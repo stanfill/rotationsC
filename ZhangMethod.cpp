@@ -75,7 +75,7 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 	for(j=0;j<m;j++){
 		
 		samp = runif(n);												//Bootstrap sample of size n, with replacement
-		samp = floor(samp * n);
+		samp = floor(samp * n);									//I need to add something that will require 4 unique observations
 	
 		for(i=0;i<n;i++){
 			Qstar.row(i) = QSamp.row(samp[i]);		//Copying a matrix row by row produces a bunch of junk messages
@@ -96,35 +96,25 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 
 /*** R
 
-library(microbenchmark)
-library(rotations)
-source("U:/Thesis/Intervals/Code/IntervalFuns.R")
-n<-20
-rs<-rcayley(n)
-Qs<-genR(rs,space='Q4')
-Rs<-SO3(Qs)
+#library(microbenchmark)
+#library(rotations)
+#source("U:/Thesis/Intervals/Code/IntervalFuns.R")
+#n<-20
+#rs<-rcayley(n)
+#Qs<-genR(rs,space='Q4')
+#Rs<-SO3(Qs)
 
-cTest<-bootQhat(Qs,300)
-xs<-seq(0,max(cTest),length=1000)
-hist(cTest,breaks=100,prob=T)
-lines(xs,dchisq(xs,3))
-
-tim<-microbenchmark(
-	bootQhat(Qs,300),
-	ZhangCI(Rs,300,.95)
-)
-
-print(tim)
-plot(tim)
+#cTest<-bootQhat(Qs,300)
+#xs<-seq(0,max(cTest),length=1000)
+#hist(cTest,breaks=100,prob=T)
+#lines(xs,dchisq(xs,3))
 
 #tim<-microbenchmark(
-#cdfunsC(Qs,qHat),
-#cdfuns(Rs,mean(Rs))
+#	bootQhat(Qs,300),
+#	ZhangCI(Rs,300,.95)
 #)
-
 #print(tim)
 #plot(tim)
-
 
 */
 
