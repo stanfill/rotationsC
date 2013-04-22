@@ -29,18 +29,24 @@ double RdistC(NumericVector Q1, NumericVector Q2){
 
 // [[Rcpp::export]]
 NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
+	
+	//Compute the values c and d to form the pivotal test statistic
+	
 	int n = Qs.nrow();
 	double crs;
+	
 	NumericVector cds(2);
 	NumericVector rs(n);
+
 	
 	for(int i=0; i<n; i++){
-		rs[i] = 2*acos(Qs(i,0));
+		
+		rs[i] = RdistC(Qs(i,_),Qhat); //Get misorientation angle of Qs[i,] and hat(Q)
 		
 		crs = cos(rs[i]);
 		
-		cds[0] += 1-pow(crs,2);
-		cds[1] += 1+2*crs;
+		cds[0] += 1-pow(crs,2);				//c=2E[1-cos(r)^2]/3
+		cds[1] += 1+2*crs;						//d=E[1+2cos(r)]/3
 	}
 	
 	cds[0] = (2*cds[0])/(3*n);
@@ -50,50 +56,75 @@ NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 }
 
 // [[Rcpp::export]]
-NumericVector bootQhat(NumericMatrix Q){
+NumericVector bootQhat(NumericMatrix Q, int m){
 	
-	int n=Q.nrow();
-	NumericVector samp = runif(n);
-	samp = floor(samp * n);
+	int n=Q.nrow(), i=0, j=0;
+	NumericVector samp, cdstar;
+	
+	NumericVector testStat(m);
 	
 	arma::mat Qstar(n,4);
+	NumericVector QhatStar;
+	
 	arma::mat QSamp = as<arma::mat>(Q);
 	
-	for(int i=0;i<n;i++){
-		Qstar.row(i) = QSamp.row(samp[i]);		//Copying a matrix row by row produces a bunch of junk messages
-	}																				//so I do it with arma instead of standard Rcpp
+	NumericMatrix QstarRcpp;
 	
-	arma::vec QhatStar = meanQ4C(Qstar);
+	NumericVector Qhat = as<Rcpp::NumericVector>(wrap(meanQ4C(QSamp)));
 	
-	return as<Rcpp::NumericVector>(wrap(QhatStar));
+	for(j=0;j<m;j++){
+		
+		samp = runif(n);												//Bootstrap sample of size n, with replacement
+		samp = floor(samp * n);
+	
+		for(i=0;i<n;i++){
+			Qstar.row(i) = QSamp.row(samp[i]);		//Copying a matrix row by row produces a bunch of junk messages
+		}																				//so I do it with arma instead of standard Rcpp
+	
+		QhatStar = as<Rcpp::NumericVector>(wrap(meanQ4C(Qstar)));
+		QstarRcpp = as<Rcpp::NumericMatrix>(wrap(Qstar));
+		
+		cdstar = cdfunsC(QstarRcpp,QhatStar);
+		
+		testStat[j] = 2*n*pow(cdstar[1],2)*pow(RdistC(QhatStar,Qhat),2)/cdstar[0];
+		
+	}
+	
+	return testStat;
+	
 }
 
 /*** R
 
 library(microbenchmark)
 library(rotations)
-rs<-rcayley(20)
+source("U:/Thesis/Intervals/Code/IntervalFuns.R")
+n<-20
+rs<-rcayley(n)
 Qs<-genR(rs,space='Q4')
-rs
-angle(Qs)
-cdfunsC(Qs,id.Q4)
+Rs<-SO3(Qs)
 
-#Qs<-ruars(10,rcayley,space='Q4')
+cTest<-bootQhat(Qs,300)
+xs<-seq(0,max(cTest),length=1000)
+hist(cTest,breaks=100,prob=T)
+lines(xs,dchisq(xs,3))
 
-#Qhat<-as.Q4(meanQ4C(Qs))
-#Qhat
-#mean(Qs)
+tim<-microbenchmark(
+	bootQhat(Qs,300),
+	ZhangCI(Rs,300,.95)
+)
 
-#dist(Qhat,method='intrinsic')
-#RdistC(Qhat,id.Q4)
+print(tim)
+plot(tim)
 
-#tim<-microbenchmark(          
-#dist(Qhat,method='intrinsic'),
-#RdistC(Qhat,id.Q4)
+#tim<-microbenchmark(
+#cdfunsC(Qs,qHat),
+#cdfuns(Rs,mean(Rs))
 #)
 
 #print(tim)
 #plot(tim)
+
 
 */
 
