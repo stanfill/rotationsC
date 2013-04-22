@@ -1,3 +1,5 @@
+/* To source run- Rcpp::sourceCpp('cayley.cpp') */
+
 #include<Rcpp.h>
 using namespace Rcpp;
 
@@ -24,8 +26,9 @@ library(rotations)
 library(microbenchmark)
 
 res<-microbenchmark(
-rcayleyC(100,1),
-rcayley(100,1)
+rcayleyC(100,10),
+rcayley(100,10)
 )
+print(res)
 boxplot(res)
 */
