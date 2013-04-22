@@ -84,7 +84,7 @@ for(p in 1:nrow(resultsDf)){
 	
 	resultsDf[p,]$NormalMean<-100*NormalMean/B
 	resultsDf[p,]$PivotMean<-100*PivotMean/B
-	
+	print(resultsDf[p,])
 }
 
 
