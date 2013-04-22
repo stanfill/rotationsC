@@ -3,7 +3,7 @@
 #include<Rcpp.h>
 using namespace Rcpp;
 
-//[[Rcpp::export]]
+// [[Rcpp::export]]
 NumericVector rcayleyC(int n, double kappa){
 	
 	double temp = 0;	
