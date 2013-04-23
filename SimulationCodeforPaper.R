@@ -3,11 +3,10 @@
 library(Rcpp)
 Rcpp::sourceCpp('ZhangMethod.cpp')
 library(rotations)
-#setwd("U:/Thesis/Intervals/Code")
-#source("IntervalFuns.R")
+source("IntervalFuns.R")
 
 
-n<-c(20,50,100)
+n<-c(10,50,100)
 
 nu<-c(0.25,0.50,0.75)
 cayKap<-c(10,4,2)
@@ -17,9 +16,9 @@ misesKap<-c(2.40,1.16,0.52)
 Dist<-c("Cayley","Fisher","Mises")
 
 
-B<-1000				#Number of samples to use to estimate coverage probability (Zhang used 10,000)
+B<-200				#Number of samples to use to estimate coverage probability (Zhang used 10,000)
 m<-300				#Number of bootstrap samples used to estimate bootstrap test statistic (Zhang used 300)
-alp<-0.95
+alp<-0.9
 
 resultsDf<-data.frame(expand.grid(Dist=Dist,nu=nu,n=n),Rivest=0,Fisher=0,NormalMean=0,PivotMean=0)
 
@@ -53,9 +52,9 @@ for(p in 1:nrow(resultsDf)){
 			Qs<-ruars(np,rfn,kappa=kapp,space='Q4')
 			
 			#Execute the Method in Rancourt 2000
-			#qs<-Q4(Rs)			
-			#ti<-RivestCI(qs)
-			#Rivest<-Rivest+as.numeric(ti<qchisq(alp,3))
+						
+			ti<-RivestCI(Qs)
+			Rivest<-Rivest+as.numeric(ti<qchisq(alp,3))
 			
 			#Execute the Fisher, Hall, Jing and Wood Method
 			#Criticaltf<-fisherAxisBoot(qs,m,alp)
@@ -65,7 +64,7 @@ for(p in 1:nrow(resultsDf)){
 			
 			#Now for the methods in Zhang's MS for the Projected Mean
 			zhangMean<-bootQhat(Qs,m)		        #Bootstrap Pivotal cut point
-			cutPt<-quantile(zhangMean,alp)
+			cutPt<-quantile(zhangMean,alp,na.rm=T)
 			ShatE<-as.Q4(meanQ4C(Qs))													#Projected Mean of Shat
 			RscdMean<-cdfunsC(Qs,ShatE)												#Compute c-hat and d-hat for sample quantity 
 			
@@ -90,3 +89,7 @@ for(p in 1:nrow(resultsDf)){
 
 date()
 resultsDf
+
+resM<-melt(resultsDf,id=c('Dist','nu','n'))
+qplot(n,value,data=resM[resM$variable!='Fisher',],facets=Dist~nu,colour=variable,
+      geom='line',lwd=I(1.25))+geom_hline(yintercept=alp*100)

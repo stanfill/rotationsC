@@ -58,15 +58,16 @@ NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 // [[Rcpp::export]]
 NumericVector bootQhat(NumericMatrix Q, int m){
 	
-	int n=Q.nrow(), i=0, j=0;
+	int n=Q.nrow(), i=0, j=0, numUn;
 	NumericVector samp, cdstar;
 	
 	NumericVector testStat(m);
 	
 	arma::mat Qstar(n,4);
 	NumericVector QhatStar;
+  NumericVector unSamp;
 	
-	arma::mat QSamp = as<arma::mat>(Q);
+	arma::mat QSamp = as<arma::mat>(Q); //Convert the sample into armadillo mode
 	
 	NumericMatrix QstarRcpp;
 	
@@ -74,9 +75,17 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 	
 	for(j=0;j<m;j++){
 		
-		samp = runif(n);												//Bootstrap sample of size n, with replacement
-		samp = floor(samp * n);									//I need to add something that will require 4 unique observations
-	
+		samp = floor(runif(n,0,n));			//Bootstrap sample of size n, with replacement
+	  unSamp = unique(samp);
+    numUn = unSamp.size();
+    
+    while(numUn<4){
+      samp = floor(runif(n,0,n));	 //If bootstrap samp is less than 3 obs then							
+	    unSamp = unique(samp);       //draw a new sample
+      numUn = unSamp.size();
+    }
+    
+    
 		for(i=0;i<n;i++){
 			Qstar.row(i) = QSamp.row(samp[i]);		//Copying a matrix row by row produces a bunch of junk messages
 		}																				//so I do it with arma instead of standard Rcpp
@@ -99,12 +108,13 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 #library(microbenchmark)
 #library(rotations)
 #source("U:/Thesis/Intervals/Code/IntervalFuns.R")
-#n<-20
+#n<-10
 #rs<-rcayley(n)
 #Qs<-genR(rs,space='Q4')
 #Rs<-SO3(Qs)
 
-#cTest<-bootQhat(Qs,300)
+#cTest<-bootQhat(Qs,100)
+#cTest
 #xs<-seq(0,max(cTest),length=1000)
 #hist(cTest,breaks=100,prob=T)
 #lines(xs,dchisq(xs,3))
