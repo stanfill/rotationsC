@@ -1,20 +1,23 @@
 #include <RcppArmadillo.h>   
 #include <Rcpp.h>
+
 using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]] 
 
 // [[Rcpp::export]]  
 double fisherAxisC(arma::mat Qs, arma::vec Qhat){
 	
-	arma::mat Qsq=Qs.t()*Qs;
+  int n=Qs.n_rows;
+  
+	arma::mat Qsq=Qs.t()*Qs/n;
 	arma::mat eigvec;
 	arma::vec eigval;
   
   arma::eig_sym(eigval,eigvec,Qsq);   
-  arma::vec qhat=eigvec.col(3);
+
 	arma::mat G(3,3);
   
-  int i, j, k, n=Qs.n_rows;
+  int i, j, k;
   double Tm, denom;
   arma::vec m=eigvec.col(3);
   
@@ -22,7 +25,7 @@ double fisherAxisC(arma::mat Qs, arma::vec Qhat){
   	m = -m;
   }*/
   
-  arma::mat Mhat = eigvec.submat(0,0,3,2);
+  arma::mat Mhat = eigvec.submat(0,0,3,2); //X.submat( first_row, first_col, last_row, last_col )
   
   /*for(i=0;i<3;i++){
     Mhat.col(i)=eigvec.col(i);
@@ -31,11 +34,13 @@ double fisherAxisC(arma::mat Qs, arma::vec Qhat){
   for(j=0;j<3;j++){
 		for(k=0;k<3;k++){
       
-			denom=arma::as_scalar(pow((n*(eigval(3)-eigval(j))*(eigval(3)-eigval(k))),-1));
+			denom= pow((n*(eigval(3)-eigval(j))*(eigval(3)-eigval(k))),-1);
 				
 			for(i=0;i<n;i++){
-				G(j,k) = G(j,k) + pow(sum(Qs.row(i)*Mhat.col(j))*sum(Qs.row(i)*Mhat.col(k))*sum(Qs.row(i)*eigvec.col(3)),2)*denom;
+				G(j,k) = G(j,k) + sum(Qs.row(i)*Mhat.col(j))*sum(Qs.row(i)*Mhat.col(k))*pow(sum(Qs.row(i)*eigvec.col(3)),2);
 			}
+      
+      G(j,k) = G(j,k)*denom;
       G(k,j)=G(j,k);
 		}
 	}
@@ -47,49 +52,72 @@ double fisherAxisC(arma::mat Qs, arma::vec Qhat){
   return Tm;
 }
 
+// [[Rcpp::export]]   
+arma::vec meanQ4C(arma::mat Q) { 
+  /*Compute the projected mean of the sample Q*/
+	arma::mat Qsq=Q.t()*Q;
+	arma::mat eigvec;
+	arma::vec eigval;
+  arma::eig_sym(eigval,eigvec,Qsq);   
+  arma::vec qhat=eigvec.col(3);
+  
+  if(qhat[0]<0){
+  	qhat = -qhat;
+  }
+  
+  return qhat;
+}
+
+//[[Rcpp::export]]
+arma::vec fisherBootC(arma::mat Qs, int m){
+  
+  int n = Qs.n_rows;
+  int i , j , numUn;
+  arma::vec qhat=meanQ4C(Qs);
+  arma::vec Tm(m);
+  NumericVector samp, unSamp;
+  arma::mat Qstar(n,4);
+  
+  for(i=0;i<m;i++){
+    
+    samp = floor(runif(n,0,n));			//Bootstrap sample of size n, with replacement
+	  unSamp = unique(samp);
+    numUn = unSamp.size();
+    
+    while(numUn<4){
+      samp = floor(runif(n,0,n));	 //If bootstrap samp is less than 3 obs then							
+	    unSamp = unique(samp);       //draw a new sample
+      numUn = unSamp.size();
+    }
+    
+    for(j=0;j<n;j++){
+      Qstar.row(j) = Qs.row(samp[j]);
+    }
+    
+    Tm[i]=fisherAxisC(Qstar,qhat);
+    
+  }
+  return Tm;
+}
+
 /*** R
+
+#Rcpp::sourceCpp("ZhangMethod.cpp")
+
 library(rotations)
 library(microbenchmark)
-Qs<-ruars(20,rcayley,space='Q4')
+Qs<-ruars(100,rcayley,space='Q4',kappa=50)
 Qhat<-mean(Qs)
 
-fisherAxisCompute<-function(Qs,Shat){
-  
-	n<-nrow(Qs)
-	
-	svdQs<-svd(t(Qs)%*%Qs/n)
-	mhat<-svdQs$v[,1]
-	Mhat<-t(svdQs$v[,-1])
-	etad<-svdQs$d[1]
-	etas<-svdQs$d[-1]
-	G<-matrix(0,3,3)
-		
-	for(j in 1:3){
-		for(k in j:3){
-			denom<-1/(n*(etad-etas[j])*(etad-etas[k]))
-				
-			for(i in 1:n){
-				G[j,k]<-G[k,j]<-G[j,k]+(Mhat[j,]%*%Qs[i,])*(Mhat[k,]%*%Qs[i,])*(mhat%*%Qs[i,])^2*denom
-			}
-		}
-	}
-	
-	Ginv<-solve(G)
-	
-	#Ginv<-try(solve(G),silent=T)
-		
-	#if(class(Ginv)!='matrix'){
-	#	Ginv<-diag(1/diag(G))
-	#}
-		
-	Tm<-n*Shat%*%t(Mhat)%*%Ginv%*%Mhat%*%t(Shat)
-	
-	return(Tm)
-}
-tim<-microbenchmark(
-fisherAxisC(Qs,Qhat),
-fisherAxisCompute(Qs,Qhat))
-print(tim)
-plot(tim)
+Fisher<-fisherBootC(Qs,300)
+hist(Fisher,breaks=100,prob=T)
+ss<-seq(0,max(Fisher),length=1000)
+lines(ss,dchisq(ss,3))
+
+#tim<-microbenchmark(
+#fisherAxisC(Qs,Qhat),
+#fisherAxisCompute(Qs,Qhat))
+#print(tim)
+#plot(tim)
 */
 
