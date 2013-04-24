@@ -126,59 +126,110 @@ n<-c(10,50,100,300)
 ks<-c(2,8)
 B<-1000				#Number of samples to use to estimate coverage probability (Zhang used 10,000)
 
-c<-2*(1-(ks^2-ks+3)/(ks^2+5*ks+6))/3
-d<-(1+2*(ks-1)/(ks+2))/3
+#Cayley c and d
+#ecos<-(ks-1)/(ks+2)
+#ecos2<-(ks^2-ks+3)/(ks^2+5*ks+6)
+
+#Fisher c and d
+ecos<-(((ks+1)/(ks))*besselI(2*ks,1)-besselI(2*ks,0))/(besselI(2*ks,0)-besselI(2*ks,1))
+ecos2<-(((2*ks+1)/ks)*besselI(2*ks,0)-((2*ks^2+ks+1)/ks^2)*besselI(2*ks,1))/(2*besselI(2*ks,0)-2*besselI(2*ks,1))
+
+
+#von Mises c and d
+#ecos<-besselI(ks,1)/besselI(ks,0)
+#ecos2<-(besselI(ks,2)/besselI(ks,0)+1)/2
+
+
+c<-(2/3)*(1-ecos2)
+d<-(1/3)*(1+2*ecos)
 
 simSize<-length(n)*length(ks)
 
 tMat<-matrix(0,simSize,B)
 
-resultsDfMean<-data.frame(expand.grid(kappa=ks,n=n),tMat)
+
+cdfDF<-data.frame(expand.grid(kappa=ks,n=n),tMat)
 
 
 for(j in 1:simSize){
-	kapInd<-which(ks==resultsDfMean$kappa[j])
+	kapInd<-which(ks==cdfDF$kappa[j])
 	cj<-c[kapInd]
 	dj<-d[kapInd]
 	
 	for(i in 1:B){
 		
-		Rs<-ruars(resultsDfMean$n[j],rcayley,kappa=resultsDfMean$kappa[j],space='Q4')
+		Rs<-ruars(cdfDF$n[j],rfisher,kappa=cdfDF$kappa[j],space='Q4')
 		
 		ShatMean<-meanQ4C(Rs)
 		
 		hsqMean<-RdistC(ShatMean,id.Q4)^2
 
-		resultsDfMean[j,(2+i)]<-2*resultsDfMean$n[j]*dj^2*hsqMean/cj
+		cdfDF[j,(2+i)]<-2*cdfDF$n[j]*dj^2*hsqMean/cj
 		
 	}
 }
 
-colNums<-ncol(resultsDfMean)
 
-whichK<-1 # 1 for kappa=2 and 2 for kappa=8
+resM<-melt(cdfDF,id=c("kappa","n"))
+ss<-seq(0,max(resM$value),length=B)
+Probs<-pchisq(ss,3)
 
-tInt10Mean<-sort(as.numeric(as.character(resultsDfMean[whichK,3:colNums])))
-tInt30Mean<-sort(as.numeric(as.character(resultsDfMean[(whichK+2),3:colNums])))
-tInt100Mean<-sort(as.numeric(as.character(resultsDfMean[(whichK+4),3:colNums])))
-tInt300Mean<-sort(as.numeric(as.character(resultsDfMean[(whichK+6),3:colNums])))
+resM$n<-as.factor(resM$n)
+resM$Prob<-0
+resM$ID<-paste(resM$kappa,resM$n)
+kns<-unique(resM$ID)
 
-plot(tInt300Mean,ecdf(tInt300Mean),main=expression(kappa==2),type='l',col=2,xlab='x',ylab='F(x)',xlim=c(0,10))
-lines(tInt100Mean,ecdf(tInt100Mean),col=3)
-lines(tInt30Mean,ecdf(tInt30Mean),col=4)
-lines(tInt10Mean,ecdf(tInt10Mean),col=5)
-lines(tInt300Mean,pchisq(tInt300Mean,3))
-legend(7,.6,c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"),col=c(1,5,4,3,2),lty=1,lwd=2,bty='n')
+for(i in 1:length(unique(resM$ID))){
+	resM[resM$ID==kns[i],]$value<-sort(resM[resM$ID==kns[i],]$value)
+	resM[resM$ID==kns[i],]$Prob<-ecdf(resM[resM$ID==kns[i],]$value)
+}
 
-whichK<-2 # 1 for kappa=2 and 2 for kappa=8
-tInt10Mean<-sort(as.numeric(as.character(resultsDfMean[whichK,3:colNums])))
-tInt30Mean<-sort(as.numeric(as.character(resultsDfMean[(whichK+2),3:colNums])))
-tInt100Mean<-sort(as.numeric(as.character(resultsDfMean[(whichK+4),3:colNums])))
-tInt300Mean<-sort(as.numeric(as.character(resultsDfMean[(whichK+6),3:colNums])))
+chiDF<-data.frame(kappa=rep(c(2,8),1000),n='Chisq',variable='Tr',value=rep(ss,each=2),Prob=rep(pchisq(ss,3),each=2))
+chiDF$ID<-paste(chiDF$kappa,chiDF$n)
 
-plot(tInt300Mean,ecdf(tInt300Mean),main=expression(kappa==8),type='l',col=2,xlab='x',ylab='F(x)',xlim=c(0,10))
-lines(tInt100Mean,ecdf(tInt100Mean),col=3)
-lines(tInt30Mean,ecdf(tInt30Mean),col=4)
-lines(tInt10Mean,ecdf(tInt10Mean),col=5)
-lines(tInt300Mean,pchisq(tInt300Mean,3))
-legend(7,.6,c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"),col=c(1,5,4,3,2),lty=1,lwd=2,bty='n')
+fullDF<-rbind(resM,chiDF)
+
+qplot(value,Prob,group=n,colour=n,data=fullDF,geom="line",lwd=I(1.125),xlab='x',alpha=I(.7),
+			ylab="P(X<x)",main='matrix Fisher Distribution')+
+			facet_grid(.~kappa,labeller=label_both)+theme_bw()
+
+setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
+ggsave("FisherECDF.pdf",height=5,width=7)
+
+#Old way of plotting CDFs
+# colNums<-ncol(cdfDF)
+# 
+# whichK<-1 # 1 for kappa=2 and 2 for kappa=8
+# 
+# tInt10Mean<-sort(as.numeric(as.character(cdfDF[whichK,3:colNums])))
+# tInt50Mean<-sort(as.numeric(as.character(cdfDF[(whichK+2),3:colNums])))
+# tInt100Mean<-sort(as.numeric(as.character(cdfDF[(whichK+4),3:colNums])))
+# tInt300Mean<-sort(as.numeric(as.character(cdfDF[(whichK+6),3:colNums])))
+# 
+# plot(tInt300Mean,ecdf(tInt300Mean),main=expression(kappa==2),type='l',col=2,xlab='x',ylab='F(x)',xlim=c(0,10))
+# lines(tInt100Mean,ecdf(tInt100Mean),col=3)
+# lines(tInt50Mean,ecdf(tInt50Mean),col=4)
+# lines(tInt10Mean,ecdf(tInt10Mean),col=5)
+# lines(tInt300Mean,pchisq(tInt300Mean,3))
+# legend(7,.6,c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"),col=c(1,5,4,3,2),lty=1,lwd=2,bty='n')
+# 
+# whichK<-2 # 1 for kappa=2 and 2 for kappa=8
+# tInt10Mean<-sort(as.numeric(as.character(cdfDF[whichK,3:colNums])))
+# tInt50Mean<-sort(as.numeric(as.character(cdfDF[(whichK+2),3:colNums])))
+# tInt100Mean<-sort(as.numeric(as.character(cdfDF[(whichK+4),3:colNums])))
+# tInt300Mean<-sort(as.numeric(as.character(cdfDF[(whichK+6),3:colNums])))
+# 
+# plot(tInt300Mean,ecdf(tInt300Mean),main=expression(kappa==8),type='l',col=2,xlab='x',ylab='F(x)',xlim=c(0,10))
+# lines(tInt100Mean,ecdf(tInt100Mean),col=3)
+# lines(tInt50Mean,ecdf(tInt50Mean),col=4)
+# lines(tInt10Mean,ecdf(tInt10Mean),col=5)
+# lines(tInt300Mean,pchisq(tInt300Mean,3))
+# legend(7,.6,c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"),col=c(1,5,4,3,2),lty=1,lwd=2,bty='n')
+
+
+2*(besselI(2*ks,2)+besselI(2*ks,0))-besselI(2*ks,3)-3*besselI(2*ks,1)
+
+((2*ks+2)/ks)*besselI(2*ks,2)+2*besselI(2*ks,0)-4*besselI(2*ks,1)
+
+
+
