@@ -9,35 +9,34 @@ double fisherAxisC(arma::mat Qs, arma::vec Qhat){
 	
   int n=Qs.n_rows;
   
-	arma::mat Qsq=Qs.t()*Qs/n;
-	arma::mat eigvec;
-	arma::vec eigval;
+	arma::mat Qsq=(Qs.t()*Qs)/n;
+	arma::mat eigvec, Mhat(4,3);
+	arma::vec eigval, eta(3);
   
   arma::eig_sym(eigval,eigvec,Qsq);   
 
 	arma::mat G(3,3);
-  
+	G.zeros();
+
   int i, j, k;
   double Tm, denom;
-  arma::vec m=eigvec.col(3);
+
   
-  /*if(m[0]<0){
-  	m = -m;
-  }*/
   
-  arma::mat Mhat = eigvec.submat(0,0,3,2); //X.submat( first_row, first_col, last_row, last_col )
-  
-  /*for(i=0;i<3;i++){
+  for(i=0;i<3;i++){
     Mhat.col(i)=eigvec.col(i);
-  }*/
+    eta(i)=eigval(i);
+  }
   
   for(j=0;j<3;j++){
-		for(k=0;k<3;k++){
+		for(k=j;k<3;k++){
       
-			denom= pow((n*(eigval(3)-eigval(j))*(eigval(3)-eigval(k))),-1);
-				
+			denom = pow((n*(eigval[3]-eta[j])*(eigval[3]-eta[k])),-1);
+			
+			//printf(" %lf ",denom);
+			
 			for(i=0;i<n;i++){
-				G(j,k) = G(j,k) + sum(Qs.row(i)*Mhat.col(j))*sum(Qs.row(i)*Mhat.col(k))*pow(sum(Qs.row(i)*eigvec.col(3)),2);
+				G(j,k) = G(j,k) + arma::as_scalar(Qs.row(i)*Mhat.col(j)*Qs.row(i)*Mhat.col(k)*pow(Qs.row(i)*eigvec.col(3),2));
 			}
       
       G(j,k) = G(j,k)*denom;
@@ -45,16 +44,19 @@ double fisherAxisC(arma::mat Qs, arma::vec Qhat){
 		}
 	}
   
-  arma::mat Ginv = G.i();
+
+  //G.print("G:");
+  arma::mat Ginv = G.i();  
   
-  Tm=arma::as_scalar(n*Qhat.t()*Mhat*Ginv*Mhat.t()*Qhat);
+  Tm = arma::as_scalar(n*Qhat.t()*Mhat*Ginv*Mhat.t()*Qhat);
   
   return Tm;
 }
 
+
 // [[Rcpp::export]]   
 arma::vec meanQ4C(arma::mat Q) { 
-  /*Compute the projected mean of the sample Q*/
+  
 	arma::mat Qsq=Q.t()*Q;
 	arma::mat eigvec;
 	arma::vec eigval;
@@ -67,6 +69,7 @@ arma::vec meanQ4C(arma::mat Q) {
   
   return qhat;
 }
+
 
 //[[Rcpp::export]]
 arma::vec fisherBootC(arma::mat Qs, int m){
@@ -104,15 +107,15 @@ arma::vec fisherBootC(arma::mat Qs, int m){
 
 #Rcpp::sourceCpp("ZhangMethod.cpp")
 
-library(rotations)
-library(microbenchmark)
-Qs<-ruars(100,rcayley,space='Q4',kappa=50)
-Qhat<-mean(Qs)
+#library(rotations)
+#library(microbenchmark)
+#Qs<-ruars(100,rcayley,space='Q4',kappa=5)
+#Qhat<-mean(Qs)
 
-Fisher<-fisherBootC(Qs,300)
-hist(Fisher,breaks=100,prob=T)
-ss<-seq(0,max(Fisher),length=1000)
-lines(ss,dchisq(ss,3))
+#Fisher<-fisherBootC(Qs,300)
+#hist(Fisher,breaks=100,prob=T)
+#ss<-seq(0,max(Fisher),length=1000)
+#lines(ss,dchisq(ss,3))
 
 #tim<-microbenchmark(
 #fisherAxisC(Qs,Qhat),

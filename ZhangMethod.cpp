@@ -36,6 +36,9 @@ NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 	double crs;
 	
 	NumericVector cds(2);
+	cds[0]=0;
+	cds[1]=0;
+	
 	NumericVector rs(n);
 
 	

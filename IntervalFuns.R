@@ -235,7 +235,7 @@ fisherBootCI<-function(Qs,mhat){
 	return(Tm)
 }
 
-fisherAxisBoot<-function(Qs,m,alp){
+fisherAxisBoot<-function(Qs,m){
 	
 	n<-nrow(Qs)
 	Tm<-rep(0,m)
@@ -258,7 +258,7 @@ fisherAxisBoot<-function(Qs,m,alp){
 		
 	}
 	
-	return(quantile(Tm,alp))
+	return(Tm)
 }
 
 fisherAxisCompute<-function(Qs,Shat){
@@ -275,12 +275,16 @@ fisherAxisCompute<-function(Qs,Shat){
 	for(j in 1:3){
 		for(k in j:3){
 			denom<-1/(n*(etad-etas[j])*(etad-etas[k]))
-				
+			#print(denom)
 			for(i in 1:n){
 				G[j,k]<-G[k,j]<-G[j,k]+(Mhat[j,]%*%Qs[i,])*(Mhat[k,]%*%Qs[i,])*(mhat%*%Qs[i,])^2*denom
 			}
 		}
 	}
+	#print("etas:");print(etas)
+	#print("G:");print(G)
+	#print("Qhat:");print(Shat)
+	#print("Mhat:");print(t(Mhat))
 	
 	Ginv<-solve(G)
 	

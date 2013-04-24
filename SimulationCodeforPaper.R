@@ -2,6 +2,7 @@
 
 library(Rcpp)
 Rcpp::sourceCpp('ZhangMethod.cpp')
+Rcpp::sourceCpp("FisherMethod.cpp")
 library(rotations)
 source("IntervalFuns.R")
 
@@ -57,9 +58,9 @@ for(p in 1:nrow(resultsDf)){
 			Rivest<-Rivest+as.numeric(ti<qchisq(alp,3))
 			
 			#Execute the Fisher, Hall, Jing and Wood Method
-			#Criticaltf<-fisherAxisBoot(qs,m,alp)
-			#testStat<-fisherAxisCompute(qs,id.Q4)
-			#Fisher<-Fisher+as.numeric(testStat<Criticaltf)
+			Criticaltf<-quantile(fisherBootC(qs,m),alp,na.rm=T)
+			testStat<-fisherAxisC(qs,id.Q4)
+			Fisher<-Fisher+as.numeric(testStat<Criticaltf)
 			
 			
 			#Now for the methods in Zhang's MS for the Projected Mean
