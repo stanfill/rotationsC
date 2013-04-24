@@ -227,9 +227,5 @@ ggsave("FisherECDF.pdf",height=5,width=7)
 # legend(7,.6,c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"),col=c(1,5,4,3,2),lty=1,lwd=2,bty='n')
 
 
-2*(besselI(2*ks,2)+besselI(2*ks,0))-besselI(2*ks,3)-3*besselI(2*ks,1)
-
-((2*ks+2)/ks)*besselI(2*ks,2)+2*besselI(2*ks,0)-4*besselI(2*ks,1)
-
 
 
