@@ -96,18 +96,24 @@ for(p in 1:nrow(resultsDf)){
 	resultsDf[p,]$NormalMean<-100*NormalMean/B
 	resultsDf[p,]$PivotMean<-100*PivotMean/B
 	print(resultsDf[p,])
-	write.csv(resultsDf,"ResultsB5000M300.csv")
+	#write.csv(resultsDf,"ResultsB5000M300.csv")
 }
 
 
 date()
 resultsDf
 
-write.csv(resultsDf,"ResultsB5000M300.csv")
+#write.csv(resultsDf,"ResultsB5000M300.csv")
 
 resM<-melt(resultsDf,id=c('Dist','nu','n'))
-qplot(n,value,data=resM,facets=Dist~nu,colour=variable,
-      geom='line',lwd=I(1.25))+geom_hline(yintercept=alp*100)
+colnames(resM)[4]<-'Method'
+levels(resM$Method)[3:4]<-c("Nordman Normal","Nordman Bootstrap")
+resM$n<-as.factor(resM$n)
+qplot(n,value,data=resM,colour=Method,group=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
+	facet_grid(Dist~nu,labeller=label_both)+geom_hline(yintercept=alp*100,colour='gray50')+
+	geom_line(lwd=I(1.25),alpha=I(.8))
+
+#ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB5000.pdf",width=10,height=8)
 
 
 ###############################################################
