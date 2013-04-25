@@ -22,7 +22,7 @@ misesKap<-c(2.40,1.16,0.52)
 Dist<-c("Cayley","Fisher","Mises")
 
 
-B<-1000				#Number of samples to use to estimate coverage probability (Zhang used 10,000)
+B<-5000				#Number of samples to use to estimate coverage probability (Zhang used 10,000)
 m<-300				#Number of bootstrap samples used to estimate bootstrap test statistic (Zhang used 300)
 alp<-0.9
 
@@ -30,7 +30,7 @@ resultsDf<-data.frame(expand.grid(Dist=Dist,nu=nu,n=n),Rivest=0,Fisher=0,NormalM
 
 date()
 
-for(p in 18:nrow(resultsDf)){
+for(p in 1:nrow(resultsDf)){
 
 	distp<-resultsDf$Dist[p]
 	np<-resultsDf$n[p]
@@ -96,13 +96,14 @@ for(p in 18:nrow(resultsDf)){
 	resultsDf[p,]$NormalMean<-100*NormalMean/B
 	resultsDf[p,]$PivotMean<-100*PivotMean/B
 	print(resultsDf[p,])
+	write.csv(resultsDf,"ResultsB5000M300.csv")
 }
 
 
 date()
 resultsDf
 
-write.csv(resultsDf,"ResultsB1000M300.csv")
+write.csv(resultsDf,"ResultsB5000M300.csv")
 
 resM<-melt(resultsDf,id=c('Dist','nu','n'))
 qplot(n,value,data=resM,facets=Dist~nu,colour=variable,
@@ -113,7 +114,7 @@ qplot(n,value,data=resM,facets=Dist~nu,colour=variable,
 #Plot the test statistics cumulative dist function versus the 
 #theoretical limiting dist
 ###############################################################
-
+setwd("C:/Users/stanfill/Desktop/GitHub/intervals")
 library(Rcpp)
 Rcpp::sourceCpp('ZhangMethod.cpp')
 Rcpp::sourceCpp("FisherMethod.cpp")
@@ -124,24 +125,16 @@ source("IntervalFuns.R")
 
 n<-c(10,50,100,300)
 ks<-c(2,8)
-B<-1000				#Number of samples to use to estimate coverage probability (Zhang used 10,000)
+B<-1000				#Number of samples to use to estimate CDF
+Dist<-'fisher'
 
-#Cayley c and d
-#ecos<-(ks-1)/(ks+2)
-#ecos2<-(ks^2-ks+3)/(ks^2+5*ks+6)
-
-#Fisher c and d
-ecos<-(((ks+1)/(ks))*besselI(2*ks,1)-besselI(2*ks,0))/(besselI(2*ks,0)-besselI(2*ks,1))
-ecos2<-(((2*ks+1)/ks)*besselI(2*ks,0)-((2*ks^2+ks+1)/ks^2)*besselI(2*ks,1))/(2*besselI(2*ks,0)-2*besselI(2*ks,1))
-
-
-#von Mises c and d
-#ecos<-besselI(ks,1)/besselI(ks,0)
-#ecos2<-(besselI(ks,2)/besselI(ks,0)+1)/2
-
-
-c<-(2/3)*(1-ecos2)
-d<-(1/3)*(1+2*ecos)
+if(Dist=='cayley'){
+	rangle<-rcayley
+}else if(Dist=='fisher'){
+	rangle<-rfisher
+}else{
+	rangle<-rvmises
+}
 
 simSize<-length(n)*length(ks)
 
@@ -150,21 +143,28 @@ tMat<-matrix(0,simSize,B)
 
 cdfDF<-data.frame(expand.grid(kappa=ks,n=n),tMat)
 
-
 for(j in 1:simSize){
-	kapInd<-which(ks==cdfDF$kappa[j])
-	cj<-c[kapInd]
-	dj<-d[kapInd]
+
 	
 	for(i in 1:B){
 		
-		Rs<-ruars(cdfDF$n[j],rfisher,kappa=cdfDF$kappa[j],space='Q4')
+		rs<-rangle(cdfDF$n[j],kappa=cdfDF$kappa[j])
+
+		Rs<-genR(rs,space='Q4')
+		
+		cosrs<-cos(rs)
+		
+		ecos<-mean(cosrs)
+		ecos2<-mean(cosrs^2)
+		
+		c<-(2/3)*(1-ecos2)
+		d<-(1/3)*(1+2*ecos)
 		
 		ShatMean<-meanQ4C(Rs)
 		
 		hsqMean<-RdistC(ShatMean,id.Q4)^2
 
-		cdfDF[j,(2+i)]<-2*cdfDF$n[j]*dj^2*hsqMean/cj
+		cdfDF[j,(2+i)]<-2*cdfDF$n[j]*d^2*hsqMean/c
 		
 	}
 }
@@ -189,12 +189,40 @@ chiDF$ID<-paste(chiDF$kappa,chiDF$n)
 
 fullDF<-rbind(resM,chiDF)
 
-qplot(value,Prob,group=n,colour=n,data=fullDF,geom="line",lwd=I(1.125),xlab='x',alpha=I(.7),
-			ylab="P(X<x)",main='matrix Fisher Distribution')+
-			facet_grid(.~kappa,labeller=label_both)+theme_bw()
 
-setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
-ggsave("FisherECDF.pdf",height=5,width=7)
+if(Dist=='cayley'){
+	
+	qplot(value,Prob,group=n,colour=n,data=fullDF,geom="line",lwd=I(1.125),xlab='x',alpha=I(.7),
+				ylab="P(X<x)",main='Cayley Distribution')+
+		facet_grid(.~kappa,labeller=label_both)+theme_bw()
+	
+	setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
+	ggsave("CayleyECDF.pdf",height=5,width=8)
+	write.csv(fullDF,"CayleyECDF.csv")
+	
+}else if(Dist=='fisher'){
+	
+	qplot(value,Prob,group=n,colour=n,data=fullDF,geom="line",lwd=I(1.125),xlab='x',alpha=I(.7),
+				ylab="P(X<x)",main='matrix Fisher Distribution')+
+		facet_grid(.~kappa,labeller=label_both)+theme_bw()
+	
+	setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
+	ggsave("FisherECDF.pdf",height=5,width=8)
+	write.csv(fullDF,"FisherECDF.csv")
+	
+}else{
+	
+	qplot(value,Prob,group=n,colour=n,data=fullDF,geom="line",lwd=I(1.125),xlab='x',alpha=I(.7),
+				ylab="P(X<x)",main='circular von Mises Distribution')+
+		facet_grid(.~kappa,labeller=label_both)+theme_bw()
+	
+	setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
+	ggsave("vonMisesECDF.pdf",height=5,width=8)
+	write.csv(fullDF,"vonMisesECDF.csv")
+	
+}
+
+
 
 #Old way of plotting CDFs
 # colNums<-ncol(cdfDF)
@@ -226,6 +254,17 @@ ggsave("FisherECDF.pdf",height=5,width=7)
 # lines(tInt300Mean,pchisq(tInt300Mean,3))
 # legend(7,.6,c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"),col=c(1,5,4,3,2),lty=1,lwd=2,bty='n')
 
+#This will compute true c and d values for each distribution
+#Cayley c and d
+#ecos<-(ks-1)/(ks+2)
+#ecos2<-(ks^2-ks+3)/(ks^2+5*ks+6)
+
+#Fisher c and d
+#ecos<-((1+1/(2*ks))*besselI(2*ks,1)-besselI(2*ks,0))/(besselI(2*ks,0)-besselI(2*ks,1))
+#ecos2<-(((2*ks+1)/ks)*besselI(2*ks,0)-((2*ks^2+ks+1)/ks^2)*besselI(2*ks,1))/(2*besselI(2*ks,0)-2*besselI(2*ks,1))
 
 
+#von Mises c and d
+#ecos<-besselI(ks,1)/besselI(ks,0)
+#ecos2<-(besselI(ks,2)/besselI(ks,0)+1)/2
 
