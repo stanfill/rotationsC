@@ -73,7 +73,7 @@ NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 	
 	//Compute the values c and d to form the pivotal test statistic
 	
-	int n = Qs.nrow();
+	int n = Qs.nrow(), i;
 	double crs;
 	
 	NumericVector cds(2);
@@ -83,20 +83,19 @@ NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 	NumericVector rs(n);
 	
 	rs = RdistC(Qs,Qhat);
-
 	
-	for(int i=0; i<n; i++){
+	for(i=0; i<n; i++){
 		
 		//rs[i] = RdistC(Qs(i,_),Qhat); //Get misorientation angle of Qs[i,] and hat(Q)
 		
 		crs = cos(rs[i]);
 		
-		cds[0] += 1-pow(crs,2);				//c=2E[1-cos(r)^2]/3
-		cds[1] += 1+2*crs;						//d=E[1+2cos(r)]/3
+		cds[0] += pow(crs,2);				//c=2E[1-cos(r)^2]/3
+		cds[1] += crs;							//d=E[1+2cos(r)]/3
 	}
 	
-	cds[0] = (2*cds[0])/(3*n);
-	cds[1] = (cds[1]/(3*n));
+	cds[0] = 2*(1-cds[0]/n)/3;
+	cds[1] = (1+2*cds[1]/n)/3;
 	
 	return cds;
 }
@@ -110,14 +109,13 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 		throw Rcpp::exception("The data are not in Q4.");
 	}
 	
-	int n=Q.nrow(), i=0, j=0, numUn;
+	int n=Q.nrow(), i=0, j=0;
 	NumericVector samp, cdstar;
 	
 	NumericVector testStat(m), sqrth;
 	
 	arma::mat Qstar(n,4);
 	NumericVector QhatStar;
-  NumericVector unSamp;
   NumericMatrix QhatStarMat(1,4);
 	
 	arma::mat QSamp = as<arma::mat>(Q); //Convert the sample into armadillo mode
@@ -129,14 +127,6 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 	for(j=0;j<m;j++){
 		
 		samp = floor(runif(n,0,n));			//Bootstrap sample of size n, with replacement
-	  unSamp = unique(samp);
-    numUn = unSamp.size();
-    
-    while(numUn<4){
-      samp = floor(runif(n,0,n));	 //If bootstrap samp is less than 3 obs then							
-	    unSamp = unique(samp);       //draw a new sample
-      numUn = unSamp.size();
-    }
     
     
 		for(i=0;i<n;i++){
@@ -169,7 +159,7 @@ rs<-rcayley(n)
 #Rs<-genR(rs,space='SO3')
 Qs<-genR(rs,space='Q4')
 meanQ4C(Qs)
-bootQhat(Qs,30)
+bootQhat(Qs,300)
 
 
 */

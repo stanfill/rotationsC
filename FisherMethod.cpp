@@ -5,8 +5,8 @@ using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]] 
 
 // [[Rcpp::export]]  
-double fisherAxisC(arma::mat Qs, arma::vec Qhat){
-	
+double fisherAxisC(arma::mat Qs, arma::rowvec Qhat){
+
   int n=Qs.n_rows;
   
 	arma::mat Qsq=(Qs.t()*Qs)/n;
@@ -21,7 +21,6 @@ double fisherAxisC(arma::mat Qs, arma::vec Qhat){
   int i, j, k;
   double Tm, denom;
 
-  
   
   for(i=0;i<3;i++){
     Mhat.col(i)=eigvec.col(i);
@@ -44,7 +43,7 @@ double fisherAxisC(arma::mat Qs, arma::vec Qhat){
   
   arma::mat Ginv = G.i();  
   
-  Tm = arma::as_scalar(n*Qhat.t()*Mhat*Ginv*Mhat.t()*Qhat);
+  Tm = arma::as_scalar(n*Qhat*Mhat*Ginv*Mhat.t()*Qhat.t());
   
   return Tm;
 }
@@ -69,13 +68,16 @@ arma::rowvec meanQ4C(arma::mat Q) {
 
 //[[Rcpp::export]]
 arma::vec fisherBootC(arma::mat Qs, int m){
-  
+
   int n = Qs.n_rows;
   int i , j , numUn;
-  arma::vec qhat=meanQ4C(Qs);
+  
+  arma::rowvec qhat = meanQ4C(Qs);
+
   arma::vec Tm(m);
   NumericVector samp, unSamp;
   arma::mat Qstar(n,4);
+  Qstar.zeros();
   
   for(i=0;i<m;i++){
     
@@ -84,7 +86,7 @@ arma::vec fisherBootC(arma::mat Qs, int m){
     numUn = unSamp.size();
     
     while(numUn<4){
-      samp = floor(runif(n,0,n));	 //If bootstrap samp is less than 3 obs then							
+      samp = floor(runif(n,0,n));	 //If bootstrap samp is less than 4 obs then							
 	    unSamp = unique(samp);       //draw a new sample
       numUn = unSamp.size();
     }
@@ -103,12 +105,12 @@ arma::vec fisherBootC(arma::mat Qs, int m){
 
 #Rcpp::sourceCpp("ZhangMethod.cpp")
 
-#library(rotations)
+library(rotations)
 #library(microbenchmark)
-#Qs<-ruars(100,rcayley,space='Q4',kappa=5)
-#Qhat<-mean(Qs)
+Qs<-ruars(10,rcayley,space='Q4',kappa=5)
+meanQ4C(Qs)
 
-#Fisher<-fisherBootC(Qs,300)
+Fisher<-fisherBootC(Qs,300)
 #hist(Fisher,breaks=100,prob=T)
 #ss<-seq(0,max(Fisher),length=1000)
 #lines(ss,dchisq(ss,3))
