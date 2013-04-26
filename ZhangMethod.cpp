@@ -20,11 +20,54 @@ arma::vec meanQ4C(arma::mat Q) {
 } 
 
 // [[Rcpp::export]]
-double RdistC(NumericVector Q1, NumericVector Q2){
-	/*Compute the geodesic distance between quaternions Q1 and Q2*/
-	double cp = sum(Q1*Q2);
-	return acos(2*cp*cp-1);
+int checkQ4(NumericMatrix Q){
 	
+	int n = Q.nrow(), p = Q.ncol(), i;
+	double len;
+	
+	if((n*p) % 4 != 0){
+		throw Rcpp::exception("The data are not of length 4 each.");	
+	}
+
+	
+	for(i=0;i<n;i++){
+		
+		len = sum(Q(i,_)*Q(i,_));
+		//printf(" %lf ",len);
+		if(len > 1.1 || len < 0.9){
+			
+			throw Rcpp::exception("The data are not all unit length so are not quaternions.");
+			
+		}		
+	}
+		
+
+	return 0;
+}
+
+// [[Rcpp::export]]
+NumericVector RdistC(NumericMatrix Q1, NumericVector Q2){
+	/*Compute the geodesic distance between quaternions Q1 and Q2*/
+	/* Q1 must be an n-by-4 matrix with quaternion rows and Q2 a single quaternion*/
+	
+	int cq4 = checkQ4(Q1);
+	
+	if(cq4){
+		throw Rcpp::exception("The data are not in Q4.");
+	}
+	
+	int n = Q1.nrow(), i; 
+	double cp;
+	NumericVector rs(n);
+	
+	for(i=0;i<n;i++){
+		
+		cp = sum(Q1(i,_)*Q2);
+		rs[i] = acos(2*cp*cp-1);
+		
+	}
+	
+	return rs;
 }
 
 // [[Rcpp::export]]
@@ -40,11 +83,13 @@ NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 	cds[1]=0;
 	
 	NumericVector rs(n);
+	
+	rs = RdistC(Qs,Qhat);
 
 	
 	for(int i=0; i<n; i++){
 		
-		rs[i] = RdistC(Qs(i,_),Qhat); //Get misorientation angle of Qs[i,] and hat(Q)
+		//rs[i] = RdistC(Qs(i,_),Qhat); //Get misorientation angle of Qs[i,] and hat(Q)
 		
 		crs = cos(rs[i]);
 		
@@ -61,20 +106,27 @@ NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 // [[Rcpp::export]]
 NumericVector bootQhat(NumericMatrix Q, int m){
 	
+	int cq4 = checkQ4(Q);
+	
+	if(cq4){
+		throw Rcpp::exception("The data are not in Q4.");
+	}
+	
 	int n=Q.nrow(), i=0, j=0, numUn;
 	NumericVector samp, cdstar;
 	
-	NumericVector testStat(m);
+	NumericVector testStat(m), sqrth;
 	
 	arma::mat Qstar(n,4);
 	NumericVector QhatStar;
   NumericVector unSamp;
+  NumericMatrix QhatStarMat(1,4);
 	
 	arma::mat QSamp = as<arma::mat>(Q); //Convert the sample into armadillo mode
 	
 	NumericMatrix QstarRcpp;
 	
-	NumericVector Qhat = as<Rcpp::NumericVector>(wrap(meanQ4C(QSamp)));
+	NumericVector Qhat = as<NumericVector>(wrap(meanQ4C(QSamp)));
 	
 	for(j=0;j<m;j++){
 		
@@ -93,12 +145,19 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 			Qstar.row(i) = QSamp.row(samp[i]);		//Copying a matrix row by row produces a bunch of junk messages
 		}																				//so I do it with arma instead of standard Rcpp
 	
-		QhatStar = as<Rcpp::NumericVector>(wrap(meanQ4C(Qstar)));
-		QstarRcpp = as<Rcpp::NumericMatrix>(wrap(Qstar));
+		QhatStar = as<NumericVector>(wrap(meanQ4C(Qstar)));
+		QstarRcpp = as<NumericMatrix>(wrap(Qstar));
 		
 		cdstar = cdfunsC(QstarRcpp,QhatStar);
 		
-		testStat[j] = 2*n*pow(cdstar[1],2)*pow(RdistC(QhatStar,Qhat),2)/cdstar[0];
+		for(i=0;i<4;i++){									//To use RdistC, QhatStar must be made into a matrix
+			QhatStarMat(0,i) = QhatStar[i]; //Using a for loop skips the stupid "MatrixRos::___" output
+		}																	//And ensures QhatStarMat is 1x4 for checkQ4 call inside  RdistC
+		
+		
+		sqrth = RdistC(QhatStarMat,Qhat);
+		
+		testStat[j] = 2*n*pow(cdstar[1],2)*pow(sqrth[0],2)/cdstar[0];
 		
 	}
 	
@@ -109,12 +168,22 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 /*** R
 
 #library(microbenchmark)
-#library(rotations)
+library(rotations)
 #source("U:/Thesis/Intervals/Code/IntervalFuns.R")
-#n<-10
-#rs<-rcayley(n)
-#Qs<-genR(rs,space='Q4')
+n<-10
+rs<-rcayley(n)
+Rs<-genR(rs,space='SO3')
+Qs<-genR(rs,space='Q4')
+bootQhat(Qs,30)
+#bootQhat(Rs,30)
+
 #Rs<-SO3(Qs)
+#abs(rs)-RdistC(Qs,id.Q4)
+
+
+
+#checkQ4(Qs)
+
 
 #cTest<-bootQhat(Qs,100)
 #cTest
