@@ -3,9 +3,39 @@
 using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]] 
 
+// [[Rcpp::export]]
+int checkQ4(NumericMatrix Q){
+	/*This function will check that the rows in the matrix Q are unit quaternions*/
+	int n = Q.nrow(), p = Q.ncol(), i;
+	double len;
+	
+	if(n!=4 && p!=4){
+		throw Rcpp::exception("The data are not of length 4 each.");	
+		return 1;
+	}
+	
+	for(i=0;i<n;i++){
+		
+		len = sum(Q(i,_)*Q(i,_));
+		if(len > 1.1 || len < 0.9){
+			
+			throw Rcpp::exception("The data are not all unit length so are not quaternions.");
+			return 1;
+			
+		}		
+	}
+	return 0;
+}
+
 // [[Rcpp::export]]   
 arma::rowvec meanQ4C(arma::mat Q) { 
 	/*Compute the projected mean of the sample Q.*/
+	NumericMatrix Qss = as<NumericMatrix>(wrap(Q));
+	int cq4 = checkQ4(Qss);
+	if(cq4){
+		throw Rcpp::exception("The data are not in Q4.");
+	}
+	
 	arma::mat Qsq=Q.t()*Q;
 	arma::mat eigvec;
 	arma::vec eigval;
@@ -18,30 +48,6 @@ arma::rowvec meanQ4C(arma::mat Q) {
   
   return qhat.t(); /*Want to return it in a row vector so transpose it*/
 } 
-
-// [[Rcpp::export]]
-int checkQ4(NumericMatrix Q){
-	
-	int n = Q.nrow(), p = Q.ncol(), i;
-	double len;
-	
-	if(n!=4 && p!=4){
-		throw Rcpp::exception("The data are not of length 4 each.");	
-	}
-	
-	for(i=0;i<n;i++){
-		
-		len = sum(Q(i,_)*Q(i,_));
-		if(len > 1.1 || len < 0.9){
-			
-			throw Rcpp::exception("The data are not all unit length so are not quaternions.");
-			
-		}		
-	}
-		
-
-	return 0;
-}
 
 // [[Rcpp::export]]
 NumericVector RdistC(NumericMatrix Q1, NumericVector Q2){
@@ -85,8 +91,6 @@ NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 	rs = RdistC(Qs,Qhat);
 	
 	for(i=0; i<n; i++){
-		
-		//rs[i] = RdistC(Qs(i,_),Qhat); //Get misorientation angle of Qs[i,] and hat(Q)
 		
 		crs = cos(rs[i]);
 		
