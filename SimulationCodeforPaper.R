@@ -132,7 +132,7 @@ source("IntervalFuns.R")
 n<-c(10,50,100,300)
 ks<-c(.5,8)
 B<-1000				#Number of samples to use to estimate CDF
-Dist<-'fisher'
+Dist<-'cayley'
 
 if(Dist=='cayley'){
 	rangle<-rcayley
@@ -175,7 +175,6 @@ for(j in 1:simSize){
 	}
 }
 
-
 resM<-melt(cdfDF,id=c("kappa","n"))
 ss<-seq(0,max(resM$value),length=B)
 Probs<-pchisq(ss,3)
@@ -190,11 +189,10 @@ for(i in 1:length(unique(resM$ID))){
 	resM[resM$ID==kns[i],]$Prob<-ecdf(resM[resM$ID==kns[i],]$value)
 }
 
-chiDF<-data.frame(kappa=rep(c(2,8),1000),n='Chisq',variable='Tr',value=rep(ss,each=2),Prob=rep(pchisq(ss,3),each=2))
+chiDF<-data.frame(kappa=rep(ks,1000),n='Chisq',variable='Tr',value=rep(ss,each=2),Prob=rep(pchisq(ss,3),each=2))
 chiDF$ID<-paste(chiDF$kappa,chiDF$n)
 
 fullDF<-rbind(resM,chiDF)
-
 
 if(Dist=='cayley'){
 	
@@ -227,8 +225,6 @@ if(Dist=='cayley'){
 	#write.csv(fullDF,"vonMisesECDF.csv")
 	
 }
-
-
 
 #Old way of plotting CDFs
 # colNums<-ncol(cdfDF)

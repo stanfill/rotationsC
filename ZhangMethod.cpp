@@ -143,8 +143,8 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 			Qstar.row(i) = QSamp.row(samp[i]);		//Copying a matrix row by row produces a bunch of junk messages
 		}																				//so I do it with arma instead of standard Rcpp
 	
-		QhatStar = as<NumericVector>(wrap(meanQ4C(Qstar)));
-		QstarRcpp = as<NumericMatrix>(wrap(Qstar));
+		QhatStar = as<NumericVector>(wrap(meanQ4C(Qstar))); //Both of these functinos return arma variables so
+		QstarRcpp = as<NumericMatrix>(wrap(Qstar));					//They need to be converted to Rcpp type
 		
 		cdstar = cdfunsC(QstarRcpp,QhatStar);
 		
