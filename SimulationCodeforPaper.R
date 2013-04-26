@@ -108,10 +108,14 @@ resultsDf
 resM<-melt(resultsDf,id=c('Dist','nu','n'))
 colnames(resM)[4]<-'Method'
 levels(resM$Method)[3:4]<-c("Nordman Normal","Nordman Bootstrap")
+
+levels(resM$Dist)<-c("Cayley","matrix~~Fisher","circular-von~~Mises")
+resM$nu<-factor(resM$nu,labels=c("nu == 0.25","nu == 0.50","nu == 0.75"))
 resM$n<-as.factor(resM$n)
+
 qplot(n,value,data=resM,colour=Method,group=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
-	facet_grid(Dist~nu,labeller=label_both)+geom_hline(yintercept=alp*100,colour='gray50')+
-	geom_line(lwd=I(1.25),alpha=I(.8))
+	facet_grid(Dist~nu,labeller=label_parsed)+geom_hline(yintercept=alp*100,colour='gray50')+
+	geom_line(lwd=I(1.25),alpha=I(.8))+theme_bw()
 
 #ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB5000.pdf",width=10,height=8)
 
@@ -130,9 +134,9 @@ library(plyr)
 source("IntervalFuns.R")
 
 n<-c(10,50,100,300)
-ks<-c(.5,8)
+ks<-c(.05,8)
 B<-1000				#Number of samples to use to estimate CDF
-Dist<-'cayley'
+Dist<-'vM'
 
 if(Dist=='cayley'){
 	rangle<-rcayley
@@ -193,12 +197,14 @@ chiDF<-data.frame(kappa=rep(ks,1000),n='Chisq',variable='Tr',value=rep(ss,each=2
 chiDF$ID<-paste(chiDF$kappa,chiDF$n)
 
 fullDF<-rbind(resM,chiDF)
+Newlabs<-c("10","50","100","300","Chisq")
+fullDF$n<-factor(fullDF$n,levels=Newlabs)
 
 if(Dist=='cayley'){
 	
-	qplot(value,Prob,group=n,colour=n,data=fullDF,geom="line",lwd=I(1.125),xlab='x',alpha=I(.7),
-				ylab="P(X<x)",main='Cayley Distribution')+
-		facet_grid(.~kappa,labeller=label_both)+theme_bw()
+	qplot(value,Prob,data=fullDF,colour=n,geom="line",lwd=I(1.125),xlab='x',ylab="F(x)")+
+		scale_colour_hue("",labels=c("n=10","n=50","n=100","n=300",expression(chi[3]^2)))+
+		facet_grid(.~kappa)+theme_bw()
 	
 	#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 	#ggsave("CayleyECDF.pdf",height=5,width=8)
@@ -206,9 +212,9 @@ if(Dist=='cayley'){
 	
 }else if(Dist=='fisher'){
 	
-	qplot(value,Prob,group=n,colour=n,data=fullDF,geom="line",lwd=I(1.125),xlab='x',alpha=I(.7),
-				ylab="P(X<x)",main='matrix Fisher Distribution')+
-		facet_grid(.~kappa,labeller=label_both)+theme_bw()
+	qplot(value,Prob,data=fullDF,colour=n,geom="line",lwd=I(1.125),xlab='x',ylab="F(x)")+
+		scale_colour_hue("",labels=c("n=10","n=50","n=100","n=300",expression(chi[3]^2)))+
+		facet_grid(.~kappa)+theme_bw()
 	
 	#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 	#ggsave("FisherECDF.pdf",height=5,width=8)
@@ -216,9 +222,9 @@ if(Dist=='cayley'){
 	
 }else{
 	
-	qplot(value,Prob,group=n,colour=n,data=fullDF,geom="line",lwd=I(1.125),xlab='x',alpha=I(.7),
-				ylab="P(X<x)",main='circular von Mises Distribution')+
-		facet_grid(.~kappa,labeller=label_both)+theme_bw()
+	qplot(value,Prob,data=fullDF,colour=n,geom="line",lwd=I(1.125),xlab='x',ylab="F(x)")+
+		scale_colour_hue("",labels=c("n=10","n=50","n=100","n=300",expression(chi[3]^2)))+
+		facet_grid(.~kappa)+theme_bw()
 	
 	#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 	#ggsave("vonMisesECDF.pdf",height=5,width=8)
@@ -269,4 +275,7 @@ if(Dist=='cayley'){
 #von Mises c and d
 #ecos<-besselI(ks,1)/besselI(ks,0)
 #ecos2<-(besselI(ks,2)/besselI(ks,0)+1)/2
+
+
+
 
