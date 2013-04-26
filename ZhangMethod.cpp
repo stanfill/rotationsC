@@ -25,15 +25,13 @@ int checkQ4(NumericMatrix Q){
 	int n = Q.nrow(), p = Q.ncol(), i;
 	double len;
 	
-	if((n*p) % 4 != 0){
+	if(n!=4 && p!=4){
 		throw Rcpp::exception("The data are not of length 4 each.");	
 	}
-
 	
 	for(i=0;i<n;i++){
 		
 		len = sum(Q(i,_)*Q(i,_));
-		//printf(" %lf ",len);
 		if(len > 1.1 || len < 0.9){
 			
 			throw Rcpp::exception("The data are not all unit length so are not quaternions.");

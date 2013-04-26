@@ -33,8 +33,6 @@ double fisherAxisC(arma::mat Qs, arma::vec Qhat){
       
 			denom = pow((n*(eigval[3]-eta[j])*(eigval[3]-eta[k])),-1);
 			
-			//printf(" %lf ",denom);
-			
 			for(i=0;i<n;i++){
 				G(j,k) = G(j,k) + arma::as_scalar(Qs.row(i)*Mhat.col(j)*Qs.row(i)*Mhat.col(k)*pow(Qs.row(i)*eigvec.col(3),2));
 			}
@@ -44,8 +42,6 @@ double fisherAxisC(arma::mat Qs, arma::vec Qhat){
 		}
 	}
   
-
-  //G.print("G:");
   arma::mat Ginv = G.i();  
   
   Tm = arma::as_scalar(n*Qhat.t()*Mhat*Ginv*Mhat.t()*Qhat);
