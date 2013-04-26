@@ -4,8 +4,8 @@ using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]] 
 
 // [[Rcpp::export]]   
-arma::vec meanQ4C(arma::mat Q) { 
-	/*Compute the projected mean of the sample Q*/
+arma::rowvec meanQ4C(arma::mat Q) { 
+	/*Compute the projected mean of the sample Q.*/
 	arma::mat Qsq=Q.t()*Q;
 	arma::mat eigvec;
 	arma::vec eigval;
@@ -16,7 +16,7 @@ arma::vec meanQ4C(arma::mat Q) {
   	qhat = -qhat;
   }
   
-  return qhat;
+  return qhat.t(); /*Want to return it in a row vector so transpose it*/
 } 
 
 // [[Rcpp::export]]
@@ -148,11 +148,7 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 		
 		cdstar = cdfunsC(QstarRcpp,QhatStar);
 		
-		for(i=0;i<4;i++){									//To use RdistC, QhatStar must be made into a matrix
-			QhatStarMat(0,i) = QhatStar[i]; //Using a for loop skips the stupid "MatrixRos::___" output
-		}																	//And ensures QhatStarMat is 1x4 for checkQ4 call inside  RdistC
-		
-		
+		QhatStarMat = as<NumericMatrix>(QhatStar); /*QhatStar needs to be a matrix to be used in RdistC*/
 		sqrth = RdistC(QhatStarMat,Qhat);
 		
 		testStat[j] = 2*n*pow(cdstar[1],2)*pow(sqrth[0],2)/cdstar[0];
@@ -170,31 +166,11 @@ library(rotations)
 #source("U:/Thesis/Intervals/Code/IntervalFuns.R")
 n<-10
 rs<-rcayley(n)
-Rs<-genR(rs,space='SO3')
+#Rs<-genR(rs,space='SO3')
 Qs<-genR(rs,space='Q4')
+meanQ4C(Qs)
 bootQhat(Qs,30)
-#bootQhat(Rs,30)
 
-#Rs<-SO3(Qs)
-#abs(rs)-RdistC(Qs,id.Q4)
-
-
-
-#checkQ4(Qs)
-
-
-#cTest<-bootQhat(Qs,100)
-#cTest
-#xs<-seq(0,max(cTest),length=1000)
-#hist(cTest,breaks=100,prob=T)
-#lines(xs,dchisq(xs,3))
-
-#tim<-microbenchmark(
-#	bootQhat(Qs,300),
-#	ZhangCI(Rs,300,.95)
-#)
-#print(tim)
-#plot(tim)
 
 */
 

@@ -33,7 +33,7 @@ arma::mat projectSO3C(arma::mat M){
 }
 
 // [[Rcpp::export]]
-arma::mat ProjectedMean(arma::mat Rs){
+arma::mat meanSO3C(arma::mat Rs){
 	
 	/*Compute the projected mean for a sample of n roations, Rs.  
 	This function expects Rs to be a n-by-9 matrix where each row
@@ -62,7 +62,7 @@ library(microbenchmark)
 Rs<-ruars(200,rcayley)
 tim<-microbenchmark(
 mean(Rs),
-ProjectedMean(Rs))
+meanSO3C(Rs))
 
 plot(tim)
 print(tim)

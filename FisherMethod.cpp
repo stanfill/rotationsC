@@ -51,8 +51,8 @@ double fisherAxisC(arma::mat Qs, arma::vec Qhat){
 
 
 // [[Rcpp::export]]   
-arma::vec meanQ4C(arma::mat Q) { 
-  
+arma::rowvec meanQ4C(arma::mat Q) { 
+	/*Compute the projected mean of the sample Q*/
 	arma::mat Qsq=Q.t()*Q;
 	arma::mat eigvec;
 	arma::vec eigval;
@@ -63,7 +63,7 @@ arma::vec meanQ4C(arma::mat Q) {
   	qhat = -qhat;
   }
   
-  return qhat;
+  return qhat.t(); /*Want to return it in a row vector so transpose it*/
 }
 
 

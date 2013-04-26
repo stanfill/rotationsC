@@ -130,7 +130,7 @@ library(plyr)
 source("IntervalFuns.R")
 
 n<-c(10,50,100,300)
-ks<-c(2,8)
+ks<-c(.5,8)
 B<-1000				#Number of samples to use to estimate CDF
 Dist<-'fisher'
 
@@ -202,9 +202,9 @@ if(Dist=='cayley'){
 				ylab="P(X<x)",main='Cayley Distribution')+
 		facet_grid(.~kappa,labeller=label_both)+theme_bw()
 	
-	setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
-	ggsave("CayleyECDF.pdf",height=5,width=8)
-	write.csv(fullDF,"CayleyECDF.csv")
+	#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
+	#ggsave("CayleyECDF.pdf",height=5,width=8)
+	#write.csv(fullDF,"CayleyECDF.csv")
 	
 }else if(Dist=='fisher'){
 	
@@ -212,9 +212,9 @@ if(Dist=='cayley'){
 				ylab="P(X<x)",main='matrix Fisher Distribution')+
 		facet_grid(.~kappa,labeller=label_both)+theme_bw()
 	
-	setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
-	ggsave("FisherECDF.pdf",height=5,width=8)
-	write.csv(fullDF,"FisherECDF.csv")
+	#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
+	#ggsave("FisherECDF.pdf",height=5,width=8)
+	#write.csv(fullDF,"FisherECDF.csv")
 	
 }else{
 	
@@ -222,9 +222,9 @@ if(Dist=='cayley'){
 				ylab="P(X<x)",main='circular von Mises Distribution')+
 		facet_grid(.~kappa,labeller=label_both)+theme_bw()
 	
-	setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
-	ggsave("vonMisesECDF.pdf",height=5,width=8)
-	write.csv(fullDF,"vonMisesECDF.csv")
+	#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
+	#ggsave("vonMisesECDF.pdf",height=5,width=8)
+	#write.csv(fullDF,"vonMisesECDF.csv")
 	
 }
 
