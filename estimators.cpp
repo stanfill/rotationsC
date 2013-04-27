@@ -12,7 +12,7 @@ int checkSO3(arma::mat Rs){
 	double deti, inv;
 	arma::mat Ri(3,3), I(3,3);
 	I.eye();
-	
+  
 	if(n!=9 && p!=9){
 		throw Rcpp::exception("The data are not each of length 9.");	
 		return 1;
@@ -39,6 +39,87 @@ int checkSO3(arma::mat Rs){
 	return 0;
 }
 
+// [[Rcpp::export]]
+arma::mat expskewC(arma::mat M){
+  /*This function takes a 3-by-3 skew symmetric matrix (in so(3)) and
+  returs the exponential, a 3-by-3 roations (in SO(3))*/
+  
+  double MMt = sum(sum(M-M.t()));
+  
+  if(abs(MMt)>0.01){
+    throw Rcpp::exception("The expskewC function is expecting a 3-by-3 skew symmetric matrix");
+  }
+  
+  arma::mat expM(3,3);
+  expM.eye();
+  
+  double a = pow(0.5*trace(M.t()*M),0.5);
+  
+  if(abs(a)<0.001){
+    
+    return expM;
+  
+  }
+   
+  expM = expM + (sin(a)/a) * M + (1-cos(a))*pow(a,-2)*M*M;
+  return expM;
+  
+}
+
+
+// [[Rcpp::export]]
+arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2){
+  /* This function takes the matrix of matrices Rs and returns
+  each of the observatiosn distances from R2, which is assumed to be a
+  3-by-3 rotation matrix.*/
+  
+  int cSO3 = checkSO3(Rs);
+	if(cSO3){
+		throw Rcpp::exception("The data are not in SO(3).");
+	}
+  
+  int n = Rs.n_rows, i,j;
+  
+  arma::rowvec theta(n);
+  theta.zeros();
+  arma::mat33 Rsi;
+  
+  for(i=0; i<n ; i++){
+    
+    for(j = 0; j<9 ;j++){
+      Rsi(j)=Rs(i,j);
+    }
+    
+    Rsi = Rsi * R2.t();
+    theta(i) = acos(0.5*trace(Rsi)-0.5);
+    
+  }
+  return theta;
+}
+
+// [[Rcpp::export]]
+arma::mat logSO3C(arma::mat R){
+  
+  /*int cSO3 = checkSO3(R);
+  if(cSO3){
+		throw Rcpp::exception("The data are not in SO(3).");
+	}*/
+  
+  arma::mat I(3,3), logR(3,3);
+  I.eye();
+  
+  double theta = acos(0.5*trace(R)-0.5);
+  
+  if(theta < 0.0001){
+    logR.zeros();
+    return logR;
+  }
+  
+  logR = (R-R.t())*theta/(2*sin(theta));
+  
+  return logR;
+  
+}
 
 // [[Rcpp::export]]
 arma::mat projectSO3C(arma::mat M){
@@ -91,19 +172,67 @@ arma::mat meanSO3C(arma::mat Rs){
 	return projectSO3C(Rbar);
 }
 
-/*// [[Rcpp::export]]
+//[[Rcpp::export]]
 arma::mat medianSO3C(arma::mat Rs){
-	
-}*/
+  
+  int cSO3 = checkSO3(Rs);
+	if(cSO3){
+		throw Rcpp::exception("The data are not in SO(3).");
+	}
+  int n = Rs.n_rows, i,j,iterations=0;
+  arma::mat S = meanSO3C(Rs), RsCopy = Rs, Snew;
+  arma::mat33 delta, Rsi;
+  arma::rowvec vn(n), deltaV(9);
+  vn.zeros();
+  double denom,epsilon = 1.0;
+  
+  while(epsilon > 0.0005 && iterations < 1000){
+  
+    denom = 0;
+    
+    for(i=0;i<n;i++){
+    
+      for(j = 0; j<9;j++){
+        Rsi(j) = Rs(i,j);
+      }
+    
+      vn(i) = norm(Rsi-S,2);
+
+      RsCopy.row(i) = Rs.row(i)/vn(i);
+      denom += pow(vn(i),-1);
+    
+    }
+  
+    deltaV = sum(RsCopy)/denom;
+
+    for(j=0;j<9;j++){
+      
+      delta(j) = deltaV(j);
+      
+    }
+    
+    //delta.print();
+    Snew = projectSO3C(delta);
+    
+    iterations += 1;
+    epsilon = norm(Snew-S,2);
+    S = Snew;
+  }
+
+  printf(" %i ",iterations);
+  
+  return S;
+}
 
 /*** R
 library(rotations)
 library(microbenchmark)
+rs<-rcayley(100)
+Rs<-genR(rs)
 
-Rs<-ruars(200,rcayley)
 tim<-microbenchmark(
-meanSO3C(Rs),
-mean(Rs))
+medianSO3C(Rs),
+median(Rs))
 
 plot(tim)
 print(tim)
