@@ -262,18 +262,51 @@ arma::mat HartmedianSO3C(arma::mat Rs){
   return S;
 }
 
+// [[Rcpp::export]]
+arma::mat gmeanSO3C(arma::mat Rs){
+  int n = Rs.n_rows, i=0, j=0, iterations=0;
+  arma::mat33 Rsi, r;
+  arma::mat S = meanSO3C(Rs);
+  double eps=1.0;
+  
+  while(eps > 0.0001 && iterations < 2000){
+    
+    r.zeros();
+    S = S*expskewC(r);
+  
+    for(i = 0; i<n ; i++){
+    
+      for(j=0;j<9;j++){
+        Rsi(j) = Rs(i,j); 
+      }
+    
+      r += logSO3C(Rsi.t()*S);
+    
+    }
+  
+    r = r/n;
+
+    eps = norm(r,2);
+    iterations++;
+  }
+  return S;
+}
+
 /*** R
 library(rotations)
 library(microbenchmark)
 rs<-rcayley(100)
 Rs<-genR(rs)
 
-med1<-as.SO3(HartmedianSO3C(Rs))
-med2<-median(Rs,type='intrinsic')
+gmeanSO3C(Rs)
+mean(Rs,method='intrinsic')
+
+#med1<-as.SO3(HartmedianSO3C(Rs))
+#med2<-median(Rs,type='intrinsic')
 
 tim<-microbenchmark(
-HartmedianSO3C(Rs),
-median(Rs,type='intrinsic'))
+meanSO3C(Rs),
+mean(Rs,type='projected'))
 
 plot(tim)
 print(tim)
