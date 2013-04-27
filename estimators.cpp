@@ -175,43 +175,41 @@ arma::mat meanSO3C(arma::mat Rs){
 //[[Rcpp::export]]
 arma::mat medianSO3C(arma::mat Rs){
   
+  /*Estimate the central direction with the projected median according
+  to our algorithm in point estimation paper*/
+  
   int cSO3 = checkSO3(Rs);
 	if(cSO3){
 		throw Rcpp::exception("The data are not in SO(3).");
 	}
   int n = Rs.n_rows, i,j,iterations=0;
   arma::mat S = meanSO3C(Rs), RsCopy = Rs, Snew;
-  arma::mat33 delta, Rsi;
-  arma::rowvec vn(n), deltaV(9);
-  vn.zeros();
+  arma::mat33 delta;
+  arma::rowvec vnInv(n), deltaV(9);
   double denom,epsilon = 1.0;
+  arma::rowvec Svec(9);
   
-  while(epsilon > 0.0005 && iterations < 1000){
+  while(epsilon > 0.0005 && iterations < 1500){
+  
+    for(j=0;j<9;j++){
+      Svec(j) = S(j); 
+    }
   
     denom = 0;
-    
     for(i=0;i<n;i++){
-    
-      for(j = 0; j<9;j++){
-        Rsi(j) = Rs(i,j);
-      }
-    
-      vn(i) = norm(Rsi-S,2);
-
-      RsCopy.row(i) = Rs.row(i)/vn(i);
-      denom += pow(vn(i),-1);
-    
+      
+      vnInv(i) = pow(norm(Rs.row(i)-Svec,2),-1);
+      RsCopy.row(i) = Rs.row(i)*vnInv(i);
+      denom += vnInv(i);
+      
     }
   
     deltaV = sum(RsCopy)/denom;
 
     for(j=0;j<9;j++){
-      
       delta(j) = deltaV(j);
-      
     }
-    
-    //delta.print();
+
     Snew = projectSO3C(delta);
     
     iterations += 1;
@@ -219,7 +217,7 @@ arma::mat medianSO3C(arma::mat Rs){
     S = Snew;
   }
 
-  printf(" %i ",iterations);
+  //printf(" %i ",iterations);
   
   return S;
 }
@@ -229,6 +227,9 @@ library(rotations)
 library(microbenchmark)
 rs<-rcayley(100)
 Rs<-genR(rs)
+
+median(Rs)
+medianSO3C(Rs)
 
 tim<-microbenchmark(
 medianSO3C(Rs),
