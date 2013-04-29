@@ -1,12 +1,14 @@
 #include <RcppArmadillo.h>   
 #include <Rcpp.h>
+
 using namespace Rcpp;
 
 // [[Rcpp::depends(RcppArmadillo)]] 
+// [[Rcpp::interfaces(r, cpp)]]
 
-// [[Rcpp::export]]
+/*// [[Rcpp::export]]
 int checkQ4(NumericMatrix Q){
-	/*This function will check that the rows in the matrix Q are unit quaternions*/
+	//This function will check that the rows in the matrix Q are unit quaternions
 	int n = Q.nrow(), p = Q.ncol(), i;
 	double len;
 	
@@ -28,7 +30,7 @@ int checkQ4(NumericMatrix Q){
 		
 
 	return 0;
-}
+}*/
 
 // [[Rcpp::export]]  
 double fisherAxisC(arma::mat Qs, arma::rowvec Qhat){
@@ -81,9 +83,9 @@ double fisherAxisC(arma::mat Qs, arma::rowvec Qhat){
 }
 
 
-// [[Rcpp::export]]   
+/*// [[Rcpp::export]]   
 arma::rowvec meanQ4C(arma::mat Q) { 
-	/*Compute the projected mean of the sample Q*/
+	//Compute the projected mean of the sample Q
 	
 	NumericMatrix Qss = as<NumericMatrix>(wrap(Q));
 	int cq4 = checkQ4(Qss);
@@ -101,8 +103,8 @@ arma::rowvec meanQ4C(arma::mat Q) {
   	qhat = -qhat;
   }
   
-  return qhat.t(); /*Want to return it in a row vector so transpose it*/
-}
+  return qhat.t(); //Want to return it in a row vector so transpose it
+}*/
 
 
 //[[Rcpp::export]]
@@ -139,25 +141,4 @@ arma::vec fisherBootC(arma::mat Qs, int m){
   }
   return Tm;
 }
-
-/*** R
-
-#Rcpp::sourceCpp("ZhangMethod.cpp")
-
-library(rotations)
-#library(microbenchmark)
-Qs<-ruars(10,rcayley,space='Q4',kappa=5)
-meanQ4C(Qs)
-
-Fisher<-fisherBootC(Qs,300)
-#hist(Fisher,breaks=100,prob=T)
-#ss<-seq(0,max(Fisher),length=1000)
-#lines(ss,dchisq(ss,3))
-
-#tim<-microbenchmark(
-#fisherAxisC(Qs,Qhat),
-#fisherAxisCompute(Qs,Qhat))
-#print(tim)
-#plot(tim)
-*/
 

@@ -1,11 +1,12 @@
 #include <RcppArmadillo.h>   
 #include <Rcpp.h>
+#include "estimators.h"
 using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]] 
 
-// [[Rcpp::export]]
+/*// [[Rcpp::export]]
 int checkQ4(NumericMatrix Q){
-	/*This function will check that the rows in the matrix Q are unit quaternions*/
+	//This function will check that the rows in the matrix Q are unit quaternions
 	int n = Q.nrow(), p = Q.ncol(), i;
 	double len;
 	
@@ -25,11 +26,11 @@ int checkQ4(NumericMatrix Q){
 		}		
 	}
 	return 0;
-}
+}*/
 
-// [[Rcpp::export]]   
+/*// [[Rcpp::export]]   
 arma::rowvec meanQ4C(arma::mat Q) { 
-	/*Compute the projected mean of the sample Q.*/
+	//Compute the projected mean of the sample Q.
 	NumericMatrix Qss = as<NumericMatrix>(wrap(Q));
 	int cq4 = checkQ4(Qss);
 	if(cq4){
@@ -46,8 +47,8 @@ arma::rowvec meanQ4C(arma::mat Q) {
   	qhat = -qhat;
   }
   
-  return qhat.t(); /*Want to return it in a row vector so transpose it*/
-} 
+  return qhat.t(); //Want to return it in a row vector so transpose it
+} */
 
 // [[Rcpp::export]]
 NumericVector RdistC(NumericMatrix Q1, NumericVector Q2){
@@ -152,19 +153,4 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 	return testStat;
 	
 }
-
-/*** R
-
-#library(microbenchmark)
-library(rotations)
-#source("U:/Thesis/Intervals/Code/IntervalFuns.R")
-n<-10
-rs<-rcayley(n)
-#Rs<-genR(rs,space='SO3')
-Qs<-genR(rs,space='Q4')
-meanQ4C(Qs)
-bootQhat(Qs,300)
-
-
-*/
 

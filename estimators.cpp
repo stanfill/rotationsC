@@ -3,6 +3,33 @@
 
 using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]] 
+// [[Rcpp::interfaces(r, cpp)]]
+
+// [[Rcpp::export]]
+int checkQ4(NumericMatrix Q){
+	/*This function will check that the rows in the matrix Q are unit quaternions*/
+	int n = Q.nrow(), p = Q.ncol(), i;
+	double len;
+	
+	if(n!=4 && p!=4){
+		throw Rcpp::exception("The data are not of length 4 each.");	
+		return 1;
+	}
+	
+	for(i=0;i<n;i++){
+		
+		len = sum(Q(i,_)*Q(i,_));
+		if(len > 1.1 || len < 0.9){
+			
+			throw Rcpp::exception("The data are not all unit length so are not quaternions.");
+			return 1;
+			
+		}		
+	}
+		
+
+	return 0;
+}
 
 // [[Rcpp::export]]
 int checkSO3(arma::mat Rs){
@@ -147,6 +174,22 @@ arma::mat projectSO3C(arma::mat M){
 	 
 }
 
+//' Mean Rotation
+//'
+//' Compute the intrinsic or projected mean of a sample of rotations
+//'
+//' This function takes a sample of \eqn{3\times 3}{3-by-3} rotations (in the form of a \eqn{n\times 9}{n-by-9} matrix where \eqn{n>1} is the sample size) and returns the projected arithmetic mean denoted \eqn{\widehat{\bm S}_P}{S_P} or
+//' intrinsic mean \eqn{\widehat{\bm S}_G}{S_G} according to the \code{type} option.
+//' For a sample of \eqn{n} random rotations \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the mean-type estimator is defined as \deqn{\widehat{\bm{S}}=\argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd_D^2(\bm{R}_i,\bm{S})}{argmin d^2(bar(R),S)} where \eqn{\bar{\bm{R}}=\frac{1}{n}\sum_{i=1}^n\bm{R}_i}{bar(R)=\sum Ri/n} and the distance metric \eqn{d_D}{d}
+//' is the Riemannian or Euclidean.  For more on the projected mean see \cite{moakher02} and for the intrinsic mean see \cite{manton04}.
+//'
+//' @param Rs A \eqn{n\times 9}{n-by-9} matrix where each row corresponds to a random rotation in matrix form
+//' @return Estimate of the projected or intrinsic mean of the sample
+//' @seealso \code{\link{medianSO3C}}
+//' @cite moakher02, manton04
+//' @examples
+//' Rs<-ruars(20,rvmises,kappa=0.01)
+//' mean(Rs)
 // [[Rcpp::export]]
 arma::mat meanSO3C(arma::mat Rs){
 	
@@ -170,6 +213,42 @@ arma::mat meanSO3C(arma::mat Rs){
 	return projectSO3C(Rbar);
 }
 
+// [[Rcpp::export]]   
+arma::rowvec meanQ4C(arma::mat Q) { 
+	//Compute the projected mean of the sample Q
+	
+	NumericMatrix Qss = as<NumericMatrix>(wrap(Q));
+	int cq4 = checkQ4(Qss);
+	if(cq4){
+		throw Rcpp::exception("The data are not in Q4.");
+	}
+	
+	arma::mat Qsq=Q.t()*Q;
+	arma::mat eigvec;
+	arma::vec eigval;
+  arma::eig_sym(eigval,eigvec,Qsq);   
+  arma::vec qhat=eigvec.col(3);
+  
+  if(qhat[0]<0){
+  	qhat = -qhat;
+  }
+  
+  return qhat.t(); //Want to return it in a row vector so transpose it
+}
+
+
+//' Median Rotation
+//' 
+//' Compute the projected or intrinsic median of a sample of rotations
+//'
+//' The median-type estimators are defined as \deqn{\widetilde{\bm{S}}=\argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd_D(\bm{R}_i,\bm{S})}{argmin\sum d(Ri,S)}.  If the choice of distance metrid, \eqn{d_D}{d}, is Riemannian then the estimator is called the intrinsic, and if the distance metric in Euclidean then it projected.
+//' The algorithm used in the intrinsic case is discussed in \cite{hartley11} and the projected case was written by the authors.
+//'
+//' @param Rs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix form (\eqn{p=9}) or quaternion form (\eqn{p=4})
+//' @return an estimate of the projected or intrinsic mean
+//' @seealso \code{\link{meanSO3C}}
+//' @cite hartley11
+//' @export
 //[[Rcpp::export]]
 arma::mat medianSO3C(arma::mat Rs){
   
@@ -291,25 +370,4 @@ arma::mat gmeanSO3C(arma::mat Rs){
   }
   return S;
 }
-
-/*** R
-library(rotations)
-library(microbenchmark)
-rs<-rcayley(100)
-Rs<-genR(rs)
-
-gmeanSO3C(Rs)
-mean(Rs,method='intrinsic')
-
-#med1<-as.SO3(HartmedianSO3C(Rs))
-#med2<-median(Rs,type='intrinsic')
-
-tim<-microbenchmark(
-meanSO3C(Rs),
-mean(Rs,type='projected'))
-
-plot(tim)
-print(tim)
-
-*/
 
