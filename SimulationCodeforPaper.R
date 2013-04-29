@@ -118,7 +118,7 @@ qplot(n,value,data=resM,colour=Method,group=Method,ylab='Coverage Rate (%)',xlab
 	facet_grid(Dist~nu,labeller=label_parsed)+geom_hline(yintercept=alp*100,colour='gray50')+
 	geom_line(lwd=I(1.25),alpha=I(.8))+theme_bw()
 
-#ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB5000.pdf",width=10,height=8)
+ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB5000.pdf",width=10,height=8)
 
 
 ###############################################################
