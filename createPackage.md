@@ -8,7 +8,7 @@ This is a simple example of how to create a package from *Rcpp.package.skeleton*
 
 ```
 library(Rcpp)
-Rcpp.package.skeleton("rotations2",example_code=F,cpp_files=c("estimators.cpp","FisherMethod.cpp"))
+Rcpp.package.skeleton("rotations2",example_code=F,cpp_files=c("estimators.cpp","FisherMethod.cpp","ZhangMethod.cpp"))
 ```
 This will not allow for RcppArmadillo so make the following two changes to the *DESCRIPTION* file:
 
@@ -31,6 +31,11 @@ compileAttributes()
 ```
 In the "/inst/include/rotations2_RcppExports.h" file change "../inst/include/rotations2.h" to "rotations2.h"
 
+Also need to add the following include statement at the top of .cpp files that reference functions in other .cpp files:
+```
+#include "../inst/include/rotations2.h"
+```
+
 Finally, run the following code
 ```
 library(roxygen2)
@@ -38,6 +43,9 @@ library(devtools)
 roxygenize(rotations2)
 install()
 ```
+
+
+
 
 ## Using `RcppArmadillo.package.skeleton`
 

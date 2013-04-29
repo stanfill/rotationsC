@@ -3,16 +3,17 @@
 #Compute coverage rates for the Rivest, Fisher and our methods
 ###############################################################
 
-library(Rcpp)
-Rcpp::sourceCpp('ZhangMethod.cpp')
-Rcpp::sourceCpp("FisherMethod.cpp")
+#library(Rcpp)
+#Rcpp::sourceCpp('ZhangMethod.cpp')
+#Rcpp::sourceCpp("FisherMethod.cpp")
+library(rotations2)
 library(rotations)
 library(reshape2)
 library(plyr)
 source("IntervalFuns.R")
 
 
-n<-c(10,50,100)
+n<-c(10,20,50,100)
 
 nu<-c(0.25,0.50,0.75)
 cayKap<-c(10,4,2)

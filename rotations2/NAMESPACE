@@ -1,0 +1,2 @@
+useDynLib(rotations2)
+exportPattern("^[[:alpha:]]+")
