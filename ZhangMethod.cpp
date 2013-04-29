@@ -1,10 +1,10 @@
 #include <RcppArmadillo.h>   
 #include <Rcpp.h>
-#include "../inst/include/rotations2.h"
+//#include "../inst/include/rotations2.h"
 using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]] 
 
-/*// [[Rcpp::export]]
+// [[Rcpp::export]]
 int checkQ4(NumericMatrix Q){
 	//This function will check that the rows in the matrix Q are unit quaternions
 	int n = Q.nrow(), p = Q.ncol(), i;
@@ -26,9 +26,9 @@ int checkQ4(NumericMatrix Q){
 		}		
 	}
 	return 0;
-}*/
+}
 
-/*// [[Rcpp::export]]   
+// [[Rcpp::export]]   
 arma::rowvec meanQ4C(arma::mat Q) { 
 	//Compute the projected mean of the sample Q.
 	NumericMatrix Qss = as<NumericMatrix>(wrap(Q));
@@ -48,14 +48,15 @@ arma::rowvec meanQ4C(arma::mat Q) {
   }
   
   return qhat.t(); //Want to return it in a row vector so transpose it
-} */
+} 
 
 // [[Rcpp::export]]
 NumericVector RdistC(NumericMatrix Q1, NumericVector Q2){
 	/*Compute the geodesic distance between quaternions Q1 and Q2*/
 	/* Q1 must be an n-by-4 matrix with quaternion rows and Q2 a single quaternion*/
 	
-	int cq4 = rotations2::checkQ4(Q1);
+	//int cq4 = rotations2::checkQ4(Q1);
+	int cq4 = checkQ4(Q1);
 	
 	if(cq4){
 		throw Rcpp::exception("The data are not in Q4.");
@@ -108,7 +109,8 @@ NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 // [[Rcpp::export]]
 NumericVector bootQhat(NumericMatrix Q, int m){
 	
-	int cq4 = rotations2::checkQ4(Q);
+	//int cq4 = rotations2::checkQ4(Q);
+	int cq4 = checkQ4(Q);
 	
 	if(cq4){
 		throw Rcpp::exception("The data are not in Q4.");
@@ -127,7 +129,8 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 	
 	NumericMatrix QstarRcpp;
 	
-	NumericVector Qhat = as<NumericVector>(wrap(rotations2::meanQ4C(QSamp)));
+	//NumericVector Qhat = as<NumericVector>(wrap(rotations2::meanQ4C(QSamp)));
+	NumericVector Qhat = as<NumericVector>(wrap(meanQ4C(QSamp)));
 	
 	for(j=0;j<m;j++){
 		
@@ -138,7 +141,8 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 			Qstar.row(i) = QSamp.row(samp[i]);		//Copying a matrix row by row produces a bunch of junk messages
 		}																				//so I do it with arma instead of standard Rcpp
 	
-		QhatStar = as<NumericVector>(wrap(rotations2::meanQ4C(Qstar))); //Both of these functinos return arma variables so
+		//QhatStar = as<NumericVector>(wrap(rotations2::meanQ4C(Qstar))); //Both of these functinos return arma variables so
+		QhatStar = as<NumericVector>(wrap(meanQ4C(Qstar)));
 		QstarRcpp = as<NumericMatrix>(wrap(Qstar));					//They need to be converted to Rcpp type
 		
 		cdstar = cdfunsC(QstarRcpp,QhatStar);

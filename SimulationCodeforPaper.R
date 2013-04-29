@@ -3,9 +3,9 @@
 #Compute coverage rates for the Rivest, Fisher and our methods
 ###############################################################
 
-#library(Rcpp)
-#Rcpp::sourceCpp('ZhangMethod.cpp')
-#Rcpp::sourceCpp("FisherMethod.cpp")
+library(Rcpp)
+Rcpp::sourceCpp('ZhangMethod.cpp')
+Rcpp::sourceCpp("FisherMethod.cpp")
 library(rotations2)
 library(rotations)
 library(reshape2)
@@ -97,14 +97,14 @@ for(p in 1:nrow(resultsDf)){
 	resultsDf[p,]$NormalMean<-100*NormalMean/B
 	resultsDf[p,]$PivotMean<-100*PivotMean/B
 	print(resultsDf[p,])
-	#write.csv(resultsDf,"ResultsB5000M300.csv")
+	write.csv(resultsDf,"ResultsB5000M300Part2.csv")
 }
 
 
 date()
 resultsDf
 
-#write.csv(resultsDf,"ResultsB5000M300.csv")
+write.csv(resultsDf,"ResultsB5000M300Part2.csv")
 
 resM<-melt(resultsDf,id=c('Dist','nu','n'))
 colnames(resM)[4]<-'Method'
@@ -118,7 +118,7 @@ qplot(n,value,data=resM,colour=Method,group=Method,ylab='Coverage Rate (%)',xlab
 	facet_grid(Dist~nu,labeller=label_parsed)+geom_hline(yintercept=alp*100,colour='gray50')+
 	geom_line(lwd=I(1.25),alpha=I(.8))+theme_bw()
 
-ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB5000.pdf",width=10,height=8)
+#ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB5000.pdf",width=10,height=8)
 
 
 ###############################################################

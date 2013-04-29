@@ -1,12 +1,12 @@
 #include <RcppArmadillo.h>   
 #include <Rcpp.h>
-#include "../inst/include/rotations2.h"
+//#include "../inst/include/rotations2.h"
 using namespace Rcpp;
 
 // [[Rcpp::depends(RcppArmadillo)]] 
 // [[Rcpp::interfaces(r, cpp)]]
 
-/*// [[Rcpp::export]]
+// [[Rcpp::export]]
 int checkQ4(NumericMatrix Q){
 	//This function will check that the rows in the matrix Q are unit quaternions
 	int n = Q.nrow(), p = Q.ncol(), i;
@@ -30,13 +30,14 @@ int checkQ4(NumericMatrix Q){
 		
 
 	return 0;
-}*/
+}
 
 // [[Rcpp::export]]  
 double fisherAxisC(arma::mat Qs, arma::rowvec Qhat){
 
 	NumericMatrix Qss = as<NumericMatrix>(wrap(Qs));
-	int cq4 = rotations2::checkQ4(Qss);
+	//int cq4 = rotations2::checkQ4(Qss);
+	int cq4 = checkQ4(Qss);
 	if(cq4){
 		throw Rcpp::exception("The data are not in Q4.");
 	}
@@ -83,7 +84,7 @@ double fisherAxisC(arma::mat Qs, arma::rowvec Qhat){
 }
 
 
-/*// [[Rcpp::export]]   
+// [[Rcpp::export]]   
 arma::rowvec meanQ4C(arma::mat Q) { 
 	//Compute the projected mean of the sample Q
 	
@@ -104,7 +105,7 @@ arma::rowvec meanQ4C(arma::mat Q) {
   }
   
   return qhat.t(); //Want to return it in a row vector so transpose it
-}*/
+}
 
 
 //[[Rcpp::export]]
@@ -113,7 +114,8 @@ arma::vec fisherBootC(arma::mat Qs, int m){
   int n = Qs.n_rows;
   int i , j , numUn;
   
-  arma::rowvec qhat = rotations2::meanQ4C(Qs);
+  //arma::rowvec qhat = rotations2::meanQ4C(Qs);
+	arma::rowvec qhat = meanQ4C(Qs);
 
   arma::vec Tm(m);
   NumericVector samp, unSamp;
