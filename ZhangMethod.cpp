@@ -117,7 +117,8 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 	}
 	
 	int n=Q.nrow(), i=0, j=0;
-	NumericVector samp, cdstar;
+	NumericVector cdstar;
+	IntegerVector samp(n);
 	
 	NumericVector testStat(m), sqrth;
 	
@@ -135,7 +136,6 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 	for(j=0;j<m;j++){
 		
 		samp = floor(runif(n,0,n));			//Bootstrap sample of size n, with replacement
-    
     
 		for(i=0;i<n;i++){
 			Qstar.row(i) = QSamp.row(samp[i]);		//Copying a matrix row by row produces a bunch of junk messages

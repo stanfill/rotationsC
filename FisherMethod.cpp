@@ -118,7 +118,8 @@ arma::vec fisherBootC(arma::mat Qs, int m){
 	arma::rowvec qhat = meanQ4C(Qs);
 
   arma::vec Tm(m);
-  NumericVector samp, unSamp;
+  NumericVector unSamp;
+  IntegerVector samp(n);
   arma::mat Qstar(n,4);
   Qstar.zeros();
   

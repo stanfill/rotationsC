@@ -97,14 +97,14 @@ for(p in 1:nrow(resultsDf)){
 	resultsDf[p,]$NormalMean<-100*NormalMean/B
 	resultsDf[p,]$PivotMean<-100*PivotMean/B
 	print(resultsDf[p,])
-	write.csv(resultsDf,"ResultsB5000M300Part2.csv")
+	write.csv(resultsDf,"Results/ResultsB5000M300Part2.csv")
 }
 
 
 date()
 resultsDf
 
-write.csv(resultsDf,"ResultsB5000M300Part2.csv")
+write.csv(resultsDf,"Results/ResultsB5000M300Part2.csv")
 
 resM<-melt(resultsDf,id=c('Dist','nu','n'))
 colnames(resM)[4]<-'Method'
