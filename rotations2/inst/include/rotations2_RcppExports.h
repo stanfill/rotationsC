@@ -6,7 +6,6 @@
 
 #include <RcppArmadillo.h>
 #include <Rcpp.h>
-#include "rotations2.h"
 
 namespace rotations2 {
 
@@ -206,6 +205,48 @@ namespace rotations2 {
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::vec >(__result);
+    }
+
+    inline NumericVector RdistC(NumericMatrix Q1, NumericVector Q2) {
+        typedef SEXP(*Ptr_RdistC)(SEXP,SEXP);
+        static Ptr_RdistC p_RdistC = NULL;
+        if (p_RdistC == NULL) {
+            validateSignature("NumericVector(*RdistC)(NumericMatrix,NumericVector)");
+            p_RdistC = (Ptr_RdistC)R_GetCCallable("rotations2", "rotations2_RdistC");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_RdistC(Rcpp::wrap(Q1), Rcpp::wrap(Q2));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<NumericVector >(__result);
+    }
+
+    inline NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat) {
+        typedef SEXP(*Ptr_cdfunsC)(SEXP,SEXP);
+        static Ptr_cdfunsC p_cdfunsC = NULL;
+        if (p_cdfunsC == NULL) {
+            validateSignature("NumericVector(*cdfunsC)(NumericMatrix,NumericVector)");
+            p_cdfunsC = (Ptr_cdfunsC)R_GetCCallable("rotations2", "rotations2_cdfunsC");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_cdfunsC(Rcpp::wrap(Qs), Rcpp::wrap(Qhat));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<NumericVector >(__result);
+    }
+
+    inline NumericVector bootQhat(NumericMatrix Q, int m) {
+        typedef SEXP(*Ptr_bootQhat)(SEXP,SEXP);
+        static Ptr_bootQhat p_bootQhat = NULL;
+        if (p_bootQhat == NULL) {
+            validateSignature("NumericVector(*bootQhat)(NumericMatrix,int)");
+            p_bootQhat = (Ptr_bootQhat)R_GetCCallable("rotations2", "rotations2_bootQhat");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_bootQhat(Rcpp::wrap(Q), Rcpp::wrap(m));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<NumericVector >(__result);
     }
 
 }

@@ -1,11 +1,29 @@
 Package: rotations2
 Type: Package
-Title: What the package does (short line)
-Version: 1.0
-Date: 2013-04-29
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What Licence is it under ?
-Depends: Rcpp (>= 0.10.3), RcppArmadillo
+Title: Tools for working with rotational data
+Version: 0.1
+Author: Bryan Stanfill <stanfill@iastate.edu>, Heike Hofmann
+    <hofmann@iastate.edu>, Ulrike Genschel <ulrike@iastate.edu>
+Maintainer: Bryan Stanfill <stanfill@iastate.edu>
+Description: This package implements tools for working with rotational data: it
+    allows simulation from the most commonly used distributions on the sphere,
+    it estimates differen mean and median type estimators for the main
+    direction of a number of rotations, it provides (bootstrap) confidence
+    regions for the estimates, and it allows to visualize rotational data.
+License: MIT
+Depends:
+    ggplot2,
+    grid,
+    Rcpp,
+    RcppArmadillo
 LinkingTo: Rcpp, RcppArmadillo
+Collate:
+    'help.R'
+    'parameterizations.R'
+    'estimators.R'
+    'preliminary.R'
+    'plot.R'
+    'distributions.R'
+    'kappa.R'
+    'regions.R'
+    'RcppExports.R'

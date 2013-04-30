@@ -37,6 +37,7 @@ double fisherAxisC(arma::mat Qs, arma::rowvec Qhat){
 
 	NumericMatrix Qss = as<NumericMatrix>(wrap(Qs));
 	int cq4 = rotations2::checkQ4(Qss);
+	//int cq4 = checkQ4(Qss);
 	if(cq4){
 		throw Rcpp::exception("The data are not in Q4.");
 	}
@@ -114,9 +115,11 @@ arma::vec fisherBootC(arma::mat Qs, int m){
   int i , j , numUn;
   
   arma::rowvec qhat = rotations2::meanQ4C(Qs);
+	//arma::rowvec qhat = meanQ4C(Qs);
 
   arma::vec Tm(m);
-  NumericVector samp, unSamp;
+  NumericVector unSamp;
+  IntegerVector samp(n);
   arma::mat Qstar(n,4);
   Qstar.zeros();
   

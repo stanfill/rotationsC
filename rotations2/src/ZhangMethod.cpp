@@ -3,7 +3,7 @@
 #include "../inst/include/rotations2.h"
 using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]] 
-
+// [[Rcpp::interfaces(r, cpp)]]
 /*// [[Rcpp::export]]
 int checkQ4(NumericMatrix Q){
 	//This function will check that the rows in the matrix Q are unit quaternions
@@ -56,6 +56,7 @@ NumericVector RdistC(NumericMatrix Q1, NumericVector Q2){
 	/* Q1 must be an n-by-4 matrix with quaternion rows and Q2 a single quaternion*/
 	
 	int cq4 = rotations2::checkQ4(Q1);
+	//int cq4 = checkQ4(Q1);
 	
 	if(cq4){
 		throw Rcpp::exception("The data are not in Q4.");
@@ -109,13 +110,15 @@ NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 NumericVector bootQhat(NumericMatrix Q, int m){
 	
 	int cq4 = rotations2::checkQ4(Q);
+	//int cq4 = checkQ4(Q);
 	
 	if(cq4){
 		throw Rcpp::exception("The data are not in Q4.");
 	}
 	
 	int n=Q.nrow(), i=0, j=0;
-	NumericVector samp, cdstar;
+	NumericVector cdstar;
+	IntegerVector samp(n);
 	
 	NumericVector testStat(m), sqrth;
 	
@@ -128,17 +131,18 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 	NumericMatrix QstarRcpp;
 	
 	NumericVector Qhat = as<NumericVector>(wrap(rotations2::meanQ4C(QSamp)));
+	//NumericVector Qhat = as<NumericVector>(wrap(meanQ4C(QSamp)));
 	
 	for(j=0;j<m;j++){
 		
 		samp = floor(runif(n,0,n));			//Bootstrap sample of size n, with replacement
-    
     
 		for(i=0;i<n;i++){
 			Qstar.row(i) = QSamp.row(samp[i]);		//Copying a matrix row by row produces a bunch of junk messages
 		}																				//so I do it with arma instead of standard Rcpp
 	
 		QhatStar = as<NumericVector>(wrap(rotations2::meanQ4C(Qstar))); //Both of these functinos return arma variables so
+		//QhatStar = as<NumericVector>(wrap(meanQ4C(Qstar)));
 		QstarRcpp = as<NumericMatrix>(wrap(Qstar));					//They need to be converted to Rcpp type
 		
 		cdstar = cdfunsC(QstarRcpp,QhatStar);

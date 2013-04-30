@@ -3,7 +3,6 @@
 
 #include <RcppArmadillo.h>
 #include <Rcpp.h>
-#include "../inst/include/rotations2.h"
 #include <string>
 #include <set>
 
@@ -248,36 +247,60 @@ RcppExport SEXP rotations2_fisherBootC(SEXP QsSEXP, SEXP mSEXP) {
 }
 // RdistC
 NumericVector RdistC(NumericMatrix Q1, NumericVector Q2);
-RcppExport SEXP rotations2_RdistC(SEXP Q1SEXP, SEXP Q2SEXP) {
+static SEXP rotations2_RdistC_try(SEXP Q1SEXP, SEXP Q2SEXP) {
 BEGIN_RCPP
-    Rcpp::RNGScope __rngScope;
     NumericMatrix Q1 = Rcpp::as<NumericMatrix >(Q1SEXP);
     NumericVector Q2 = Rcpp::as<NumericVector >(Q2SEXP);
     NumericVector __result = RdistC(Q1, Q2);
     return Rcpp::wrap(__result);
-END_RCPP
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations2_RdistC(SEXP Q1SEXP, SEXP Q2SEXP) {
+    Rcpp::RNGScope __rngScope;
+    SEXP __result = PROTECT(rotations2_RdistC_try(Q1SEXP, Q2SEXP));
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    UNPROTECT(1);
+    if (__isError)
+        Rf_error(CHAR(Rf_asChar(__result)));
+    return __result;
 }
 // cdfunsC
 NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat);
-RcppExport SEXP rotations2_cdfunsC(SEXP QsSEXP, SEXP QhatSEXP) {
+static SEXP rotations2_cdfunsC_try(SEXP QsSEXP, SEXP QhatSEXP) {
 BEGIN_RCPP
-    Rcpp::RNGScope __rngScope;
     NumericMatrix Qs = Rcpp::as<NumericMatrix >(QsSEXP);
     NumericVector Qhat = Rcpp::as<NumericVector >(QhatSEXP);
     NumericVector __result = cdfunsC(Qs, Qhat);
     return Rcpp::wrap(__result);
-END_RCPP
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations2_cdfunsC(SEXP QsSEXP, SEXP QhatSEXP) {
+    Rcpp::RNGScope __rngScope;
+    SEXP __result = PROTECT(rotations2_cdfunsC_try(QsSEXP, QhatSEXP));
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    UNPROTECT(1);
+    if (__isError)
+        Rf_error(CHAR(Rf_asChar(__result)));
+    return __result;
 }
 // bootQhat
 NumericVector bootQhat(NumericMatrix Q, int m);
-RcppExport SEXP rotations2_bootQhat(SEXP QSEXP, SEXP mSEXP) {
+static SEXP rotations2_bootQhat_try(SEXP QSEXP, SEXP mSEXP) {
 BEGIN_RCPP
-    Rcpp::RNGScope __rngScope;
     NumericMatrix Q = Rcpp::as<NumericMatrix >(QSEXP);
     int m = Rcpp::as<int >(mSEXP);
     NumericVector __result = bootQhat(Q, m);
     return Rcpp::wrap(__result);
-END_RCPP
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations2_bootQhat(SEXP QSEXP, SEXP mSEXP) {
+    Rcpp::RNGScope __rngScope;
+    SEXP __result = PROTECT(rotations2_bootQhat_try(QSEXP, mSEXP));
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    UNPROTECT(1);
+    if (__isError)
+        Rf_error(CHAR(Rf_asChar(__result)));
+    return __result;
 }
 
 // validate (ensure exported C++ functions exist before calling them)
@@ -297,6 +320,9 @@ static int rotations2_RcppExport_validate(const char* sig) {
         signatures.insert("arma::mat(*gmeanSO3C)(arma::mat)");
         signatures.insert("double(*fisherAxisC)(arma::mat,arma::rowvec)");
         signatures.insert("arma::vec(*fisherBootC)(arma::mat,int)");
+        signatures.insert("NumericVector(*RdistC)(NumericMatrix,NumericVector)");
+        signatures.insert("NumericVector(*cdfunsC)(NumericMatrix,NumericVector)");
+        signatures.insert("NumericVector(*bootQhat)(NumericMatrix,int)");
     }
     return signatures.find(sig) != signatures.end();
 }
@@ -316,6 +342,9 @@ RcppExport SEXP rotations2_RcppExport_registerCCallable() {
     R_RegisterCCallable("rotations2", "rotations2_gmeanSO3C", (DL_FUNC)rotations2_gmeanSO3C_try);
     R_RegisterCCallable("rotations2", "rotations2_fisherAxisC", (DL_FUNC)rotations2_fisherAxisC_try);
     R_RegisterCCallable("rotations2", "rotations2_fisherBootC", (DL_FUNC)rotations2_fisherBootC_try);
+    R_RegisterCCallable("rotations2", "rotations2_RdistC", (DL_FUNC)rotations2_RdistC_try);
+    R_RegisterCCallable("rotations2", "rotations2_cdfunsC", (DL_FUNC)rotations2_cdfunsC_try);
+    R_RegisterCCallable("rotations2", "rotations2_bootQhat", (DL_FUNC)rotations2_bootQhat_try);
     R_RegisterCCallable("rotations2", "rotations2_RcppExport_validate", (DL_FUNC)rotations2_RcppExport_validate);
     return R_NilValue;
 }

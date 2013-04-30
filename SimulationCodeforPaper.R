@@ -6,7 +6,6 @@
 library(Rcpp)
 Rcpp::sourceCpp('ZhangMethod.cpp')
 Rcpp::sourceCpp("FisherMethod.cpp")
-library(rotations2)
 library(rotations)
 library(reshape2)
 library(plyr)
