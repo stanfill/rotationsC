@@ -26,8 +26,8 @@ B<-5000				#Number of samples to use to estimate coverage probability (Zhang use
 m<-300				#Number of bootstrap samples used to estimate bootstrap test statistic (Zhang used 300)
 alp<-0.9
 
-resultsDf<-data.frame(expand.grid(Dist=Dist,nu=nu,n=n),Rivest=0,Fisher=0,NormalMean=0,PivotMean=0)
-
+#resultsDf<-data.frame(expand.grid(Dist=Dist,nu=nu,n=n),Rivest=0,Fisher=0,NormalMean=0,PivotMean=0)
+resultsDf<-read.csv("Results/ResultsB5000M300Part2.csv")[,-1]
 resultsDf
 date()
 
@@ -97,14 +97,14 @@ for(p in 36:nrow(resultsDf)){
 	resultsDf[p,]$NormalMean<-100*NormalMean/B
 	resultsDf[p,]$PivotMean<-100*PivotMean/B
 	print(resultsDf[p,])
-	write.csv(resultsDf,"Results/ResultsB5000M300Part2.csv")
+	#write.csv(resultsDf,"Results/ResultsB5000M300Part2.csv")
 }
 
 
 date()
 resultsDf
 
-write.csv(resultsDf,"Results/ResultsB5000M300Part2.csv")
+#write.csv(resultsDf,"Results/ResultsB5000M300Part2.csv")
 
 resM<-melt(resultsDf,id=c('Dist','nu','n'))
 colnames(resM)[4]<-'Method'
@@ -232,51 +232,3 @@ if(Dist=='cayley'){
 	#write.csv(fullDF,"vonMisesECDF.csv")
 	
 }
-
-#Old way of plotting CDFs
-# colNums<-ncol(cdfDF)
-# 
-# whichK<-1 # 1 for kappa=2 and 2 for kappa=8
-# 
-# tInt10Mean<-sort(as.numeric(as.character(cdfDF[whichK,3:colNums])))
-# tInt50Mean<-sort(as.numeric(as.character(cdfDF[(whichK+2),3:colNums])))
-# tInt100Mean<-sort(as.numeric(as.character(cdfDF[(whichK+4),3:colNums])))
-# tInt300Mean<-sort(as.numeric(as.character(cdfDF[(whichK+6),3:colNums])))
-# 
-# plot(tInt300Mean,ecdf(tInt300Mean),main=expression(kappa==2),type='l',col=2,xlab='x',ylab='F(x)',xlim=c(0,10))
-# lines(tInt100Mean,ecdf(tInt100Mean),col=3)
-# lines(tInt50Mean,ecdf(tInt50Mean),col=4)
-# lines(tInt10Mean,ecdf(tInt10Mean),col=5)
-# lines(tInt300Mean,pchisq(tInt300Mean,3))
-# legend(7,.6,c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"),col=c(1,5,4,3,2),lty=1,lwd=2,bty='n')
-# 
-# whichK<-2 # 1 for kappa=2 and 2 for kappa=8
-# tInt10Mean<-sort(as.numeric(as.character(cdfDF[whichK,3:colNums])))
-# tInt50Mean<-sort(as.numeric(as.character(cdfDF[(whichK+2),3:colNums])))
-# tInt100Mean<-sort(as.numeric(as.character(cdfDF[(whichK+4),3:colNums])))
-# tInt300Mean<-sort(as.numeric(as.character(cdfDF[(whichK+6),3:colNums])))
-# 
-# plot(tInt300Mean,ecdf(tInt300Mean),main=expression(kappa==8),type='l',col=2,xlab='x',ylab='F(x)',xlim=c(0,10))
-# lines(tInt100Mean,ecdf(tInt100Mean),col=3)
-# lines(tInt50Mean,ecdf(tInt50Mean),col=4)
-# lines(tInt10Mean,ecdf(tInt10Mean),col=5)
-# lines(tInt300Mean,pchisq(tInt300Mean,3))
-# legend(7,.6,c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"),col=c(1,5,4,3,2),lty=1,lwd=2,bty='n')
-
-#This will compute true c and d values for each distribution
-#Cayley c and d
-#ecos<-(ks-1)/(ks+2)
-#ecos2<-(ks^2-ks+3)/(ks^2+5*ks+6)
-
-#Fisher c and d
-#ecos<-((1+1/(2*ks))*besselI(2*ks,1)-besselI(2*ks,0))/(besselI(2*ks,0)-besselI(2*ks,1))
-#ecos2<-(((2*ks+1)/ks)*besselI(2*ks,0)-((2*ks^2+ks+1)/ks^2)*besselI(2*ks,1))/(2*besselI(2*ks,0)-2*besselI(2*ks,1))
-
-
-#von Mises c and d
-#ecos<-besselI(ks,1)/besselI(ks,0)
-#ecos2<-(besselI(ks,2)/besselI(ks,0)+1)/2
-
-
-
-
