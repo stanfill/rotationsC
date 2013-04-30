@@ -31,11 +31,11 @@ int checkQ4(NumericMatrix Q){
 // [[Rcpp::export]]   
 arma::rowvec meanQ4C(arma::mat Q) { 
 	//Compute the projected mean of the sample Q.
-	NumericMatrix Qss = as<NumericMatrix>(wrap(Q));
-	int cq4 = checkQ4(Qss);
-	if(cq4){
-		throw Rcpp::exception("The data are not in Q4.");
-	}
+	//NumericMatrix Qss = as<NumericMatrix>(wrap(Q));
+	//int cq4 = checkQ4(Qss);
+	//if(cq4){
+	//	throw Rcpp::exception("The data are not in Q4.");
+//	}
 	
 	arma::mat Qsq=Q.t()*Q;
 	arma::mat eigvec;
@@ -56,11 +56,11 @@ NumericVector RdistC(NumericMatrix Q1, NumericVector Q2){
 	/* Q1 must be an n-by-4 matrix with quaternion rows and Q2 a single quaternion*/
 	
 	//int cq4 = rotations2::checkQ4(Q1);
-	int cq4 = checkQ4(Q1);
+	//int cq4 = checkQ4(Q1);
 	
-	if(cq4){
-		throw Rcpp::exception("The data are not in Q4.");
-	}
+	//if(cq4){
+	//	throw Rcpp::exception("The data are not in Q4.");
+	//}
 	
 	int n = Q1.nrow(), i; 
 	double cp;
@@ -85,8 +85,8 @@ NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 	double crs;
 	
 	NumericVector cds(2);
-	cds[0]=0;
-	cds[1]=0;
+	cds[0]=0.0;
+	cds[1]=0.0;
 	
 	NumericVector rs(n);
 	
@@ -110,11 +110,11 @@ NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 NumericVector bootQhat(NumericMatrix Q, int m){
 	
 	//int cq4 = rotations2::checkQ4(Q);
-	int cq4 = checkQ4(Q);
+	//int cq4 = checkQ4(Q);
 	
-	if(cq4){
-		throw Rcpp::exception("The data are not in Q4.");
-	}
+	//if(cq4){
+//		throw Rcpp::exception("The data are not in Q4.");
+//	}
 	
 	int n=Q.nrow(), i=0, j=0;
 	NumericVector cdstar;
@@ -147,7 +147,7 @@ NumericVector bootQhat(NumericMatrix Q, int m){
 		
 		cdstar = cdfunsC(QstarRcpp,QhatStar);
 		
-		QhatStarMat = as<NumericMatrix>(QhatStar); /*QhatStar needs to be a matrix to be used in RdistC*/
+		QhatStarMat = as<NumericMatrix>(wrap(QhatStar)); /*QhatStar needs to be a matrix to be used in RdistC*/
 		sqrth = RdistC(QhatStarMat,Qhat);
 		
 		testStat[j] = 2*n*pow(cdstar[1],2)*pow(sqrth[0],2)/cdstar[0];

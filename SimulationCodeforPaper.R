@@ -3,7 +3,7 @@
 #Compute coverage rates for the Rivest, Fisher and our methods
 ###############################################################
 
-library(Rcpp)
+library(RcppArmadillo)
 Rcpp::sourceCpp('ZhangMethod.cpp')
 Rcpp::sourceCpp("FisherMethod.cpp")
 library(rotations)
@@ -28,9 +28,10 @@ alp<-0.9
 
 resultsDf<-data.frame(expand.grid(Dist=Dist,nu=nu,n=n),Rivest=0,Fisher=0,NormalMean=0,PivotMean=0)
 
+resultsDf
 date()
 
-for(p in 1:nrow(resultsDf)){
+for(p in 36:nrow(resultsDf)){
 
 	distp<-resultsDf$Dist[p]
 	np<-resultsDf$n[p]
