@@ -3,6 +3,7 @@
 
 #include <RcppArmadillo.h>
 #include <Rcpp.h>
+#include "../inst/include/rotations2.h"
 #include <string>
 #include <set>
 
@@ -154,17 +155,19 @@ RcppExport SEXP rotations2_meanQ4C(SEXP QSEXP) {
     return __result;
 }
 // medianSO3C
-arma::mat medianSO3C(arma::mat Rs);
-static SEXP rotations2_medianSO3C_try(SEXP RsSEXP) {
+arma::mat medianSO3C(arma::mat Rs, int maxIterations, double maxEps);
+static SEXP rotations2_medianSO3C_try(SEXP RsSEXP, SEXP maxIterationsSEXP, SEXP maxEpsSEXP) {
 BEGIN_RCPP
     arma::mat Rs = Rcpp::as<arma::mat >(RsSEXP);
-    arma::mat __result = medianSO3C(Rs);
+    int maxIterations = Rcpp::as<int >(maxIterationsSEXP);
+    double maxEps = Rcpp::as<double >(maxEpsSEXP);
+    arma::mat __result = medianSO3C(Rs, maxIterations, maxEps);
     return Rcpp::wrap(__result);
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP rotations2_medianSO3C(SEXP RsSEXP) {
+RcppExport SEXP rotations2_medianSO3C(SEXP RsSEXP, SEXP maxIterationsSEXP, SEXP maxEpsSEXP) {
     Rcpp::RNGScope __rngScope;
-    SEXP __result = PROTECT(rotations2_medianSO3C_try(RsSEXP));
+    SEXP __result = PROTECT(rotations2_medianSO3C_try(RsSEXP, maxIterationsSEXP, maxEpsSEXP));
     Rboolean __isError = Rf_inherits(__result, "try-error");
     UNPROTECT(1);
     if (__isError)
@@ -172,17 +175,19 @@ RcppExport SEXP rotations2_medianSO3C(SEXP RsSEXP) {
     return __result;
 }
 // HartmedianSO3C
-arma::mat HartmedianSO3C(arma::mat Rs);
-static SEXP rotations2_HartmedianSO3C_try(SEXP RsSEXP) {
+arma::mat HartmedianSO3C(arma::mat Rs, int maxIterations, double maxEps);
+static SEXP rotations2_HartmedianSO3C_try(SEXP RsSEXP, SEXP maxIterationsSEXP, SEXP maxEpsSEXP) {
 BEGIN_RCPP
     arma::mat Rs = Rcpp::as<arma::mat >(RsSEXP);
-    arma::mat __result = HartmedianSO3C(Rs);
+    int maxIterations = Rcpp::as<int >(maxIterationsSEXP);
+    double maxEps = Rcpp::as<double >(maxEpsSEXP);
+    arma::mat __result = HartmedianSO3C(Rs, maxIterations, maxEps);
     return Rcpp::wrap(__result);
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP rotations2_HartmedianSO3C(SEXP RsSEXP) {
+RcppExport SEXP rotations2_HartmedianSO3C(SEXP RsSEXP, SEXP maxIterationsSEXP, SEXP maxEpsSEXP) {
     Rcpp::RNGScope __rngScope;
-    SEXP __result = PROTECT(rotations2_HartmedianSO3C_try(RsSEXP));
+    SEXP __result = PROTECT(rotations2_HartmedianSO3C_try(RsSEXP, maxIterationsSEXP, maxEpsSEXP));
     Rboolean __isError = Rf_inherits(__result, "try-error");
     UNPROTECT(1);
     if (__isError)
@@ -190,17 +195,19 @@ RcppExport SEXP rotations2_HartmedianSO3C(SEXP RsSEXP) {
     return __result;
 }
 // gmeanSO3C
-arma::mat gmeanSO3C(arma::mat Rs);
-static SEXP rotations2_gmeanSO3C_try(SEXP RsSEXP) {
+arma::mat gmeanSO3C(arma::mat Rs, int maxIterations, double maxEps);
+static SEXP rotations2_gmeanSO3C_try(SEXP RsSEXP, SEXP maxIterationsSEXP, SEXP maxEpsSEXP) {
 BEGIN_RCPP
     arma::mat Rs = Rcpp::as<arma::mat >(RsSEXP);
-    arma::mat __result = gmeanSO3C(Rs);
+    int maxIterations = Rcpp::as<int >(maxIterationsSEXP);
+    double maxEps = Rcpp::as<double >(maxEpsSEXP);
+    arma::mat __result = gmeanSO3C(Rs, maxIterations, maxEps);
     return Rcpp::wrap(__result);
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP rotations2_gmeanSO3C(SEXP RsSEXP) {
+RcppExport SEXP rotations2_gmeanSO3C(SEXP RsSEXP, SEXP maxIterationsSEXP, SEXP maxEpsSEXP) {
     Rcpp::RNGScope __rngScope;
-    SEXP __result = PROTECT(rotations2_gmeanSO3C_try(RsSEXP));
+    SEXP __result = PROTECT(rotations2_gmeanSO3C_try(RsSEXP, maxIterationsSEXP, maxEpsSEXP));
     Rboolean __isError = Rf_inherits(__result, "try-error");
     UNPROTECT(1);
     if (__isError)
@@ -315,9 +322,9 @@ static int rotations2_RcppExport_validate(const char* sig) {
         signatures.insert("arma::mat(*projectSO3C)(arma::mat)");
         signatures.insert("arma::mat(*meanSO3C)(arma::mat)");
         signatures.insert("arma::rowvec(*meanQ4C)(arma::mat)");
-        signatures.insert("arma::mat(*medianSO3C)(arma::mat)");
-        signatures.insert("arma::mat(*HartmedianSO3C)(arma::mat)");
-        signatures.insert("arma::mat(*gmeanSO3C)(arma::mat)");
+        signatures.insert("arma::mat(*medianSO3C)(arma::mat,int,double)");
+        signatures.insert("arma::mat(*HartmedianSO3C)(arma::mat,int,double)");
+        signatures.insert("arma::mat(*gmeanSO3C)(arma::mat,int,double)");
         signatures.insert("double(*fisherAxisC)(arma::mat,arma::rowvec)");
         signatures.insert("arma::vec(*fisherBootC)(arma::mat,int)");
         signatures.insert("NumericVector(*RdistC)(NumericMatrix,NumericVector)");

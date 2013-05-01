@@ -41,7 +41,7 @@ meanC.SO3 <- function(Rs, type = "projected", epsilon = 1e-05, maxIter = 2000, .
 	if(type=='projected'){
 		R<-meanSO3C(Rs)
 	}else{
-		R<-gmeanSO3C(Rs)
+		R<-gmeanSO3C(Rs,maxIter,epsilon)
 	}
 	
   class(R)<-"SO3"
@@ -87,7 +87,7 @@ meanC.Q4 <- function(Qs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
 	}else{
 		
 		Rs<-SO3(Qs)
-  	R<-gmeanSO3C(Rs)
+  	R<-gmeanSO3C(Rs,maxIter,epsilon)
 		R<-Q4.SO3(R)
 	}
 	
@@ -134,11 +134,11 @@ medianC.SO3 <- function(Rs, type = "projected", epsilon = 1e-05, maxIter = 2000)
   
   if (type == "projected") {
 		
-  	S<-medianSO3C(Rs)
+  	S<-medianSO3C(Rs,maxIter,epsilon)
       
   } else {
       
-		S<-HartmedianSO3C(Rs)
+		S<-HartmedianSO3C(Rs,maxIter,epsilon)
       
   }
     
@@ -160,7 +160,7 @@ medianC.Q4 <- function(Qs, type = "projected", epsilon = 1e-05, maxIter = 2000) 
 
   Rs<-SO3(Qs)
   
-  R<-medianC.SO3(Rs,type,epsilon,maxIter)
+  R<-medianC(Rs,type,epsilon,maxIter)
   
   return(Q4.SO3(R))
 }

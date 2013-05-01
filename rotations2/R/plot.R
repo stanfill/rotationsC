@@ -103,9 +103,9 @@ pointsXYZ <- function(data, center, column=1) {
 #' @examples
 #' r<-rvmises(200,1.0)
 #' Rs<-genR(r)
-#' plot(Rs,center=mean(Rs),show_estimates=NULL,shape=4)
+#' plot(Rs,center=meanC(Rs),show_estimates=NULL,shape=4)
 #' # Z is computed internally and contains information on depth
-#' plot(Rs,center=mean(Rs),show_estimates=c("proj.mean", "riem.mean")) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
+#' plot(Rs,center=meanC(Rs),show_estimates=c("proj.mean", "riem.mean")) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
 
 plot.SO3 <- function(x, center, col=1, toRange=FALSE, show_estimates=NULL,  ...) {
   Rs <- as.SO3(x)
@@ -126,10 +126,10 @@ plot.SO3 <- function(x, center, col=1, toRange=FALSE, show_estimates=NULL,  ...)
   if (!is.null(show_estimates)) {
     ShatP <- StildeP <- ShatG <- StildeG <- NA
     if(show_estimates%in%c('all','All')) show_estimates<-c("proj.mean","proj.median","riem.mean","riem.median")
-    if (length(grep("proj.mean", show_estimates)) > 0) ShatP<-mean(Rs, type="projected")
-    if (length(grep("proj.median", show_estimates)) >0)    StildeP<-median(Rs, type="projected")
-    if (length(grep("riem.mean", show_estimates)) > 0)    ShatG<-mean(Rs, type="intrinsic")
-    if (length(grep("riem.median", show_estimates)) > 0)    StildeG<-median(Rs, type="intrinsic")
+    if (length(grep("proj.mean", show_estimates)) > 0) ShatP<-meanC(Rs, type="projected")
+    if (length(grep("proj.median", show_estimates)) >0)    StildeP<-medianC(Rs, type="projected")
+    if (length(grep("riem.mean", show_estimates)) > 0)    ShatG<-meanC(Rs, type="intrinsic")
+    if (length(grep("riem.median", show_estimates)) > 0)    StildeG<-medianC(Rs, type="intrinsic")
     
     Shats<-data.frame(rbind(as.vector(ShatP),as.vector(StildeP),as.vector(ShatG),as.vector(StildeG)),Est=1:4)
     Shats$Est <- factor(Shats$Est)

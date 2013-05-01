@@ -6,6 +6,7 @@
 
 #include <RcppArmadillo.h>
 #include <Rcpp.h>
+#include "rotations2.h"
 
 namespace rotations2 {
 
@@ -137,43 +138,43 @@ namespace rotations2 {
         return Rcpp::as<arma::rowvec >(__result);
     }
 
-    inline arma::mat medianSO3C(arma::mat Rs) {
-        typedef SEXP(*Ptr_medianSO3C)(SEXP);
+    inline arma::mat medianSO3C(arma::mat Rs, int maxIterations, double maxEps) {
+        typedef SEXP(*Ptr_medianSO3C)(SEXP,SEXP,SEXP);
         static Ptr_medianSO3C p_medianSO3C = NULL;
         if (p_medianSO3C == NULL) {
-            validateSignature("arma::mat(*medianSO3C)(arma::mat)");
+            validateSignature("arma::mat(*medianSO3C)(arma::mat,int,double)");
             p_medianSO3C = (Ptr_medianSO3C)R_GetCCallable("rotations2", "rotations2_medianSO3C");
         }
         RNGScope __rngScope;
-        RObject __result = p_medianSO3C(Rcpp::wrap(Rs));
+        RObject __result = p_medianSO3C(Rcpp::wrap(Rs), Rcpp::wrap(maxIterations), Rcpp::wrap(maxEps));
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);
     }
 
-    inline arma::mat HartmedianSO3C(arma::mat Rs) {
-        typedef SEXP(*Ptr_HartmedianSO3C)(SEXP);
+    inline arma::mat HartmedianSO3C(arma::mat Rs, int maxIterations, double maxEps) {
+        typedef SEXP(*Ptr_HartmedianSO3C)(SEXP,SEXP,SEXP);
         static Ptr_HartmedianSO3C p_HartmedianSO3C = NULL;
         if (p_HartmedianSO3C == NULL) {
-            validateSignature("arma::mat(*HartmedianSO3C)(arma::mat)");
+            validateSignature("arma::mat(*HartmedianSO3C)(arma::mat,int,double)");
             p_HartmedianSO3C = (Ptr_HartmedianSO3C)R_GetCCallable("rotations2", "rotations2_HartmedianSO3C");
         }
         RNGScope __rngScope;
-        RObject __result = p_HartmedianSO3C(Rcpp::wrap(Rs));
+        RObject __result = p_HartmedianSO3C(Rcpp::wrap(Rs), Rcpp::wrap(maxIterations), Rcpp::wrap(maxEps));
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);
     }
 
-    inline arma::mat gmeanSO3C(arma::mat Rs) {
-        typedef SEXP(*Ptr_gmeanSO3C)(SEXP);
+    inline arma::mat gmeanSO3C(arma::mat Rs, int maxIterations, double maxEps) {
+        typedef SEXP(*Ptr_gmeanSO3C)(SEXP,SEXP,SEXP);
         static Ptr_gmeanSO3C p_gmeanSO3C = NULL;
         if (p_gmeanSO3C == NULL) {
-            validateSignature("arma::mat(*gmeanSO3C)(arma::mat)");
+            validateSignature("arma::mat(*gmeanSO3C)(arma::mat,int,double)");
             p_gmeanSO3C = (Ptr_gmeanSO3C)R_GetCCallable("rotations2", "rotations2_gmeanSO3C");
         }
         RNGScope __rngScope;
-        RObject __result = p_gmeanSO3C(Rcpp::wrap(Rs));
+        RObject __result = p_gmeanSO3C(Rcpp::wrap(Rs), Rcpp::wrap(maxIterations), Rcpp::wrap(maxEps));
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);

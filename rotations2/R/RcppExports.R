@@ -42,18 +42,18 @@ meanQ4C <- function(Q) {
 }
 
 #' Compute projected Median in SO3
-medianSO3C <- function(Rs) {
-    .Call('rotations2_medianSO3C', PACKAGE = 'rotations2', Rs)
+medianSO3C <- function(Rs, maxIterations, maxEps) {
+    .Call('rotations2_medianSO3C', PACKAGE = 'rotations2', Rs, maxIterations, maxEps)
 }
 
 #' Compute intrinsic median in SO3 
-HartmedianSO3C <- function(Rs) {
-    .Call('rotations2_HartmedianSO3C', PACKAGE = 'rotations2', Rs)
+HartmedianSO3C <- function(Rs, maxIterations, maxEps) {
+    .Call('rotations2_HartmedianSO3C', PACKAGE = 'rotations2', Rs, maxIterations, maxEps)
 }
 
 #' Compute geometric mean in SO3
-gmeanSO3C <- function(Rs) {
-    .Call('rotations2_gmeanSO3C', PACKAGE = 'rotations2', Rs)
+gmeanSO3C <- function(Rs, maxIterations, maxEps) {
+    .Call('rotations2_gmeanSO3C', PACKAGE = 'rotations2', Rs, maxIterations, maxEps)
 }
 
 fisherAxisC <- function(Qs, Qhat) {

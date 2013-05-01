@@ -85,11 +85,12 @@ arma::mat expskewC(arma::mat M){
   
   double a = pow(0.5*trace(M.t()*M),0.5);
   
-  if(abs(a)<0.001){
+  if(a < 0.000001 && a > -0.000001){
     return expM;
   }
    
   expM = expM + (sin(a)/a) * M + (1-cos(a))*pow(a,-2)*M*M;
+  
   return expM;
   
 }
@@ -98,14 +99,6 @@ arma::mat expskewC(arma::mat M){
 //' Compue the geodesic distance between each row of Rs and R2
 // [[Rcpp::export]]
 arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2){
-  /* This function takes the matrix of matrices Rs and returns
-  each of the observatiosn distances from R2, which is assumed to be a
-  3-by-3 rotation matrix.*/
-  
-  int cSO3 = checkSO3(Rs);
-	if(cSO3){
-		throw Rcpp::exception("The data are not in SO(3).");
-	}
   
   int n = Rs.n_rows, i,j;
   
@@ -130,11 +123,6 @@ arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2){
 //' Compute the natural log of a rotation matrix, which is skew-symmetric
 // [[Rcpp::export]]
 arma::mat logSO3C(arma::mat R){
-  
-  /*int cSO3 = checkSO3(R);
-  if(cSO3){
-		throw Rcpp::exception("The data are not in SO(3).");
-	}*/
   
   arma::mat I(3,3), logR(3,3);
   I.eye();
@@ -190,11 +178,6 @@ arma::mat meanSO3C(arma::mat Rs){
 	This function expects Rs to be a n-by-9 matrix where each row
 	represents an observations in SO(3)*/
 	
-	int cSO3 = checkSO3(Rs);
-	if(cSO3){
-		throw Rcpp::exception("The data are not in SO(3).");
-	}
-	
 	int i;
 	arma::mat Rbarels = mean(Rs);
 	arma::mat Rbar(3,3);
@@ -234,22 +217,18 @@ arma::rowvec meanQ4C(arma::mat Q) {
 
 //' Compute projected Median in SO3
 //[[Rcpp::export]]
-arma::mat medianSO3C(arma::mat Rs){
+arma::mat medianSO3C(arma::mat Rs, int maxIterations, double maxEps){
   
   /*Estimate the central direction with the projected median according
   to our algorithm in point estimation paper*/
   
-  int cSO3 = checkSO3(Rs);
-	if(cSO3){
-		throw Rcpp::exception("The data are not in SO(3).");
-	}
   int n = Rs.n_rows, i,j,iterations=0;
   arma::mat S = meanSO3C(Rs), RsCopy = Rs, Snew;
   arma::mat33 delta;
   arma::rowvec vnInv(n), deltaV(9), Svec(9);
   double denom,epsilon = 1.0;
   
-  while(epsilon > 0.0005 && iterations < 1500){
+  while(epsilon > maxEps && iterations < maxIterations){
   
     for(j=0;j<9;j++){
       Svec(j) = S(j); 
@@ -282,22 +261,18 @@ arma::mat medianSO3C(arma::mat Rs){
 
 //' Compute intrinsic median in SO3 
 //[[Rcpp::export]]
-arma::mat HartmedianSO3C(arma::mat Rs){
+arma::mat HartmedianSO3C(arma::mat Rs, int maxIterations, double maxEps){
   
   /*Estimate the central direction with the projected median according
   to our algorithm in point estimation paper*/
   
-  int cSO3 = checkSO3(Rs);
-  if(cSO3){
-		throw Rcpp::exception("The data are not in SO(3).");
-	}
   int n = Rs.n_rows, i,j,iterations=0;
   arma::mat S = meanSO3C(Rs), RsCopy = Rs, Snew;
   arma::mat33 delta, Rsi, vi;
   arma::rowvec vnInv(n);
   double denom,epsilon = 1.0;
   
-  while(epsilon > 0.0001 && iterations < 1500){
+  while(epsilon > maxEps && iterations < maxIterations){
     
     delta.zeros();
     denom = 0;
@@ -328,30 +303,31 @@ arma::mat HartmedianSO3C(arma::mat Rs){
 
 //' Compute geometric mean in SO3
 // [[Rcpp::export]]
-arma::mat gmeanSO3C(arma::mat Rs){
+arma::mat gmeanSO3C(arma::mat Rs, int maxIterations, double maxEps){
   int n = Rs.n_rows, i=0, j=0, iterations=0;
   arma::mat33 Rsi, r;
   arma::mat S = meanSO3C(Rs);
   double eps=1.0;
-  
-  while(eps > 0.0001 && iterations < 2000){
-    
-    r.zeros();
-    S = S*expskewC(r);
-  
+  Rsi.zeros();
+
+  while(eps > maxEps && iterations < maxIterations){
+  	
+ 	 	r.zeros();
+  	
     for(i = 0; i<n ; i++){
     
       for(j=0;j<9;j++){
         Rsi(j) = Rs(i,j); 
       }
     
-      r += logSO3C(Rsi.t()*S);
+      r = r + logSO3C(S.t()*Rsi);
     
     }
-  
+
     r = r/n;
 
-    eps = norm(r,2);
+ 	  S = S*expskewC(r);
+    eps = norm(r,"fro");
     iterations++;
   }
   return S;

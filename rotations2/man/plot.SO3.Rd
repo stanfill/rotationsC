@@ -39,9 +39,9 @@
 \examples{
 r<-rvmises(200,1.0)
 Rs<-genR(r)
-plot(Rs,center=mean(Rs),show_estimates=NULL,shape=4)
+plot(Rs,center=meanC(Rs),show_estimates=NULL,shape=4)
 # Z is computed internally and contains information on depth
-plot(Rs,center=mean(Rs),show_estimates=c("proj.mean", "riem.mean")) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
+plot(Rs,center=meanC(Rs),show_estimates=c("proj.mean", "riem.mean")) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
 }
 \references{
   Wickham H (2009). _ggplot2: elegant graphics for data

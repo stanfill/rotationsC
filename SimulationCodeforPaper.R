@@ -115,8 +115,9 @@ resM$nu<-factor(resM$nu,labels=c("nu == 0.25","nu == 0.50","nu == 0.75"))
 resM$n<-as.factor(resM$n)
 
 qplot(n,value,data=resM,colour=Method,group=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
-	facet_grid(Dist~nu,labeller=label_parsed)+geom_hline(yintercept=alp*100,colour='gray50')+
-	geom_line(lwd=I(1.25),alpha=I(.8))+theme_bw()
+	facet_grid(Dist~nu,labeller=label_parsed)+
+	geom_hline(yintercept=alp*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
+	theme_bw()
 
 #ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB5000.pdf",width=10,height=8)
 
@@ -217,7 +218,7 @@ if(Dist=='cayley'){
 	
 }else if(Dist=='fisher'){
 	
-	qplot(value,Prob,data=fullDF,colour=n,lwd=Stat,geom="line",lwd=I(1.125),xlab='x',ylab="F(x)",xlim=c(0,15))+
+	qplot(value,Prob,data=fullDF,colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,15))+
 		scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"))+
 		facet_grid(.~kappa,labeller=label_both)+theme_bw()+coord_fixed(ratio=15/1)+
 	  scale_size_discrete("",range=c(1,2),guide='none')+
