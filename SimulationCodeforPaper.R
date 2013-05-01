@@ -125,7 +125,7 @@ qplot(n,value,data=resM,colour=Method,group=Method,ylab='Coverage Rate (%)',xlab
 #Plot the test statistics cumulative dist function versus the 
 #theoretical limiting dist
 ###############################################################
-setwd("C:/Users/stanfill/Desktop/GitHub/intervals")
+setwd("C:/Users/stanfill/Desktop/GitHub/rotationsC")
 library(Rcpp)
 Rcpp::sourceCpp('ZhangMethod.cpp')
 Rcpp::sourceCpp("FisherMethod.cpp")
@@ -198,14 +198,18 @@ chiDF<-data.frame(kappa=rep(ks,1000),n='Chisq',variable='Tr',value=rep(ss,each=2
 chiDF$ID<-paste(chiDF$kappa,chiDF$n)
 
 fullDF<-rbind(resM,chiDF)
-Newlabs<-c("10","50","100","300","Chisq")
+Newlabs<-c("Chisq","10","50","100","300")
 fullDF$n<-factor(fullDF$n,levels=Newlabs)
-
+fullDF$Stat<-1
+fullDF[fullDF$n=='Chisq',]$Stat<-2
+fullDF$Stat<-as.factor(fullDF$Stat)
 if(Dist=='cayley'){
 	
-	qplot(value,Prob,data=fullDF,colour=n,geom="line",lwd=I(1.125),xlab='x',ylab="F(x)")+
-		scale_colour_hue("",labels=c("n=10","n=50","n=100","n=300",expression(chi[3]^2)))+
-		facet_grid(.~kappa)+theme_bw()
+	qplot(value,Prob,data=fullDF,colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,15))+
+		scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"))+
+		facet_grid(.~kappa,labeller=label_both)+theme_bw()+coord_fixed(ratio=15/1)+
+    scale_size_discrete("",range=c(1,2),guide='none')+
+	  guides(colour=guide_legend(label.hjust=0))
 	
 	#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 	#ggsave("CayleyECDF.pdf",height=5,width=8)
@@ -213,9 +217,11 @@ if(Dist=='cayley'){
 	
 }else if(Dist=='fisher'){
 	
-	qplot(value,Prob,data=fullDF,colour=n,geom="line",lwd=I(1.125),xlab='x',ylab="F(x)")+
-		scale_colour_hue("",labels=c("n=10","n=50","n=100","n=300",expression(chi[3]^2)))+
-		facet_grid(.~kappa)+theme_bw()
+	qplot(value,Prob,data=fullDF,colour=n,lwd=Stat,geom="line",lwd=I(1.125),xlab='x',ylab="F(x)",xlim=c(0,15))+
+		scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"))+
+		facet_grid(.~kappa,labeller=label_both)+theme_bw()+coord_fixed(ratio=15/1)+
+	  scale_size_discrete("",range=c(1,2),guide='none')+
+	  guides(colour=guide_legend(label.hjust=0))
 	
 	#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 	#ggsave("FisherECDF.pdf",height=5,width=8)
@@ -223,10 +229,12 @@ if(Dist=='cayley'){
 	
 }else{
 	
-	qplot(value,Prob,data=fullDF,colour=n,geom="line",lwd=I(1.125),xlab='x',ylab="F(x)")+
-		scale_colour_hue("",labels=c("n=10","n=50","n=100","n=300",expression(chi[3]^2)))+
-		facet_grid(.~kappa)+theme_bw()
-	
+	qplot(value,Prob,data=fullDF,colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,15))+
+		scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"))+
+		facet_grid(.~kappa,labeller=label_both)+theme_bw()+coord_fixed(ratio=15/1)+
+	  guides(colour=guide_legend(label.hjust=0))+
+	  scale_size_discrete("",range=c(1,2),guide='none')
+
 	#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 	#ggsave("vonMisesECDF.pdf",height=5,width=8)
 	#write.csv(fullDF,"vonMisesECDF.csv")
