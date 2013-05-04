@@ -83,11 +83,9 @@ dist.SO3 <- function(R1, R2=id.SO3, method='projected' , p=1) {
     
     R2<-matrix(R2,3,3)
     
-    for(i in 1:nrow(R1)){
-      R1[i,]<-t(matrix(R1[i,],3,3))%*%R2
-    }
+    thetas<-rdistSO3C(R1,R2)
     
-    so3dist<-angle(as.SO3(R1))^p
+    so3dist<-thetas^p
     
   }else{
     stop("Incorrect usage of method argument.  Please choose intrinsic or projected.")
@@ -109,9 +107,7 @@ dist.Q4 <- function(Q1, Q2=id.Q4 ,method='projected', p=1) {
   
   if(method=='intrinsic'){
     
-    Q2<-matrix(Q2,nrow(Q1),4,byrow=T)
-    cp <- rowSums(Q1*Q2)
-    q4dist<-acos(2*cp*cp-1)^p
+    q4dist<-RdistC(Q1,Q2)^p
     
   }else if(method=='projected'){
     
@@ -155,19 +151,8 @@ angle.SO3 <- function(Rs){
 	
 	Rs<-formatSO3(Rs)
 	n<-nrow(Rs)
-	tr<-rep(0,n)
-	eps <- 10^-3
-	for(i in 1:n){
-  	##  trace of a rotation matrix has to be between -1 and 3. If not, this is due
-  	## to numerical inconcistencies, that we have to fix here
-  	tr[i]<-Rs[i,1]+Rs[i,5]+Rs[i,9]
-
-		if (tr[i] > 3+eps) print(sprintf("Warning: trace too large (> 3.0): %f ", tr))
-  		if (tr[i] < -1-eps) print(sprintf("Warning: trace too small (< -1.0): %f ", tr))
-		#  stopifnot(tr<3+eps, tr>-1-eps)
-  	tr[i] <- max(min(3, tr[i]), -1)
-	}
-  return(acos((tr-1)/2))
+	theta<-rdistSO3C(Rs,id.SO3)
+  return()
 }
 
 
@@ -347,20 +332,7 @@ exp.skew <- function(A) {
   if (sum(abs(A + t(A)))>10e-10) {
     stop("The input matrix must be skew symmetric.")
   }
-  
-  I <- diag(1, 3, 3)
-  AtA <- t(A) %*% A
-  a2 <- 0.5 * sum(diag(AtA))
-  a <- sqrt(a2)
-  
-  if (a == 0) {
-    return(I)
-  } else {
-    p1 <- (sin(a)/a) * A
-    p2 <- ((1 - cos(a))/a^2) * A %*% A
-    return(I + p1 + p2)
-  }
-  
+  return(expskewC(A))
 }
 
 
@@ -374,19 +346,9 @@ exp.skew <- function(A) {
 
 log.SO3 <- function(R) {
   
-	#R<-formatSO3(R)
+	R<-matrix(R,3,3)
+	return(logSO3C(R))
   
-  theta <- angle.SO3(R)  
-  R<-matrix(R,3,3)
-  
-  if (abs(cos(theta)) >= 1) {
-    return(diag(0, 3, 3))
-  } else {
-    
-    c <- theta/(2 * sin(theta))
-    mlog <- c * (R - t(R))
-    return(mlog)
-  }
 }
 
 #' Projection Procedure
@@ -406,14 +368,7 @@ log.SO3 <- function(R) {
 project.SO3 <- function(M) {
   
 	M<-matrix(M,3,3)
-  d <- svd(t(M) %*% M)
-  u <- d$u
-  
-  d1 <- 1/sqrt(d$d[1])
-  d2 <- 1/sqrt(d$d[2])
-  d3 <- sign(det(M))/sqrt(d$d[3])
-  
-  R <- M %*% u %*% diag(x = c(d1, d2, d3), 3, 3) %*% t(u)
+  R<-projectSO3C(M)
   return(R)
 }
 
