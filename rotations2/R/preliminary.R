@@ -83,7 +83,7 @@ dist.SO3 <- function(R1, R2=id.SO3, method='projected' , p=1) {
     
     R2<-matrix(R2,3,3)
     
-    thetas<-rdistSO3C(R1,R2)
+    thetas<-c(rdistSO3C(R1,R2))
     
     so3dist<-thetas^p
     
@@ -107,7 +107,7 @@ dist.Q4 <- function(Q1, Q2=id.Q4 ,method='projected', p=1) {
   
   if(method=='intrinsic'){
     
-    q4dist<-RdistC(Q1,Q2)^p
+    q4dist<-c(RdistC(Q1,Q2))^p
     
   }else if(method=='projected'){
     
@@ -151,8 +151,8 @@ angle.SO3 <- function(Rs){
 	
 	Rs<-formatSO3(Rs)
 	n<-nrow(Rs)
-	theta<-rdistSO3C(Rs,id.SO3)
-  return()
+	theta<-c(rdistSO3C(Rs,id.SO3))
+  return(theta)
 }
 
 
