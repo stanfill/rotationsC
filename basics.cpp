@@ -55,46 +55,46 @@ arma::mat SO3defaultC(arma::mat U, arma::vec theta) {
   return Rs;
 }
 
-/*NumericMatrix genrC <- function(NumericVector r, NumericMatrix S , int SO3) {
+// [[Rcpp::export]]
+arma::mat genrC(arma::vec r, arma::mat S , int SO3) {
 
-  
   int n=r.size(), i=0;
   
   NumericVector theta = runif(n,-1,1);
   theta = acos(theta);
     
-  NumericVector phi = runif(n, -pi, pi);
-  NumericMatrix u(n,3);
+  NumericVector phi = runif(n, -M_PI, M_PI);
+  arma::mat u(n,3);
   
   for(i=0;i<n;i++){
-    u[i,0]=sin(theta) * cos(phi);
-    u[i,1]=sin(theta) * sin(phi);
-    u[i,2]=cos(theta);
+    u(i,0)=sin(theta[i]) * cos(phi[i]);
+    u(i,1)=sin(theta[i]) * sin(phi[i]);
+    u(i,2)=cos(theta[i]);
   }  
+  
   if(SO3==1){
     
-  	if(is.null(S))
-  		S<-id.SO3
-  	S<-formatSO3(S)
-  	o<-SO3(u,r)
-  	o<-centeringSO3(o,t(S))
-  	
-  	class(o) <- "SO3"
-  	return(o)
-  	
+    int j;
+    arma::mat Rs(n,9);
+    arma::mat33 Rsi;
+
+    Rs = SO3defaultC(u, r);
+    
+    
+    for(i=0;i<n;i++){
+      
+      for(j=0;j<9;j++){
+        Rsi(j) = Rs(i,j);
+      }
+      
+      Rsi = S * Rsi;
+      Rs.row(i) = as<arma::rowvec>(wrap(Rsi));
+      
+    }
+      
+    return Rs;
   }else{
-  	
-  	if(is.null(S))
-  		S<-id.Q4
-  	
-  	S<-formatQ4(S)
-  	
-  	S[2:4]<--S[2:4]
-  	q<-matrix(c(cos(r/2),sin(r/2)*u),n,4)
-  	q<-centeringQ4(q,S)
-  	
-  	class(q)<-"Q4"
-  	return(q)
+    return u;
   }
 
-}*/
+}
