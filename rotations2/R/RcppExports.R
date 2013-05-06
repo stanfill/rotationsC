@@ -11,6 +11,16 @@ SO3defaultC <- function(U, theta) {
     .Call('rotations2_SO3defaultC', PACKAGE = 'rotations2', U, theta)
 }
 
+#' A function to create a rotation in quaternion form with axis U and angle theta
+Q4defaultC <- function(U, theta) {
+    .Call('rotations2_Q4defaultC', PACKAGE = 'rotations2', U, theta)
+}
+
+#' Make the 4-by-4 matrix used to perform quaternion multiplication
+pMatC <- function(p) {
+    .Call('rotations2_pMatC', PACKAGE = 'rotations2', p)
+}
+
 #' a function to generate UARS rotations with angles of rotations r and central direction S
 genrC <- function(r, S, SO3) {
     .Call('rotations2_genrC', PACKAGE = 'rotations2', r, S, SO3)

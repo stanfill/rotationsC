@@ -46,6 +46,43 @@ RcppExport SEXP rotations2_SO3defaultC(SEXP USEXP, SEXP thetaSEXP) {
         Rf_error(CHAR(Rf_asChar(__result)));
     return __result;
 }
+// Q4defaultC
+arma::mat Q4defaultC(arma::mat U, arma::vec theta);
+static SEXP rotations2_Q4defaultC_try(SEXP USEXP, SEXP thetaSEXP) {
+BEGIN_RCPP
+    arma::mat U = Rcpp::as<arma::mat >(USEXP);
+    arma::vec theta = Rcpp::as<arma::vec >(thetaSEXP);
+    arma::mat __result = Q4defaultC(U, theta);
+    return Rcpp::wrap(__result);
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations2_Q4defaultC(SEXP USEXP, SEXP thetaSEXP) {
+    Rcpp::RNGScope __rngScope;
+    SEXP __result = PROTECT(rotations2_Q4defaultC_try(USEXP, thetaSEXP));
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    UNPROTECT(1);
+    if (__isError)
+        Rf_error(CHAR(Rf_asChar(__result)));
+    return __result;
+}
+// pMatC
+arma::mat pMatC(arma::mat p);
+static SEXP rotations2_pMatC_try(SEXP pSEXP) {
+BEGIN_RCPP
+    arma::mat p = Rcpp::as<arma::mat >(pSEXP);
+    arma::mat __result = pMatC(p);
+    return Rcpp::wrap(__result);
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations2_pMatC(SEXP pSEXP) {
+    Rcpp::RNGScope __rngScope;
+    SEXP __result = PROTECT(rotations2_pMatC_try(pSEXP));
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    UNPROTECT(1);
+    if (__isError)
+        Rf_error(CHAR(Rf_asChar(__result)));
+    return __result;
+}
 // genrC
 arma::mat genrC(arma::vec r, arma::mat S, int SO3);
 static SEXP rotations2_genrC_try(SEXP rSEXP, SEXP SSEXP, SEXP SO3SEXP) {
@@ -373,6 +410,8 @@ static int rotations2_RcppExport_validate(const char* sig) {
     if (signatures.empty()) {
         signatures.insert("arma::mat(*eskewC)(arma::rowvec)");
         signatures.insert("arma::mat(*SO3defaultC)(arma::mat,arma::vec)");
+        signatures.insert("arma::mat(*Q4defaultC)(arma::mat,arma::vec)");
+        signatures.insert("arma::mat(*pMatC)(arma::mat)");
         signatures.insert("arma::mat(*genrC)(arma::vec,arma::mat,int)");
         signatures.insert("int(*checkQ4)(NumericMatrix)");
         signatures.insert("int(*checkSO3)(arma::mat)");
@@ -398,6 +437,8 @@ static int rotations2_RcppExport_validate(const char* sig) {
 RcppExport SEXP rotations2_RcppExport_registerCCallable() { 
     R_RegisterCCallable("rotations2", "rotations2_eskewC", (DL_FUNC)rotations2_eskewC_try);
     R_RegisterCCallable("rotations2", "rotations2_SO3defaultC", (DL_FUNC)rotations2_SO3defaultC_try);
+    R_RegisterCCallable("rotations2", "rotations2_Q4defaultC", (DL_FUNC)rotations2_Q4defaultC_try);
+    R_RegisterCCallable("rotations2", "rotations2_pMatC", (DL_FUNC)rotations2_pMatC_try);
     R_RegisterCCallable("rotations2", "rotations2_genrC", (DL_FUNC)rotations2_genrC_try);
     R_RegisterCCallable("rotations2", "rotations2_checkQ4", (DL_FUNC)rotations2_checkQ4_try);
     R_RegisterCCallable("rotations2", "rotations2_checkSO3", (DL_FUNC)rotations2_checkSO3_try);

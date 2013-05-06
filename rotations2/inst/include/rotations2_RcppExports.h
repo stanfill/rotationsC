@@ -54,6 +54,34 @@ namespace rotations2 {
         return Rcpp::as<arma::mat >(__result);
     }
 
+    inline arma::mat Q4defaultC(arma::mat U, arma::vec theta) {
+        typedef SEXP(*Ptr_Q4defaultC)(SEXP,SEXP);
+        static Ptr_Q4defaultC p_Q4defaultC = NULL;
+        if (p_Q4defaultC == NULL) {
+            validateSignature("arma::mat(*Q4defaultC)(arma::mat,arma::vec)");
+            p_Q4defaultC = (Ptr_Q4defaultC)R_GetCCallable("rotations2", "rotations2_Q4defaultC");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_Q4defaultC(Rcpp::wrap(U), Rcpp::wrap(theta));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<arma::mat >(__result);
+    }
+
+    inline arma::mat pMatC(arma::mat p) {
+        typedef SEXP(*Ptr_pMatC)(SEXP);
+        static Ptr_pMatC p_pMatC = NULL;
+        if (p_pMatC == NULL) {
+            validateSignature("arma::mat(*pMatC)(arma::mat)");
+            p_pMatC = (Ptr_pMatC)R_GetCCallable("rotations2", "rotations2_pMatC");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_pMatC(Rcpp::wrap(p));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<arma::mat >(__result);
+    }
+
     inline arma::mat genrC(arma::vec r, arma::mat S, int SO3) {
         typedef SEXP(*Ptr_genrC)(SEXP,SEXP,SEXP);
         static Ptr_genrC p_genrC = NULL;

@@ -45,23 +45,11 @@ Q4<-function(U,...){
 #' @S3method Q4 default
 #' @family Q4
 
-Q4.default <- function(U,theta=NULL){
-	
-	n<-length(U)/3
-	
-	if(n%%1!=0)
-		stop("This functions only works in three dimensions.")	
+Q4.default <- function(U,theta){	
 	
 	U<-matrix(U,n,3)
 	
-	ulen<-sqrt(rowSums(U^2)) 
-	
-	if(is.null(theta)){ 
-		theta<-ulen%%(pi)
-		U<-U/ulen
-	}
-	
-	x <- cbind(cos(theta/2), sin(theta/2) * U)
+	x <- Q4defaultC(U,theta)
 
 	class(x)<-"Q4"
   return(x)

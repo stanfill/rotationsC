@@ -65,6 +65,9 @@ arma::mat Q4defaultC(arma::mat U, arma::vec theta){
 	arma::rowvec stheta(3);
 	
 	for(i=0;i<n;i++){
+		
+		U.row(i) = U.row(i)/norm(U.row(i),2);
+		
 		q(i,0) = cos(theta(i)/2);
 		stheta = sin(theta(i)/2)*U.row(i);
 		
@@ -77,19 +80,33 @@ arma::mat Q4defaultC(arma::mat U, arma::vec theta){
   return q;
 }
 
-/*//' Make the 4-by-4 matrix used to perform quaternion multiplication
+//' Make the 4-by-4 matrix used to perform quaternion multiplication
 // [[Rcpp::export]]
-arma::mat pMatC(arma::vec p){
+arma::mat pMatC(arma::mat p){
 
 	arma::mat Pmat(4,4);
 	Pmat.zeros();
+	arma::mat revI(4,4);
+	
+	p.reshape(4,1);
 	
 	Pmat.col(0)=p;
-	Pmat[,2]<-p[c(2,1,4,3)]*c(-1,1,1,-1)
-	Pmat[,3]<-c(-p[3:4],p[1:2])
-	Pmat[,4]<-p[4:1]*c(-1,1,-1,1)
+
+	revI.zeros();
+	revI(0,1) = -1;revI(1,0) = 1;	revI(2,3) = 1; revI(3,2) = -1;
+	Pmat.col(1) = revI*p;
+
+	revI.zeros();
+	revI(0,2) = -1;revI(1,3) = -1;	revI(2,0) = 1; revI(3,1) = 1;
+	Pmat.col(2) = revI*p;
+
+	revI.zeros();
+	revI(0,3) = -1;revI(1,2) = 1;	revI(2,1) = -1; revI(3,0) = 1;
+	Pmat.col(3)=revI*p;
+	
+
 	return Pmat;
-}*/
+}
 
 //' a function to generate UARS rotations with angles of rotations r and central direction S
 // [[Rcpp::export]]
@@ -134,7 +151,12 @@ arma::mat genrC(arma::vec r, arma::mat S , int SO3) {
   }else{
   	
   	arma::mat q(n,4);
+  	arma::mat Smat;
+  	Smat = pMatC(S);
+  	arma::vec qi(4);
   	q = Q4defaultC(u,r);
+ 		
+ 		q = q*Smat.t();
   	
     return q;
     
