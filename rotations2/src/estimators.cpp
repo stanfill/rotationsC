@@ -28,7 +28,6 @@ int checkQ4(NumericMatrix Q){
 		}		
 	}
 		
-
 	return 0;
 }
 

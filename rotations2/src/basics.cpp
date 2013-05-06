@@ -1,6 +1,6 @@
 #include <RcppArmadillo.h>   
 #include <Rcpp.h>
-//#include "../inst/include/rotations2.h"
+
 using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]] 
 // [[Rcpp::interfaces(r, cpp)]]

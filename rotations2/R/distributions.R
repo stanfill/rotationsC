@@ -434,7 +434,7 @@ puars<-function(os,S=diag(3),kappa=1,pangle=NULL,...){
 ruars<-function(n,rangle,S=NULL,kappa=1,space="SO3",...){
   
   r<-rangle(n,kappa,...)
-  Rs<-genR(r,S,space)
+  Rs<-genrC2(r,S,space)
   
   return(Rs)
 }

@@ -47,7 +47,18 @@ Q4<-function(U,...){
 
 Q4.default <- function(U,theta){	
 	
+	n<-length(U)/3
+	
+	if(n%%1!=0)
+		stop("This functions only works in three dimensions.")	
+	
 	U<-matrix(U,n,3)
+	
+	ulen<-sqrt(rowSums(U^2)) 
+	
+	if(is.null(theta)){ 
+		theta<-ulen%%pi
+	}
 	
 	x <- Q4defaultC(U,theta)
 
@@ -141,22 +152,9 @@ SO3.default <- function(U, theta=NULL) {
   
   if(is.null(theta)){ 
   	theta<-ulen%%(pi)
-  	
-  	#if(theta>pi)
-  	#	theta<-2*pi-theta
   }
 
-	R<-matrix(NA,n,9)
-	
-  for(i in 1:n){
-  	
-  	if(ulen[i]!=0)
-  		U[i,]<-U[i,]/ulen[i]
-  	
- 		P <- U[i,] %*% t(U[i,])
-   
-  	R[i,] <- P + (diag(3) - P) * cos(theta[i]) + eskew(U[i,]) * sin(theta[i])
-  }
+	R<-SO3defaultC(U,theta)
  		
  	class(R) <- "SO3"
   return(R)

@@ -44,12 +44,12 @@
   r)/[\Gamma(\kappa+1/2)2^(\kappa+1)\sqrt\pi].}
 }
 \references{
-  Le<U+00F3>n C, <U+00E9> JM and Rivest L (2006). "A
-  statistical model for random rotations." _Journal of
-  Multivariate Analysis_, *97*(2), pp. 412-430.
+  León C, é JM and Rivest L (2006). "A statistical model
+  for random rotations." _Journal of Multivariate
+  Analysis_, *97*(2), pp. 412-430.
 
   Schaeben H (1997). "A Simple Standard Orientation Density
-  Function: The Hyperspherical de la Vall<U+00E9>e Poussin
+  Function: The Hyperspherical de la Vallée Poussin
   Kernel." _Phys. Stat. Sol. (B)_, *200*, pp. 367-376.
 }
 \seealso{
