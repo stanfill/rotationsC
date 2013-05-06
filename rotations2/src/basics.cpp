@@ -5,6 +5,7 @@ using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]] 
 // [[Rcpp::interfaces(r, cpp)]]
 
+//' make u into a skew-symmetric matrix
 // [[Rcpp::export]]
 arma::mat eskewC(arma::rowvec U) {
   
@@ -25,12 +26,10 @@ arma::mat eskewC(arma::rowvec U) {
   res(1,2) = -u;
   res(2,1) = u;
   
-  /*res <- matrix((-1) *  c(0, -w, v,
-                          w, 0, -u,
-                          -v, u, 0), ncol = 3)*/
   return res;
 }
 
+//' generate a rotation matrix with axis and angles of rotation u and theta, respectively
 // [[Rcpp::export]]
 arma::mat SO3defaultC(arma::mat U, arma::vec theta) {
   
@@ -38,7 +37,6 @@ arma::mat SO3defaultC(arma::mat U, arma::vec theta) {
   //each row of U needs to be length 1
   
   int n=U.n_rows, i=0;	
-  //int n=1, i=0;
 	arma::mat Ri(3,3), Rs(n,9), I(3,3), SS(3,3);
   Ri.zeros(); Rs.zeros(); I.eye();
   arma::rowvec Rir;
@@ -55,6 +53,45 @@ arma::mat SO3defaultC(arma::mat U, arma::vec theta) {
   return Rs;
 }
 
+
+//' A function to create a rotation in quaternion form with axis U and angle theta
+// [[Rcpp::export]]
+arma::mat Q4defaultC(arma::mat U, arma::vec theta){
+	
+	
+	int n = U.n_rows, i=0;
+	arma::mat q(n,4);
+	q.zeros();
+	arma::rowvec stheta(3);
+	
+	for(i=0;i<n;i++){
+		q(i,0) = cos(theta(i)/2);
+		stheta = sin(theta(i)/2)*U.row(i);
+		
+		q(i,1) = stheta(0);
+		q(i,2) = stheta(1);
+		q(i,3) = stheta(2);
+		
+	}
+	
+  return q;
+}
+
+/*//' Make the 4-by-4 matrix used to perform quaternion multiplication
+// [[Rcpp::export]]
+arma::mat pMatC(arma::vec p){
+
+	arma::mat Pmat(4,4);
+	Pmat.zeros();
+	
+	Pmat.col(0)=p;
+	Pmat[,2]<-p[c(2,1,4,3)]*c(-1,1,1,-1)
+	Pmat[,3]<-c(-p[3:4],p[1:2])
+	Pmat[,4]<-p[4:1]*c(-1,1,-1,1)
+	return Pmat;
+}*/
+
+//' a function to generate UARS rotations with angles of rotations r and central direction S
 // [[Rcpp::export]]
 arma::mat genrC(arma::vec r, arma::mat S , int SO3) {
 
@@ -93,8 +130,14 @@ arma::mat genrC(arma::vec r, arma::mat S , int SO3) {
     }
       
     return Rs;
+    
   }else{
-    return u;
+  	
+  	arma::mat q(n,4);
+  	q = Q4defaultC(u,r);
+  	
+    return q;
+    
   }
 
 }

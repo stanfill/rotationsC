@@ -272,31 +272,21 @@ eskew <- function(U) {
 #' @export
 #' @examples
 #' r<-rvmises(20,0.01)
-#' genR(r)
+#' genrC2(r)
 
-genR <- function(r, S = NULL, space='SO3') {
+genrC2 <- function(r, S = NULL, space='SO3') {
   
   if(!(space %in% c("SO3","Q4")))
     stop("Incorrect space argument.  Options are: SO3 and Q4. ")
   
-  n<-length(r)
-  
-  # Generate angles theta from a uniform distribution from 0 to pi
-  
-  theta <- acos(runif(n, -1, 1))
-  
-  # Generate angles phi from a uniform distribution from -pi to pi
-  
-  phi <- runif(n, -pi, pi)
-  u <- matrix(c(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta)),length(r),3)
   
   if(space=="SO3"){
   	
   	if(is.null(S))
   		S<-id.SO3
-  	S<-formatSO3(S)
-  	o<-SO3(u,r)
-  	o<-centeringSO3(o,t(S))
+  	
+  	S<-matrix(S,3,3)
+  	o<-genrC(r,S,1)
   	
   	class(o) <- "SO3"
   	return(o)
@@ -306,11 +296,9 @@ genR <- function(r, S = NULL, space='SO3') {
   	if(is.null(S))
   		S<-id.Q4
   	
-  	S<-formatQ4(S)
+  	S<-matrix(S,1,4)
   	
-  	S[2:4]<--S[2:4]
-  	q<-matrix(c(cos(r/2),sin(r/2)*u),n,4)
-  	q<-centeringQ4(q,S)
+  	q<-genrC(r,S,2)
   	
   	class(q)<-"Q4"
   	return(q)

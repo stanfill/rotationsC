@@ -26,6 +26,48 @@ namespace rotations2 {
         }
     }
 
+    inline arma::mat eskewC(arma::rowvec U) {
+        typedef SEXP(*Ptr_eskewC)(SEXP);
+        static Ptr_eskewC p_eskewC = NULL;
+        if (p_eskewC == NULL) {
+            validateSignature("arma::mat(*eskewC)(arma::rowvec)");
+            p_eskewC = (Ptr_eskewC)R_GetCCallable("rotations2", "rotations2_eskewC");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_eskewC(Rcpp::wrap(U));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<arma::mat >(__result);
+    }
+
+    inline arma::mat SO3defaultC(arma::mat U, arma::vec theta) {
+        typedef SEXP(*Ptr_SO3defaultC)(SEXP,SEXP);
+        static Ptr_SO3defaultC p_SO3defaultC = NULL;
+        if (p_SO3defaultC == NULL) {
+            validateSignature("arma::mat(*SO3defaultC)(arma::mat,arma::vec)");
+            p_SO3defaultC = (Ptr_SO3defaultC)R_GetCCallable("rotations2", "rotations2_SO3defaultC");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_SO3defaultC(Rcpp::wrap(U), Rcpp::wrap(theta));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<arma::mat >(__result);
+    }
+
+    inline arma::mat genrC(arma::vec r, arma::mat S, int SO3) {
+        typedef SEXP(*Ptr_genrC)(SEXP,SEXP,SEXP);
+        static Ptr_genrC p_genrC = NULL;
+        if (p_genrC == NULL) {
+            validateSignature("arma::mat(*genrC)(arma::vec,arma::mat,int)");
+            p_genrC = (Ptr_genrC)R_GetCCallable("rotations2", "rotations2_genrC");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_genrC(Rcpp::wrap(r), Rcpp::wrap(S), Rcpp::wrap(SO3));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<arma::mat >(__result);
+    }
+
     inline int checkQ4(NumericMatrix Q) {
         typedef SEXP(*Ptr_checkQ4)(SEXP);
         static Ptr_checkQ4 p_checkQ4 = NULL;
