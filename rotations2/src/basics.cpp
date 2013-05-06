@@ -33,8 +33,8 @@ arma::mat eskewC(arma::rowvec U) {
 // [[Rcpp::export]]
 arma::mat SO3defaultC(arma::mat U, arma::vec theta) {
   
-  //This function expects U to be n-by-3 and theta to be a vector of length n 
-  //each row of U needs to be length 1
+  //U is an n-by-3 matrix, each row is a misorentation axis
+  //theta is a vector of length n, each item is a misorientation angle
   
   int n=U.n_rows, i=0;	
 	arma::mat Ri(3,3), Rs(n,9), I(3,3), SS(3,3);
@@ -42,12 +42,10 @@ arma::mat SO3defaultC(arma::mat U, arma::vec theta) {
   arma::rowvec Rir;
 
   for(i=0;i<n;i++){
-  	
  		Ri = U.row(i).t() * U.row(i);
     SS = eskewC(U.row(i));
   	Ri = Ri + (I - Ri) * cos(theta[i]) +  SS * sin(theta[i]);
     Rs.row(i) = as<arma::rowvec>(wrap(Ri));
-
   }
  		
   return Rs;
@@ -57,7 +55,6 @@ arma::mat SO3defaultC(arma::mat U, arma::vec theta) {
 //' A function to create a rotation in quaternion form with axis U and angle theta
 // [[Rcpp::export]]
 arma::mat Q4defaultC(arma::mat U, arma::vec theta){
-	
 	
 	int n = U.n_rows, i=0;
 	arma::mat q(n,4);
@@ -111,7 +108,9 @@ arma::mat pMatC(arma::mat p){
 //' a function to generate UARS rotations with angles of rotations r and central direction S
 // [[Rcpp::export]]
 arma::mat genrC(arma::vec r, arma::mat S , int SO3) {
-
+	// r is a vector of angles
+	// S is the central direction
+	// SO3 is an integer, 1 means SO3, anything else gives
   int n=r.size(), i=0;
   
   NumericVector theta = runif(n,-1,1);
