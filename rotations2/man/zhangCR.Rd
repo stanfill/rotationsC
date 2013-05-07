@@ -4,28 +4,24 @@
 \alias{zhangCR.SO3}
 \title{Zhang CR Method}
 \usage{
-  zhangCR(Qs, a, m, pivot, estimator)
+  zhangCR(Qs, alpha, m, pivot)
 
-  \method{zhangCR}{SO3} (Rs, a, m = 300, pivot = T,
-    estimator = "mean")
+  \method{zhangCR}{SO3} (Rs, alpha, m = 300, pivot = T)
 
-  \method{zhangCR}{Q4} (Qs, alpha, m = 300, pivot = T,
-    estimator = "mean")
+  \method{zhangCR}{Q4} (Qs, alpha, m = 300, pivot = T)
 }
 \arguments{
   \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
   row corresponds to a random rotation in matrix (p=9) or
   quaternion form (p=4)}
 
-  \item{a}{The alpha level desired, e.g. 0.95 or 0.90}
+  \item{alpha}{The alpha level desired, e.g. 0.95 or 0.90}
 
   \item{m}{Number of replicates to use to estiamte cut
   point}
 
   \item{pivot}{should the pivotal (T) or non-pivotal (F)
   method be used}
-
-  \item{estimator}{Mean or median}
 }
 \value{
   radius of the confidence region centered at the projected

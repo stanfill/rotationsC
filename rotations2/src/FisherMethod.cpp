@@ -7,7 +7,7 @@ using namespace Rcpp;
 // [[Rcpp::interfaces(r, cpp)]]
 
 
-
+//' Compute a singe test statistic for the Fisher mean polar axis method
 // [[Rcpp::export]]  
 double fisherAxisC(arma::mat Qs, arma::rowvec Qhat){
 
@@ -55,7 +55,7 @@ double fisherAxisC(arma::mat Qs, arma::rowvec Qhat){
 }
 
 
-
+//' Use the Fisher mean polar axis method
 //[[Rcpp::export]]
 arma::vec fisherBootC(arma::mat Qs, int m){
 

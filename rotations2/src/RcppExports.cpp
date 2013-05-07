@@ -365,6 +365,25 @@ RcppExport SEXP rotations2_RdistC(SEXP Q1SEXP, SEXP Q2SEXP) {
         Rf_error(CHAR(Rf_asChar(__result)));
     return __result;
 }
+// oneRdistC
+double oneRdistC(NumericMatrix Q1, NumericVector Q2);
+static SEXP rotations2_oneRdistC_try(SEXP Q1SEXP, SEXP Q2SEXP) {
+BEGIN_RCPP
+    NumericMatrix Q1 = Rcpp::as<NumericMatrix >(Q1SEXP);
+    NumericVector Q2 = Rcpp::as<NumericVector >(Q2SEXP);
+    double __result = oneRdistC(Q1, Q2);
+    return Rcpp::wrap(__result);
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations2_oneRdistC(SEXP Q1SEXP, SEXP Q2SEXP) {
+    Rcpp::RNGScope __rngScope;
+    SEXP __result = PROTECT(rotations2_oneRdistC_try(Q1SEXP, Q2SEXP));
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    UNPROTECT(1);
+    if (__isError)
+        Rf_error(CHAR(Rf_asChar(__result)));
+    return __result;
+}
 // cdfunsC
 NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat);
 static SEXP rotations2_cdfunsC_try(SEXP QsSEXP, SEXP QhatSEXP) {
@@ -384,19 +403,19 @@ RcppExport SEXP rotations2_cdfunsC(SEXP QsSEXP, SEXP QhatSEXP) {
         Rf_error(CHAR(Rf_asChar(__result)));
     return __result;
 }
-// bootQhat
-NumericVector bootQhat(NumericMatrix Q, int m);
-static SEXP rotations2_bootQhat_try(SEXP QSEXP, SEXP mSEXP) {
+// zhangQ4
+NumericVector zhangQ4(NumericMatrix Q, int m);
+static SEXP rotations2_zhangQ4_try(SEXP QSEXP, SEXP mSEXP) {
 BEGIN_RCPP
     NumericMatrix Q = Rcpp::as<NumericMatrix >(QSEXP);
     int m = Rcpp::as<int >(mSEXP);
-    NumericVector __result = bootQhat(Q, m);
+    NumericVector __result = zhangQ4(Q, m);
     return Rcpp::wrap(__result);
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP rotations2_bootQhat(SEXP QSEXP, SEXP mSEXP) {
+RcppExport SEXP rotations2_zhangQ4(SEXP QSEXP, SEXP mSEXP) {
     Rcpp::RNGScope __rngScope;
-    SEXP __result = PROTECT(rotations2_bootQhat_try(QSEXP, mSEXP));
+    SEXP __result = PROTECT(rotations2_zhangQ4_try(QSEXP, mSEXP));
     Rboolean __isError = Rf_inherits(__result, "try-error");
     UNPROTECT(1);
     if (__isError)
@@ -427,8 +446,9 @@ static int rotations2_RcppExport_validate(const char* sig) {
         signatures.insert("double(*fisherAxisC)(arma::mat,arma::rowvec)");
         signatures.insert("arma::vec(*fisherBootC)(arma::mat,int)");
         signatures.insert("NumericVector(*RdistC)(NumericMatrix,NumericVector)");
+        signatures.insert("double(*oneRdistC)(NumericMatrix,NumericVector)");
         signatures.insert("NumericVector(*cdfunsC)(NumericMatrix,NumericVector)");
-        signatures.insert("NumericVector(*bootQhat)(NumericMatrix,int)");
+        signatures.insert("NumericVector(*zhangQ4)(NumericMatrix,int)");
     }
     return signatures.find(sig) != signatures.end();
 }
@@ -454,8 +474,9 @@ RcppExport SEXP rotations2_RcppExport_registerCCallable() {
     R_RegisterCCallable("rotations2", "rotations2_fisherAxisC", (DL_FUNC)rotations2_fisherAxisC_try);
     R_RegisterCCallable("rotations2", "rotations2_fisherBootC", (DL_FUNC)rotations2_fisherBootC_try);
     R_RegisterCCallable("rotations2", "rotations2_RdistC", (DL_FUNC)rotations2_RdistC_try);
+    R_RegisterCCallable("rotations2", "rotations2_oneRdistC", (DL_FUNC)rotations2_oneRdistC_try);
     R_RegisterCCallable("rotations2", "rotations2_cdfunsC", (DL_FUNC)rotations2_cdfunsC_try);
-    R_RegisterCCallable("rotations2", "rotations2_bootQhat", (DL_FUNC)rotations2_bootQhat_try);
+    R_RegisterCCallable("rotations2", "rotations2_zhangQ4", (DL_FUNC)rotations2_zhangQ4_try);
     R_RegisterCCallable("rotations2", "rotations2_RcppExport_validate", (DL_FUNC)rotations2_RcppExport_validate);
     return R_NilValue;
 }

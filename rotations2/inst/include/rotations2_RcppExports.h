@@ -292,6 +292,20 @@ namespace rotations2 {
         return Rcpp::as<NumericVector >(__result);
     }
 
+    inline double oneRdistC(NumericMatrix Q1, NumericVector Q2) {
+        typedef SEXP(*Ptr_oneRdistC)(SEXP,SEXP);
+        static Ptr_oneRdistC p_oneRdistC = NULL;
+        if (p_oneRdistC == NULL) {
+            validateSignature("double(*oneRdistC)(NumericMatrix,NumericVector)");
+            p_oneRdistC = (Ptr_oneRdistC)R_GetCCallable("rotations2", "rotations2_oneRdistC");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_oneRdistC(Rcpp::wrap(Q1), Rcpp::wrap(Q2));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<double >(__result);
+    }
+
     inline NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat) {
         typedef SEXP(*Ptr_cdfunsC)(SEXP,SEXP);
         static Ptr_cdfunsC p_cdfunsC = NULL;
@@ -306,15 +320,15 @@ namespace rotations2 {
         return Rcpp::as<NumericVector >(__result);
     }
 
-    inline NumericVector bootQhat(NumericMatrix Q, int m) {
-        typedef SEXP(*Ptr_bootQhat)(SEXP,SEXP);
-        static Ptr_bootQhat p_bootQhat = NULL;
-        if (p_bootQhat == NULL) {
-            validateSignature("NumericVector(*bootQhat)(NumericMatrix,int)");
-            p_bootQhat = (Ptr_bootQhat)R_GetCCallable("rotations2", "rotations2_bootQhat");
+    inline NumericVector zhangQ4(NumericMatrix Q, int m) {
+        typedef SEXP(*Ptr_zhangQ4)(SEXP,SEXP);
+        static Ptr_zhangQ4 p_zhangQ4 = NULL;
+        if (p_zhangQ4 == NULL) {
+            validateSignature("NumericVector(*zhangQ4)(NumericMatrix,int)");
+            p_zhangQ4 = (Ptr_zhangQ4)R_GetCCallable("rotations2", "rotations2_zhangQ4");
         }
         RNGScope __rngScope;
-        RObject __result = p_bootQhat(Rcpp::wrap(Q), Rcpp::wrap(m));
+        RObject __result = p_zhangQ4(Rcpp::wrap(Q), Rcpp::wrap(m));
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<NumericVector >(__result);

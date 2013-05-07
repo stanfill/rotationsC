@@ -151,17 +151,16 @@ rancourtCR.SO3<-function(Rs,a){
 #' Find the radius of a \eqn{100\alpha%} confidence region for the projected mean
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
-#' @param a The alpha level desired, e.g. 0.95 or 0.90
+#' @param alpha The alpha level desired, e.g. 0.95 or 0.90
 #' @param m Number of replicates to use to estiamte cut point
 #' @param pivot should the pivotal (T) or non-pivotal (F) method be used
-#' @param estimator Mean or median
 #' @return radius of the confidence region centered at the projected mean
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
 #' region(Rs,method='zhang',alpha=0.9)
 
-zhangCR<-function(Qs,a,m,pivot,estimator){
+zhangCR<-function(Qs,alpha,m,pivot){
 	UseMethod("zhangCR")
 }
 
@@ -170,106 +169,43 @@ zhangCR<-function(Qs,a,m,pivot,estimator){
 #' @method zhangCR SO3
 #' @S3method zhangCR SO3
 
-zhangCR.SO3<-function(Rs,a,m=300,pivot=T,estimator='mean'){
+zhangCR.SO3<-function(Rs,alpha,m=300,pivot=T){
 	
 	#Rs is a n-by-9 matrix where each row is an 3-by-3 rotation matrix
 	#m is the number of resamples to find q_1-a
-	#a is the level of confidence desired, e.g. 0.95 or 0.90
+	#alpha is the level of confidence desired, e.g. 0.95 or 0.90
 	#pivot logical; should the pivotal (T) bootstrap be used or nonpivotal (F)
 	
-	Rs<-formatSO3(Rs)
-	n<-nrow(Rs)
-  
-  if(estimator=='mean'){
-	  Shat<-mean(Rs)
-	}else{
-    Shat<-median(Rs,type='intrinsic')
-  }
-
-	tstar<-rep(0,m)
-	
-	if(pivot){
-		
-		tstarPivot<-rep(0,m)
-	
-		for(i in 1:m){
-			
-			Ostar<-as.SO3(Rs[sample(n,replace=T),])
-      
-			if(estimator=='mean'){
-			  ShatStar<-mean(Ostar)
-			}else{
-			  ShatStar<-median(Ostar,type='intrinsic')
-			}
-      
-			tstar[i]<-3-sum(diag(t(Shat)%*%ShatStar))
-		
-			cd<-cdfuns(Ostar,ShatStar)
-		
-			tstarPivot[i]<-tstar[i]*2*n*cd$d^2/cd$c
-		
-		}
-		
-		cdhat<-cdfuns(Rs,Shat)
-		
-		qhat<-as.numeric(quantile(tstarPivot,a))*cdhat$c/(2*n*cdhat$d^2)
-		
-		return(acos(1-qhat/2))
-		
-	}else{
-		
-		for(i in 1:m){
-			
-			Ostar<-as.SO3(Rs[sample(n,replace=T),])
-			
-			if(estimator=='mean'){
-			  ShatStar<-mean(Ostar)
-			}else{
-			  ShatStar<-median(Ostar,type='intrinsic')
-			}
-			
-			tstar[i]<-3-sum(diag(t(Shat)%*%ShatStar))
-			
-		}
-		
-		qhat<-as.numeric(quantile(tstar,a))
-		
-		return(acos(1-qhat/2))
-	}
-	
+  Rs<-formatSO3(Rs)
+  Qs<-Q4(Rs)
+  rad<-zhangCR.Q4(Rs,alpha,m)
+	return(rad)
 }
 
 #' @rdname zhangCR
 #' @method zhangCR Q4
 #' @S3method zhangCR Q4
 
-zhangCR.Q4<-function(Qs,alpha,m=300,pivot=T,estimator='mean'){
+zhangCR.Q4<-function(Qs,alpha,m=300,pivot=T){
 	
-	Rs<-SO3(Qs)
+	Qs<-formatQ4(Qs)
+	n<-nrow(Qs)
+  stats<-zhangQ4(Qs,m)
+	Shat<-mean(Qs)
+  cdhat<-cdfuns(Qs,Shat)
+  
+	rad<-as.numeric(quantile(stats,alpha))*cdhat$c/(2*n*cdhat$d^2)
 	
-	r<-zhangCR.SO3(Rs,alpha,m,pivot,estimator)
-	
-	return(r)
+	return(rad)
 }
 
 
-cdfuns<-function(Rs,Shat){
-	Rs<-formatSO3(Rs)
-	n<-nrow(Rs)
-	c<-0
-	d<-0
+cdfuns<-function(Qs,Shat){
+  
+  Shat<-matrix(Shat,4,1)
+	cd<-cdfunsC(Qs,Shat)
 	
-	StO<-centeringSO3(Rs,Shat)
-	
-	for(i in 1:n){
-		StOi<-matrix(StO[i,],3,3)
-		c<-c+(3-sum(diag(StOi%*%StOi)))
-		d<-d+sum(diag(StOi))
-	}
-	
-	c<-c/(6*n)
-	d<-d/(3*n)
-	return(list(c=c,d=d))
+	return(list(c=cd[1],d=cd[2]))
 }
 
 
@@ -281,7 +217,7 @@ cdfuns<-function(Rs,Shat){
 #' symmetry and is therefore conservative.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
-#' @param a The alpha level desired, e.g. 0.95 or 0.90
+#' @param alpha The alpha level desired, e.g. 0.95 or 0.90
 #' @param boot Should the bootstrap or normal theory critical value be used
 #' @param m number of bootstrap replicates to use to estimate critical value
 #' @return radius of the confidence region centered at the projected mean
@@ -291,7 +227,7 @@ cdfuns<-function(Rs,Shat){
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
 #' region(Qs,method='fisher',alpha=0.9)
 
-fisherCR<-function(Qs,a,boot,m){
+fisherCR<-function(Qs,alpha,boot,m){
 	UseMethod("fisherCR")
 }
 
@@ -300,21 +236,15 @@ fisherCR<-function(Qs,a,boot,m){
 #' @method fisherCR Q4
 #' @S3method fisherCR Q4
 
-fisherCR.Q4<-function(Qs,a,boot=T,m=300){
+fisherCR.Q4<-function(Qs,alpha,boot=T,m=300){
 	
 	Qs<-formatQ4(Qs)
-	n<-nrow(Qs)
-	mhat<-mean(Qs)
 	
 	if(boot){
-		Tstats<-rep(0,m)
-	
-		for(i in 1:m){
-			Qsi<-as.Q4(Qs[sample(n,replace=T),])
-			Tstats[i]<-fisherAxis(Qsi,mhat)
-		}
-	
-		qhat<-as.numeric(quantile(Tstats,a))
+    
+	  Tstats <- fisherBootC(Qs,m)
+    
+		qhat<-as.numeric(quantile(Tstats,alpha))
 		
 	}else{
 		
@@ -327,35 +257,35 @@ fisherCR.Q4<-function(Qs,a,boot=T,m=300){
 	return(rsym)
 }
 
-fisherAxis<-function(Qs,Shat){
-	
-	n<-nrow(Qs)
-	svdQs<-svd(t(Qs)%*%Qs/n)
-	mhat<-svdQs$v[,1]
-	Mhat<-t(svdQs$v[,-1])
-	etad<-svdQs$d[1]
-	etas<-svdQs$d[-1]
-	G<-matrix(0,3,3)
-	
-	for(j in 1:3){
-		for(k in j:3){
-			denom<-1/(n*(etad-etas[j])*(etad-etas[k]))
-			
-			for(i in 1:n){
-				G[j,k]<-G[k,j]<-G[j,k]+(Mhat[j,]%*%Qs[i,])*(Mhat[k,]%*%Qs[i,])*(mhat%*%Qs[i,])^2*denom
-			}
-		}
-	}
-	
-	Tm<-n*Shat%*%t(Mhat)%*%solve(G)%*%Mhat%*%t(Shat)
-	return(Tm)
-}
+# fisherAxis<-function(Qs,Shat){
+# 	
+# 	n<-nrow(Qs)
+# 	svdQs<-svd(t(Qs)%*%Qs/n)
+# 	mhat<-svdQs$v[,1]
+# 	Mhat<-t(svdQs$v[,-1])
+# 	etad<-svdQs$d[1]
+# 	etas<-svdQs$d[-1]
+# 	G<-matrix(0,3,3)
+# 	
+# 	for(j in 1:3){
+# 		for(k in j:3){
+# 			denom<-1/(n*(etad-etas[j])*(etad-etas[k]))
+# 			
+# 			for(i in 1:n){
+# 				G[j,k]<-G[k,j]<-G[j,k]+(Mhat[j,]%*%Qs[i,])*(Mhat[k,]%*%Qs[i,])*(mhat%*%Qs[i,])^2*denom
+# 			}
+# 		}
+# 	}
+# 	
+# 	Tm<-n*Shat%*%t(Mhat)%*%solve(G)%*%Mhat%*%t(Shat)
+# 	return(Tm)
+# }
 
 optimAxis<-function(r,Qs,cut){
 	
-	Shat<-Q4(axis2(mean(Qs)),r)
+	Shat<-Q4(axis2(meanC(Qs)),r)
 	
-	Tm<-fisherAxis(Qs,Shat)
+	Tm<-fisherAxisC(Qs,Shat)
 	
 	return((Tm-cut)^2)
 }
@@ -365,10 +295,10 @@ optimAxis<-function(r,Qs,cut){
 #' @method fisherCR SO3
 #' @S3method fisherCR SO3
 
-fisherCR.SO3<-function(Rs,a,boot=T,m=300){
+fisherCR.SO3<-function(Rs,alpha,boot=T,m=300){
 	
 	Qs<-Q4(Rs)
-	r<-fisherCR.Q4(Qs,a,boot,m)
+	r<-fisherCR.Q4(Qs,alpha,boot,m)
 	
 	return(r)
 }

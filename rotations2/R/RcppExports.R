@@ -89,16 +89,24 @@ fisherBootC <- function(Qs, m) {
     .Call('rotations2_fisherBootC', PACKAGE = 'rotations2', Qs, m)
 }
 
+#' Compute the rotational distance from each row of Q1 and Q2
 RdistC <- function(Q1, Q2) {
     .Call('rotations2_RdistC', PACKAGE = 'rotations2', Q1, Q2)
 }
 
+#' Compute the rotational distance between Q1 and Q2
+oneRdistC <- function(Q1, Q2) {
+    .Call('rotations2_oneRdistC', PACKAGE = 'rotations2', Q1, Q2)
+}
+
+#' This estimates c=2E(1-cos(r^2))/3 and d=E(1+2cos(r))/3 from a sample
 cdfunsC <- function(Qs, Qhat) {
     .Call('rotations2_cdfunsC', PACKAGE = 'rotations2', Qs, Qhat)
 }
 
-bootQhat <- function(Q, m) {
-    .Call('rotations2_bootQhat', PACKAGE = 'rotations2', Q, m)
+#'Zhang bootstrap method paramaterized for quaternions
+zhangQ4 <- function(Q, m) {
+    .Call('rotations2_zhangQ4', PACKAGE = 'rotations2', Q, m)
 }
 
 # Register entry points for exported C++ functions
