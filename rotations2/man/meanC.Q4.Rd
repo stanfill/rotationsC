@@ -40,18 +40,14 @@ Qs<-ruars(20,rcayley,space="Q4")
 meanC(Qs,type='intrinsic')
 }
 \references{
-  Manton J (2004). "A globally convergent numerical
-  algorithm for computing the centre of mass on compact Lie
-  groups." In _8th Conference on Control, Automation,
-  Robotics and Vision, (ICARCV) _, volume 3, pp. 2211-2216.
-  IEEE.
-
   Moakher M (2002). "Means and averaging in the group of
   rotations." _SIAM Journal on Matrix Analysis and
   Applications_, *24*(1), pp. 1-16.
 
   Tyler DE (1981). "Asymptotic inference for eigenvectors."
   _The Annals of Statistics_, pp. 725-736.
+
+  manton04
 }
 \seealso{
   \code{\link{meanC.SO3}}

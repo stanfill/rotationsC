@@ -81,10 +81,12 @@ gmeanSO3C <- function(Rs, maxIterations, maxEps) {
     .Call('rotations2_gmeanSO3C', PACKAGE = 'rotations2', Rs, maxIterations, maxEps)
 }
 
+#' Compute a singe test statistic for the Fisher mean polar axis method
 fisherAxisC <- function(Qs, Qhat) {
     .Call('rotations2_fisherAxisC', PACKAGE = 'rotations2', Qs, Qhat)
 }
 
+#' Use the Fisher mean polar axis method
 fisherBootC <- function(Qs, m) {
     .Call('rotations2_fisherBootC', PACKAGE = 'rotations2', Qs, m)
 }

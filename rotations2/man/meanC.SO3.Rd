@@ -43,22 +43,18 @@
   Ri/n} and the distance metric \eqn{d_D}{d} is the
   Riemannian or Euclidean.  For more on the projected mean
   see \cite{Moakher (2002)} and for the intrinsic mean see
-  \cite{Manton (2004)}.
+  \cite{manton04}.
 }
 \examples{
 Rs<-ruars(20,rvmises,kappa=0.01)
 meanC(Rs)
 }
 \references{
-  Manton J (2004). "A globally convergent numerical
-  algorithm for computing the centre of mass on compact Lie
-  groups." In _8th Conference on Control, Automation,
-  Robotics and Vision, (ICARCV) _, volume 3, pp. 2211-2216.
-  IEEE.
-
   Moakher M (2002). "Means and averaging in the group of
   rotations." _SIAM Journal on Matrix Analysis and
   Applications_, *24*(1), pp. 1-16.
+
+  manton04
 }
 \seealso{
   \code{\link{medianC.SO3}}

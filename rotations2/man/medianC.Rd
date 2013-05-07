@@ -42,14 +42,11 @@
   \eqn{d_D}{d}, is Riemannian then the estimator is called
   the intrinsic, and if the distance metric in Euclidean
   then it projected. The algorithm used in the intrinsic
-  case is discussed in \cite{Hartley et al. (2011)} and the
-  projected case was written by the authors.
+  case is discussed in \cite{hartley11} and the projected
+  case was written by the authors.
 }
 \references{
-  Hartley R, Aftab K and Trumpf J (2011). "L1 rotation
-  averaging using the Weiszfeld algorithm." In _2011 IEEE
-  Conference on Computer Vision and Pattern Recognition
-  (CVPR)_, pp. 3041-3048. IEEE.
+  hartley11
 }
 \seealso{
   \code{\link{meanC.SO3}}

@@ -4,11 +4,11 @@
 \alias{zhangCR.SO3}
 \title{Zhang CR Method}
 \usage{
-  zhangCR(Qs, alpha, m, pivot)
+  zhangCR(Qs, alpha, m)
 
-  \method{zhangCR}{SO3} (Rs, alpha, m = 300, pivot = T)
+  \method{zhangCR}{SO3} (Rs, alpha, m = 300)
 
-  \method{zhangCR}{Q4} (Qs, alpha, m = 300, pivot = T)
+  \method{zhangCR}{Q4} (Qs, alpha, m = 300)
 }
 \arguments{
   \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
@@ -19,9 +19,6 @@
 
   \item{m}{Number of replicates to use to estiamte cut
   point}
-
-  \item{pivot}{should the pivotal (T) or non-pivotal (F)
-  method be used}
 }
 \value{
   radius of the confidence region centered at the projected

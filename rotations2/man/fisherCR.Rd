@@ -4,18 +4,18 @@
 \alias{fisherCR.SO3}
 \title{Fisher Mean Polax Axis CR Method}
 \usage{
-  fisherCR(Qs, a, boot, m)
+  fisherCR(Qs, alpha, boot, m)
 
-  \method{fisherCR}{Q4} (Qs, a, boot = T, m = 300)
+  \method{fisherCR}{Q4} (Qs, alpha, boot = T, m = 300)
 
-  \method{fisherCR}{SO3} (Rs, a, boot = T, m = 300)
+  \method{fisherCR}{SO3} (Rs, alpha, boot = T, m = 300)
 }
 \arguments{
   \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
   row corresponds to a random rotation in matrix (p=9) or
   quaternion form (p=4)}
 
-  \item{a}{The alpha level desired, e.g. 0.95 or 0.90}
+  \item{alpha}{The alpha level desired, e.g. 0.95 or 0.90}
 
   \item{boot}{Should the bootstrap or normal theory
   critical value be used}

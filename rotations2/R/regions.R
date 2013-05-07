@@ -153,14 +153,13 @@ rancourtCR.SO3<-function(Rs,a){
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param alpha The alpha level desired, e.g. 0.95 or 0.90
 #' @param m Number of replicates to use to estiamte cut point
-#' @param pivot should the pivotal (T) or non-pivotal (F) method be used
 #' @return radius of the confidence region centered at the projected mean
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
 #' region(Rs,method='zhang',alpha=0.9)
 
-zhangCR<-function(Qs,alpha,m,pivot){
+zhangCR<-function(Qs,alpha,m){
 	UseMethod("zhangCR")
 }
 
@@ -169,7 +168,7 @@ zhangCR<-function(Qs,alpha,m,pivot){
 #' @method zhangCR SO3
 #' @S3method zhangCR SO3
 
-zhangCR.SO3<-function(Rs,alpha,m=300,pivot=T){
+zhangCR.SO3<-function(Rs,alpha,m=300){
 	
 	#Rs is a n-by-9 matrix where each row is an 3-by-3 rotation matrix
 	#m is the number of resamples to find q_1-a
@@ -178,7 +177,7 @@ zhangCR.SO3<-function(Rs,alpha,m=300,pivot=T){
 	
   Rs<-formatSO3(Rs)
   Qs<-Q4(Rs)
-  rad<-zhangCR.Q4(Rs,alpha,m)
+  rad<-zhangCR.Q4(Qs,alpha,m)
 	return(rad)
 }
 
@@ -186,7 +185,7 @@ zhangCR.SO3<-function(Rs,alpha,m=300,pivot=T){
 #' @method zhangCR Q4
 #' @S3method zhangCR Q4
 
-zhangCR.Q4<-function(Qs,alpha,m=300,pivot=T){
+zhangCR.Q4<-function(Qs,alpha,m=300){
 	
 	Qs<-formatQ4(Qs)
 	n<-nrow(Qs)
