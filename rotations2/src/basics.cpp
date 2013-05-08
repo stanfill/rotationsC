@@ -53,35 +53,26 @@ arma::mat SO3defaultC(arma::mat U, arma::vec theta) {
 // [[Rcpp::export]]
 arma::mat Q4defaultC(arma::mat U, arma::vec theta){
 	
-	int n = U.n_rows, i=0;
-  int n2 = theta.n_elem, n3 = U.n_cols;
-    
-	arma::mat q;
-	q.zeros(n,4);
-  
-  if(n!=n2 || n3<3){
-    throw Rcpp::exception("Error in Q4defaultC, u and theta not same length.");
-    return q;
-  }
-  
-	arma::rowvec stheta;
-	stheta.zeros(3);
+	int n1 = U.n_rows, n = theta.size();
+	arma::mat q(n,4);
+	q.zeros();
 	
-	for(i=0;i<n;i++){
-		
-		//U.row(i) = U.row(i)/norm(U.row(i),2);
-		
-		q(i,0) = cos(theta(i)/2);
-		stheta = sin(theta(i)/2)*U.row(i);
-      
-		q(i,1) = stheta(0);
-		q(i,2) = stheta(1);
-		q(i,3) = stheta(2);
-		
+	if(n1 != n){
+		printf("Error, u and theta different length");
+		return q;
 	}
 	
-  return q;
+	arma::vec stheta = sin(theta/2);
+	
+	q.col(0) = cos(theta/2);
+	q.col(1) = U.col(0) % stheta;
+	q.col(2) = U.col(1) % stheta;
+	q.col(3) = U.col(2) % stheta;
+	
+	return q;
+	
 }
+
 
 // [[Rcpp::export]]
 arma::mat pMatC(arma::mat p){
@@ -115,6 +106,7 @@ arma::mat pMatC(arma::mat p){
 
 // [[Rcpp::export]]
 arma::mat genrC(arma::vec r, arma::mat S , int SO3, arma::mat u) {
+	RNGScope scope;
 	// r is a vector of angles
 	// S is the central direction
 	// SO3 is an integer, 1 means SO3, anything else gives

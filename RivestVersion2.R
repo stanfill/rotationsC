@@ -3,31 +3,13 @@
 #Compute coverage rates for the Rivest, Fisher and our methods
 ###############################################################
 
-library(rotations2)
+#library(rotations2)
+library(RcppArmadillo)
+sourceCpp("rotations2/src/basics.cpp")
 library(rotations)
 library(reshape2)
 library(plyr)
 source("IntervalFuns.R")
-
-#For some reason it appears that if I simulate data outside the loop it won't crash
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
-rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
 
 n<-c(10,20,50,100)
 
@@ -42,8 +24,7 @@ B<-1000				#Number of samples to use to estimate coverage probability (Zhang use
 alp<-0.9
 
 resultsDf<-data.frame(expand.grid(Dist=Dist,nu=nu,n=n),Rivest=0)
-#resultsDf<-read.csv("Results/ResultsB5000M300Part2.csv")[,-1]
-#resultsDf
+
 date()
 
 for(p in 1:nrow(resultsDf)){
@@ -64,10 +45,16 @@ for(p in 1:nrow(resultsDf)){
 	}	
 	Rivest<-0
 		for(k in 1:B){
-			#Qs<-ruars(np,rfn,kappa=kapp,space='Q4')
+
       rs<-rfn(np,kappa=kapp)
-      #print(summary(rs))
-      Qs<-genrC2(rs,matrix(c(1,0,0,0),1,4),'Q4')
+      #print(rs)
+     
+      theta <- acos(runif(np, -1, 1))      
+      phi <- runif(np, -pi, pi)
+      u <- matrix(c(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta)),np,3)
+      
+      Qs<-Q4default2(u,rs)
+      Qs<-as.Q4(Qs)
 			#Execute the Method in Rancourt 2000
 			#ti<-RivestCI2(Qs)
 			#Rivest<-Rivest+as.numeric(ti<qf(alp,3,np-3))	
