@@ -167,11 +167,37 @@ pMat<-function(p){
 	return(Pmat)
 }
 
+RivestCI2<-function(qs,S=id.Q4){
+  #This takes as input the dataset and true central direction S
+  n<-nrow(qs)
+  Shat<-mean(qs)
+  Phat<-pMat(Shat)
+  
+  Rhat<-qs%*%Phat
+  resids<-matrix(0,n,3)
+  VarShat<-matrix(0,3,3)
+  
+  resids<-2*Rhat[,1]*matrix(Rhat[,2:4],n,3)
+  
+  VarShat<-t(resids)%*%resids/(n-1)
+  
+  RtR<-t(Rhat)%*%Rhat
+  Ahat<-(diag(RtR[1,1],3,3)-RtR[-1,-1])/n
+  
+  #St<-as.Q4(matrix(c(S[1],-S[2:4]),1,4))
+  #StShat<-qMult(St,Shat)
+  StShat<-as.Q4(matrix(c(Shat[1],-Shat[2:4]),1,4))
+  avec<-matrix(axis2(StShat)*angle(StShat),1,3)
+  
+  Tm<-((n-3)/(3*n-3))*avec%*%Ahat%*%solve(VarShat)%*%Ahat%*%t(avec)
+  
+  return(Tm)
+}
 
 RivestCI<-function(qs,S=id.Q4){
 	#This takes as input the dataset and true central direction S
 	n<-nrow(qs)
-	Shat<-mean(qs)
+	Shat<-meanC(qs)
 	Phat<-pMat(Shat)
 	
 	Rhat<-qs%*%Phat
@@ -185,8 +211,9 @@ RivestCI<-function(qs,S=id.Q4){
 	RtR<-t(Rhat)%*%Rhat
 	Ahat<-(diag(RtR[1,1],3,3)-RtR[-1,-1])/n
 	
-	St<-as.Q4(matrix(c(S[1],-S[2:4]),1,4))
-	StShat<-qMult(St,Shat)
+	#St<-as.Q4(matrix(c(S[1],-S[2:4]),1,4))
+	#StShat<-qMult(St,Shat)
+	StShat<-as.Q4(matrix(c(Shat[1],-Shat[2:4]),1,4))
 	avec<-matrix(axis2(StShat)*angle(StShat),1,3)
 	
 	Tm<-n*avec%*%Ahat%*%solve(VarShat)%*%Ahat%*%t(avec)

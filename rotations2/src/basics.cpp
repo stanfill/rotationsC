@@ -5,7 +5,6 @@ using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]] 
 // [[Rcpp::interfaces(r, cpp)]]
 
-//' make u into a skew-symmetric matrix
 // [[Rcpp::export]]
 arma::mat eskewC(arma::rowvec U) {
   
@@ -57,17 +56,25 @@ arma::mat SO3defaultC(arma::mat U, arma::vec theta) {
 arma::mat Q4defaultC(arma::mat U, arma::vec theta){
 	
 	int n = U.n_rows, i=0;
+  int n2 = theta.n_elem, n3 = U.n_cols;
+    
 	arma::mat q(n,4);
 	q.zeros();
-	arma::rowvec stheta(3);
+  
+  if(n!=n2 || n3<3){
+    throw Rcpp::exception("Error in Q4defaultC, u and theta not same length.");
+    return q;
+  }
+  
+	arma::rowvec stheta;
 	
 	for(i=0;i<n;i++){
 		
-		U.row(i) = U.row(i)/norm(U.row(i),2);
+		//U.row(i) = U.row(i)/norm(U.row(i),2);
 		
 		q(i,0) = cos(theta(i)/2);
 		stheta = sin(theta(i)/2)*U.row(i);
-		
+      
 		q(i,1) = stheta(0);
 		q(i,2) = stheta(1);
 		q(i,3) = stheta(2);
@@ -77,7 +84,6 @@ arma::mat Q4defaultC(arma::mat U, arma::vec theta){
   return q;
 }
 
-//' Make the 4-by-4 matrix used to perform quaternion multiplication
 // [[Rcpp::export]]
 arma::mat pMatC(arma::mat p){
 
@@ -117,6 +123,16 @@ arma::mat genrC(arma::vec r, arma::mat S , int SO3) {
   theta = acos(theta);
     
   NumericVector phi = runif(n, -M_PI, M_PI);
+  
+  int n1 = phi.size(), n2 = theta.size();
+  
+  if(n1 != n && n2 != n ){
+    printf("runif screwed me");
+    arma::mat33 q;
+    q.zeros();
+    return q;
+  }
+  
   arma::mat u(n,3);
   
   for(i=0;i<n;i++){
@@ -149,10 +165,20 @@ arma::mat genrC(arma::vec r, arma::mat S , int SO3) {
     
   }else{
   	
-  	arma::mat q(n,4);
+  	arma::mat q;
   	arma::mat Smat;
+    
+    int ssize = S.n_rows;
+    int ssize2 = S.n_cols;
+    
+    if(ssize!=4 && ssize2!=4){
+      printf("S isn't big enough");
+      q.zeros(3,3);
+      return q;
+    }
+    
   	Smat = pMatC(S);
-  	arma::vec qi(4);
+
   	q = Q4defaultC(u,r);
  		
  		q = q*Smat.t();

@@ -5,7 +5,6 @@ using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]] 
 // [[Rcpp::interfaces(r, cpp)]]
 
-//' Check that each row of Q is a quaternion, i.e., length 1
 // [[Rcpp::export]]
 int checkQ4(NumericMatrix Q){
 	/*This function will check that the rows in the matrix Q are unit quaternions*/
@@ -31,7 +30,6 @@ int checkQ4(NumericMatrix Q){
 	return 0;
 }
 
-//' Check that each row of Rs is a rotation matrix, i.e. R'R=I and det(R)=1
 // [[Rcpp::export]]
 int checkSO3(arma::mat Rs){
 	
