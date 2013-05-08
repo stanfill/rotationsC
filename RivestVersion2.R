@@ -5,10 +5,11 @@
 
 #library(rotations2)
 library(RcppArmadillo)
-sourceCpp("rotations2/src/basics.cpp")
-library(rotations)
-library(reshape2)
-library(plyr)
+sourceCpp("genQ4only.cpp")
+source("rotations2/R/distributions.R")
+source("rotations2/R/preliminary.R")
+source("rotations2/R/parameterizations.R")
+#library(rotations)
 source("IntervalFuns.R")
 
 n<-c(10,20,50,100)
@@ -53,8 +54,7 @@ for(p in 1:nrow(resultsDf)){
       phi <- runif(np, -pi, pi)
       u <- matrix(c(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta)),np,3)
       
-      Qs<-Q4default2(u,rs)
-      Qs<-as.Q4(Qs)
+      Qs<-Q4defaultC(u,rs)
 			#Execute the Method in Rancourt 2000
 			#ti<-RivestCI2(Qs)
 			#Rivest<-Rivest+as.numeric(ti<qf(alp,3,np-3))	

@@ -197,7 +197,7 @@ RivestCI2<-function(qs,S=id.Q4){
 RivestCI<-function(qs,S=id.Q4){
 	#This takes as input the dataset and true central direction S
 	n<-nrow(qs)
-	Shat<-mean(qs)
+	Shat<-meanQ4C(qs)
 	Phat<-pMat(Shat)
 	
 	Rhat<-qs%*%Phat
