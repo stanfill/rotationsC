@@ -6,7 +6,7 @@
 
 #include <RcppArmadillo.h>
 #include <Rcpp.h>
-#include "../inst/include/rotations2.h"
+#include "rotations2.h"
 
 namespace rotations2 {
 
@@ -82,15 +82,15 @@ namespace rotations2 {
         return Rcpp::as<arma::mat >(__result);
     }
 
-    inline arma::mat genrC(arma::vec r, arma::mat S, int SO3) {
-        typedef SEXP(*Ptr_genrC)(SEXP,SEXP,SEXP);
+    inline arma::mat genrC(arma::vec r, arma::mat S, int SO3, arma::mat u) {
+        typedef SEXP(*Ptr_genrC)(SEXP,SEXP,SEXP,SEXP);
         static Ptr_genrC p_genrC = NULL;
         if (p_genrC == NULL) {
-            validateSignature("arma::mat(*genrC)(arma::vec,arma::mat,int)");
+            validateSignature("arma::mat(*genrC)(arma::vec,arma::mat,int,arma::mat)");
             p_genrC = (Ptr_genrC)R_GetCCallable("rotations2", "rotations2_genrC");
         }
         RNGScope __rngScope;
-        RObject __result = p_genrC(Rcpp::wrap(r), Rcpp::wrap(S), Rcpp::wrap(SO3));
+        RObject __result = p_genrC(Rcpp::wrap(r), Rcpp::wrap(S), Rcpp::wrap(SO3), Rcpp::wrap(u));
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);

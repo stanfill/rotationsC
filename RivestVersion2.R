@@ -9,6 +9,26 @@ library(reshape2)
 library(plyr)
 source("IntervalFuns.R")
 
+#For some reason it appears that if I simulate data outside the loop it won't crash
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+rs<-rcayley(1000);Qs<-genrC2(rs,space='Q4');Qhat<-meanC(Qs)
+
 n<-c(10,20,50,100)
 
 nu<-c(0.25,0.50,0.75)
@@ -46,6 +66,7 @@ for(p in 1:nrow(resultsDf)){
 		for(k in 1:B){
 			#Qs<-ruars(np,rfn,kappa=kapp,space='Q4')
       rs<-rfn(np,kappa=kapp)
+      #print(summary(rs))
       Qs<-genrC2(rs,matrix(c(1,0,0,0),1,4),'Q4')
 			#Execute the Method in Rancourt 2000
 			#ti<-RivestCI2(Qs)

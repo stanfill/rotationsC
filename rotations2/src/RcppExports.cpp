@@ -84,19 +84,20 @@ RcppExport SEXP rotations2_pMatC(SEXP pSEXP) {
     return __result;
 }
 // genrC
-arma::mat genrC(arma::vec r, arma::mat S, int SO3);
-static SEXP rotations2_genrC_try(SEXP rSEXP, SEXP SSEXP, SEXP SO3SEXP) {
+arma::mat genrC(arma::vec r, arma::mat S, int SO3, arma::mat u);
+static SEXP rotations2_genrC_try(SEXP rSEXP, SEXP SSEXP, SEXP SO3SEXP, SEXP uSEXP) {
 BEGIN_RCPP
     arma::vec r = Rcpp::as<arma::vec >(rSEXP);
     arma::mat S = Rcpp::as<arma::mat >(SSEXP);
     int SO3 = Rcpp::as<int >(SO3SEXP);
-    arma::mat __result = genrC(r, S, SO3);
+    arma::mat u = Rcpp::as<arma::mat >(uSEXP);
+    arma::mat __result = genrC(r, S, SO3, u);
     return Rcpp::wrap(__result);
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP rotations2_genrC(SEXP rSEXP, SEXP SSEXP, SEXP SO3SEXP) {
+RcppExport SEXP rotations2_genrC(SEXP rSEXP, SEXP SSEXP, SEXP SO3SEXP, SEXP uSEXP) {
     Rcpp::RNGScope __rngScope;
-    SEXP __result = PROTECT(rotations2_genrC_try(rSEXP, SSEXP, SO3SEXP));
+    SEXP __result = PROTECT(rotations2_genrC_try(rSEXP, SSEXP, SO3SEXP, uSEXP));
     Rboolean __isError = Rf_inherits(__result, "try-error");
     UNPROTECT(1);
     if (__isError)
@@ -431,7 +432,7 @@ static int rotations2_RcppExport_validate(const char* sig) {
         signatures.insert("arma::mat(*SO3defaultC)(arma::mat,arma::vec)");
         signatures.insert("arma::mat(*Q4defaultC)(arma::mat,arma::vec)");
         signatures.insert("arma::mat(*pMatC)(arma::mat)");
-        signatures.insert("arma::mat(*genrC)(arma::vec,arma::mat,int)");
+        signatures.insert("arma::mat(*genrC)(arma::vec,arma::mat,int,arma::mat)");
         signatures.insert("int(*checkQ4)(NumericMatrix)");
         signatures.insert("int(*checkSO3)(arma::mat)");
         signatures.insert("arma::mat(*expskewC)(arma::mat)");

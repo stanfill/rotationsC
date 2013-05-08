@@ -28,7 +28,6 @@ arma::mat eskewC(arma::rowvec U) {
   return res;
 }
 
-//' generate a rotation matrix with axis and angles of rotation u and theta, respectively
 // [[Rcpp::export]]
 arma::mat SO3defaultC(arma::mat U, arma::vec theta) {
   
@@ -51,15 +50,14 @@ arma::mat SO3defaultC(arma::mat U, arma::vec theta) {
 }
 
 
-//' A function to create a rotation in quaternion form with axis U and angle theta
 // [[Rcpp::export]]
 arma::mat Q4defaultC(arma::mat U, arma::vec theta){
 	
 	int n = U.n_rows, i=0;
   int n2 = theta.n_elem, n3 = U.n_cols;
     
-	arma::mat q(n,4);
-	q.zeros();
+	arma::mat q;
+	q.zeros(n,4);
   
   if(n!=n2 || n3<3){
     throw Rcpp::exception("Error in Q4defaultC, u and theta not same length.");
@@ -67,6 +65,7 @@ arma::mat Q4defaultC(arma::mat U, arma::vec theta){
   }
   
 	arma::rowvec stheta;
+	stheta.zeros(3);
 	
 	for(i=0;i<n;i++){
 		
@@ -90,12 +89,15 @@ arma::mat pMatC(arma::mat p){
 	arma::mat Pmat(4,4);
 	Pmat.zeros();
 	arma::mat revI(4,4);
+	revI.zeros();
+	
+	//int n1=p.n_rows, n2=p.n_cols;
+	
+	//if(n1!=4 && n2!=4){}
 	
 	p.reshape(4,1);
-	
 	Pmat.col(0)=p;
 
-	revI.zeros();
 	revI(0,1) = -1;revI(1,0) = 1;	revI(2,3) = 1; revI(3,2) = -1;
 	Pmat.col(1) = revI*p;
 
@@ -111,35 +113,36 @@ arma::mat pMatC(arma::mat p){
 	return Pmat;
 }
 
-//' a function to generate UARS rotations with angles of rotations r and central direction S
 // [[Rcpp::export]]
-arma::mat genrC(arma::vec r, arma::mat S , int SO3) {
+arma::mat genrC(arma::vec r, arma::mat S , int SO3, arma::mat u) {
 	// r is a vector of angles
 	// S is the central direction
 	// SO3 is an integer, 1 means SO3, anything else gives
-  int n=r.size(), i=0;
+  int n=r.size(), i=0,n1 = u.n_rows, n2 = u.n_cols;
   
-  NumericVector theta = runif(n,-1,1);
-  theta = acos(theta);
+  //GetRNGstate();PutRNGstate();
+  
+  //NumericVector theta = runif(n,-1,1);
+  //theta = acos(theta);
     
-  NumericVector phi = runif(n, -M_PI, M_PI);
+  //NumericVector phi = runif(n, -M_PI, M_PI);
   
-  int n1 = phi.size(), n2 = theta.size();
-  
-  if(n1 != n && n2 != n ){
-    printf("runif screwed me");
-    arma::mat33 q;
+  //int n1 = phi.size(), n2 = theta.size();
+    
+  if(n1 != n || n2!=3){
+    printf("u is wrong size");
+    arma::mat q(n,4);
     q.zeros();
     return q;
   }
   
-  arma::mat u(n,3);
+  /*arma::mat u(n,3);
   
   for(i=0;i<n;i++){
     u(i,0)=sin(theta[i]) * cos(phi[i]);
     u(i,1)=sin(theta[i]) * sin(phi[i]);
     u(i,2)=cos(theta[i]);
-  }  
+  }  */
   
   if(SO3==1){
     
@@ -166,22 +169,23 @@ arma::mat genrC(arma::vec r, arma::mat S , int SO3) {
   }else{
   	
   	arma::mat q;
-  	arma::mat Smat;
+  	q.zeros(n,4);
+  	//arma::mat Smat;
     
-    int ssize = S.n_rows;
+    /*int ssize = S.n_rows;
     int ssize2 = S.n_cols;
     
     if(ssize!=4 && ssize2!=4){
       printf("S isn't big enough");
-      q.zeros(3,3);
+      q.zeros(n,4);
       return q;
-    }
+    }*/
     
-  	Smat = pMatC(S);
+  	//Smat = pMatC(S);
 
   	q = Q4defaultC(u,r);
  		
- 		q = q*Smat.t();
+ 		//q = q*Smat.t();
   	
     return q;
     

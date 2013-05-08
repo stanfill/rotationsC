@@ -170,7 +170,7 @@ pMat<-function(p){
 RivestCI2<-function(qs,S=id.Q4){
   #This takes as input the dataset and true central direction S
   n<-nrow(qs)
-  Shat<-mean(qs)
+  Shat<-meanC(qs)
   Phat<-pMat(Shat)
   
   Rhat<-qs%*%Phat
@@ -197,7 +197,7 @@ RivestCI2<-function(qs,S=id.Q4){
 RivestCI<-function(qs,S=id.Q4){
 	#This takes as input the dataset and true central direction S
 	n<-nrow(qs)
-	Shat<-meanC(qs)
+	Shat<-mean(qs)
 	Phat<-pMat(Shat)
 	
 	Rhat<-qs%*%Phat

@@ -5,12 +5,10 @@ eskewC <- function(U) {
     .Call('rotations2_eskewC', PACKAGE = 'rotations2', U)
 }
 
-#' generate a rotation matrix with axis and angles of rotation u and theta, respectively
 SO3defaultC <- function(U, theta) {
     .Call('rotations2_SO3defaultC', PACKAGE = 'rotations2', U, theta)
 }
 
-#' A function to create a rotation in quaternion form with axis U and angle theta
 Q4defaultC <- function(U, theta) {
     .Call('rotations2_Q4defaultC', PACKAGE = 'rotations2', U, theta)
 }
@@ -19,9 +17,8 @@ pMatC <- function(p) {
     .Call('rotations2_pMatC', PACKAGE = 'rotations2', p)
 }
 
-#' a function to generate UARS rotations with angles of rotations r and central direction S
-genrC <- function(r, S, SO3) {
-    .Call('rotations2_genrC', PACKAGE = 'rotations2', r, S, SO3)
+genrC <- function(r, S, SO3, u) {
+    .Call('rotations2_genrC', PACKAGE = 'rotations2', r, S, SO3, u)
 }
 
 checkQ4 <- function(Q) {

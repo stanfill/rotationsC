@@ -279,6 +279,14 @@ genrC2 <- function(r, S = NULL, space='SO3') {
   if(!(space %in% c("SO3","Q4")))
     stop("Incorrect space argument.  Options are: SO3 and Q4. ")
   
+  n<-length(r)
+  
+  theta <- acos(runif(n, -1, 1))
+  
+  # Generate angles phi from a uniform distribution from -pi to pi
+  
+  phi <- runif(n, -pi, pi)
+  u <- matrix(c(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta)),n,3)
   
   if(space=="SO3"){
   	
@@ -286,7 +294,7 @@ genrC2 <- function(r, S = NULL, space='SO3') {
   		S<-id.SO3
   	
   	S<-matrix(S,3,3)
-  	o<-genrC(r,S,1)
+  	o<-genrC(r,S,1,u)
   	
   	class(o) <- "SO3"
   	return(o)
@@ -298,7 +306,7 @@ genrC2 <- function(r, S = NULL, space='SO3') {
   	
   	S<-matrix(S,1,4)
   	
-  	q<-genrC(r,S,2)
+  	q<-genrC(r,S,2,u)
   	
   	class(q)<-"Q4"
   	return(q)
