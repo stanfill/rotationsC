@@ -105,21 +105,20 @@ date()
 resultsDf
 
 #write.csv(resultsDf,"Results/ResultsB5000M300Part2.csv")
-
+#resultsDf<-read.csv("Results/ResultsB10000M300.csv")[,-1]
 resM<-melt(resultsDf,id=c('Dist','nu','n'))
 colnames(resM)[4]<-'Method'
 levels(resM$Method)[3:4]<-c("Nordman Normal","Nordman Bootstrap")
 
 levels(resM$Dist)<-c("Cayley","matrix~~Fisher","circular-von~~Mises")
 resM$nu<-factor(resM$nu,labels=c("nu == 0.25","nu == 0.50","nu == 0.75"))
-resM$n<-as.factor(resM$n)
+#resM$n<-as.factor(resM$n)
 
 qplot(n,value,data=resM,colour=Method,group=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
 	facet_grid(Dist~nu,labeller=label_parsed)+
 	geom_hline(yintercept=alp*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
-	theme_bw()
-
-#ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB5000.pdf",width=10,height=8)
+	scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()
+#ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB10000.pdf",width=10,height=8)
 
 
 ###############################################################
