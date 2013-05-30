@@ -129,6 +129,7 @@ setwd("C:/Users/stanfill/Desktop/GitHub/rotationsC")
 library(Rcpp)
 Rcpp::sourceCpp('ZhangMethod.cpp')
 Rcpp::sourceCpp("FisherMethod.cpp")
+#Rcpp::sourceCpp('rotations2/src/estimators.cpp')
 library(rotations)
 library(reshape2)
 library(plyr)
@@ -137,7 +138,7 @@ source("IntervalFuns.R")
 n<-c(10,50,100,300)
 ks<-c(.05,8)
 B<-1000				#Number of samples to use to estimate CDF
-Dist<-'vM'
+Dist<-'cayley'
 
 if(Dist=='cayley'){
 	rangle<-rcayley
@@ -162,6 +163,7 @@ for(j in 1:simSize){
 		rs<-rangle(cdfDF$n[j],kappa=cdfDF$kappa[j])
 
 		Rs<-genR(rs,space='Q4')
+		#Rs<-genR(rs)
 		
 		cosrs<-cos(rs)
 		
@@ -172,6 +174,8 @@ for(j in 1:simSize){
 		d<-(1/3)*(1+2*ecos)
 		
 		ShatMean<-meanQ4C(Rs)
+		#ShatMean<-HartmedianSO3C(Rs,100,1e-5)
+		#ShatMean<-Q4(as.SO3(matrix(ShatMean,nrow=1)))
 		
 		hsqMean<-RdistC(ShatMean,id.Q4)^2
 

@@ -16,7 +16,7 @@ arma::mat Q4defaultC(arma::mat U, arma::vec theta){
 	}
 	
 	arma::vec stheta = sin(theta/2);
-	q.row(0).print("Q0: ");
+	//q.row(0).print("Q0: ");
 	q.col(0) = cos(theta/2);
 	q.col(1) = U.col(0) % stheta;
 	q.col(2) = U.col(1) % stheta;

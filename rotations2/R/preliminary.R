@@ -294,6 +294,7 @@ genrC2 <- function(r, S = NULL, space='SO3') {
   		S<-id.SO3
   	
   	S<-matrix(S,3,3)
+  	#o<-SO3defaultC(u,r)
   	o<-genrC(r,S,1,u)
   	
   	class(o) <- "SO3"
@@ -305,6 +306,8 @@ genrC2 <- function(r, S = NULL, space='SO3') {
   		S<-id.Q4
   	
   	S<-matrix(S,1,4)
+  	
+  	#q<-Q4defaultC(u,r)
   	
   	q<-genrC(r,S,2,u)
   	

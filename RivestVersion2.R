@@ -3,14 +3,14 @@
 #Compute coverage rates for the Rivest, Fisher and our methods
 ###############################################################
 
-#library(rotations2)
-library(RcppArmadillo)
-sourceCpp("genQ4only.cpp")
-source("rotations2/R/distributions.R")
-source("rotations2/R/preliminary.R")
-source("rotations2/R/parameterizations.R")
+library(rotations2)
+#library(RcppArmadillo)
+#sourceCpp("genQ4only.cpp")
+#source("rotations2/R/distributions.R")
+#source("rotations2/R/preliminary.R")
+#source("rotations2/R/parameterizations.R")
 #library(rotations)
-source("IntervalFuns.R")
+#source("IntervalFuns.R")
 
 n<-c(10,20,50,100)
 
@@ -53,16 +53,17 @@ for(p in 1:nrow(resultsDf)){
       theta <- acos(runif(np, -1, 1))      
       phi <- runif(np, -pi, pi)
       u <- matrix(c(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta)),np,3)
-      
-      Qs<-Q4defaultC(u,rs)
-			#Execute the Method in Rancourt 2000
+      #Qs<-Q4defaultC(u,rs)
+      #Qs<-genrC2(rs,space='Q4')
+      Qs<-genrC2(rs,space='SO3')
+      #Execute the Method in Rancourt 2000
 			#ti<-RivestCI2(Qs)
 			#Rivest<-Rivest+as.numeric(ti<qf(alp,3,np-3))	
-      ti<-RivestCI(Qs)
-      Rivest<-Rivest+as.numeric(ti<qchisq(alp,3))  
+      #ti<-RivestCI(Qs)
+      #Rivest<-Rivest+as.numeric(ti<qchisq(alp,3))  
 		}
-	resultsDf[p,]$Rivest<-100*Rivest/B
-	print(resultsDf[p,])
+	#resultsDf[p,]$Rivest<-100*Rivest/B
+	#print(resultsDf[p,])
 	#write.csv(resultsDf,"Results/ResultsB5000M300Part2.csv")
 }
 date()

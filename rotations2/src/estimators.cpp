@@ -97,7 +97,15 @@ arma::mat expskewC(arma::mat M){
 // [[Rcpp::export]]
 arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2){
   
-  int n = Rs.n_rows, i,j;
+  int n = Rs.n_rows, m=Rs.n_cols , i,j;
+  
+  if(m==3){
+  	Rs = Rs * R2.t();
+    arma::rowvec theta(1); 
+    theta(0) = acos(0.5*trace(Rs)-0.5);
+    return theta;
+  }
+  
   
   arma::rowvec theta(n);
   theta.zeros();
