@@ -108,7 +108,8 @@ resultsDf
 #resultsDf<-read.csv("Results/ResultsB10000M300.csv")[,-1]
 resM<-melt(resultsDf,id=c('Dist','nu','n'))
 colnames(resM)[4]<-'Method'
-levels(resM$Method)[3:4]<-c("Nordman Normal","Nordman Bootstrap")
+#levels(resM$Method)[3:4]<-c("Nordman Normal","Nordman Bootstrap")
+levels(resM$Method)<-c("NTH(P)","B(F)","NTH(C&R)","B(Z&N)")
 
 levels(resM$Dist)<-c("Cayley","matrix~~Fisher","circular-von~~Mises")
 resM$nu<-factor(resM$nu,labels=c("nu == 0.25","nu == 0.50","nu == 0.75"))
@@ -119,6 +120,7 @@ qplot(n,value,data=resM,colour=Method,group=Method,ylab='Coverage Rate (%)',xlab
 	geom_hline(yintercept=alp*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
 	scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()
 #ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB10000.pdf",width=10,height=8)
+#ggsave("C:/Users/stanfill/Dropbox/Thesis/OralPrelim/figure/CoverRatesB10000.pdf",width=9,height=8)
 
 
 ###############################################################

@@ -18,7 +18,7 @@ Dist<-'cayley'
 
 if(Dist=='cayley'){
 	rangle<-rcayley
-	ks<-c(2,8)
+	ks<-c(0.5,8)
 }else if(Dist=='fisher'){
 	rangle<-rfisher
 	ks<-c(2,8)
@@ -49,17 +49,18 @@ for(j in 1:simSize){
 		cosrs<-cos(rs)
 		
 		#ers<-mean(rs)
-		ers2<-mean(rs^2)
-		rfn<-mean((ars+2*(cos(ars)))/(sin(ars)))
-		#ecos<-mean(cosrs)
-		#ecos2<-mean(cosrs^2)
+		#ers2<-mean(rs^2)
+		#rfn<-mean((ars+2*(cos(ars)))/(sin(ars)))
+		ecos<-mean(cosrs)
+		ecos2<-mean(cosrs^2)
 		
-		c<-(2/3)*(ers2)
-		#c<-(2/3)*(1-ecos2)
-		d<-(1/3)*(rfn)
-		#d<-(1/3)*(1+2*ecos)
+		#c<-(2/3)*(ers2)
+		c<-(2/3)*(1-ecos2)
+		#d<-(1/3)*(rfn)
+		d<-(1/3)*(1+2*ecos)
 		
-		Shat<-as.SO3(gmeanSO3C(Rs,200,1e-5))
+		#Shat<-as.SO3(gmeanSO3C(Rs,200,1e-5))
+		Shat<-as.SO3(meanSO3C(Rs))
 		
 		ShatMean<-rdistSO3C(Shat,id.SO3)^2
 		

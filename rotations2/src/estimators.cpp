@@ -276,11 +276,15 @@ arma::mat HartmedianSO3C(arma::mat Rs, int maxIterations, double maxEps){
   arma::mat33 delta, Rsi, vi;
   arma::rowvec vnInv(n);
   double denom,epsilon = 1.0;
+  double vin;
   
   while(epsilon > maxEps && iterations < maxIterations){
     
     delta.zeros();
     denom = 0;
+    
+    //printf("vi: ");
+    
     for(i=0;i<n;i++){
       
       for(j=0;j<9;j++){
@@ -288,13 +292,16 @@ arma::mat HartmedianSO3C(arma::mat Rs, int maxIterations, double maxEps){
       }
       
       vi = logSO3C(Rsi*S.t());
+      vin = std::max(norm(vi,2),1e-5);
       
-      vnInv(i) = pow(norm(vi,2),-1);
+      //printf(" %lf ",vin);
+      
+      vnInv(i) = pow(vin,-1);
       delta+=vi*vnInv(i);
       denom += vnInv(i);
       
     }
-  
+  	//printf("denom: %lf\n",denom);
     delta = delta/denom;
 
     Snew = expskewC(delta)*S;
