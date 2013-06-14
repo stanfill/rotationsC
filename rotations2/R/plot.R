@@ -155,10 +155,10 @@ plot.SO3 <- function(x, center, col=1, toRange=FALSE, show_estimates=NULL,  ...)
   if (!is.null(show_estimates)) {
     ShatP <- StildeP <- ShatG <- StildeG <- NA
     if(show_estimates%in%c('all','All')) show_estimates<-c("proj.mean","proj.median","geom.mean","geom.median")
-    if (length(grep("proj.mean", show_estimates)) > 0) ShatP<-mean(Rs, type="projected")
-    if (length(grep("proj.median", show_estimates)) >0)    StildeP<-median(Rs, type="projected")
-    if (length(grep("geom.mean", show_estimates)) > 0)    ShatG<-mean(Rs, type="geometric")
-    if (length(grep("geom.median", show_estimates)) > 0)    StildeG<-median(Rs, type="geometric")
+    if (length(grep("proj.mean", show_estimates)) > 0) ShatP<-meanC(Rs, type="projected")
+    if (length(grep("proj.median", show_estimates)) >0)    StildeP<-medianC(Rs, type="projected")
+    if (length(grep("geom.mean", show_estimates)) > 0)    ShatG<-meanC(Rs, type="geometric")
+    if (length(grep("geom.median", show_estimates)) > 0)    StildeG<-medianC(Rs, type="geometric")
     
     Shats<-data.frame(rbind(as.vector(ShatP),as.vector(StildeP),as.vector(ShatG),as.vector(StildeG)),Est=1:4)
     Shats$Est <- factor(Shats$Est)

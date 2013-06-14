@@ -20,7 +20,7 @@
   \item{show_estimates}{character vector to specify which
   of the four estimates of the principal direction to show.
   Possibilities are "all", "proj.mean", "proj.median",
-  "riem.mean", "riem.median"}
+  "geom.mean", "geom.median"}
 
   \item{...}{parameters passed onto the points layer}
 }
@@ -41,7 +41,7 @@ r<-rvmises(200,1.0)
 Rs<-genR(r)
 plot(Rs,center=meanC(Rs),show_estimates=NULL,shape=4)
 # Z is computed internally and contains information on depth
-plot(Rs,center=meanC(Rs),show_estimates=c("proj.mean", "riem.mean")) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
+plot(Rs,center=meanC(Rs),show_estimates=c("proj.mean", "geom.mean")) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
 }
 \references{
   Wickham H (2009). _ggplot2: elegant graphics for data
