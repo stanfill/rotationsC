@@ -126,7 +126,7 @@ dist.Q4 <- function(Q1, Q2=id.Q4 ,method='projected', p=1) {
 
 #' Misorientation Angle
 #' 
-#' Find the misorientation angle of a rotation
+#' Compute the misorientation angle of a rotation
 #' 
 #' Every rotation can be thought of as some reference coordinate system rotated about an axis through an angle.  These quantites
 #' are referred to as the misorientation axis and misorientation angle, respectively, in the material sciences literature.
@@ -175,14 +175,14 @@ angle.Q4 <- function(Qs){
 
 #' Misorientation Axis
 #' 
-#' Find the misorientation axis of a rotation
+#' Determine the misorientation axis of a rotation
 #' 
 #' Every rotation can be thought of as some reference coordinate system rotated about an axis through an angle.  These quantites
 #' are referred to as the misorientation axis and misorientation angle, respectively, in the material sciences literature.
 #' This function returns the misorentation axis associated with a rotation assuming the reference coordinate system
 #' is the identity.
 #' 
-#' @param R 3-by-3 matrix in SO3 
+#' @param R,q \eqn{3\times 3}{3-by-3} matrix in SO3 or unit quaterion
 #' @return axis in form of three dimensional vector of length one.
 #' @seealso \code{\link{angle}}
 #' @export
@@ -290,29 +290,50 @@ genrC2 <- function(r, S = NULL, space='SO3') {
   
   if(space=="SO3"){
   	
-  	if(is.null(S))
-  		S<-id.SO3
-  	
-  	S<-matrix(S,3,3)
+  	#For now the C++ code is broken, use R functions
+  	#S<-matrix(S,3,3)
   	#o<-SO3defaultC(u,r)
-  	o<-genrC(r,S,1,u)
+  	#o<-genrC(r,S,1,u)
   	
+  	o<-SO3(u,r)
+  	
+  	if(is.null(S)){
+  		
+  		class(o) <- "SO3"
+  		return(o)
+  		
+  	}else{
+
+  	S<-formatSO3(S)
+  	o<-centeringSO3(o,t(S))
   	class(o) <- "SO3"
   	return(o)
   	
+  	}
+  	
   }else{
   	
-  	if(is.null(S))
-  		S<-id.Q4
-  	
-  	S<-matrix(S,1,4)
-  	
+  	#S<-matrix(S,1,4)
   	#q<-Q4defaultC(u,r)
+  	#q<-genrC(r,S,2,u)
   	
-  	q<-genrC(r,S,2,u)
+  	q<-matrix(c(cos(r/2),sin(r/2)*u),n,4)
   	
-  	class(q)<-"Q4"
-  	return(q)
+  	if(is.null(S)){
+  		
+  		class(q)<-"Q4"
+  		return(q)
+  		
+  	}else{
+  	
+  		S<-formatQ4(S)
+  		S[2:4]<--S[2:4]
+  		q<-centeringQ4(q,S)
+  	
+  		class(q)<-"Q4"
+  		return(q)
+  	}
+  	
   }
 
 }
