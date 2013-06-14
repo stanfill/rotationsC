@@ -11,7 +11,7 @@
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Qs,method='rancourt',alpha=0.9)
+#' region(Qs,method='prentice',alpha=0.9)
 
 region<-function(Qs,method,alpha,...){
 	UseMethod("region")
@@ -26,7 +26,7 @@ region.Q4<-function(Qs,method,alpha,...){
 	
 	Qs<-formatQ4(Qs)
 	
-	if(method%in%c('Rancourt','rancourt')){
+	if(method%in%c('Prentice','prentice')){
 		
 		r<-rancourtCR.Q4(Qs=Qs,a=alpha)
 		
@@ -46,7 +46,7 @@ region.Q4<-function(Qs,method,alpha,...){
 		
 	}else{
 		
-		stop("Only the Rancourt, Zhang and Fisher options are currently available")
+		stop("Only the Prentice, Zhang and Fisher options are currently available")
 		
 	}
 	
@@ -61,7 +61,7 @@ region.SO3<-function(Rs,method,alpha,...){
 	
 	Rs<-formatSO3(Rs)
 	
-	if(method%in%c('Rancourt','rancourt')){
+	if(method%in%c('Prentice','prentice')){
 		
 		r<-rancourtCR.SO3(Rs=Rs,a=alpha)
 		return(r)
@@ -80,13 +80,13 @@ region.SO3<-function(Rs,method,alpha,...){
 		
 	}else{
 		
-		stop("Only the Rancourt, Zhang and Fisher options are currently available")
+		stop("Only the Prentice, Zhang and Fisher options are currently available")
 		
 	}
 	
 }
 
-#' Rancourt CR Method
+#' Prentice CR Method
 #'
 #' Find the radius of a \eqn{100\alpha%} confidence region for the projected mean \cite{rancourt2000}
 #'
@@ -100,7 +100,7 @@ region.SO3<-function(Rs,method,alpha,...){
 #' @export
 #' @examples
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-#' region(Qs,method='rancourt',alpha=0.9)
+#' region(Qs,method='prentice',alpha=0.9)
 
 rancourtCR<-function(Qs,a){
 	UseMethod("rancourtCR")
