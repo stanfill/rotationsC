@@ -5,28 +5,30 @@ require(grid)
 oldSO3 <- function(U, theta=NULL) {
 	n<-length(U)/3
 	if(n%%1!=0)
-		stop("This functions only works in three dimensions.")	
+			stop("This functions only works in three dimensions.")	
 	U<-matrix(U,n,3)
 	ulen<-sqrt(rowSums(U^2)) 
 	if(is.null(theta)){ 
-		theta<-ulen%%(pi)
-		
-		#if(theta>pi)
-		#	theta<-2*pi-theta
-	}
+			theta<-ulen%%(pi)
+					
+					#if(theta>pi)
+					#	theta<-2*pi-theta
+			}
 	R<-matrix(NA,n,9)
-	for(i in 1:n){
-		
-		if(ulen[i]!=0)
-			U[i,]<-U[i,]/ulen[i]
-		
-		P <- U[i,] %*% t(U[i,])
-		
-		R[i,] <- P + (diag(3) - P) * cos(theta[i]) + eskew(U[i,]) * sin(theta[i])
+ 	for(i in 1:n){
+					
+				if(ulen[i]!=0)
+						U[i,]<-U[i,]/ulen[i]
+					
+				P <- U[i,] %*% t(U[i,])
+					
+				R[i,] <- P + (diag(3) - P) * cos(theta[i]) + eskew(U[i,]) * sin(theta[i])
 	}
 	class(R) <- "SO3"
 	return(R)
 }
+
+	
 
 # set origin of concentric circles
 origin <- matrix(oldSO3(c(1,-1,0), pi/16),3,3)
@@ -97,7 +99,7 @@ roteye <- function(origin, center, column=1) {
 #' @param column integer 1 to 3 indicating which column to display
 #' @return  data frame with columns X, Y, Z standing for the respective coordinates in 3d space
 #' @export
-
+#' 
 pointsXYZ <- function(data, center, column=1) {
   rot <- roteye(origin, center, column)
   idx <- list(1:3,4:6, 7:9)[[column]]
@@ -122,7 +124,7 @@ pointsXYZ <- function(data, center, column=1) {
 #' @param col integer 1 to 3 indicating which column to display
 #' @param toRange show only part of the globe that is in range of the data?
 #' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are
-#'     "all", "proj.mean", "proj.median", "riem.mean", "riem.median"
+#'     "all", "proj.mean", "proj.median", "geom.mean", "geom.median"
 #' @param ... parameters passed onto the points layer
 #' @return  a ggplot2 object with the data displayed on spherical grid
 #' @cite wickham09
@@ -132,7 +134,7 @@ pointsXYZ <- function(data, center, column=1) {
 #' Rs<-genR(r)
 #' plot(Rs,center=meanC(Rs),show_estimates=NULL,shape=4)
 #' # Z is computed internally and contains information on depth
-#' plot(Rs,center=meanC(Rs),show_estimates=c("proj.mean", "riem.mean")) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
+#' plot(Rs,center=meanC(Rs),show_estimates=c("proj.mean", "geom.mean")) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
 
 plot.SO3 <- function(x, center, col=1, toRange=FALSE, show_estimates=NULL,  ...) {
   Rs <- as.SO3(x)
@@ -152,11 +154,11 @@ plot.SO3 <- function(x, center, col=1, toRange=FALSE, show_estimates=NULL,  ...)
   estimates <- NULL
   if (!is.null(show_estimates)) {
     ShatP <- StildeP <- ShatG <- StildeG <- NA
-    if(show_estimates%in%c('all','All')) show_estimates<-c("proj.mean","proj.median","riem.mean","riem.median")
-    if (length(grep("proj.mean", show_estimates)) > 0) ShatP<-meanC(Rs, type="projected")
-    if (length(grep("proj.median", show_estimates)) >0)    StildeP<-medianC(Rs, type="projected")
-    if (length(grep("riem.mean", show_estimates)) > 0)    ShatG<-meanC(Rs, type="intrinsic")
-    if (length(grep("riem.median", show_estimates)) > 0)    StildeG<-medianC(Rs, type="intrinsic")
+    if(show_estimates%in%c('all','All')) show_estimates<-c("proj.mean","proj.median","geom.mean","geom.median")
+    if (length(grep("proj.mean", show_estimates)) > 0) ShatP<-mean(Rs, type="projected")
+    if (length(grep("proj.median", show_estimates)) >0)    StildeP<-median(Rs, type="projected")
+    if (length(grep("geom.mean", show_estimates)) > 0)    ShatG<-mean(Rs, type="geometric")
+    if (length(grep("geom.median", show_estimates)) > 0)    StildeG<-median(Rs, type="geometric")
     
     Shats<-data.frame(rbind(as.vector(ShatP),as.vector(StildeP),as.vector(ShatG),as.vector(StildeG)),Est=1:4)
     Shats$Est <- factor(Shats$Est)
