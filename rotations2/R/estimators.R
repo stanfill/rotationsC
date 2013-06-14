@@ -15,8 +15,8 @@ meanC<-function(x,...){
 #'
 #' @param Rs A \eqn{n\times 9}{n-by-9} matrix where each row corresponds to a random rotation in matrix form
 #' @param type String indicating 'projected' or 'geometric' type mean estimator
-#' @param epsilon Stopping rule for the geometric method
-#' @param maxIter The maximum number of iterations allowed before returning most recent estimate
+#' @param epsilon Stopping rule for the geometric-mean
+#' @param maxIter Maximum number of iterations allowed for geometric-mean
 #' @param ... additional arguments passed to mean
 #' @return Estimate of the projected or geometric mean of the sample
 #' @seealso \code{\link{medianC.SO3}}
@@ -54,15 +54,15 @@ meanC.SO3 <- function(Rs, type = "projected", epsilon = 1e-05, maxIter = 2000, .
 #'
 #' This function takes a sample of \eqn{n} unit quaternions and approximates the mean rotation.  If the projected mean
 #' is called for then the according to \cite{tyler1981} an estimate of the mean is the eigenvector corresponding to the largest
-#' eigen value of \eqn{\frac{1}{n}\sum_{i=1}^nq_i^\top q_i}{Q`Q/n}.  If the geometric
+#' eigenvalue of \eqn{\frac{1}{n}\sum_{i=1}^nq_i^\top q_i}{Q`Q/n}.  If the geometric
 #' mean is called then the quaternions are transformed into \eqn{3\times 3}{3-by-3} matrices and the \code{mean.SO3}
 #' function is called.
 #'
 #' 
 #' @param Qs A \eqn{n\times 4}{n-by-4} matrix where each row corresponds to a random rotation in unit quaternion
 #' @param type String indicating 'projeted' or 'geometric' type mean estimator
-#' @param epsilon Stopping rule for the geometric method
-#' @param maxIter The maximum number of iterations allowed before returning most recent estimate
+#' @param epsilon Stopping rule 
+#' @param maxIter The maximum number of iterations allowed
 #' @return projected or geometric mean of the sample
 #' @seealso \code{\link{meanC.SO3}}
 #' @cite moakher02, manton04
@@ -101,7 +101,7 @@ meanC.Q4 <- function(Qs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
 #' 
 #' Compute the projected or geometric median of a sample of rotations
 #'
-#' The median-type estimators are defined as \deqn{\widetilde{\bm{S}}=\argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd_D(\bm{R}_i,\bm{S})}{argmin\sum d(Ri,S)}.  If the choice of distance metrid, \eqn{d_D}{d}, is Riemannian then the estimator is called the geometric, and if the distance metric in Euclidean then it projected.
+#' The median-type estimators are defined as \deqn{\widetilde{\bm{S}}=\argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd_D(\bm{R}_i,\bm{S}).}{argmin\sum d(Ri,S).}  If the choice of distance metric, \eqn{d_D}{d}, is Riemannian then the estimator is called the geometric, and if the distance metric in Euclidean then it projected.
 #' The algorithm used in the geometric case is discussed in \cite{hartley11} and the projected case was written by the authors.
 #'
 #' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix form (\eqn{p=9}) or quaternion form (\eqn{p=4})
