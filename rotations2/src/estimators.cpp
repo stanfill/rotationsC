@@ -65,7 +65,6 @@ int checkSO3(arma::mat Rs){
 	return 0;
 }
 
-//' Exponentiate a skew-symmetric matrix, which is necessairly a rotation
 // [[Rcpp::export]]
 arma::mat expskewC(arma::mat M){
   /*This function takes a 3-by-3 skew symmetric matrix (in so(3)) and
@@ -93,7 +92,6 @@ arma::mat expskewC(arma::mat M){
 }
 
 
-//' Compue the geodesic distance between each row of Rs and R2
 // [[Rcpp::export]]
 arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2){
   
@@ -125,7 +123,6 @@ arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2){
 }
 
 
-//' Compute the natural log of a rotation matrix, which is skew-symmetric
 // [[Rcpp::export]]
 arma::mat logSO3C(arma::mat R){
   
@@ -146,7 +143,6 @@ arma::mat logSO3C(arma::mat R){
 }
 
 
-//' Project 3-by-3 skew symmetric matrix into SO3
 // [[Rcpp::export]]
 arma::mat projectSO3C(arma::mat M){
 	
@@ -175,7 +171,7 @@ arma::mat projectSO3C(arma::mat M){
 	 
 }
 
-//' Projected mean for SO3
+
 // [[Rcpp::export]]
 arma::mat meanSO3C(arma::mat Rs){
 	
@@ -195,7 +191,7 @@ arma::mat meanSO3C(arma::mat Rs){
 }
 
 
-//' Compute projected mean for quaternions
+
 // [[Rcpp::export]]   
 arma::rowvec meanQ4C(arma::mat Q) { 
 	//Compute the projected mean of the sample Q
@@ -220,7 +216,7 @@ arma::rowvec meanQ4C(arma::mat Q) {
 }
 
 
-//' Compute projected Median in SO3
+
 //[[Rcpp::export]]
 arma::mat medianSO3C(arma::mat Rs, int maxIterations, double maxEps){
   
@@ -264,7 +260,7 @@ arma::mat medianSO3C(arma::mat Rs, int maxIterations, double maxEps){
   return S;
 }
 
-//' Compute intrinsic median in SO3 
+ 
 //[[Rcpp::export]]
 arma::mat HartmedianSO3C(arma::mat Rs, int maxIterations, double maxEps){
   
@@ -313,7 +309,7 @@ arma::mat HartmedianSO3C(arma::mat Rs, int maxIterations, double maxEps){
   return S;
 }
 
-//' Compute geometric mean in SO3
+
 // [[Rcpp::export]]
 arma::mat gmeanSO3C(arma::mat Rs, int maxIterations, double maxEps){
   int n = Rs.n_rows, i=0, j=0, iterations=0;

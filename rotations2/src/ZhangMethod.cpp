@@ -5,7 +5,6 @@ using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]] 
 // [[Rcpp::interfaces(r, cpp)]]
 
-//' Compute the rotational distance from each row of Q1 and Q2
 // [[Rcpp::export]]
 NumericVector RdistC(NumericMatrix Q1, NumericVector Q2){
 	/*Compute the geodesic distance between quaternions Q1 and Q2*/
@@ -25,7 +24,6 @@ NumericVector RdistC(NumericMatrix Q1, NumericVector Q2){
 	return rs;
 }
 
-//' Compute the rotational distance between Q1 and Q2
 // [[Rcpp::export]]
 double oneRdistC(NumericMatrix Q1, NumericVector Q2){
 	/*Compute the geodesic distance between quaternions Q1 and Q2*/
@@ -39,12 +37,12 @@ double oneRdistC(NumericMatrix Q1, NumericVector Q2){
 	return rs;
 }
 
-//' This estimates c=2E(1-cos(r^2))/3 and d=E(1+2cos(r))/3 from a sample
+
 // [[Rcpp::export]]
 NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 	
 	//Compute the values c and d to form the pivotal test statistic
-	
+	//This estimates c=2E(1-cos(r^2))/3 and d=E(1+2cos(r))/3 from a sample
 	int n = Qs.nrow(), i;
 	double crs;
 	
@@ -70,7 +68,6 @@ NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 	return cds;
 }
 
-//'Zhang bootstrap method paramaterized for quaternions
 // [[Rcpp::export]]
 NumericVector zhangQ4(NumericMatrix Q, int m){
 	

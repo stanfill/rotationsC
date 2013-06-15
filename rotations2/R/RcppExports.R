@@ -29,77 +29,62 @@ checkSO3 <- function(Rs) {
     .Call('rotations2_checkSO3', PACKAGE = 'rotations2', Rs)
 }
 
-#' Exponentiate a skew-symmetric matrix, which is necessairly a rotation
 expskewC <- function(M) {
     .Call('rotations2_expskewC', PACKAGE = 'rotations2', M)
 }
 
-#' Compue the geodesic distance between each row of Rs and R2
 rdistSO3C <- function(Rs, R2) {
     .Call('rotations2_rdistSO3C', PACKAGE = 'rotations2', Rs, R2)
 }
 
-#' Compute the natural log of a rotation matrix, which is skew-symmetric
 logSO3C <- function(R) {
     .Call('rotations2_logSO3C', PACKAGE = 'rotations2', R)
 }
 
-#' Project 3-by-3 skew symmetric matrix into SO3
 projectSO3C <- function(M) {
     .Call('rotations2_projectSO3C', PACKAGE = 'rotations2', M)
 }
 
-#' Projected mean for SO3
 meanSO3C <- function(Rs) {
     .Call('rotations2_meanSO3C', PACKAGE = 'rotations2', Rs)
 }
 
-#' Compute projected mean for quaternions
 meanQ4C <- function(Q) {
     .Call('rotations2_meanQ4C', PACKAGE = 'rotations2', Q)
 }
 
-#' Compute projected Median in SO3
 medianSO3C <- function(Rs, maxIterations, maxEps) {
     .Call('rotations2_medianSO3C', PACKAGE = 'rotations2', Rs, maxIterations, maxEps)
 }
 
-#' Compute intrinsic median in SO3 
 HartmedianSO3C <- function(Rs, maxIterations, maxEps) {
     .Call('rotations2_HartmedianSO3C', PACKAGE = 'rotations2', Rs, maxIterations, maxEps)
 }
 
-#' Compute geometric mean in SO3
 gmeanSO3C <- function(Rs, maxIterations, maxEps) {
     .Call('rotations2_gmeanSO3C', PACKAGE = 'rotations2', Rs, maxIterations, maxEps)
 }
 
-#' Compute a singe test statistic for the Fisher mean polar axis method
 fisherAxisC <- function(Qs, Qhat) {
     .Call('rotations2_fisherAxisC', PACKAGE = 'rotations2', Qs, Qhat)
 }
 
-#' Use the Fisher mean polar axis method
 fisherBootC <- function(Qs, m) {
     .Call('rotations2_fisherBootC', PACKAGE = 'rotations2', Qs, m)
 }
 
-#' Compute the rotational distance from each row of Q1 and Q2
 RdistC <- function(Q1, Q2) {
     .Call('rotations2_RdistC', PACKAGE = 'rotations2', Q1, Q2)
 }
 
-#' Compute the rotational distance between Q1 and Q2
 oneRdistC <- function(Q1, Q2) {
     .Call('rotations2_oneRdistC', PACKAGE = 'rotations2', Q1, Q2)
 }
 
-#' This estimates c=2E(1-cos(r^2))/3 and d=E(1+2cos(r))/3 from a sample
 cdfunsC <- function(Qs, Qhat) {
     .Call('rotations2_cdfunsC', PACKAGE = 'rotations2', Qs, Qhat)
 }
 
-#'Zhang bootstrap method paramaterized for quaternions
 zhangQ4 <- function(Q, m) {
     .Call('rotations2_zhangQ4', PACKAGE = 'rotations2', Q, m)
 }
