@@ -1,4 +1,4 @@
-## *intervals* code
+## *intervals*
 ========================================================
 
 This folder contains the code necessary to run the simulations for the intervals research
