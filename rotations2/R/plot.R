@@ -28,11 +28,12 @@ oldSO3 <- function(U, theta=NULL) {
 	return(R)
 }
 
-	
+library(ggplot2)
+require(grid)
 
 # set origin of concentric circles
 origin <- matrix(oldSO3(c(1,-1,0), pi/16),3,3)
-  
+
 # construct helper grid lines for sphere
 
 theta <- seq(0,pi, by=pi/8)
@@ -61,32 +62,32 @@ circles <- rbind(circles, circles.2)
 
 
 setOrigin <- function(origin = matrix(oldSO3(c(1,-1,0), pi/8),3,3)) {
-  origin <<- origin
-  pcircles <- data.frame(as.matrix(circles[,1:3]) %*% origin)
-  pcircles
+	origin <<- origin
+	pcircles <- data.frame(as.matrix(circles[,1:3]) %*% origin)
+	pcircles
 }
 
 
 # this is the coordinate system and should be fixed, no matter what column of the rotation matrices is shown
 
 base <- ggplot(aes(x=X1, y=X2), data=setOrigin(matrix(oldSO3(c(1,-1,0), pi/16),3,3))) + 
-  coord_equal() + 
-  geom_point(aes(alpha=X3), size=0.6, colour="grey65") + 
-  scale_alpha(range=c(0,0.8),  guide="none") + 
-  theme(panel.background=element_blank(),
-       panel.grid.minor=element_blank(),
-       panel.grid.major=element_blank(),
-       axis.title.x=element_blank(),
-       axis.title.y=element_blank(),
-       axis.text.x=element_blank(),
-       axis.text.y=element_blank(),
-       axis.ticks=element_blank(), 
-       plot.margin = unit(rep(0, 4), "lines"))
+	coord_equal() + 
+	geom_point(aes(alpha=X3), size=0.6, colour="grey65") + 
+	scale_alpha(range=c(0,0.8),  guide="none") + 
+	theme(panel.background=element_blank(),
+				panel.grid.minor=element_blank(),
+				panel.grid.major=element_blank(),
+				axis.title.x=element_blank(),
+				axis.title.y=element_blank(),
+				axis.text.x=element_blank(),
+				axis.text.y=element_blank(),
+				axis.ticks=element_blank(), 
+				plot.margin = unit(rep(0, 4), "lines"))
 
 
 roteye <- function(origin, center, column=1) {
-  R <- list(matrix(oldSO3(c(0,1,0), pi/2),3,3), matrix(oldSO3(c(1,0,0), -pi/2),3,3), diag(c(1,1,1)))[[column]]
-  rot <- center %*% R %*% origin 
+	R <- list(matrix(oldSO3(c(0,1,0), pi/2),3,3), matrix(oldSO3(c(1,0,0), -pi/2),3,3), diag(c(1,1,1)))[[column]]
+	rot <- center %*% R %*% origin 
 }
 
 
@@ -101,16 +102,16 @@ roteye <- function(origin, center, column=1) {
 #' @export
 #' 
 pointsXYZ <- function(data, center, column=1) {
-  rot <- roteye(origin, center, column)
-  idx <- list(1:3,4:6, 7:9)[[column]]
-  data <- as.matrix(data[,idx])
-  
-  psample1 <- data.frame(data %*% rot)
-  names(psample1) <- c("X","Y","Z")
-  
-  #  psample1 <- data.frame(psample1, data)
-  #  psample1 <- psample1[order(psample1$Z, decreasing=FALSE),]
-  psample1  
+	rot <- roteye(origin, center, column)
+	idx <- list(1:3,4:6, 7:9)[[column]]
+	data <- as.matrix(data[,idx])
+	
+	psample1 <- data.frame(data %*% rot)
+	names(psample1) <- c("X","Y","Z")
+	
+	#  psample1 <- data.frame(psample1, data)
+	#  psample1 <- psample1[order(psample1$Z, decreasing=FALSE),]
+	psample1  
 }
 
 
@@ -123,8 +124,8 @@ pointsXYZ <- function(data, center, column=1) {
 #' @param center point about which to center the observations
 #' @param col integer 1 to 3 indicating which column to display
 #' @param toRange show only part of the globe that is in range of the data?
-#' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are
-#'     "all", "proj.mean", "proj.median", "geom.mean", "geom.median"
+#' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "riem.mean", "riem.median"
+#' @param label_points  vector of labels
 #' @param ... parameters passed onto the points layer
 #' @return  a ggplot2 object with the data displayed on spherical grid
 #' @cite wickham09
@@ -132,44 +133,51 @@ pointsXYZ <- function(data, center, column=1) {
 #' @examples
 #' r<-rvmises(200,1.0)
 #' Rs<-genR(r)
-#' plot(Rs,center=meanC(Rs),show_estimates=NULL,shape=4)
+#' plot(Rs,center=mean(Rs),show_estimates=NULL,shape=4)
 #' # Z is computed internally and contains information on depth
-#' plot(Rs,center=meanC(Rs),show_estimates=c("proj.mean", "geom.mean")) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
+#' plot(Rs,center=mean(Rs),show_estimates=c("proj.mean", "riem.mean"), label_points=sample(LETTERS, 200, replace=TRUE)) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
 
-plot.SO3 <- function(x, center, col=1, toRange=FALSE, show_estimates=NULL,  ...) {
-  Rs <- as.SO3(x)
-  xlimits <- c(-1,1)
-  ylimits <- c(-1,1)
-  
-  X <- Y <- Est <- NULL
-  proj2d <- pointsXYZ(Rs, center=center, column=col)
-  if(toRange) {
-    xlimits <- range(proj2d$X)
-    ylimits <- range(proj2d$Y)
-    xbar <- mean(xlimits)
-    xlimits <- xbar + 1.1*(xlimits-xbar)
-    ybar <- mean(ylimits)
-    ylimits <- ybar + 1.1*(ylimits-ybar)
-  }
-  estimates <- NULL
-  if (!is.null(show_estimates)) {
-    ShatP <- StildeP <- ShatG <- StildeG <- NA
-    if(show_estimates%in%c('all','All')) show_estimates<-c("proj.mean","proj.median","geom.mean","geom.median")
-    if (length(grep("proj.mean", show_estimates)) > 0) ShatP<-meanC(Rs, type="projected")
-    if (length(grep("proj.median", show_estimates)) >0)    StildeP<-medianC(Rs, type="projected")
-    if (length(grep("geom.mean", show_estimates)) > 0)    ShatG<-meanC(Rs, type="geometric")
-    if (length(grep("geom.median", show_estimates)) > 0)    StildeG<-medianC(Rs, type="geometric")
-    
-    Shats<-data.frame(rbind(as.vector(ShatP),as.vector(StildeP),as.vector(ShatG),as.vector(StildeG)),Est=1:4)
-    Shats$Est <- factor(Shats$Est)
-    labels <- c(expression(hat(S)[E]), expression(tilde(S)[E]), expression(hat(S)[R]), expression(tilde(S)[R]))
-    levels(Shats$Est) <- labels
-    Shats <- na.omit(Shats)
-    
-    estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(pointsXYZ(Shats, center=center, column=col), Shats)),
-                      scale_colour_brewer("Estimates", palette="Paired", labels=labels))
-  }
-  base + geom_point(aes(x=X, y=Y), data=proj2d, ...) + 
-    estimates +
-    xlim(xlimits) + ylim(ylimits) 
+plot.SO3 <- function(x, center, col=1, toRange=FALSE, show_estimates=NULL, label_points=NULL,  ...) {
+	Rs <- as.SO3(x)
+	xlimits <- c(-1,1)
+	ylimits <- c(-1,1)
+	
+	X <- Y <- Est <- NULL
+	proj2d <- pointsXYZ(Rs, center=center, column=col)
+	if(toRange) {
+		xlimits <- range(proj2d$X)
+		ylimits <- range(proj2d$Y)
+		xbar <- mean(xlimits)
+		xlimits <- xbar + 1.1*(xlimits-xbar)
+		ybar <- mean(ylimits)
+		ylimits <- ybar + 1.1*(ylimits-ybar)
+	}
+	estimates <- NULL
+	if (!is.null(show_estimates)) {
+		ShatP <- StildeP <- ShatG <- StildeG <- NA
+		if(show_estimates%in%c('all','All')) show_estimates<-c("proj.mean","proj.median","riem.mean","riem.median")
+		if (length(grep("proj.mean", show_estimates)) > 0) ShatP<-meanC(Rs, type="projected")
+		if (length(grep("proj.median", show_estimates)) >0)    StildeP<-medianC(Rs, type="projected")
+		if (length(grep("riem.mean", show_estimates)) > 0)    ShatG<-meanC(Rs, type="intrinsic")
+		if (length(grep("riem.median", show_estimates)) > 0)    StildeG<-medianC(Rs, type="intrinsic")
+		
+		Shats<-data.frame(rbind(as.vector(ShatP),as.vector(StildeP),as.vector(ShatG),as.vector(StildeG)),Est=1:4)
+		Shats$Est <- factor(Shats$Est)
+		labels <- c(expression(hat(S)[E]), expression(tilde(S)[E]), expression(hat(S)[R]), expression(tilde(S)[R]))
+		levels(Shats$Est) <- labels
+		Shats <- na.omit(Shats)
+		
+		estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(pointsXYZ(Shats, center=center, column=col), Shats)),
+											scale_colour_brewer("Estimates", palette="Paired", labels=labels))
+	}
+	labels <- NULL
+	if (!is.null(label_points)) {
+		proj2d$labels <- label_points
+		labels <- geom_text(aes(x=X+0.05, y=Y, label=labels), size=3.25, data=proj2d, ...) 
+	}
+	base + geom_point(aes(x=X, y=Y), data=proj2d, ...) + 
+		labels + 
+		estimates +
+		xlim(xlimits) + ylim(ylimits) 
 }
+
