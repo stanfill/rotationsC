@@ -1,18 +1,17 @@
 \name{as.SO3}
 \alias{as.SO3}
-\title{Convert anything into SO3 class}
+\title{Add SO3 class to object}
 \usage{
   as.SO3(x)
 }
 \arguments{
-  \item{x}{matrix of rotations, note that no check is
-  performed}
+  \item{x}{an R object}
 }
 \value{
   x with class "SO3"
 }
 \description{
-  Convert anything into SO3 class
+  Add SO3 class to object
 }
 \seealso{
   Other SO3: \code{\link{id.SO3}}, \code{\link{is.Q4}},

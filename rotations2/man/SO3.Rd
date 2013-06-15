@@ -11,28 +11,31 @@
   \method{SO3}{Q4} (q)
 }
 \arguments{
-  \item{U}{three-dimensional vector describing the fix axis
-  of the rotation}
+  \item{U}{three-dimensional vector describing the axis of
+  rotation}
+
+  \item{theta}{vector of angles to create the matrices}
+
+  \item{q}{quaternions to be translated into rotations}
 
   \item{...}{additional arguments}
 }
 \value{
   matrix of rotations in SO3 format
-
-  \code{NULL}
-
-  \code{NULL}
 }
 \description{
-  Create a rotation matrix
+  Rotation matrix construction
 }
 \details{
-  Create matrix in SO(3) representing the rotation of the
-  identity matrix about the axis U throught the angle
-  theta.  This can be accomplished by providing the axis
-  and angle explicitly or by providing the rotation in some
-  other form, e.g. a vector of Euler angles or unit
-  quaternion.
+  Construct a 3-by-3 non-singular orthogonal matrix with
+  determinant one.  The construction is accodring to
+  Rodrigues formula.  It is interpreted as a rotation of
+  all three axis of the identity matrix about the axis U
+  (of unit length) through the angle theta.  Alternatively,
+  if U is not of unit length, the length of U is taken to
+  be angle of rotation, theta.  Given a quaternion
+  representation of a rotation this function will translate
+  the quaternion into a rotation matrix
 }
 \seealso{
   Other SO3: \code{\link{as.SO3}}, \code{\link{id.SO3}},

@@ -19,27 +19,28 @@ setOldClass("SO3")
 #' @exportClass Q4
 setOldClass("Q4")
 
-
 #' Quaternions
 #' 
 #' Create a unit quaternion
 #' 
-#' Create quaternion representing the rotation of the identity matrix about the 
-#' axis U throught the angle theta.  This can be accomplished by providing the axis and angle
-#' explicitly or by providing the rotation in some other form, e.g. a matrix in SO(3) or Euler angles.
-#' 
+#' Construct a unit quaternion to represent a rotation.  It is interpreted as a rotation of all three axis 
+#' of the identity matrix about the axis U (of unit length) through the angle theta.  Alternatively, if 
+#' U is not of unit length, the length of U is taken to be angle of rotation, theta.  Given a matrix representation 
+#' of a rotation this function will translate the matrix into a quaternion.
+#'
 #' @export
-#' @param U three-dimensional vector describing the fix axis of the rotation
+#' @param U three-dimensional vector describing the axis of rotation
+#' @param theta vector of angles to create the matrices
+#' @param R matrix in SO(3) to be translated into quaternions
 #' @param ... additional arguments
-#' @return unit quaternion of class "Q4"
+#' @return unit quaternion of class Q4
 #' @family Q4
 
 Q4<-function(U,...){
   UseMethod("Q4")
 }
 
-#' @return \code{NULL}
-#'
+
 #' @rdname Q4
 #' @method Q4 default
 #' @S3method Q4 default
@@ -66,8 +67,6 @@ Q4.default <- function(U,theta){
   return(x)
 }
 
-#' @return \code{NULL}
-#'
 #' @rdname Q4
 #' @method Q4 SO3
 #' @S3method Q4 SO3
@@ -101,11 +100,11 @@ as.Q4<-function(x){
 #' @export
 id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 
-#' A function to determine if a given matrix is in unit quaternion or not.
+#' A function to determine if a given object is in unit quaternion or not.
 #'
-#' @param x numeric 1-by-4  vector of length 9
+#' @param x numeric 1-by-4  vector of length 4
 #' @return logical T if the vector is a unit quaternion and false otherwise
-#' @family SO3
+#' @family Q4
 #' @export
 
 is.Q4 <- function(x) {
@@ -116,14 +115,18 @@ is.Q4 <- function(x) {
 
 #' Matrix in SO(3)
 #' 
-#' Create a rotation matrix
+#' Rotation matrix construction
 #' 
-#' Create matrix in SO(3) representing the rotation of the identity matrix about the 
-#' axis U throught the angle theta.  This can be accomplished by providing the axis and angle
-#' explicitly or by providing the rotation in some other form, e.g. a vector of Euler angles or unit quaternion.
+#' Construct a 3-by-3 non-singular orthogonal matrix with determinant one.  The construction is accodring to Rodrigues
+#' formula.  It is interpreted as a rotation of all three axis of the identity matrix about the axis U (of unit length)
+#' through the angle theta.  Alternatively, if U is not of unit length, the length of U is taken to be angle of 
+#' rotation, theta.  Given a quaternion representation of a rotation this function will translate the quaternion
+#' into a rotation matrix
 #'
 #' @export
-#' @param U three-dimensional vector describing the fix axis of the rotation
+#' @param U three-dimensional vector describing the axis of rotation
+#' @param theta vector of angles to create the matrices
+#' @param q quaternions to be translated into rotations
 #' @param ... additional arguments
 #' @return matrix of rotations in SO3 format
 #' @family SO3
@@ -132,8 +135,7 @@ SO3 <- function(U,...){
   UseMethod("SO3")
 }
 
-#' @return \code{NULL}
-#' 
+
 #' @rdname SO3
 #' @method SO3 default
 #' @S3method SO3 default
@@ -161,8 +163,6 @@ SO3.default <- function(U, theta=NULL) {
 }
 
 
-#' @return \code{NULL}
-#' 
 #' @rdname SO3
 #' @method SO3 Q4
 #' @S3method SO3 Q4
@@ -188,9 +188,9 @@ SO3.Q4<-function(q){
 }
 
 
-#' Convert anything into SO3 class
+#' Add SO3 class to object
 #' 
-#' @param x matrix of rotations, note that no check is performed 
+#' @param x an R object
 #' @return x with class "SO3"
 #' @family SO3
 #' @export
@@ -206,7 +206,7 @@ as.SO3<-function(x){
 id.SO3 <- as.SO3(diag(c(1,1,1)))
 
 
-#' A function to determine if a given matrix is in \eqn{SO(3)} or not.
+#' A function to determine if a given object is in \eqn{SO(3)} or not.
 #'
 #' @param x numeric 3-by-3 matrix or vector of length 9
 #' @return logical T if the matrix is in SO(3) and false otherwise
