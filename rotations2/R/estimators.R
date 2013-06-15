@@ -1,9 +1,3 @@
-#' @export
-
-meanC<-function(x,...){
-	UseMethod("meanC")
-}
-
 #' Mean Rotation
 #'
 #' Compute the geometric or projected mean of a sample of rotations
@@ -21,13 +15,13 @@ meanC<-function(x,...){
 #' @return Estimate of the projected or geometric mean of the sample
 #' @seealso \code{\link{medianC.SO3}}
 #' @cite moakher02, manton04
-#' @S3method meanC SO3
-#' @method meanC SO3
+#' @S3method mean SO3
+#' @method mean SO3
 #' @examples
 #' Rs<-ruars(20,rvmises,kappa=0.01)
-#' meanC(Rs)
+#' mean(Rs)
 
-meanC.SO3 <- function(Rs, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
+mean.SO3 <- function(Rs, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
 	
 	Rs<-formatSO3(Rs)	
 	
@@ -66,14 +60,14 @@ meanC.SO3 <- function(Rs, type = "projected", epsilon = 1e-05, maxIter = 2000, .
 #' @return projected or geometric mean of the sample
 #' @seealso \code{\link{meanC.SO3}}
 #' @cite moakher02, manton04
-#' @S3method meanC Q4
-#' @method meanC Q4
+#' @S3method mean Q4
+#' @method mean Q4
 #' @export
 #' @examples
 #' Qs<-ruars(20,rcayley,space="Q4")
-#' meanC(Qs,type='geometric')
+#' mean(Qs,type='geometric')
 
-meanC.Q4 <- function(Qs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
+mean.Q4 <- function(Qs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
 	
 	Qs<-formatQ4(Qs)
 	
@@ -110,19 +104,19 @@ meanC.Q4 <- function(Qs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
 #' @param maxIter The maximum number of iterations allowed before returning most recent estimate
 #' @param ... additional arguments
 #' @return an estimate of the projected or geometric mean
-#' @seealso \code{\link{meanC.SO3}}
+#' @seealso \code{\link{mean.SO3}}
 #' @cite hartley11
 #' @export
 
-medianC<-function(x,...){
-  UseMethod("medianC")
+median<-function(x,...){
+  UseMethod("median")
 }
 
-#' @rdname medianC
-#' @method medianC SO3
-#' @S3method medianC SO3
+#' @rdname median
+#' @method median SO3
+#' @S3method median SO3
 
-medianC.SO3 <- function(Rs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
+median.SO3 <- function(Rs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
   
 	Rs<-formatSO3(Rs)
 	n<-nrow(Rs)
@@ -147,11 +141,11 @@ medianC.SO3 <- function(Rs, type = "projected", epsilon = 1e-05, maxIter = 2000)
 }
 
 
-#' @rdname medianC
-#' @method medianC Q4
-#' @S3method medianC Q4
+#' @rdname median
+#' @method median Q4
+#' @S3method median Q4
 
-medianC.Q4 <- function(Qs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
+median.Q4 <- function(Qs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
 	
 	Qs<-formatQ4(Qs)
 	
@@ -165,12 +159,6 @@ medianC.Q4 <- function(Qs, type = "projected", epsilon = 1e-05, maxIter = 2000) 
   return(Q4.SO3(R))
 }
 
-
-#' @export
-
-weighted.meanC<-function(x,...){
-	UseMethod("weighted.meanC")
-}
 
 #' Weighted Mean Rotation
 #'
@@ -190,14 +178,14 @@ weighted.meanC<-function(x,...){
 #' @return weighted projected mean of the sample
 #' @seealso \code{\link{medianC.SO3}} \code{\link{meanC.SO3}}
 #' @cite moakher02
-#' @S3method weighted.meanC SO3
-#' @method weighted.meanC SO3
+#' @S3method weighted.mean SO3
+#' @method weighted.mean SO3
 #' @examples
 #' Rs<-ruars(20,rvmises,kappa=0.01)
 #' wt<-abs(1/angle(Rs))
 #' weighted.meanC(Rs,wt)
 
-weighted.meanC.SO3 <- function(Rs, w, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
+weighted.mean.SO3 <- function(Rs, w, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
 	
 	Rs<-formatSO3(Rs)
 	
@@ -264,16 +252,16 @@ weighted.meanC.SO3 <- function(Rs, w, type = "projected", epsilon = 1e-05, maxIt
 #' @return weighted projected or geometric mean of the sample
 #' @seealso \code{\link{mean.SO3}}
 #' @cite moakher02, manton04
-#' @S3method weighted.meanC Q4
-#' @method weighted.meanC Q4
+#' @S3method weighted.mean Q4
+#' @method weighted.mean Q4
 #' @export
 #' @examples
 #' r<-rvmises(20,0.01)
 #' wt<-abs(1/r)
 #' Qs<-genR(r,space="Q4")
-#' weighted.meanC(Qs,wt)
+#' weighted.mean(Qs,wt)
 
-weighted.meanC.Q4 <- function(Qs, w, type = "projected", epsilon = 1e-05, maxIter = 2000) {
+weighted.mean.Q4 <- function(Qs, w, type = "projected", epsilon = 1e-05, maxIter = 2000) {
 	
 	Qs<-formatQ4(Qs)
 	

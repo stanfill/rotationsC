@@ -274,7 +274,7 @@ eskew <- function(U) {
 #' r<-rvmises(20,0.01)
 #' genrC2(r)
 
-genrC2 <- function(r, S = NULL, space='SO3') {
+genR <- function(r, S = NULL, space='SO3') {
   
   if(!(space %in% c("SO3","Q4")))
     stop("Incorrect space argument.  Options are: SO3 and Q4. ")

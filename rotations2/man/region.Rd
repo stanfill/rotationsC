@@ -32,7 +32,7 @@
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)
-region(Qs,method='rancourt',alpha=0.9)
+region(Qs,method='prentice',alpha=0.9)
 }
 \references{
   Rancourt D, Rivest L and Asselin J (2000). "Using

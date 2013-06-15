@@ -17,7 +17,7 @@
   angle of rotation
 }
 \description{
-  Find the misorientation angle of a rotation
+  Compute the misorientation angle of a rotation
 }
 \details{
   Every rotation can be thought of as some reference

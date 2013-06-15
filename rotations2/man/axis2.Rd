@@ -11,13 +11,14 @@
   \method{axis2}{Q4} (q)
 }
 \arguments{
-  \item{R}{3-by-3 matrix in SO3}
+  \item{R,q}{\eqn{3\times 3}{3-by-3} matrix in SO3 or unit
+  quaterion}
 }
 \value{
   axis in form of three dimensional vector of length one.
 }
 \description{
-  Find the misorientation axis of a rotation
+  Determine the misorientation axis of a rotation
 }
 \details{
   Every rotation can be thought of as some reference

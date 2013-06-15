@@ -1,15 +1,15 @@
-\name{medianC}
-\alias{medianC}
-\alias{medianC.Q4}
-\alias{medianC.SO3}
+\name{median}
+\alias{median}
+\alias{median.Q4}
+\alias{median.SO3}
 \title{Median Rotation}
 \usage{
-  medianC(x, ...)
+  median(x, ...)
 
-  \method{medianC}{SO3} (Rs, type = "projected",
+  \method{median}{SO3} (Rs, type = "projected",
     epsilon = 1e-05, maxIter = 2000)
 
-  \method{medianC}{Q4} (Qs, type = "projected",
+  \method{median}{Q4} (Qs, type = "projected",
     epsilon = 1e-05, maxIter = 2000)
 }
 \arguments{
@@ -52,6 +52,6 @@
   (CVPR)_, pp. 3041-3048. IEEE.
 }
 \seealso{
-  \code{\link{meanC.SO3}}
+  \code{\link{mean.SO3}}
 }
 

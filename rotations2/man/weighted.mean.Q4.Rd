@@ -1,8 +1,8 @@
-\name{weighted.meanC.Q4}
-\alias{weighted.meanC.Q4}
+\name{weighted.mean.Q4}
+\alias{weighted.mean.Q4}
 \title{Weighted Rotation Median}
 \usage{
-  \method{weighted.meanC}{Q4} (Qs, w, type = "projected",
+  \method{weighted.mean}{Q4} (Qs, w, type = "projected",
     epsilon = 1e-05, maxIter = 2000)
 }
 \arguments{
@@ -41,7 +41,7 @@
 r<-rvmises(20,0.01)
 wt<-abs(1/r)
 Qs<-genR(r,space="Q4")
-weighted.meanC(Qs,wt)
+weighted.mean(Qs,wt)
 }
 \references{
   Gramkow C (2001). "On averaging rotations." _Journal of

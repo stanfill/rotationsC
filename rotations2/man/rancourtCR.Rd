@@ -2,7 +2,7 @@
 \alias{rancourtCR}
 \alias{rancourtCR.Q4}
 \alias{rancourtCR.SO3}
-\title{Rancourt CR Method}
+\title{Prentice CR Method}
 \usage{
   rancourtCR(Qs, a)
 
@@ -32,7 +32,7 @@
 }
 \examples{
 Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-region(Qs,method='rancourt',alpha=0.9)
+region(Qs,method='prentice',alpha=0.9)
 }
 \references{
   Bingham M, Nordman D and Vardeman S (2009). "Modeling and

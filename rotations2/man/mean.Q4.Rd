@@ -1,8 +1,8 @@
-\name{meanC.Q4}
-\alias{meanC.Q4}
+\name{mean.Q4}
+\alias{mean.Q4}
 \title{Mean Rotation}
 \usage{
-  \method{meanC}{Q4} (Qs, type = "projected",
+  \method{mean}{Q4} (Qs, type = "projected",
     epsilon = 1e-05, maxIter = 2000)
 }
 \arguments{
@@ -36,7 +36,7 @@
 }
 \examples{
 Qs<-ruars(20,rcayley,space="Q4")
-meanC(Qs,type='geometric')
+mean(Qs,type='geometric')
 }
 \references{
   Manton JH (2004). "A globally convergent numerical
