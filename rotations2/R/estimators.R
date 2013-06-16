@@ -154,7 +154,7 @@ median.Q4 <- function(Qs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
 
   Rs<-SO3(Qs)
   
-  R<-medianC(Rs,type,epsilon,maxIter)
+  R<-median(Rs,type,epsilon,maxIter)
   
   return(Q4.SO3(R))
 }

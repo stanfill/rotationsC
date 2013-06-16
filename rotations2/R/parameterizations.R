@@ -46,7 +46,7 @@ Q4<-function(U,...){
 #' @S3method Q4 default
 #' @family Q4
 
-Q4.default <- function(U,theta){	
+Q4.default <- function(U,theta=NULL){	
 	
 	n<-length(U)/3
 	
@@ -59,6 +59,9 @@ Q4.default <- function(U,theta){
 	
 	if(is.null(theta)){ 
 		theta<-ulen%%pi
+		
+		for(i in 1:n)
+			U[i,]<-U[i,]/theta[i]
 	}
 	
 	x <- Q4defaultC(U,theta)
@@ -154,6 +157,9 @@ SO3.default <- function(U, theta=NULL) {
   
   if(is.null(theta)){ 
   	theta<-ulen%%(pi)
+  	
+  	for(i in 1:n)
+  		U[i,]<-U[i,]/theta[i]
   }
 
 	R<-SO3defaultC(U,theta)

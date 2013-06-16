@@ -227,6 +227,8 @@ axis2.Q4 <- function(q){
 		u[infs]<-0
 	}  
   
+  u<-matrix(u,ncol=3)
+  
   return(u)
 }
 
