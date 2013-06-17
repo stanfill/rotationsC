@@ -29,19 +29,19 @@ region.Q4<-function(Qs,method,alpha,...){
 	
 	if(method%in%c('Prentice','prentice')){
 		
-		r<-prenticeCR.Q4(Qs=Qs,a=alpha)
+		r<-prentice.Q4(Qs=Qs,a=alpha)
 		
 		return(r)
 		
 	}else	if(method%in%c('Zhang','zhang')){
 		
-		r<-zhangCR.Q4(Qs=Qs,a=alpha,...)
+		r<-zhang.Q4(Qs=Qs,a=alpha,...)
 		
 		return(r)
 		
 	}else	if(method%in%c('Fisher','fisher')){
 		
-		r<-fisherCR.Q4(Qs=Qs,a=alpha)
+		r<-fisher.Q4(Qs=Qs,a=alpha)
 		
 		return(r)
 		
@@ -64,18 +64,18 @@ region.SO3<-function(Rs,method,alpha,...){
 	
 	if(method%in%c('Prentice','prentice')){
 		
-		r<-prenticeCR.SO3(Rs=Rs,a=alpha)
+		r<-prentice.SO3(Rs=Rs,a=alpha)
 		return(r)
 		
 	}else	if(method%in%c('Zhang','zhang')){
 		
-		r<-zhangCR.SO3(Rs=Rs,a=alpha,...)
+		r<-zhang.SO3(Rs=Rs,a=alpha,...)
 		
 		return(r)
 		
 	}else	if(method%in%c('Fisher','fisher')){
 		
-		r<-fisherCR.SO3(Rs=Rs,a=alpha)
+		r<-fisher.SO3(Rs=Rs,a=alpha)
 		
 		return(r)
 		
@@ -143,7 +143,7 @@ prentice.Q4<-function(Qs,a){
 
 prentice.SO3<-function(Rs,a){
 	Qs<-Q4(Rs)
-	r<-prenticeCR.Q4(Qs,a)
+	r<-prentice.Q4(Qs,a)
 	return(r)
 }
 
@@ -160,16 +160,16 @@ prentice.SO3<-function(Rs,a){
 #' Rs<-ruars(20,rcayley,kappa=100)
 #' region(Rs,method='zhang',alpha=0.1)
 
-zhangCR<-function(Qs,alpha,m){
-	UseMethod("zhangCR")
+zhang<-function(Qs,alpha,m){
+	UseMethod("zhang")
 }
 
 
-#' @rdname zhangCR
-#' @method zhangCR SO3
-#' @S3method zhangCR SO3
+#' @rdname zhang
+#' @method zhang SO3
+#' @S3method zhang SO3
 
-zhangCR.SO3<-function(Rs,alpha,m=300){
+zhang.SO3<-function(Rs,alpha,m=300){
 	
 	#Rs is a n-by-9 matrix where each row is an 3-by-3 rotation matrix
 	#m is the number of resamples to find q_1-a
@@ -178,15 +178,15 @@ zhangCR.SO3<-function(Rs,alpha,m=300){
 	
   Rs<-formatSO3(Rs)
   Qs<-Q4(Rs)
-  rad<-zhangCR.Q4(Qs,alpha,m)
+  rad<-zhang.Q4(Qs,alpha,m)
 	return(rad)
 }
 
-#' @rdname zhangCR
-#' @method zhangCR Q4
-#' @S3method zhangCR Q4
+#' @rdname zhang
+#' @method zhang Q4
+#' @S3method zhang Q4
 
-zhangCR.Q4<-function(Qs,alpha,m=300){
+zhang.Q4<-function(Qs,alpha,m=300){
 	
 	Qs<-formatQ4(Qs)
 	n<-nrow(Qs)
@@ -227,16 +227,16 @@ cdfuns<-function(Qs,Shat){
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
 #' region(Qs,method='fisher',alpha=0.1)
 
-fisherCR<-function(Qs,alpha,boot,m){
-	UseMethod("fisherCR")
+fisher<-function(Qs,alpha,boot,m){
+	UseMethod("fisher")
 }
 
 
-#' @rdname fisherCR
-#' @method fisherCR Q4
-#' @S3method fisherCR Q4
+#' @rdname fisher
+#' @method fisher Q4
+#' @S3method fisher Q4
 
-fisherCR.Q4<-function(Qs,alpha,boot=T,m=300){
+fisher.Q4<-function(Qs,alpha,boot=T,m=300){
 	
 	Qs<-formatQ4(Qs)
 	
@@ -291,14 +291,14 @@ optimAxis<-function(r,Qs,cut){
 }
 
 
-#' @rdname fisherCR
-#' @method fisherCR SO3
-#' @S3method fisherCR SO3
+#' @rdname fisher
+#' @method fisher SO3
+#' @S3method fisher SO3
 
-fisherCR.SO3<-function(Rs,alpha,boot=T,m=300){
+fisher.SO3<-function(Rs,alpha,boot=T,m=300){
 	
 	Qs<-Q4(Rs)
-	r<-fisherCR.Q4(Qs,alpha,boot,m)
+	r<-fisher.Q4(Qs,alpha,boot,m)
 	
 	return(r)
 }

@@ -1,0 +1,35 @@
+\name{zhang}
+\alias{zhang}
+\alias{zhang.Q4}
+\alias{zhang.SO3}
+\title{Zhang confidence region method}
+\usage{
+  zhang(Qs, alpha, m)
+
+  \method{zhang}{SO3} (Rs, alpha, m = 300)
+
+  \method{zhang}{Q4} (Qs, alpha, m = 300)
+}
+\arguments{
+  \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
+  row corresponds to a random rotation in matrix (p=9) or
+  quaternion form (p=4)}
+
+  \item{alpha}{The alpha level desired, e.g. 0.05 or 0.10}
+
+  \item{m}{Number of replicates to use to estiamte cut
+  point}
+}
+\value{
+  radius of the confidence region centered at the projected
+  mean
+}
+\description{
+  Find the radius of a \eqn{100(1-\alpha)%} confidence
+  region for the projected mean
+}
+\examples{
+Rs<-ruars(20,rcayley,kappa=100)
+region(Rs,method='zhang',alpha=0.1)
+}
+

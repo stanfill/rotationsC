@@ -1,52 +1,55 @@
-\name{Fisher}
-\alias{dfisher}
-\alias{Fisher}
-\alias{pfisher}
-\alias{rfisher}
-\title{The Matrix Fisher Distribution}
+\name{fisher}
+\alias{fisher}
+\alias{fisher.Q4}
+\alias{fisher.SO3}
+\title{Fisher Mean Polax Axis confidence region Method}
 \usage{
-  dfisher(r, kappa = 1, nu = NULL, Haar = TRUE)
+  fisher(Qs, alpha, boot, m)
 
-  pfisher(q, kappa = 1, nu = NULL, lower.tail = TRUE)
+  \method{fisher}{Q4} (Qs, alpha, boot = T, m = 300)
 
-  rfisher(n, kappa = 1, nu = NULL)
+  \method{fisher}{SO3} (Rs, alpha, boot = T, m = 300)
 }
 \arguments{
-  \item{r,q}{vector of quantiles}
+  \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
+  row corresponds to a random rotation in matrix (p=9) or
+  quaternion form (p=4)}
 
-  \item{n}{number of observations.  If \code{length(n)>1},
-  the length is taken to be the number required}
+  \item{alpha}{The alpha level desired, e.g. 0.05 or 0.10}
 
-  \item{kappa}{concentration paramter}
+  \item{boot}{Should the bootstrap or normal theory
+  critical value be used}
 
-  \item{nu}{circular variance, can be used in place of
-  kappa}
-
-  \item{Haar}{logical; if TRUE density is evaluated with
-  respect to Haar}
+  \item{m}{number of bootstrap replicates to use to
+  estimate critical value}
 }
 \value{
-  \code{dfisher} gives the density, \code{pfisher} gives
-  the distribution function, \code{rfisher} generates
-  random deviates
+  radius of the confidence region centered at the projected
+  mean
 }
 \description{
-  Density and random generation for the matrix Fisher
-  distribution with concentration kappa (\eqn{\kappa})
+  Find the radius of a \eqn{100(1-\alpha)%} confidence
+  region for the projected mean \cite{Fisher et al. (1996)}
 }
 \details{
-  The matrix Fisher distribution with concentration kappa
-  (or circular variance nu) has density
-  \deqn{C_\mathrm{{F}}(r|\kappa)=\frac{1}{2\pi[\mathrm{I_0}(2\kappa)-\mathrm{I_1}(2\kappa)]}e^{2\kappa\cos(r)}[1-\cos(r)]}{C(r|\kappa)=exp[2\kappa
-  cos(r)][1-cos(r)]/(2\pi[I0(2\kappa)-I1(2\kappa)])} where
-  \eqn{\mathrm{I_p}(\cdot)}{Ip()} denotes the Bessel
-  function of order \eqn{p} defined as
-  \eqn{\mathrm{I_p}(\kappa)=\frac{1}{2\pi}\int_{-\pi}^{\pi}\cos(pr)e^{\kappa\cos
-  r}dr}{Ip(\kappa)} is the modified Bessel function with
-  parameters \eqn{p} and \eqn{kappa}.
+  This works in the same way as done in \cite{Bingham et
+  al. (2009)} which assumes rotational symmetry and is
+  therefore conservative.
 }
-\seealso{
-  \link{Angular-distributions} for other distributions in
-  the rotations package
+\examples{
+Qs<-ruars(20,rcayley,kappa=100,space='Q4')
+region(Qs,method='fisher',alpha=0.1)
+}
+\references{
+  Bingham M, Nordman D and Vardeman S (2009). "Modeling and
+  Inference for Measured Crystal Orientations and a
+  Tractable Class of Symmetric Distributions for Rotations
+  in three Dimensions." _Journal of the American
+  Statistical Association_, *104*(488), pp. 1385-1397.
+
+  Fisher N, Hall P, Jing B and Wood A (1996). "Improved
+  pivotal methods for constructing confidence regions with
+  directional data." _Journal of the American Statistical
+  Association_, *91*(435), pp. 1062-1070.
 }
 
