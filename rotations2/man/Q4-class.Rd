@@ -7,7 +7,7 @@
 }
 \seealso{
   Other Q4: \code{\link{as.Q4}}, \code{\link{id.Q4}},
-  \code{\link{Q4}}, \code{\link{Q4.default}},
-  \code{\link{Q4.SO3}}
+  \code{\link{is.Q4}}, \code{\link{Q4}},
+  \code{\link{Q4.default}}, \code{\link{Q4.SO3}}
 }
 

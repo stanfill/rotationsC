@@ -32,9 +32,14 @@
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)
-region(Qs,method='prentice',alpha=0.9)
+region(Qs,method='prentice',alpha=0.1)
 }
 \references{
+  Prentice MJ (1986). "Orientation statistics without
+  parametric assumptions." _Journal of the Royal
+  Statistical Society. Series B (Methodological)_, pp.
+  214-222.
+
   Rancourt D, Rivest L and Asselin J (2000). "Using
   orientation statistics to investigate variations in human
   kinematics." _Journal of the Royal Statistical Society:

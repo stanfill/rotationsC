@@ -1,6 +1,7 @@
 #' Confidence Region for Mean Rotation
 #'
-#' Find the radius of a \eqn{100\alpha%} confidence region for the projected mean
+#' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the projected mean.  The current methods available are due 
+#' to \code{\link{prentice}}, \code{\link{fisher}}, \code{\link{zhang}}.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param method Character string specifying which type of interval is required
@@ -11,7 +12,7 @@
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Qs,method='prentice',alpha=0.9)
+#' region(Qs,method='prentice',alpha=0.1)
 
 region<-function(Qs,method,alpha,...){
 	UseMethod("region")
@@ -86,32 +87,32 @@ region.SO3<-function(Rs,method,alpha,...){
 	
 }
 
-#' Prentice CR Method
+#' Prentice confidence region method
 #'
-#' Find the radius of a \eqn{100\alpha%} confidence region for the projected mean
+#' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the projected mean
 #'
 #' This works in the same way as done in \cite{bingham09} which assumes rotational 
 #' symmetry and is therefore conservative.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
-#' @param a The alpha level desired, e.g. 0.95 or 0.90
+#' @param a The alpha level desired, e.g. 0.05 or 0.10
 #' @return radius of the confidence region centered at the projected mean
 #' @cite prentice1986, rancourt2000
 #' @export
 #' @examples
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-#' region(Qs,method='prentice',alpha=0.9)
+#' region(Qs,method='prentice',alpha=0.1)
 
-prenticeCR<-function(Qs,a){
-	UseMethod("fisherCR")
+prentice<-function(Qs,a){
+	UseMethod("prentice")
 }
 
 
-#' @rdname prenticeCR
-#' @method prenticeCR Q4
-#' @S3method prenticeCR Q4
+#' @rdname prentice
+#' @method prentice Q4
+#' @S3method prentice Q4
 
-prenticeCR.Q4<-function(Qs,a){
+prentice.Q4<-function(Qs,a){
 	#This takes a sample qs and returns the radius of the confidence region
 	#centered at the projected mean
 	n<-nrow(Qs)
@@ -131,33 +132,33 @@ prenticeCR.Q4<-function(Qs,a){
 	
 	Tm<-min(diag(n*Ahat%*%solve(VarShat)%*%Ahat))
 	
-	r<-sqrt(qchisq(a,3)/Tm)
+	r<-sqrt(qchisq((1-a),3)/Tm)
 	return(r)
 }
 
 
-#' @rdname prenticeCR
-#' @method prenticeCR SO3
-#' @S3method prenticeCR SO3
+#' @rdname prentice
+#' @method prentice SO3
+#' @S3method prentice SO3
 
-prenticeCR.SO3<-function(Rs,a){
+prentice.SO3<-function(Rs,a){
 	Qs<-Q4(Rs)
 	r<-prenticeCR.Q4(Qs,a)
 	return(r)
 }
 
-#' Zhang CR Method
+#' Zhang confidence region method
 #'
-#' Find the radius of a \eqn{100\alpha%} confidence region for the projected mean
+#' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the projected mean
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
-#' @param alpha The alpha level desired, e.g. 0.95 or 0.90
+#' @param alpha The alpha level desired, e.g. 0.05 or 0.10
 #' @param m Number of replicates to use to estiamte cut point
 #' @return radius of the confidence region centered at the projected mean
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Rs,method='zhang',alpha=0.9)
+#' region(Rs,method='zhang',alpha=0.1)
 
 zhangCR<-function(Qs,alpha,m){
 	UseMethod("zhangCR")
@@ -193,7 +194,7 @@ zhangCR.Q4<-function(Qs,alpha,m=300){
 	Shat<-mean(Qs)
   cdhat<-cdfuns(Qs,Shat)
   
-	rad<-as.numeric(quantile(stats,alpha))*cdhat$c/(2*n*cdhat$d^2)
+	rad<-as.numeric(quantile(stats,1-alpha))*cdhat$c/(2*n*cdhat$d^2)
 	
 	return(rad)
 }
@@ -208,15 +209,15 @@ cdfuns<-function(Qs,Shat){
 }
 
 
-#' Fisher Mean Polax Axis CR Method
+#' Fisher Mean Polax Axis confidence region Method
 #'
-#' Find the radius of a \eqn{100(\alpha)%} confidence region for the projected mean \cite{fisher1996}
+#' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the projected mean \cite{fisher1996}
 #'
 #' This works in the same way as done in \cite{bingham09} which assumes rotational 
 #' symmetry and is therefore conservative.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
-#' @param alpha The alpha level desired, e.g. 0.95 or 0.90
+#' @param alpha The alpha level desired, e.g. 0.05 or 0.10
 #' @param boot Should the bootstrap or normal theory critical value be used
 #' @param m number of bootstrap replicates to use to estimate critical value
 #' @return radius of the confidence region centered at the projected mean
@@ -224,7 +225,7 @@ cdfuns<-function(Qs,Shat){
 #' @export
 #' @examples
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-#' region(Qs,method='fisher',alpha=0.9)
+#' region(Qs,method='fisher',alpha=0.1)
 
 fisherCR<-function(Qs,alpha,boot,m){
 	UseMethod("fisherCR")
@@ -243,7 +244,7 @@ fisherCR.Q4<-function(Qs,alpha,boot=T,m=300){
     
 	  Tstats <- fisherBootC(Qs,m)
     
-		qhat<-as.numeric(quantile(Tstats,alpha))
+		qhat<-as.numeric(quantile(Tstats,1-alpha))
 		
 	}else{
 		

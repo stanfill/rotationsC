@@ -39,15 +39,12 @@
 }
 \seealso{
   Other SO3: \code{\link{as.SO3}}, \code{\link{id.SO3}},
-  \code{\link{is.Q4}}, \code{\link{is.SO3}},
-  \code{\link{SO3-class}}
+  \code{\link{is.SO3}}, \code{\link{SO3-class}}
 
   Other SO3: \code{\link{as.SO3}}, \code{\link{id.SO3}},
-  \code{\link{is.Q4}}, \code{\link{is.SO3}},
-  \code{\link{SO3-class}}
+  \code{\link{is.SO3}}, \code{\link{SO3-class}}
 
   Other SO3: \code{\link{as.SO3}}, \code{\link{id.SO3}},
-  \code{\link{is.Q4}}, \code{\link{is.SO3}},
-  \code{\link{SO3-class}}
+  \code{\link{is.SO3}}, \code{\link{SO3-class}}
 }
 

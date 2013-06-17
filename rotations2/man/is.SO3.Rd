@@ -1,6 +1,6 @@
 \name{is.SO3}
 \alias{is.SO3}
-\title{A function to determine if a given matrix is in \eqn{SO(3)} or not.}
+\title{A function to determine if a given object is in \eqn{SO(3)} or not.}
 \usage{
   is.SO3(x)
 }
@@ -11,7 +11,7 @@
   logical T if the matrix is in SO(3) and false otherwise
 }
 \description{
-  A function to determine if a given matrix is in
+  A function to determine if a given object is in
   \eqn{SO(3)} or not.
 }
 \examples{
@@ -20,8 +20,7 @@ is.SO3(1:9)
 }
 \seealso{
   Other SO3: \code{\link{as.SO3}}, \code{\link{id.SO3}},
-  \code{\link{is.Q4}}, \code{\link{SO3}},
-  \code{\link{SO3-class}}, \code{\link{SO3.default}},
-  \code{\link{SO3.Q4}}
+  \code{\link{SO3}}, \code{\link{SO3-class}},
+  \code{\link{SO3.default}}, \code{\link{SO3.Q4}}
 }
 

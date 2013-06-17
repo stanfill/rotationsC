@@ -1,27 +1,21 @@
-\name{fisherCR}
-\alias{fisherCR}
-\alias{fisherCR.Q4}
-\alias{fisherCR.SO3}
-\title{Fisher Mean Polax Axis confidence region Method}
+\name{prenticeCR}
+\alias{prenticeCR}
+\alias{prenticeCR.Q4}
+\alias{prenticeCR.SO3}
+\title{Prentice confidence region method}
 \usage{
-  fisherCR(Qs, alpha, boot, m)
+  prenticeCR(Qs, a)
 
-  \method{fisherCR}{Q4} (Qs, alpha, boot = T, m = 300)
+  \method{prenticeCR}{Q4} (Qs, a)
 
-  \method{fisherCR}{SO3} (Rs, alpha, boot = T, m = 300)
+  \method{prenticeCR}{SO3} (Rs, a)
 }
 \arguments{
   \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
   row corresponds to a random rotation in matrix (p=9) or
   quaternion form (p=4)}
 
-  \item{alpha}{The alpha level desired, e.g. 0.05 or 0.10}
-
-  \item{boot}{Should the bootstrap or normal theory
-  critical value be used}
-
-  \item{m}{number of bootstrap replicates to use to
-  estimate critical value}
+  \item{a}{The alpha level desired, e.g. 0.05 or 0.10}
 }
 \value{
   radius of the confidence region centered at the projected
@@ -29,7 +23,7 @@
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)%} confidence
-  region for the projected mean \cite{Fisher et al. (1996)}
+  region for the projected mean
 }
 \details{
   This works in the same way as done in \cite{Bingham et
@@ -38,7 +32,7 @@
 }
 \examples{
 Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-region(Qs,method='fisher',alpha=0.1)
+region(Qs,method='prentice',alpha=0.1)
 }
 \references{
   Bingham M, Nordman D and Vardeman S (2009). "Modeling and
@@ -47,9 +41,14 @@ region(Qs,method='fisher',alpha=0.1)
   in three Dimensions." _Journal of the American
   Statistical Association_, *104*(488), pp. 1385-1397.
 
-  Fisher N, Hall P, Jing B and Wood A (1996). "Improved
-  pivotal methods for constructing confidence regions with
-  directional data." _Journal of the American Statistical
-  Association_, *91*(435), pp. 1062-1070.
+  Prentice MJ (1986). "Orientation statistics without
+  parametric assumptions." _Journal of the Royal
+  Statistical Society. Series B (Methodological)_, pp.
+  214-222.
+
+  Rancourt D, Rivest L and Asselin J (2000). "Using
+  orientation statistics to investigate variations in human
+  kinematics." _Journal of the Royal Statistical Society:
+  Series C (Applied Statistics)_, *49*(1), pp. 81-94.
 }
 

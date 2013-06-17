@@ -6,7 +6,7 @@
 \usage{
   Q4(U, ...)
 
-  \method{Q4}{default} (U, theta)
+  \method{Q4}{default} (U, theta = NULL)
 
   \method{Q4}{SO3} (R)
 }
@@ -22,7 +22,7 @@
   \item{...}{additional arguments}
 }
 \value{
-  unit quaternion of class "Q4"
+  unit quaternion of class Q4
 }
 \description{
   Create a unit quaternion
@@ -38,12 +38,12 @@
 }
 \seealso{
   Other Q4: \code{\link{as.Q4}}, \code{\link{id.Q4}},
-  \code{\link{Q4-class}}
+  \code{\link{is.Q4}}, \code{\link{Q4-class}}
 
   Other Q4: \code{\link{as.Q4}}, \code{\link{id.Q4}},
-  \code{\link{Q4-class}}
+  \code{\link{is.Q4}}, \code{\link{Q4-class}}
 
   Other Q4: \code{\link{as.Q4}}, \code{\link{id.Q4}},
-  \code{\link{Q4-class}}
+  \code{\link{is.Q4}}, \code{\link{Q4-class}}
 }
 
