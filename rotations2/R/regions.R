@@ -7,7 +7,7 @@
 #' @param alpha The alpha level desired, e.g. 0.95 or 0.90
 #' @param ... Additional arguments
 #' @return radius of the confidence region centered at the projected mean
-#' @cite rancourt2000
+#' @cite prentice1986, rancourt2000
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
@@ -28,7 +28,7 @@ region.Q4<-function(Qs,method,alpha,...){
 	
 	if(method%in%c('Prentice','prentice')){
 		
-		r<-rancourtCR.Q4(Qs=Qs,a=alpha)
+		r<-prenticeCR.Q4(Qs=Qs,a=alpha)
 		
 		return(r)
 		
@@ -63,7 +63,7 @@ region.SO3<-function(Rs,method,alpha,...){
 	
 	if(method%in%c('Prentice','prentice')){
 		
-		r<-rancourtCR.SO3(Rs=Rs,a=alpha)
+		r<-prenticeCR.SO3(Rs=Rs,a=alpha)
 		return(r)
 		
 	}else	if(method%in%c('Zhang','zhang')){
@@ -88,7 +88,7 @@ region.SO3<-function(Rs,method,alpha,...){
 
 #' Prentice CR Method
 #'
-#' Find the radius of a \eqn{100\alpha%} confidence region for the projected mean \cite{rancourt2000}
+#' Find the radius of a \eqn{100\alpha%} confidence region for the projected mean
 #'
 #' This works in the same way as done in \cite{bingham09} which assumes rotational 
 #' symmetry and is therefore conservative.
@@ -96,22 +96,22 @@ region.SO3<-function(Rs,method,alpha,...){
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param a The alpha level desired, e.g. 0.95 or 0.90
 #' @return radius of the confidence region centered at the projected mean
-#' @cite rancourt2000
+#' @cite prentice1986, rancourt2000
 #' @export
 #' @examples
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
 #' region(Qs,method='prentice',alpha=0.9)
 
-rancourtCR<-function(Qs,a){
-	UseMethod("rancourtCR")
+prenticeCR<-function(Qs,a){
+	UseMethod("fisherCR")
 }
 
 
-#' @rdname rancourtCR
-#' @method rancourtCR Q4
-#' @S3method rancourtCR Q4
+#' @rdname prenticeCR
+#' @method prenticeCR Q4
+#' @S3method prenticeCR Q4
 
-rancourtCR.Q4<-function(Qs,a){
+prenticeCR.Q4<-function(Qs,a){
 	#This takes a sample qs and returns the radius of the confidence region
 	#centered at the projected mean
 	n<-nrow(Qs)
@@ -136,13 +136,13 @@ rancourtCR.Q4<-function(Qs,a){
 }
 
 
-#' @rdname rancourtCR
-#' @method rancourtCR SO3
-#' @S3method rancourtCR SO3
+#' @rdname prenticeCR
+#' @method prenticeCR SO3
+#' @S3method prenticeCR SO3
 
-rancourtCR.SO3<-function(Rs,a){
+prenticeCR.SO3<-function(Rs,a){
 	Qs<-Q4(Rs)
-	r<-rancourtCR.Q4(Qs,a)
+	r<-prenticeCR.Q4(Qs,a)
 	return(r)
 }
 
@@ -282,7 +282,7 @@ fisherCR.Q4<-function(Qs,alpha,boot=T,m=300){
 
 optimAxis<-function(r,Qs,cut){
 	
-	Shat<-Q4(axis2(meanC(Qs)),r)
+	Shat<-Q4(axis2(mean(Qs)),r)
 	
 	Tm<-fisherAxisC(Qs,Shat)
 	
