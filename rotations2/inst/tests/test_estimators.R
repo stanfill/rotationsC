@@ -4,6 +4,8 @@ Qs<-Q4(Rs)
 
 
 context("Estimators")
+
+#Do the estimator functions return correct objects?
 expect_that(mean(Rs),is_a("SO3"))
 expect_that(mean(Rs,type='geometric'),is_a("SO3"))
 expect_that(median(Rs),is_a("SO3"))
@@ -15,6 +17,7 @@ expect_that(median(Qs),is_a("Q4"))
 expect_that(median(Qs,type='geometric'),is_a("Q4"))
 
 
+#Estimator should be the same regardless of parametrization
 expect_equal(mean(Qs),Q4(mean(Rs)))
 expect_equal(mean(Qs,type='geometric'),Q4(mean(Rs,type='geometric')))
 expect_equal(median(Qs),Q4(median(Rs)))

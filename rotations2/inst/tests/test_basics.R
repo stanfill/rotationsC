@@ -19,7 +19,7 @@ expect_equal(abs(axis2(Q)),abs(u))
 expect_equal(SO3(axis2(R),angle(R)),as.SO3(matrix(R,1,9)))
 expect_equal(Q4(axis2(Q),angle(Q)),Q)
 
-#
+#Make sure we can use angle-axis represnetation to generate a single rotation
 expect_equal(SO3(u*r),SO3(u,r))
 expect_equal(Q4(u*r),Q4(u,r))
 
@@ -31,16 +31,15 @@ us<- matrix(c(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta)),20,3)
 Rs<-SO3(us,rs)
 Qs<-Q4(us,rs)
 
-#Does the angle function extract the correct angle from the rotation
+#Does the angle function extract the correct angle from a sample of rotations
+expect_equal(angle(Rs),abs(rs))
+expect_equal(angle(Qs),abs(rs))
 
-expect_equal(angle(Rs),abs(r))
-expect_equal(angle(Qs),abs(r))
-
-#Does the axis function extract the correct axis from the rotation
+#Does the axis function extract the correct axis from a sample of rotations
 expect_equal(SO3(axis2(Rs),angle(Rs)),Rs)
 expect_equal(Q4(axis2(Qs),angle(Qs)),Qs)
 
 
-
+#Make sure we can use angle-axis represnetation to generate a sample of rotations
 expect_equal(SO3(us*rs),Rs)
 expect_equal(Q4(us*rs),Qs)
