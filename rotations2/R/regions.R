@@ -209,7 +209,7 @@ cdfuns<-function(Qs,Shat){
 }
 
 
-#' Fisher Mean Polax Axis confidence region Method
+#' Fisher Mean Polax Axis confidence region method
 #'
 #' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the projected mean \cite{fisher1996}
 #'
@@ -221,6 +221,7 @@ cdfuns<-function(Qs,Shat){
 #' @param boot Should the bootstrap or normal theory critical value be used
 #' @param m number of bootstrap replicates to use to estimate critical value
 #' @return radius of the confidence region centered at the projected mean
+#' @seealso \code{\link{prentice}}, \code{\link{zhang}}
 #' @cite fisher1996
 #' @export
 #' @examples

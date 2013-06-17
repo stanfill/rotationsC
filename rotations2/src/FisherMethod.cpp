@@ -54,8 +54,58 @@ double fisherAxisC(arma::mat Qs, arma::rowvec Qhat){
 }
 
 
+// [[Rcpp::export]]  
+double fisherAxisCSymmetric(arma::mat Qs, arma::rowvec Qhat){
+
+	//This is the same as fisherAxisC but the test statistic is much reduced
+	//See equation 10 of Fisher et. al. (1996)
+
+	NumericMatrix Qss = as<NumericMatrix>(wrap(Qs));
+
+  int n=Qs.n_rows;
+  
+	arma::mat Qsq=(Qs.t()*Qs)/n;
+	arma::mat eigvec, Mhat(4,3);
+	arma::vec eigval, eta(3);
+  
+  arma::eig_sym(eigval,eigvec,Qsq);   
+
+  int i, j;
+  double Tm, denom, trGhat=0.0, Gjj=0.0, Tnum=0.0;
+
+  
+  for(i=0;i<3;i++){
+    Mhat.col(i)=eigvec.col(i);
+    eta(i)=eigval(i);
+  }
+  
+  for(j=0;j<3;j++){
+
+			denom = pow((n*(eigval[3]-eta[j])*(eigval[3]-eta[j])),-1);
+			
+			for(i=0;i<n;i++){
+				Gjj = Gjj + arma::as_scalar(Qs.row(i)*Mhat.col(j)*Qs.row(i)*Mhat.col(j)*pow(Qs.row(i)*eigvec.col(3),2));
+			}
+      
+      Gjj = Gjj*denom;
+      trGhat = trGhat + Gjj;
+      Gjj = 0.0;
+      
+      Tnum += arma::as_scalar(pow(Qhat*Mhat.col(j),2));
+		
+	}
+  
+  trGhat = pow(trGhat,-1);
+  
+  Tm = arma::as_scalar(trGhat*(3*n)*Tnum);
+  
+  return Tm;
+}
+
+
+
 //[[Rcpp::export]]
-arma::vec fisherBootC(arma::mat Qs, int m){
+arma::vec fisherBootC(arma::mat Qs, int m, bool symm){
 
   int n = Qs.n_rows;
   int i , j , numUn;
@@ -85,9 +135,11 @@ arma::vec fisherBootC(arma::mat Qs, int m){
       Qstar.row(j) = Qs.row(samp[j]);
     }
     
-    Tm[i]=fisherAxisC(Qstar,qhat);
-    
+    if(symm){
+    	Tm[i]=fisherAxisCSymmetric(Qstar,qhat);
+    }else{
+    	Tm[i]=fisherAxisC(Qstar,qhat);
+    }
   }
   return Tm;
 }
-
