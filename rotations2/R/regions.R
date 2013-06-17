@@ -220,15 +220,16 @@ cdfuns<-function(Qs,Shat){
 #' @param alpha The alpha level desired, e.g. 0.05 or 0.10
 #' @param boot Should the bootstrap or normal theory critical value be used
 #' @param m number of bootstrap replicates to use to estimate critical value
+#' @param symm true/false on if rotationally symmetric regions should be computed or not
 #' @return radius of the confidence region centered at the projected mean
 #' @seealso \code{\link{prentice}}, \code{\link{zhang}}
 #' @cite fisher1996
 #' @export
 #' @examples
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-#' region(Qs,method='fisher',alpha=0.1)
+#' region(Qs,method='fisher',alpha=0.1,symm=T)
 
-fisher<-function(Qs,alpha,boot,m){
+fisher<-function(Qs,alpha,boot,m,symm){
 	UseMethod("fisher")
 }
 
@@ -237,13 +238,13 @@ fisher<-function(Qs,alpha,boot,m){
 #' @method fisher Q4
 #' @S3method fisher Q4
 
-fisher.Q4<-function(Qs,alpha,boot=T,m=300){
+fisher.Q4<-function(Qs,alpha,boot=T,m=300,symm=T){
 	
 	Qs<-formatQ4(Qs)
 	
 	if(boot){
     
-	  Tstats <- fisherBootC(Qs,m)
+	  Tstats <- fisherBootC(Qs,m,symm)
     
 		qhat<-as.numeric(quantile(Tstats,1-alpha))
 		
@@ -253,7 +254,7 @@ fisher.Q4<-function(Qs,alpha,boot=T,m=300){
 		
 	}
 	
-	rsym<-optim(.05,optimAxis,Qs=Qs,cut=qhat,method='Brent',lower=0,upper=pi)$par
+	rsym<-optim(.05,optimAxis,Qs=Qs,cut=qhat,symm=T,method='Brent',lower=0,upper=pi)$par
 	
 	return(rsym)
 }
@@ -282,12 +283,14 @@ fisher.Q4<-function(Qs,alpha,boot=T,m=300){
 # 	return(Tm)
 # }
 
-optimAxis<-function(r,Qs,cut){
+optimAxis<-function(r,Qs,cut,symm){
 	
 	Shat<-Q4(axis2(mean(Qs)),r)
-	
-	Tm<-fisherAxisC(Qs,Shat)
-	
+	if(symm){
+		Tm<-fisherAxisC(Qs,Shat)
+	}else{
+		Tm<-fisherAxisCSymmetric(Qs,Shat)
+	}
 	return((Tm-cut)^2)
 }
 
@@ -296,10 +299,10 @@ optimAxis<-function(r,Qs,cut){
 #' @method fisher SO3
 #' @S3method fisher SO3
 
-fisher.SO3<-function(Rs,alpha,boot=T,m=300){
+fisher.SO3<-function(Rs,alpha,boot=T,m=300,symm=T){
 	
 	Qs<-Q4(Rs)
-	r<-fisher.Q4(Qs,alpha,boot,m)
+	r<-fisher.Q4(Qs,alpha,boot,m,symm)
 	
 	return(r)
 }

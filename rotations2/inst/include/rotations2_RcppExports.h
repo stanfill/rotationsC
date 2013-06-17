@@ -6,7 +6,7 @@
 
 #include <RcppArmadillo.h>
 #include <Rcpp.h>
-#include "../inst/include/rotations2.h"
+#include "rotations2.h"
 
 namespace rotations2 {
 
@@ -264,15 +264,29 @@ namespace rotations2 {
         return Rcpp::as<double >(__result);
     }
 
-    inline arma::vec fisherBootC(arma::mat Qs, int m) {
-        typedef SEXP(*Ptr_fisherBootC)(SEXP,SEXP);
+    inline double fisherAxisCSymmetric(arma::mat Qs, arma::rowvec Qhat) {
+        typedef SEXP(*Ptr_fisherAxisCSymmetric)(SEXP,SEXP);
+        static Ptr_fisherAxisCSymmetric p_fisherAxisCSymmetric = NULL;
+        if (p_fisherAxisCSymmetric == NULL) {
+            validateSignature("double(*fisherAxisCSymmetric)(arma::mat,arma::rowvec)");
+            p_fisherAxisCSymmetric = (Ptr_fisherAxisCSymmetric)R_GetCCallable("rotations2", "rotations2_fisherAxisCSymmetric");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_fisherAxisCSymmetric(Rcpp::wrap(Qs), Rcpp::wrap(Qhat));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<double >(__result);
+    }
+
+    inline arma::vec fisherBootC(arma::mat Qs, int m, bool symm) {
+        typedef SEXP(*Ptr_fisherBootC)(SEXP,SEXP,SEXP);
         static Ptr_fisherBootC p_fisherBootC = NULL;
         if (p_fisherBootC == NULL) {
-            validateSignature("arma::vec(*fisherBootC)(arma::mat,int)");
+            validateSignature("arma::vec(*fisherBootC)(arma::mat,int,bool)");
             p_fisherBootC = (Ptr_fisherBootC)R_GetCCallable("rotations2", "rotations2_fisherBootC");
         }
         RNGScope __rngScope;
-        RObject __result = p_fisherBootC(Rcpp::wrap(Qs), Rcpp::wrap(m));
+        RObject __result = p_fisherBootC(Rcpp::wrap(Qs), Rcpp::wrap(m), Rcpp::wrap(symm));
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::vec >(__result);

@@ -2,13 +2,15 @@
 \alias{fisher}
 \alias{fisher.Q4}
 \alias{fisher.SO3}
-\title{Fisher Mean Polax Axis confidence region Method}
+\title{Fisher Mean Polax Axis confidence region method}
 \usage{
-  fisher(Qs, alpha, boot, m)
+  fisher(Qs, alpha, boot, m, symm)
 
-  \method{fisher}{Q4} (Qs, alpha, boot = T, m = 300)
+  \method{fisher}{Q4} (Qs, alpha, boot = T, m = 300,
+    symm = T)
 
-  \method{fisher}{SO3} (Rs, alpha, boot = T, m = 300)
+  \method{fisher}{SO3} (Rs, alpha, boot = T, m = 300,
+    symm = T)
 }
 \arguments{
   \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
@@ -22,6 +24,9 @@
 
   \item{m}{number of bootstrap replicates to use to
   estimate critical value}
+
+  \item{symm}{true/false on if rotationally symmetric
+  regions should be computed or not}
 }
 \value{
   radius of the confidence region centered at the projected
@@ -38,7 +43,7 @@
 }
 \examples{
 Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-region(Qs,method='fisher',alpha=0.1)
+region(Qs,method='fisher',alpha=0.1,symm=T)
 }
 \references{
   Bingham M, Nordman D and Vardeman S (2009). "Modeling and
@@ -51,5 +56,8 @@ region(Qs,method='fisher',alpha=0.1)
   pivotal methods for constructing confidence regions with
   directional data." _Journal of the American Statistical
   Association_, *91*(435), pp. 1062-1070.
+}
+\seealso{
+  \code{\link{prentice}}, \code{\link{zhang}}
 }
 

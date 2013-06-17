@@ -328,19 +328,39 @@ RcppExport SEXP rotations2_fisherAxisC(SEXP QsSEXP, SEXP QhatSEXP) {
         Rf_error(CHAR(Rf_asChar(__result)));
     return __result;
 }
-// fisherBootC
-arma::vec fisherBootC(arma::mat Qs, int m);
-static SEXP rotations2_fisherBootC_try(SEXP QsSEXP, SEXP mSEXP) {
+// fisherAxisCSymmetric
+double fisherAxisCSymmetric(arma::mat Qs, arma::rowvec Qhat);
+static SEXP rotations2_fisherAxisCSymmetric_try(SEXP QsSEXP, SEXP QhatSEXP) {
 BEGIN_RCPP
     arma::mat Qs = Rcpp::as<arma::mat >(QsSEXP);
-    int m = Rcpp::as<int >(mSEXP);
-    arma::vec __result = fisherBootC(Qs, m);
+    arma::rowvec Qhat = Rcpp::as<arma::rowvec >(QhatSEXP);
+    double __result = fisherAxisCSymmetric(Qs, Qhat);
     return Rcpp::wrap(__result);
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP rotations2_fisherBootC(SEXP QsSEXP, SEXP mSEXP) {
+RcppExport SEXP rotations2_fisherAxisCSymmetric(SEXP QsSEXP, SEXP QhatSEXP) {
     Rcpp::RNGScope __rngScope;
-    SEXP __result = PROTECT(rotations2_fisherBootC_try(QsSEXP, mSEXP));
+    SEXP __result = PROTECT(rotations2_fisherAxisCSymmetric_try(QsSEXP, QhatSEXP));
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    UNPROTECT(1);
+    if (__isError)
+        Rf_error(CHAR(Rf_asChar(__result)));
+    return __result;
+}
+// fisherBootC
+arma::vec fisherBootC(arma::mat Qs, int m, bool symm);
+static SEXP rotations2_fisherBootC_try(SEXP QsSEXP, SEXP mSEXP, SEXP symmSEXP) {
+BEGIN_RCPP
+    arma::mat Qs = Rcpp::as<arma::mat >(QsSEXP);
+    int m = Rcpp::as<int >(mSEXP);
+    bool symm = Rcpp::as<bool >(symmSEXP);
+    arma::vec __result = fisherBootC(Qs, m, symm);
+    return Rcpp::wrap(__result);
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations2_fisherBootC(SEXP QsSEXP, SEXP mSEXP, SEXP symmSEXP) {
+    Rcpp::RNGScope __rngScope;
+    SEXP __result = PROTECT(rotations2_fisherBootC_try(QsSEXP, mSEXP, symmSEXP));
     Rboolean __isError = Rf_inherits(__result, "try-error");
     UNPROTECT(1);
     if (__isError)
@@ -445,7 +465,8 @@ static int rotations2_RcppExport_validate(const char* sig) {
         signatures.insert("arma::mat(*HartmedianSO3C)(arma::mat,int,double)");
         signatures.insert("arma::mat(*gmeanSO3C)(arma::mat,int,double)");
         signatures.insert("double(*fisherAxisC)(arma::mat,arma::rowvec)");
-        signatures.insert("arma::vec(*fisherBootC)(arma::mat,int)");
+        signatures.insert("double(*fisherAxisCSymmetric)(arma::mat,arma::rowvec)");
+        signatures.insert("arma::vec(*fisherBootC)(arma::mat,int,bool)");
         signatures.insert("NumericVector(*RdistC)(NumericMatrix,NumericVector)");
         signatures.insert("double(*oneRdistC)(NumericMatrix,NumericVector)");
         signatures.insert("NumericVector(*cdfunsC)(NumericMatrix,NumericVector)");
@@ -473,6 +494,7 @@ RcppExport SEXP rotations2_RcppExport_registerCCallable() {
     R_RegisterCCallable("rotations2", "rotations2_HartmedianSO3C", (DL_FUNC)rotations2_HartmedianSO3C_try);
     R_RegisterCCallable("rotations2", "rotations2_gmeanSO3C", (DL_FUNC)rotations2_gmeanSO3C_try);
     R_RegisterCCallable("rotations2", "rotations2_fisherAxisC", (DL_FUNC)rotations2_fisherAxisC_try);
+    R_RegisterCCallable("rotations2", "rotations2_fisherAxisCSymmetric", (DL_FUNC)rotations2_fisherAxisCSymmetric_try);
     R_RegisterCCallable("rotations2", "rotations2_fisherBootC", (DL_FUNC)rotations2_fisherBootC_try);
     R_RegisterCCallable("rotations2", "rotations2_RdistC", (DL_FUNC)rotations2_RdistC_try);
     R_RegisterCCallable("rotations2", "rotations2_oneRdistC", (DL_FUNC)rotations2_oneRdistC_try);

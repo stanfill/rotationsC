@@ -69,8 +69,12 @@ fisherAxisC <- function(Qs, Qhat) {
     .Call('rotations2_fisherAxisC', PACKAGE = 'rotations2', Qs, Qhat)
 }
 
-fisherBootC <- function(Qs, m) {
-    .Call('rotations2_fisherBootC', PACKAGE = 'rotations2', Qs, m)
+fisherAxisCSymmetric <- function(Qs, Qhat) {
+    .Call('rotations2_fisherAxisCSymmetric', PACKAGE = 'rotations2', Qs, Qhat)
+}
+
+fisherBootC <- function(Qs, m, symm) {
+    .Call('rotations2_fisherBootC', PACKAGE = 'rotations2', Qs, m, symm)
 }
 
 RdistC <- function(Q1, Q2) {
