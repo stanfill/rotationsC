@@ -11,7 +11,6 @@
 }
 \makeatother
 
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \definecolor{fgcolor}{rgb}{0.2, 0.2, 0.2}
 \newcommand{\hlnumber}[1]{\textcolor[rgb]{0,0,0}{#1}}%
 \newcommand{\hlfunctioncall}[1]{\textcolor[rgb]{0.501960784313725,0,0.329411764705882}{\textbf{#1}}}%
@@ -67,6 +66,7 @@
 \newcommand{\GeoMean}{\widehat{\bm S}_R}
 \newcommand{\GeoMedian}{\widetilde{\bm S}_R}
 %% load any required packages here
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 
 \begin{document}
 
@@ -237,11 +237,10 @@ Once an angular distribution has been chosen and a vector of $n$ angles of rotat
 \begin{verbatim}
 Rs <- ruars(20, rcayley, kappa = 1)
 matrix(Rs[1, ], 3, 3)
-
 ##         [,1]    [,2]    [,3]
-## [1,]  0.6253 -0.2022 -0.7537
-## [2,] -0.6672  0.3624 -0.6508
-## [3,]  0.4047  0.9098  0.0917
+## [1,]  0.6025  0.2661 0.75247
+## [2,] -0.7338 -0.1863 0.65337
+## [3,]  0.3141 -0.9458 0.08303
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -295,7 +294,7 @@ The function \code{mean} with option \code{type="intrinsic"} implements an algor
 
 \section{Confidence Regions}
 
-
+For the projected mean ($\ProjMean$), confidence regions are available through the \code{region} function.  The \code{method} option specifies which method to be used to 
 
 % \section{Confidence Area Construction}
 % 
@@ -321,13 +320,9 @@ Any of the four estimates of the central direction can be plotted along with a s
 Rs <- ruars(50, rcayley, kappa = 1)
 plot(Rs, center = mean(Rs), show_estimates = "all")
 \end{verbatim}
-\end{kframe}
-
-{\centering \includegraphics[width=0mm]{figures/eye} 
-
-}
 
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: type needs to be one of 'projected' or 'geometric'.}}\end{kframe}
 \end{knitrout}
 
 
@@ -345,7 +340,7 @@ In Figure \ref{figure:eye1} a random sample of 50 matrices following the Cayley-
 
 The \pkg{rotations} package is introduced and allows the user to create, simulate, analyze and visualize rotation data.  There are three parameterizations possible in this package and four built-in distributions from which data can be simulated.  The four estimators discussed in Stanfill et al. (2012) are each implemented and each can be visualized via \code{ggplot2}.
 
-\bibliography{StanfillHofmannGenschel}
+\bibliography{REFERENCES}
 
 
 \address{Bryan Stanfill\\

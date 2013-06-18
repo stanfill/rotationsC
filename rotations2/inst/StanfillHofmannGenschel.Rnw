@@ -268,7 +268,7 @@ In Figure \ref{figure:eye1} a random sample of 50 matrices following the Cayley-
 
 The \pkg{rotations} package is introduced and allows the user to create, simulate, analyze and visualize rotation data.  There are three parameterizations possible in this package and four built-in distributions from which data can be simulated.  The four estimators discussed in Stanfill et al. (2012) are each implemented and each can be visualized via \code{ggplot2}.
 
-\bibliography{StanfillHofmannGenschel}
+\bibliography{REFERENCES}
 
 
 \address{Bryan Stanfill\\
