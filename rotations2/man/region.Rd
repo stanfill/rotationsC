@@ -30,16 +30,22 @@
   Find the radius of a \eqn{100(1-\alpha)%} confidence
   region for the central orientation based on the projected
   mean estimator. The current methods available are due to
-  \code{\link{prentice}}, \code{\link{fisher}}, and
-  \code{\link{zhang}}.
+  \code{\link{prentice}}, \code{\link{fisher}},
+  \code{\link{chang}}, and \code{\link{zhang}}.
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)
 region(Qs,method='prentice',alpha=0.1)
 region(Qs,method='fisher',alpha=0.1,symm=T)
 region(Rs,method='zhang',alpha=0.1,m=100)
+region(Rs,method='chang',alpha=0.1)
 }
 \references{
+  Chang T and Rivest L (2001). "M-estimation for location
+  and regression parameters in group models: A case study
+  using Stiefel manifolds." _Annals of statistics_, pp.
+  784-814.
+
   Fisher N, Hall P, Jing B and Wood A (1996). "Improved
   pivotal methods for constructing confidence regions with
   directional data." _Journal of the American Statistical

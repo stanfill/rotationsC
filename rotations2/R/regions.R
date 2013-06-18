@@ -1,7 +1,7 @@
 #' Confidence Region for Mean Rotation
 #'
 #' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean estimator.
-#' The current methods available are due to \code{\link{prentice}}, \code{\link{fisher}}, 
+#' The current methods available are due to \code{\link{prentice}}, \code{\link{fisher}}, \code{\link{chang}},
 #' and \code{\link{zhang}}.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
@@ -9,13 +9,15 @@
 #' @param alpha The alpha level desired, e.g. 0.95 or 0.90
 #' @param ... Additional arguments that are method specific
 #' @return Radius of the confidence region centered at the projected mean
-#' @cite prentice1986, fisher1996, rancourt2000
+#' @seealso \code{\link{prentice}} \code{\link{fisher}} \code{\link{chang}} \code{\link{zhang}}
+#' @cite prentice1986, fisher1996, rancourt2000, chang2001
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
 #' region(Qs,method='prentice',alpha=0.1)
 #' region(Qs,method='fisher',alpha=0.1,symm=T)
 #' region(Rs,method='zhang',alpha=0.1,m=100)
+#' region(Rs,method='chang',alpha=0.1)
 
 region<-function(Qs,method,alpha,...){
 	UseMethod("region")
@@ -44,13 +46,19 @@ region.Q4<-function(Qs,method,alpha,...){
 		
 	}else	if(method%in%c('Fisher','fisher')){
 		
-		r<-fisher.Q4(Qs=Qs,a=alpha)
+		r<-fisher.Q4(Qs=Qs,a=alpha,...)
+		
+		return(r)
+		
+	}else	if(method%in%c('Chang','chang')){
+		
+		r<-chang.Q4(Qs=Qs,a=alpha)
 		
 		return(r)
 		
 	}else{
 		
-		stop("Only the Prentice, Zhang and Fisher options are currently available")
+		stop("Only the Prentice, Zhang, Chang and Fisher options are currently available")
 		
 	}
 	
@@ -78,13 +86,19 @@ region.SO3<-function(Rs,method,alpha,...){
 		
 	}else	if(method%in%c('Fisher','fisher')){
 		
-		r<-fisher.SO3(Rs=Rs,a=alpha)
+		r<-fisher.SO3(Rs=Rs,a=alpha,...)
+		
+		return(r)
+		
+	}else	if(method%in%c('Chang','chang')){
+		
+		r<-chang.SO3(Rs=Rs,a=alpha)
 		
 		return(r)
 		
 	}else{
 		
-		stop("Only the Prentice, Zhang and Fisher options are currently available")
+		stop("Only the Prentice, Zhang, Chang and Fisher options are currently available")
 		
 	}
 	
@@ -102,6 +116,7 @@ region.SO3<-function(Rs,method,alpha,...){
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param alpha The alpha level desired, e.g. 0.05 or 0.10
 #' @return Radius of the confidence region centered at the projected mean for each of the x-, y- and z-axis
+#' @seealso \code{\link{fisher}} \code{\link{chang}} \code{\link{zhang}}
 #' @cite prentice1986, rancourt2000, bingham09
 #' @export
 #' @examples
@@ -158,12 +173,14 @@ prentice.SO3<-function(Rs,alpha){
 #' 
 #' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean
 #' estimator using the method due to Zhang & Nordman (2009) (unpublished MS thesis).  By construction each axis will have the same
-#' radius so the radius reported is for all three axis.
+#' radius so the radius reported is for all three axis.  A normal theory version of this procedure uses the theoretical
+#' chi-square limiting distribution and is given by the \code{\link{chang}} option.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param alpha The alpha level desired, e.g. 0.05 or 0.10
 #' @param m Number of replicates to use to estiamte cut point
 #' @return Radius of the confidence region centered at the projected mean
+#' @seealso \code{\link{prentice}} \code{\link{fisher}} \code{\link{chang}}
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
@@ -232,7 +249,7 @@ cdfuns<-function(Qs,Shat){
 #' @param m number of bootstrap replicates to use to estimate critical value
 #' @param symm true/false on if rotationally symmetric regions should be computed or not
 #' @return radius of the confidence region centered at the projected mean
-#' @seealso \code{\link{prentice}}, \code{\link{zhang}}
+#' @seealso \code{\link{prentice}} \code{\link{chang}} \code{\link{zhang}}
 #' @cite fisher1996
 #' @export
 #' @examples
@@ -269,29 +286,6 @@ fisher.Q4<-function(Qs,alpha,boot=T,m=300,symm=T){
 	return(rsym)
 }
 
-# fisherAxis<-function(Qs,Shat){
-# 	
-# 	n<-nrow(Qs)
-# 	svdQs<-svd(t(Qs)%*%Qs/n)
-# 	mhat<-svdQs$v[,1]
-# 	Mhat<-t(svdQs$v[,-1])
-# 	etad<-svdQs$d[1]
-# 	etas<-svdQs$d[-1]
-# 	G<-matrix(0,3,3)
-# 	
-# 	for(j in 1:3){
-# 		for(k in j:3){
-# 			denom<-1/(n*(etad-etas[j])*(etad-etas[k]))
-# 			
-# 			for(i in 1:n){
-# 				G[j,k]<-G[k,j]<-G[j,k]+(Mhat[j,]%*%Qs[i,])*(Mhat[k,]%*%Qs[i,])*(mhat%*%Qs[i,])^2*denom
-# 			}
-# 		}
-# 	}
-# 	
-# 	Tm<-n*Shat%*%t(Mhat)%*%solve(G)%*%Mhat%*%t(Shat)
-# 	return(Tm)
-# }
 
 optimAxis<-function(r,Qs,cut,symm){
 	
@@ -315,4 +309,59 @@ fisher.SO3<-function(Rs,alpha,boot=T,m=300,symm=T){
 	r<-fisher.Q4(Qs,alpha,boot,m,symm)
 	
 	return(r)
+}
+
+#' Chang and Rivest confidence region method
+#'
+#' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation
+#' 
+#' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean
+#' estimator using the method due to \cite{chang2001}.  By construction each axis will have the same
+#' radius so the radius reported is for all three axis.
+#'
+#' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
+#' @param alpha The alpha level desired, e.g. 0.05 or 0.10
+#' @return Radius of the confidence region centered at the projected mean
+#' @cite chang2001
+#' @seealso \code{\link{prentice}} \code{\link{fisher}} \code{\link{zhang}}
+#' @export
+#' @examples
+#' Rs<-ruars(20,rcayley,kappa=100)
+#' region(Rs,method='chang',alpha=0.1)
+
+chang<-function(Qs,alpha){
+	UseMethod("chang")
+}
+
+
+#' @rdname chang
+#' @method chang SO3
+#' @S3method chang SO3
+
+chang.SO3<-function(Rs,alpha){
+	
+	#Rs is a n-by-9 matrix where each row is an 3-by-3 rotation matrix
+	#alpha is the level of confidence desired, e.g. 0.95 or 0.90
+	#pivot logical; should the pivotal (T) bootstrap be used or nonpivotal (F)
+	
+	Rs<-formatSO3(Rs)
+	Qs<-Q4(Rs)
+	rad<-chang.Q4(Qs,alpha)
+	return(rad)
+}
+
+#' @rdname chang
+#' @method chang Q4
+#' @S3method chang Q4
+
+chang.Q4<-function(Qs,alpha){
+	
+	Qs<-formatQ4(Qs)
+	n<-nrow(Qs)
+	Shat<-mean(Qs)
+	cdhat<-cdfuns(Qs,Shat)
+	
+	rad<-as.numeric(qchisq(1-alpha,3))*cdhat$c/(2*n*cdhat$d^2)
+	
+	return(rad)
 }

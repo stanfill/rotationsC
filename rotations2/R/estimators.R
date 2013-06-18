@@ -13,7 +13,7 @@
 #' @param maxIter Maximum number of iterations allowed for geometric-mean
 #' @param ... additional arguments passed to mean
 #' @return Estimate of the projected or geometric mean of the sample
-#' @seealso \code{\link{medianC.SO3}}
+#' @seealso \code{\link{median.SO3}}
 #' @cite moakher02, manton04
 #' @S3method mean SO3
 #' @method mean SO3
@@ -58,7 +58,7 @@ mean.SO3 <- function(Rs, type = "projected", epsilon = 1e-05, maxIter = 2000, ..
 #' @param epsilon Stopping rule 
 #' @param maxIter The maximum number of iterations allowed
 #' @return projected or geometric mean of the sample
-#' @seealso \code{\link{meanC.SO3}}
+#' @seealso \code{\link{mean.SO3}}
 #' @cite moakher02, manton04
 #' @S3method mean Q4
 #' @method mean Q4
@@ -176,14 +176,14 @@ median.Q4 <- function(Qs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
 #' @param maxIter The maximum number of iterations allowed before returning most recent estimate
 #' @param ... only used for consistency with mean.default
 #' @return weighted projected mean of the sample
-#' @seealso \code{\link{medianC.SO3}} \code{\link{meanC.SO3}}
+#' @seealso \code{\link{median.SO3}} \code{\link{mean.SO3}}
 #' @cite moakher02
 #' @S3method weighted.mean SO3
 #' @method weighted.mean SO3
 #' @examples
 #' Rs<-ruars(20,rvmises,kappa=0.01)
 #' wt<-abs(1/angle(Rs))
-#' weighted.meanC(Rs,wt)
+#' weighted.mean(Rs,wt)
 
 weighted.mean.SO3 <- function(Rs, w, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
 	
