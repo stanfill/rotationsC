@@ -18,7 +18,7 @@
   \item{a}{The alpha level desired, e.g. 0.05 or 0.10}
 }
 \value{
-  radius of the confidence region centered at the projected
+  Radius of the confidence region centered at the projected
   mean
 }
 \description{

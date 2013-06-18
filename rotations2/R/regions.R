@@ -1,13 +1,14 @@
 #' Confidence Region for Mean Rotation
 #'
-#' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the projected mean.  The current methods available are due 
-#' to \code{\link{prentice}}, \code{\link{fisher}}, \code{\link{zhang}}.
+#' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean estimator.
+#' The current methods available are due to \code{\link{prentice}}, \code{\link{fisher}}, 
+#' and \code{\link{zhang}}.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param method Character string specifying which type of interval is required
 #' @param alpha The alpha level desired, e.g. 0.95 or 0.90
 #' @param ... Additional arguments
-#' @return radius of the confidence region centered at the projected mean
+#' @return Radius of the confidence region centered at the projected mean
 #' @cite prentice1986, fisher1996, rancourt2000
 #' @export
 #' @examples
@@ -96,7 +97,7 @@ region.SO3<-function(Rs,method,alpha,...){
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param a The alpha level desired, e.g. 0.05 or 0.10
-#' @return radius of the confidence region centered at the projected mean
+#' @return Radius of the confidence region centered at the projected mean
 #' @cite prentice1986, rancourt2000
 #' @export
 #' @examples

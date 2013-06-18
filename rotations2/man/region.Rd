@@ -23,14 +23,15 @@
   \item{...}{Additional arguments}
 }
 \value{
-  radius of the confidence region centered at the projected
+  Radius of the confidence region centered at the projected
   mean
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)%} confidence
-  region for the projected mean.  The current methods
-  available are due to \code{\link{prentice}},
-  \code{\link{fisher}}, \code{\link{zhang}}.
+  region for the central orientation based on the projected
+  mean estimator. The current methods available are due to
+  \code{\link{prentice}}, \code{\link{fisher}}, and
+  \code{\link{zhang}}.
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)
