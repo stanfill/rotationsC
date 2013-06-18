@@ -42,4 +42,8 @@ region(Rs,method='chang',alpha=0.1)
   using Stiefel manifolds." _Annals of statistics_, pp.
   784-814.
 }
+\seealso{
+  \code{\link{prentice}} \code{\link{fisher}}
+  \code{\link{zhang}}
+}
 

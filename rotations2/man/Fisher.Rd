@@ -56,6 +56,7 @@ region(Qs,method='fisher',alpha=0.1,symm=T)
   Association_, *91*(435), pp. 1062-1070.
 }
 \seealso{
-  \code{\link{prentice}}, \code{\link{zhang}}
+  \code{\link{prentice}} \code{\link{chang}}
+  \code{\link{zhang}}
 }
 

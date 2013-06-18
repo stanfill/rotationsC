@@ -57,4 +57,8 @@ region(Qs,method='prentice',alpha=0.1)
   kinematics." _Journal of the Royal Statistical Society:
   Series C (Applied Statistics)_, *49*(1), pp. 81-94.
 }
+\seealso{
+  \code{\link{fisher}} \code{\link{chang}}
+  \code{\link{zhang}}
+}
 

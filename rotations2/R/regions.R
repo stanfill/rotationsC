@@ -316,7 +316,7 @@ fisher.SO3<-function(Rs,alpha,boot=T,m=300,symm=T){
 #' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation
 #' 
 #' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean
-#' estimator using the method due to \cite{chang2001}.  By construction each axis will have the same
+#' estimator based on a result due to \cite{chang2001}.  By construction each axis will have the same
 #' radius so the radius reported is for all three axis.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)

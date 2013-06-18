@@ -61,6 +61,6 @@ mean(Rs)
   Applications_, *24*(1), pp. 1-16.
 }
 \seealso{
-  \code{\link{medianC.SO3}}
+  \code{\link{median.SO3}}
 }
 

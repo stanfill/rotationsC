@@ -53,6 +53,6 @@ mean(Qs,type='geometric')
   _The Annals of Statistics_, pp. 725-736.
 }
 \seealso{
-  \code{\link{meanC.SO3}}
+  \code{\link{mean.SO3}}
 }
 

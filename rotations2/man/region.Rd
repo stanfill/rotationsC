@@ -61,4 +61,8 @@ region(Rs,method='chang',alpha=0.1)
   kinematics." _Journal of the Royal Statistical Society:
   Series C (Applied Statistics)_, *49*(1), pp. 81-94.
 }
+\seealso{
+  \code{\link{prentice}} \code{\link{fisher}}
+  \code{\link{chang}} \code{\link{zhang}}
+}
 

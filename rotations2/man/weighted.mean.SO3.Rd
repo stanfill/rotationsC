@@ -52,7 +52,7 @@
 \examples{
 Rs<-ruars(20,rvmises,kappa=0.01)
 wt<-abs(1/angle(Rs))
-weighted.meanC(Rs,wt)
+weighted.mean(Rs,wt)
 }
 \references{
   Manton JH (2004). "A globally convergent numerical
@@ -66,6 +66,6 @@ weighted.meanC(Rs,wt)
   Applications_, *24*(1), pp. 1-16.
 }
 \seealso{
-  \code{\link{medianC.SO3}} \code{\link{meanC.SO3}}
+  \code{\link{median.SO3}} \code{\link{mean.SO3}}
 }
 

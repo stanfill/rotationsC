@@ -34,10 +34,17 @@
   mean estimator using the method due to Zhang & Nordman
   (2009) (unpublished MS thesis).  By construction each
   axis will have the same radius so the radius reported is
-  for all three axis.
+  for all three axis.  A normal theory version of this
+  procedure uses the theoretical chi-square limiting
+  distribution and is given by the \code{\link{chang}}
+  option.
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)
 region(Rs,method='zhang',alpha=0.1)
+}
+\seealso{
+  \code{\link{prentice}} \code{\link{fisher}}
+  \code{\link{chang}}
 }
 
