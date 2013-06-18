@@ -20,7 +20,7 @@
 
   \item{alpha}{The alpha level desired, e.g. 0.95 or 0.90}
 
-  \item{...}{Additional arguments}
+  \item{...}{Additional arguments that are method specific}
 }
 \value{
   Radius of the confidence region centered at the projected
@@ -36,6 +36,8 @@
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)
 region(Qs,method='prentice',alpha=0.1)
+region(Qs,method='fisher',alpha=0.1,symm=T)
+region(Rs,method='zhang',alpha=0.1,m=100)
 }
 \references{
   Fisher N, Hall P, Jing B and Wood A (1996). "Improved

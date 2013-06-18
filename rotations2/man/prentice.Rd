@@ -4,31 +4,37 @@
 \alias{prentice.SO3}
 \title{Prentice confidence region method}
 \usage{
-  prentice(Qs, a)
+  prentice(Qs, alpha)
 
-  \method{prentice}{Q4} (Qs, a)
+  \method{prentice}{Q4} (Qs, alpha)
 
-  \method{prentice}{SO3} (Rs, a)
+  \method{prentice}{SO3} (Rs, alpha)
 }
 \arguments{
   \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
   row corresponds to a random rotation in matrix (p=9) or
   quaternion form (p=4)}
 
-  \item{a}{The alpha level desired, e.g. 0.05 or 0.10}
+  \item{alpha}{The alpha level desired, e.g. 0.05 or 0.10}
 }
 \value{
   Radius of the confidence region centered at the projected
-  mean
+  mean for each of the x-, y- and z-axis
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)%} confidence
   region for the projected mean
 }
 \details{
-  This works in the same way as done in \cite{Bingham et
-  al. (2009)} which assumes rotational symmetry and is
-  therefore conservative.
+  Compute the radius of a \eqn{100(1-\alpha)%} confidence
+  region for the central orientation based on the projected
+  mean estimator using the method due to \cite{Prentice
+  (1986)}.  For a rotation specific version see
+  \cite{Rancourt et al. (2000)}. The variablity in each
+  axis is different so each axis will have its own radius.
+  In \cite{Bingham et al. (2009)} they take the largest
+  radius and use it to form regions that are symmetric
+  about each axis.
 }
 \examples{
 Qs<-ruars(20,rcayley,kappa=100,space='Q4')

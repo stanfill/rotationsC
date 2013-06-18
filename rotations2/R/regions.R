@@ -7,13 +7,15 @@
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param method Character string specifying which type of interval is required
 #' @param alpha The alpha level desired, e.g. 0.95 or 0.90
-#' @param ... Additional arguments
+#' @param ... Additional arguments that are method specific
 #' @return Radius of the confidence region centered at the projected mean
 #' @cite prentice1986, fisher1996, rancourt2000
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
 #' region(Qs,method='prentice',alpha=0.1)
+#' region(Qs,method='fisher',alpha=0.1,symm=T)
+#' region(Rs,method='zhang',alpha=0.1,m=100)
 
 region<-function(Qs,method,alpha,...){
 	UseMethod("region")
@@ -92,19 +94,21 @@ region.SO3<-function(Rs,method,alpha,...){
 #'
 #' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the projected mean
 #'
-#' This works in the same way as done in \cite{bingham09} which assumes rotational 
-#' symmetry and is therefore conservative.
+#' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean
+#' estimator using the method due to \cite{prentice1986}.  For a rotation specific version see \cite{rancourt2000}. The variablity
+#' in each axis is different so each axis will have its own radius.  In \cite{bingham09} they take the largest radius and use it to
+#' form regions that are symmetric about each axis.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
-#' @param a The alpha level desired, e.g. 0.05 or 0.10
-#' @return Radius of the confidence region centered at the projected mean
-#' @cite prentice1986, rancourt2000
+#' @param alpha The alpha level desired, e.g. 0.05 or 0.10
+#' @return Radius of the confidence region centered at the projected mean for each of the x-, y- and z-axis
+#' @cite prentice1986, rancourt2000, bingham09
 #' @export
 #' @examples
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
 #' region(Qs,method='prentice',alpha=0.1)
 
-prentice<-function(Qs,a){
+prentice<-function(Qs,alpha){
 	UseMethod("prentice")
 }
 
@@ -113,7 +117,7 @@ prentice<-function(Qs,a){
 #' @method prentice Q4
 #' @S3method prentice Q4
 
-prentice.Q4<-function(Qs,a){
+prentice.Q4<-function(Qs,alpha){
 	#This takes a sample qs and returns the radius of the confidence region
 	#centered at the projected mean
 	n<-nrow(Qs)
@@ -131,9 +135,9 @@ prentice.Q4<-function(Qs,a){
 	RtR<-t(Rhat)%*%Rhat
 	Ahat<-(diag(RtR[1,1],3,3)-RtR[-1,-1])/n
 	
-	Tm<-min(diag(n*Ahat%*%solve(VarShat)%*%Ahat))
+	Tm<-diag(n*Ahat%*%solve(VarShat)%*%Ahat)
 	
-	r<-sqrt(qchisq((1-a),3)/Tm)
+	r<-sqrt(qchisq((1-alpha),3)/Tm)
 	return(r)
 }
 
@@ -142,9 +146,9 @@ prentice.Q4<-function(Qs,a){
 #' @method prentice SO3
 #' @S3method prentice SO3
 
-prentice.SO3<-function(Rs,a){
+prentice.SO3<-function(Rs,alpha){
 	Qs<-Q4(Rs)
-	r<-prentice.Q4(Qs,a)
+	r<-prentice.Q4(Qs,alpha)
 	return(r)
 }
 
@@ -153,12 +157,13 @@ prentice.SO3<-function(Rs,a){
 #' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation
 #' 
 #' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean
-#' estimator using the method due to Zhang & Nordman (2009) (unpublished MS thesis).  
+#' estimator using the method due to Zhang & Nordman (2009) (unpublished MS thesis).  By construction each axis will have the same
+#' radius so the radius reported is for all three axis.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param alpha The alpha level desired, e.g. 0.05 or 0.10
 #' @param m Number of replicates to use to estiamte cut point
-#' @return radius of the confidence region centered at the projected mean
+#' @return Radius of the confidence region centered at the projected mean
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
@@ -213,7 +218,7 @@ cdfuns<-function(Qs,Shat){
 }
 
 
-#' Fisher Mean Polax Axis confidence region method
+#' Fisher confidence region method
 #'
 #' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation
 #'

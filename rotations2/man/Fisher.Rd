@@ -2,7 +2,7 @@
 \alias{fisher}
 \alias{fisher.Q4}
 \alias{fisher.SO3}
-\title{Fisher Mean Polax Axis confidence region method}
+\title{Fisher confidence region method}
 \usage{
   fisher(Qs, alpha, boot, m, symm)
 

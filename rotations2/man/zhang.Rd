@@ -21,7 +21,7 @@
   point}
 }
 \value{
-  radius of the confidence region centered at the projected
+  Radius of the confidence region centered at the projected
   mean
 }
 \description{
@@ -32,7 +32,9 @@
   Compute the radius of a \eqn{100(1-\alpha)%} confidence
   region for the central orientation based on the projected
   mean estimator using the method due to Zhang & Nordman
-  (2009) (unpublished MS thesis).
+  (2009) (unpublished MS thesis).  By construction each
+  axis will have the same radius so the radius reported is
+  for all three axis.
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)
