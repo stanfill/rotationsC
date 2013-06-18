@@ -33,7 +33,7 @@
 <<setup, include=FALSE, cache=FALSE>>=
 opts_chunk$set(fig.path='figures/', fig.align='center', fig.show='hold')
 options(replace.assign=TRUE,width=90)
-library(rotations)
+library(rotations2)
 @
 
 \abstract{
