@@ -28,9 +28,9 @@
 \details{
   Compute the radius of a \eqn{100(1-\alpha)%} confidence
   region for the central orientation based on the projected
-  mean estimator using the method due to \cite{Chang et al.
-  (2001)}.  By construction each axis will have the same
-  radius so the radius reported is for all three axis.
+  mean estimator based on a result due to \cite{Chang et
+  al. (2001)}.  By construction each axis will have the
+  same radius so the radius reported is for all three axis.
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)

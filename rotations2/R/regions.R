@@ -14,8 +14,8 @@
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Qs,method='prentice',alpha=0.1)
-#' region(Qs,method='fisher',alpha=0.1,symm=T)
+#' region(Rs,method='prentice',alpha=0.1)
+#' region(Rs,method='fisher',alpha=0.1,symm=T)
 #' region(Rs,method='zhang',alpha=0.1,m=100)
 #' region(Rs,method='chang',alpha=0.1)
 
@@ -220,7 +220,7 @@ zhang.Q4<-function(Qs,alpha,m=300){
 	Shat<-mean(Qs)
   cdhat<-cdfuns(Qs,Shat)
   
-	rad<-as.numeric(quantile(stats,1-alpha))*cdhat$c/(2*n*cdhat$d^2)
+	rad<-sqrt(as.numeric(quantile(stats,1-alpha))*cdhat$c/(2*n*cdhat$d^2))
 	
 	return(rad)
 }
@@ -361,7 +361,7 @@ chang.Q4<-function(Qs,alpha){
 	Shat<-mean(Qs)
 	cdhat<-cdfuns(Qs,Shat)
 	
-	rad<-as.numeric(qchisq(1-alpha,3))*cdhat$c/(2*n*cdhat$d^2)
+	rad<-sqrt(as.numeric(qchisq(1-alpha,3))*cdhat$c/(2*n*cdhat$d^2))
 	
 	return(rad)
 }
