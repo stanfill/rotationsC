@@ -34,24 +34,22 @@
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)%} confidence
-  region for the projected mean \cite{Fisher et al. (1996)}
+  region for the central orientation
 }
 \details{
-  This works in the same way as done in \cite{Bingham et
-  al. (2009)} which assumes rotational symmetry and is
-  therefore conservative.
+  Compute the radius of a \eqn{100(1-\alpha)%} confidence
+  region for the central orientation based on the projected
+  mean estimator using the method for the mean polar axis
+  as proposed in \cite{Fisher et al. (1996)}.  To be able
+  to reduce their method to a radius requires the additonal
+  assumption of rotational symmetry, equation (10) in
+  \cite{Fisher et al. (1996)}.
 }
 \examples{
 Qs<-ruars(20,rcayley,kappa=100,space='Q4')
 region(Qs,method='fisher',alpha=0.1,symm=T)
 }
 \references{
-  Bingham M, Nordman D and Vardeman S (2009). "Modeling and
-  Inference for Measured Crystal Orientations and a
-  Tractable Class of Symmetric Distributions for Rotations
-  in three Dimensions." _Journal of the American
-  Statistical Association_, *104*(488), pp. 1385-1397.
-
   Fisher N, Hall P, Jing B and Wood A (1996). "Improved
   pivotal methods for constructing confidence regions with
   directional data." _Journal of the American Statistical

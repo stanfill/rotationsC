@@ -67,6 +67,8 @@ double fisherAxisCSymmetric(arma::mat Qs, arma::rowvec Qhat){
 	arma::mat Qsq=(Qs.t()*Qs)/n;
 	arma::mat eigvec, Mhat(4,3);
 	arma::vec eigval, eta(3);
+	
+	//arma::mat33 unM;
   
   arma::eig_sym(eigval,eigvec,Qsq);   
 
@@ -96,6 +98,9 @@ double fisherAxisCSymmetric(arma::mat Qs, arma::rowvec Qhat){
 	}
   
   trGhat = pow(trGhat,-1);
+  
+  //unM = 3*n*Mhat.t()*Mhat*trGhat;
+  //unM.print("stat: ");
   
   Tm = arma::as_scalar(trGhat*(3*n)*Tnum);
   

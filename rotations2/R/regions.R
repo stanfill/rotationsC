@@ -8,7 +8,7 @@
 #' @param alpha The alpha level desired, e.g. 0.95 or 0.90
 #' @param ... Additional arguments
 #' @return radius of the confidence region centered at the projected mean
-#' @cite prentice1986, rancourt2000
+#' @cite prentice1986, fisher1996, rancourt2000
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
@@ -149,7 +149,10 @@ prentice.SO3<-function(Rs,a){
 
 #' Zhang confidence region method
 #'
-#' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the projected mean
+#' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation
+#' 
+#' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean
+#' estimator using the method due to Zhang & Nordman (2009) (unpublished MS thesis).  
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param alpha The alpha level desired, e.g. 0.05 or 0.10
@@ -211,10 +214,11 @@ cdfuns<-function(Qs,Shat){
 
 #' Fisher Mean Polax Axis confidence region method
 #'
-#' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the projected mean \cite{fisher1996}
+#' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation
 #'
-#' This works in the same way as done in \cite{bingham09} which assumes rotational 
-#' symmetry and is therefore conservative.
+#' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean
+#' estimator using the method for the mean polar axis as proposed in \cite{fisher1996}.  To be able to reduce their method
+#' to a radius requires the additonal assumption of rotational symmetry, equation (10) in \cite{fisher1996}. 
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param alpha The alpha level desired, e.g. 0.05 or 0.10

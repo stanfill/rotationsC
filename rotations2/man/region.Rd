@@ -37,6 +37,11 @@ Rs<-ruars(20,rcayley,kappa=100)
 region(Qs,method='prentice',alpha=0.1)
 }
 \references{
+  Fisher N, Hall P, Jing B and Wood A (1996). "Improved
+  pivotal methods for constructing confidence regions with
+  directional data." _Journal of the American Statistical
+  Association_, *91*(435), pp. 1062-1070.
+
   Prentice MJ (1986). "Orientation statistics without
   parametric assumptions." _Journal of the Royal
   Statistical Society. Series B (Methodological)_, pp.

@@ -25,8 +25,14 @@
   mean
 }
 \description{
-  Find the radius of a \eqn{100(1-\alpha)%} confidence
-  region for the projected mean
+  Compute the radius of a \eqn{100(1-\alpha)%} confidence
+  region for the central orientation
+}
+\details{
+  Compute the radius of a \eqn{100(1-\alpha)%} confidence
+  region for the central orientation based on the projected
+  mean estimator using the method due to Zhang & Nordman
+  (2009) (unpublished MS thesis).
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)
