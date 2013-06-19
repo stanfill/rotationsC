@@ -1,13 +1,17 @@
 \docType{data}
 \name{id.Q4}
 \alias{id.Q4}
-\title{Identity in Q4 space}
+\title{Identity Quaternion}
 \format{Q4 [1, 1:4] 1 0 0 0}
 \usage{
   id.Q4
 }
 \description{
-  Identity in Q4 space
+  This is a Q4 object that represents the identity rotation
+  for quaternions. More specifically
+  \deqn{q=[1,0,0,0]^\top}{q=[1,0,0,0]'} represnents the
+  roation of some coordinate axis about any axis through
+  the angle 0.
 }
 \seealso{
   Other Q4: \code{\link{as.Q4}}, \code{\link{is.Q4}},

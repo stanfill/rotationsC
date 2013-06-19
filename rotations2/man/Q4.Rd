@@ -1,20 +1,28 @@
 \name{Q4}
+\alias{as.Q4}
+\alias{is.Q4}
 \alias{Q4}
 \alias{Q4.default}
 \alias{Q4.SO3}
 \title{Quaternions}
 \usage{
-  Q4(U, ...)
+  Q4(q, ...)
+
+  as.Q4(q)
+
+  is.Q4(q)
 
   \method{Q4}{default} (U, theta = NULL)
 
   \method{Q4}{SO3} (R)
 }
 \arguments{
-  \item{U}{three-dimensional vector describing the axis of
+  \item{q}{object to be coerced or tested}
+
+  \item{U}{n-by-3 matrix where rows represent axes of
   rotation}
 
-  \item{theta}{vector of angles to create the matrices}
+  \item{theta}{vector of rotation angles}
 
   \item{R}{matrix in SO(3) to be translated into
   quaternions}
@@ -25,25 +33,29 @@
   unit quaternion of class Q4
 }
 \description{
-  Create a unit quaternion
+  Creates or tests for objects of type 'Q4'
 }
 \details{
-  Construct a unit quaternion to represent a rotation.  It
-  is interpreted as a rotation of all three axis of the
-  identity matrix about the axis U (of unit length) through
-  the angle theta.  Alternatively, if U is not of unit
-  length, the length of U is taken to be angle of rotation,
-  theta.  Given a matrix representation of a rotation this
-  function will translate the matrix into a quaternion.
+  Construct a unit quaternion to represent a rotation.
+  Each quaternion can be interpreted as a rotation of some
+  reference frame about the axis U (of unit length) through
+  the angle theta.  For each axis, u, and angle theta the
+  quaternion is formed through
+  \deqn{q=[cos(\theta/2),sin(\theta/2)u]^\top.}{q=[cos(theta/2),sin(theta/2)u]'.}
+  If the theta element is left empty then the
+  Frobenius-norm of each axis is taken to the the angle
+  theta.  If an \code{\link{SO3}} object is given then this
+  function will return the quaternion equivalent.
 }
 \seealso{
-  Other Q4: \code{\link{as.Q4}}, \code{\link{id.Q4}},
-  \code{\link{is.Q4}}, \code{\link{Q4-class}}
+  Other Q4: \code{\link{id.Q4}}, \code{\link{Q4-class}}
 
-  Other Q4: \code{\link{as.Q4}}, \code{\link{id.Q4}},
-  \code{\link{is.Q4}}, \code{\link{Q4-class}}
+  Other Q4: \code{\link{id.Q4}}, \code{\link{Q4-class}}
 
-  Other Q4: \code{\link{as.Q4}}, \code{\link{id.Q4}},
-  \code{\link{is.Q4}}, \code{\link{Q4-class}}
+  Other Q4: \code{\link{id.Q4}}, \code{\link{Q4-class}}
+
+  Other Q4: \code{\link{id.Q4}}, \code{\link{Q4-class}}
+
+  Other Q4: \code{\link{id.Q4}}, \code{\link{Q4-class}}
 }
 

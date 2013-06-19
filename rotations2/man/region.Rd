@@ -35,8 +35,8 @@
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)
-region(Qs,method='prentice',alpha=0.1)
-region(Qs,method='fisher',alpha=0.1,symm=T)
+region(Rs,method='prentice',alpha=0.1)
+region(Rs,method='fisher',alpha=0.1,symm=T)
 region(Rs,method='zhang',alpha=0.1,m=100)
 region(Rs,method='chang',alpha=0.1)
 }

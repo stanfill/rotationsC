@@ -21,22 +21,42 @@ setOldClass("Q4")
 
 #' Quaternions
 #' 
-#' Create a unit quaternion
+#' Creates or tests for objects of type 'Q4'
 #' 
 #' Construct a unit quaternion to represent a rotation.  Each quaternion can be interpreted as a rotation of some reference frame 
-#' about the axis U (of unit length) through the angle theta.  Provided with a vector in three-dimensions
-#' is provided then
+#' about the axis U (of unit length) through the angle theta.  For each axis, u, and angle theta the quaternion is formed through
+#' \deqn{q=[cos(\theta/2),sin(\theta/2)u]^\top.}{q=[cos(theta/2),sin(theta/2)u]'.}  If the theta element is left empty then the 
+#' Frobenius-norm of each axis is taken to the the angle theta.  If an \code{\link{SO3}} object is given then this function will
+#' return the quaternion equivalent.
 #'
 #' @export
-#' @param U \eqn{n\times 3}{n-by-3} matrix where rows represent axes of rotation
+#' @param q object to be coerced or tested
+#' @param U n-by-3 matrix where rows represent axes of rotation
 #' @param theta vector of rotation angles
 #' @param R matrix in SO(3) to be translated into quaternions
 #' @param ... additional arguments
 #' @return unit quaternion of class Q4
 #' @family Q4
 
-Q4<-function(U,...){
+Q4<-function(q,...){
   UseMethod("Q4")
+}
+
+#' @rdname Q4
+#' @family Q4
+
+as.Q4<-function(q){
+	class(q)<-"Q4"
+	return(q)
+}
+
+#' @rdname Q4
+#' @family Q4
+
+is.Q4 <- function(q) {
+	
+	return(sum(q^2)-1<10e-10 & length(q)==4)
+	
 }
 
 
@@ -49,22 +69,25 @@ Q4.default <- function(U,theta=NULL){
 	
 	n<-length(U)/3
 	
+	if(is.null(theta)){ 
+		theta<-ulen%%pi
+	}
+	
+	ntheta<-length(theta)
+	
+	if(n!=ntheta)
+		stop("Number of angles must match number of axes")
+
 	if(n%%1!=0)
-		stop("This functions only works in three dimensions.")	
+		stop("Each axis must be in three-dimensions")	
 	
 	U<-matrix(U,n,3)
 	
 	ulen<-sqrt(rowSums(U^2)) 
 	
-	if(any(ulen!=1)){
+	if(any(ulen!=1))
 		U<-U/ulen
-	}
-	
-	if(is.null(theta)){ 
-		theta<-ulen%%pi
-	}
-	
-	
+
 	x <- Q4defaultC(U,theta)
 
 	class(x)<-"Q4"
@@ -86,36 +109,17 @@ Q4.SO3 <- function(R) {
   return(x)
 }
 
-
-#' Convert anything into Q4 class
+#' Identity Quaternion
 #' 
-#' @param x can be anything
-#' @return x with class "Q4"
-#' @family Q4
-#' @export
-
-as.Q4<-function(x){
-  class(x)<-"Q4"
-  return(x)
-}
-
-#' Identity in Q4 space
+#' This is a Q4 object that represents the identity rotation for quaternions. More specifically 
+#' \deqn{q=[1,0,0,0]^\top}{q=[1,0,0,0]'} represnents the roation of some coordinate axis about any axis through
+#' the angle 0.
+#' 
 #' @family Q4
 #' @export
 id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 
-#' A function to determine if a given object is in unit quaternion or not.
-#'
-#' @param x numeric 1-by-4  vector of length 4
-#' @return logical T if the vector is a unit quaternion and false otherwise
-#' @family Q4
-#' @export
 
-is.Q4 <- function(x) {
-
- return(sum(x^2)-1<10e-10 & length(x)==4)
-	
-}
 
 #' Matrix in SO(3)
 #' 
@@ -149,20 +153,24 @@ SO3.default <- function(U, theta=NULL) {
   
 	n<-length(U)/3
 	
+	if(is.null(theta)){ 
+		theta<-ulen%%pi
+	}
+	
+	ntheta<-length(theta)
+	
+	if(n!=ntheta)
+		stop("Number of angles must match number of axes")
+	
 	if(n%%1!=0)
-		stop("This functions only works in three dimensions.")	
+		stop("Each axis must be in three-dimensions")	
 	
 	U<-matrix(U,n,3)
 	
 	ulen<-sqrt(rowSums(U^2)) 
-  
-	if(any(ulen!=1)){
-		U<-U/ulen
-	}
 	
-  if(is.null(theta)){ 
-  	theta<-ulen%%(pi)
-  }
+	if(any(ulen!=1))
+		U<-U/ulen
 
 	R<-SO3defaultC(U,theta)
  		
