@@ -24,8 +24,8 @@
 
   \item{theta}{vector of rotation angles}
 
-  \item{R}{matrix in SO(3) to be translated into
-  quaternions}
+  \item{R}{n-by-9 matrix of rotation matrices to be
+  translated into quaternions}
 
   \item{...}{additional arguments}
 }
@@ -33,15 +33,15 @@
   unit quaternion of class Q4
 }
 \description{
-  Creates or tests for objects of type 'Q4'
+  Creates or tests for objects of type "Q4"
 }
 \details{
   Construct a unit quaternion to represent a rotation.
   Each quaternion can be interpreted as a rotation of some
   reference frame about the axis U (of unit length) through
-  the angle theta.  For each axis, u, and angle theta the
+  the angle theta.  For each axis, U, and angle theta the
   quaternion is formed through
-  \deqn{q=[cos(\theta/2),sin(\theta/2)u]^\top.}{q=[cos(theta/2),sin(theta/2)u]'.}
+  \deqn{q=[cos(\theta/2),sin(\theta/2)U]^\top.}{q=[cos(theta/2),sin(theta/2)U]'.}
   If the theta element is left empty then the
   Frobenius-norm of each axis is taken to the the angle
   theta.  If an \code{\link{SO3}} object is given then this
