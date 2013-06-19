@@ -23,14 +23,13 @@ setOldClass("Q4")
 #' 
 #' Create a unit quaternion
 #' 
-#' Construct a unit quaternion to represent a rotation.  It is interpreted as a rotation of all three axis 
-#' of the identity matrix about the axis U (of unit length) through the angle theta.  Alternatively, if 
-#' U is not of unit length, the length of U is taken to be angle of rotation, theta.  Given a matrix representation 
-#' of a rotation this function will translate the matrix into a quaternion.
+#' Construct a unit quaternion to represent a rotation.  Each quaternion can be interpreted as a rotation of some reference frame 
+#' about the axis U (of unit length) through the angle theta.  Provided with a vector in three-dimensions
+#' is provided then
 #'
 #' @export
-#' @param U three-dimensional vector describing the axis of rotation
-#' @param theta vector of angles to create the matrices
+#' @param U \eqn{n\times 3}{n-by-3} matrix where rows represent axes of rotation
+#' @param theta vector of rotation angles
 #' @param R matrix in SO(3) to be translated into quaternions
 #' @param ... additional arguments
 #' @return unit quaternion of class Q4
@@ -57,12 +56,14 @@ Q4.default <- function(U,theta=NULL){
 	
 	ulen<-sqrt(rowSums(U^2)) 
 	
+	if(any(ulen!=1)){
+		U<-U/ulen
+	}
+	
 	if(is.null(theta)){ 
 		theta<-ulen%%pi
-		
-		for(i in 1:n)
-			U[i,]<-U[i,]/theta[i]
 	}
+	
 	
 	x <- Q4defaultC(U,theta)
 
@@ -155,11 +156,12 @@ SO3.default <- function(U, theta=NULL) {
 	
 	ulen<-sqrt(rowSums(U^2)) 
   
+	if(any(ulen!=1)){
+		U<-U/ulen
+	}
+	
   if(is.null(theta)){ 
   	theta<-ulen%%(pi)
-  	
-  	for(i in 1:n)
-  		U[i,]<-U[i,]/theta[i]
   }
 
 	R<-SO3defaultC(U,theta)
