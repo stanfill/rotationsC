@@ -35,7 +35,12 @@ setOldClass("Q4")
 #' @param theta vector of rotation angles
 #' @param R n-by-9 matrix of rotation matrices to be translated into quaternions
 #' @param ... additional arguments
-#' @return unit quaternion of class Q4
+#' @format \code{id.Q4} is the identity rotation given by the matrix \eqn{[1,0,0,0]^\top}{[1,0,0,0]'}
+#' @return 	\item{as.Q4}{coerces its object into an Q4 type} 
+#' 					\item{is.Q4}{returns \code{TRUE} or \code{False} depending on whether its argument satifies the conditions to be an
+#' 					quaternion.  Namely, is four-dimensional and of unit length.}
+#' 					\item{Q4.default}{returns an n-by-4 matrix where each row is a quaternion constructed from axis U and angle theta}
+#' 					\item{Q4.SO3}{returns n-by-4 matrix where each row is a quaternion constructed from the corresponding rotation matrix}
 #' @family Q4
 
 Q4<-function(q,...){
@@ -59,6 +64,9 @@ is.Q4 <- function(q) {
 	
 }
 
+#' @rdname Q4
+#' @family Q4
+id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 
 #' @rdname Q4
 #' @method Q4 default
@@ -109,16 +117,6 @@ Q4.SO3 <- function(R) {
   return(x)
 }
 
-#' Identity Quaternion
-#' 
-#' This is a Q4 object that represents the identity rotation for quaternions. More specifically 
-#' \deqn{q=[1,0,0,0]^\top}{q=[1,0,0,0]'} represnents the roation of some coordinate axis about any axis through
-#' the angle 0.
-#' 
-#' @family Q4
-#' @export
-id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
-
 
 
 #' Rotation Matrices
@@ -127,7 +125,7 @@ id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 #' 
 #' Construct a unit quaternion to represent a rotation.  Each quaternion can be interpreted as a rotation of some reference frame 
 #' about the axis U (of unit length) through the angle theta.  For each axis, U, and angle theta the quaternion is formed through
-#' \deqn{exp[\Phi(Ur)]}{q=[cos(theta/2),sin(theta/2)u]'.}  If the theta element is left empty then the 
+#' \deqn{R=exp[\Phi(Ur)]}{R=exp[\Phi(Ur)].}  If the theta element is left empty then the 
 #' Frobenius-norm of each axis is taken to the the angle theta.  If an \code{\link{SO3}} object is given then this function will
 #' return the quaternion equivalent.
 #'
@@ -137,7 +135,12 @@ id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 #' @param theta vector of rotation angles
 #' @param q n-by-4 matrix of quaternions to be translated into rotations
 #' @param ... additional arguments
-#' @return matrix of rotations in SO3 format
+#' @format \code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix
+#' @return 	\item{as.SO3}{coerces its object into an SO3 type} 
+#' 					\item{is.SO3}{returns \code{TRUE} or \code{False} depending on whether its argument satifies the conditions to be an
+#' 					rotation matrix.  Namely, has determinant one and its transpose is its inverse.}
+#' 					\item{SO3.default}{returns an n-by-9 matrix where each row is a rotation matrix constructed from axis U and angle theta}
+#' 					\item{SO3.Q4}{returns n-by-9 matrix where each row is a rotation matrix constructed from the corresponding quaternion}
 #' @family SO3
 
 SO3 <- function(R,...){
@@ -163,6 +166,11 @@ is.SO3 <- function(R) {
 	return(all(sum(t(R) %*% R - diag(1, 3))<10e-10)) 
 	
 }
+
+#' @rdname SO3
+#' @family SO3
+
+id.SO3 <- as.SO3(diag(c(1,1,1)))
 
 #' @rdname SO3
 #' @method SO3 default
@@ -223,13 +231,6 @@ SO3.Q4<-function(q){
   return(SO3(u, theta)) 
 }
 
-
-
-
-#' Identity in SO(3) space
-#' @family SO3
-#' @export
-id.SO3 <- as.SO3(diag(c(1,1,1)))
 
 
 

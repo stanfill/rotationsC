@@ -1,16 +1,21 @@
+\docType{data}
 \name{SO3}
 \alias{as.SO3}
+\alias{id.SO3}
 \alias{is.SO3}
 \alias{SO3}
 \alias{SO3.default}
 \alias{SO3.Q4}
 \title{Rotation Matrices}
+\format{\code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix}
 \usage{
   SO3(R, ...)
 
   as.SO3(R)
 
   is.SO3(R)
+
+  id.SO3
 
   \method{SO3}{default} (U, theta = NULL)
 
@@ -30,7 +35,16 @@
   \item{...}{additional arguments}
 }
 \value{
-  matrix of rotations in SO3 format
+  \item{as.SO3}{coerces its object into an SO3 type}
+  \item{is.SO3}{returns \code{TRUE} or \code{False}
+  depending on whether its argument satifies the conditions
+  to be an rotation matrix.  Namely, has determinant one
+  and its transpose is its inverse.}
+  \item{SO3.default}{returns an n-by-9 matrix where each
+  row is a rotation matrix constructed from axis U and
+  angle theta} \item{SO3.Q4}{returns n-by-9 matrix where
+  each row is a rotation matrix constructed from the
+  corresponding quaternion}
 }
 \description{
   Creates or tests for objects of type "SO3"
@@ -41,21 +55,24 @@
   reference frame about the axis U (of unit length) through
   the angle theta.  For each axis, U, and angle theta the
   quaternion is formed through
-  \deqn{exp[\Phi(Ur)]}{q=[cos(theta/2),sin(theta/2)u]'.} If
-  the theta element is left empty then the Frobenius-norm
-  of each axis is taken to the the angle theta.  If an
+  \deqn{R=exp[\Phi(Ur)]}{R=exp[\Phi(Ur)].} If the theta
+  element is left empty then the Frobenius-norm of each
+  axis is taken to the the angle theta.  If an
   \code{\link{SO3}} object is given then this function will
   return the quaternion equivalent.
 }
 \seealso{
-  Other SO3: \code{\link{id.SO3}}, \code{\link{SO3-class}}
+  Other SO3: \code{\link{SO3-class}}
 
-  Other SO3: \code{\link{id.SO3}}, \code{\link{SO3-class}}
+  Other SO3: \code{\link{SO3-class}}
 
-  Other SO3: \code{\link{id.SO3}}, \code{\link{SO3-class}}
+  Other SO3: \code{\link{SO3-class}}
 
-  Other SO3: \code{\link{id.SO3}}, \code{\link{SO3-class}}
+  Other SO3: \code{\link{SO3-class}}
 
-  Other SO3: \code{\link{id.SO3}}, \code{\link{SO3-class}}
+  Other SO3: \code{\link{SO3-class}}
+
+  Other SO3: \code{\link{SO3-class}}
 }
+\keyword{datasets}
 
