@@ -160,7 +160,7 @@ as.SO3<-function(R){
 
 is.SO3 <- function(R) {
 	
-	x <- matrix(R, 3, 3)
+	R <- matrix(R, 3, 3)
 	if (any(is.na(R))) return(FALSE)
 	
 	return(all(sum(t(R) %*% R - diag(1, 3))<10e-10)) 

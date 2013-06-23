@@ -135,7 +135,7 @@ dist.Q4 <- function(Q1, Q2=id.Q4 ,method='projected', p=1) {
 #'  
 #' @param Rs rotation matrix
 #' @return angle of rotation
-#' @seealso \code{\link{axis}}
+#' @seealso \code{\link{axis2}}
 #' @export
 
 angle<-function(Rs){
