@@ -3,7 +3,7 @@
 \alias{Mises}
 \alias{pvmises}
 \alias{rvmises}
-\title{The circular-von Mises distribution}
+\title{The Circular-von Mises Distribution}
 \usage{
   dvmises(r, kappa = 1, nu = NULL, Haar = T)
 
@@ -29,13 +29,13 @@
   \eqn{P(X\leq x)}{P(X\le x)} otherwise, \eqn{P(X>x)}}
 }
 \value{
-  \code{dvmises} gives the density, \code{pvmises} gives
-  the distribution function, \code{rvmises} generates
-  random deviates
+  \item{dvmises}{gives the density} \item{pvmises}{gives
+  the distribution function} \item{rvmises}{generates
+  random deviates}
 }
 \description{
-  Density for the the circular von Mises-based distribution
-  with concentration kappa
+  Density and random generation for the the circular von
+  Mises distribution with concentration kappa
 }
 \details{
   The circular von Mises-based distribution has the density

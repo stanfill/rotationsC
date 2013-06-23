@@ -1,6 +1,6 @@
 \name{Angular-distributions}
 \alias{Angular-distributions}
-\title{Angular distributions in the rotations packages}
+\title{Angular distributions}
 \description{
   Density and random variate generation for symmetric
   probability distributions in the rotations package

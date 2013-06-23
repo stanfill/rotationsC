@@ -1,15 +1,7 @@
-#' Accept/Reject Algorithm
-#'
-#' @author Heike Hofmann
-#' @param f target density
-#' @param g sampling density
-#' @param M real valued constant, maximum of g
-#' @param kappa second parameter in the target density
-#' @param Haar should f be with respect to Haar or not
-#' @param ... additional arguments passed to samping density, g
-#' @return a random observation from target density
+
 
 arsample <- function(f, g, M, kappa, Haar, ...) {
+  #generate a random observation from target density f
   found = FALSE
   while (!found) {
     x <- g(1, ...)
@@ -21,15 +13,10 @@ arsample <- function(f, g, M, kappa, Haar, ...) {
   # arsample(f, g, M, kappa, ...)
 }
 
-#' Accept/Reject Algorithm
-#'
-#' @author Heike Hofmann
-#' @param f target density
-#' @param M maximum value for enveloping uniform density
-#' @param ... additional arguments sent to f
-#' @return x an observation from the target density
+
 
 arsample.unif <- function(f, M, ...) {
+  #generate a random observation from target density f assuming g is uniform
   found = FALSE
   while (!found) {
     x <- runif(1, -pi, pi)

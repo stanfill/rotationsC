@@ -1,4 +1,4 @@
-#' Angular distributions in the rotations packages
+#' Angular distributions
 #' 
 #' Density and random variate generation for symmetric probability distributions in the rotations package
 #' 
@@ -15,14 +15,6 @@
 
 NULL
 
-#' Sample of size n from target density f
-#'
-#' @author Heike Hofmann
-#' @param n number of sample wanted
-#' @param f target density
-#' @param M maximum number in uniform proposal density
-#' @param ... additional arguments sent to arsample
-#' @return a vector of size n of observations from target density
 
 rar <- function(n, f, M, ...) {
   res <- vector("numeric", length = n)
@@ -47,7 +39,9 @@ rar <- function(n, f, M, ...) {
 #' @param kappa Concentration paramter
 #' @param nu The circular variance, can be used in place of kappa
 #' @param Haar logical; if TRUE density is evaluated with respect to Haar
-#' @return \code{dcayley} gives the density, \code{pcayley} gives the distribution function, \code{rcayley} generates random deviates
+#' @return  \item{dcayley}{gives the density}
+#'          \item{pcayley}{gives the distribution function}
+#'          \item{rcayley}{generates random deviates}
 #' @seealso \link{Angular-distributions} for other distributions in the rotations package
 #' @cite Schaeben97 leon06
 
@@ -125,7 +119,9 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
 #' @param kappa concentration paramter
 #' @param nu circular variance, can be used in place of kappa
 #' @param Haar logical; if TRUE density is evaluated with respect to Haar
-#' @return \code{dfisher} gives the density, \code{pfisher} gives the distribution function, \code{rfisher} generates random deviates
+#' @return  \item{dfisher}{gives the density}
+#'          \item{pfisher}{gives the distribution function}
+#'          \item{rfisher}{generates random deviates}
 #' @seealso \link{Angular-distributions} for other distributions in the rotations package
 
 NULL
@@ -200,7 +196,9 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 #' @usage rhaar(n)
 #' @param r,q vector of quantiles
 #' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required
-#' @return \code{dhaar} gives the density, \code{phaar} gives the distribution function, \code{rhaar} generates random deviates
+#' @return  \item{dhaar}{gives the density}
+#'          \item{phaar}{gives the distribution function}
+#'          \item{rhaar}{generates random deviates}
 #' @seealso \link{Angular-distributions} for other distributions in the rotations package
 
 NULL
@@ -247,16 +245,16 @@ rhaar<-function(n){
   return(rar(n, dhaar, 1/pi))
 }
 
-#' The circular-von Mises distribution
+#' The Circular-von Mises Distribution
 #'
-#' Density for the the circular von Mises-based distribution with concentration kappa
+#' Density and random generation for the the circular von Mises distribution with concentration kappa
 #' 
 #' The circular von Mises-based distribution has the density
 #' \deqn{C_\mathrm{M}(r|\kappa)=\frac{1}{2\pi \mathrm{I_0}(\kappa)}e^{\kappa cos(r)}.}{C(r|\kappa)=exp[\kappa cos(r)]/[2\pi I(\kappa)]}
 #' where \eqn{\mathrm{I_0}(\kappa)}{I(\kappa)} is the modified bessel function of order 0.
 #'
 #' @name Mises
-#' @aliases Mises dvmises rvmises
+#' @aliases Mises dvmises rvmises pvmises
 #' @usage dvmises(r, kappa = 1, nu = NULL, Haar = TRUE)
 #' @usage pvmises(q, kappa = 1, nu = NULL, lower.tail=TRUE)
 #' @usage rvmises(n, kappa = 1, nu = NULL)
@@ -266,7 +264,9 @@ rhaar<-function(n){
 #' @param nu The circular variance, can be used in place of kappa
 #' @param Haar logical; if TRUE density is evaluated with respect to Haar
 #' @param lower.tail logica; if TRUE probabilites are \eqn{P(X\leq x)}{P(X\le x)} otherwise, \eqn{P(X>x)}
-#' @return \code{dvmises} gives the density, \code{pvmises} gives the distribution function, \code{rvmises} generates random deviates
+#' @return  \item{dvmises}{gives the density}
+#'          \item{pvmises}{gives the distribution function}
+#'          \item{rvmises}{generates random deviates}
 #' @seealso \link{Angular-distributions} for other distributions in the rotations package
 
 NULL
@@ -358,16 +358,35 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 
 
 
-#' UARS density function
+#' Generic UARS Distribution
+#'
+#' Density and random generation for the the generic uniform-axis random-spin class of distributions
 #' 
-#' Evaluate the UARS density with a given angular distribution.
-#' 
+#' Give the form of the UARS distribution
+#'
+#' @name UARS
+#' @aliases UARS duars ruars
+#' @usage duars(os, S=id.SO3, kappa = 1, dangle=dvmises)
+#' @usage puars(os, S=id.SO3, kappa = 1, pangle=pvmises)
+#' @usage ruars(n, kappa = 1)
 #' @param os Value at which to evaluate the UARS density
 #' @param S principal direction of the distribution
 #' @param kappa concentration of the distribution
 #' @param dangle The function to evaulate the angles from: e.g. dcayley, dvmises, dfisher, dhaar
+#' @param pangle The form of the angular density: e.g. pcayley, pvmises, pfisher, phaar
+#' @param rangle The function from which to simulate angles: e.g. rcayley, rvmises, rhaar, rfisher
+#' @param space Indicates the desired representation: matrix (SO3) or quaternion (Q4)
 #' @param ... additional arguments passed to the angular distribution
-#' @return density value at o
+#' @return  \item{duars}{gives the density}
+#'          \item{puars}{gives the distribution function}
+#'          \item{ruars}{generates random deviates}
+#' @seealso For more on the angular distribution options see \link{Angular-distributions}
+
+NULL
+
+
+#' @rdname UARS
+#' @aliases UARS duars puars ruars
 #' @export
 
 duars<-function(os,S=diag(3),kappa=1,dangle,...){
@@ -382,18 +401,11 @@ duars<-function(os,S=diag(3),kappa=1,dangle,...){
 	return(den)
 }
 
-#' UARS distribution function
-#' 
-#' Evaluate the UARS distributions fuction with a given angular distribution
-#' 
-#' @param os Value at which to evaluate the UARS density
-#' @param S principal direction of the distribution
-#' @param kappa concentration of the distribution
-#' @param dangle The function to evaulate the angles from: e.g. dcayley, dvmises, dfisher, dhaar.  If left at NULL, the empirical CDF is used
-#' @param ... additional arguments passed to the angular distribution
-#' @return cdf evaulated at each os value
+#' @rdname UARS
+#' @aliases UARS duars puars ruars
+#' @export
 
-puars<-function(os,S=diag(3),kappa=1,pangle=NULL,...){
+puars<-function(os,S=diag(3),kappa=1,pangle,...){
 	
 	#This is not a true CDF, but it will work for now
 	os<-formatSO3(os)
@@ -418,20 +430,12 @@ puars<-function(os,S=diag(3),kappa=1,pangle=NULL,...){
 	return(cr)
 	
 }
-#' UARS random deviates
-#' 
-#' Produce random deviates from a chosen UARS distribution.
-#' 
-#' @param n number of observations. If \code{length(n)>1}, the length is taken to be n
-#' @param rangle The function from which to simulate angles: e.g. rcayley, rvmises, rhaar, rfisher
-#' @param S principal direction of the distribution
-#' @param kappa concentration of the distribution
-#' @param space Indicates the desired representation: matrix (SO3), quaternion (Q4) or Euler angles (EA)
-#' @param ... additional arguments passed to the angular function
-#' @return random deviates from the specified UARS distribution
+
+#' @rdname UARS
+#' @aliases UARS duars puars ruars
 #' @export
 
-ruars<-function(n,rangle,S=NULL,kappa=1,space="SO3",...){
+ruars<-function(n,S=NULL,kappa=1,rangle,space="SO3",...){
   
   r<-rangle(n,kappa,...)
   Rs<-genR(r,S,space)

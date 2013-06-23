@@ -26,9 +26,9 @@
   respect to Haar}
 }
 \value{
-  \code{dcayley} gives the density, \code{pcayley} gives
-  the distribution function, \code{rcayley} generates
-  random deviates
+  \item{dcayley}{gives the density} \item{pcayley}{gives
+  the distribution function} \item{rcayley}{generates
+  random deviates}
 }
 \description{
   Density and random generation for the Cayley distribution

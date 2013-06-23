@@ -18,9 +18,9 @@
   the length is taken to be the number required}
 }
 \value{
-  \code{dhaar} gives the density, \code{phaar} gives the
-  distribution function, \code{rhaar} generates random
-  deviates
+  \item{dhaar}{gives the density} \item{phaar}{gives the
+  distribution function} \item{rhaar}{generates random
+  deviates}
 }
 \description{
   Uniform density on the circle
