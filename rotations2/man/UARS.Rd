@@ -5,14 +5,14 @@
 \alias{UARS}
 \title{Generic UARS Distribution}
 \usage{
-  duars(os, dangle, S = diag(3), kappa = 1, ...)
+  duars(R, dangle, S = diag(3), kappa = 1, ...)
 
-  puars(os, pangle, S = diag(3), kappa = 1, ...)
+  puars(R, pangle, S = diag(3), kappa = 1, ...)
 
   ruars(n, rangle, S = NULL, kappa = 1, space = "SO3", ...)
 }
 \arguments{
-  \item{os}{Value at which to evaluate the UARS density}
+  \item{R}{Value at which to evaluate the UARS density}
 
   \item{dangle}{The function to evaulate the angles from:
   e.g. dcayley, dvmises, dfisher, dhaar}
@@ -45,10 +45,17 @@
 \details{
   For the rotation R with central orientation S and
   concentration \eqn{kappa} the UARS density is given by
-  \deqn{\frac{4\pi}{3-tr(S'R)}C(acos[tr(S'R)-1]/2|\kappa)}{4\pi
-  C(acos[tr(S'R)-1]/2|\kappa)/(3-tr(S'R))} where
+  \deqn{f(R|S,\kappa)=\frac{4\pi}{3-tr(S'R)}C(acos[tr(S'R)-1]/2|\kappa)}{f(R|S,\kappa)=4\pi
+  C(acos[tr(S'R)-1]/2|\kappa)/[3-tr(S'R)]} where
   \eqn{C(r|\kappa)} is one of the
   \link{Angular-distributions}.
+}
+\references{
+  Bingham M, Nordman D and Vardeman S (2009). "Modeling and
+  Inference for Measured Crystal Orientations and a
+  Tractable Class of Symmetric Distributions for Rotations
+  in three Dimensions." _Journal of the American
+  Statistical Association_, *104*(488), pp. 1385-1397.
 }
 \seealso{
   For more on the angular distribution options see

@@ -352,12 +352,12 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #' Density and random generation for the the generic uniform-axis random-spin class of distributions
 #' 
 #' For the rotation R with central orientation S and concentration \eqn{kappa} the UARS density is given by 
-#' \deqn{\frac{4\pi}{3-tr(S'R)}C(acos[tr(S'R)-1]/2|\kappa)}{4\pi C(acos[tr(S'R)-1]/2|\kappa)/(3-tr(S'R))}
+#' \deqn{f(R|S,\kappa)=\frac{4\pi}{3-tr(S'R)}C(acos[tr(S'R)-1]/2|\kappa)}{f(R|S,\kappa)=4\pi C(acos[tr(S'R)-1]/2|\kappa)/[3-tr(S'R)]}
 #' where \eqn{C(r|\kappa)} is one of the \link{Angular-distributions}.
 #'
 #' @name UARS
 #' @aliases UARS duars ruars
-#' @param os Value at which to evaluate the UARS density
+#' @param R Value at which to evaluate the UARS density
 #' @param dangle The function to evaulate the angles from: e.g. dcayley, dvmises, dfisher, dhaar
 #' @param pangle The form of the angular density: e.g. pcayley, pvmises, pfisher, phaar
 #' @param rangle The function from which to simulate angles: e.g. rcayley, rvmises, rhaar, rfisher
@@ -369,6 +369,7 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #'          \item{puars}{gives the distribution function}
 #'          \item{ruars}{generates random deviates}
 #' @seealso For more on the angular distribution options see \link{Angular-distributions}
+#' @cite bingham09
 
 NULL
 
@@ -377,10 +378,10 @@ NULL
 #' @aliases UARS duars puars ruars
 #' @export
 
-duars<-function(os,dangle,S=diag(3),kappa=1,...){
+duars<-function(R,dangle,S=diag(3),kappa=1,...){
 	
-	os<-formatSO3(os)
-	rs<-angle(os)
+	R<-formatSO3(R)
+	rs<-angle(R)
 	cr<-dangle(rs,kappa,...)	
 	trStO<-2*cos(rs)+1
 	
@@ -393,11 +394,11 @@ duars<-function(os,dangle,S=diag(3),kappa=1,...){
 #' @aliases UARS duars puars ruars
 #' @export
 
-puars<-function(os,pangle,S=diag(3),kappa=1,...){
+puars<-function(R,pangle,S=diag(3),kappa=1,...){
 	
 	#This is not a true CDF, but it will work for now
-	os<-formatSO3(os)
-	rs<-angle(os)
+	R<-formatSO3(R)
+	rs<-angle(R)
 	
 	if(is.null(pangle)){
 		
