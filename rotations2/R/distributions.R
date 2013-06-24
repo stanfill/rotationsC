@@ -108,7 +108,7 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
 #' \eqn{\mathrm{I_p}(\kappa)=\frac{1}{2\pi}\int_{-\pi}^{\pi}\cos(pr)e^{\kappa\cos r}dr}{Ip(\kappa)} is the modified Bessel function with parameters \eqn{p} and \eqn{kappa}.
 #'
 #' @name Fisher
-#' @aliases Fisher dfisher rfisher
+#' @aliases Fisher dfisher rfisher pfisher
 #' @param r,q vector of quantiles
 #' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required
 #' @param kappa concentration paramter
