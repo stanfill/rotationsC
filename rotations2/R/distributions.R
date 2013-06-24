@@ -2,13 +2,13 @@
 #' 
 #' Density and random variate generation for symmetric probability distributions in the rotations package
 #' 
-#' The functions for the density function and random variate generation are named in the usual form dxxxx and rxxxx 
+#' The functions for the density function and random variate generation are named in the usual form dxxxx, pxxxx and rxxxx 
 #' respectively.        
 #' \itemize{
-#' 	\item See \code{\link{dcayley}} for the Cayley distribution.
-#' 	\item See \code{\link{dfisher}}for the matrix Fisher distribution.
-#' 	\item See \code{\link{dhaar}} for the uniform distribution on the circle.
-#' 	\item See \code{\link{dvmises}} for the von Mises-Fisher distribution.
+#' 	\item See \code{\link{Cayley}} for the Cayley distribution.
+#' 	\item See \code{\link{Fisher}} for the matrix Fisher distribution.
+#' 	\item See \code{\link{Haar}} for the uniform distribution on the circle.
+#' 	\item See \code{\link{Mises}} for the von Mises-Fisher distribution.
 #' }
 #' 
 #' @name Angular-distributions
@@ -32,8 +32,6 @@ rar <- function(n, f, M, ...) {
 #'
 #' @name Cayley
 #' @aliases Cayley rcayley dcayley
-#' @usage dcayley(r, kappa = 1, nu = NULL, Haar = TRUE, lower.tail=TRUE)
-#' @usage rcayley(n, kappa = 1, nu = NULL)
 #' @param r,q vector of quantiles
 #' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required
 #' @param kappa Concentration paramter
@@ -111,9 +109,6 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
 #'
 #' @name Fisher
 #' @aliases Fisher dfisher rfisher
-#' @usage dfisher(r, kappa = 1, nu = NULL, Haar = TRUE)
-#' @usage pfisher(r, kappa = 1, nu = NULL, lower.tail=TRUE)
-#' @usage rfisher(n, kappa = 1, nu = NULL)
 #' @param r,q vector of quantiles
 #' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required
 #' @param kappa concentration paramter
@@ -191,9 +186,6 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 #'
 #' @name Haar
 #' @aliases Haar dhaar phaar rhaar
-#' @usage dhaar(r)
-#' @usage phaar(q, lower.tail=T)
-#' @usage rhaar(n)
 #' @param r,q vector of quantiles
 #' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required
 #' @return  \item{dhaar}{gives the density}
@@ -255,9 +247,6 @@ rhaar<-function(n){
 #'
 #' @name Mises
 #' @aliases Mises dvmises rvmises pvmises
-#' @usage dvmises(r, kappa = 1, nu = NULL, Haar = TRUE)
-#' @usage pvmises(q, kappa = 1, nu = NULL, lower.tail=TRUE)
-#' @usage rvmises(n, kappa = 1, nu = NULL)
 #' @param r,q vector of quantiles
 #' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required
 #' @param kappa concentration paramter
@@ -366,9 +355,6 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #'
 #' @name UARS
 #' @aliases UARS duars ruars
-#' @usage duars(os, S=id.SO3, kappa = 1, dangle=dvmises)
-#' @usage puars(os, S=id.SO3, kappa = 1, pangle=pvmises)
-#' @usage ruars(n, kappa = 1)
 #' @param os Value at which to evaluate the UARS density
 #' @param dangle The function to evaulate the angles from: e.g. dcayley, dvmises, dfisher, dhaar
 #' @param pangle The form of the angular density: e.g. pcayley, pvmises, pfisher, phaar
