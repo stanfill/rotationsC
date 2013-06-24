@@ -5,18 +5,14 @@
 \alias{UARS}
 \title{Generic UARS Distribution}
 \usage{
-  duars(os, S = diag(3), kappa = 1, dangle, ...)
+  duars(os, dangle, S = diag(3), kappa = 1, ...)
 
-  puars(os, S = diag(3), kappa = 1, pangle, ...)
+  puars(os, pangle, S = diag(3), kappa = 1, ...)
 
-  ruars(n, S = NULL, kappa = 1, rangle, space = "SO3", ...)
+  ruars(n, rangle, S = NULL, kappa = 1, space = "SO3", ...)
 }
 \arguments{
   \item{os}{Value at which to evaluate the UARS density}
-
-  \item{S}{principal direction of the distribution}
-
-  \item{kappa}{concentration of the distribution}
 
   \item{dangle}{The function to evaulate the angles from:
   e.g. dcayley, dvmises, dfisher, dhaar}
@@ -26,6 +22,10 @@
 
   \item{rangle}{The function from which to simulate angles:
   e.g. rcayley, rvmises, rhaar, rfisher}
+
+  \item{S}{principal direction of the distribution}
+
+  \item{kappa}{concentration of the distribution}
 
   \item{space}{Indicates the desired representation: matrix
   (SO3) or quaternion (Q4)}

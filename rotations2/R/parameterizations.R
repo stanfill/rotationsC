@@ -1,8 +1,7 @@
 #' "SO3" class
 #'
 #' @name SO3-class
-#' @aliases SO3
-#' @family SO3
+#' @seealso See the \code{\link{SO3}} function
 #'
 #' @exportClass SO3
 setOldClass("SO3")
@@ -13,8 +12,7 @@ setOldClass("SO3")
 #' Class for quaterion representation of rotations
 #' 
 #' @name Q4-class
-#' @aliases Q4
-#' @family Q4
+#' @seealso See the \code{\link{Q4}} function
 #'
 #' @exportClass Q4
 setOldClass("Q4")
@@ -41,14 +39,15 @@ setOldClass("Q4")
 #' 					quaternion.  Namely, is four-dimensional and of unit length.}
 #' 					\item{Q4.default}{returns an n-by-4 matrix where each row is a quaternion constructed from axis U and angle theta}
 #' 					\item{Q4.SO3}{returns n-by-4 matrix where each row is a quaternion constructed from the corresponding rotation matrix}
-#' @family Q4
+#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3
 
 Q4<-function(q,...){
   UseMethod("Q4")
 }
 
 #' @rdname Q4
-#' @family Q4
+#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3
+#' @export
 
 as.Q4<-function(q){
 	class(q)<-"Q4"
@@ -56,7 +55,8 @@ as.Q4<-function(q){
 }
 
 #' @rdname Q4
-#' @family Q4
+#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3
+#' @export
 
 is.Q4 <- function(q) {
 	
@@ -65,17 +65,27 @@ is.Q4 <- function(q) {
 }
 
 #' @rdname Q4
-#' @family Q4
+#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3
+#' @export
+#' 
 id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 
 #' @rdname Q4
 #' @method Q4 default
 #' @S3method Q4 default
-#' @family Q4
+#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3
+#' @export
 
 Q4.default <- function(U,theta=NULL){	
 	
+
 	n<-length(U)/3
+	
+	if(n%%1!=0)
+		stop("Each axis must be in three-dimensions")	 
+	
+	U<-matrix(U,n,3)
+	ulen<-sqrt(rowSums(U^2))
 	
 	if(is.null(theta)){ 
 		theta<-ulen%%pi
@@ -85,13 +95,6 @@ Q4.default <- function(U,theta=NULL){
 	
 	if(n!=ntheta)
 		stop("Number of angles must match number of axes")
-
-	if(n%%1!=0)
-		stop("Each axis must be in three-dimensions")	
-	
-	U<-matrix(U,n,3)
-	
-	ulen<-sqrt(rowSums(U^2)) 
 	
 	if(any(ulen!=1))
 		U<-U/ulen
@@ -103,9 +106,10 @@ Q4.default <- function(U,theta=NULL){
 }
 
 #' @rdname Q4
-#' @method Q4 SO3
-#' @S3method Q4 SO3
-#' @family Q4
+#' @method Q4 default
+#' @S3method Q4 default
+#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3
+#' @export
 
 Q4.SO3 <- function(R) {
   
@@ -123,11 +127,11 @@ Q4.SO3 <- function(R) {
 #' 
 #' Creates or tests for objects of type "SO3"
 #' 
-#' Construct a unit quaternion to represent a rotation.  Each quaternion can be interpreted as a rotation of some reference frame 
-#' about the axis U (of unit length) through the angle theta.  For each axis, U, and angle theta the quaternion is formed through
+#' Construct a 3-by-3 matrix to represent a rotation.  Each rotation matrix can be interpreted as a rotation of some reference frame 
+#' about the axis U (of unit length) through the angle theta.  For each axis, U, and angle theta the matrix is formed through
 #' \deqn{R=exp[\Phi(Ur)]}{R=exp[\Phi(Ur)].}  If the theta element is left empty then the 
-#' Frobenius-norm of each axis is taken to the the angle theta.  If an \code{\link{SO3}} object is given then this function will
-#' return the quaternion equivalent.
+#' Frobenius-norm of each axis is taken to the the angle theta.  If a \code{\link{Q4}} object is given then this function will
+#' return the rotation matrix equivalent.
 #'
 #' @export
 #' @param R object to be coerced or tested
@@ -141,14 +145,15 @@ Q4.SO3 <- function(R) {
 #' 					rotation matrix.  Namely, has determinant one and its transpose is its inverse.}
 #' 					\item{SO3.default}{returns an n-by-9 matrix where each row is a rotation matrix constructed from axis U and angle theta}
 #' 					\item{SO3.Q4}{returns n-by-9 matrix where each row is a rotation matrix constructed from the corresponding quaternion}
-#' @family SO3
+#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4
 
 SO3 <- function(R,...){
   UseMethod("SO3")
 }
 
 #' @rdname SO3
-#' @family SO3
+#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4
+#' @export
 
 as.SO3<-function(R){
 	class(R)<-"SO3"
@@ -156,7 +161,8 @@ as.SO3<-function(R){
 }
 
 #' @rdname SO3
-#' @family SO3
+#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4
+#' @export
 
 is.SO3 <- function(R) {
 	
@@ -168,34 +174,36 @@ is.SO3 <- function(R) {
 }
 
 #' @rdname SO3
-#' @family SO3
+#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4
+#' @export
 
 id.SO3 <- as.SO3(diag(c(1,1,1)))
 
 #' @rdname SO3
 #' @method SO3 default
 #' @S3method SO3 default
-#' @family SO3
+#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4
+#' @export
+
 
 SO3.default <- function(U, theta=NULL) {
   
 	n<-length(U)/3
 	
+	if(n%%1!=0)
+		stop("Each axis must be in three-dimensions")
+	
+	U<-matrix(U,n,3)
+	ulen<-sqrt(rowSums(U^2)) 
+	
 	if(is.null(theta)){ 
 		theta<-ulen%%pi
 	}
 	
-	ntheta<-length(theta)
+	ntheta<-length(theta)	
 	
 	if(n!=ntheta)
 		stop("Number of angles must match number of axes")
-	
-	if(n%%1!=0)
-		stop("Each axis must be in three-dimensions")	
-	
-	U<-matrix(U,n,3)
-	
-	ulen<-sqrt(rowSums(U^2)) 
 	
 	if(any(ulen!=1))
 		U<-U/ulen
@@ -210,7 +218,8 @@ SO3.default <- function(U, theta=NULL) {
 #' @rdname SO3
 #' @method SO3 Q4
 #' @S3method SO3 Q4
-#' @family SO3
+#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4
+#' @export
 
 SO3.Q4<-function(q){
   

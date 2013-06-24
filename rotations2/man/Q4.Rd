@@ -19,7 +19,7 @@
 
   \method{Q4}{default} (U, theta = NULL)
 
-  \method{Q4}{SO3} (R)
+  \method{Q4}{default} (R)
 }
 \arguments{
   \item{q}{object to be coerced or tested}
@@ -59,19 +59,6 @@
   Frobenius-norm of each axis is taken to the the angle
   theta.  If an \code{\link{SO3}} object is given then this
   function will return the quaternion equivalent.
-}
-\seealso{
-  Other Q4: \code{\link{Q4-class}}
-
-  Other Q4: \code{\link{Q4-class}}
-
-  Other Q4: \code{\link{Q4-class}}
-
-  Other Q4: \code{\link{Q4-class}}
-
-  Other Q4: \code{\link{Q4-class}}
-
-  Other Q4: \code{\link{Q4-class}}
 }
 \keyword{datasets}
 

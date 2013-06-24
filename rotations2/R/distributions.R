@@ -370,11 +370,11 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #' @usage puars(os, S=id.SO3, kappa = 1, pangle=pvmises)
 #' @usage ruars(n, kappa = 1)
 #' @param os Value at which to evaluate the UARS density
-#' @param S principal direction of the distribution
-#' @param kappa concentration of the distribution
 #' @param dangle The function to evaulate the angles from: e.g. dcayley, dvmises, dfisher, dhaar
 #' @param pangle The form of the angular density: e.g. pcayley, pvmises, pfisher, phaar
 #' @param rangle The function from which to simulate angles: e.g. rcayley, rvmises, rhaar, rfisher
+#' @param S principal direction of the distribution
+#' @param kappa concentration of the distribution
 #' @param space Indicates the desired representation: matrix (SO3) or quaternion (Q4)
 #' @param ... additional arguments passed to the angular distribution
 #' @return  \item{duars}{gives the density}
@@ -389,7 +389,7 @@ NULL
 #' @aliases UARS duars puars ruars
 #' @export
 
-duars<-function(os,S=diag(3),kappa=1,dangle,...){
+duars<-function(os,dangle,S=diag(3),kappa=1,...){
 	
 	os<-formatSO3(os)
 	rs<-angle(os)
@@ -405,7 +405,7 @@ duars<-function(os,S=diag(3),kappa=1,dangle,...){
 #' @aliases UARS duars puars ruars
 #' @export
 
-puars<-function(os,S=diag(3),kappa=1,pangle,...){
+puars<-function(os,pangle,S=diag(3),kappa=1,...){
 	
 	#This is not a true CDF, but it will work for now
 	os<-formatSO3(os)
@@ -435,7 +435,7 @@ puars<-function(os,S=diag(3),kappa=1,pangle,...){
 #' @aliases UARS duars puars ruars
 #' @export
 
-ruars<-function(n,S=NULL,kappa=1,rangle,space="SO3",...){
+ruars<-function(n,rangle,S=NULL,kappa=1,space="SO3",...){
   
   r<-rangle(n,kappa,...)
   Rs<-genR(r,S,space)
