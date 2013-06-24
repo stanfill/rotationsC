@@ -2,7 +2,7 @@
 \alias{plot.SO3}
 \title{Visualizing random rotations.}
 \usage{
-  plot.SO3(x, center, col = 1, toRange = FALSE,
+  plot.SO3(x, center, col = 1, to_range = FALSE,
     show_estimates = NULL, label_points = NULL, ...)
 }
 \arguments{
@@ -14,7 +14,7 @@
   \item{col}{integer 1 to 3 indicating which column to
   display}
 
-  \item{toRange}{show only part of the globe that is in
+  \item{to_range}{show only part of the globe that is in
   range of the data?}
 
   \item{show_estimates}{character vector to specify which

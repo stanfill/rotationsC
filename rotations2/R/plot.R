@@ -123,7 +123,7 @@ pointsXYZ <- function(data, center, column=1) {
 #' @param x n rotations in SO3 format
 #' @param center point about which to center the observations
 #' @param col integer 1 to 3 indicating which column to display
-#' @param toRange show only part of the globe that is in range of the data?
+#' @param to_range show only part of the globe that is in range of the data?
 #' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "riem.mean", "riem.median"
 #' @param label_points  vector of labels
 #' @param ... parameters passed onto the points layer
@@ -137,14 +137,14 @@ pointsXYZ <- function(data, center, column=1) {
 #' # Z is computed internally and contains information on depth
 #' plot(Rs,center=mean(Rs),show_estimates=c("proj.mean", "riem.mean"), label_points=sample(LETTERS, 200, replace=TRUE)) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
 
-plot.SO3 <- function(x, center, col=1, toRange=FALSE, show_estimates=NULL, label_points=NULL,  ...) {
+plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL,  ...) {
 	Rs <- as.SO3(x)
 	xlimits <- c(-1,1)
 	ylimits <- c(-1,1)
 	
 	X <- Y <- Est <- NULL
 	proj2d <- pointsXYZ(Rs, center=center, column=col)
-	if(toRange) {
+	if(to_range) {
 		xlimits <- range(proj2d$X)
 		ylimits <- range(proj2d$Y)
 		xbar <- mean(xlimits)
