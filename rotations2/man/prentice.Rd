@@ -58,7 +58,7 @@ region(Qs,method='prentice',alpha=0.1)
   Statistical Association_, *104*(488), pp. 1385-1397.
 }
 \seealso{
-  \code{\link{fisher}} \code{\link{chang}}
+  \code{\link{fisheretal}} \code{\link{chang}}
   \code{\link{zhang}}
 }
 

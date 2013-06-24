@@ -1,62 +1,52 @@
-\name{fisher}
-\alias{fisher}
-\alias{fisher.Q4}
-\alias{fisher.SO3}
-\title{Fisher confidence region method}
+\name{Fisher}
+\alias{dfisher}
+\alias{Fisher}
+\alias{pfisher}
+\alias{rfisher}
+\title{The Matrix Fisher Distribution}
 \usage{
-  fisher(Qs, alpha, boot, m, symm)
+  dfisher(r, kappa = 1, nu = NULL, Haar = TRUE)
 
-  \method{fisher}{Q4} (Qs, alpha, boot = T, m = 300,
-    symm = T)
+  pfisher(q, kappa = 1, nu = NULL, lower.tail = TRUE)
 
-  \method{fisher}{SO3} (Rs, alpha, boot = T, m = 300,
-    symm = T)
+  rfisher(n, kappa = 1, nu = NULL)
 }
 \arguments{
-  \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
-  row corresponds to a random rotation in matrix (p=9) or
-  quaternion form (p=4)}
+  \item{r,q}{vector of quantiles}
 
-  \item{alpha}{The alpha level desired, e.g. 0.05 or 0.10}
+  \item{n}{number of observations.  If \code{length(n)>1},
+  the length is taken to be the number required}
 
-  \item{boot}{Should the bootstrap or normal theory
-  critical value be used}
+  \item{kappa}{concentration paramter}
 
-  \item{m}{number of bootstrap replicates to use to
-  estimate critical value}
+  \item{nu}{circular variance, can be used in place of
+  kappa}
 
-  \item{symm}{true/false on if rotationally symmetric
-  regions should be computed or not}
+  \item{Haar}{logical; if TRUE density is evaluated with
+  respect to Haar}
 }
 \value{
-  radius of the confidence region centered at the projected
-  mean
+  \item{dfisher}{gives the density} \item{pfisher}{gives
+  the distribution function} \item{rfisher}{generates
+  random deviates}
 }
 \description{
-  Find the radius of a \eqn{100(1-\alpha)%} confidence
-  region for the central orientation
+  Density and random generation for the matrix Fisher
+  distribution with concentration kappa (\eqn{\kappa})
 }
 \details{
-  Compute the radius of a \eqn{100(1-\alpha)%} confidence
-  region for the central orientation based on the projected
-  mean estimator using the method for the mean polar axis
-  as proposed in \cite{Fisher et al. (1996)}.  To be able
-  to reduce their method to a radius requires the additonal
-  assumption of rotational symmetry, equation (10) in
-  \cite{Fisher et al. (1996)}.
-}
-\examples{
-Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-region(Qs,method='fisher',alpha=0.1,symm=T)
-}
-\references{
-  Fisher N, Hall P, Jing B and Wood A (1996). "Improved
-  pivotal methods for constructing confidence regions with
-  directional data." _Journal of the American Statistical
-  Association_, *91*(435), pp. 1062-1070.
+  The matrix Fisher distribution with concentration kappa
+  (or circular variance nu) has density
+  \deqn{C_\mathrm{{F}}(r|\kappa)=\frac{1}{2\pi[\mathrm{I_0}(2\kappa)-\mathrm{I_1}(2\kappa)]}e^{2\kappa\cos(r)}[1-\cos(r)]}{C(r|\kappa)=exp[2\kappa
+  cos(r)][1-cos(r)]/(2\pi[I0(2\kappa)-I1(2\kappa)])} where
+  \eqn{\mathrm{I_p}(\cdot)}{Ip()} denotes the Bessel
+  function of order \eqn{p} defined as
+  \eqn{\mathrm{I_p}(\kappa)=\frac{1}{2\pi}\int_{-\pi}^{\pi}\cos(pr)e^{\kappa\cos
+  r}dr}{Ip(\kappa)} is the modified Bessel function with
+  parameters \eqn{p} and \eqn{kappa}.
 }
 \seealso{
-  \code{\link{prentice}} \code{\link{chang}}
-  \code{\link{zhang}}
+  \link{Angular-distributions} for other distributions in
+  the rotations package
 }
 

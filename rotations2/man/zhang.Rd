@@ -44,7 +44,7 @@ Rs<-ruars(20,rcayley,kappa=100)
 region(Rs,method='zhang',alpha=0.1)
 }
 \seealso{
-  \code{\link{prentice}} \code{\link{fisher}}
+  \code{\link{prentice}} \code{\link{fisheretal}}
   \code{\link{chang}}
 }
 

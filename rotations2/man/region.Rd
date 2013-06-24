@@ -30,7 +30,7 @@
   Find the radius of a \eqn{100(1-\alpha)%} confidence
   region for the central orientation based on the projected
   mean estimator. The current methods available are due to
-  \code{\link{prentice}}, \code{\link{fisher}},
+  \code{\link{prentice}}, \code{\link{fisheretal}},
   \code{\link{chang}}, and \code{\link{zhang}}.
 }
 \examples{
@@ -62,7 +62,7 @@ region(Rs,method='chang',alpha=0.1)
   784-814.
 }
 \seealso{
-  \code{\link{prentice}} \code{\link{fisher}}
+  \code{\link{prentice}} \code{\link{fisheretal}}
   \code{\link{chang}} \code{\link{zhang}}
 }
 

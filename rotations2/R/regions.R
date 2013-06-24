@@ -1,7 +1,7 @@
 #' Confidence Region for Mean Rotation
 #'
 #' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean estimator.
-#' The current methods available are due to \code{\link{prentice}}, \code{\link{fisher}}, \code{\link{chang}},
+#' The current methods available are due to \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}},
 #' and \code{\link{zhang}}.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
@@ -9,7 +9,7 @@
 #' @param alpha The alpha level desired, e.g. 0.95 or 0.90
 #' @param ... Additional arguments that are method specific
 #' @return Radius of the confidence region centered at the projected mean
-#' @seealso \code{\link{prentice}} \code{\link{fisher}} \code{\link{chang}} \code{\link{zhang}}
+#' @seealso \code{\link{prentice}} \code{\link{fisheretal}} \code{\link{chang}} \code{\link{zhang}}
 #' @cite prentice1986, fisher1996, rancourt2000, chang2001
 #' @export
 #' @examples
@@ -46,7 +46,7 @@ region.Q4<-function(Qs,method,alpha,...){
 		
 	}else	if(method%in%c('Fisher','fisher')){
 		
-		r<-fisher.Q4(Qs=Qs,a=alpha,...)
+		r<-fisheretal.Q4(Qs=Qs,a=alpha,...)
 		
 		return(r)
 		
@@ -86,7 +86,7 @@ region.SO3<-function(Rs,method,alpha,...){
 		
 	}else	if(method%in%c('Fisher','fisher')){
 		
-		r<-fisher.SO3(Rs=Rs,a=alpha,...)
+		r<-fisheretal.SO3(Rs=Rs,a=alpha,...)
 		
 		return(r)
 		
@@ -116,7 +116,7 @@ region.SO3<-function(Rs,method,alpha,...){
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param alpha The alpha level desired, e.g. 0.05 or 0.10
 #' @return Radius of the confidence region centered at the projected mean for each of the x-, y- and z-axis
-#' @seealso \code{\link{fisher}} \code{\link{chang}} \code{\link{zhang}}
+#' @seealso \code{\link{fisheretal}} \code{\link{chang}} \code{\link{zhang}}
 #' @cite prentice1986, rancourt2000, bingham09
 #' @export
 #' @examples
@@ -180,7 +180,7 @@ prentice.SO3<-function(Rs,alpha){
 #' @param alpha The alpha level desired, e.g. 0.05 or 0.10
 #' @param m Number of replicates to use to estiamte cut point
 #' @return Radius of the confidence region centered at the projected mean
-#' @seealso \code{\link{prentice}} \code{\link{fisher}} \code{\link{chang}}
+#' @seealso \code{\link{prentice}} \code{\link{fisheretal}} \code{\link{chang}}
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
@@ -256,16 +256,16 @@ cdfuns<-function(Qs,Shat){
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
 #' region(Qs,method='fisher',alpha=0.1,symm=T)
 
-fisher<-function(Qs,alpha,boot,m,symm){
-	UseMethod("fisher")
+fisheretal<-function(Qs,alpha,boot,m,symm){
+	UseMethod("fisheretal")
 }
 
 
-#' @rdname fisher
-#' @method fisher Q4
-#' @S3method fisher Q4
+#' @rdname fisheretal
+#' @method fisheretal Q4
+#' @S3method fisheretal Q4
 
-fisher.Q4<-function(Qs,alpha,boot=T,m=300,symm=T){
+fisheretal.Q4<-function(Qs,alpha,boot=T,m=300,symm=T){
 	
 	Qs<-formatQ4(Qs)
 	
@@ -299,14 +299,14 @@ optimAxis<-function(r,Qs,cut,symm){
 }
 
 
-#' @rdname fisher
-#' @method fisher SO3
-#' @S3method fisher SO3
+#' @rdname fisheretal
+#' @method fisheretal SO3
+#' @S3method fisheretal SO3
 
-fisher.SO3<-function(Rs,alpha,boot=T,m=300,symm=T){
+fisheretal.SO3<-function(Rs,alpha,boot=T,m=300,symm=T){
 	
 	Qs<-Q4(Rs)
-	r<-fisher.Q4(Qs,alpha,boot,m,symm)
+	r<-fisheretal.Q4(Qs,alpha,boot,m,symm)
 	
 	return(r)
 }
@@ -323,7 +323,7 @@ fisher.SO3<-function(Rs,alpha,boot=T,m=300,symm=T){
 #' @param alpha The alpha level desired, e.g. 0.05 or 0.10
 #' @return Radius of the confidence region centered at the projected mean
 #' @cite chang2001
-#' @seealso \code{\link{prentice}} \code{\link{fisher}} \code{\link{zhang}}
+#' @seealso \code{\link{prentice}} \code{\link{fisheretal}} \code{\link{zhang}}
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)

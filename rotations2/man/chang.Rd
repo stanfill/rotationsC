@@ -43,7 +43,7 @@ region(Rs,method='chang',alpha=0.1)
   784-814.
 }
 \seealso{
-  \code{\link{prentice}} \code{\link{fisher}}
+  \code{\link{prentice}} \code{\link{fisheretal}}
   \code{\link{zhang}}
 }
 

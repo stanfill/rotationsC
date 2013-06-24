@@ -43,7 +43,12 @@
   uniform-axis random-spin class of distributions
 }
 \details{
-  Give the form of the UARS distribution
+  For the rotation R with central orientation S and
+  concentration \eqn{kappa} the UARS density is given by
+  \deqn{\frac{4\pi}{3-tr(S'R)}C(acos[tr(S'R)-1]/2|\kappa)}{4\pi
+  C(acos[tr(S'R)-1]/2|\kappa)/(3-tr(S'R))} where
+  \eqn{C(r|\kappa)} is one of the
+  \link{Angular-distributions}.
 }
 \seealso{
   For more on the angular distribution options see
