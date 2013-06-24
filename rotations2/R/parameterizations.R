@@ -1,7 +1,7 @@
-#' "SO3" class
+#' SO3 class
 #'
 #' @name SO3-class
-#' @seealso See the \code{\link{SO3}} function
+#' @seealso See the \code{\link{SO3}} functions
 #'
 #' @exportClass SO3
 setOldClass("SO3")
@@ -12,7 +12,7 @@ setOldClass("SO3")
 #' Class for quaterion representation of rotations
 #' 
 #' @name Q4-class
-#' @seealso See the \code{\link{Q4}} function
+#' @seealso See the \code{\link{Q4}} functions
 #'
 #' @exportClass Q4
 setOldClass("Q4")
