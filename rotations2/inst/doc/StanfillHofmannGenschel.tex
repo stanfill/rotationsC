@@ -96,12 +96,12 @@ In this article we introduce the \pkg{rotations} package which provides users wi
 
 Data in form of three-dimensional rotations find application in several scientific areas, such as bio-medical engineering, computer visioning, and geological and materials sciences.  A common goal shared by these fields is to estimate the main or central orientation for a sample of rotations.  That is, letting the rotation group $SO(3)$ denote the collection of all $3\times 3$ rotation matrices, observations $\bm{R}_1,\ldots,\bm{R}_n \in SO(3)$ can be conceptualized as a random sample from a \textit{location model}
 \begin{equation}
-\label{eqn:1}
+\label{eqn:loc_model}
 \mathbf{R}_i = \bm{S} \bm{E}_i, \quad i=1,\ldots,n,
 \end{equation}
 where $\bm S \in SO(3)$ is the {\it fixed} parameter of interest indicating an orientation of central tendency, and $\bm{E}_1,\ldots,\bm{E}_n \in SO(3)$ denote i.i.d. {\it random} rotations which symmetrically perturb $\bm{S}$.
 
-The \pkg{rotations} package provides users with the tools necessary to simulate data from four common choices of symmetric distributions, estimate $\bm{S}$ in \eqref{eqn:1} and visualize a sample of rotations.  The remainder of this paper is organized as follows.  We will begin with a discussion on how rotation data can be parameterized.  Then we discuss how data generation is possible in this package.  Next we discuss the different estimators used to estimate the central direction.  Finally, visualizations of rotation data is presented.
+The \pkg{rotations} package provides users with the tools necessary to simulate data from four common choices of symmetric distributions, estimate $\bm{S}$ in \eqref{eqn:loc_model} and visualize a sample of rotations.  The remainder of this paper is organized as follows.  We will begin with a discussion on how rotation data can be parameterized.  Then we discuss how data generation is possible in this package.  Next we discuss the different estimators used to estimate the central direction.  Finally, visualizations of rotation data is presented.
 
 %For example, \citet{rancourt00} examine rotation matrix data in studying body positions whilst operating machinery. \cite{fletcher09} consider this type of  orientation data in magnetic resonance imaging and in shape analysis; similar examples  can be found in \cite{schwartz05}, \cite{pierrynowski09},  \cite{dai10},  or \cite{hadani11}.  The data in our illustrative example to follow arise from a study in materials science, where $3 \times 3$ rotations represent the orientations of cubic crystals on the micro-surface of a metal specimen as measured through electron backscatter diffraction (EBSD) and ``grains" within metals are composed of crystals which roughly share a common orientation; see \cite{randle03} for details on EBSD data.  
      
@@ -122,7 +122,7 @@ The variety of applications for rotations is echoed by the number of equivalent 
 
 \subsection{Matrix Form}
 
-Three-dimensional rotations can be represented by $3\times3$ orthogonal matrices with determinant one.  All matrices with these characteristics form a group called the {\it special orthogonal group}, or {\it rotation group}, denoted $SO(3)$.  Every element in $SO(3)$ can be described by an angle, $r\in[0,\pi)$ and an axis, $\bm u\in\mathbb{R}^3$ with $||\bm u||=1$. Thus $\bm{R}\in SO(3)$ can be thought of as rotating the coordinate axis, $\bm{I}_{3 \times 3}$, about the axis $\bm{u}$ by the angle $r$.  We adopt the material scientist's terminology in calling $r$ the misorientation angle and $\bm u$ the misorientation axis.
+Three-dimensional rotations can be represented by $3\times3$ orthogonal matrices with determinant one.  All matrices with these characteristics form a group called the {\it special orthogonal group}, or {\it rotation group}, denoted $SO(3)$.  Every element in $SO(3)$ can be described by an angle, $r\in[0,\pi)$ and an axis, $\bm u\in\mathbb{R}^3$ with $\|\bm u\|=1$. Thus $\bm{R}\in SO(3)$ can be thought of as rotating the coordinate axis, $\bm{I}_{3 \times 3}$, about the axis $\bm{u}$ by the angle $r$.  We adopt the material scientist's terminology in calling $r$ the misorientation angle and $\bm u$ the misorientation axis.
 
 More specifically, given an angle, $r$, and axis, $\bm u$, a $3\times 3$ rotation matrix can be formed by
 \begin{equation}\label{eqn:angleaxis}
@@ -171,7 +171,7 @@ This makes $q$ a unit quaternion.  The following code forms a unit quaternion fr
 % 
 % For each of these parameterizations we have created a class of R objects: \code{SO3} for the matrix representation, \code{Q4} for quaternions and \code{EA} for Euler angles.  The names of these classes  are also functions that will return an object of the class with the same name given an angle and axis, or an object of any other class.  See the below code for an illustration.  First I generate a rotation matrix from an angle, $r$, and an axis, $\bm U$ using the function \code{SO3}.  Next we transform that rotation into quaternions then Euler angles with the funcions \code{Q4} and \code{EA}, respecitvely.  One can also create quaternions or Euler angles directly by feeding the angle and axis into those same functions.
 
-\begin{knitrout}
+\begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
 r <- runif(1, -pi, pi)
@@ -190,14 +190,14 @@ For the remainder of this article we will present our work using the matrix repr
 
 \section{Data generation} 
 
-From \eqref{eqn:1}, one can simulate a matrix $\bm{R}_i\in SO(3)$ by picking an axis $\bm u$ uniformly on the sphere then drawing an angle $r$ from a distribution symmetric about $0$ and bounded between $-\pi$ and $\pi$ then applying \eqref{eqn:angleaxis}.  A matrix generated in this fashion is said to belong to the \dfn{uniform-axis random spin}, or UARS, class of distributions and has the density
+From \eqref{eqn:loc_model}, one can simulate a matrix $\bm{R}_i\in SO(3)$ by picking an axis $\bm u$ uniformly on the sphere then drawing an angle $r$ from a distribution symmetric about $0$ and bounded between $-\pi$ and $\pi$ then applying \eqref{eqn:angleaxis}.  A matrix generated in this fashion is said to belong to the \dfn{uniform-axis random spin}, or UARS, class of distributions and has the density
 \begin{equation}\label{eq:uarsden}
 f(\bm E_i|\kappa)=\frac{4\pi}{3-\tr(\bm E_i)}C\left(\left.\cos^{-1}\left\{\frac{1}{2}[\tr(\bm E_i)-1]\right\}\right|\kappa\right)
 \end{equation}
-where $C(\cdot|\kappa)$ is distribution function connecting to the angle of rotation $r$ \citep{bingham09}.  Members of the UARS family of distributions are distinguished based on the angluar distribution.
+where $C(\cdot|\kappa)$ is distribution function connecting to the angle of rotation $r$ \citep{bingham2009}.  Members of the UARS family of distributions are distinguished based on the angluar distribution.
 
 
-The \pkg{rotate} package allows the user access to four members of the UARS class.  Each member is differentiated by the distribution function for $r$: the uniform distribution on the circle, the matrix Fisher \citep{langevin05, downs72, khatri77, jupp79}, the Cayley  \citep{Schaeben97, leon06} and a circular-von Mises-based distribution \citep{bingham09}. 
+The \pkg{rotate} package allows the user access to four members of the UARS class.  Each member is differentiated by the distribution function for $r$: the uniform distribution on the circle, the matrix Fisher \citep{langevin2005, downs1972, khatri1977, jupp1979}, the Cayley  \citep{Schaeben1997, leon2006} and a circular-von Mises-based distribution \citep{bingham2009}. 
 
 %A general construction approach exists for random rotations that are symmetrically distributed around the identity matrix $\bm{I}_{3 \times 3}$; see \citet{watson83, bingham09} and \citet{hielscher10}.  To this end, let $\bm{U}\in\mathbb{R}^3$ represent a point chosen uniformly on the unit sphere and, independently, generate a random angle $r$ according to some circular density $C(r|\kappa)$ on $(-\pi,\pi]$, which is symmetric around 0 and where $\kappa$ denotes a concentration parameter governing the spread of the circular distribution.  Then, define a random rotation as $\bm{E}=\bm{E}(\bm{U},r)$ using the constructive definition \eqref{eqn:angleaxis} (i.e., $\bm{E}$ represents the position of $\bm{I}_{3\times 3}$ upon rotating the standard coordinate frame in $\mathbb{R}^3$ about the random axis $\bm{U}$ by the random angle $r$).  The resulting rotation $\bm{E}$ will be symmetrically distributed and its distributional type (i.e., matrix Fisher, Cayley or circular-von Mises-based) is determined by the form of the circular density $C(r|\kappa)$ for the (misorientation) angle $r$.
 
@@ -207,7 +207,7 @@ C_\mathrm{{H}}(r)=\frac{1-\cos(r)}{2\pi}
 \end{equation}
 for $r\in(-\pi,\pi]$.  This function also plays the part of a measure on the sphere, called the Haar measure on the sphere.  The function \code{rhaar} with input \code{n} will draw a sample of size $n$ from \eqref{eqn:haar} and \code{dhaar} with evaluate the density at a given point.
 
-The following three distributions are all symmetric around $0$ on the range $[-\pi,\pi)$ and have one parameter, $\kappa$, which is the concentration parameter.  As $\kappa$ increases, the distribution becomes more peaked about $0$ and less variable.  If one would prefer to specify the variability instead, the circular variance denoted $\nu$ can also be set by the user.  For $r\sim F$ where $F$ is a distribution on the circle, the circular variance is defined as $\nu=1-E\cos(r)$, and $E\cos(r)$ is called the mean resultant length \citep{mardia00}.
+The following three distributions are all symmetric around $0$ on the range $[-\pi,\pi)$ and have one parameter, $\kappa$, which is the concentration parameter.  As $\kappa$ increases, the distribution becomes more peaked about $0$ and less variable.  If one would prefer to specify the variability instead, the circular variance denoted $\nu$ can also be set by the user.  For $r\sim F$ where $F$ is a distribution on the circle, the circular variance is defined as $\nu=1-E\cos(r)$, and $E\cos(r)$ is called the mean resultant length \citep{mardia2000}.
 
 The symmetric matrix Fisher distribution is the oldest and also the most difficult to sample from.  It takes on the following distributional form
 \[
@@ -218,39 +218,39 @@ where $\mathrm{I_p}(\cdot)$ denotes the Bessel function of order $p$ defined as 
 
 For a given $\kappa$, the function \code{rfisher} generates a sample of size $n$ from this distribution using a rejection algorithm and \code{dfisher} evaluates the density at a given angle $r$.
 
-\citet{leon06} proposed the symmetric Cayley distribution, which is identical to the de la Vall\'{e}e Poussin distribution and a favorite among material scientists \citep{Schaeben97}.  This distribution is closely related to the beta distribution and has the distributional form
+\citet{leon2006} proposed the symmetric Cayley distribution, which is identical to the de la Vall\'{e}e Poussin distribution and a favorite among material scientists \citep{Schaeben1997}.  This distribution is closely related to the beta distribution and has the distributional form
 \[
 C_\mathrm{C}(r |\kappa)=\frac{1}{\sqrt{\pi}} \frac{\Gamma(\kappa+2)}{\Gamma(\kappa+1/2)}2^{-(\kappa+1)}(1+\cos r)^\kappa(1-\cos r).
 \]
 \code{rcayley} simulates from this distribution by taking a simple transformation of random deviates from a beta distribution and \code{dcayley} evaluates the Cayley density at a given angle, $r$.
 
-Finally the circular-von Mises-based distribution is included because the distribution is non-regular and has been applied to EBSD data \citep{bingham09}.  An angle following this distribution has the distribution form
+Finally the circular-von Mises-based distribution is included because the distribution is non-regular and has been applied to EBSD data \citep{bingham2009}.  An angle following this distribution has the distribution form
 \[
 C_\mathrm{M}(r|\kappa)=\frac{1}{2\pi \mathrm{I_0}(\kappa)}e^{\kappa\cos(r)}.
 \]
-Simulation from this distribution was developed by \citet{best79} and the function \code{rvmises} follows this procedure closely.  Also, \code{dvmises} evaluates the density at a given angle, $r$.
+Simulation from this distribution was developed by \citet{best1979} and the function \code{rvmises} follows this procedure closely.  Also, \code{dvmises} evaluates the density at a given angle, $r$.
 
-Once an angular distribution has been chosen and a vector of $n$ angles of rotation have been generated, the \code{genR} function with option \code{space="SO3"} creates an $n\times 9$ matrix representing a sample from the appropriate UARS member as demonstrated in the following code.  If quaternions are required the options \code{space} can be changed to \code{"Q4"}.
+Once an angular distribution has been chosen and a vector of $n$ angles of rotation have been generated, the \code{genR} function with argument \code{space="SO3"} creates an $n\times 9$ matrix representing a sample from the appropriate UARS member as demonstrated in the following code.  If quaternions are required the argument \code{space} can be changed to \code{"Q4"}.
 
-\begin{knitrout}
+\begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
 Rs <- ruars(20, rcayley, kappa = 1)
 matrix(Rs[1, ], 3, 3)
-         [,1]   [,2]    [,3]
-[1,]  0.01419 0.6892 -0.7244
-[2,] -0.55980 0.6058  0.5654
-[3,]  0.82851 0.3975  0.3944
+        [,1]    [,2]    [,3]
+[1,] -0.4435  0.6822  0.5813
+[2,] -0.8523 -0.1204 -0.5089
+[3,] -0.2772 -0.7212  0.6348
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
 
-Here \code{rcayley(20,1)} simulates $r_1,\ldots,r_{20}$ from  $C_\mathrm{C}(r |\kappa=1)$ then \code{genR} generates the matrices.  Each row of \code{Rs} is an element in $SO(3)$, as demonstrated by \code{is.SO3}, in vector form with central orientation $\bm I_{3\times 3}$.  Any other central orientation in $SO(3)$ is possible by changing the \code{S} option.  If a central orientation not in $SO(3)$ is proposed, however, an error is returned.
+Here \code{rcayley(20,1)} simulates $r_1,\ldots,r_{20}$ from  $C_\mathrm{C}(r |\kappa=1)$ then \code{genR} generates the matrices.  Each row of \code{Rs} is an element in $SO(3)$, as demonstrated by \code{is.SO3}, in vector form with central orientation $\bm I_{3\times 3}$.  Any other central orientation in $SO(3)$ is possible by changing the \code{S} argument.  If a central orientation not in $SO(3)$ is proposed, however, an error is returned.
 
 \section{$SO(3)$ data analysis\label{section:analysis}}
 
-Given a sample of $n$ observations $\bm R_1,\dots,\bm R_{n}$ generated according to \eqref{eqn:1} we offer four ways to estimate the central orientation $\bm S$.  These estimators are either Riemannian- or Euclidean-based in geometry and either mean- or median-based.  First we discuss how the choice of geometry affects distance.
+Given a sample of $n$ observations $\bm R_1,\dots,\bm R_{n}$ generated according to \eqref{eqn:loc_model} we offer four ways to estimate the central orientation $\bm S$.  These estimators are either Riemannian- or Euclidean-based in geometry and either mean- or median-based.  First we discuss how the choice of geometry affects distance.
 
 The choice of geometry results in two different metrics to measure the distance between rotation matrices $\bm{R}_1$ and $\bm{R}_2 \in SO(3)$. Under the embedding approach, the natural distance metric between two random matrices in the Euclidean distance, $\Edist$, is induced by the Frobenius norm 
 \begin{equation}
@@ -262,39 +262,47 @@ where $\|\bm{A}\|_F = \sqrt{\mathbf{tr}({\bm A^\top \bm A})}$ denotes the Froben
 By staying in the Riemannian space $SO(3)$ under the intrinsic approach, the natural distance metric becomes the Riemannian (or geodesic) distance, $\Rdist$, by which the distance between two rotations $\bm{R}_1,\bm{R}_2\in SO(3)$  is  defined as 
 \begin{equation}
 \label{d_R}
-\Rdist(\bm{R}_1,\bm{R}_2)=  \frac{1}{\sqrt{2}}||\text{Log}(\bm{R}_1^\top\bm{R}_2)||_F = |r|,
+\Rdist(\bm{R}_1,\bm{R}_2)=  \frac{1}{\sqrt{2}}\|\text{Log}(\bm{R}_1^\top\bm{R}_2)\|_F = |r|,
 \end{equation}
-where $\text{Log}(\bm{R})$ denotes the principle logarithm of $\bm{R}$ (i.e., $\text{Log}(\bm{R}) = \text{Log}(\bm{R}(\bm u,r))= \bm \Phi(r\bm u)$ in \eqref{eqn:angleaxis}) and $r\in[-\pi,\pi)$ is the misorientation angle of $\bm{R}_1^\top \bm{R}_2$.  The Riemannian distance corresponds to the length of the shortest path that connects $\bm{R}_1$ and $\bm{R}_2$ {\it within} the space $SO(3)$. For this reason, the Riemannian distance is often considered the more natural metric on $SO(3)$; see \citet{moakher02} for this discussion along with more details on exponential/logarithmic operators related to $SO(3)$.
+where $\text{Log}(\bm{R})$ denotes the principle logarithm of $\bm{R}$ (i.e., $\text{Log}(\bm{R}) = \text{Log}(\bm{R}(\bm u,r))= \bm \Phi(r\bm u)$ in \eqref{eqn:angleaxis}) and $r\in[-\pi,\pi)$ is the misorientation angle of $\bm{R}_1^\top \bm{R}_2$.  The Riemannian distance corresponds to the length of the shortest path that connects $\bm{R}_1$ and $\bm{R}_2$ {\it within} the space $SO(3)$. For this reason, the Riemannian distance is often considered the more natural metric on $SO(3)$; see \citet{moakher2002} for this discussion along with more details on exponential/logarithmic operators related to $SO(3)$.
 
 We first consider estimators based on the embedding approach, which we call the projected estimators.  The median-based estimator in this class is
 \begin{equation}\label{est:med}
 \ProjMedian=\argmin_{\bm{S}\in
 SO(3)}\sum_{i=1}^n\Edist(\bm{R}_i,\bm{S}).
 \end{equation}
-The function \code{median} with option \code{type="projected"} approximates $\ProjMedian$ and uses an adaptation of the Weiszfeld algorithm \citep{weiszfeld37}.  The mean-based estimator is 
+The function \code{median} with argument \code{type="projected"} approximates $\ProjMedian$ and uses an adaptation of the Weiszfeld algorithm \citep{weiszfeld1937}.  The mean-based estimator is 
 \begin{align}\label{est:pam}
 \ProjMean&=\argmin_{\bm{S}\in
 SO(3)}\sum_{i=1}^n\Edist^2(\bm{R}_i,\bm{S})\nonumber\\
 &=\argmax_{\bm{S}\in
 SO(3)}\tr(\bm{S}^{\top}\overline{\bm{R}})
 \end{align}
-and is computed by the function \code{mean} with option \code{type="projected"}.  For an in-depth discussion of the algorithm used to compute this value consult \citet{moakher02}.
+and is computed by the function \code{mean} with argument \code{type="projected"}.  For an in-depth discussion of the algorithm used to compute this value consult \citet{moakher2002}.
 
-The intrinsic estimators minimize the first and second order Riemannian distances.  The \dfn{geometric median} is 
+The geometric estimators minimize the first and second order Riemannian distances.  The \dfn{geometric median} is 
 \begin{equation}\label{est:lone}
 \GeoMedian=\argmin_{\bm{S}\in
 SO(3)}\sum_{i=1}^n\Rdist(\bm{R}_i,\bm{S}).
 \end{equation}
-An algorithm proposed by \citet{hartley11} is employed by the function \code{median} with option \code{type="intrinsic"}.  The \dfn{geometric mean} is the $L_2$ analog of $\GeoMedian$ given by 
+An algorithm proposed by \citet{hartley2011} is employed by the function \code{median} with argument \code{type="geometric"}.  The \dfn{geometric mean} is the $L_2$ analog of $\GeoMedian$ given by 
 \begin{equation}\label{est:ltwo}
 \GeoMean=\argmin_{\bm{S}\in
 SO(3)}\sum_{i=1}^n\Rdist^2(\bm{R}_i,\bm{S}).
 \end{equation}
-The function \code{mean} with option \code{type="intrinsic"} implements an algorithm first proposed by \citet{manton04} in estimating $\GeoMean$.
+The function \code{mean} with argument \code{type="geometric"} implements an algorithm first proposed by \citet{manton2004} in estimating $\GeoMean$.
 
 \section{Confidence Regions}
 
-For the projected mean ($\ProjMean$), confidence regions are available through the \code{region} function.  The \code{method} option specifies which method to be used to 
+Asymptotic results for the projected mean $\ProjMean$ can be used to infer about the central orientation $\bm S$. In particular, results in \cite{prentice1986,chang2001} and Zhang et al. (2009) give three distinct approaches to forming a confidence region for the central orientation.  The \code{region} function acts as a wrapper that can be used to access each of these methods for a sample from \eqref{eqn:loc_model} through the \code{method} argument.
+
+
+The first method we consider is due to \cite{prentice1986} and is based upon asymptotic results for eigenvectors.  \cite{rancourt2000} used this method in the context of human kinematics and we use their formulation of the result.  A call to the \code{region} function with argument \code{method="prentice"} will return a vector of length three, where each value corresponds to the largest possible radius of the confidence region centered at each axis of $\ProjMean$.  A conservative estimate of the overall confidence region is therefore the largest of the three returned values.
+
+The second method we consider is based upon a result given by \cite{chang2001} that was later clarified for the UARS context by Stanfill et al. (2013).  For this case, the \code{region} function with \code{method="chang"} returns a single value that represents the largest radius possible for the confidence region centered at $\ProjMean$.
+
+The final method available is due to Zhange and Nordman (2009) and is a non-parametric pivotal bootstrap method.  When \code{method="zhang"} is specified the additional \code{m} argument specifices how large a bootstrap sample size to use in order to estimate the critical value, which is used in place of the $\chi^2_3$ percentile.  The simulation study in Stanfill et al. (2013) indicates that this is the best region estimation procedure in terms of coverage rate, especially for small sample sizes.
+
 
 % \section{Confidence Area Construction}
 % 
@@ -310,24 +318,17 @@ For the projected mean ($\ProjMean$), confidence regions are available through t
 % A similar procedure was used by \cite{bingham10}, but in place of $\Rdist$ the maximum absolute angle between all three axis, which they called $\alpha$, was used.  It's easy to show that $\alpha$ is less than or equal to the geodesic distance between any two rotations making our method slightly more conservative.
 
 \section{Visualizations}
-In this section we introduce a method to visualize $SO(3)$ data via the the \pkg{ggplot2} package \citep{wickham09}.  The function \code{plot} takes as input a $n\times 9$ matrix of $SO(3)$ observations and returns a visualization of one of the three columns.  The user can specify which column to use with the \code{col} option, the default is one.  If the data are highly concentrated in one part of the sphere then the the \code{toRange} option can be set to \code{TRUE} then the range of the plot is set to zoom in on the populated area. 
+In this section we introduce a method to visualize $SO(3)$ data via the the \pkg{ggplot2} package \citep{wickham2009}.  The function \code{plot} takes as input a $n\times 9$ matrix of $SO(3)$ observations and returns a visualization of one of the three columns.  The user can specify which column to use with the \code{col} argument, the default is one.  If the data are highly concentrated in one part of the sphere then the the \code{to$\_$range} argument can be set to \code{TRUE} then the range of the plot is set to zoom in on the populated area. 
 
-Any of the four estimates of the central direction can be plotted along with a sample of rotations. To show all estmiates at once add the option \code{estimates$\_$show="all"}.  If only a few estimates are of interest then any combination of \code{"proj.mean"}, \code{"proj.median"}, \code{"riem.mean"} or \code{"riem.median"} are valid inputs.  The estimators are indicated by shape.  One can also center the data about any observation in $SO(3)$ by setting \code{center=S}.   Typically take \code{center=mean(Rs)}.  
+Any of the four estimates of the central direction can be plotted along with a sample of rotations. To show all estimates at once add the argument \code{estimates$\_$show="all"}.  If only a few estimates are of interest then any combination of \code{"proj.mean"}, \code{"proj.median"}, \code{"riem.mean"} or \code{"riem.median"} are valid inputs.  The estimators are indicated by shape.  One can also center the data about any observation in $SO(3)$ by setting \code{center=S}.   Typically take \code{center=mean(Rs)}.  
 
-\begin{knitrout}
+\begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
 Rs <- ruars(50, rcayley, kappa = 1)
 plot(Rs, center = mean(Rs), show_estimates = "all")
 \end{verbatim}
 \end{kframe}
-
-{\centering \includegraphics[width=0mm]{figures/eye} 
-
-}
-
-
-
 \end{knitrout}
 
 
@@ -336,7 +337,7 @@ plot(Rs, center = mean(Rs), show_estimates = "all")
 \centering
 \includegraphics[width=.75\textwidth]{figures/eye}
 \caption{\label{figure:eye1}
-A plot of the a random sample from the von Mises-UARS distribution with $\kappa=1$.}
+A plot of the a random sample from the Cayley-UARS distribution with $\kappa=1$.}
 \end{figure}
 
 In Figure \ref{figure:eye1} a random sample of 50 matrices following the Cayley-UARS distribution with $\kappa=1$ is plotted along with four estimates of the central orientation.  The code to produce this plot is also given.
