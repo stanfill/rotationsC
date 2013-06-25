@@ -31,7 +31,7 @@
 \maketitle
 
 <<setup, include=FALSE, cache=FALSE>>=
-opts_chunk$set(fig.path='figures/', fig.align='center', fig.show='hold')
+opts_chunk$set(fig.path='figures/', fig.align='center', fig.show='hold',comment=NA)
 options(replace.assign=TRUE,width=90)
 library(rotations2)
 @
@@ -185,7 +185,7 @@ Here \code{rcayley(20,1)} simulates $r_1,\ldots,r_{20}$ from  $C_\mathrm{C}(r |\
 
 \section{$SO(3)$ data analysis\label{section:analysis}}
 
-Given a sample of $n$ observations $\bm R_1,\dots,\bm R_{n}$ generated according to \eqref{eqn:1} we offer four ways to estimate the matrix $\bm S$, i.e. the central orientation.  These estimators are either Riemannian- or Euclidean-based in geometry and either mean- or median-based.  First we discuss how the choice of geometry affects distance.
+Given a sample of $n$ observations $\bm R_1,\dots,\bm R_{n}$ generated according to \eqref{eqn:1} we offer four ways to estimate the central orientation $\bm S$.  These estimators are either Riemannian- or Euclidean-based in geometry and either mean- or median-based.  First we discuss how the choice of geometry affects distance.
 
 The choice of geometry results in two different metrics to measure the distance between rotation matrices $\bm{R}_1$ and $\bm{R}_2 \in SO(3)$. Under the embedding approach, the natural distance metric between two random matrices in the Euclidean distance, $\Edist$, is induced by the Frobenius norm 
 \begin{equation}
@@ -215,21 +215,21 @@ SO(3)}\tr(\bm{S}^{\top}\overline{\bm{R}})
 \end{align}
 and is computed by the function \code{mean} with option \code{type="projected"}.  For an in-depth discussion of the algorithm used to compute this value consult \citet{moakher02}.
 
-The intrinsic estimators minimize the first and second order Riemannian distances.  The \dfn{geometric median} is 
+The geometric estimators minimize the first and second order Riemannian distances.  The \dfn{geometric median} is 
 \begin{equation}\label{est:lone}
 \GeoMedian=\argmin_{\bm{S}\in
 SO(3)}\sum_{i=1}^n\Rdist(\bm{R}_i,\bm{S}).
 \end{equation}
-An algorithm proposed by \citet{hartley11} is employed by the function \code{median} with option \code{type="intrinsic"}.  The \dfn{geometric mean} is the $L_2$ analog of $\GeoMedian$ given by 
+An algorithm proposed by \citet{hartley11} is employed by the function \code{median} with option \code{type="geometric"}.  The \dfn{geometric mean} is the $L_2$ analog of $\GeoMedian$ given by 
 \begin{equation}\label{est:ltwo}
 \GeoMean=\argmin_{\bm{S}\in
 SO(3)}\sum_{i=1}^n\Rdist^2(\bm{R}_i,\bm{S}).
 \end{equation}
-The function \code{mean} with option \code{type="intrinsic"} implements an algorithm first proposed by \citet{manton04} in estimating $\GeoMean$.
+The function \code{mean} with option \code{type="geometric"} implements an algorithm first proposed by \citet{manton04} in estimating $\GeoMean$.
 
 \section{Confidence Regions}
 
-For the projected mean ($\ProjMean$), confidence regions are available through the \code{region} function.  The \code{method} option specifies which method to be used to 
+For the projected mean $\ProjMean$, confidence regions are available through the \code{region} function.  The \code{method} option specifies which method to be used to 
 
 % \section{Confidence Area Construction}
 % 
@@ -268,8 +268,8 @@ In Figure \ref{figure:eye1} a random sample of 50 matrices following the Cayley-
 
 The \pkg{rotations} package is introduced and allows the user to create, simulate, analyze and visualize rotation data.  There are three parameterizations possible in this package and four built-in distributions from which data can be simulated.  The four estimators discussed in Stanfill et al. (2012) are each implemented and each can be visualized via \code{ggplot2}.
 
-\bibliography{REFERENCES}
-
+%\bibliography{../REFERENCES}
+\bibliography{StanfillHofmannGenschel}
 
 \address{Bryan Stanfill\\
   Department of Statistics\\

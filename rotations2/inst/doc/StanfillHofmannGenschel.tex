@@ -237,10 +237,10 @@ Once an angular distribution has been chosen and a vector of $n$ angles of rotat
 \begin{verbatim}
 Rs <- ruars(20, rcayley, kappa = 1)
 matrix(Rs[1, ], 3, 3)
-##          [,1]    [,2]    [,3]
-## [1,]  0.64680 -0.6278 -0.4331
-## [2,]  0.75887  0.4732  0.4474
-## [3,] -0.07592 -0.6180  0.7825
+         [,1]   [,2]    [,3]
+[1,]  0.01419 0.6892 -0.7244
+[2,] -0.55980 0.6058  0.5654
+[3,]  0.82851 0.3975  0.3944
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -250,7 +250,7 @@ Here \code{rcayley(20,1)} simulates $r_1,\ldots,r_{20}$ from  $C_\mathrm{C}(r |\
 
 \section{$SO(3)$ data analysis\label{section:analysis}}
 
-Given a sample of $n$ observations $\bm R_1,\dots,\bm R_{n}$ generated according to \eqref{eqn:1} we offer four ways to estimate the matrix $\bm S$, i.e. the central orientation.  These estimators are either Riemannian- or Euclidean-based in geometry and either mean- or median-based.  First we discuss how the choice of geometry affects distance.
+Given a sample of $n$ observations $\bm R_1,\dots,\bm R_{n}$ generated according to \eqref{eqn:1} we offer four ways to estimate the central orientation $\bm S$.  These estimators are either Riemannian- or Euclidean-based in geometry and either mean- or median-based.  First we discuss how the choice of geometry affects distance.
 
 The choice of geometry results in two different metrics to measure the distance between rotation matrices $\bm{R}_1$ and $\bm{R}_2 \in SO(3)$. Under the embedding approach, the natural distance metric between two random matrices in the Euclidean distance, $\Edist$, is induced by the Frobenius norm 
 \begin{equation}
@@ -345,8 +345,8 @@ In Figure \ref{figure:eye1} a random sample of 50 matrices following the Cayley-
 
 The \pkg{rotations} package is introduced and allows the user to create, simulate, analyze and visualize rotation data.  There are three parameterizations possible in this package and four built-in distributions from which data can be simulated.  The four estimators discussed in Stanfill et al. (2012) are each implemented and each can be visualized via \code{ggplot2}.
 
-\bibliography{REFERENCES}
-
+%\bibliography{../REFERENCES}
+\bibliography{StanfillHofmannGenschel}
 
 \address{Bryan Stanfill\\
   Department of Statistics\\
