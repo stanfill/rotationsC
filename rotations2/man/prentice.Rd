@@ -6,9 +6,9 @@
 \usage{
   prentice(Qs, alp)
 
-  \method{prentice}{Q4} (Qs, alp)
+  \method{prentice}{Q4} (Qs, alp = NULL)
 
-  \method{prentice}{SO3} (Rs, alp)
+  \method{prentice}{SO3} (Rs, alp = NULL)
 }
 \arguments{
   \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each

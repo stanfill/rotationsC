@@ -6,11 +6,11 @@
 \usage{
   fisheretal(Qs, alp, boot, m, symm)
 
-  \method{fisheretal}{Q4} (Qs, alp, boot = T, m = 300,
-    symm = T)
+  \method{fisheretal}{Q4} (Qs, alp = NULL, boot = T,
+    m = 300, symm = T)
 
-  \method{fisheretal}{SO3} (Rs, alp, boot = T, m = 300,
-    symm = T)
+  \method{fisheretal}{SO3} (Rs, alp = NULL, boot = T,
+    m = 300, symm = T)
 }
 \arguments{
   \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each

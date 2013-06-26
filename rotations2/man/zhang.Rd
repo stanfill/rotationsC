@@ -6,9 +6,9 @@
 \usage{
   zhang(Qs, alp, m)
 
-  \method{zhang}{SO3} (Rs, alp, m = 300)
+  \method{zhang}{SO3} (Rs, alp = NULL, m = 300)
 
-  \method{zhang}{Q4} (Qs, alp, m = 300)
+  \method{zhang}{Q4} (Qs, alp = NULL, m = 300)
 }
 \arguments{
   \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each

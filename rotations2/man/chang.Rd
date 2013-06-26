@@ -6,9 +6,9 @@
 \usage{
   chang(Qs, alp)
 
-  \method{chang}{SO3} (Rs, alp)
+  \method{chang}{SO3} (Rs, alp = NULL)
 
-  \method{chang}{Q4} (Qs, alp)
+  \method{chang}{Q4} (Qs, alp = NULL)
 }
 \arguments{
   \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each

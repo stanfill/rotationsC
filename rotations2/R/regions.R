@@ -6,7 +6,7 @@
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param method Character string specifying which type of interval is required
-#' @param alpha The alpha level desired, e.g. 0.95 or 0.90
+#' @param alp The alpha level desired, e.g. 0.95 or 0.90
 #' @param ... Additional arguments that are method specific
 #' @return Radius of the confidence region centered at the projected mean
 #' @seealso \code{\link{prentice}} \code{\link{fisheretal}} \code{\link{chang}} \code{\link{zhang}}
@@ -28,9 +28,15 @@ region<-function(Qs,method,alp,...){
 #' @method region Q4
 #' @S3method region Q4
 
-region.Q4<-function(Qs,method,alp,...){
+region.Q4<-function(Qs,method,alp=NULL,...){
 	
 	Qs<-formatQ4(Qs)
+	
+	if(is.null(alp)){
+		#Take a default alpha=0.1 if no level is specified
+		alp<-.1
+		warning("No alpha-level specified, 0.1 used by default.")
+	}
 	
 	if(method%in%c('Prentice','prentice')){
 		
@@ -69,9 +75,15 @@ region.Q4<-function(Qs,method,alp,...){
 #' @method region SO3
 #' @S3method region SO3
 
-region.SO3<-function(Rs,method,alp,...){
+region.SO3<-function(Rs,method,alp=NULL,...){
 	
 	Rs<-formatSO3(Rs)
+	
+	if(is.null(alp)){
+		#Take a default alpha=0.1 if no level is specified
+		alp<-.1
+		warning("No alpha-level specified, 0.1 used by default.")
+	}
 	
 	if(method%in%c('Prentice','prentice')){
 		
@@ -132,9 +144,16 @@ prentice<-function(Qs,alp){
 #' @method prentice Q4
 #' @S3method prentice Q4
 
-prentice.Q4<-function(Qs,alp){
+prentice.Q4<-function(Qs,alp=NULL){
 	#This takes a sample qs and returns the radius of the confidence region
 	#centered at the projected mean
+	
+	if(is.null(alp)){
+		#Take a default alpha=0.1 if no level is specified
+		alp<-.1
+		warning("No alpha-level specified, 0.1 used by default.")
+	}
+	
 	n<-nrow(Qs)
 	Shat<-mean(Qs)
 	Phat<-pMat(Shat)
@@ -161,7 +180,7 @@ prentice.Q4<-function(Qs,alp){
 #' @method prentice SO3
 #' @S3method prentice SO3
 
-prentice.SO3<-function(Rs,alp){
+prentice.SO3<-function(Rs,alp=NULL){
 	Qs<-Q4(Rs)
 	r<-prentice.Q4(Qs,alp)
 	return(r)
@@ -195,7 +214,7 @@ zhang<-function(Qs,alp,m){
 #' @method zhang SO3
 #' @S3method zhang SO3
 
-zhang.SO3<-function(Rs,alp,m=300){
+zhang.SO3<-function(Rs,alp=NULL,m=300){
 	
 	#Rs is a n-by-9 matrix where each row is an 3-by-3 rotation matrix
 	#m is the number of resamples to find q_1-a
@@ -212,7 +231,13 @@ zhang.SO3<-function(Rs,alp,m=300){
 #' @method zhang Q4
 #' @S3method zhang Q4
 
-zhang.Q4<-function(Qs,alp,m=300){
+zhang.Q4<-function(Qs,alp=NULL,m=300){
+	
+	if(is.null(alp)){
+		#Take a default alpha=0.1 if no level is specified
+		alp<-.1
+		warning("No alpha-level specified, 0.1 used by default.")
+	}
 	
 	Qs<-formatQ4(Qs)
 	n<-nrow(Qs)
@@ -265,7 +290,13 @@ fisheretal<-function(Qs,alp,boot,m,symm){
 #' @method fisheretal Q4
 #' @S3method fisheretal Q4
 
-fisheretal.Q4<-function(Qs,alp,boot=T,m=300,symm=T){
+fisheretal.Q4<-function(Qs,alp=NULL,boot=T,m=300,symm=T){
+	
+	if(is.null(alp)){
+		#Take a default alpha=0.1 if no level is specified
+		alp<-.1
+		warning("No alpha-level specified, 0.1 used by default.")
+	}
 	
 	Qs<-formatQ4(Qs)
 	
@@ -303,7 +334,7 @@ optimAxis<-function(r,Qs,cut,symm){
 #' @method fisheretal SO3
 #' @S3method fisheretal SO3
 
-fisheretal.SO3<-function(Rs,alp,boot=T,m=300,symm=T){
+fisheretal.SO3<-function(Rs,alp=NULL,boot=T,m=300,symm=T){
 	
 	Qs<-Q4(Rs)
 	r<-fisheretal.Q4(Qs,alp,boot,m,symm)
@@ -338,7 +369,7 @@ chang<-function(Qs,alp){
 #' @method chang SO3
 #' @S3method chang SO3
 
-chang.SO3<-function(Rs,alp){
+chang.SO3<-function(Rs,alp=NULL){
 	
 	#Rs is a n-by-9 matrix where each row is an 3-by-3 rotation matrix
 	#alp is the level of confidence desired, e.g. 0.95 or 0.90
@@ -354,7 +385,13 @@ chang.SO3<-function(Rs,alp){
 #' @method chang Q4
 #' @S3method chang Q4
 
-chang.Q4<-function(Qs,alp){
+chang.Q4<-function(Qs,alp=NULL){
+	
+	if(is.null(alp)){
+		#Take a default alpha=0.1 if no level is specified
+		alp<-.1
+		warning("No alpha-level specified, 0.1 used by default.")
+	}
 	
 	Qs<-formatQ4(Qs)
 	n<-nrow(Qs)
