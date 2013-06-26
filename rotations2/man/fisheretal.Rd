@@ -4,12 +4,12 @@
 \alias{fisheretal.SO3}
 \title{Fisher confidence region method}
 \usage{
-  fisheretal(Qs, alpha, boot, m, symm)
+  fisheretal(Qs, alp, boot, m, symm)
 
-  \method{fisheretal}{Q4} (Qs, alpha, boot = T, m = 300,
+  \method{fisheretal}{Q4} (Qs, alp, boot = T, m = 300,
     symm = T)
 
-  \method{fisheretal}{SO3} (Rs, alpha, boot = T, m = 300,
+  \method{fisheretal}{SO3} (Rs, alp, boot = T, m = 300,
     symm = T)
 }
 \arguments{
@@ -17,7 +17,7 @@
   row corresponds to a random rotation in matrix (p=9) or
   quaternion form (p=4)}
 
-  \item{alpha}{The alpha level desired, e.g. 0.05 or 0.10}
+  \item{alp}{The alpha level desired, e.g. 0.05 or 0.10}
 
   \item{boot}{Should the bootstrap or normal theory
   critical value be used}
@@ -47,7 +47,7 @@
 }
 \examples{
 Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-region(Qs,method='fisher',alpha=0.1,symm=T)
+region(Qs,method='fisher',alp=0.1,symm=T)
 }
 \references{
   Fisher N, Hall P, Jing B and Wood A (1996). "Improved

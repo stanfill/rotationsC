@@ -4,18 +4,18 @@
 \alias{prentice.SO3}
 \title{Prentice confidence region method}
 \usage{
-  prentice(Qs, alpha)
+  prentice(Qs, alp)
 
-  \method{prentice}{Q4} (Qs, alpha)
+  \method{prentice}{Q4} (Qs, alp)
 
-  \method{prentice}{SO3} (Rs, alpha)
+  \method{prentice}{SO3} (Rs, alp)
 }
 \arguments{
   \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
   row corresponds to a random rotation in matrix (p=9) or
   quaternion form (p=4)}
 
-  \item{alpha}{The alpha level desired, e.g. 0.05 or 0.10}
+  \item{alp}{The alpha level desired, e.g. 0.05 or 0.10}
 }
 \value{
   Radius of the confidence region centered at the projected
@@ -38,7 +38,7 @@
 }
 \examples{
 Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-region(Qs,method='prentice',alpha=0.1)
+region(Qs,method='prentice',alp=0.1)
 }
 \references{
   Prentice MJ (1986). "Orientation statistics without

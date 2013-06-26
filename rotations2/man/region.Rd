@@ -4,11 +4,11 @@
 \alias{region.SO3}
 \title{Confidence Region for Mean Rotation}
 \usage{
-  region(Qs, method, alpha, ...)
+  region(Qs, method, alp, ...)
 
-  \method{region}{Q4} (Qs, method, alpha, ...)
+  \method{region}{Q4} (Qs, method, alp, ...)
 
-  \method{region}{SO3} (Rs, method, alpha, ...)
+  \method{region}{SO3} (Rs, method, alp, ...)
 }
 \arguments{
   \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
@@ -35,10 +35,10 @@
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)
-region(Rs,method='prentice',alpha=0.1)
-region(Rs,method='fisher',alpha=0.1,symm=T)
-region(Rs,method='zhang',alpha=0.1,m=100)
-region(Rs,method='chang',alpha=0.1)
+region(Rs,method='prentice',alp=0.1)
+region(Rs,method='fisher',alp=0.1,symm=T)
+region(Rs,method='zhang',alp=0.1,m=100)
+region(Rs,method='chang',alp=0.1)
 }
 \references{
   Prentice MJ (1986). "Orientation statistics without

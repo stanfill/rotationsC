@@ -3,7 +3,8 @@
 \title{Visualizing random rotations.}
 \usage{
   plot.SO3(x, center, col = 1, to_range = FALSE,
-    show_estimates = NULL, label_points = NULL, ...)
+    show_estimates = NULL, label_points = NULL,
+    show_regions = NULL, ...)
 }
 \arguments{
   \item{x}{n rotations in SO3 format}
@@ -21,6 +22,10 @@
   of the four estimates of the principal direction to show.
   Possibilities are "all", "proj.mean", "proj.median",
   "riem.mean", "riem.median"}
+
+  \item{show_regions}{character vector to specify which of
+  the three confidence regions to show.  Possibilities are
+  "all", "prentice", "chang", "zhang"}
 
   \item{label_points}{vector of labels}
 

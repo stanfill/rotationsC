@@ -125,6 +125,7 @@ pointsXYZ <- function(data, center, column=1) {
 #' @param col integer 1 to 3 indicating which column to display
 #' @param to_range show only part of the globe that is in range of the data?
 #' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "riem.mean", "riem.median"
+#' @param show_regions character vector to specify which of the three confidence regions to show.  Possibilities are "all", "prentice", "chang", "zhang"
 #' @param label_points  vector of labels
 #' @param ... parameters passed onto the points layer
 #' @return  a ggplot2 object with the data displayed on spherical grid
@@ -169,9 +170,9 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 		Shats <- na.omit(Shats)
 		
 		if(!is.null(show_regions)){
-			vals<-21:(20+nrow(Shats)) #Make the shapes noticable, 15:18
+			vals<-3:(2+nrow(Shats)) #Make the shapes noticable, 15:18
 			estimates <- list(geom_point(aes(x=X, y=Y, shape=Est),size=3.5, data=data.frame(pointsXYZ(Shats, center=center, column=col), Shats)),
-												scale_shape(name="Estimates", labels=labels,values=vals))
+												scale_shape_manual(name="Estimates", labels=labels,values=vals))
 		}else{
 			estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(pointsXYZ(Shats, center=center, column=col), Shats)),
 												scale_colour_brewer("Estimates", palette="Paired", labels=labels))
@@ -181,9 +182,9 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 	if (!is.null(show_regions)) {
 	  prentr <- changr <- zhangr  <- NA
 	  if(any(show_regions%in%c('all','All'))) show_regions<-c("prentice","zhang","chang")
-	  if (length(grep("prentice", show_regions)) > 0) prentr<-region(Rs,method='prentice',alpha=.1)[col]
-	  if (length(grep("chang", show_regions)) >0)    changr<-region(Rs,method='chang',alpha=.1)
-	  if (length(grep("zhang", show_regions)) > 0)    zhangr<-region(Rs,method='zhang',alpha=.1)
+	  if (length(grep("prentice", show_regions)) > 0) prentr<-region(Rs,method='prentice',...)[col]
+	  if (length(grep("chang", show_regions)) >0)    changr<-region(Rs,method='chang',...)
+	  if (length(grep("zhang", show_regions)) > 0)    zhangr<-region(Rs,method='zhang',...)
 
 	  Regions<-data.frame(X1=c(prentr,changr,zhangr),Meth=c('Prentice','Chang','Zhang'))
 	  Regions <- na.omit(Regions)

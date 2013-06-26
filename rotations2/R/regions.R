@@ -14,12 +14,12 @@
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Rs,method='prentice',alpha=0.1)
-#' region(Rs,method='fisher',alpha=0.1,symm=T)
-#' region(Rs,method='zhang',alpha=0.1,m=100)
-#' region(Rs,method='chang',alpha=0.1)
+#' region(Rs,method='prentice',alp=0.1)
+#' region(Rs,method='fisher',alp=0.1,symm=T)
+#' region(Rs,method='zhang',alp=0.1,m=100)
+#' region(Rs,method='chang',alp=0.1)
 
-region<-function(Qs,method,alpha,...){
+region<-function(Qs,method,alp,...){
 	UseMethod("region")
 }
 
@@ -28,31 +28,31 @@ region<-function(Qs,method,alpha,...){
 #' @method region Q4
 #' @S3method region Q4
 
-region.Q4<-function(Qs,method,alpha,...){
+region.Q4<-function(Qs,method,alp,...){
 	
 	Qs<-formatQ4(Qs)
 	
 	if(method%in%c('Prentice','prentice')){
 		
-		r<-prentice.Q4(Qs=Qs,a=alpha)
+		r<-prentice.Q4(Qs=Qs,alp=alp)
 		
 		return(r)
 		
 	}else	if(method%in%c('Zhang','zhang')){
 		
-		r<-zhang.Q4(Qs=Qs,a=alpha,...)
+		r<-zhang.Q4(Qs=Qs,alp=alp,...)
 		
 		return(r)
 		
 	}else	if(method%in%c('Fisher','fisher')){
 		
-		r<-fisheretal.Q4(Qs=Qs,a=alpha,...)
+		r<-fisheretal.Q4(Qs=Qs,alp=alp,...)
 		
 		return(r)
 		
 	}else	if(method%in%c('Chang','chang')){
 		
-		r<-chang.Q4(Qs=Qs,a=alpha)
+		r<-chang.Q4(Qs=Qs,alp=alp)
 		
 		return(r)
 		
@@ -69,30 +69,30 @@ region.Q4<-function(Qs,method,alpha,...){
 #' @method region SO3
 #' @S3method region SO3
 
-region.SO3<-function(Rs,method,alpha,...){
+region.SO3<-function(Rs,method,alp,...){
 	
 	Rs<-formatSO3(Rs)
 	
 	if(method%in%c('Prentice','prentice')){
 		
-		r<-prentice.SO3(Rs=Rs,a=alpha)
+		r<-prentice.SO3(Rs=Rs,alp=alp)
 		return(r)
 		
 	}else	if(method%in%c('Zhang','zhang')){
 		
-		r<-zhang.SO3(Rs=Rs,a=alpha,...)
+		r<-zhang.SO3(Rs=Rs,alp=alp,...)
 		
 		return(r)
 		
 	}else	if(method%in%c('Fisher','fisher')){
 		
-		r<-fisheretal.SO3(Rs=Rs,a=alpha,...)
+		r<-fisheretal.SO3(Rs=Rs,alp=alp,...)
 		
 		return(r)
 		
 	}else	if(method%in%c('Chang','chang')){
 		
-		r<-chang.SO3(Rs=Rs,a=alpha)
+		r<-chang.SO3(Rs=Rs,alp=alp)
 		
 		return(r)
 		
@@ -114,16 +114,16 @@ region.SO3<-function(Rs,method,alpha,...){
 #' form regions that are symmetric about each axis.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
-#' @param alpha The alpha level desired, e.g. 0.05 or 0.10
+#' @param alp The alpha level desired, e.g. 0.05 or 0.10
 #' @return Radius of the confidence region centered at the projected mean for each of the x-, y- and z-axis
 #' @seealso \code{\link{fisheretal}} \code{\link{chang}} \code{\link{zhang}}
 #' @cite prentice1986, rancourt2000, bingham09
 #' @export
 #' @examples
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-#' region(Qs,method='prentice',alpha=0.1)
+#' region(Qs,method='prentice',alp=0.1)
 
-prentice<-function(Qs,alpha){
+prentice<-function(Qs,alp){
 	UseMethod("prentice")
 }
 
@@ -132,7 +132,7 @@ prentice<-function(Qs,alpha){
 #' @method prentice Q4
 #' @S3method prentice Q4
 
-prentice.Q4<-function(Qs,alpha){
+prentice.Q4<-function(Qs,alp){
 	#This takes a sample qs and returns the radius of the confidence region
 	#centered at the projected mean
 	n<-nrow(Qs)
@@ -152,7 +152,7 @@ prentice.Q4<-function(Qs,alpha){
 	
 	Tm<-diag(n*Ahat%*%solve(VarShat)%*%Ahat)
 	
-	r<-sqrt(qchisq((1-alpha),3)/Tm)
+	r<-sqrt(qchisq((1-alp),3)/Tm)
 	return(r)
 }
 
@@ -161,9 +161,9 @@ prentice.Q4<-function(Qs,alpha){
 #' @method prentice SO3
 #' @S3method prentice SO3
 
-prentice.SO3<-function(Rs,alpha){
+prentice.SO3<-function(Rs,alp){
 	Qs<-Q4(Rs)
-	r<-prentice.Q4(Qs,alpha)
+	r<-prentice.Q4(Qs,alp)
 	return(r)
 }
 
@@ -177,16 +177,16 @@ prentice.SO3<-function(Rs,alpha){
 #' chi-square limiting distribution and is given by the \code{\link{chang}} option.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
-#' @param alpha The alpha level desired, e.g. 0.05 or 0.10
+#' @param alp The alpha level desired, e.g. 0.05 or 0.10
 #' @param m Number of replicates to use to estiamte cut point
 #' @return Radius of the confidence region centered at the projected mean
 #' @seealso \code{\link{prentice}} \code{\link{fisheretal}} \code{\link{chang}}
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Rs,method='zhang',alpha=0.1)
+#' region(Rs,method='zhang',alp=0.1)
 
-zhang<-function(Qs,alpha,m){
+zhang<-function(Qs,alp,m){
 	UseMethod("zhang")
 }
 
@@ -195,16 +195,16 @@ zhang<-function(Qs,alpha,m){
 #' @method zhang SO3
 #' @S3method zhang SO3
 
-zhang.SO3<-function(Rs,alpha,m=300){
+zhang.SO3<-function(Rs,alp,m=300){
 	
 	#Rs is a n-by-9 matrix where each row is an 3-by-3 rotation matrix
 	#m is the number of resamples to find q_1-a
-	#alpha is the level of confidence desired, e.g. 0.95 or 0.90
+	#alp is the level of confidence desired, e.g. 0.95 or 0.90
 	#pivot logical; should the pivotal (T) bootstrap be used or nonpivotal (F)
 	
   Rs<-formatSO3(Rs)
   Qs<-Q4(Rs)
-  rad<-zhang.Q4(Qs,alpha,m)
+  rad<-zhang.Q4(Qs,alp,m)
 	return(rad)
 }
 
@@ -212,7 +212,7 @@ zhang.SO3<-function(Rs,alpha,m=300){
 #' @method zhang Q4
 #' @S3method zhang Q4
 
-zhang.Q4<-function(Qs,alpha,m=300){
+zhang.Q4<-function(Qs,alp,m=300){
 	
 	Qs<-formatQ4(Qs)
 	n<-nrow(Qs)
@@ -220,7 +220,7 @@ zhang.Q4<-function(Qs,alpha,m=300){
 	Shat<-mean(Qs)
   cdhat<-cdfuns(Qs,Shat)
   
-	rad<-sqrt(as.numeric(quantile(stats,1-alpha))*cdhat$c/(2*n*cdhat$d^2))
+	rad<-sqrt(as.numeric(quantile(stats,1-alp))*cdhat$c/(2*n*cdhat$d^2))
 	
 	return(rad)
 }
@@ -244,7 +244,7 @@ cdfuns<-function(Qs,Shat){
 #' to a radius requires the additonal assumption of rotational symmetry, equation (10) in \cite{fisher1996}. 
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
-#' @param alpha The alpha level desired, e.g. 0.05 or 0.10
+#' @param alp The alpha level desired, e.g. 0.05 or 0.10
 #' @param boot Should the bootstrap or normal theory critical value be used
 #' @param m number of bootstrap replicates to use to estimate critical value
 #' @param symm true/false on if rotationally symmetric regions should be computed or not
@@ -254,9 +254,9 @@ cdfuns<-function(Qs,Shat){
 #' @export
 #' @examples
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-#' region(Qs,method='fisher',alpha=0.1,symm=T)
+#' region(Qs,method='fisher',alp=0.1,symm=T)
 
-fisheretal<-function(Qs,alpha,boot,m,symm){
+fisheretal<-function(Qs,alp,boot,m,symm){
 	UseMethod("fisheretal")
 }
 
@@ -265,7 +265,7 @@ fisheretal<-function(Qs,alpha,boot,m,symm){
 #' @method fisheretal Q4
 #' @S3method fisheretal Q4
 
-fisheretal.Q4<-function(Qs,alpha,boot=T,m=300,symm=T){
+fisheretal.Q4<-function(Qs,alp,boot=T,m=300,symm=T){
 	
 	Qs<-formatQ4(Qs)
 	
@@ -273,7 +273,7 @@ fisheretal.Q4<-function(Qs,alpha,boot=T,m=300,symm=T){
     
 	  Tstats <- fisherBootC(Qs,m,symm)
     
-		qhat<-as.numeric(quantile(Tstats,1-alpha))
+		qhat<-as.numeric(quantile(Tstats,1-alp))
 		
 	}else{
 		
@@ -303,10 +303,10 @@ optimAxis<-function(r,Qs,cut,symm){
 #' @method fisheretal SO3
 #' @S3method fisheretal SO3
 
-fisheretal.SO3<-function(Rs,alpha,boot=T,m=300,symm=T){
+fisheretal.SO3<-function(Rs,alp,boot=T,m=300,symm=T){
 	
 	Qs<-Q4(Rs)
-	r<-fisheretal.Q4(Qs,alpha,boot,m,symm)
+	r<-fisheretal.Q4(Qs,alp,boot,m,symm)
 	
 	return(r)
 }
@@ -320,16 +320,16 @@ fisheretal.SO3<-function(Rs,alpha,boot=T,m=300,symm=T){
 #' radius so the radius reported is for all three axis.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
-#' @param alpha The alpha level desired, e.g. 0.05 or 0.10
+#' @param alp The alpha level desired, e.g. 0.05 or 0.10
 #' @return Radius of the confidence region centered at the projected mean
 #' @cite chang2001
 #' @seealso \code{\link{prentice}} \code{\link{fisheretal}} \code{\link{zhang}}
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Rs,method='chang',alpha=0.1)
+#' region(Rs,method='chang',alp=0.1)
 
-chang<-function(Qs,alpha){
+chang<-function(Qs,alp){
 	UseMethod("chang")
 }
 
@@ -338,15 +338,15 @@ chang<-function(Qs,alpha){
 #' @method chang SO3
 #' @S3method chang SO3
 
-chang.SO3<-function(Rs,alpha){
+chang.SO3<-function(Rs,alp){
 	
 	#Rs is a n-by-9 matrix where each row is an 3-by-3 rotation matrix
-	#alpha is the level of confidence desired, e.g. 0.95 or 0.90
+	#alp is the level of confidence desired, e.g. 0.95 or 0.90
 	#pivot logical; should the pivotal (T) bootstrap be used or nonpivotal (F)
 	
 	Rs<-formatSO3(Rs)
 	Qs<-Q4(Rs)
-	rad<-chang.Q4(Qs,alpha)
+	rad<-chang.Q4(Qs,alp)
 	return(rad)
 }
 
@@ -354,14 +354,14 @@ chang.SO3<-function(Rs,alpha){
 #' @method chang Q4
 #' @S3method chang Q4
 
-chang.Q4<-function(Qs,alpha){
+chang.Q4<-function(Qs,alp){
 	
 	Qs<-formatQ4(Qs)
 	n<-nrow(Qs)
 	Shat<-mean(Qs)
 	cdhat<-cdfuns(Qs,Shat)
 	
-	rad<-sqrt(as.numeric(qchisq(1-alpha,3))*cdhat$c/(2*n*cdhat$d^2))
+	rad<-sqrt(as.numeric(qchisq(1-alp,3))*cdhat$c/(2*n*cdhat$d^2))
 	
 	return(rad)
 }
