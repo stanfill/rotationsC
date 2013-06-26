@@ -137,7 +137,7 @@ pointsXYZ <- function(data, center, column=1) {
 #' # Z is computed internally and contains information on depth
 #' plot(Rs,center=mean(Rs),show_estimates=c("proj.mean", "riem.mean"), label_points=sample(LETTERS, 200, replace=TRUE)) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
 
-plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL,  ...) {
+plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, show_regions=NULL,  ...) {
 	Rs <- as.SO3(x)
 	xlimits <- c(-1,1)
 	ylimits <- c(-1,1)
@@ -153,9 +153,10 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 		ylimits <- ybar + 1.1*(ylimits-ybar)
 	}
 	estimates <- NULL
+  regs<-NULL
 	if (!is.null(show_estimates)) {
 		ShatP <- StildeP <- ShatG <- StildeG <- NA
-		if(show_estimates%in%c('all','All')) show_estimates<-c("proj.mean","proj.median","riem.mean","riem.median")
+		if(any(show_estimates%in%c('all','All'))) show_estimates<-c("proj.mean","proj.median","riem.mean","riem.median")
 		if (length(grep("proj.mean", show_estimates)) > 0) ShatP<-mean(Rs, type="projected")
 		if (length(grep("proj.median", show_estimates)) >0)    StildeP<-median(Rs, type="projected")
 		if (length(grep("riem.mean", show_estimates)) > 0)    ShatG<-mean(Rs, type="geometric")
@@ -170,6 +171,33 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 		estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(pointsXYZ(Shats, center=center, column=col), Shats)),
 											scale_colour_brewer("Estimates", palette="Paired", labels=labels))
 	}
+  
+	if (!is.null(show_regions)) {
+	  prentr <- changr <- zhangr  <- NA
+	  if(any(show_regions%in%c('all','All'))) show_regions<-c("prentice","zhang","chang")
+	  if (length(grep("prentice", show_regions)) > 0) prentr<-region(Rs,method='prentice',alpha=.1)[col]
+	  if (length(grep("chang", show_regions)) >0)    changr<-region(Rs,method='chang',alpha=.1)
+	  if (length(grep("zhang", show_regions)) > 0)    zhangr<-region(Rs,method='zhang',alpha=.1)
+
+	  Regions<-data.frame(X1=c(prentr,changr,zhangr),Meth=c('Prentice','Chang','Zhang'))
+	  Regions <- na.omit(Regions)
+	  
+    cisp.boot<-NULL
+    
+    for(i in 1:nrow(Regions)){
+      if(col==1)
+        cisp.boot <- rbind(cisp.boot,t(replicate(200, oldSO3(c(0,runif(2,-1,1)), Regions$X1[i]),simplify="matrix")))
+      
+      if(col==2)
+        cisp.boot <- rbind(cisp.boot,t(replicate(200, oldSO3(c(runif(1,-1,1),0,runif(1,-1,1)), Regions$X1[i]),simplify="matrix")))
+      
+      
+      if(col==3)
+	      cisp.boot <- rbind(cisp.boot,t(replicate(200, oldSO3(c(runif(2,-1,1),0), Regions$X1[i]),simplify="matrix")))
+    }
+	  regs <- geom_point(aes(x=X, y=Y), data=data.frame(pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col)))
+	}
+  
 	labels <- NULL
 	if (!is.null(label_points)) {
 		proj2d$labels <- label_points
@@ -178,6 +206,7 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 	base + geom_point(aes(x=X, y=Y), data=proj2d, ...) + 
 		labels + 
 		estimates +
+    regs+
 		xlim(xlimits) + ylim(ylimits) 
 }
 
