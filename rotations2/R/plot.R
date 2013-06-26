@@ -193,17 +193,17 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
     
     for(i in 1:nrow(Regions)){
       if(col==1)
-        cisp.boot <- rbind(cisp.boot,t(replicate(200, oldSO3(c(0,runif(2,-1,1)), Regions$X1[i]),simplify="matrix")))
+        cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(0,runif(2,-1,1)), Regions$X1[i]),simplify="matrix")))
       
       if(col==2)
-        cisp.boot <- rbind(cisp.boot,t(replicate(200, oldSO3(c(runif(1,-1,1),0,runif(1,-1,1)), Regions$X1[i]),simplify="matrix")))
+        cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(runif(1,-1,1),0,runif(1,-1,1)), Regions$X1[i]),simplify="matrix")))
       
       
       if(col==3)
-	      cisp.boot <- rbind(cisp.boot,t(replicate(200, oldSO3(c(runif(2,-1,1),0), Regions$X1[i]),simplify="matrix")))
+	      cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(runif(2,-1,1),0), Regions$X1[i]),simplify="matrix")))
     }
 	  
-	  regs <- geom_point(aes(x=X, y=Y,colour=Method), data=data.frame(pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col),Method=rep(Regions$Meth,each=200)))
+	  regs <- geom_point(aes(x=X, y=Y,colour=Method), data=data.frame(pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col),Method=rep(Regions$Meth,each=500)))
 
 	}
   
