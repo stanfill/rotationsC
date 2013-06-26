@@ -28,7 +28,7 @@ oldSO3 <- function(U, theta=NULL) {
 	return(R)
 }
 
-library(ggplot2)
+suppressMessages(library(ggplot2))
 require(grid)
 
 # set origin of concentric circles
@@ -181,3 +181,15 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 		xlim(xlimits) + ylim(ylimits) 
 }
 
+
+#Rs<-ruars(20,rcayley,kappa=20)
+#center<-matrix(SO3(c(1,0,0),pi/16),3,3)%*%median(Rs)
+#col<-3
+#usual<-plot(Rs,center=center,show_estimate='proj.mean',col=col)
+
+#rad<-region(Rs,method='chang',alpha=.1)
+##shat<-mean(Rs)
+#cisp.boot <- t(replicate(200, SO3(c(runif(2,-1,1),0), rad),simplify="matrix"))
+##pci.sp<-data.frame(as.matrix(cisp.boot[,7:9]))
+
+#usual+geom_point(aes(x=X, y=Y), colour="darkgreen", data=data.frame(pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col)))  	#Person 1's data
