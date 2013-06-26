@@ -37,7 +37,7 @@ library(rotations2)
 @
 
 \abstract{
-In this article we introduce the \pkg{rotations} package which provides users with the ability to simulate, analyze and visualize 3-dimensional rotation data.  The \pkg{rotations} package includes four distributions from which to simulate data, four estimators of the central orientation and a novel approach to visualizing these data.  All of the above features are available to two different parameterizations of rotations: 3-by-3 matrix form and quaternions.
+In this article we introduce the \pkg{rotations} package which provides users with the ability to simulate, analyze and visualize three-dimensional rotation data.  The \pkg{rotations} package includes four distributions from which to simulate data, four estimators of the central orientation and a novel approach to visualizing these data.  All of the above features are available to two different parameterizations of rotations: 3-by-3 matrix form and quaternions.
 }
 
 \section{Introduction}
@@ -257,15 +257,28 @@ In this section we introduce a method to visualize $SO(3)$ data via the the \pkg
 
 Any of the four estimates of the central direction can be plotted along with a sample of rotations. To show all estimates at once add the argument \code{estimates$\_$show="all"}.  If only a few estimates are of interest then any combination of \code{"proj.mean"}, \code{"proj.median"}, \code{"riem.mean"} or \code{"riem.median"} are valid inputs.  The estimators are indicated by shape.  One can also center the data about any observation in $SO(3)$ by setting \code{center=S}.   Typically take \code{center=mean(Rs)}.  
 
-<<eye,eval=FALSE>>=
+\begin{example}
 Rs<-ruars(50,rcayley,kappa=1)
-plot(Rs,center=mean(Rs),show_estimates='all')
+plot(Rs,center=id.SO3)
+plot(Rs,center=id.SO3,show_estimates='all')
+plot(Rs,center=id.SO3,show_estimates='proj.mean',
+		 show_regions='all',alp=.1)
+\end{example}
+
+<<eye,fig.width=6,fig.height=6,echo=FALSE,include=FALSE>>=
+Rs<-ruars(50,rcayley,kappa=1)
+plot(Rs,center=id.SO3)
+plot(Rs,center=id.SO3,show_estimates='all')
+plot(Rs,center=id.SO3,show_estimates='proj.mean',
+		 show_regions='all',alp=.1)
 @
 
 
 \begin{figure}
 \centering
-\includegraphics[width=.75\textwidth]{figures/eye}
+\includegraphics[width=.6\textwidth]{figures/eye1}
+\includegraphics[width=.75\textwidth]{figures/eye2}
+\includegraphics[width=.75\textwidth]{figures/eye3}
 \caption{\label{figure:eye1}
 A plot of the a random sample from the Cayley-UARS distribution with $\kappa=1$.}
 \end{figure}
