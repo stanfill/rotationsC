@@ -4,7 +4,7 @@
 \usage{
   plot.SO3(x, center, col = 1, to_range = FALSE,
     show_estimates = NULL, label_points = NULL,
-    show_regions = NULL, ...)
+    show_regions = NULL, alp = NULL, m = 300, ...)
 }
 \arguments{
   \item{x}{n rotations in SO3 format}
@@ -23,11 +23,16 @@
   Possibilities are "all", "proj.mean", "proj.median",
   "riem.mean", "riem.median"}
 
+  \item{label_points}{vector of labels}
+
   \item{show_regions}{character vector to specify which of
   the three confidence regions to show.  Possibilities are
   "all", "prentice", "chang", "zhang"}
 
-  \item{label_points}{vector of labels}
+  \item{alp}{alpha level to be used for confidence regions}
+
+  \item{m}{number of bootstrap replicates to use in Zhang
+  confidence region}
 
   \item{...}{parameters passed onto the points layer}
 }

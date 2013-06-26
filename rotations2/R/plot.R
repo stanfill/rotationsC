@@ -125,8 +125,10 @@ pointsXYZ <- function(data, center, column=1) {
 #' @param col integer 1 to 3 indicating which column to display
 #' @param to_range show only part of the globe that is in range of the data?
 #' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "riem.mean", "riem.median"
-#' @param show_regions character vector to specify which of the three confidence regions to show.  Possibilities are "all", "prentice", "chang", "zhang"
 #' @param label_points  vector of labels
+#' @param show_regions character vector to specify which of the three confidence regions to show.  Possibilities are "all", "prentice", "chang", "zhang"
+#' @param alp alpha level to be used for confidence regions
+#' @param m number of bootstrap replicates to use in Zhang confidence region
 #' @param ... parameters passed onto the points layer
 #' @return  a ggplot2 object with the data displayed on spherical grid
 #' @cite wickham09
@@ -138,7 +140,7 @@ pointsXYZ <- function(data, center, column=1) {
 #' # Z is computed internally and contains information on depth
 #' plot(Rs,center=mean(Rs),show_estimates=c("proj.mean", "riem.mean"), label_points=sample(LETTERS, 200, replace=TRUE)) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
 
-plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, show_regions=NULL,  ...) {
+plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, show_regions=NULL, alp=NULL, m=300,  ...) {
 	Rs <- as.SO3(x)
 	xlimits <- c(-1,1)
 	ylimits <- c(-1,1)
@@ -182,9 +184,9 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 	if (!is.null(show_regions)) {
 	  prentr <- changr <- zhangr  <- NA
 	  if(any(show_regions%in%c('all','All'))) show_regions<-c("prentice","zhang","chang")
-	  if (length(grep("prentice", show_regions)) > 0) prentr<-region(Rs,method='prentice',...)[col]
-	  if (length(grep("chang", show_regions)) >0)    changr<-region(Rs,method='chang',...)
-	  if (length(grep("zhang", show_regions)) > 0)    zhangr<-region(Rs,method='zhang',...)
+	  if (length(grep("prentice", show_regions)) > 0) prentr<-region(Rs,method='prentice',alp=alp)[col]
+	  if (length(grep("chang", show_regions)) >0)    changr<-region(Rs,method='chang',alp=alp)
+	  if (length(grep("zhang", show_regions)) > 0)    zhangr<-region(Rs,method='zhang',alp=alp,m=m)
 
 	  Regions<-data.frame(X1=c(prentr,changr,zhangr),Meth=c('Prentice','Chang','Zhang'))
 	  Regions <- na.omit(Regions)
@@ -219,15 +221,3 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 		xlim(xlimits) + ylim(ylimits) 
 }
 
-
-#Rs<-ruars(20,rcayley,kappa=20)
-#center<-matrix(SO3(c(1,0,0),pi/16),3,3)%*%median(Rs)
-#col<-3
-#usual<-plot(Rs,center=center,show_estimate='proj.mean',col=col)
-
-#rad<-region(Rs,method='chang',alpha=.1)
-##shat<-mean(Rs)
-#cisp.boot <- t(replicate(200, SO3(c(runif(2,-1,1),0), rad),simplify="matrix"))
-##pci.sp<-data.frame(as.matrix(cisp.boot[,7:9]))
-
-#usual+geom_point(aes(x=X, y=Y), colour="darkgreen", data=data.frame(pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col)))  	#Person 1's data
