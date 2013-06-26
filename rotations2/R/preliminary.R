@@ -220,11 +220,6 @@ axis2.Q4 <- function(q){
 }
 
 
-#' Directional vector to skew-symmetric Matrix
-#'
-#' @author Heike Hofmann
-#' @param U three dimensional vector indicating rotational fix-axis
-#' @return skew-symmetric matrix
 
 eskew <- function(U) {
   

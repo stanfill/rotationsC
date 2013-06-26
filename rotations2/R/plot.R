@@ -168,8 +168,14 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 		levels(Shats$Est) <- labels
 		Shats <- na.omit(Shats)
 		
-		estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(pointsXYZ(Shats, center=center, column=col), Shats)),
-											scale_colour_brewer("Estimates", palette="Paired", labels=labels))
+		if(!is.null(show_regions)){
+			vals<-21:(20+nrow(Shats)) #Make the shapes noticable, 15:18
+			estimates <- list(geom_point(aes(x=X, y=Y, shape=Est),size=3.5, data=data.frame(pointsXYZ(Shats, center=center, column=col), Shats)),
+												scale_shape(name="Estimates", labels=labels,values=vals))
+		}else{
+			estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(pointsXYZ(Shats, center=center, column=col), Shats)),
+												scale_colour_brewer("Estimates", palette="Paired", labels=labels))
+		}
 	}
   
 	if (!is.null(show_regions)) {
@@ -195,7 +201,9 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
       if(col==3)
 	      cisp.boot <- rbind(cisp.boot,t(replicate(200, oldSO3(c(runif(2,-1,1),0), Regions$X1[i]),simplify="matrix")))
     }
-	  regs <- geom_point(aes(x=X, y=Y), data=data.frame(pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col)))
+	  
+	  regs <- geom_point(aes(x=X, y=Y,colour=Method), data=data.frame(pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col),Method=rep(Regions$Meth,each=200)))
+
 	}
   
 	labels <- NULL
