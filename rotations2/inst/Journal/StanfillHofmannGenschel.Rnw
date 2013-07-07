@@ -7,7 +7,7 @@
 
 %% load any required packages here
 
-%\usepackage{bm,subfig}
+\usepackage{bm,subfig}
 %\usepackage[round]{natbib}
 %\bibliographystyle{abbrvnat}
 \newcommand{\argmin}{\text{argmin}}

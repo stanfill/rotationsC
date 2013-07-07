@@ -1,44 +1,16 @@
-\documentclass[a4paper]{report}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{RJournal}
-\usepackage{amsmath,amssymb,array}
-\usepackage{booktabs}
+% !TeX root = RJwrapper.tex
 
-%% load any required packages here
-
-%\usepackage{bm,subfig}
-%\usepackage[round]{natbib}
-%\bibliographystyle{abbrvnat}
-\newcommand{\argmin}{\text{argmin}}
-\newcommand{\argmax}{\text{argmax}}
-\newcommand{\tr}{\text{tr}}
-\newcommand{\Edist}{d_E}
-\newcommand{\Rdist}{d_R}
-\newcommand{\ProjMean}{\widehat{\bm S}_E}
-\newcommand{\ProjMedian}{\widetilde{\bm S}_E}
-\newcommand{\GeoMean}{\widehat{\bm S}_R}
-\newcommand{\GeoMedian}{\widetilde{\bm S}_R}
-
-\begin{document}
-
-%% do not edit, for illustration only
-\sectionhead{Contributed research article}
-\volume{XX}
-\volnumber{YY}
-\year{20ZZ}
-\month{AAAA}
-
-%% replace RJtemplate with your article
-\begin{article}
 
 \title{\pkg{rotations}: A Package for $SO(3)$ Data}
 \author{by Bryan Stanfill, Heike Hofmann, Ulrike Genschel}
 
 \maketitle
 
-
-
+%<<setup, include=FALSE, cache=FALSE>>=
+%opts_chunk$set(fig.path='figures/', fig.align='center', fig.show='hold',comment=NA,background='white',highlight=FALSE,size='small')
+%options(replace.assign=TRUE,width=90)
+%library(rotations2)
+%@
 
 \abstract{
 In this article we introduce the \pkg{rotations} package which provides users with the ability to simulate, analyze and visualize three-dimensional rotation data.  The \pkg{rotations} package includes four distributions from which to simulate data, four estimators of the central orientation and a novel approach to visualizing these data.  All of the above features are available to two different parameterizations of rotations: 3-by-3 matrix form and quaternions.
@@ -123,19 +95,15 @@ This makes $q$ a unit quaternion.  The following code forms a unit quaternion fr
 % 
 % For each of these parameterizations we have created a class of R objects: \code{SO3} for the matrix representation, \code{Q4} for quaternions and \code{EA} for Euler angles.  The names of these classes  are also functions that will return an object of the class with the same name given an angle and axis, or an object of any other class.  See the below code for an illustration.  First I generate a rotation matrix from an angle, $r$, and an axis, $\bm U$ using the function \code{SO3}.  Next we transform that rotation into quaternions then Euler angles with the funcions \code{Q4} and \code{EA}, respecitvely.  One can also create quaternions or Euler angles directly by feeding the angle and axis into those same functions.
 
-\begin{knitrout}\small
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-r <- runif(1, -pi, pi)
-theta <- acos(runif(1, -1, 1))
-phi <- runif(1, -pi, pi)
-U <- c(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta))
-R <- SO3(U, r)
-q <- Q4(R)
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
+%<<params>>=
+%r<-runif(1,-pi,pi)
+%theta<-acos(runif(1, -1, 1))
+%phi<-runif(1, -pi, pi)
+%U<-c(sin(theta)*cos(phi),
+%		 sin(theta)*sin(phi),cos(theta))
+%R<-SO3(U,r)
+%q<-Q4(R)
+%@
 %As before the function \code{axis} and \code{angle} will extract the axis and angle of the Euler angle.  One can also translate an Euler angle into a quaternion or matrix by passing an \code{EA} object into \code{Q4} and \code{SO3}, respectively.  One can go the other direction too.
 
 For the remainder of this article we will present our work using the matrix representation.  All the functions to follow will work with any of  the representations we have discussed above.
@@ -184,19 +152,10 @@ Simulation from this distribution was developed by \citet{best1979} and the func
 
 Once an angular distribution has been chosen and a vector of $n$ angles of rotation have been generated, the \code{genR} function with argument \code{space="SO3"} creates an $n\times 9$ matrix representing a sample from the appropriate UARS member as demonstrated in the following code.  If quaternions are required the argument \code{space} can be changed to \code{"Q4"}.
 
-\begin{knitrout}\small
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-Rs <- ruars(20, rcayley, kappa = 1)
-matrix(Rs[1, ], 3, 3)
-        [,1]     [,2]   [,3]
-[1,]  0.6690  0.07854 0.7391
-[2,] -0.1939  0.97842 0.0715
-[3,] -0.7176 -0.19112 0.6698
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
+%<<genRs>>=
+%Rs<-ruars(20,rcayley,kappa=1)
+%matrix(Rs[1,],3,3)
+%@
 
 Here \code{rcayley(20,1)} simulates $r_1,\ldots,r_{20}$ from  $C_\mathrm{C}(r |\kappa=1)$ then \code{genR} generates the matrices.  Each row of \code{Rs} is an element in $SO(3)$, as demonstrated by \code{is.SO3}, in vector form with central orientation $\bm I_{3\times 3}$.  Any other central orientation in $SO(3)$ is possible by changing the \code{S} argument.  If a central orientation not in $SO(3)$ is proposed, however, an error is returned.
 
@@ -282,5 +241,47 @@ plot(Rs,center=id.SO3,show_estimates='proj.mean',
 		 show_regions='all',alp=.1)
 \end{example}
 
+%<<eye,fig.width=6,fig.height=6,echo=FALSE,include=FALSE>>=
+%Rs<-ruars(50,rcayley,kappa=1)
+%plot(Rs,center=id.SO3)
+%plot(Rs,center=id.SO3,show_estimates='all')
+%plot(Rs,center=id.SO3,show_estimates='proj.mean',
+%		 show_regions='all',alp=.1)
+%@
 
 
+\begin{figure}
+\centering
+\includegraphics[width=.6\textwidth]{figures/eye}
+%\includegraphics[width=.75\textwidth]{figures/eye2}
+%\includegraphics[width=.75\textwidth]{figures/eye3}
+\caption{\label{figure:eye1}
+A plot of the a random sample from the Cayley-UARS distribution with $\kappa=1$.}
+\end{figure}
+
+In Figure \ref{figure:eye1} a random sample of 50 matrices following the Cayley-UARS distribution with $\kappa=1$ is plotted along with four estimates of the central orientation.  The code to produce this plot is also given.
+
+\section{Summary}
+
+The \pkg{rotations} package is introduced and allows the user to create, simulate, analyze and visualize rotation data.  There are three parameterizations possible in this package and four built-in distributions from which data can be simulated.  The four estimators discussed in Stanfill et al. (2012) are each implemented and each can be visualized via \code{ggplot2}.
+
+%\bibliography{../REFERENCES}
+\bibliography{stanfill-hofmann-genschel}
+
+\address{Bryan Stanfill\\
+  Department of Statistics\\
+  Iowa State University\\
+  Ames, IA 50011}\\
+\email{stanfill@iastate.edu}
+
+\address{Heike Hofmann\\
+  Department of Statistics\\
+  Iowa State University\\
+  Ames, IA 50011}\\
+\email{hofmann@mail.iastate.edu}
+
+\address{Ulrike Genschel\\
+  Department of Statistics\\
+  Iowa State University\\
+  Ames, IA 50011}\\
+\email{ulrike@mail.iastate.edu}
