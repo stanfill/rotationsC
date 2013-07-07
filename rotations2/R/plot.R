@@ -124,7 +124,7 @@ pointsXYZ <- function(data, center, column=1) {
 #' @param center point about which to center the observations
 #' @param col integer 1 to 3 indicating which column to display
 #' @param to_range show only part of the globe that is in range of the data?
-#' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "riem.mean", "riem.median"
+#' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "geom.mean", "geom.median"
 #' @param label_points  vector of labels
 #' @param show_regions character vector to specify which of the three confidence regions to show.  Possibilities are "all", "prentice", "chang", "zhang"
 #' @param alp alpha level to be used for confidence regions
@@ -138,7 +138,7 @@ pointsXYZ <- function(data, center, column=1) {
 #' Rs<-genR(r)
 #' plot(Rs,center=mean(Rs),show_estimates=NULL,shape=4)
 #' # Z is computed internally and contains information on depth
-#' plot(Rs,center=mean(Rs),show_estimates=c("proj.mean", "riem.mean"), label_points=sample(LETTERS, 200, replace=TRUE)) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
+#' plot(Rs,center=mean(Rs),show_estimates=c("proj.mean", "geom.mean"), label_points=sample(LETTERS, 200, replace=TRUE)) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
 
 plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, show_regions=NULL, alp=NULL, m=300,  ...) {
 	Rs <- as.SO3(x)
@@ -159,17 +159,19 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
   regs<-NULL
 	if (!is.null(show_estimates)) {
 		ShatP <- StildeP <- ShatG <- StildeG <- NA
-		if(any(show_estimates%in%c('all','All'))) show_estimates<-c("proj.mean","proj.median","riem.mean","riem.median")
+		if(any(show_estimates%in%c('all','All'))) show_estimates<-c("proj.mean","proj.median","geom.mean","geom.median")
 		if (length(grep("proj.mean", show_estimates)) > 0) ShatP<-mean(Rs, type="projected")
 		if (length(grep("proj.median", show_estimates)) >0)    StildeP<-median(Rs, type="projected")
-		if (length(grep("riem.mean", show_estimates)) > 0)    ShatG<-mean(Rs, type="geometric")
-		if (length(grep("riem.median", show_estimates)) > 0)    StildeG<-median(Rs, type="geometric")
+		if (length(grep("geom.mean", show_estimates)) > 0)    ShatG<-mean(Rs, type="geometric")
+		if (length(grep("geom.median", show_estimates)) > 0)    StildeG<-median(Rs, type="geometric")
 		
 		Shats<-data.frame(rbind(as.vector(ShatP),as.vector(StildeP),as.vector(ShatG),as.vector(StildeG)),Est=1:4)
 		Shats$Est <- factor(Shats$Est)
 		labels <- c(expression(hat(S)[E]), expression(tilde(S)[E]), expression(hat(S)[R]), expression(tilde(S)[R]))
 		levels(Shats$Est) <- labels
-		Shats <- na.omit(Shats)
+		rmNA<-which(!is.na(Shats$X1))
+		Shats <- Shats[rmNA,]
+		labels<-labels[rmNA]
 		
 		if(!is.null(show_regions)){
 			vals<-3:(2+nrow(Shats)) #Make the shapes noticable, 15:18
@@ -177,7 +179,7 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 												scale_shape_manual(name="Estimates", labels=labels,values=vals))
 		}else{
 			estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(pointsXYZ(Shats, center=center, column=col), Shats)),
-												scale_colour_brewer("Estimates", palette="Paired", labels=labels))
+												scale_colour_brewer(name="Estimates", palette="Paired", labels=labels))
 		}
 	}
   
