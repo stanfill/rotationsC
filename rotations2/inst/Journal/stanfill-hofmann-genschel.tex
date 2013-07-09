@@ -11,16 +11,16 @@ In this article we introduce the \pkg{rotations} package which provides users wi
 
 \section{Introduction}
 
-Data in form of three-dimensional rotations find application in several scientific areas, such as bio-medical engineering, computer visioning, and geological and materials sciences where such data represent the positions of objects within some three-dimensional reference frame.  For example, \cite{hubert1996, bingham2009, bachmann2012} examine rotation data in studying crystal orientations on the surfaces of metals.  \cite{rancourt2000} use this data to represent an individual's body position whilst performing a task. 
+Data in form of three-dimensional rotations find application in several scientific areas, such as bio-medical engineering, computer visioning, and geological and materials sciences where such data represent the positions of objects within some three-dimensional reference frame.  For example, \cite{humbert1996, bingham2009, bachmann2010} use rotation data to study the orientation of crystals on metal surfaces.  \cite{rancourt2000} use this data to represent an individual's body position whilst performing a task. 
 
 A common goal shared by these fields is to estimate the main or central orientation for a sample of rotations.  That is, letting the rotation group $SO(3)$ denote the collection of all $3\times 3$ rotation matrices, observations $\bm{R}_1,\ldots,\bm{R}_n \in SO(3)$ can be conceptualized as a random sample from a \textit{location model}
 \begin{equation}
 \label{eqn:loc_model}
 \mathbf{R}_i = \bm{S} \bm{E}_i, \quad i=1,\ldots,n,
 \end{equation}
-where $\bm S \in SO(3)$ is the {\it fixed} parameter of interest indicating an orientation of central tendency, and $\bm{E}_1,\ldots,\bm{E}_n \in SO(3)$ denote i.i.d. {\it random} rotations which symmetrically perturb $\bm{S}$.  The data-generating model in \eqref{eqn:1} is a rotation-matrix analog of a location model for scalar data $Y_i = \mu + e_i$, where $\mu \in \mathbb{R}$ denotes a mean and $e_i \in \mathbb{R}$ denotes an additive error symmetrically distributed around zero.
+where $\bm S \in SO(3)$ is the {\it fixed} parameter of interest indicating an orientation of central tendency, and $\bm{E}_1,\ldots,\bm{E}_n \in SO(3)$ denote i.i.d. {\it random} rotations which symmetrically perturb $\bm{S}$.  The data-generating model in \eqref{eqn:loc_model} is a rotation-matrix analog of a location model for scalar data $Y_i = \mu + e_i$, where $\mu \in \mathbb{R}$ denotes a mean and $e_i \in \mathbb{R}$ denotes an additive error symmetrically distributed around zero.
 
-The unique fea
+A multitude of methods for location models are available in R, but for the case of $SO(3)$ data the toolbox is more limited.  The \CRANpkg{orientlib} package includes the definition of an orientation class along with a few methods to summarize and visualize rotation data \citep{murdoch2003}.  Though the representations of rotations are examined in detail in the \CRANpkg{orientlib} package, only one method for summarizing orientation data is available and the visualizations offered are not intuitive.
 
 The \pkg{rotations} package provides users with the tools necessary to simulate data from four common choices of symmetric distributions, estimate $\bm{S}$ in \eqref{eqn:loc_model}, form a confidence region for $\bm S$ based on one of the estimators and visualize a sample of rotations.  The remainder of this manuscript is organized as follows.  In the next section we discuss methods for parameterizing rotations and how they are handled in R. Then we discuss how data generation is possible in this package.  Next we discuss the different estimators used to estimate the central direction.  Finally, visualizations of rotation data is presented.
 
@@ -274,7 +274,7 @@ In Figure \ref{figure:eye1} a random sample of 50 matrices following the Cayley-
 
 \section{Summary}
 
-The \pkg{rotations} package is introduced and allows the user to create, simulate, analyze and visualize rotation data.  There are three parameterizations possible in this package and four built-in distributions from which data can be simulated.  The four estimators discussed in Stanfill et al. (2012) are each implemented and each can be visualized via \code{ggplot2}.
+The \pkg{rotations} package is introduced and allows the user to create, simulate, analyze and visualize rotation data.  There are three parameterizations possible in this package and four built-in distributions from which data can be simulated.  The four estimators discussed in Stanfill et al. (2012) are each implemented and each can be visualized via \CRANpkg{ggplot2}.
 
 %\bibliography{../REFERENCES}
 \bibliography{stanfill-hofmann-genschel}
