@@ -43,7 +43,7 @@ where
 \]
 For more details on this construction see Stanfill et al. (2013) (or some other reference).
 
-The function \code{SO3} will creates a rotation matrix according to \eqref{eqn:angleaxis} for a variety of inputs.  One can supply an angle and unit-axis separately, or as a single three dimensional axis with length equal to the angle.  One can also supply a rotation in the quaternion representation and the matrix equivalent will be return as an \code{SO3} object.  All objects are returned as vectors with the number of rows equal to the sample size.  See the following for the construction of a rotation about the $y$-axis through an angle uniformly chosen on the interval $[0,\pi]$.
+The function \code{SO3} creates a rotation matrix according to \eqref{eqn:angleaxis} for a variety of inputs.  Given an angle and axis \code{SO3} will form a matrix as described above; given only a three-dimensional vector the length of that vector will be taken to be the angle of rotation and the vector will be made unit length.  One can also supply a rotation in the quaternion representation and the matrix equivalent will be return as an \code{SO3} object.  A rotation matrix is returned in vector form with class \code{"SO3"}.  See the following for the construction of a rotation about the $y$-axis through an angle uniformly chosen on the interval $[0,\pi]$.
 
 \begin{example}
 > r <- runif(1, 0 , pi) #2.546667
