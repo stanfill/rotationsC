@@ -1,6 +1,6 @@
 \BOOKMARK [0][-]{section*.2}{rotations: A Package for SO\(3\) Data}{}% 1
 \BOOKMARK [1][-]{chapter.1}{Introduction}{section*.2}% 2
-\BOOKMARK [1][-]{equation.1.0.1}{Rotation Representations}{section*.2}% 3
+\BOOKMARK [1][-]{equation.1.0.1}{Rotation Parameterizations}{section*.2}% 3
 \BOOKMARK [2][-]{section*.3}{Matrix Form}{equation.1.0.1}% 4
 \BOOKMARK [2][-]{equation.1.0.2}{Quaternion Form}{equation.1.0.1}% 5
 \BOOKMARK [1][-]{equation.1.0.2}{Data generation}{section*.2}% 6
