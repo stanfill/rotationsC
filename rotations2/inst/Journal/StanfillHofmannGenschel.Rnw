@@ -274,10 +274,13 @@ plot(Rs,center=id.SO3,show_estimates='proj.mean',
 
 <<eye,fig.width=6,fig.height=6,echo=FALSE,include=FALSE>>=
 Rs<-ruars(50,rcayley,kappa=1)
+setwd("C:/Users/stanfill/Desktop/GitHub/rotationsC/rotations2/inst/Journal/figures")
 plot(Rs,center=id.SO3)
+#ggsave("eye1.png",width=6,height=6)
 plot(Rs,center=id.SO3,show_estimates='all')
-plot(Rs,center=id.SO3,show_estimates='proj.mean',
-		 show_regions='all',alp=.1)
+#ggsave("eye2.png",width=6,height=6)
+plot(Rs,center=id.SO3,show_estimates='proj.mean',show_regions='all',alp=.1)
+#ggsave("eye3.png",width=6,height=6)
 @
 
 

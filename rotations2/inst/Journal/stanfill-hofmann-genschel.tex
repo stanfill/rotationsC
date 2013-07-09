@@ -1,31 +1,28 @@
 % !TeX root = RJwrapper.tex
 
-
 \title{\pkg{rotations}: A Package for $SO(3)$ Data}
 \author{by Bryan Stanfill, Heike Hofmann, Ulrike Genschel}
 
 \maketitle
 
-%<<setup, include=FALSE, cache=FALSE>>=
-%opts_chunk$set(fig.path='figures/', fig.align='center', fig.show='hold',comment=NA,background='white',highlight=FALSE,size='small')
-%options(replace.assign=TRUE,width=90)
-%library(rotations2)
-%@
-
 \abstract{
-In this article we introduce the \pkg{rotations} package which provides users with the ability to simulate, analyze and visualize three-dimensional rotation data.  The \pkg{rotations} package includes four distributions from which to simulate data, four estimators of the central orientation and a novel approach to visualizing these data.  All of the above features are available to two different parameterizations of rotations: 3-by-3 matrix form and quaternions.
+In this article we introduce the \pkg{rotations} package which provides users with the ability to simulate, analyze and visualize three-dimensional rotation data.  The \pkg{rotations} package gives the user access to four distributions from which to simulate data, four estimators of the central orientation, three confidence region estimation procedures and a novel approach to visualizing these data.  All of the above features are available to two different parameterizations of rotations: three-by-three matrix form and quaternions.
 }
 
 \section{Introduction}
 
-Data in form of three-dimensional rotations find application in several scientific areas, such as bio-medical engineering, computer visioning, and geological and materials sciences.  A common goal shared by these fields is to estimate the main or central orientation for a sample of rotations.  That is, letting the rotation group $SO(3)$ denote the collection of all $3\times 3$ rotation matrices, observations $\bm{R}_1,\ldots,\bm{R}_n \in SO(3)$ can be conceptualized as a random sample from a \textit{location model}
+Data in form of three-dimensional rotations find application in several scientific areas, such as bio-medical engineering, computer visioning, and geological and materials sciences where such data represent the positions of objects within some three-dimensional reference frame.  For example, \cite{hubert1996, bingham2009, bachmann2012} examine rotation data in studying crystal orientations on the surfaces of metals.  \cite{rancourt2000} use this data to represent an individual's body position whilst performing a task. 
+
+A common goal shared by these fields is to estimate the main or central orientation for a sample of rotations.  That is, letting the rotation group $SO(3)$ denote the collection of all $3\times 3$ rotation matrices, observations $\bm{R}_1,\ldots,\bm{R}_n \in SO(3)$ can be conceptualized as a random sample from a \textit{location model}
 \begin{equation}
 \label{eqn:loc_model}
 \mathbf{R}_i = \bm{S} \bm{E}_i, \quad i=1,\ldots,n,
 \end{equation}
-where $\bm S \in SO(3)$ is the {\it fixed} parameter of interest indicating an orientation of central tendency, and $\bm{E}_1,\ldots,\bm{E}_n \in SO(3)$ denote i.i.d. {\it random} rotations which symmetrically perturb $\bm{S}$.
+where $\bm S \in SO(3)$ is the {\it fixed} parameter of interest indicating an orientation of central tendency, and $\bm{E}_1,\ldots,\bm{E}_n \in SO(3)$ denote i.i.d. {\it random} rotations which symmetrically perturb $\bm{S}$.  The data-generating model in \eqref{eqn:1} is a rotation-matrix analog of a location model for scalar data $Y_i = \mu + e_i$, where $\mu \in \mathbb{R}$ denotes a mean and $e_i \in \mathbb{R}$ denotes an additive error symmetrically distributed around zero.
 
-The \pkg{rotations} package provides users with the tools necessary to simulate data from four common choices of symmetric distributions, estimate $\bm{S}$ in \eqref{eqn:loc_model} and visualize a sample of rotations.  The remainder of this paper is organized as follows.  We will begin with a discussion on how rotation data can be parameterized.  Then we discuss how data generation is possible in this package.  Next we discuss the different estimators used to estimate the central direction.  Finally, visualizations of rotation data is presented.
+The unique fea
+
+The \pkg{rotations} package provides users with the tools necessary to simulate data from four common choices of symmetric distributions, estimate $\bm{S}$ in \eqref{eqn:loc_model}, form a confidence region for $\bm S$ based on one of the estimators and visualize a sample of rotations.  The remainder of this manuscript is organized as follows.  In the next section we discuss methods for parameterizing rotations and how they are handled in R. Then we discuss how data generation is possible in this package.  Next we discuss the different estimators used to estimate the central direction.  Finally, visualizations of rotation data is presented.
 
 %For example, \citet{rancourt00} examine rotation matrix data in studying body positions whilst operating machinery. \cite{fletcher09} consider this type of  orientation data in magnetic resonance imaging and in shape analysis; similar examples  can be found in \cite{schwartz05}, \cite{pierrynowski09},  \cite{dai10},  or \cite{hadani11}.  The data in our illustrative example to follow arise from a study in materials science, where $3 \times 3$ rotations represent the orientations of cubic crystals on the micro-surface of a metal specimen as measured through electron backscatter diffraction (EBSD) and ``grains" within metals are composed of crystals which roughly share a common orientation; see \cite{randle03} for details on EBSD data.  
      
@@ -96,12 +93,12 @@ This makes $q$ a unit quaternion.  The following code forms a unit quaternion fr
 % For each of these parameterizations we have created a class of R objects: \code{SO3} for the matrix representation, \code{Q4} for quaternions and \code{EA} for Euler angles.  The names of these classes  are also functions that will return an object of the class with the same name given an angle and axis, or an object of any other class.  See the below code for an illustration.  First I generate a rotation matrix from an angle, $r$, and an axis, $\bm U$ using the function \code{SO3}.  Next we transform that rotation into quaternions then Euler angles with the funcions \code{Q4} and \code{EA}, respecitvely.  One can also create quaternions or Euler angles directly by feeding the angle and axis into those same functions.
 
 \begin{example}
-r<-runif(1,-pi,pi)
-theta<-acos(runif(1, -1, 1))
-phi<-runif(1, -pi, pi)
-U<-c(sin(theta)*cos(phi),sin(theta)*sin(phi),cos(theta))
-R<-SO3(U,r)
-q<-Q4(R)
+r <- runif(1,-pi,pi)
+theta <- acos(runif(1, -1, 1))
+phi <- runif(1, -pi, pi)
+U <- c(sin(theta)*cos(phi),sin(theta)*sin(phi),cos(theta))
+R <- SO3(U,r)
+q <- Q4(R)
 \end{example}
 
 %As before the function \code{axis} and \code{angle} will extract the axis and angle of the Euler angle.  One can also translate an Euler angle into a quaternion or matrix by passing an \code{EA} object into \code{Q4} and \code{SO3}, respectively.  One can go the other direction too.
@@ -185,8 +182,7 @@ SO(3)}\sum_{i=1}^n\Edist(\bm{R}_i,\bm{S}).
 The function \code{median} with argument \code{type="projected"} approximates $\ProjMedian$ and uses an adaptation of the Weiszfeld algorithm \citep{weiszfeld1937}.  The mean-based estimator is 
 \begin{align}\label{est:pam}
 \ProjMean&=\argmin_{\bm{S}\in
-SO(3)}\sum_{i=1}^n\Edist^2(\bm{R}_i,\bm{S})\nonumber\\
-&=\argmax_{\bm{S}\in
+SO(3)}\sum_{i=1}^n\Edist^2(\bm{R}_i,\bm{S})\nonumber=\argmax_{\bm{S}\in
 SO(3)}\tr(\bm{S}^{\top}\overline{\bm{R}})
 \end{align}
 and is computed by the function \code{mean} with argument \code{type="projected"}.  For an in-depth discussion of the algorithm used to compute this value consult \citet{moakher2002}.
@@ -229,7 +225,7 @@ The final method available is due to Zhange and Nordman (2009) and is a non-para
 % A similar procedure was used by \cite{bingham10}, but in place of $\Rdist$ the maximum absolute angle between all three axis, which they called $\alpha$, was used.  It's easy to show that $\alpha$ is less than or equal to the geodesic distance between any two rotations making our method slightly more conservative.
 
 \section{Visualizations}
-In this section we introduce a method to visualize $SO(3)$ data via the the \pkg{ggplot2} package \citep{wickham2009}.  The function \code{plot} takes as input a $n\times 9$ matrix of $SO(3)$ observations and returns a visualization of one of the three columns.  The user can specify which column to use with the \code{col} argument, the default is one.  If the data are highly concentrated in one part of the sphere then the the \code{to$\_$range} argument can be set to \code{TRUE} then the range of the plot is set to zoom in on the populated area. 
+In this section we introduce a method to visualize $SO(3)$ data via the the \CRANpkg{ggplot2} package \citep{wickham2009}.  The function \code{plot} takes as input a $n\times 9$ matrix of $SO(3)$ observations and returns a visualization of one of the three columns.  The user can specify which column to use with the \code{col} argument, the default is one.  If the data are highly concentrated in one part of the sphere then the the \code{to$\_$range} argument can be set to \code{TRUE} then the range of the plot is set to zoom in on the populated area. 
 
 Any of the four estimates of the central direction can be plotted along with a sample of rotations. To show all estimates at once add the argument \code{estimates$\_$show="all"}.  If only a few estimates are of interest then any combination of \code{"proj.mean"}, \code{"proj.median"}, \code{"riem.mean"} or \code{"riem.median"} are valid inputs.  The estimators are indicated by shape.  One can also center the data about any observation in $SO(3)$ by setting \code{center=S}.   Typically take \code{center=mean(Rs)}.  
 
@@ -249,13 +245,29 @@ plot(Rs,center=id.SO3,show_estimates='proj.mean',show_regions='all',alp=.1)
 %@
 
 
-\begin{figure}
-\centering
-\includegraphics[width=.6\textwidth]{figures/eye1}
-\includegraphics[width=.75\textwidth]{figures/eye2}
-\includegraphics[width=.75\textwidth]{figures/eye3}
-\caption{\label{figure:eye1}
-A plot of the a random sample from the Cayley-UARS distribution with $\kappa=1$.}
+\begin{figure}[h]
+	\centering
+%	\begin{subfigure}[h]{.5\textwidth}
+%		%\centering
+%		\includegraphics[width=\textwidth]{figures/eye1}
+%		\caption{A random sample from the Cayley-UARS distribution with $\kappa=1$, $n=50$.}
+%		\label{fig:sample}
+%	\end{subfigure}
+	\begin{subfigure}[h]{.45\textwidth}
+		%\centering
+		\includegraphics[width=\textwidth]{figures/eye2}
+		\caption{All four of the estimators are plotted along with the random sample.}
+		\label{fig:ests}
+	\end{subfigure}
+	\begin{subfigure}[h]{.45\textwidth}
+		%\centering
+		\includegraphics[width=\textwidth]{figures/eye3}
+		\caption{Three methods to compute confidence regions for the projected mean.}
+		\label{fig:regs}
+	\end{subfigure}
+	
+	\caption{\label{figure:eye1}The $x$-axis of a random sample from the Cayley-UARS distribution with $\kappa=1$, $n=50$.}
+	
 \end{figure}
 
 In Figure \ref{figure:eye1} a random sample of 50 matrices following the Cayley-UARS distribution with $\kappa=1$ is plotted along with four estimates of the central orientation.  The code to produce this plot is also given.
