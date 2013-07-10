@@ -49,47 +49,52 @@ The function \code{SO3} creates a rotation matrix according to \eqref{eqn:anglea
 > r <- runif(1, 0 , pi) #2.546667
 > u <- c(0, 1 ,0)
 > SO3(u, r)
-           [,1] [,2]       [,3] [,4] [,5][,6]       [,7] [,8]       [,9]
-[1,] -0.8281899    0 -0.5604476    0    1    0 0.5604476    0 -0.8281899
+      [,1] [,2]  [,3] [,4] [,5][,6]  [,7] [,8]  [,9]
+[1,] -0.82    0 -0.56    0    1    0 0.56    0 -0.82
 attr(,"class")
 [1] "SO3"
 
 > SO3(u*r)
-           [,1] [,2]       [,3] [,4] [,5][,6]       [,7] [,8]       [,9]
-[1,] -0.8281899    0 -0.5604476    0    1    0 0.5604476    0 -0.8281899
+      [,1] [,2]  [,3] [,4] [,5][,6]  [,7] [,8]  [,9]
+[1,] -0.82    0 -0.56    0    1    0 0.56    0 -0.82
 attr(,"class")
 [1] "SO3"
 \end{example}
 
 \subsection{Quaternion Form}
 
-A second parameterization of rotations is with a {\it quaternion} of unit length.  Quaternions are a form of imaginary numbers with one real entry and a vector of three imaginary parts that can be expressed as
+Alternative one can represent a rotation as a unit vector in $\R^4$ called quaternions.  Quaternions are a form of imaginary numbers with one real entry and a vector of three imaginary parts that can be expressed as
 \[
 q = x_1 + x_2 i + x_3 j + x_4 k
 \]
-where $i,j,$ and $k$ are square roots of -1, i.e. $i^2 = j^2= k^2 = -1$.  We can write $q=(s,\bm v)$ as tuple of the scalar $s$ for coefficient {\bf 1} and vector $\bm v$ for the imaginary coefficients, i.e. $s=x_1$ and $\bm v= (x_2, x_3, x_4)$.
+where $i,j,$ and $k$ are square roots of -1, i.e. $i^2 = j^2= k^2 = -1$.  We can write $q=(s,\bm v)$ as tuple of the scalar $s$ for coefficient $\bm 1$ and vector $\bm v$ for the imaginary coefficients, i.e. $s=x_1$ and $\bm v= (x_2, x_3, x_4)$.
 
 A rotation around axis $\bm u$ by angle $r$ translates to $q=(s,\bm v)$ with
 \[
 s = \cos{(r/2)},  \ \ \bm v = \bm u \sin {(r/2)}
 \]
-This makes $q$ a unit quaternion.  The following code forms a unit quaternion from an angle sampled uniformly from the interval $[-\pi,\pi]$ and an axis sampled uniformly from the unit circle.
+The following code creates the same rotation from the previous section in the form of a quaternion with the \code{Q4} function.  This function works much the same way as the \code{SO3} function in terms of possible inputs but returns a vector of length four of the class \code{"Q4"}. 
 
 \begin{example}
-r <- runif(1,-pi,pi)
-theta <- acos(runif(1, -1, 1))
-phi <- runif(1, -pi, pi)
-U <- c(sin(theta)*cos(phi),sin(theta)*sin(phi),cos(theta))
-R <- SO3(U,r)
-q <- Q4(R)
+> Q4(r, u)
+     [,1] [,2] [,3]  [,4]
+[1,] 0.29    0 0.95     0
+attr(,"class")
+[1] "Q4"
+
+> Q4(SO3(r, u))
+     [,1] [,2] [,3]  [,4]
+[1,] 0.29    0 0.95     0
+attr(,"class")
+[1] "Q4"
 \end{example}
 
 
-For the remainder of this article we will present our work using the matrix representation.  All the functions to follow will work with any of  the representations we have discussed above.
+For the remainder of this manuscript only the matrix parametrization will be considered though all the functions are available for quaternions as well.
 
 \section{Data generation} 
 
-From \eqref{eqn:loc_model}, one can simulate a matrix $\bm{R}_i\in SO(3)$ by picking an axis $\bm u$ uniformly on the sphere then drawing an angle $r$ from a distribution symmetric about $0$ and bounded between $-\pi$ and $\pi$ then applying \eqref{eqn:angleaxis}.  A matrix generated in this fashion is said to belong to the \dfn{uniform-axis random spin}, or UARS, class of distributions and has the density
+If for the rotation $\bm{R}_i\in SO(3)$, the axis $\bm u$ is uniformly distributed on the sphere and the angle $r$ is distributed symmetrically about $0$ then $\bm R_i$ is said to belong to the \dfn{uniform-axis random spin}, or UARS, class of distributions and has the density
 \begin{equation}\label{eq:uarsden}
 f(\bm E_i|\kappa)=\frac{4\pi}{3-\tr(\bm E_i)}C\left(\left.\cos^{-1}\left\{\frac{1}{2}[\tr(\bm E_i)-1]\right\}\right|\kappa\right)
 \end{equation}
@@ -202,8 +207,6 @@ plot(Rs,center=id.SO3)
 plot(Rs,center=id.SO3,show_estimates='all')
 plot(Rs,center=id.SO3,show_estimates='proj.mean',show_regions='all',alp=.1)
 \end{example}
-
-
 
 
 \begin{figure}[h]
