@@ -182,7 +182,7 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 #' Uniform density on the circle
 #' 
 #' The uniform density on the circle  (also referred to as Haar measure)
-#' has the density \deqn{C_U(r)=\frac{1-cos(r)}{2\pi}.}{C(r)=1-cos(r)/2\pi.}
+#' has the density \deqn{C_U(r)=\frac{[1-cos(r)]}{2\pi}.}{C(r)=[1-cos(r)]/2\pi.}
 #'
 #' @name Haar
 #' @aliases Haar dhaar phaar rhaar

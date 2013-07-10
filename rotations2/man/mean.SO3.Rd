@@ -50,15 +50,15 @@ Rs<-ruars(20,rvmises,kappa=0.01)
 mean(Rs)
 }
 \references{
-  Moakher M (2002). "Means and averaging in the group of
-  rotations." _SIAM Journal on Matrix Analysis and
-  Applications_, *24*(1), pp. 1-16.
-
   Manton JH (2004). "A globally convergent numerical
   algorithm for computing the centre of mass on compact Lie
   groups." In _Control, Automation, Robotics and Vision
   Conference, 2004. ICARCV 2004 8th_, volume 3, pp.
   2211-2216. IEEE.
+
+  Moakher M (2002). "Means and averaging in the group of
+  rotations." _SIAM Journal on Matrix Analysis and
+  Applications_, *24*(1), pp. 1-16.
 }
 \seealso{
   \code{\link{median.SO3}}

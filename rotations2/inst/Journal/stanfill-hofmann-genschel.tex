@@ -92,25 +92,27 @@ attr(,"class")
 
 For the remainder of this manuscript only the matrix parametrization will be considered though all the functions are available for quaternions as well.
 
-\section{Data generation} 
+\section{$SO(3)$ Data generation} 
 
-If for the rotation $\bm{R}_i\in SO(3)$, the axis $\bm u$ is uniformly distributed on the sphere and the angle $r$ is distributed symmetrically about $0$ then $\bm R_i$ is said to belong to the \dfn{uniform-axis random spin}, or UARS, class of distributions and has the density
+{\color{red} MAKE A TABLE LIKE IN THE TECHNO PAPER AND SIMPLIFY THIS SECTION SIGNIFICANTLY}
+
+If the rotation $\bm{E}_i\in SO(3)$ from \eqref{eqn:loc_model} has an axis $\bm u$ that is uniformly distributed on the sphere and an angle $r$ that is distributed about $0$ according to some symmetric distribution function then $\bm E_i$ is said to belong to the \dfn{uniform-axis random spin}, or UARS, class of distributions.   From \cite{bingham2009} the density for $\bm E_i$ is given by
 \begin{equation}\label{eq:uarsden}
 f(\bm E_i|\kappa)=\frac{4\pi}{3-\tr(\bm E_i)}C\left(\left.\cos^{-1}\left\{\frac{1}{2}[\tr(\bm E_i)-1]\right\}\right|\kappa\right)
 \end{equation}
-where $C(\cdot|\kappa)$ is distribution function connecting to the angle of rotation $r$ \citep{bingham2009}.  Members of the UARS family of distributions are distinguished based on the angluar distribution.
+where $C(\cdot|\kappa)$ is distribution function connecting to the angle of rotation $r$.  Members of the UARS family of distributions are distinguished based on the angular distribution.
 
 
-The \pkg{rotate} package allows the user access to four members of the UARS class.  Each member is differentiated by the distribution function for $r$: the uniform distribution on the circle, the matrix Fisher \citep{langevin2005, downs1972, khatri1977, jupp1979}, the Cayley  \citep{Schaeben1997, leon2006} and a circular-von Mises-based distribution \citep{bingham2009}. 
+The \pkg{rotations} package allows the user access to four members of the UARS class.  Each member is differentiated by the distribution function for $r$: the uniform distribution on the circle, the matrix Fisher \citep{langevin2005, downs1972, khatri1977, jupp1979}, the Cayley  \citep{Schaeben1997, leon2006} and a circular-von Mises-based distribution \citep{bingham2009}. 
 
 
 The uniform distribution on the circle is given by the following density function
 \begin{equation}\label{eqn:haar}
 C_\mathrm{{H}}(r)=\frac{1-\cos(r)}{2\pi}
 \end{equation}
-for $r\in(-\pi,\pi]$.  This function also plays the part of a measure on the sphere, called the Haar measure on the sphere.  The function \code{rhaar} with input \code{n} will draw a sample of size $n$ from \eqref{eqn:haar} and \code{dhaar} with evaluate the density at a given point.
+for $r\in(-\pi,\pi]$.  This function is also known as the \dfn{Haar measure}, which acts like the uniform measure on $SO(3)$.  The functions \code{rhaar}, \code{dhaar} and \code{phaar} are included and can be used in the usual way.
 
-The following three distributions are all symmetric around $0$ on the range $[-\pi,\pi)$ and have one parameter, $\kappa$, which is the concentration parameter.  As $\kappa$ increases, the distribution becomes more peaked about $0$ and less variable.  If one would prefer to specify the variability instead, the circular variance denoted $\nu$ can also be set by the user.  For $r\sim F$ where $F$ is a distribution on the circle, the circular variance is defined as $\nu=1-E\cos(r)$, and $E\cos(r)$ is called the mean resultant length \citep{mardia2000}.
+The following three distributions are all symmetric around $0$ on the range $[-\pi,\pi)$ and have one parameter, $\kappa$, which is the concentration parameter.  As $\kappa$ increases, the distribution becomes more peaked about $0$ and less variable.  If one would prefer to specify the variability instead, the circular variance denoted $\nu$ can also be set by the user.  For $r\sim F$ where $F$ is a distribution on the circle, the circular variance is defined as $\nu=1-E\cos(r)$, and $E\cos(r)$ is called the mean resultant length \citep{mardia2000}.  
 
 The symmetric matrix Fisher distribution is the oldest and also the most difficult to sample from.  It takes on the following distributional form
 \[
@@ -158,6 +160,8 @@ By staying in the Riemannian space $SO(3)$ under the intrinsic approach, the nat
 \Rdist(\bm{R}_1,\bm{R}_2)=  \frac{1}{\sqrt{2}}\|\text{Log}(\bm{R}_1^\top\bm{R}_2)\|_F = |r|,
 \end{equation}
 where $\text{Log}(\bm{R})$ denotes the principle logarithm of $\bm{R}$ (i.e., $\text{Log}(\bm{R}) = \text{Log}(\bm{R}(\bm u,r))= \bm \Phi(r\bm u)$ in \eqref{eqn:angleaxis}) and $r\in[-\pi,\pi)$ is the misorientation angle of $\bm{R}_1^\top \bm{R}_2$.  The Riemannian distance corresponds to the length of the shortest path that connects $\bm{R}_1$ and $\bm{R}_2$ {\it within} the space $SO(3)$. For this reason, the Riemannian distance is often considered the more natural metric on $SO(3)$; see \citet{moakher2002} for this discussion along with more details on exponential/logarithmic operators related to $SO(3)$.
+
+{\color{red} AGAIN, MAKE A TABLE SUMMARIZING THE ESTIMATORS AND SIMPLIFY THE REST OF THIS SECTION}
 
 We first consider estimators based on the embedding approach, which we call the projected estimators.  The median-based estimator in this class is
 \begin{equation}\label{est:med}
