@@ -216,7 +216,7 @@ Estimators based on the Riemannian distance metric are called \code{geometric} e
 
 %\begin{center}
 \begin{table}[h]
-\caption{A summary of the estimators included in \pkg{rotations} and how to call them assuming \code{Rs} is a sample of $n$ rotations with class \code{"SO3"} or \code{"Q4"}.}  \label{tab:ests.sum}
+\caption{A summary of the estimators included in \pkg{rotations} package.  \code{Rs} is a sample of $n$ rotations with class \code{"SO3"} or \code{"Q4"} as generated in the previous section.}  \label{tab:ests.sum}
 \centering
 \begin{tabular}{ lclclcl}\toprule
 \rule[2mm]{0mm}{1mm} \textbf{Estimator name} & & \textbf{Definition} & & \textbf{Code}\\ 
@@ -284,14 +284,14 @@ The second method we consider is based upon a result given by \cite{chang2001} t
 \end{equation}
 where $c=2E[1-\cos(r)^2]/3$ and $d=E[1+2\cos(r)]/3$.  Similar to \eqref{eqn:prentice}, rearranging \eqref{eqn:mest} will give a single value that can be interpreted as the radius of a confidence cone centered at $\ProjMean$, this value is calculated by the \code{region} function with argument \code{method="chang"}.
 
-The final method available is due to Zhang and Nordman (2009) and is a non-parametric pivotal bootstrap method.  It is based on the results of \cite{chang2001} but replaces the $\chi^2_{3,1-\alpha}$ critical value in \eqref{eqn:mest} with the bootstrap estimated critical value $\hat{q}_{1-\alpha}$.  See Stanfill et al. (2014) for details and a comparison of these three methods.  When \code{method="zhang"} is specified the additional \code{m} argument specifics how large a bootstrap sample size to use in order to estimate the critical value, which is used in place of the $\chi^2_3$ percentile. 
+The final method available is due to Zhang and Nordman (2009) and is a non-parametric pivotal bootstrap method.  It is based on the results of \cite{chang2001} but replaces the $\chi^2_{3,1-\alpha}$ critical value in \eqref{eqn:mest} with the bootstrap estimated critical value $\hat{q}_{1-\alpha}$.  See Stanfill et al. (2014) for details and a comparison of these three methods.  Calling the \code{region} function with \code{method="zhang"} specified will return the cond radius as before.  The additional \code{m} argument specifics how large a bootstrap sample size to use in order to estimate the critical value, which defaults to 300. 
 
 
 \section{Visualizations}
 
-In this section we introduce a method to visualize $SO(3)$ data via the the \CRANpkg{ggplot2} package \citep{wickham2009}.  The function \code{plot} takes as input a $n\times 9$ matrix of $SO(3)$ observations and returns a visualization of one of the three columns.  The user can specify which column to use with the \code{col} argument, the default is one.  If the data are highly concentrated in one part of the sphere then the the \code{to$\_$range} argument can be set to \code{TRUE} then the range of the plot is set to zoom in on the populated area. 
+In this section we introduce a method to visualize $SO(3)$ data via the the \CRANpkg{ggplot2} package \citep{wickham2009}.  Calling the \code{plot} function with a \code{"SO3"} object will result in a sphere, which represent one of the columns of the supplied data.  The \code{center} defines the center of the plot and is usually set to the identity rotation \code{id.SO3} or an estimate of the central orientation, e.g. \code{mean(Rs)}.  The user can specify which column to use with the \code{col} argument, which defaults to \code{col=1} and is the $x$-axis.  If the data are highly concentrated in one part of the sphere then the the \code{to$\_$range} argument can be set to \code{TRUE} then the range of the plot is set to zoom in on the area of the sphere that has points. 
 
-Any of the four estimates of the central direction can be plotted along with a sample of rotations. To show all estimates at once add the argument \code{estimates$\_$show="all"}.  If only a few estimates are of interest then any combination of \code{"proj.mean"}, \code{"proj.median"}, \code{"riem.mean"} or \code{"riem.median"} are valid inputs.  The estimators are indicated by shape.  One can also center the data about any observation in $SO(3)$ by setting \code{center=S}.   Typically take \code{center=mean(Rs)}.  
+Any of the four estimates of the central direction can be plotted along with a sample of rotations. To show all estimates at once add the argument \code{estimates$\_$show="all"}.  If only a few estimates are of interest then any combination of \code{"proj.mean"}, \code{"proj.median"}, \code{"geom.mean"} or \code{"geom.median"} are valid inputs.  The estimators are indicated by color and a legend is given. Finally, the \code{show$\_$regions} option allows the used to draw a circle on the surface of the sphere representing the confidence region for that axis, and centered at $\ProjMean$.  If estimators are also plotted then they are represented by shapes and the regions are colored.  See below for an example.
 
 \begin{example}
 Rs <- ruars(50, rcayley, kappa = 1)
@@ -326,7 +326,7 @@ plot(Rs, center = id.SO3, show_estimates = 'proj.mean', show_regions = 'all', al
 	
 \end{figure}
 
-In Figure \ref{figure:ests} a random sample of 50 matrices following the Cayley-UARS distribution with $\kappa=1$ is plotted along with four estimates of the central orientation.  The confidence region methods and how they are displayed by the \code{plot} function is illustrated in Figure \ref{fig:regs}.
+In Figure \ref{fig:ests} a random sample of 50 matrices following the Cayley-UARS distribution with $\kappa=1$ is plotted along with four estimates of the central orientation.  The confidence region methods and how they are displayed by the \code{plot} function is illustrated in Figure \ref{fig:regs}.
 
 \section{Summary}
 
