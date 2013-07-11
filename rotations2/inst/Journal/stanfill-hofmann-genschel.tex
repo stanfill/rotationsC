@@ -195,31 +195,50 @@ where $\text{Log}(\bm{R})$ denotes the principle logarithm of $\bm{R}$ (i.e., $\
 
 Estimators based on the Riemannian distance metric are called \code{geometric} estimators because they preserve the geometry of $SO(3)$.  These can be computed using the \code{mean} and \code{median} functions with the argument \code{type="geometric"}.  In Table \ref{tab:ests.sum} the four estimators are summarized including how they can be computed and the functions they minimize.  Examples of how the function can be used is displayed below.
 
+%%\begin{center}
+%\begin{table}[h]
+%\caption{An overview of the estimators and their underlying geometry and loss function.}  \label{tab:ests.sum}
+%\centering
+%\begin{tabular}{ lclclcl}\toprule
+%\rule[2mm]{0mm}{1mm} \textbf{Estimator name} & & \textbf{Denoted} & & \textbf{\code{type}} &&\textbf{Minimizer of}\\ 
+%%\rule[2mm]{0mm}{1mm}
+%  & &  & & \textbf{argument} &&\textbf{loss function}\\ 
+%\midrule
+%%\rule[2mm]{0mm}{6mm} 
+%Projected Mean & & $\ProjMean$ & & \code{"projected"} &&$\sum\limits_{i=1}^n \Edist(\bm S,\bm R_i)^2$  \\
+%\rule[2mm]{0mm}{6mm} Projected Median & & $\ProjMedian$ & & \code{"projected"} && $\sum\limits_{i=1}^n\Edist(\bm S,\bm R_i)$ \\
+%\rule[2mm]{0mm}{6mm} Geometric Mean & & $\GeomMean$&  & \code{"geometric"} && $\sum\limits_{i=1}^n \Rdist(\bm S,\bm R_i)^2$\\
+%\rule[2mm]{0mm}{6mm} Geometric Median & & $\GeomMedian$&  & \code{"geometric"} &&$\sum\limits_{i=1}^n\Rdist(\bm S,\bm R_i)$ \\[-7mm] 
+%\rule[2mm]{0mm}{6mm} & & & & \\ \bottomrule
+%\end{tabular}
+%\end{table}
+%%\end{center}
+
 %\begin{center}
 \begin{table}[h]
-\caption{An overview of the estimators and their underlying geometry and loss function.}  \label{tab:ests.sum}
+\caption{A summary of the estimators included in \pkg{rotations} and how to call them assuming \code{Rs} is a sample of $n$ rotations with class \code{"SO3"} or \code{"Q4"}.}  \label{tab:ests.sum}
 \centering
 \begin{tabular}{ lclclcl}\toprule
-\rule[2mm]{0mm}{1mm} \textbf{Estimator name} & & \textbf{Denoted} & & \textbf{\code{type}} &&\textbf{Minimizer of}\\ 
+\rule[2mm]{0mm}{1mm} \textbf{Estimator name} & & \textbf{Definition} & & \textbf{Code}\\ 
 %\rule[2mm]{0mm}{1mm}
-  & &  & & \textbf{argument} &&\textbf{loss function}\\ 
+ % & &  & & \textbf{argument} \\ 
 \midrule
 %\rule[2mm]{0mm}{6mm} 
-Projected Mean & & $\ProjMean$ & & \code{"projected"} &&$\sum_{i=1}^n d^2_E$  \\
-\rule[2mm]{0mm}{6mm} Projected Median & & $\ProjMedian$ & & \code{"projected"} && $\sum_{i=1}^n\Edist$ \\
-\rule[2mm]{0mm}{6mm} Geometric Mean & & $\GeomMean$&  & \code{"geometric"} && $\sum_{i=1}^n d^2_R$\\
-\rule[2mm]{0mm}{6mm} Geometric Median & & $\GeomMedian$&  & \code{"geometric"} &&$\sum_{i=1}^n\Rdist$ \\[-7mm] 
+Projected Mean & & $\ProjMean=\underset{\bm S\in SO(3)}{\argmin}\sum\limits_{i=1}^n \Edist(\bm S,\bm R_i)^2$ & & \code{mean(Rs, type = "projected")} \\
+\rule[2mm]{0mm}{6mm} Projected Median & & $\ProjMedian=\underset{\bm S\in SO(3)}{\argmin}\sum\limits_{i=1}^n\Edist(\bm S,\bm R_i)$ & & \code{median(Rs, type = "projected")} \\
+\rule[2mm]{0mm}{6mm} Geometric Mean & & $\GeomMean=\underset{\bm S\in SO(3)}{\argmin}\sum\limits_{i=1}^n \Rdist(\bm S,\bm R_i)^2$&  & \code{mean(Rs, type = "geometric")} \\
+\rule[2mm]{0mm}{6mm} Geometric Median & & $\GeomMedian=\underset{\bm S\in SO(3)}{\argmin}\sum\limits_{i=1}^n\Rdist(\bm S,\bm R_i)$&  & \code{median(Rs, type = "geometric")} \\[-7mm] 
 \rule[2mm]{0mm}{6mm} & & & & \\ \bottomrule
 \end{tabular}
 \end{table}
 %\end{center}
 
-\begin{example}
-> ShatE <- mean(Rs, type='projected')
-> StildeE <- median(Rs, type='projected')
-> ShatG <- mean(Rs, type='geometric)
-> StildeG <- median(Rs, type='geometric') 
-\end{example}
+%\begin{example}
+%> ShatE <- mean(Rs, type='projected')
+%> StildeE <- median(Rs, type='projected')
+%> ShatG <- mean(Rs, type='geometric)
+%> StildeG <- median(Rs, type='geometric') 
+%\end{example}
 
 %We first consider estimators based on the embedding approach, which we call the projected estimators.  The median-based estimator in this class is
 %\begin{equation}\label{est:med}
