@@ -31,30 +31,29 @@ Several parameterizations of rotations exist, we consider two of the most popula
 
 \subsection{Matrix Form}
 
-Rotations in three-dimensions can be represented by $3\times3$ orthogonal matrices with determinant one.  Matrices with these characteristics form a group called the \dfn{special orthogonal group}, or \dfn{rotation group}, denoted $SO(3)$.  Every element in $SO(3)$ can be described by an angle, $r\in[0,\pi)$ and an axis, $\bm u\in\mathbb{R}^3$ with $\|\bm u\|=1$, which in the material scientist's literature are called the \dfn{misorientation angle} and the \dfn{misorientation axis}, respectively.  
-
-More specifically, given an angle $r$ and axis $\bm u=(u_1,u_2,u_3)$ the rotation matrix $\bm R\in SO(3)$ is formed by
-\begin{equation}\label{eqn:angleaxis}
- \bm{R} = \bm{R}(r,\bm{u}) = \bm{u}\bm{u}^\top+(\bm{I}_{3\times3}-\bm{u}\bm{u}^\top)\cos(r) +\Phi(\bm{u})\sin(r)
-\end{equation}
-where
+Rotations in three-dimensions can be represented by $3\times3$ orthogonal matrices with determinant one.  Matrices with these characteristics form a group called the \dfn{special orthogonal group}, or \dfn{rotation group}, denoted $SO(3)$.  Every element in $SO(3)$ is associated with a skew-symmetric matrix $\Phi(\bm w)$ where
 \[
-\Phi(\bm{u}) = \Phi (u_1,u_2,u_3) = \left(\begin{array}{ccc}0 & -u_3 & u_2 \\ u_3 & 0 & -u_1 \\-u_2 & u_1 & 0\end{array}\right).
+\bm{\Phi}(\bm{w}) = \left(\begin{array}{ccc}0 & -w_3 & w_2 \\ w_3 & 0 & -w_1 \\-w_2 & w_1 & 0\end{array}\right)
 \]
-For more details on this construction see Stanfill et al. (2013) (or some other reference).
+for $\bm w\in\mathbb{R}^3$.  Applying the exponential operator to the matrix $\Phi(\bm w)$ results in the rotation $\bm R$
+
+\begin{equation}\label{eqn:angleaxis}
+  \bm R=\exp[\bm{\Phi}(\bm{w})] = \sum\limits_{k=0}^\infty \frac{[\bm{\Phi}(\bm{w})]^k}{k!}=\cos(r)\bm{I}_{3\times3} + \sin(r) \bm{\Phi}(\bm{u}) + (1-\cos r) \bm{u} \bm{u}^\top
+\end{equation}
+where $r=\|\bm{w}\|_F$, $\bm{u} =\bm{w}/\|\bm{w}\|_F$ and $\|\cdot\|_F$ the Frobenius norm.  In the material sciences literature, the values $r\in[0,\pi)$ and  $\bm u\in\R^3$ \dfn{misorientation angle} and \dfn{misorientation axis}, respectively. For more details on this construction see Stanfill et al. (2013) (or some other reference). 
 
 The function \code{SO3} creates a rotation matrix according to \eqref{eqn:angleaxis} for a variety of inputs.  Given an angle and axis \code{SO3} will form a matrix as described above; given only a three-dimensional vector the length of that vector will be taken to be the angle of rotation and the vector will be made unit length.  One can also supply a rotation in the quaternion representation and the matrix equivalent will be return as an \code{SO3} object.  A rotation matrix is returned in vector form with class \code{"SO3"}.  See the following for the construction of a rotation about the $y$-axis through an angle uniformly chosen on the interval $[0,\pi]$.
 
 \begin{example}
 > r <- runif(1, 0 , pi) #2.546667
 > u <- c(0, 1 ,0)
-> SO3(u, r)
+> w <- u*r
+> SO3(w)
       [,1] [,2]  [,3] [,4] [,5][,6]  [,7] [,8]  [,9]
 [1,] -0.82    0 -0.56    0    1    0 0.56    0 -0.82
 attr(,"class")
 [1] "SO3"
-
-> SO3(u*r)
+> SO3(u, r)
       [,1] [,2]  [,3] [,4] [,5][,6]  [,7] [,8]  [,9]
 [1,] -0.82    0 -0.56    0    1    0 0.56    0 -0.82
 attr(,"class")
@@ -173,6 +172,9 @@ The dashes in 'Function' column of Table \ref{tab:Crforms} can be replaced by \c
 
 \section{Data analysis\label{section:analysis}}
 
+In this section we present functions in the \pkg{rotations} package to compute point estimates and confidence regions for the central orientation $\bm S$.
+
+\subsection{Point Estimation}
 Given a sample of $n$ observations $\bm R_1,\dots,\bm R_{n}$ generated according to \eqref{eqn:loc_model} we offer four ways to estimate the central orientation $\bm S$.  These estimators are either Riemannian- or Euclidean-based in geometry and either mean- or median-based.  First we discuss how the choice of geometry affects distance.
 
 The choice of geometry results in two different metrics to measure the distance between rotation matrices $\bm{R}_1$ and $\bm{R}_2 \in SO(3)$. Under the embedding approach, the natural distance metric between two random matrices in the Euclidean distance, $\Edist$, is induced by the Frobenius norm 
@@ -244,28 +246,39 @@ Projected Mean & & $\ProjMean$ & & \code{"projected"} &&$\sum_{i=1}^n d^2_E$  \\
 %\end{equation}
 %The function \code{mean} with argument \code{type="geometric"} implements an algorithm first proposed by \citet{manton2004} in estimating $\GeomMean$.
 
-\section{Confidence Regions}
+\subsection{Confidence Regions}
 
-Asymptotic results for the projected mean $\ProjMean$ can be used to infer about the central orientation $\bm S$. In particular, results in \cite{prentice1986,chang2001} and Zhang et al. (2009) give three distinct approaches to forming a confidence region for the central orientation.  The \code{region} function acts as a wrapper that can be used to access each of these methods for a sample from \eqref{eqn:loc_model} through the \code{method} argument.
+Asymptotic results for the projected mean $\ProjMean$ can be used to infer about the central orientation $\bm S$. In particular, results in \cite{prentice1986,chang2001} and Zhang et al. (2009) give three distinct approaches to forming a confidence region for the central orientation.  The \code{region} function acts as a wrapper that can be used to access each of these methods for a sample from \eqref{eqn:loc_model}.
 
 
-The first method we consider is due to \cite{prentice1986} and is based upon asymptotic results for eigenvectors.  \cite{rancourt2000} used this method in the context of human kinematics and we use their formulation of the result.  A call to the \code{region} function with argument \code{method="prentice"} will return a vector of length three, where each value corresponds to the largest possible radius of the confidence region centered at each axis of $\ProjMean$.  A conservative estimate of the overall confidence region is therefore the largest of the three returned values.
+The method due to \cite{prentice1986} states that all rotations of the form $\ProjMean\exp[\bm{\Phi}(\bm h)]$ with vectors $\bm h\in\R^3$ satisfying
+\begin{equation}\label{eqn:prentice}
+n\bm h^\top\widehat{\bm A}\bm{S}^{-1}\widehat{\bm A}\bm h<\chi^2_{3,1-\alpha}
+\end{equation}
+form a $100(1-\alpha)\%$ confidence region.  See \cite{rancourt2000} for details on how to compute the matrices $\widehat{\bm A}$ and $\bm{S}^{-1}$.  Rearranging \eqref{eqn:prentice} and using \eqref{eqn:angleaxis} one can determine the largest angle of rotation possible about each axis that will maintain the inequality.
 
-The second method we consider is based upon a result given by \cite{chang2001} that was later clarified for the UARS context by Stanfill et al. (2013).  For this case, the \code{region} function with \code{method="chang"} returns a single value that represents the largest radius possible for the confidence region centered at $\ProjMean$.
+For a sample of rotations a call to the \code{region} function with argument \code{method="prentice"} will return a three-dimensional vector, where each value corresponds to the largest possible radius of the confidence region centered at each axis of $\ProjMean$.  Alternatively, a conservative estimate of the overall confidence region is the largest of the three axis rotation angles.
 
-The final method available is due to Zhange and Nordman (2009) and is a non-parametric pivotal bootstrap method.  When \code{method="zhang"} is specified the additional \code{m} argument specifices how large a bootstrap sample size to use in order to estimate the critical value, which is used in place of the $\chi^2_3$ percentile.  The simulation study in Stanfill et al. (2013) indicates that this is the best region estimation procedure in terms of coverage rate, especially for small sample sizes.
+The second method we consider is based upon a result given by \cite{chang2001} that was later clarified for the UARS context by Zhang et al. (2009).  With the same form or rotations, vectors $\bm h\in\R^3$ satisfying
+\begin{equation}\label{eqn:mest}
+\frac{2nd^2}{c}\|\bm h\|^2<\chi^2_{3,1-\alpha}
+\end{equation}
+where $c=2E[1-\cos(r)^2]/3$ and $d=E[1+2\cos(r)]/3$.  Similar to \eqref{eqn:prentice}, rearranging \eqref{eqn:mest} will give a single value that can be interpreted as the radius of a confidence cone centered at $\ProjMean$, this value is calculated by the \code{region} function with argument \code{method="chang"}.
+
+The final method available is due to Zhang and Nordman (2009) and is a non-parametric pivotal bootstrap method.  It is based on the results of \cite{chang2001} but replaces the $\chi^2_{3,1-\alpha}$ critical value in \eqref{eqn:mest} with the bootstrap estimated critical value $\hat{q}_{1-\alpha}$.  See Stanfill et al. (2014) for details and a comparison of these three methods.  When \code{method="zhang"} is specified the additional \code{m} argument specifics how large a bootstrap sample size to use in order to estimate the critical value, which is used in place of the $\chi^2_3$ percentile. 
 
 
 \section{Visualizations}
+
 In this section we introduce a method to visualize $SO(3)$ data via the the \CRANpkg{ggplot2} package \citep{wickham2009}.  The function \code{plot} takes as input a $n\times 9$ matrix of $SO(3)$ observations and returns a visualization of one of the three columns.  The user can specify which column to use with the \code{col} argument, the default is one.  If the data are highly concentrated in one part of the sphere then the the \code{to$\_$range} argument can be set to \code{TRUE} then the range of the plot is set to zoom in on the populated area. 
 
 Any of the four estimates of the central direction can be plotted along with a sample of rotations. To show all estimates at once add the argument \code{estimates$\_$show="all"}.  If only a few estimates are of interest then any combination of \code{"proj.mean"}, \code{"proj.median"}, \code{"riem.mean"} or \code{"riem.median"} are valid inputs.  The estimators are indicated by shape.  One can also center the data about any observation in $SO(3)$ by setting \code{center=S}.   Typically take \code{center=mean(Rs)}.  
 
 \begin{example}
-Rs<-ruars(50,rcayley,kappa=1)
-plot(Rs,center=id.SO3)
-plot(Rs,center=id.SO3,show_estimates='all')
-plot(Rs,center=id.SO3,show_estimates='proj.mean',show_regions='all',alp=.1)
+Rs <- ruars(50, rcayley, kappa = 1)
+plot(Rs, center = id.SO3)
+plot(Rs, center = id.SO3, show_estimates = 'all')
+plot(Rs, center = id.SO3, show_estimates = 'proj.mean', show_regions = 'all', alp = .1)
 \end{example}
 
 
@@ -280,21 +293,21 @@ plot(Rs,center=id.SO3,show_estimates='proj.mean',show_regions='all',alp=.1)
 	\begin{subfigure}[h]{.45\textwidth}
 		%\centering
 		\includegraphics[width=\textwidth]{figures/eye2}
-		\caption{All four of the estimators are plotted along with the random sample.}
+		\caption{Point estimates}
 		\label{fig:ests}
 	\end{subfigure}
 	\begin{subfigure}[h]{.45\textwidth}
 		%\centering
 		\includegraphics[width=\textwidth]{figures/eye3}
-		\caption{Three methods to compute confidence regions for the projected mean.}
+		\caption{Confidence region estimates}
 		\label{fig:regs}
 	\end{subfigure}
 	
-	\caption{\label{figure:eye1}The $x$-axis of a random sample from the Cayley-UARS distribution with $\kappa=1$, $n=50$.}
+	\caption{\label{figure:eye1}The $x$-axis of a random sample from the Cayley-UARS distribution with $\kappa=1$, $n=50$.  All for point estimates are displayed in (a) and all three region methods along with the projected mean are in (b).}
 	
 \end{figure}
 
-In Figure \ref{figure:eye1} a random sample of 50 matrices following the Cayley-UARS distribution with $\kappa=1$ is plotted along with four estimates of the central orientation.  The code to produce this plot is also given.
+In Figure \ref{figure:ests} a random sample of 50 matrices following the Cayley-UARS distribution with $\kappa=1$ is plotted along with four estimates of the central orientation.  The confidence region methods and how they are displayed by the \code{plot} function is illustrated in Figure \ref{fig:regs}.
 
 \section{Summary}
 
