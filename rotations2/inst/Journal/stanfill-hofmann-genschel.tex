@@ -109,7 +109,8 @@ The \pkg{rotations} package allows the user access to four members of the UARS c
 \small{
 \begin{tabular}{ lclclcl}\toprule
 \textbf{Name} & & \textbf{Function} & & \textbf{Density} $C(r |\kappa)$ & & \textbf{Circular variance $\nu$}\\ \midrule 
-\rule[2mm]{0mm}{6mm} Uniform & & \code{-haar} & & $\frac{1-\cos(r)}{2\pi}$ & & $\frac{3}
+%\rule[2mm]{0mm}{6mm} 
+Uniform & & \code{-haar} & & $\frac{1-\cos(r)}{2\pi}$ & & $\frac{3}
 {2}$ \\
 \rule[2mm]{0mm}{6mm} Cayley & & \code{-cayley} & & $\frac{1}
 {\sqrt{\pi}} \frac{\Gamma(\kappa+2)}{\Gamma(\kappa+1/2)} 
@@ -121,7 +122,7 @@ $\frac{3\mathrm{I}_0(2\kappa)-4\mathrm{I}_1(2\kappa)+\mathrm{I}_2(2\kappa)}
 {2[\mathrm{I}_0(2\kappa)-\mathrm{I}_1(2\kappa)]}$ \\
 \rule[2mm]{0mm}{6mm} circular-von Mises & & \code{-vmises} & & $\frac{1}{2\pi \mathrm{I_0}(\kappa)}e^{\kappa\cos(r)}$&  & 
 $\frac{\mathrm{I_0}(\kappa)-\mathrm{I_1}(\kappa)}{\mathrm{I_0}(\kappa)}$ \\[-7mm] 
-\rule[2mm]{0mm}{6mm} & & & & \\\bottomrule
+\rule[2mm]{0mm}{6mm} & & & & & & \\\bottomrule
 \end{tabular}}
 \end{table}
 %\end{center}
@@ -190,16 +191,19 @@ By staying in the Riemannian space $SO(3)$ under the intrinsic approach, the nat
 \end{equation}
 where $\text{Log}(\bm{R})$ denotes the principle logarithm of $\bm{R}$ (i.e., $\text{Log}(\bm{R}) = \text{Log}(\bm{R}(\bm u,r))= \bm \Phi(r\bm u)$ in \eqref{eqn:angleaxis}) and $r\in[-\pi,\pi)$ is the misorientation angle of $\bm{R}_1^\top \bm{R}_2$.  The Riemannian distance corresponds to the length of the shortest path that connects $\bm{R}_1$ and $\bm{R}_2$ {\it within} the space $SO(3)$. For this reason, the Riemannian distance is often considered the more natural metric on $SO(3)$; see \citet{moakher2002} for this discussion along with more details on exponential/logarithmic operators related to $SO(3)$.
 
+Estimators based on the Riemannian distance metric are called \code{geometric} estimators because they preserve the geometry of $SO(3)$.  These can be computed using the \code{mean} and \code{median} functions with the argument \code{type="geometric"}.  In Table \ref{tab:ests.sum} the four estimators are summarized including how they can be computed and the functions they minimize.  Examples of how the function can be used is displayed below.
 
 %\begin{center}
 \begin{table}[h]
 \caption{An overview of the estimators and their underlying geometry and loss function.}  \label{tab:ests.sum}
 \centering
 \begin{tabular}{ lclclcl}\toprule
-\rule[2mm]{0mm}{1mm} \textbf{Estimator name} & & \textbf{Denoted} & & \textbf{\code{Type}} &&\textbf{Minimizer of}\\ 
-\rule[2mm]{0mm}{1mm}  & &  & & \textbf{argument} &&\textbf{loss function}\\ 
+\rule[2mm]{0mm}{1mm} \textbf{Estimator name} & & \textbf{Denoted} & & \textbf{\code{type}} &&\textbf{Minimizer of}\\ 
+%\rule[2mm]{0mm}{1mm}
+  & &  & & \textbf{argument} &&\textbf{loss function}\\ 
 \midrule
-\rule[2mm]{0mm}{6mm} Projected Mean & & $\ProjMean$ & & \code{"projected"} &&$\sum_{i=1}^n d^2_E$  \\
+%\rule[2mm]{0mm}{6mm} 
+Projected Mean & & $\ProjMean$ & & \code{"projected"} &&$\sum_{i=1}^n d^2_E$  \\
 \rule[2mm]{0mm}{6mm} Projected Median & & $\ProjMedian$ & & \code{"projected"} && $\sum_{i=1}^n\Edist$ \\
 \rule[2mm]{0mm}{6mm} Geometric Mean & & $\GeomMean$&  & \code{"geometric"} && $\sum_{i=1}^n d^2_R$\\
 \rule[2mm]{0mm}{6mm} Geometric Median & & $\GeomMedian$&  & \code{"geometric"} &&$\sum_{i=1}^n\Rdist$ \\[-7mm] 
