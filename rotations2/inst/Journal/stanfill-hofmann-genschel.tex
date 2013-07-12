@@ -20,7 +20,7 @@ A common goal shared by these fields is to estimate the main or central orientat
 \end{equation}
 where $\bm S \in SO(3)$ is the {\it fixed} parameter of interest indicating an orientation of central tendency, and $\bm{E}_1,\ldots,\bm{E}_n \in SO(3)$ denote i.i.d. {\it random} rotations which symmetrically perturb $\bm{S}$.  The data-generating model in \eqref{eqn:loc_model} is a rotation-matrix analog of a location model for scalar data $Y_i = \mu + e_i$, where $\mu \in \mathbb{R}$ denotes a mean and $e_i \in \mathbb{R}$ denotes an additive error symmetrically distributed around zero.
 
-For the scaler location model a multitude of methods for location models are available in R, but for the case of $SO(3)$ data the toolbox is more limited.  The \CRANpkg{orientlib} package includes the definition of an orientation class along with a few methods to summarize and visualize rotation data \citep{murdoch2003}.  A strength of the \CRANpkg{orientlib} package is its thorough exploration of rotation representations, but no methods for inference are available and the estimation and visualization techniques are lacking.  The \pkg{uarsbayes} package includes functions for data generation and Bayes inference but is not publicly available \citet{qu2013}.  In addition there are several packages for circular and spherical, e.g. \CRANpkg{circular}, \CRANpkg{SpherWave}, data but their extension to rotation data is non-trivial.
+For the scaler location model a multitude of methods for location models are available in R, but for the case of $SO(3)$ data the toolbox is more limited.  The \CRANpkg{orientlib} package includes the definition of an orientation class along with a few methods to summarize and visualize rotation data \citep{murdoch2003}.  A strength of the \CRANpkg{orientlib} package is its thorough exploration of rotation representations, but no methods for inference are available and the estimation and visualization techniques are lacking.  The \pkg{uarsbayes} package includes functions for data generation and Bayes inference but is not publicly available \citet{qu2013}.  In addition there are several packages for circular and spherical, e.g. \CRANpkg{circular} and \CRANpkg{SpherWave}, data but their extension to rotation data is non-trivial.
 
 The \pkg{rotations} package provides users with the tools necessary to simulate rotations from \eqref{eqn:loc_model} with several distributional models for the perturbation matrices $\bm E_i$.  Estimation and inference for $\bm{S}$ in \eqref{eqn:loc_model} is also available along with novel visualization techniques.  The remainder of this manuscript introduces rotation data more fully and discusses the ways they are handled by the \pkg{rotations} package.
 
@@ -80,7 +80,6 @@ The following code creates the same rotation from the previous section in the fo
 [1,] 0.29    0 0.95     0
 attr(,"class")
 [1] "Q4"
-
 > Q4(SO3(r, u))
      [,1] [,2] [,3]  [,4]
 [1,] 0.29    0 0.95     0
@@ -107,20 +106,20 @@ The \pkg{rotations} package allows the user access to four members of the UARS c
 \caption{Circular densities with respect to the Lebesgue measure and circular variance $\nu$.}  \label{tab:Crforms}\centering
 \small{
 \begin{tabular}{ lclclcl}\toprule
-\textbf{Name} & & \textbf{Function} & & \textbf{Density} $C(r |\kappa)$ & & \textbf{Circular variance $\nu$}\\ \midrule 
+\textbf{Name}  & & \textbf{Density} $C(r |\kappa)$ & & \textbf{Circular variance $\nu$}& & \textbf{Function}\\ \midrule 
 %\rule[2mm]{0mm}{6mm} 
-Uniform & & \code{-haar} & & $\frac{1-\cos(r)}{2\pi}$ & & $\frac{3}
-{2}$ \\
-\rule[2mm]{0mm}{6mm} Cayley & & \code{-cayley} & & $\frac{1}
-{\sqrt{\pi}} \frac{\Gamma(\kappa+2)}{\Gamma(\kappa+1/2)} 
-2^{-(\kappa+1)} (1+\cos r)^\kappa(1-\cos r)$ & & $\frac{3}
-{\kappa+2}$ \\
-\rule[2mm]{0mm}{6mm} matrix Fisher & & \code{-fisher} & & $\frac{1}{2\pi[\mathrm{I_0}(2\kappa)-\mathrm{I_1}(2\kappa)]}e^{2\kappa 
-\cos(r)}[1-\cos(r)]$ & & 
+Uniform  & & $\frac{1-\cos(r)}{2\pi}$ & & $\frac{3}{2}$& & \code{-haar} \\
+
+\rule[2mm]{0mm}{6mm} Cayley  & & $\frac{\Gamma(\kappa+2)(1+\cos r)^\kappa(1-\cos r)}{2^{(\kappa+1)}\sqrt{\pi}\Gamma(\kappa+1/2)}$ & & $\frac{3}
+{\kappa+2}$ & & \code{-cayley}\\
+
+\rule[2mm]{0mm}{6mm} matrix Fisher  & & $\frac{[1-\cos(r)]\exp[2\kappa 
+\cos(r)]}{2\pi[\mathrm{I_0}(2\kappa)-\mathrm{I_1}(2\kappa)]}$ & & 
 $\frac{3\mathrm{I}_0(2\kappa)-4\mathrm{I}_1(2\kappa)+\mathrm{I}_2(2\kappa)}
-{2[\mathrm{I}_0(2\kappa)-\mathrm{I}_1(2\kappa)]}$ \\
-\rule[2mm]{0mm}{6mm} circular-von Mises & & \code{-vmises} & & $\frac{1}{2\pi \mathrm{I_0}(\kappa)}e^{\kappa\cos(r)}$&  & 
-$\frac{\mathrm{I_0}(\kappa)-\mathrm{I_1}(\kappa)}{\mathrm{I_0}(\kappa)}$ \\[-7mm] 
+{2[\mathrm{I}_0(2\kappa)-\mathrm{I}_1(2\kappa)]}$& & \code{-fisher} \\
+
+\rule[2mm]{0mm}{6mm} circular-von Mises  & & $\frac{\exp[\kappa\cos(r)]}{2\pi \mathrm{I_0}(\kappa)}$&  & 
+$\frac{\mathrm{I_0}(\kappa)-\mathrm{I_1}(\kappa)}{\mathrm{I_0}(\kappa)}$& & \code{-vmises} \\[-7mm] 
 \rule[2mm]{0mm}{6mm} & & & & & & \\\bottomrule
 \end{tabular}}
 \end{table}
