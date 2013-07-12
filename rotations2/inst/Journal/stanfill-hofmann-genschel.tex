@@ -40,15 +40,18 @@ for $\bm w\in\mathbb{R}^3$.  Applying the exponential operator to the matrix $\P
 \begin{equation}\label{eqn:angleaxis}
   \bm R=\exp[\bm{\Phi}(\bm{w})] = \sum\limits_{k=0}^\infty \frac{[\bm{\Phi}(\bm{w})]^k}{k!}=\cos(r)\bm{I}_{3\times3} + \sin(r) \bm{\Phi}(\bm{u}) + (1-\cos r) \bm{u} \bm{u}^\top
 \end{equation}
-where $r=\|\bm{w}\|_F$, $\bm{u} =\bm{w}/\|\bm{w}\|_F$ and $\|\cdot\|_F$ the Frobenius norm.  In the material sciences literature, the values $r\in[0,\pi)$ and  $\bm u\in\R^3$ \dfn{misorientation angle} and \dfn{misorientation axis}, respectively. For more details on this construction see Stanfill et al. (2013) (or some other reference). 
+where $r=\|\bm{w}\|_F$, $\bm{u} =\bm{w}/\|\bm{w}\|_F$ and $\|\cdot\|_F$ the Frobenius norm.  In the material sciences literature, the values $r\in[0,\pi)$ and  $\bm u\in\Rbb^3$ \dfn{misorientation angle} and \dfn{misorientation axis}, respectively. For more details on this construction see Stanfill et al. (2013) (or some other reference). 
 
-The function \code{SO3} creates a rotation matrix according to \eqref{eqn:angleaxis} for a variety of inputs.  Given an angle and axis \code{SO3} will form a matrix as described above; given only a three-dimensional vector the length of that vector will be taken to be the angle of rotation and the vector will be made unit length.  One can also supply a rotation in the quaternion representation and the matrix equivalent will be return as an \code{SO3} object.  A rotation matrix is returned in vector form with class \code{"SO3"}.  See the following for the construction of a rotation about the $y$-axis through an angle uniformly chosen on the interval $[0,\pi]$.
+The function \code{SO3} creates a rotation matrix according to \eqref{eqn:angleaxis} for a variety of inputs.  Given an angle and axis \code{SO3} will form a matrix as described above; given only a three-dimensional vector the length of that vector will be taken to be the angle of rotation and the vector will be made unit length.  One can also supply a rotation in the quaternion representation and the matrix equivalent will be return as an \code{SO3} object.  A rotation matrix is returned in vector form with class \code{"SO3"}. Moving in the other direction, the function \code{angle} and \code{axis2} will find the misorientation angle and axis of a \code{SO3} object.  The following code illustrates the formation of a rotation matrix from the axis $u=(0, 1, 0)$ and an angle chosen uniformly on the interval $[0,\pi]$ as well as the recovery of the angle and axis from a rotation.
 
 \begin{example}
-> r <- runif(1, 0 , pi) #2.546667
+> r <- runif(1, 0 , pi) 
+> r
+2.546667
 > u <- c(0, 1 ,0)
 > w <- u*r
-> SO3(w)
+> R <- SO3(w)
+> R
       [,1] [,2]  [,3] [,4] [,5][,6]  [,7] [,8]  [,9]
 [1,] -0.82    0 -0.56    0    1    0 0.56    0 -0.82
 attr(,"class")
@@ -58,11 +61,16 @@ attr(,"class")
 [1,] -0.82    0 -0.56    0    1    0 0.56    0 -0.82
 attr(,"class")
 [1] "SO3"
+> angle(R)
+2.546667
+> axis2(R)
+     [,1] [,2] [,3]
+[1,]    0    1    0
 \end{example}
 
 \subsection{Quaternion Form}
 
-Alternative one can represent a rotation as a unit vector in $\R^4$ called quaternions.  Quaternions are a form of imaginary numbers with one real entry and a vector of three imaginary parts that can be expressed as
+Alternative one can represent a rotation as a unit vector in $\Rbb^4$ called quaternions.  Quaternions are a form of imaginary numbers with one real entry and a vector of three imaginary parts that can be expressed as
 \[
 q = x_1 + x_2 i + x_3 j + x_4 k
 \]
@@ -125,7 +133,7 @@ $\frac{\mathrm{I_0}(\kappa)-\mathrm{I_1}(\kappa)}{\mathrm{I_0}(\kappa)}$& & \cod
 \end{table}
 %\end{center}
 
-The dashes in 'Function' column of Table \ref{tab:Crforms} can be replaced by \code{d}, \code{r} or \code{p} and the functions are the same as usual.  To simulate a sample of $SO(3)$ data, the \code{ruars} function takes arguments \code{n}, \code{ranglge}, and \code{kappa} to specify the sample size, angular distribution and concentration as shown below.  Alternatively, one can specify the circular variance $\nu$.  The \code{space} argument determines if matrices or quaternions should be returned.
+The dashes in 'Function' column of Table \ref{tab:Crforms} can be replaced by \code{d}, \code{r} or \code{p} and the functions are the same as usual.  To simulate a sample of $SO(3)$ data, the \code{ruars} function takes arguments \code{n}, \code{rangle}, and \code{kappa} to specify the sample size, angular distribution and concentration as shown below.  Alternatively, one can specify the circular variance $\nu$.  The \code{space} argument determines if matrices or quaternions should be returned.
 
 \begin{example}
 > Rs <- ruars(n = 20, rangle = rcayley, kappa = 1, space = 'SO3')
@@ -181,7 +189,7 @@ The choice of geometry results in two different metrics to measure the distance 
 \label{d_E}
 \Edist(\bm{R}_1,\bm{R}_2)=\|\bm{R}_1-\bm{R}_2\|_F, 
 \end{equation}
-where $\|\bm{A}\|_F = \sqrt{\mathbf{tr}({\bm A^\top \bm A})}$ denotes the Frobenius norm of a matrix $\bm A$ and $\mathbf{tr}(\cdot)$ denotes the trace of a matrix.  The Euclidean distance between two rotation matrices corresponds to the shortest cord in $\mathcal{M}(3)$ that connects them.  If $r\in[-\pi,\pi)$ denotes the misorientation angle in the angle-axis representation \eqref{eqn:angleaxis} of $\bm{R}_1^\top \bm{R}_2 \equiv \bm{R}_1^\top \bm{R}_2(r,\bm{u})$ (so that $\mathbf{tr}(\bm{R}_1^\top \bm{R}_2) =1 +2 \cos r$), then $\Edist(\bm{R}_1,\bm{R}_2) = 2\sqrt{2}\sin(|r|/2)$ holds.
+where $\|\bm{A}\|_F = \sqrt{\mathbf{tr}({\bm A^\top \bm A})}$ denotes the Frobenius norm of a matrix $\bm A$ and $\mathbf{tr}(\cdot)$ denotes the trace of a matrix.  The Euclidean distance between two rotation matrices corresponds to the shortest cord in $\Rbb^{3\times3}$ that connects them.  If $r\in[-\pi,\pi)$ denotes the misorientation angle in the angle-axis representation \eqref{eqn:angleaxis} of $\bm{R}_1^\top \bm{R}_2 \equiv \bm{R}_1^\top \bm{R}_2(r,\bm{u})$ (so that $\mathbf{tr}(\bm{R}_1^\top \bm{R}_2) =1 +2 \cos r$), then $\Edist(\bm{R}_1,\bm{R}_2) = 2\sqrt{2}\sin(|r|/2)$ holds.
 
 Estimators based on the Euclidean distance form the class of \dfn{projected} estimators.  This is because the algorithms used to compute these estimators find the generic $3\times 3$ matrix that minimizes the loss function then projects that matrix into $SO(3)$.  For an object with class \code{"SO3"} the \code{median} or \code{mean} function with argument \code{type="projected"} will return a $3\times 3$ matrix in $SO(3)$ that minimizes the first- or second-order loss function, respectively.
 
