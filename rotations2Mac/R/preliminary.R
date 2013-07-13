@@ -40,12 +40,12 @@ arsample.unif <- function(f, M, ...) {
 #' The intrinsic distance is defined as \deqn{||Log(R_1^\top R_2)||_F}{||Log(R1'R2)||} where \eqn{Log} is the matrix logarithm, and it corresponds
 #' to the misorientation angle of \eqn{R_1^\top R_2}{R1'R2}.
 #'
-#' @param R1 (or Q1) a rotation in matrix or quaternion representation
-#' @param R2 (or Q2) the second rotation in the same parameterization as R1
+#' @param R1,Q1 a rotation in matrix or quaternion representation
+#' @param R2,Q2 the second rotation in the same parameterization as R1
 #' @param method String indicating 'projected' or 'intrinsic' method of distance 
 #' @param p the order of the distance 
 #' @param ... Additional arguments
-#' @return the rotational distance between R1 and R2
+#' @return the rotational distance between R1 and R2 or Q1 and Q2
 #' @export
 
 dist<-function(x,...){
@@ -120,7 +120,7 @@ dist.Q4 <- function(Q1, Q2=id.Q4 ,method='projected', p=1) {
 #' This function returns the misorentation angle associated with a rotation assuming the reference coordinate system
 #' is the identity.
 #'  
-#' @param Rs rotation matrix
+#' @param Rs,Qs rotation matrix
 #' @return angle of rotation
 #' @seealso \code{\link{axis2}}
 #' @export
