@@ -5,8 +5,22 @@ This folder contains the code necessary to run the simulations for the intervals
 
 ## *rotations2*
 ========================================================
-The *rotations2* folder contains the .cpp and .R files that will eventually become the faster version of the *rotations* package.  For now the installation process, run the following code:
+The *rotations2* package is also available in this folder.  It uses C++ to greatly increase computing time, especially for the estimators.  Because of differences in compilers, a Windows and a Mac version need to be kept separate to be widely accessible.  
+
+**To contributors**: Please *do not* make changes to the files in the *'rotations2Mac'* folder!
+
+### Installation instructions:
+
+#### For Windows:
 ```
 library(devtools)
 install_github('rotationsC','stanfill',subdir='rotations2')
+library(rotations2)
+```
+
+#### For Mac: 
+```
+library(devtools)
+install_github('rotationsC','stanfill',subdir='rotations2Mac')
+library(rotations2)
 ```
