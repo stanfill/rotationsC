@@ -167,19 +167,26 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 		
 		Shats<-data.frame(rbind(as.vector(ShatP),as.vector(StildeP),as.vector(ShatG),as.vector(StildeG)),Est=1:4)
 		Shats$Est <- factor(Shats$Est)
-		labels <- c(expression(hat(S)[E]), expression(tilde(S)[E]), expression(hat(S)[R]), expression(tilde(S)[R]))
-		levels(Shats$Est) <- labels
+		Estlabels <- c(expression(hat(S)[E]), expression(tilde(S)[E]), expression(hat(S)[R]), expression(tilde(S)[R]))
+		
+		
+		levels(Shats$Est) <- Estlabels
+		
+		
 		rmNA<-which(!is.na(Shats$X1))
-		Shats <- Shats[rmNA,]
-		labels<-labels[rmNA]
+		NAs<-c(1:4)[-rmNA]
+		Shats<-na.omit(Shats)
+		
+		#Shats <- Shats[rmNA,]
+		Estlabels<-Estlabels[c(rmNA,NAs)]
 		
 		if(!is.null(show_regions)){
 			vals<-3:(2+nrow(Shats)) #Make the shapes noticable, 15:18
 			estimates <- list(geom_point(aes(x=X, y=Y, shape=Est),size=3.5, data=data.frame(pointsXYZ(Shats, center=center, column=col), Shats)),
-												scale_shape_manual(name="Estimates", labels=labels,values=vals))
+												scale_shape_manual(name="Estimates", labels=Estlabels,values=vals))
 		}else{
 			estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(pointsXYZ(Shats, center=center, column=col), Shats)),
-												scale_colour_brewer(name="Estimates", palette="Paired", labels=labels))
+												scale_colour_brewer(name="Estimates", palette="Paired", labels=Estlabels))
 		}
 	}
   
@@ -220,6 +227,6 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 		labels + 
 		estimates +
     regs+
-		xlim(xlimits) + ylim(ylimits) 
+		xlim(xlimits) + ylim(ylimits)
 }
 
