@@ -35,14 +35,14 @@ Rotations in three-dimensions can be represented by $3\times3$ orthogonal matric
 \[
 \bm{\Phi}(\bm{w}) = \left(\begin{array}{ccc}0 & -w_3 & w_2 \\ w_3 & 0 & -w_1 \\-w_2 & w_1 & 0\end{array}\right)
 \]
-for $\bm w\in\mathbb{R}^3$.  Applying the exponential operator to the matrix $\Phi(\bm w)$ results in the rotation $\bm R$
+and $\bm w\in\mathbb{R}^3$.  Applying the exponential operator to the matrix $\Phi(\bm w)$ results in the rotation $\bm R$
 
 \begin{equation}\label{eqn:angleaxis}
-  \bm R=\exp[\bm{\Phi}(\bm{w})] = \sum\limits_{k=0}^\infty \frac{[\bm{\Phi}(\bm{w})]^k}{k!}=\cos(r)\bm{I}_{3\times3} + \sin(r) \bm{\Phi}(\bm{u}) + (1-\cos r) \bm{u} \bm{u}^\top
+  \bm R=\exp[\bm{\Phi}(\bm{w})] = \sum\limits_{k=0}^\infty \frac{[\bm{\Phi}(\bm{w})]^k}{k!}=\cos(r)\bm{I}_{3\times3} + \sin(r) \bm{\Phi}(\bm{u}) + [1-\cos (r)] \bm{u} \bm{u}^\top
 \end{equation}
-where $r=\|\bm{w}\|_F$, $\bm{u} =\bm{w}/\|\bm{w}\|_F$ and $\|\cdot\|_F$ the Frobenius norm.  In the material sciences literature, the values $r\in[0,\pi)$ and  $\bm u\in\Rbb^3$ \dfn{misorientation angle} and \dfn{misorientation axis}, respectively. For more details on this construction see Stanfill et al. (2013) (or some other reference). 
+where $r=\|\bm{w}\|_F$, $\bm{u} =\bm{w}/\|\bm{w}\|_F$ and $\|\cdot\|_F$ the Frobenius norm.  In the material sciences literature the values $r$ and  $\bm u\in\Rbb^3$ are termed the \dfn{misorientation angle} and \dfn{misorientation axis}, respectively. For more details on this construction see Stanfill et al. (2013) (or some other reference). 
 
-The function \code{SO3} creates a rotation matrix according to \eqref{eqn:angleaxis} for a variety of inputs.  Given an angle and axis \code{SO3} will form a matrix as described above; given only a three-dimensional vector the length of that vector will be taken to be the angle of rotation and the vector will be made unit length.  One can also supply a rotation in the quaternion representation and the matrix equivalent will be return as an \code{SO3} object.  A rotation matrix is returned in vector form with class \code{"SO3"}. Moving in the other direction, the function \code{angle} and \code{axis2} will find the misorientation angle and axis of a \code{SO3} object.  The following code illustrates the formation of a rotation matrix from the axis $u=(0, 1, 0)$ and an angle chosen uniformly on the interval $[0,\pi]$ as well as the recovery of the angle and axis from a rotation.
+The function \code{SO3} creates a rotation matrix according to \eqref{eqn:angleaxis} for a variety of inputs.  Given an angle and axis \code{SO3} will form a matrix according to \eqref{eqn:angleaxis}; given only a three-dimensional vector the length of that vector will be taken to be the angle of rotation and the vector will be made unit length.  One can also supply a rotation in the quaternion representation and the matrix equivalent will be return as an \code{SO3} object.  A rotation matrix is returned in vector form with class \code{"SO3"} as the following code illustrates for the axis $u=(0, 1, 0)$ and an angle chosen uniformly on the interval $[0,\pi]$.
 
 \begin{example}
 > r <- runif(1, 0 , pi) 
@@ -61,6 +61,10 @@ attr(,"class")
 [1,] -0.82    0 -0.56    0    1    0 0.56    0 -0.82
 attr(,"class")
 [1] "SO3"
+\end{example}
+
+Moving in the other direction, the functions \code{angle} and \code{axis2} will determine the misorientation angle and axis of a \code{SO3} object.  The code below illustrates that for the rotation \code{R} just constructed the correct angle and axis are computed.
+\begin{example}
 > angle(R)
 2.546667
 > axis2(R)
@@ -70,13 +74,13 @@ attr(,"class")
 
 \subsection{Quaternion Form}
 
-Alternative one can represent a rotation as a unit vector in $\Rbb^4$ called quaternions.  Quaternions are a form of imaginary numbers with one real entry and a vector of three imaginary parts that can be expressed as
+One can also represent a rotation as a unit vector in $\Rbb^4$ called a quaternion.  Quaternions are a form of imaginary numbers with one real entry and a vector of three imaginary parts that can be expressed as
 \[
 q = x_1 + x_2 i + x_3 j + x_4 k
 \]
-where $i,j,$ and $k$ are square roots of -1, i.e. $i^2 = j^2= k^2 = -1$.  We can write $q=(s,\bm v)$ as tuple of the scalar $s$ for coefficient $\bm 1$ and vector $\bm v$ for the imaginary coefficients, i.e. $s=x_1$ and $\bm v= (x_2, x_3, x_4)$.
+where $i,j,$ and $k$ are square roots of -1, i.e. $i^2 = j^2= k^2 = -1$.  We can write $\bm q=(s,\bm v)$ as tuple of the scalar $s$ for coefficient $\bm 1$ and vector $\bm v$ for the imaginary coefficients, i.e. $s=x_1$ and $\bm v= (x_2, x_3, x_4)$.
 
-A rotation around axis $\bm u$ by angle $r$ translates to $q=(s,\bm v)$ with
+A rotation around axis $\bm u$ by angle $r$ translates to $\bm q=(s,\bm v)$ with
 \[
 s = \cos{(r/2)},  \ \ \bm v = \bm u \sin {(r/2)}
 \]
@@ -95,8 +99,7 @@ attr(,"class")
 [1] "Q4"
 \end{example}
 
-
-For the remainder of this manuscript only the matrix parametrization will be considered though all the functions are available for quaternions as well.
+%For the remainder of this manuscript only the matrix parametrization will be considered though all the functions are available for quaternions as well.
 
 \section{Data generation\label{section:generation}} 
 
