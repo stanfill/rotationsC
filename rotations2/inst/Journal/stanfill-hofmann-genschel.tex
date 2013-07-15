@@ -103,14 +103,16 @@ attr(,"class")
 
 \section{Data generation\label{section:generation}} 
 
-If the rotation $\bm{E}_i\in SO(3)$ from \eqref{eqn:loc_model} has an axis $\bm u$ that is uniformly distributed on the sphere and an angle $r$ that is distributed about $0$ according to some symmetric distribution function then $\bm E_i$ is said to belong to the \dfn{uniform-axis random spin}, or UARS, class of distributions.   From \cite{bingham2009} the density for $\bm E_i$ is given by
+If the rotation $\bm{E}_i\in SO(3)$ from \eqref{eqn:loc_model} has an axis $\bm u$ that is uniformly distributed on the unit sphere and an angle $r$ that is distributed about $0$ according to some symmetric distribution function then $\bm E_i$ is said to belong to the \dfn{uniform-axis random spin}, or \dfn{UARS}, class of distributions.   From \cite{bingham2009} the density for $\bm E_i$ is given by
 \begin{equation}\label{eq:uarsden}
 f(\bm E_i|\kappa)=\frac{4\pi}{3-\tr(\bm E_i)}C\left(\left.\cos^{-1}\left\{\frac{1}{2}[\tr(\bm E_i)-1]\right\}\right|\kappa\right)
 \end{equation}
-where $C(\cdot|\kappa)$ is distribution function connecting to the angle of rotation $r$.  Members of the UARS family of distributions are distinguished based on the angular distribution.
+where $C(\cdot|\kappa)$ is distribution function connected to the angle of rotation $r$.  Members of the UARS family of distributions are distinguished based on the angular distribution.
 
 
-The \pkg{rotations} package allows the user access to four members of the UARS class.  Each member is differentiated by the distribution function for $r$: the uniform distribution on the circle, the matrix Fisher \citep{langevin2005, downs1972, khatri1977, jupp1979}, the Cayley  \citep{Schaeben1997, leon2006} and a circular-von Mises-based distribution \citep{bingham2009}.   The form of each angular distribution along with the circular variance is given in Table \ref{tab:Crforms}.
+The \pkg{rotations} package allows the user access to four members of the UARS class.  Each member is differentiated by the distribution function for $r$: the uniform distribution on the circle, the matrix Fisher \citep{langevin2005, downs1972, khatri1977, jupp1979}, the Cayley  \citep{Schaeben1997, leon2006} and a circular-von Mises-based distribution \citep{bingham2009}.  The uniform distribution on the sphere also plays the role of a uniform measure for $SO(3)$ called the Haar measure.  
+
+The spread of  the Cayley, matrix Fisher and circular-von Mises distributions is controlled by the concentration parameter $\kappa$, but two distributions with the same concentration do not necessarily have the same spread, i.e. a sample from Cayley distribution with $\kappa=1$ is usually more variable than a sample from the matrix Fisher distribution with $\kappa=1$.  To make comparisons across distribution possible we also allow for specification of the circular variance, which is defined as $\nu=1-E[\cos(r)]$ where $E[\cos(r)]$ is called in the circular data literature the \dfn{mean resultant length} \citep{fisher1996}.    The form of each angular distribution along with the circular variance at a function of the concentration parameter is given in Table \ref{tab:Crforms}.
 
 %\begin{center} 
 \begin{table}[h!]
@@ -136,7 +138,7 @@ $\frac{\mathrm{I_0}(\kappa)-\mathrm{I_1}(\kappa)}{\mathrm{I_0}(\kappa)}$& & \cod
 \end{table}
 %\end{center}
 
-The dashes in 'Function' column of Table \ref{tab:Crforms} can be replaced by \code{d}, \code{r} or \code{p} and the functions are the same as usual.  To simulate a sample of $SO(3)$ data, the \code{ruars} function takes arguments \code{n}, \code{rangle}, and \code{kappa} to specify the sample size, angular distribution and concentration as shown below.  Alternatively, one can specify the circular variance $\nu$.  The \code{space} argument determines if matrices or quaternions should be returned.
+For a given concentration or circular variance the density, distribution function and random generation for each of these angular distributions is accessed by replacing the dashes in 'Function' column of Table \ref{tab:Crforms} with \code{d}, \code{p} and \code{r} respectively.  To simulate a sample of $SO(3)$ data, the \code{ruars} function takes arguments \code{n}, \code{rangle}, and \code{kappa} to specify the sample size, angular distribution and concentration as shown below.  Alternatively, one can specify the circular variance $\nu$.  Note: if the circular variance and concentration are both provided only the circular variance is used.  The \code{space} argument determines if matrices or quaternions should be returned.
 
 \begin{example}
 > Rs <- ruars(n = 20, rangle = rcayley, kappa = 1, space = 'SO3')
