@@ -187,9 +187,9 @@ For a given concentration or circular variance the density, distribution functio
 In this section we present functions in the \pkg{rotations} package to compute point estimates and confidence regions for the central orientation $\bm S$.
 
 \subsection{Point Estimation}
-Given a sample of $n$ observations $\bm R_1,\dots,\bm R_{n}$ generated according to \eqref{eqn:loc_model} we offer four ways to estimate the central orientation $\bm S$.  These estimators are either Riemannian- or Euclidean-based in geometry and either mean- or median-based.  First we discuss how the choice of geometry affects distance.
+Given a sample of $n$ observations $\bm R_1,\dots,\bm R_{n}$ generated according to \eqref{eqn:loc_model} the \pkg{rotations} package offers four ways to estimate the central orientation $\bm S$.  These estimators are either Riemannian- or Euclidean-based in geometry and either mean- or median-based.  First we discuss how the choice of geometry affects distance.
 
-The choice of geometry results in two different metrics to measure the distance between rotation matrices $\bm{R}_1$ and $\bm{R}_2 \in SO(3)$. Under the embedding approach, the natural distance metric between two random matrices in the Euclidean distance, $\Edist$, is induced by the Frobenius norm 
+The choice of geometry results in two different metrics to measure the distance between rotation matrices $\bm{R}_1$ and $\bm{R}_2 \in SO(3)$. The Euclidean distance, $\Edist$, between two rotations is defined by
 \begin{equation}
 \label{d_E}
 \Edist(\bm{R}_1,\bm{R}_2)=\|\bm{R}_1-\bm{R}_2\|_F, 
@@ -203,9 +203,9 @@ By staying in the Riemannian space $SO(3)$ under the intrinsic approach, the nat
 \label{d_R}
 \Rdist(\bm{R}_1,\bm{R}_2)=  \frac{1}{\sqrt{2}}\|\text{Log}(\bm{R}_1^\top\bm{R}_2)\|_F = |r|,
 \end{equation}
-where $\text{Log}(\bm{R})$ denotes the principle logarithm of $\bm{R}$ (i.e., $\text{Log}(\bm{R}) = \text{Log}(\bm{R}(\bm u,r))= \bm \Phi(r\bm u)$ in \eqref{eqn:angleaxis}) and $r\in[-\pi,\pi)$ is the misorientation angle of $\bm{R}_1^\top \bm{R}_2$.  The Riemannian distance corresponds to the length of the shortest path that connects $\bm{R}_1$ and $\bm{R}_2$ {\it within} the space $SO(3)$. For this reason, the Riemannian distance is often considered the more natural metric on $SO(3)$; see \citet{moakher2002} for this discussion along with more details on exponential/logarithmic operators related to $SO(3)$.
+where $\text{Log}(\bm{R})$ denotes the principle logarithm of $\bm{R}$ (i.e., $\text{Log}(\bm{R}) = \text{Log}[\bm{R}(\bm u,r)]= \bm \Phi(r\bm u)$ in \eqref{eqn:angleaxis}) and $r\in[-\pi,\pi)$ is the misorientation angle of $\bm{R}_1^\top \bm{R}_2$.  The Riemannian distance corresponds to the length of the shortest path that connects $\bm{R}_1$ and $\bm{R}_2$ {\it within} the space $SO(3)$. For this reason, the Riemannian distance is often considered the more natural metric on $SO(3)$; see \citet{moakher2002} for this discussion along with more details on exponential/logarithmic operators related to $SO(3)$.
 
-Estimators based on the Riemannian distance metric are called \code{geometric} estimators because they preserve the geometry of $SO(3)$.  These can be computed using the \code{mean} and \code{median} functions with the argument \code{type="geometric"}.  In Table \ref{tab:ests.sum} the four estimators are summarized including how they can be computed and the functions they minimize.  Examples of how the function can be used is displayed below.
+Estimators based on the Riemannian distance metric are called \code{geometric} estimators because they preserve the geometry of $SO(3)$.  These can be computed using the \code{mean} and \code{median} functions with the argument \code{type="geometric"}.  In Table \ref{tab:ests.sum} the four estimators are summarized including how they can be computed and their formal definitions.  %Examples of how the function can be used is displayed below.
 
 %%\begin{center}
 %\begin{table}[h]
@@ -286,7 +286,7 @@ The method due to \cite{prentice1986} states that all rotations of the form $\Pr
 \begin{equation}\label{eqn:prentice}
 n\bm h^\top\widehat{\bm A}\bm{S}^{-1}\widehat{\bm A}\bm h<\chi^2_{3,1-\alpha}
 \end{equation}
-form a $100(1-\alpha)\%$ confidence region.  See \cite{rancourt2000} for details on how to compute the matrices $\widehat{\bm A}$ and $\bm{S}^{-1}$.  Rearranging \eqref{eqn:prentice} and using \eqref{eqn:angleaxis} one can determine the largest angle of rotation possible about each axis that will maintain the inequality.
+form a $100(1-\alpha)\%$ confidence region.  See \cite{rancourt2000} for details on how to compute the matrices $\widehat{\bm A}$ and $\bm{S}^{-1}$.  Rearranging \eqref{eqn:prentice} and using \eqref{eqn:angleaxis} one can determine the largest angle of rotation possible about each axis that will satisfy the inequality.
 
 For a sample of rotations a call to the \code{region} function with argument \code{method="prentice"} will return a three-dimensional vector, where each value corresponds to the largest possible radius of the confidence region centered at each axis of $\ProjMean$.  Alternatively, a conservative estimate of the overall confidence region is the largest of the three axis rotation angles.
 
@@ -294,16 +294,16 @@ The second method we consider is based upon a result given by \cite{chang2001} t
 \begin{equation}\label{eqn:mest}
 \frac{2nd^2}{c}\|\bm h\|^2<\chi^2_{3,1-\alpha}
 \end{equation}
-where $c=2E[1-\cos(r)^2]/3$ and $d=E[1+2\cos(r)]/3$.  Similar to \eqref{eqn:prentice}, rearranging \eqref{eqn:mest} will give a single value that can be interpreted as the radius of a confidence cone centered at $\ProjMean$, this value is calculated by the \code{region} function with argument \code{method="chang"}.
+where $c=2E[1-\cos(r)^2]/3$ and $d=E[1+2\cos(r)]/3$.  Similar to \eqref{eqn:prentice}, rearranging \eqref{eqn:mest} will give a single value that can be interpreted as the radius of a confidence region centered at each asix of $\ProjMean$.  The \code{region} function with argument \code{method="chang"} will return this value.
 
-The final method available is due to Zhang and Nordman (2009) and is a non-parametric pivotal bootstrap method.  It is based on the results of \cite{chang2001} but replaces the $\chi^2_{3,1-\alpha}$ critical value in \eqref{eqn:mest} with the bootstrap estimated critical value $\hat{q}_{1-\alpha}$.  See Stanfill et al. (2014) for details and a comparison of these three methods.  Calling the \code{region} function with \code{method="zhang"} specified will return the cond radius as before.  The additional \code{m} argument specifics how large a bootstrap sample size to use in order to estimate the critical value, which defaults to 300. 
+The final method available is due to Zhang and Nordman (2009) and is a non-parametric pivotal bootstrap method.  It is based on the results of \cite{chang2001} but replaces the $\chi^2_{3,1-\alpha}$ critical value in \eqref{eqn:mest} with the bootstrap estimated critical value $\hat{q}_{1-\alpha}$.  See Stanfill et al. (2014) for details and a comparison of these three methods and a method due to \cite{fisherhall1996}.  Calling the \code{region} function with \code{method="zhang"} specified will return the region radius similar to the \cite{chang2001} method.  The additional \code{m} argument specifics how large a bootstrap sample size to use in order to estimate the critical value, default is 300. 
 
 
 \section{Visualizations}
 
-In this section we introduce a method to visualize $SO(3)$ data via the the \CRANpkg{ggplot2} package \citep{wickham2009}.  Calling the \code{plot} function with a \code{"SO3"} object will result in a sphere, which represent one of the columns of the supplied data.  The \code{center} defines the center of the plot and is usually set to the identity rotation \code{id.SO3} or an estimate of the central orientation, e.g. \code{mean(Rs)}.  The user can specify which column to use with the \code{col} argument, which defaults to \code{col=1} and is the $x$-axis.  If the data are highly concentrated in one part of the sphere then the the \code{to$\_$range} argument can be set to \code{TRUE} then the range of the plot is set to zoom in on the area of the sphere that has points. 
+Finally the \pkg{rotations} package offers a novel method to visualize $SO(3)$ data via the the \CRANpkg{ggplot2} package \citep{wickham2009}.  Calling the \code{plot} function with a \code{"SO3"} object will result in a sphere that represents a column of the supplied data.  The \code{center} defines the center of the plot and is usually set to the identity rotation \code{id.SO3} or an estimate of the central orientation, e.g. \code{mean(Rs, method='projected')}.  The user can specify which column to use with the \code{col} argument with options $1$, $2$, and $3$ representing the $x$-, $y$- and $z$- axes respectively.  If the data are concentrated in one part of the sphere then the the \code{to$\_$range} argument can be set to \code{TRUE} then the range of the plot is set to the area of the sphere that contains the points. 
 
-Any of the four estimates of the central direction can be plotted along with a sample of rotations. To show all estimates at once add the argument \code{estimates$\_$show="all"}.  If only a few estimates are of interest then any combination of \code{"proj.mean"}, \code{"proj.median"}, \code{"geom.mean"} or \code{"geom.median"} are valid inputs.  The estimators are indicated by color and a legend is given. Finally, the \code{show$\_$regions} option allows the used to draw a circle on the surface of the sphere representing the confidence region for that axis, and centered at $\ProjMean$.  If estimators are also plotted then they are represented by shapes and the regions are colored.  See below for an example.
+Any of the four estimates of the central direction can be plotted along with a sample of rotations. To show all estimates at once add the argument \code{estimates$\_$show="all"}.  If only a few estimates are of interest then any combination of \code{"proj.mean"}, \code{"proj.median"}, \code{"geom.mean"} or \code{"geom.median"} are valid inputs.  The estimators are indicated by color and a legend is provided. Finally, the \code{show$\_$regions} option allows the used to draw a circle on the surface of the sphere representing the confidence region for that axis, centered at $\ProjMean$.  If estimators are plotted along with the different regions then shapes are used to represent them.  See example code below and Figure \ref{figure:eye1} for the result.
 
 \begin{example}
 Rs <- ruars(50, rcayley, kappa = 1)
@@ -342,7 +342,7 @@ In Figure \ref{fig:ests} a random sample of 50 matrices following the Cayley-UAR
 
 \section{Summary}
 
-In this manuscript we introduced the \pkg{rotations} package and how it can be used to generate, analyze and visualize rotation data.  In the future we plan to extend the \pkg{rotations} package to include more parameterizations, e.g. Euler angles, and estimators.  New robust estimators are currently being developed by the authors and will likely be included as well.  
+In this manuscript we introduced the \pkg{rotations} package and how it can be used to generate, analyze and visualize rotation data.  In future version of the package we plan to extend the parameterization and estimator sections including robust estimators that are currently being developed by the authors.  
 
 
 \bibliography{stanfill-hofmann-genschel}
