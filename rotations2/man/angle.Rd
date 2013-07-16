@@ -11,7 +11,7 @@
   \method{angle}{Q4} (Qs)
 }
 \arguments{
-  \item{Rs}{rotation matrix}
+  \item{Rs,Qs}{rotation matrix}
 }
 \value{
   angle of rotation

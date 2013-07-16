@@ -13,10 +13,10 @@
     p = 1)
 }
 \arguments{
-  \item{R1}{(or Q1) a rotation in matrix or quaternion
+  \item{R1,Q1}{a rotation in matrix or quaternion
   representation}
 
-  \item{R2}{(or Q2) the second rotation in the same
+  \item{R2,Q2}{the second rotation in the same
   parameterization as R1}
 
   \item{method}{String indicating 'projected' or
@@ -27,7 +27,7 @@
   \item{...}{Additional arguments}
 }
 \value{
-  the rotational distance between R1 and R2
+  the rotational distance between R1 and R2 or Q1 and Q2
 }
 \description{
   Calculate the Euclidean or Riemannian distance between

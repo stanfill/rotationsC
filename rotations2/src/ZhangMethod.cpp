@@ -25,6 +25,26 @@ NumericVector RdistC(NumericMatrix Q1, NumericVector Q2){
 }
 
 // [[Rcpp::export]]
+NumericVector EdistC(NumericMatrix Q1, NumericVector Q2){
+	/*Compute the Euclidean distance between quaternions Q1 and Q2*/
+	/* Q1 must be an n-by-4 matrix with quaternion rows and Q2 a single quaternion*/
+	
+	int n = Q1.nrow(), i=0; 
+	double cp, rsi;
+	NumericVector rs(n);
+	
+	for(i=0;i<n;i++){
+		
+		cp = sum(Q1(i,_)*Q2);
+		rsi = 8*(1-(cp*cp));
+		rs[i] = pow(rsi,0.5);
+		
+	}
+	
+	return rs;
+}
+
+// [[Rcpp::export]]
 double oneRdistC(NumericMatrix Q1, NumericVector Q2){
 	/*Compute the geodesic distance between quaternions Q1 and Q2*/
 	/* Q1 must be an n-by-4 matrix with quaternion rows and Q2 a single quaternion*/

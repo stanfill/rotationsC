@@ -81,6 +81,10 @@ RdistC <- function(Q1, Q2) {
     .Call('rotations2_RdistC', PACKAGE = 'rotations2', Q1, Q2)
 }
 
+EdistC <- function(Q1, Q2) {
+    .Call('rotations2_EdistC', PACKAGE = 'rotations2', Q1, Q2)
+}
+
 oneRdistC <- function(Q1, Q2) {
     .Call('rotations2_oneRdistC', PACKAGE = 'rotations2', Q1, Q2)
 }

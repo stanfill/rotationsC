@@ -6,7 +6,7 @@
 
 #include <RcppArmadillo.h>
 #include <Rcpp.h>
-#include "../inst/include/rotations2.h"
+#include "rotations2.h"
 
 namespace rotations2 {
 
@@ -301,6 +301,20 @@ namespace rotations2 {
         }
         RNGScope __rngScope;
         RObject __result = p_RdistC(Rcpp::wrap(Q1), Rcpp::wrap(Q2));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<NumericVector >(__result);
+    }
+
+    inline NumericVector EdistC(NumericMatrix Q1, NumericVector Q2) {
+        typedef SEXP(*Ptr_EdistC)(SEXP,SEXP);
+        static Ptr_EdistC p_EdistC = NULL;
+        if (p_EdistC == NULL) {
+            validateSignature("NumericVector(*EdistC)(NumericMatrix,NumericVector)");
+            p_EdistC = (Ptr_EdistC)R_GetCCallable("rotations2", "rotations2_EdistC");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_EdistC(Rcpp::wrap(Q1), Rcpp::wrap(Q2));
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<NumericVector >(__result);

@@ -98,10 +98,7 @@ dist.Q4 <- function(Q1, Q2=id.Q4 ,method='projected', p=1) {
     
   }else if(method=='projected'){
     
-    R1<-SO3.Q4(Q1)
-    R2<-SO3.Q4(Q2)
-    R2<-matrix(R2,nrow(R1),9,byrow=T)
-    q4dist<-sqrt(rowSums((R1-R2)^2))^p
+    q4dist<-c(EdistC(Q1,Q2))^p
     
   }else{
     stop("Incorrect usage of method argument.  Please choose intrinsic or projected.")
