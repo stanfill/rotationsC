@@ -17,13 +17,13 @@ tstats<-matrix(0,B,numN)
 for(j in 1:numN){
 	
 	for(i in 1:B){
-		rs<-rfisher(n[j],kappa=kap)
+		rs<-rcayley(n[j],kappa=kap)
 		Rs<-genR(rs)
 		
 		#ars<-abs(rs)
 		cosrs<-cos(rs)
 		crs<-(cosrs+1)
-		drs<-(1+2*cosrs-3*cosrs^2)/(1-cosrs)^1.5
+		drs<-(1+3*cosrs)/(sqrt(1-cosrs))
 		#cosrs2<-cos(rs/2)^2
 		#cotrs<-cot(rs)
 
