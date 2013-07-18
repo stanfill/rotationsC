@@ -187,32 +187,67 @@ id.SO3 <- as.SO3(diag(c(1,1,1)))
 
 
 SO3.default <- function(U, theta=NULL) {
-  
+	
 	n<-length(U)/3
 	
 	if(n%%1!=0)
-		stop("Each axis must be in three-dimensions")
+		stop("This functions only works in three dimensions.")	
 	
 	U<-matrix(U,n,3)
+	
 	ulen<-sqrt(rowSums(U^2)) 
 	
 	if(is.null(theta)){ 
-		theta<-ulen%%pi
+		theta<-ulen%%(pi)
+		
+		#if(theta>pi)
+		#	theta<-2*pi-theta
 	}
 	
-	ntheta<-length(theta)	
+	R<-matrix(NA,n,9)
 	
-	if(n!=ntheta)
-		stop("Number of angles must match number of axes")
+	for(i in 1:n){
+		
+		if(ulen[i]!=0)
+			U[i,]<-U[i,]/ulen[i]
+		
+		P <- U[i,] %*% t(U[i,])
+		
+		R[i,] <- P + (diag(3) - P) * cos(theta[i]) + eskew(U[i,]) * sin(theta[i])
+	}
 	
-	if(any(ulen!=1))
-		U<-U/ulen
-
-	R<-SO3defaultC(U,theta)
- 		
- 	class(R) <- "SO3"
-  return(R)
+	class(R) <- "SO3"
+	return(R)
 }
+
+# C++ version still isn't working, comment out for now
+# SO3.default <- function(U, theta=NULL) {
+#   
+# 	n<-length(U)/3
+# 	
+# 	if(n%%1!=0)
+# 		stop("Each axis must be in three-dimensions")
+# 	
+# 	U<-matrix(U,n,3)
+# 	ulen<-sqrt(rowSums(U^2)) 
+# 	
+# 	if(is.null(theta)){ 
+# 		theta<-ulen%%pi
+# 	}
+# 	
+# 	ntheta<-length(theta)	
+# 	
+# 	if(n!=ntheta)
+# 		stop("Number of angles must match number of axes")
+# 	
+# 	if(any(ulen!=1))
+# 		U<-U/ulen
+# 
+# 	R<-SO3defaultC(U,theta)
+#  		
+#  	class(R) <- "SO3"
+#   return(R)
+# }
 
 
 #' @rdname SO3

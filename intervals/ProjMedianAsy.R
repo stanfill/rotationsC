@@ -1,8 +1,15 @@
+#Note about these simulations:
+#
+#The C++ version of genR() seems to crash for the fisher or von Mises distributions but works
+#with relative reliability for the Cayley distribution.  For now I've removed any call to the
+#C++ version of genR(), namely "SO3defaultC()" from within "SO3.default()", which I thought I had
+#already done.  Not it runs with little issue!
+
 library(rotations2)
 setwd("C:/Users/stanfill/Desktop/GitHub/rotationsC/intervals")
 source("IntervalFuns.R")
-B<-500
-n<-c(10,50,100)
+B<-1000
+n<-c(10,50,300)
 numN<-length(n)
 kap<-.1
 tstats<-matrix(0,B,numN)
@@ -10,25 +17,23 @@ tstats<-matrix(0,B,numN)
 for(j in 1:numN){
 	
 	for(i in 1:B){
-		rs<-rcayley(n[j],kappa=kap)
+		rs<-rfisher(n[j],kappa=kap)
 		Rs<-genR(rs)
 		
 		#ars<-abs(rs)
-		
-		cos2rs<-cos(rs/2)^2
-		#drs<-(3*cos(rs)+1)/(sin(rs/2)*6*sqrt(2))
+		cosrs<-cos(rs)
+		crs<-(cosrs+1)
+		drs<-(1+2*cosrs-3*cosrs^2)/(1-cosrs)^1.5
 		#cosrs2<-cos(rs/2)^2
 		#cotrs<-cot(rs)
 
-		ecos2<-mean(cos2rs)
-		#ecos2<-mean(cosrs2)
-		#ecot<-mean(cotrs)
 
-		c<-(4/3)*(ecos2)  #I think this is C for proj median according to notes from 7/16
+		c<-mean(crs)/6  #I think this is C for proj median according to notes from 7/16
 		#c<-1
 
-		#d<--mean(drs)
-		d<-1
+		d<-mean(drs)/12
+		#d<-1
+		
 		Shat<-median(Rs)
 	
 		ShatMedian<-dist(Shat,method='intrinsic',p=2)
@@ -43,15 +48,22 @@ for(j in 1:numN){
 #ses<-seq(0,max(tstats),length=B)
 #lines(ses,dchisq(ses,3))
 
+xmax<-15
+
 for(j in 1:numN){
 	tstats[,j]<-sort(tstats[,j])
 }
-plot(tstats[,1],ecdf(tstats[,1]),type='l')
+plot(tstats[,numN],ecdf(tstats[,numN]),type='l',xlim=c(0,xmax))
 
-for(j in 2:numN){
+for(j in 1:(numN-1)){
 	lines(tstats[,j],ecdf(tstats[,j]),col=(j+1))
 }
 
-lines(tstats[,3],pchisq(tstats[,3],3),lty=2)
+seqChi<-seq(0,xmax,length=B)
+
+lines(seqChi,pchisq(seqChi,3),lty=2)
 
 
+
+###########
+#Compare 
