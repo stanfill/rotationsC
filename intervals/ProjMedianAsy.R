@@ -20,19 +20,16 @@ for(j in 1:numN){
 		rs<-rcayley(n[j],kappa=kap)
 		Rs<-genR(rs)
 		
-		#ars<-abs(rs)
+
 		cosrs<-cos(rs)
 		crs<-(cosrs+1)
 		drs<-(1+3*cosrs)/(sqrt(1-cosrs))
 		#cosrs2<-cos(rs/2)^2
 		#cotrs<-cot(rs)
 
-
 		c<-mean(crs)/6  #I think this is C for proj median according to notes from 7/16
-		#c<-1
-
 		d<-mean(drs)/12
-		#d<-1
+
 		
 		Shat<-median(Rs)
 	
@@ -64,6 +61,119 @@ seqChi<-seq(0,xmax,length=B)
 lines(seqChi,pchisq(seqChi,3),lty=2)
 
 
+###########################
+###########################
+#Make plots for proj.median similar to proj.mean
 
-###########
-#Compare 
+
+library(plyr)
+library(reshape2)
+library(rotations2)
+setwd("C:/Users/stanfill/Desktop/GitHub/rotationsC/intervals")
+source("IntervalFuns.R")
+
+n<-c(10,50,100,300)
+ks<-c(.05,8)
+B<-1000				#Number of samples to use to estimate CDF
+Dist<-c('cayley','fisher','mises')
+
+
+simSize<-length(n)*length(ks)*length(Dist)
+
+tMat<-matrix(0,simSize,B)
+
+cdfDF<-data.frame(expand.grid(kappa=ks,n=n,Dist=Dist),tMat)
+
+for(j in 1:simSize){
+	
+	if(cdfDF$Dist[j]=='cayley'){
+		rangle<-rcayley
+	}else if(cdfDF$Dist[j]=='fisher'){
+		rangle<-rfisher
+	}else{
+		rangle<-rvmises
+	}
+	
+	for(i in 1:B){
+		
+		rs<-rangle(cdfDF$n[j],kappa=cdfDF$kappa[j])
+		
+		Rs<-genR(rs)
+		
+		cosrs<-cos(rs)
+		crs<-(cosrs+1)
+		drs<-(1+3*cosrs)/(sqrt(1-cosrs))
+		#cosrs2<-cos(rs/2)^2
+		#cotrs<-cot(rs)
+		
+		c<-mean(crs)/6  #I think this is C for proj median according to notes from 7/16
+		d<-mean(drs)/12
+		
+		Shat<-median(Rs)
+		
+		hsqMean<-dist(Shat,method='intrinsic',p=2)
+		
+		cdfDF[j,(3+i)]<-2*cdfDF$n[j]*d^2*hsqMean/c
+		
+	}
+}
+
+resM<-melt(cdfDF,id=c("Dist","kappa","n"))
+ss<-seq(0,max(resM$value),length=B)
+Probs<-pchisq(ss,3)
+
+resM$n<-as.factor(resM$n)
+resM$Prob<-0
+resM$ID<-paste(resM$Dist,resM$kappa,resM$n)
+kns<-unique(resM$ID)
+
+for(i in 1:length(unique(resM$ID))){
+	resM[resM$ID==kns[i],]$value<-sort(resM[resM$ID==kns[i],]$value)
+	resM[resM$ID==kns[i],]$Prob<-ecdf(resM[resM$ID==kns[i],]$value)
+}
+
+chiDF<-data.frame(Dist="All",kappa=rep(ks,B),n='Chisq',variable='Tr',value=rep(ss,each=2),Prob=rep(pchisq(ss,3),each=2))
+chiDF$ID<-paste(chiDF$Dist,chiDF$kappa,chiDF$n)
+
+fullDF<-rbind(resM,chiDF)
+
+Newlabs<-c("Chisq","10","50","100","300")
+fullDF$n<-factor(fullDF$n,levels=Newlabs)
+fullDF$Stat<-1
+fullDF[fullDF$n=='Chisq',]$Stat<-2
+fullDF$Stat<-as.factor(fullDF$Stat)
+fullDF$kappa<-factor(fullDF$kappa,labels=c("kappa == 0.5","kappa == 8.0"))
+	
+
+qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("cayley",'All'),],colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,15))+
+	scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"))+
+	facet_grid(.~kappa,labeller=label_parsed)+theme_bw()+coord_fixed(ratio=15/1)+
+	scale_size_discrete(range=c(0.75,1.5),guide='none')+
+	guides(colour=guide_legend(label.hjust=0))
+	
+#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
+#ggsave("CayleyECDF.pdf",height=5,width=8)
+#write.csv(fullDF,"CayleyECDF.csv")
+	
+	
+qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("fisher",'All'),],colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,15))+
+	scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"))+
+	facet_grid(.~kappa,labeller=label_parsed)+theme_bw()+coord_fixed(ratio=15/1)+
+	scale_size_discrete(range=c(0.75,1.5),guide='none')+
+	guides(colour=guide_legend(label.hjust=0))
+	
+#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
+#ggsave("FisherECDF.pdf",height=5,width=8)
+#write.csv(fullDF,"FisherECDF.csv")
+	
+
+qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("mises",'All'),],colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,15))+
+	scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"))+
+	facet_grid(.~kappa,labeller=label_parsed)+theme_bw()+coord_fixed(ratio=15/1)+
+	guides(colour=guide_legend(label.hjust=0))+
+	scale_size_discrete("",range=c(0.75,1.5),guide='none')
+	
+#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
+#ggsave("vonMisesECDF.pdf",height=5,width=8)
+#write.csv(fullDF,"vonMisesECDF.csv")
+	
