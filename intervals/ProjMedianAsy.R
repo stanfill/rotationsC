@@ -225,7 +225,7 @@ abline(0,1)
 #Compare theoretical to empirical c and d values for distributions
 
 library(rotations2)
-kap<-1
+kap<-250
 
 #Cayley distribution
 rs<-rcayley(1000,kappa=kap)
@@ -236,4 +236,18 @@ sqrt(2)*gamma(kap+2)/((2*kap+1)*gamma(kap+.5)*gamma(1.5)) #Pretty good
 
 mean(crs/sqrt(1-crs))
 (2*kap-1)*gamma(kap+2)/(sqrt(2*pi)*gamma(kap+2.5))  #Pretty good
+
+
+#Fisher distribution
+library(gsl)
+kap<-100
+
+rs<-rfisher(1000,kappa=kap)
+crs<-cos(rs)
+mean(1/sqrt(1-crs))
+
+exp(2*kap)*sqrt(2)*dawson(2*sqrt(kap))/(pi*sqrt(kap)*(besselI(2*kap,0)-besselI(2*kap,1)))
+
+mean(crs/sqrt(1-crs))
+exp(2*kap)*(2*sqrt(kap)-(1+4*kap)*dawson(2*sqrt(kap)))/((2*kap)^(1.5)*pi*(besselI(2*kap,0)-besselI(2*kap,1)))  #Pretty good
 
