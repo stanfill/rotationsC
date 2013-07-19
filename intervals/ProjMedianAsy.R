@@ -219,3 +219,21 @@ for(i in 1:B){
 plot(AvarHat,AvarTilde,pch=19)
 abline(0,1)
 
+
+###########################
+###########################
+#Compare theoretical to empirical c and d values for distributions
+
+library(rotations2)
+kap<-1
+
+#Cayley distribution
+rs<-rcayley(1000,kappa=kap)
+crs<-cos(rs)
+
+mean(1/sqrt(1-crs))
+sqrt(2)*gamma(kap+2)/((2*kap+1)*gamma(kap+.5)*gamma(1.5)) #Pretty good
+
+mean(crs/sqrt(1-crs))
+(2*kap-1)*gamma(kap+2)/(sqrt(2*pi)*gamma(kap+2.5))  #Pretty good
+
