@@ -184,3 +184,38 @@ qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("mises",'All'),],colour=n,lwd=Stat
 #ggsave("vonMisesECDF.pdf",height=5,width=8)
 #write.csv(fullDF,"vonMisesECDF.csv")
 	
+
+###########################
+###########################
+#How do c and d compare between proj.mean and proj.median
+
+library(rotations2)
+n<-100
+kap<-1
+B<-100
+AvarHat<-rep(0,B)
+AvarTilde<-rep(0,B)
+
+for(i in 1:B){
+
+	rs<-rvmises(n,kap)
+	cosrs<-cos(rs)
+	cos2rs<-cos(rs)^2
+
+	crs<-(cosrs+1)
+	drs<-(1+3*cosrs)/(sqrt(1-cosrs))
+
+	chat<-2*mean(1-cos2rs)/3
+	dhat<-mean(1+2*cosrs)/3
+	AvarHat[i]<-chat/(2*dhat^2)
+
+	ctilde<-mean(crs)/6  
+	dtilde<-mean(drs)/12
+	AvarTilde[i]<-ctilde/(2*dtilde^2)
+
+}
+
+#Empirically AvarTilde > AvarHat
+plot(AvarHat,AvarTilde,pch=19)
+abline(0,1)
+
