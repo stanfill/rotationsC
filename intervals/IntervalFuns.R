@@ -368,5 +368,5 @@ zhangMedian<-function(Rs,alpha,m=300){
   
   }
   
-  return(as.numeric(quantile(hstar,1-alpha)))
+  return(as.numeric(quantile(hstar,1-alpha,na.rm=T)))
 }
