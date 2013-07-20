@@ -350,3 +350,23 @@ centeringSO3<-function(Rs,S){
 	}
 	return(as.SO3(Rs))
 }
+
+zhangMedian<-function(Rs,alpha,m=300){
+  
+  n<-nrow(Rs)
+  Shat<-median(Rs)
+  hstar<-rep(0,m)
+  
+  for(i in 1:m){
+    nstar<-sample(n,replace=T)
+    Rstar<-as.SO3(Rs[nstar,])
+    Sstar<-median(Rstar)
+    cd<-cdfunsCSO3(Rstar,Sstar)
+    hsqMean<-dist(Shat,Sstar,method='intrinsic',p=2)
+    
+    hstar[i]<-2*n*cd[2]^2*hsqMean/cd[1]
+  
+  }
+  
+  return(as.numeric(quantile(hstar,1-alpha)))
+}

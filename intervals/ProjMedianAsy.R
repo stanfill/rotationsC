@@ -276,9 +276,9 @@ Dist<-c('Cayley','matrix-Fisher')
 
 simSize<-length(n)*length(nus)*length(Dist)
 
-#tMat<-matrix(0,simSize,B)
+tMat<-matrix(0,simSize,B)
 
-#cdfDF<-data.frame(expand.grid(nus=nus,n=n,Dist=Dist),tMat)
+cdfDF<-data.frame(expand.grid(nus=nus,n=n,Dist=Dist),tMat)
 coverRate<-data.frame(expand.grid(nus=nus,n=n,Dist=Dist),Chang=0,Zhang=0)
 
 
@@ -317,14 +317,19 @@ for(j in 1:simSize){
     
     statIJ<-2*cdfDF$n[j]*d^2*hsqMean/c
     
-    cdfDF[j,(3+i)]<-statIJ
+    c#dfDF[j,(3+i)]<-statIJ
     coverRate[j,]$Chang<-coverRate[j,]$Chang+as.numeric(statIJ<critVal)
     
+    zhangIJ<-zhangMedian(Rs,alpha)
+    
+    #cdfDF[j,(3+i)]<-statIJ
+    coverRate[j,]$Zhang<-coverRate[j,]$Zhang+as.numeric(statIJ<zhangIJ)
     
   }
 }
 
-coverRate[,4]<-100*coverRate[,4]/B
+coverRate$Chang<-100*coverRate$Chang/B
+coverRate$Zhang<-100*coverRate$Zhang/B
 
 coverRate$nus<-factor(coverRate$nus,labels=c("nu==0.25","nu==0.75"))
 
