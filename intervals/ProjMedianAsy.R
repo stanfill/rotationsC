@@ -262,26 +262,29 @@ exp(2*kap)*(2*sqrt(kap)-(1+4*kap)*dawson(2*sqrt(kap)))/((2*kap)^(1.5)*pi*(bessel
 library(plyr)
 library(reshape2)
 library(rotations2)
+sourceCpp("ZhangMethod.cpp")
 #setwd("C:/Users/stanfill/Desktop/GitHub/rotationsC/intervals")
-#source("IntervalFuns.R")
+sourceCpp("ZhangMethod.cpp")  #this contains the functions that will compute bootsrap c and d
+source("IntervalFuns.R")     #contains the actual Zhang bootstrap for Median
 
 alpha<-.1
 critVal<-qchisq(1-alpha,3)
 n<-c(10,20,50,100)
 nus<-c(.25,.75)
-B<-1000  			#Number of samples to use to estimate CDF
-Dist<-c('cayley','fisher')
+B<-10  			#Number of samples to use to estimate CDF
+Dist<-c('Cayley','matrix-Fisher')
 
 simSize<-length(n)*length(nus)*length(Dist)
 
-tMat<-matrix(0,simSize,B)
+#tMat<-matrix(0,simSize,B)
 
-cdfDF<-data.frame(expand.grid(nus=nus,n=n,Dist=Dist),tMat)
-coverRate<-cdfDF[,1:4]
+#cdfDF<-data.frame(expand.grid(nus=nus,n=n,Dist=Dist),tMat)
+coverRate<-data.frame(expand.grid(nus=nus,n=n,Dist=Dist),Chang=0,Zhang=0)
+
 
 for(j in 1:simSize){
   
-  if(cdfDF$Dist[j]=='cayley'){
+  if(cdfDF$Dist[j]=='Cayley'){
     
     rangle<-rcayley
     kappaj <- cayley_kappa(cdfDF$nu[j])
@@ -315,19 +318,19 @@ for(j in 1:simSize){
     statIJ<-2*cdfDF$n[j]*d^2*hsqMean/c
     
     cdfDF[j,(3+i)]<-statIJ
-    coverRate[j,4]<-coverRate[j,4]+as.numeric(statIJ<critVal)
+    coverRate[j,]$Chang<-coverRate[j,]$Chang+as.numeric(statIJ<critVal)
     
     
   }
 }
 
 coverRate[,4]<-100*coverRate[,4]/B
-levels(coverRate$Dist)<-c("Cayley","matrix-Fisher")
+
 coverRate$nus<-factor(coverRate$nus,labels=c("nu==0.25","nu==0.75"))
 
-qplot(n,X1,data=coverRate,geom='line',ylab='Coverage Rate (%)',xlab='Sample Size')+
+qplot(n,Chang,data=coverRate,geom='line',ylab='Coverage Rate (%)',xlab='Sample Size')+
   geom_hline(yintercept=90,colour='red')+facet_grid(Dist~nus,labeller=label_parsed)+
   scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()
   
 #ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB10000.pdf",width=10,height=8)
-#ggsave("CoverRatesB1000Median.pdf",width=10,height=8)
+#ggsave("CoverRatesB1000Median.pdf",width=5,height=4)

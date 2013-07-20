@@ -153,3 +153,68 @@ NumericVector zhangQ4(NumericMatrix Q, int m){
 	
 }
 
+
+//' Below here are all the functions for the Projected median
+
+//' compute the riemannian distance between R1 and R2
+// [[Rcpp::export]]
+arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2){
+  
+  int n = Rs.n_rows, m=Rs.n_cols , i,j;
+  
+  if(m==3){
+    Rs = Rs * R2.t();
+    arma::rowvec theta(1); 
+    theta(0) = acos(0.5*trace(Rs)-0.5);
+    return theta;
+  }
+  
+  
+  arma::rowvec theta(n);
+  theta.zeros();
+  arma::mat33 Rsi;
+  
+  for(i=0; i<n ; i++){
+    
+    for(j = 0; j<9 ;j++){
+      Rsi(j)=Rs(i,j);
+    }
+    
+    Rsi = Rsi * R2.t();
+    theta(i) = acos(0.5*trace(Rsi)-0.5);
+    
+  }
+  return theta;
+}
+
+//' This estimates c=2E(1-cos(r^2))/3 and d=E(1+2cos(r))/3 from a sample
+// [[Rcpp::export]]
+NumericVector cdfunsCSO3(arma::mat Rs, arma::mat Rhat){
+  
+	//Compute the values c and d to form the pivotal test statistic
+	
+	int n = Rs.n_rows, i;
+	double crs;
+	
+	NumericVector cds(2);
+	cds[0]=0.0;
+	cds[1]=0.0;
+	
+	NumericVector rs(n);
+	
+	rs = rdistSO3C(Rs,Rhat);
+
+	for(i=0; i<n; i++){
+		
+		crs = cos(rs[i]);
+		
+		cds[0] += crs;				//c=E[1+cos(r)]/6
+		cds[1] += (1+3*crs)/(pow(1-crs,0.5));							//d=E([1+3cos(r)]/12*sqrt[1-cos(r)])
+	}
+	
+	cds[0] = ((cds[0]/n)+1)/6;
+	cds[1] = (cds[1]/n)/12;
+	
+	return cds;
+}
+
