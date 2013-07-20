@@ -5,6 +5,10 @@
 #C++ version of genR(), namely "SO3defaultC()" from within "SO3.default()", which I thought I had
 #already done.  Not it runs with little issue!
 
+################################
+#In this section I compare the empirical CDF of the test statistic to 
+#the theoretical chi^2_3 limiting distribution
+
 library(rotations2)
 setwd("C:/Users/stanfill/Desktop/GitHub/rotationsC/intervals")
 source("IntervalFuns.R")
@@ -62,9 +66,7 @@ lines(seqChi,pchisq(seqChi,3),lty=2)
 
 
 ###########################
-###########################
 #Make plots for proj.median similar to proj.mean
-
 
 library(plyr)
 library(reshape2)
@@ -76,7 +78,6 @@ n<-c(10,50,100,300)
 nus<-c(.25,.75)
 B<-1000				#Number of samples to use to estimate CDF
 Dist<-c('cayley','fisher','mises')
-
 
 simSize<-length(n)*length(nus)*length(Dist)
 
@@ -251,3 +252,82 @@ exp(2*kap)*sqrt(2)*dawson(2*sqrt(kap))/(pi*sqrt(kap)*(besselI(2*kap,0)-besselI(2
 mean(crs/sqrt(1-crs))
 exp(2*kap)*(2*sqrt(kap)-(1+4*kap)*dawson(2*sqrt(kap)))/((2*kap)^(1.5)*pi*(besselI(2*kap,0)-besselI(2*kap,1)))  #Pretty good
 
+
+######################################################
+######################################################
+#Find coverage rates for the parametric and bootstrap
+#confidence regions
+
+
+library(plyr)
+library(reshape2)
+library(rotations2)
+#setwd("C:/Users/stanfill/Desktop/GitHub/rotationsC/intervals")
+#source("IntervalFuns.R")
+
+alpha<-.1
+critVal<-qchisq(1-alpha,3)
+n<-c(10,20,50,100)
+nus<-c(.25,.75)
+B<-1000  			#Number of samples to use to estimate CDF
+Dist<-c('cayley','fisher')
+
+simSize<-length(n)*length(nus)*length(Dist)
+
+tMat<-matrix(0,simSize,B)
+
+cdfDF<-data.frame(expand.grid(nus=nus,n=n,Dist=Dist),tMat)
+coverRate<-cdfDF[,1:4]
+
+for(j in 1:simSize){
+  
+  if(cdfDF$Dist[j]=='cayley'){
+    
+    rangle<-rcayley
+    kappaj <- cayley_kappa(cdfDF$nu[j])
+    
+  }else{
+    
+    rangle<-rfisher
+    kappaj <- fisher_kappa(cdfDF$nu[j])
+    
+  }
+  
+  for(i in 1:B){
+    
+    rs<-rangle(cdfDF$n[j],kappa=kappaj)
+    
+    Rs<-genR(rs)
+    
+    cosrs<-cos(rs)
+    crs<-(cosrs+1)
+    drs<-(1+3*cosrs)/(sqrt(1-cosrs))
+    #cosrs2<-cos(rs/2)^2
+    #cotrs<-cot(rs)
+    
+    c<-mean(crs)/6  #I think this is C for proj median according to notes from 7/16
+    d<-mean(drs)/12
+    
+    Shat<-median(Rs)
+    
+    hsqMean<-dist(Shat,method='intrinsic',p=2)
+    
+    statIJ<-2*cdfDF$n[j]*d^2*hsqMean/c
+    
+    cdfDF[j,(3+i)]<-statIJ
+    coverRate[j,4]<-coverRate[j,4]+as.numeric(statIJ<critVal)
+    
+    
+  }
+}
+
+coverRate[,4]<-100*coverRate[,4]/B
+levels(coverRate$Dist)<-c("Cayley","matrix-Fisher")
+coverRate$nus<-factor(coverRate$nus,labels=c("nu==0.25","nu==0.75"))
+
+qplot(n,X1,data=coverRate,geom='line',ylab='Coverage Rate (%)',xlab='Sample Size')+
+  geom_hline(yintercept=90,colour='red')+facet_grid(Dist~nus,labeller=label_parsed)+
+  scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()
+  
+#ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB10000.pdf",width=10,height=8)
+#ggsave("CoverRatesB1000Median.pdf",width=10,height=8)
