@@ -262,9 +262,9 @@ exp(2*kap)*(2*sqrt(kap)-(1+4*kap)*dawson(2*sqrt(kap)))/((2*kap)^(1.5)*pi*(bessel
 library(plyr)
 library(reshape2)
 library(rotations2)
+sourceCpp("intervals/ZhangMethod.cpp")  
 
-#setwd("C:/Users/stanfill/Desktop/GitHub/rotationsC/intervals")
-sourceCpp("ZhangMethod.cpp")  #this contains the functions that will compute c/d and perform the zhang bootstrap
+#ZhangMethod.cpp contains the functions that will compute c/d and perform the zhang bootstrap
 
 alp<-.1
 critVal<-qchisq(1-alp,3)
@@ -320,10 +320,11 @@ for(j in 1:simSize){
     coverRate[j,]$Zhang<-coverRate[j,]$Zhang+as.numeric(statIJ<zhangIJ)
     
   }
+  coverRate$Chang[j]<-100*coverRate$Chang[j]/B
+  coverRate$Zhang[j]<-100*coverRate$Zhang[j]/B
+  write.csv(coverRate,"Results/MedianResultsM300.csv")
 }
 
-coverRate$Chang<-100*coverRate$Chang/B
-coverRate$Zhang<-100*coverRate$Zhang/B
 
 cRateM<-melt(coverRate,id=c('Dist','nus','n'))
 colnames(cRateM)[4]<-'Method'
