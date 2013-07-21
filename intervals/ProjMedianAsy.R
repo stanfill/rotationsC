@@ -262,7 +262,7 @@ exp(2*kap)*(2*sqrt(kap)-(1+4*kap)*dawson(2*sqrt(kap)))/((2*kap)^(1.5)*pi*(bessel
 library(plyr)
 library(reshape2)
 library(rotations2)
-sourceCpp("ZhangMethod.cpp")
+
 #setwd("C:/Users/stanfill/Desktop/GitHub/rotationsC/intervals")
 sourceCpp("ZhangMethod.cpp")  #this contains the functions that will compute bootsrap c and d
 source("IntervalFuns.R")     #contains the actual Zhang bootstrap for Median
@@ -271,7 +271,7 @@ alpha<-.1
 critVal<-qchisq(1-alpha,3)
 n<-c(10,20,50,100)
 nus<-c(.25,.75)
-B<-10  			#Number of samples to use to estimate CDF
+B<-100  			#Number of samples to use to estimate CDF
 Dist<-c('Cayley','matrix-Fisher')
 
 simSize<-length(n)*length(nus)*length(Dist)
@@ -302,16 +302,11 @@ for(j in 1:simSize){
     
     Rs<-genR(rs)
     
-    cosrs<-cos(rs)
-    crs<-(cosrs+1)
-    drs<-(1+3*cosrs)/(sqrt(1-cosrs))
-    #cosrs2<-cos(rs/2)^2
-    #cotrs<-cot(rs)
-    
-    c<-mean(crs)/6  #I think this is C for proj median according to notes from 7/16
-    d<-mean(drs)/12
-    
     Shat<-median(Rs)
+    
+    cdTilde<-cdfunsCSO3(Rs,Shat) #compute c and d tilde using consistent estimators
+    c<-cdTilde[1]
+    d<-cdTilde[2]
     
     hsqMean<-dist(Shat,method='intrinsic',p=2)
     
@@ -320,7 +315,7 @@ for(j in 1:simSize){
     c#dfDF[j,(3+i)]<-statIJ
     coverRate[j,]$Chang<-coverRate[j,]$Chang+as.numeric(statIJ<critVal)
     
-    zhangIJ<-zhangMedian(Rs,alpha)
+    zhangIJ<-as.numeric(quantile(zhangMedianC(Rs,300),1-alpha,na.rm=T))
     
     #cdfDF[j,(3+i)]<-statIJ
     coverRate[j,]$Zhang<-coverRate[j,]$Zhang+as.numeric(statIJ<zhangIJ)

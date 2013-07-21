@@ -218,3 +218,141 @@ NumericVector cdfunsCSO3(arma::mat Rs, arma::mat Rhat){
 	return cds;
 }
 
+// [[Rcpp::export]]
+arma::mat projectSO3C(arma::mat M){
+  
+	/*This function will project the an arbitrary 3-by-3 matrix M in M(3) into SO(3)
+	It is expecting a 3-by-3 matrix*/
+	
+	arma::mat Msq = M.t()*M;
+	arma::mat eigvec;
+	arma::vec eigval;
+  arma::eig_sym(eigval,eigvec,Msq); 
+  arma::mat dMat(3,3);
+  arma::mat u = fliplr(eigvec);
+  dMat.zeros();
+  
+  int sign = 1;
+  
+  if(det(M)<0){
+  	sign = -1;
+  }
+  
+  dMat(0,0) = pow(eigval[2],-0.5);
+  dMat(1,1) = pow(eigval[1],-0.5);
+  dMat(2,2) = sign*pow(eigval[0],-0.5);
+
+  return M * u * dMat * u.t();
+	 
+}
+
+
+// [[Rcpp::export]]
+arma::mat meanSO3C(arma::mat Rs){
+	
+	/*Compute the projected mean for a sample of n roations, Rs.  
+	This function expects Rs to be a n-by-9 matrix where each row
+	represents an observations in SO(3)*/
+	
+	int i;
+	arma::mat Rbarels = mean(Rs);
+	arma::mat Rbar(3,3);
+	
+	for(i=0;i<9;i++){
+			Rbar[i] = Rbarels[i];
+	}
+	
+	return projectSO3C(Rbar);
+}
+
+
+//[[Rcpp::export]]
+arma::mat medianSO3C(arma::mat Rs, int maxIterations, double maxEps){
+  
+  /*Estimate the central direction with the projected median according
+  to our algorithm in point estimation paper*/
+  
+  int n = Rs.n_rows, i,j,iterations=0;
+  arma::mat S = meanSO3C(Rs), RsCopy = Rs, Snew;
+  arma::mat33 delta;
+  arma::rowvec vnInv(n), deltaV(9), Svec(9);
+  double denom,epsilon = 1.0;
+  
+  while(epsilon > maxEps && iterations < maxIterations){
+  
+    for(j=0;j<9;j++){
+      Svec(j) = S(j); 
+    }
+  
+    denom = 0;
+    for(i=0;i<n;i++){
+      
+      vnInv(i) = pow(norm(Rs.row(i)-Svec,2),-1);
+      RsCopy.row(i) = Rs.row(i)*vnInv(i);
+      denom += vnInv(i);
+      
+    }
+  
+    deltaV = sum(RsCopy)/denom;
+
+    for(j=0;j<9;j++){
+      delta(j) = deltaV(j);
+    }
+
+    Snew = projectSO3C(delta);
+    
+    iterations += 1;
+    epsilon = norm(Snew-S,2);
+    S = Snew;
+  }
+
+  return S;
+}
+
+
+// [[Rcpp::export]]
+NumericVector zhangMedianC(arma::mat Rs, int m){
+  
+  int n = Rs.n_rows, i,j;
+  arma::mat Shat = medianSO3C(Rs,2000,1e-5);
+  arma::mat Rstar(n,9);
+  arma::mat Sstar(3,3);
+  NumericVector cdstar(2);
+	IntegerVector samp(n);
+	NumericVector unSamp;
+	int numUn=0, maxSamp=0;
+  NumericVector hsqrtMedian;
+  NumericVector hstar(m);
+  double hsq=0.0;
+  
+  for(j=0;j<m;j++){
+  	
+		samp = floor(runif(n,0,n));			//Bootstrap sample of size n, with replacement
+	  unSamp = unique(samp);
+    numUn = unSamp.size();
+    maxSamp = max(samp);
+    
+    while(numUn<4 || maxSamp>n-1){
+      samp = floor(runif(n,0,n));	 //If bootstrap samp is less than 4 obs then							
+	    unSamp = unique(samp);       //draw a new sample
+      numUn = unSamp.size();
+      maxSamp = max(samp);
+    }
+    
+		for(i=0;i<n;i++){
+			
+			Rstar.row(i) = Rs.row(samp[i]);		//Copying a matrix row by row produces a bunch of junk messages
+		}	
+    
+    Sstar = medianSO3C(Rstar,2000,1e-5);
+    
+    cdstar = cdfunsCSO3(Rstar,Sstar);
+    hsqrtMedian = rdistSO3C(Shat,Sstar);
+    hsq = hsqrtMedian[0];
+    
+    hstar[j]=2*n*pow(cdstar[1],2)*pow(hsq,2)/cdstar[0];
+  
+  }
+  
+  return hstar;
+}
