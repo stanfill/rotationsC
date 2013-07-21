@@ -264,14 +264,13 @@ library(reshape2)
 library(rotations2)
 
 #setwd("C:/Users/stanfill/Desktop/GitHub/rotationsC/intervals")
-sourceCpp("ZhangMethod.cpp")  #this contains the functions that will compute bootsrap c and d
-source("IntervalFuns.R")     #contains the actual Zhang bootstrap for Median
+sourceCpp("ZhangMethod.cpp")  #this contains the functions that will compute c/d and perform the zhang bootstrap
 
-alpha<-.1
-critVal<-qchisq(1-alpha,3)
+alp<-.1
+critVal<-qchisq(1-alp,3)
 n<-c(10,20,50,100)
-nus<-c(.25,.75)
-B<-100  			#Number of samples to use to estimate CDF
+nus<-c(.25,.5,.75)
+B<-10000  			#Number of samples to use to estimate CDF
 Dist<-c('Cayley','matrix-Fisher')
 
 simSize<-length(n)*length(nus)*length(Dist)
@@ -315,7 +314,7 @@ for(j in 1:simSize){
     c#dfDF[j,(3+i)]<-statIJ
     coverRate[j,]$Chang<-coverRate[j,]$Chang+as.numeric(statIJ<critVal)
     
-    zhangIJ<-as.numeric(quantile(zhangMedianC(Rs,300),1-alpha,na.rm=T))
+    zhangIJ<-as.numeric(quantile(zhangMedianC(Rs,300),1-alp,na.rm=T))
     
     #cdfDF[j,(3+i)]<-statIJ
     coverRate[j,]$Zhang<-coverRate[j,]$Zhang+as.numeric(statIJ<zhangIJ)
@@ -326,11 +325,19 @@ for(j in 1:simSize){
 coverRate$Chang<-100*coverRate$Chang/B
 coverRate$Zhang<-100*coverRate$Zhang/B
 
-coverRate$nus<-factor(coverRate$nus,labels=c("nu==0.25","nu==0.75"))
+cRateM<-melt(coverRate,id=c('Dist','nus','n'))
+colnames(cRateM)[4]<-'Method'
 
-qplot(n,Chang,data=coverRate,geom='line',ylab='Coverage Rate (%)',xlab='Sample Size')+
-  geom_hline(yintercept=90,colour='red')+facet_grid(Dist~nus,labeller=label_parsed)+
-  scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()
-  
-#ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB10000.pdf",width=10,height=8)
+levels(cRateM$Method)<-c("NTH(C&R)","B(Z&N)")
+
+levels(cRateM$Dist)<-c("Cayley","matrix~~Fisher")
+cRateM$nu<-factor(cRateM$nu,labels=c("nu == 0.25","nu == 0.5","nu == 0.75"))
+
+
+qplot(n,value,data=cRateM,colour=Method,group=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
+	facet_grid(Dist~nu,labeller=label_parsed)+
+	geom_hline(yintercept=(1-alp)*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
+	scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()
+
+#ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB1000Median.pdf",width=10,height=8)
 #ggsave("CoverRatesB1000Median.pdf",width=5,height=4)
