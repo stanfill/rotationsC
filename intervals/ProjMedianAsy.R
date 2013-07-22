@@ -279,9 +279,9 @@ tMat<-matrix(0,simSize,B)
 
 cdfDF<-data.frame(expand.grid(nus=nus,n=n,Dist=Dist),tMat)
 coverRate<-data.frame(expand.grid(nus=nus,n=n,Dist=Dist),Chang=0,Zhang=0)
+#coverRate<-read.csv("Results/MedianResultsM300.csv")[,-1]
 
-
-for(j in 1:simSize){
+for(j in 19:simSize){
   
   if(cdfDF$Dist[j]=='Cayley'){
     
@@ -324,7 +324,6 @@ for(j in 1:simSize){
   coverRate$Zhang[j]<-100*coverRate$Zhang[j]/B
   write.csv(coverRate,"Results/MedianResultsM300.csv")
 }
-
 
 cRateM<-melt(coverRate,id=c('Dist','nus','n'))
 colnames(cRateM)[4]<-'Method'
