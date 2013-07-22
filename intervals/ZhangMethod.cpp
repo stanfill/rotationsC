@@ -93,7 +93,10 @@ NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 // [[Rcpp::export]]
 NumericVector zhangQ4(NumericMatrix Q, int m){
 	
-	
+	RNGScope scope; // using runif requires this to be set...I think  								
+									// This has been shown to cause problems in the past so consider using the next line in its place
+  //GetRNGstate();PutRNGstate();
+  
 	int n=Q.nrow(), i=0, j=0;
 	NumericVector cdstar;
 	IntegerVector samp(n);
@@ -194,7 +197,7 @@ NumericVector cdfunsCSO3(arma::mat Rs, arma::mat Rhat){
 	//Compute the values c and d to form the pivotal test statistic
 	
 	int n = Rs.n_rows, i;
-	double crs;
+	double crs, OnemCrs;
 	
 	NumericVector cds(2);
 	cds[0]=0.0;
@@ -209,7 +212,12 @@ NumericVector cdfunsCSO3(arma::mat Rs, arma::mat Rhat){
 		crs = cos(rs[i]);
 		
 		cds[0] += crs;				//c=E[1+cos(r)]/6
-		cds[1] += (1+3*crs)/(pow(1-crs,0.5));							//d=E([1+3cos(r)]/12*sqrt[1-cos(r)])
+		
+		OnemCrs = 1-crs;
+		OnemCrs = std::max(OnemCrs,1e-5); //I think sqrt(1-crs) is close to zero and causing the crash, for now max sure
+															//that doesn't happen by taking at least 1e-5
+															
+		cds[1] += (1+3*crs)*(pow(OnemCrs,-0.5));							//d=E([1+3cos(r)]/12*sqrt[1-cos(r)])
 	}
 	
 	cds[0] = ((cds[0]/n)+1)/6;
@@ -312,6 +320,11 @@ arma::mat medianSO3C(arma::mat Rs, int maxIterations, double maxEps){
 
 // [[Rcpp::export]]
 NumericVector zhangMedianC(arma::mat Rs, int m){
+	
+  RNGScope scope; // using runif requires this to be set...I think.  
+  								// This has been shown to cause problems in the past so consider using the next line in its place
+  
+  //GetRNGstate();PutRNGstate();
   
   int n = Rs.n_rows, i,j;
   arma::mat Shat = medianSO3C(Rs,2000,1e-5);

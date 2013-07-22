@@ -279,9 +279,9 @@ tMat<-matrix(0,simSize,B)
 
 cdfDF<-data.frame(expand.grid(nus=nus,n=n,Dist=Dist),tMat)
 coverRate<-data.frame(expand.grid(nus=nus,n=n,Dist=Dist),Chang=0,Zhang=0)
-#coverRate<-read.csv("Results/MedianResultsM300.csv")[,-1]
+coverRate<-read.csv("Results/MedianResultsM300.csv")[,-1]
 
-for(j in 19:simSize){
+for(j in 20:simSize){
   
   if(cdfDF$Dist[j]=='Cayley'){
     
@@ -307,11 +307,15 @@ for(j in 19:simSize){
     c<-cdTilde[1]
     d<-cdTilde[2]
     
+	  if(d>1000){
+	  	break
+	  }
+    
     hsqMean<-dist(Shat,method='intrinsic',p=2)
     
     statIJ<-2*cdfDF$n[j]*d^2*hsqMean/c
     
-    c#dfDF[j,(3+i)]<-statIJ
+    #dfDF[j,(3+i)]<-statIJ
     coverRate[j,]$Chang<-coverRate[j,]$Chang+as.numeric(statIJ<critVal)
     
     zhangIJ<-as.numeric(quantile(zhangMedianC(Rs,300),1-alp,na.rm=T))
