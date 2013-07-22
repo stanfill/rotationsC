@@ -279,9 +279,9 @@ tMat<-matrix(0,simSize,B)
 
 cdfDF<-data.frame(expand.grid(nus=nus,n=n,Dist=Dist),tMat)
 coverRate<-data.frame(expand.grid(nus=nus,n=n,Dist=Dist),Chang=0,Zhang=0)
-coverRate<-read.csv("Results/MedianResultsM300.csv")[,-1]
+#coverRate<-read.csv("Results/MedianResultsM300.csv")[,-1]
 
-for(j in 20:simSize){
+for(j in 1:simSize){
   
   if(cdfDF$Dist[j]=='Cayley'){
     
@@ -343,5 +343,8 @@ qplot(n,value,data=cRateM,colour=Method,group=Method,ylab='Coverage Rate (%)',xl
 	geom_hline(yintercept=(1-alp)*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
 	scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()
 
-#ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB1000Median.pdf",width=10,height=8)
+#ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB1000Median.pdf",width=6,height=4)
 #ggsave("CoverRatesB1000Median.pdf",width=5,height=4)
+
+#library(xtable)
+#xtable(coverRate)
