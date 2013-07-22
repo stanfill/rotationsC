@@ -71,8 +71,7 @@ lines(seqChi,pchisq(seqChi,3),lty=2)
 library(plyr)
 library(reshape2)
 library(rotations2)
-setwd("C:/Users/stanfill/Desktop/GitHub/rotationsC/intervals")
-source("IntervalFuns.R")
+source("intervals/IntervalFuns.R")	#This is needed for the ecdf function
 
 n<-c(10,50,100,300)
 nus<-c(.25,.75)
