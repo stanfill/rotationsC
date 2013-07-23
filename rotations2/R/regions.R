@@ -319,6 +319,68 @@ cdfuns<-function(Qs,estimator){
 	return(list(c=cd[1],d=cd[2]))
 }
 
+#' Chang and Rivest confidence region method
+#'
+#' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation
+#' 
+#' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean
+#' estimator based on a result due to \cite{chang2001}.  By construction each axis will have the same
+#' radius so the radius reported is for all three axis.
+#'
+#' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
+#' @param estimator Character string either 'mean' or 'median'
+#' @param alp The alpha level desired, e.g. 0.05 or 0.10
+#' @return Radius of the confidence region centered at the projected mean
+#' @cite chang2001
+#' @seealso \code{\link{prentice}} \code{\link{fisheretal}} \code{\link{zhang}}
+#' @export
+#' @examples
+#' Rs<-ruars(20,rcayley,kappa=100)
+#' region(Rs,method='chang',alp=0.1)
+
+chang<-function(Qs,estimator,alp){
+	UseMethod("chang")
+}
+
+
+#' @rdname chang
+#' @method chang SO3
+#' @S3method chang SO3
+
+chang.SO3<-function(Rs,estimator,alp=NULL){
+	
+	#Rs is a n-by-9 matrix where each row is an 3-by-3 rotation matrix
+	#alp is the level of confidence desired, e.g. 0.95 or 0.90
+	#pivot logical; should the pivotal (T) bootstrap be used or nonpivotal (F)
+	
+	Rs<-formatSO3(Rs)
+	Qs<-Q4(Rs)
+	rad<-chang.Q4(Qs,estimator,alp)
+	return(rad)
+}
+
+#' @rdname chang
+#' @method chang Q4
+#' @S3method chang Q4
+
+chang.Q4<-function(Qs,estimator,alp=NULL){
+	
+	if(is.null(alp)){
+		#Take a default alpha=0.1 if no level is specified
+		alp<-.1
+		warning("No alpha-level specified, 0.1 used by default.")
+	}
+	
+	Qs<-formatQ4(Qs)
+	n<-nrow(Qs)
+	
+	cdhat<-cdfuns(Qs,estimator)
+	
+	rad<-sqrt(as.numeric(qchisq(1-alp,3))*cdhat$c/(2*n*cdhat$d^2))
+	
+	return(rad)
+}
+
 
 #' Fisher confidence region method
 #'
@@ -402,64 +464,3 @@ fisheretal.SO3<-function(Rs,alp=NULL,boot=T,m=300,symm=T){
 	return(r)
 }
 
-#' Chang and Rivest confidence region method
-#'
-#' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation
-#' 
-#' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean
-#' estimator based on a result due to \cite{chang2001}.  By construction each axis will have the same
-#' radius so the radius reported is for all three axis.
-#'
-#' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
-#' @param estimator Character string either 'mean' or 'median'
-#' @param alp The alpha level desired, e.g. 0.05 or 0.10
-#' @return Radius of the confidence region centered at the projected mean
-#' @cite chang2001
-#' @seealso \code{\link{prentice}} \code{\link{fisheretal}} \code{\link{zhang}}
-#' @export
-#' @examples
-#' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Rs,method='chang',alp=0.1)
-
-chang<-function(Qs,estimator,alp){
-	UseMethod("chang")
-}
-
-
-#' @rdname chang
-#' @method chang SO3
-#' @S3method chang SO3
-
-chang.SO3<-function(Rs,estimator,alp=NULL){
-	
-	#Rs is a n-by-9 matrix where each row is an 3-by-3 rotation matrix
-	#alp is the level of confidence desired, e.g. 0.95 or 0.90
-	#pivot logical; should the pivotal (T) bootstrap be used or nonpivotal (F)
-	
-	Rs<-formatSO3(Rs)
-	Qs<-Q4(Rs)
-	rad<-chang.Q4(Qs,estimator,alp)
-	return(rad)
-}
-
-#' @rdname chang
-#' @method chang Q4
-#' @S3method chang Q4
-
-chang.Q4<-function(Qs,estimator,alp=NULL){
-	
-	if(is.null(alp)){
-		#Take a default alpha=0.1 if no level is specified
-		alp<-.1
-		warning("No alpha-level specified, 0.1 used by default.")
-	}
-	
-	Qs<-formatQ4(Qs)
-	n<-nrow(Qs)
-	
-	cdhat<-cdfuns(Qs,estimator)
-	
-	rad<-sqrt(as.numeric(qchisq(1-alp,3))*cdhat$c/(2*n*cdhat$d^2))
-	
-	return(rad)
-}
