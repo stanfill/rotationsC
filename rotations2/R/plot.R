@@ -184,7 +184,7 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 		#Shats <- Shats[rmNA,]
 		Estlabels<-Estlabels[c(rmNA,NAs)]
 		
-		if(!is.null(mean_regions)){
+		if(!is.null(mean_regions) || !is.null(median_regions)){
 			vals<-3:(2+nrow(Shats)) #Make the shapes noticable, 15:18
 			estimates <- list(geom_point(aes(x=X, y=Y, shape=Est),size=3.5, data=data.frame(pointsXYZ(Shats, center=center, column=col), Shats)),
 												scale_shape_manual(name="Estimates", labels=Estlabels,values=vals))
@@ -197,9 +197,9 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 	if (!is.null(mean_regions)) {
 	  prentr <- changr <- zhangr  <- NA
 	  if(any(mean_regions%in%c('all','All'))) mean_regions<-c("prentice","zhang","chang")
-	  if (length(grep("prentice", mean_regions)) > 0) prentr<-region(Rs,method='prentice',alp=alp)[col]
-	  if (length(grep("chang", mean_regions)) >0)    changr<-region(Rs,method='chang',alp=alp)
-	  if (length(grep("zhang", mean_regions)) > 0)    zhangr<-region(Rs,method='zhang',alp=alp,m=m)
+	  if (length(grep("prentice", mean_regions)) > 0) prentr<-region(Rs,estimator='mean',method='prentice',alp=alp)[col]
+	  if (length(grep("chang", mean_regions)) >0)    changr<-region(Rs,estimator='mean',method='chang',alp=alp)
+	  if (length(grep("zhang", mean_regions)) > 0)    zhangr<-region(Rs,estimator='mean',method='zhang',alp=alp,m=m)
 
 	  Regions<-data.frame(X1=c(prentr,changr,zhangr),Meth=c('Prentice','Chang','Zhang'))
 	  Regions <- na.omit(Regions)
@@ -225,8 +225,8 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 	if (!is.null(median_regions)) {
 		prentr <- changr <- zhangr  <- NA
 		if(any(median_regions%in%c('all','All'))) median_regions<-c("zhang","chang")
-		if (length(grep("chang", median_regions)) >0)    changr<-region(Rs,method='chang',alp=alp)
-		if (length(grep("zhang", median_regions)) > 0)    zhangr<-region(Rs,method='zhang',alp=alp,m=m)
+		if (length(grep("chang", median_regions)) >0)    changr<-region(Rs,method='chang',estimator='median',alp=alp)
+		if (length(grep("zhang", median_regions)) > 0)    zhangr<-region(Rs,method='zhang',estimator='median',alp=alp,m=m)
 		
 		MedRegions<-data.frame(X1=c(changr,zhangr),Meth=c('Chang','Zhang'))
 		MedRegions <- na.omit(MedRegions)

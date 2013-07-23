@@ -303,10 +303,12 @@ cdfuns<-function(Qs,estimator){
   
   
   if(estimator=='mean'){
+  	
   	Shat<-mean(Qs)
 		cd<-cdfunsC(Qs,Shat)
 		
   }else if(estimator=='median'){
+  	
   	Shat<-median(Qs)
   	cd<-cdfunsCMedian(Qs,Shat)
   	
@@ -436,7 +438,7 @@ chang.SO3<-function(Rs,estimator,alp=NULL){
 	
 	Rs<-formatSO3(Rs)
 	Qs<-Q4(Rs)
-	rad<-chang.Q4(Qs,alp)
+	rad<-chang.Q4(Qs,estimator,alp)
 	return(rad)
 }
 
