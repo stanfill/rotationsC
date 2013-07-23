@@ -241,8 +241,28 @@ zhang.SO3<-function(Rs,estimator,alp=NULL,m=300){
 	#pivot logical; should the pivotal (T) bootstrap be used or nonpivotal (F)
 	
   Rs<-formatSO3(Rs)
-  Qs<-Q4(Rs)
-  rad<-zhang.Q4(Qs,alp,m)
+  
+  if(estimator=='median'){
+  	
+  	if(is.null(alp)){
+  		#Take a default alpha=0.1 if no level is specified
+  		alp<-.1
+  		warning("No alpha-level specified, 0.1 used by default.")
+  	}
+  	
+  	stats<-zhangMedianC(Rs,m)
+  	cdhat<-cdfuns(Rs,estimator)
+  	rad<-sqrt(as.numeric(quantile(stats,1-alp))*cdhat$c/(2*n*cdhat$d^2))
+  	
+  }else if(estimator=='mean'){
+  
+  	Qs<-Q4(Rs)
+  	rad<-zhang.Q4(Qs,estimator,alp,m)
+  	
+  }else{
+  	stop("Please choose an estimator mean or median.")
+  }
+  
 	return(rad)
 }
 
@@ -252,27 +272,36 @@ zhang.SO3<-function(Rs,estimator,alp=NULL,m=300){
 
 zhang.Q4<-function(Qs,estimator,alp=NULL,m=300){
 	
-	if(is.null(alp)){
-		#Take a default alpha=0.1 if no level is specified
-		alp<-.1
-		warning("No alpha-level specified, 0.1 used by default.")
+	if(estimator=='mean'){
+	
+		if(is.null(alp)){
+			#Take a default alpha=0.1 if no level is specified
+			alp<-.1
+			warning("No alpha-level specified, 0.1 used by default.")
+		}
+	
+		Qs<-formatQ4(Qs)
+		n<-nrow(Qs)
+  	stats<-zhangQ4(Qs,m)
+		#Shat<-mean(Qs)
+  	cdhat<-cdfuns(Qs,estimator)
+		rad<-sqrt(as.numeric(quantile(stats,1-alp))*cdhat$c/(2*n*cdhat$d^2))
+		
+	}else if(estimator=='median'){
+		
+		Rs<-SO3(Qs)
+		rad<-zhang.SO3(Rs,estimator,alp,m)
+		
+	}else{
+		stop("Please choose an estimator mean or median.")
 	}
-	
-	Qs<-formatQ4(Qs)
-	n<-nrow(Qs)
-  stats<-zhangQ4(Qs,m)
-	#Shat<-mean(Qs)
-  cdhat<-cdfuns(Qs,estimator)
-  
-	rad<-sqrt(as.numeric(quantile(stats,1-alp))*cdhat$c/(2*n*cdhat$d^2))
-	
 	return(rad)
 }
 
 
 cdfuns<-function(Qs,estimator){
   
-  Shat<-matrix(Shat,4,1)
+  
   if(estimator=='mean'){
   	Shat<-mean(Qs)
 		cd<-cdfunsC(Qs,Shat)

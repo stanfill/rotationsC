@@ -4,16 +4,19 @@
 \alias{zhang.SO3}
 \title{Zhang confidence region method}
 \usage{
-  zhang(Qs, alp, m)
+  zhang(Qs, estimator, alp, m)
 
-  \method{zhang}{SO3} (Rs, alp = NULL, m = 300)
+  \method{zhang}{SO3} (Rs, estimator, alp = NULL, m = 300)
 
-  \method{zhang}{Q4} (Qs, alp = NULL, m = 300)
+  \method{zhang}{Q4} (Qs, estimator, alp = NULL, m = 300)
 }
 \arguments{
   \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
   row corresponds to a random rotation in matrix (p=9) or
   quaternion form (p=4)}
+
+  \item{estimator}{Character string either 'mean' or
+  'median'}
 
   \item{alp}{The alpha level desired, e.g. 0.05 or 0.10}
 

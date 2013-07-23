@@ -25,6 +25,36 @@ NumericVector RdistC(NumericMatrix Q1, NumericVector Q2){
 }
 
 // [[Rcpp::export]]
+arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2){
+  
+  int n = Rs.n_rows, m=Rs.n_cols , i,j;
+  
+  if(m==3){
+  	Rs = Rs * R2.t();
+    arma::rowvec theta(1); 
+    theta(0) = acos(0.5*trace(Rs)-0.5);
+    return theta;
+  }
+  
+  
+  arma::rowvec theta(n);
+  theta.zeros();
+  arma::mat33 Rsi;
+  
+  for(i=0; i<n ; i++){
+    
+    for(j = 0; j<9 ;j++){
+      Rsi(j)=Rs(i,j);
+    }
+    
+    Rsi = Rsi * R2.t();
+    theta(i) = acos(0.5*trace(Rsi)-0.5);
+    
+  }
+  return theta;
+}
+
+// [[Rcpp::export]]
 NumericVector EdistC(NumericMatrix Q1, NumericVector Q2){
 	/*Compute the Euclidean distance between quaternions Q1 and Q2*/
 	/* Q1 must be an n-by-4 matrix with quaternion rows and Q2 a single quaternion*/
@@ -84,6 +114,41 @@ NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 	
 	cds[0] = 2*(1-cds[0]/n)/3;
 	cds[1] = (1+2*cds[1]/n)/3;
+	
+	return cds;
+}
+
+// [[Rcpp::export]]
+NumericVector cdfunsCMedian(NumericMatrix Qs, NumericVector Qhat){
+  
+	//Compute the values c and d to form the pivotal test statistic for the median using quaternions
+	
+	int n = Qs.nrow(), i;
+	double crs, OnemCrs;
+	
+	NumericVector cds(2);
+	cds[0]=0.0;
+	cds[1]=0.0;
+	
+	NumericVector rs(n);
+	
+	rs = RdistC(Qs,Qhat);
+
+	for(i=0; i<n; i++){
+		
+		crs = cos(rs[i]);
+		
+		cds[0] += crs;				//c=E[1+cos(r)]/6
+		
+		OnemCrs = 1-crs;
+		OnemCrs = std::max(OnemCrs,1e-5); //I think sqrt(1-crs) is close to zero and causing the crash, for now max sure
+															//that doesn't happen by taking at least 1e-5
+															
+		cds[1] += (1+3*crs)*(pow(OnemCrs,-0.5));							//d=E([1+3cos(r)]/12*sqrt[1-cos(r)])
+	}
+	
+	cds[0] = ((cds[0]/n)+1)/6;
+	cds[1] = (cds[1]/n)/12;
 	
 	return cds;
 }
@@ -151,12 +216,14 @@ NumericVector zhangQ4(NumericMatrix Q, int m){
 	
 }
 
+
 // [[Rcpp::export]]
-NumericVector cdfunsCMedian(arma::mat Qs, arma::mat Qhat){
+NumericVector cdfunsCSO3(arma::mat Rs, arma::mat Rhat){
   
-	//Compute the values c and d to form the pivotal test statistic for the median using quaternions
+	//Compute the values c and d to form the pivotal test statistic for SO3 data, used by
+	//the zhangMedianC function
 	
-	int n = Qs.n_rows, i;
+	int n = Rs.n_rows, i;
 	double crs, OnemCrs;
 	
 	NumericVector cds(2);
@@ -165,7 +232,7 @@ NumericVector cdfunsCMedian(arma::mat Qs, arma::mat Qhat){
 	
 	NumericVector rs(n);
 	
-	rs = RdistC(Qs,Qhat);
+	rs = rdistSO3C(Rs,Rhat);
 
 	for(i=0; i<n; i++){
 		
@@ -189,13 +256,16 @@ NumericVector cdfunsCMedian(arma::mat Qs, arma::mat Qhat){
 // [[Rcpp::export]]
 NumericVector zhangMedianC(arma::mat Rs, int m){
 	
+	//Compute the bootstrap version of the chang regions for SO3 data because that is what the 
+	//median function is written for
+	
   RNGScope scope; // using runif requires this to be set...I think.  
   								// This has been shown to cause problems in the past so consider using the next line in its place
   
   //GetRNGstate();PutRNGstate();
   
   int n = Rs.n_rows, i,j;
-  arma::mat Shat = medianSO3C(Rs,2000,1e-5);
+  arma::mat Shat = rotations2::medianSO3C(Rs,2000,1e-5);
   arma::mat Rstar(n,9);
   arma::mat Sstar(3,3);
   NumericVector cdstar(2);
@@ -225,7 +295,7 @@ NumericVector zhangMedianC(arma::mat Rs, int m){
 			Rstar.row(i) = Rs.row(samp[i]);		//Copying a matrix row by row produces a bunch of junk messages
 		}	
     
-    Sstar = medianSO3C(Rstar,2000,1e-5);
+    Sstar = rotations2::medianSO3C(Rstar,2000,1e-5);
     
     cdstar = cdfunsCSO3(Rstar,Sstar);
     hsqrtMedian = rdistSO3C(Shat,Sstar);
