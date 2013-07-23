@@ -126,7 +126,8 @@ pointsXYZ <- function(data, center, column=1) {
 #' @param to_range show only part of the globe that is in range of the data?
 #' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "geom.mean", "geom.median"
 #' @param label_points  vector of labels
-#' @param show_regions character vector to specify which of the three confidence regions to show.  Possibilities are "all", "prentice", "chang", "zhang"
+#' @param mean_regions character vector to specify which of the three confidence regions to show for the projected mean.  Possibilities are "all", "prentice", "chang", "zhang"
+#' @param median_regions character vector to specify which of the three confidence regions to show for the projected median.  Possibilities are "all", "chang", "zhang"
 #' @param alp alpha level to be used for confidence regions
 #' @param m number of bootstrap replicates to use in Zhang confidence region
 #' @param ... parameters passed onto the points layer
@@ -140,7 +141,7 @@ pointsXYZ <- function(data, center, column=1) {
 #' # Z is computed internally and contains information on depth
 #' plot(Rs,center=mean(Rs),show_estimates=c("proj.mean", "geom.mean"), label_points=sample(LETTERS, 200, replace=TRUE)) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
 
-plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, show_regions=NULL, alp=NULL, m=300,  ...) {
+plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300,  ...) {
 	Rs <- as.SO3(x)
 	xlimits <- c(-1,1)
 	ylimits <- c(-1,1)
@@ -155,8 +156,11 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 		ybar <- mean(ylimits)
 		ylimits <- ybar + 1.1*(ylimits-ybar)
 	}
+	
 	estimates <- NULL
   regs<-NULL
+	regsMed<-NULL
+	
 	if (!is.null(show_estimates)) {
 		ShatP <- StildeP <- ShatG <- StildeG <- NA
 		if(any(show_estimates%in%c('all','All'))) show_estimates<-c("proj.mean","proj.median","geom.mean","geom.median")
@@ -180,7 +184,7 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 		#Shats <- Shats[rmNA,]
 		Estlabels<-Estlabels[c(rmNA,NAs)]
 		
-		if(!is.null(show_regions)){
+		if(!is.null(mean_regions)){
 			vals<-3:(2+nrow(Shats)) #Make the shapes noticable, 15:18
 			estimates <- list(geom_point(aes(x=X, y=Y, shape=Est),size=3.5, data=data.frame(pointsXYZ(Shats, center=center, column=col), Shats)),
 												scale_shape_manual(name="Estimates", labels=Estlabels,values=vals))
@@ -190,12 +194,12 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 		}
 	}
   
-	if (!is.null(show_regions)) {
+	if (!is.null(mean_regions)) {
 	  prentr <- changr <- zhangr  <- NA
-	  if(any(show_regions%in%c('all','All'))) show_regions<-c("prentice","zhang","chang")
-	  if (length(grep("prentice", show_regions)) > 0) prentr<-region(Rs,method='prentice',alp=alp)[col]
-	  if (length(grep("chang", show_regions)) >0)    changr<-region(Rs,method='chang',alp=alp)
-	  if (length(grep("zhang", show_regions)) > 0)    zhangr<-region(Rs,method='zhang',alp=alp,m=m)
+	  if(any(mean_regions%in%c('all','All'))) mean_regions<-c("prentice","zhang","chang")
+	  if (length(grep("prentice", mean_regions)) > 0) prentr<-region(Rs,method='prentice',alp=alp)[col]
+	  if (length(grep("chang", mean_regions)) >0)    changr<-region(Rs,method='chang',alp=alp)
+	  if (length(grep("zhang", mean_regions)) > 0)    zhangr<-region(Rs,method='zhang',alp=alp,m=m)
 
 	  Regions<-data.frame(X1=c(prentr,changr,zhangr),Meth=c('Prentice','Chang','Zhang'))
 	  Regions <- na.omit(Regions)
@@ -218,6 +222,33 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 
 	}
   
+	if (!is.null(median_regions)) {
+		prentr <- changr <- zhangr  <- NA
+		if(any(median_regions%in%c('all','All'))) median_regions<-c("zhang","chang")
+		if (length(grep("chang", median_regions)) >0)    changr<-region(Rs,method='chang',alp=alp)
+		if (length(grep("zhang", median_regions)) > 0)    zhangr<-region(Rs,method='zhang',alp=alp,m=m)
+		
+		MedRegions<-data.frame(X1=c(changr,zhangr),Meth=c('Chang','Zhang'))
+		MedRegions <- na.omit(MedRegions)
+		
+		cisp.boot<-NULL
+		
+		for(i in 1:nrow(MedRegions)){
+			if(col==1)
+				cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(0,runif(2,-1,1)), MedRegions$X1[i]),simplify="matrix")))
+			
+			if(col==2)
+				cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(runif(1,-1,1),0,runif(1,-1,1)), MedRegions$X1[i]),simplify="matrix")))
+			
+			
+			if(col==3)
+				cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(runif(2,-1,1),0), MedRegions$X1[i]),simplify="matrix")))
+		}
+		
+		regsMed <- geom_point(aes(x=X, y=Y,colour=Method), data=data.frame(pointsXYZ(cisp.boot, center=t(median(Rs))%*%center, column=col),Method=rep(MedRegions$Meth,each=500)))
+		
+	}
+	
 	labels <- NULL
 	if (!is.null(label_points)) {
 		proj2d$labels <- label_points
@@ -227,6 +258,7 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 		labels + 
 		estimates +
     regs+
+		regsMed+
 		xlim(xlimits) + ylim(ylimits)
 }
 

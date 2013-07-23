@@ -4,7 +4,8 @@
 \usage{
   plot.SO3(x, center, col = 1, to_range = FALSE,
     show_estimates = NULL, label_points = NULL,
-    show_regions = NULL, alp = NULL, m = 300, ...)
+    mean_regions = NULL, median_regions = NULL, alp = NULL,
+    m = 300, ...)
 }
 \arguments{
   \item{x}{n rotations in SO3 format}
@@ -25,9 +26,14 @@
 
   \item{label_points}{vector of labels}
 
-  \item{show_regions}{character vector to specify which of
-  the three confidence regions to show.  Possibilities are
-  "all", "prentice", "chang", "zhang"}
+  \item{mean_regions}{character vector to specify which of
+  the three confidence regions to show for the projected
+  mean.  Possibilities are "all", "prentice", "chang",
+  "zhang"}
+
+  \item{median_regions}{character vector to specify which
+  of the three confidence regions to show for the projected
+  median.  Possibilities are "all", "chang", "zhang"}
 
   \item{alp}{alpha level to be used for confidence regions}
 

@@ -6,6 +6,7 @@
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param method Character string specifying which type of interval is required
+#' @param estimator Character string either 'mean' or 'median'
 #' @param alp The alpha level desired, e.g. 0.95 or 0.90
 #' @param ... Additional arguments that are method specific
 #' @return Radius of the confidence region centered at the projected mean
@@ -19,7 +20,7 @@
 #' region(Rs,method='zhang',alp=0.1,m=100)
 #' region(Rs,method='chang',alp=0.1)
 
-region<-function(Qs,method,alp,...){
+region<-function(Qs,method, estimator,alp,...){
 	UseMethod("region")
 }
 
@@ -28,7 +29,7 @@ region<-function(Qs,method,alp,...){
 #' @method region Q4
 #' @S3method region Q4
 
-region.Q4<-function(Qs,method,alp=NULL,...){
+region.Q4<-function(Qs,method, estimator,alp=NULL,...){
 	
 	Qs<-formatQ4(Qs)
 	
@@ -40,17 +41,25 @@ region.Q4<-function(Qs,method,alp=NULL,...){
 	
 	if(method%in%c('Prentice','prentice')){
 		
+		if(estimator!='mean'){
+			stop("The method due to Prentice is only available for the mean estimator.")
+		}
+		
 		r<-prentice.Q4(Qs=Qs,alp=alp)
 		
 		return(r)
 		
 	}else	if(method%in%c('Zhang','zhang')){
 		
-		r<-zhang.Q4(Qs=Qs,alp=alp,...)
+		r<-zhang.Q4(Qs=Qs,estimator=estimator,alp=alp,...)
 		
 		return(r)
 		
 	}else	if(method%in%c('Fisher','fisher')){
+		
+		if(estimator!='mean'){
+			stop("The method due to Fisher et al. is only available for the mean estimator.")
+		}
 		
 		r<-fisheretal.Q4(Qs=Qs,alp=alp,...)
 		
@@ -58,7 +67,7 @@ region.Q4<-function(Qs,method,alp=NULL,...){
 		
 	}else	if(method%in%c('Chang','chang')){
 		
-		r<-chang.Q4(Qs=Qs,alp=alp)
+		r<-chang.Q4(Qs=Qs,estimator=estimator,alp=alp)
 		
 		return(r)
 		
@@ -75,7 +84,7 @@ region.Q4<-function(Qs,method,alp=NULL,...){
 #' @method region SO3
 #' @S3method region SO3
 
-region.SO3<-function(Rs,method,alp=NULL,...){
+region.SO3<-function(Rs,method,estimator,alp=NULL,...){
 	
 	Rs<-formatSO3(Rs)
 	
@@ -87,16 +96,25 @@ region.SO3<-function(Rs,method,alp=NULL,...){
 	
 	if(method%in%c('Prentice','prentice')){
 		
+		if(estimator!='mean'){
+			stop("The method due to Prentice is only available for the mean estimator.")
+		}
+		
 		r<-prentice.SO3(Rs=Rs,alp=alp)
+		
 		return(r)
 		
 	}else	if(method%in%c('Zhang','zhang')){
 		
-		r<-zhang.SO3(Rs=Rs,alp=alp,...)
+		r<-zhang.SO3(Rs=Rs,estimator=estimator,alp=alp,...)
 		
 		return(r)
 		
 	}else	if(method%in%c('Fisher','fisher')){
+		
+		if(estimator!='mean'){
+			stop("The method due to Fisher et al. is only available for the mean estimator.")
+		}
 		
 		r<-fisheretal.SO3(Rs=Rs,alp=alp,...)
 		
@@ -104,7 +122,7 @@ region.SO3<-function(Rs,method,alp=NULL,...){
 		
 	}else	if(method%in%c('Chang','chang')){
 		
-		r<-chang.SO3(Rs=Rs,alp=alp)
+		r<-chang.SO3(Rs=Rs,estimator=estimator,alp=alp)
 		
 		return(r)
 		
@@ -196,6 +214,7 @@ prentice.SO3<-function(Rs,alp=NULL){
 #' chi-square limiting distribution and is given by the \code{\link{chang}} option.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
+#' @param estimator Character string either 'mean' or 'median'
 #' @param alp The alpha level desired, e.g. 0.05 or 0.10
 #' @param m Number of replicates to use to estiamte cut point
 #' @return Radius of the confidence region centered at the projected mean
@@ -205,7 +224,7 @@ prentice.SO3<-function(Rs,alp=NULL){
 #' Rs<-ruars(20,rcayley,kappa=100)
 #' region(Rs,method='zhang',alp=0.1)
 
-zhang<-function(Qs,alp,m){
+zhang<-function(Qs,estimator,alp,m){
 	UseMethod("zhang")
 }
 
@@ -214,7 +233,7 @@ zhang<-function(Qs,alp,m){
 #' @method zhang SO3
 #' @S3method zhang SO3
 
-zhang.SO3<-function(Rs,alp=NULL,m=300){
+zhang.SO3<-function(Rs,estimator,alp=NULL,m=300){
 	
 	#Rs is a n-by-9 matrix where each row is an 3-by-3 rotation matrix
 	#m is the number of resamples to find q_1-a
@@ -231,7 +250,7 @@ zhang.SO3<-function(Rs,alp=NULL,m=300){
 #' @method zhang Q4
 #' @S3method zhang Q4
 
-zhang.Q4<-function(Qs,alp=NULL,m=300){
+zhang.Q4<-function(Qs,estimator,alp=NULL,m=300){
 	
 	if(is.null(alp)){
 		#Take a default alpha=0.1 if no level is specified
@@ -242,8 +261,8 @@ zhang.Q4<-function(Qs,alp=NULL,m=300){
 	Qs<-formatQ4(Qs)
 	n<-nrow(Qs)
   stats<-zhangQ4(Qs,m)
-	Shat<-mean(Qs)
-  cdhat<-cdfuns(Qs,Shat)
+	#Shat<-mean(Qs)
+  cdhat<-cdfuns(Qs,estimator)
   
 	rad<-sqrt(as.numeric(quantile(stats,1-alp))*cdhat$c/(2*n*cdhat$d^2))
 	
@@ -251,11 +270,21 @@ zhang.Q4<-function(Qs,alp=NULL,m=300){
 }
 
 
-cdfuns<-function(Qs,Shat){
+cdfuns<-function(Qs,estimator){
   
   Shat<-matrix(Shat,4,1)
-	cd<-cdfunsC(Qs,Shat)
-	
+  if(estimator=='mean'){
+  	Shat<-mean(Qs)
+		cd<-cdfunsC(Qs,Shat)
+		
+  }else if(estimator=='median'){
+  	Shat<-median(Qs)
+  	cd<-cdfunsCMedian(Qs,Shat)
+  	
+  }else{
+  	stop("Please choose an estimator mean or median.")
+  }
+  
 	return(list(c=cd[1],d=cd[2]))
 }
 
@@ -351,6 +380,7 @@ fisheretal.SO3<-function(Rs,alp=NULL,boot=T,m=300,symm=T){
 #' radius so the radius reported is for all three axis.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
+#' @param estimator Character string either 'mean' or 'median'
 #' @param alp The alpha level desired, e.g. 0.05 or 0.10
 #' @return Radius of the confidence region centered at the projected mean
 #' @cite chang2001
@@ -360,7 +390,7 @@ fisheretal.SO3<-function(Rs,alp=NULL,boot=T,m=300,symm=T){
 #' Rs<-ruars(20,rcayley,kappa=100)
 #' region(Rs,method='chang',alp=0.1)
 
-chang<-function(Qs,alp){
+chang<-function(Qs,estimator,alp){
 	UseMethod("chang")
 }
 
@@ -369,7 +399,7 @@ chang<-function(Qs,alp){
 #' @method chang SO3
 #' @S3method chang SO3
 
-chang.SO3<-function(Rs,alp=NULL){
+chang.SO3<-function(Rs,estimator,alp=NULL){
 	
 	#Rs is a n-by-9 matrix where each row is an 3-by-3 rotation matrix
 	#alp is the level of confidence desired, e.g. 0.95 or 0.90
@@ -385,7 +415,7 @@ chang.SO3<-function(Rs,alp=NULL){
 #' @method chang Q4
 #' @S3method chang Q4
 
-chang.Q4<-function(Qs,alp=NULL){
+chang.Q4<-function(Qs,estimator,alp=NULL){
 	
 	if(is.null(alp)){
 		#Take a default alpha=0.1 if no level is specified
@@ -395,8 +425,8 @@ chang.Q4<-function(Qs,alp=NULL){
 	
 	Qs<-formatQ4(Qs)
 	n<-nrow(Qs)
-	Shat<-mean(Qs)
-	cdhat<-cdfuns(Qs,Shat)
+	
+	cdhat<-cdfuns(Qs,estimator)
 	
 	rad<-sqrt(as.numeric(qchisq(1-alp,3))*cdhat$c/(2*n*cdhat$d^2))
 	

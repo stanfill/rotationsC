@@ -151,3 +151,89 @@ NumericVector zhangQ4(NumericMatrix Q, int m){
 	
 }
 
+// [[Rcpp::export]]
+NumericVector cdfunsCMedian(arma::mat Qs, arma::mat Qhat){
+  
+	//Compute the values c and d to form the pivotal test statistic for the median using quaternions
+	
+	int n = Qs.n_rows, i;
+	double crs, OnemCrs;
+	
+	NumericVector cds(2);
+	cds[0]=0.0;
+	cds[1]=0.0;
+	
+	NumericVector rs(n);
+	
+	rs = RdistC(Qs,Qhat);
+
+	for(i=0; i<n; i++){
+		
+		crs = cos(rs[i]);
+		
+		cds[0] += crs;				//c=E[1+cos(r)]/6
+		
+		OnemCrs = 1-crs;
+		OnemCrs = std::max(OnemCrs,1e-5); //I think sqrt(1-crs) is close to zero and causing the crash, for now max sure
+															//that doesn't happen by taking at least 1e-5
+															
+		cds[1] += (1+3*crs)*(pow(OnemCrs,-0.5));							//d=E([1+3cos(r)]/12*sqrt[1-cos(r)])
+	}
+	
+	cds[0] = ((cds[0]/n)+1)/6;
+	cds[1] = (cds[1]/n)/12;
+	
+	return cds;
+}
+
+// [[Rcpp::export]]
+NumericVector zhangMedianC(arma::mat Rs, int m){
+	
+  RNGScope scope; // using runif requires this to be set...I think.  
+  								// This has been shown to cause problems in the past so consider using the next line in its place
+  
+  //GetRNGstate();PutRNGstate();
+  
+  int n = Rs.n_rows, i,j;
+  arma::mat Shat = medianSO3C(Rs,2000,1e-5);
+  arma::mat Rstar(n,9);
+  arma::mat Sstar(3,3);
+  NumericVector cdstar(2);
+	IntegerVector samp(n);
+	NumericVector unSamp;
+	int numUn=0, maxSamp=0;
+  NumericVector hsqrtMedian;
+  NumericVector hstar(m);
+  double hsq=0.0;
+  
+  for(j=0;j<m;j++){
+  	
+		samp = floor(runif(n,0,n));			//Bootstrap sample of size n, with replacement
+	  unSamp = unique(samp);
+    numUn = unSamp.size();
+    maxSamp = max(samp);
+    
+    while(numUn<4 || maxSamp>n-1){
+      samp = floor(runif(n,0,n));	 //If bootstrap samp is less than 4 obs then							
+	    unSamp = unique(samp);       //draw a new sample
+      numUn = unSamp.size();
+      maxSamp = max(samp);
+    }
+    
+		for(i=0;i<n;i++){
+			
+			Rstar.row(i) = Rs.row(samp[i]);		//Copying a matrix row by row produces a bunch of junk messages
+		}	
+    
+    Sstar = medianSO3C(Rstar,2000,1e-5);
+    
+    cdstar = cdfunsCSO3(Rstar,Sstar);
+    hsqrtMedian = rdistSO3C(Shat,Sstar);
+    hsq = hsqrtMedian[0];
+    
+    hstar[j]=2*n*pow(cdstar[1],2)*pow(hsq,2)/cdstar[0];
+  
+  }
+  
+  return hstar;
+}
