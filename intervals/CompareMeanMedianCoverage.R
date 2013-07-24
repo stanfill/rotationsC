@@ -15,7 +15,7 @@ alp<-.1
 critVal<-qchisq(1-alp,3)
 n<-c(10,20,50,100)
 nus<-c(.25,.5,.75)
-B<-5  			#Number of samples to use to estimate CDF
+B<-10000  			#Number of samples to use to estimate CDF
 Dist<-c('Cayley','matrix-Fisher')
 
 simSize<-length(n)*length(nus)*length(Dist)
