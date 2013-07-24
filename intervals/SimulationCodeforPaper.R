@@ -76,7 +76,7 @@ for(p in 36:nrow(resultsDf)){
 			
 			
 			#Now for the methods in Zhang's MS for the Projected Mean
-			zhangMean<-bootQhat(Qs,m)		        #Bootstrap Pivotal cut point
+			zhangMean<-zhangQ4(Qs,m)		        #Bootstrap Pivotal cut point
 			cutPt<-quantile(zhangMean,alp,na.rm=T)
 			ShatE<-as.Q4(meanQ4C(Qs))													#Projected Mean of Shat
 			RscdMean<-cdfunsC(Qs,ShatE)												#Compute c-hat and d-hat for sample quantity 

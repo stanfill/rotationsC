@@ -409,7 +409,7 @@ qplot(n,value,data=cRateM,colour=Method,group=Method,ylab='Coverage Rate (%)',xl
 	geom_hline(yintercept=(1-alp)*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
 	scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+theme(panel.margin=unit(0.5,'lines'))
 
-ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB1000Median.pdf",width=7,height=4.5)
+#ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB1000Median.pdf",width=7,height=4.5)
 #ggsave("CoverRatesB1000Median.pdf",width=5,height=4)
 
 #library(xtable)
