@@ -228,7 +228,7 @@ library(rotations2)
 
 #####
 #Cayley distribution
-kap<-250
+kap<-25
 rs<-rcayley(1000,kappa=kap)
 crs<-cos(rs)
 
@@ -245,7 +245,8 @@ mean(1+crs)/6
 (2*kap+1)/(6*kap+12)
 
 #dtilde
-
+mean((1+3*crs)/(12*sqrt(1-crs)))
+sqrt(2/pi)*kap*gamma(kap+2)/(3*gamma(kap+2.5))
 
 #####
 #Fisher distribution
