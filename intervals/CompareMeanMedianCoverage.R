@@ -17,8 +17,6 @@ n<-c(10,20,50,100)
 nus<-c(.25,.5,.75)
 B<-5  			#Number of samples to use to estimate CDF
 Dist<-c('Cayley','matrix-Fisher')
-Est<-c("mean","median")
-Method<-c("Chang","Zhang")
 
 simSize<-length(n)*length(nus)*length(Dist)
 
@@ -42,8 +40,6 @@ for(j in 1:dimS){
 		
 	}
 	
-
-		
 	rs<-rangle(coverCompare$n[j],kappa=kappaj)
 		
 	Rs<-genR(rs)
@@ -87,21 +83,31 @@ for(j in 1:dimS){
 		write.csv(coverCompare,"Results/MeanMedianComparison.csv")
 }
 
-cRateM<-melt(coverRate,id=c('Dist','nus','n'))
-colnames(cRateM)[4]<-'Method'
+ccrit<-qchisq(1-alp,3)
+coverCompare$MeanCoverC<-as.numeric(coverCompare$MeanStat<ccrit)
+coverCompare$MeanCoverZ<-as.numeric(coverCompare$MeanStat<coverCompare$MeanCrit)
 
-levels(cRateM$Method)<-c("NTH(C&R)","B(Z&N)")
+coverCompare$MedianCoverC<-as.numeric(coverCompare$MedianStat<ccrit)
+coverCompare$MedianCoverZ<-as.numeric(coverCompare$MedianStat<coverCompare$MedianCrit)
 
-levels(cRateM$Dist)<-c("Cayley","matrix~~Fisher")
-cRateM$nu<-factor(cRateM$nu,labels=c("nu == 0.25","nu == 0.5","nu == 0.75"))
+compareRate<-ddply(coverCompare,.(Dist,nus,n),summarize,MeanCCover=100*sum(MeanCoverC)/B,MeanZCover=100*sum(MeanCoverZ)/B,
+									 MedianCCover=100*sum(MedianCoverC)/B,MedianZCover=100*sum(MedianCoverZ)/B)
 
-
-qplot(n,value,data=cRateM,colour=Method,group=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
-	facet_grid(Dist~nu,labeller=label_parsed)+
-	geom_hline(yintercept=(1-alp)*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
-	scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+theme(panel.margin=unit(0.5,'lines'))
-
-ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB1000Median.pdf",width=7,height=4.5)
+# cRateM<-melt(coverRate,id=c('Dist','nus','n'))
+# colnames(cRateM)[4]<-'Method'
+# 
+# levels(cRateM$Method)<-c("NTH(C&R)","B(Z&N)")
+# 
+# levels(cRateM$Dist)<-c("Cayley","matrix~~Fisher")
+# cRateM$nu<-factor(cRateM$nu,labels=c("nu == 0.25","nu == 0.5","nu == 0.75"))
+# 
+# 
+# qplot(n,value,data=cRateM,colour=Method,group=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
+# 	facet_grid(Dist~nu,labeller=label_parsed)+
+# 	geom_hline(yintercept=(1-alp)*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
+# 	scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+theme(panel.margin=unit(0.5,'lines'))
+# 
+# ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB1000Median.pdf",width=7,height=4.5)
 #ggsave("CoverRatesB1000Median.pdf",width=5,height=4)
 
 #library(xtable)
