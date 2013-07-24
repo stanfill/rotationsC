@@ -225,12 +225,78 @@ abline(0,1)
 #Compare theoretical to empirical c and d values for distributions
 
 library(rotations2)
-kap<-250
 
+#####
 #Cayley distribution
+kap<-250
 rs<-rcayley(1000,kappa=kap)
 crs<-cos(rs)
 
+#chat
+mean(1-crs^2)*2/3
+(4*kap+2)/(kap^2+5*kap+6)
+
+#dhat
+mean(1+2*crs)/3
+kap/(kap+2)
+
+#ctilde
+mean(1+crs)/6
+(2*kap+1)/(6*kap+12)
+
+#dtilde
+
+
+#####
+#Fisher distribution
+library(gsl)
+kap<-25
+
+rs<-rfisher(1000,kappa=kap)
+crs<-cos(rs)
+
+#chat
+mean(1-crs^2)*2/3
+(((kap+1)/kap)*besselI(2*kap,1)-besselI(2*kap,0))/(3*kap*(besselI(2*kap,0)-besselI(2*kap,1)))
+
+#dhat
+mean(1+2*crs)/3
+(((kap+1)/kap)*besselI(2*kap,1)-besselI(2*kap,0))/(3*(besselI(2*kap,0)-besselI(2*kap,1)))
+
+
+#ctilde
+mean(1+crs)/6
+besselI(2*kap,1)/(12*kap*(besselI(2*kap,0)-besselI(2*kap,1)))
+
+#dtilde
+mean((1+3*crs)/(12*sqrt(1-crs)))
+exp(2*kap)*(6*sqrt(kap)-(3+8*kap)*dawson(2*sqrt(kap)))/(24*sqrt(2)*pi*kap^1.5*(besselI(2*kap,0)-besselI(2*kap,1)))
+
+
+#####
+#von Mises
+kap<-25
+rs<-rvmises(1000,kappa=kap)
+crs<-cos(rs)
+
+#chat
+mean(1-crs^2)*2/3
+(1-besselI(kap,2)/besselI(kap,0))/3
+(besselI(kap,0)-besselI(kap,2))/(3*besselI(kap,0))
+
+#dhat
+mean(1+2*crs)/3
+(besselI(kap,0)+2*besselI(kap,1))/(3*besselI(kap,0))
+
+
+#ctilde
+mean(1+crs)/6
+(besselI(kap,0)+besselI(kap,1))/(6*besselI(kap,0))
+
+####################
+#compare moments to theory moments
+
+#Cayley dist
 mean(1/sqrt(1-crs))
 sqrt(2)*gamma(kap+2)/((2*kap+1)*gamma(kap+.5)*gamma(1.5)) #Pretty good
 
@@ -238,18 +304,18 @@ mean(crs/sqrt(1-crs))
 (2*kap-1)*gamma(kap+2)/(sqrt(2*pi)*gamma(kap+2.5))  #Pretty good
 
 
-#Fisher distribution
-library(gsl)
-kap<-100
-
-rs<-rfisher(1000,kappa=kap)
-crs<-cos(rs)
-mean(1/sqrt(1-crs))
-
+#Fisher dist
 exp(2*kap)*sqrt(2)*dawson(2*sqrt(kap))/(pi*sqrt(kap)*(besselI(2*kap,0)-besselI(2*kap,1)))
 
 mean(crs/sqrt(1-crs))
 exp(2*kap)*(2*sqrt(kap)-(1+4*kap)*dawson(2*sqrt(kap)))/((2*kap)^(1.5)*pi*(besselI(2*kap,0)-besselI(2*kap,1)))  #Pretty good
+
+kap<-50
+rs<-rfisher(1000,kappa=kap)
+
+mean(cos(rs))
+(besselI(2*kap,1)-.5*besselI(2*kap,0)-.5*besselI(2*kap,2))/(besselI(2*kap,0)-besselI(2*kap,1))
+(((2*kap+1)/(2*kap))*besselI(2*kap,1)-besselI(2*kap,0))/(besselI(2*kap,0)-besselI(2*kap,1))
 
 
 ######################################################
