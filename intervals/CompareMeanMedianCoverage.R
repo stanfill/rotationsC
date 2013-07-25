@@ -24,7 +24,7 @@ coverCompare<-data.frame(expand.grid(nus=nus,n=n,Dist=Dist),MeanStat=0,MeanCrit=
 coverCompare<-coverCompare[rep(seq_len(nrow(coverCompare)),each=B),]
 dimS<-nrow(coverCompare)
 
-#coverRate<-read.csv("Results/MeanMedianComparison.csv")[,-1]
+#coverCompare<-read.csv("Results/MeanMedianComparison.csv")[,-1]
 
 for(j in 180001:dimS){
 	
