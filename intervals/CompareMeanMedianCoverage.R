@@ -24,9 +24,9 @@ coverCompare<-data.frame(expand.grid(nus=nus,n=n,Dist=Dist),MeanStat=0,MeanCrit=
 coverCompare<-coverCompare[rep(seq_len(nrow(coverCompare)),each=B),]
 dimS<-nrow(coverCompare)
 
-#coverRate<-read.csv("Results/MedianResultsM300.csv")[,-1]
+#coverRate<-read.csv("Results/MeanMedianComparison.csv")[,-1]
 
-for(j in 1:dimS){
+for(j in 180001:dimS){
 	
 	if(coverCompare$Dist[j]=='Cayley'){
 		
