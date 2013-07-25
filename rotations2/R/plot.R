@@ -223,7 +223,7 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 	}
   
 	if (!is.null(median_regions)) {
-		prentr <- changr <- zhangr  <- NA
+		changr <- zhangr  <- NA
 		if(any(median_regions%in%c('all','All'))) median_regions<-c("zhang","chang")
 		if (length(grep("chang", median_regions)) >0)    changr<-region(Rs,method='chang',estimator='median',alp=alp)
 		if (length(grep("zhang", median_regions)) > 0)    zhangr<-region(Rs,method='zhang',estimator='median',alp=alp,m=m)
