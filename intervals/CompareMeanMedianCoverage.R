@@ -93,22 +93,52 @@ coverCompare$MedianCoverZ<-as.numeric(coverCompare$MedianStat<coverCompare$Media
 compareRate<-ddply(coverCompare,.(Dist,nus,n),summarize,MeanCCover=100*sum(MeanCoverC)/B,MeanZCover=100*sum(MeanCoverZ)/B,
 									 MedianCCover=100*sum(MedianCoverC)/B,MedianZCover=100*sum(MedianCoverZ)/B)
 
-# cRateM<-melt(coverRate,id=c('Dist','nus','n'))
-# colnames(cRateM)[4]<-'Method'
-# 
-# levels(cRateM$Method)<-c("NTH(C&R)","B(Z&N)")
-# 
-# levels(cRateM$Dist)<-c("Cayley","matrix~~Fisher")
-# cRateM$nu<-factor(cRateM$nu,labels=c("nu == 0.25","nu == 0.5","nu == 0.75"))
-# 
-# 
-# qplot(n,value,data=cRateM,colour=Method,group=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
-# 	facet_grid(Dist~nu,labeller=label_parsed)+
-# 	geom_hline(yintercept=(1-alp)*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
-# 	scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+theme(panel.margin=unit(0.5,'lines'))
-# 
-# ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB1000Median.pdf",width=7,height=4.5)
-#ggsave("CoverRatesB1000Median.pdf",width=5,height=4)
+#####
+#Analyze the results
 
-#library(xtable)
-#xtable(coverRate)
+cRateM<-melt(compareRate,id=c('Dist','nus','n'))
+colnames(cRateM)[4]<-'Method'
+ 
+levels(cRateM$Method)<-c("Mean(C&R)","Mean(Z&N)","Median(C&R)","Median(Z&N)")
+ 
+levels(cRateM$Dist)<-c("Cayley","matrix~~Fisher")
+cRateM$nu<-factor(cRateM$nu,labels=c("nu == 0.25","nu == 0.5","nu == 0.75"))
+
+# Compare coverage rates by estimator and method
+qplot(n,value,data=cRateM,colour=Method,group=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
+ 	facet_grid(Dist~nu,labeller=label_parsed)+
+ 	geom_hline(yintercept=(1-alp)*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
+ 	scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+theme(panel.margin=unit(0.5,'lines'))
+
+
+#####################
+#Plot test statistics against one another?
+ccrit<-qchisq(1-alp,3)
+
+qplot(MeanStat,MedianStat,data=coverCompare[coverCompare$nus==0.25,],facets=n~Dist,
+	xlim=c(0,30),ylim=c(0,30))+geom_hline(yintercept=ccrit,colour='red')+
+	geom_vline(xintercept=ccrit,colour='red')
+
+qplot(MeanStat,MedianStat,data=coverCompare[coverCompare$nus==0.5,],facets=n~Dist,
+	xlim=c(0,30),ylim=c(0,30))+geom_hline(yintercept=ccrit,colour='red')+
+	geom_vline(xintercept=ccrit,colour='red')
+
+qplot(MeanStat,MedianStat,data=coverCompare[coverCompare$nus==0.75,],facets=n~Dist,
+	xlim=c(0,30),ylim=c(0,30))+geom_hline(yintercept=ccrit,colour='red')+
+	geom_vline(xintercept=ccrit,colour='red')
+
+#####################
+#plot Mean-test statistics against bootstrap critical value
+qplot(MeanStat,MeanCrit,data=coverCompare[coverCompare$nus==0.25,],facets=n~Dist)
+qplot(MeanStat,MeanCrit,data=coverCompare[coverCompare$nus==0.5,],facets=n~Dist)
+qplot(MeanStat,MeanCrit,data=coverCompare[coverCompare$nus==0.75,],facets=n~Dist)
+
+#####################
+#plot Median-test statistics against bootstrap critical value
+qplot(MedianStat,MedianCrit,data=coverCompare[coverCompare$nus==0.25,],facets=n~Dist)
+qplot(MedianStat,MedianCrit,data=coverCompare[coverCompare$nus==0.5,],facets=n~Dist)
+qplot(MedianStat,MedianCrit,data=coverCompare[coverCompare$nus==0.75,],facets=n~Dist)
+
+####################
+#plot mean versus median critical value
+qplot(MeanCrit,MedianCrit,data=coverCompare[coverCompare$nus==0.25,],facets=n~Dist,ylim=c(0,100))
