@@ -252,9 +252,8 @@ zhang.SO3<-function(Rs,estimator,alp=NULL,m=300){
   	
   	n<-nrow(Rs)
   	stats<-zhangMedianC(Rs,m)
-  	Qs<-Q4(Rs)
-  	cdhat<-cdfuns(Qs,estimator)
-  	rad<-sqrt(as.numeric(quantile(stats,1-alp))*cdhat$c/(2*n*cdhat$d^2))
+  	cdtilde<-cdfunsCSO3(Rs,median(Rs))
+  	rad<-sqrt(as.numeric(quantile(stats,1-alp))*cdtilde[1]/(2*n*cdtilde[2]^2))
   	
   }else if(estimator=='mean'){
   
