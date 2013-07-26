@@ -250,8 +250,10 @@ zhang.SO3<-function(Rs,estimator,alp=NULL,m=300){
   		warning("No alpha-level specified, 0.1 used by default.")
   	}
   	
+  	n<-nrow(Rs)
   	stats<-zhangMedianC(Rs,m)
-  	cdhat<-cdfuns(Rs,estimator)
+  	Qs<-Q4(Rs)
+  	cdhat<-cdfuns(Qs,estimator)
   	rad<-sqrt(as.numeric(quantile(stats,1-alp))*cdhat$c/(2*n*cdhat$d^2))
   	
   }else if(estimator=='mean'){
