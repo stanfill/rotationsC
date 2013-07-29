@@ -83,6 +83,8 @@ for(j in 180001:dimS){
 		write.csv(coverCompare,"Results/MeanMedianComparison.csv")
 }
 
+#coverCompare<-read.csv("Results/MeanMedianComparison.csv")[,-1]
+
 ccrit<-qchisq(1-alp,3)
 coverCompare$MeanCoverC<-as.numeric(coverCompare$MeanStat<ccrit)
 coverCompare$MeanCoverZ<-as.numeric(coverCompare$MeanStat<coverCompare$MeanCrit)
@@ -142,3 +144,11 @@ qplot(MedianStat,MedianCrit,data=coverCompare[coverCompare$nus==0.75,],facets=n~
 ####################
 #plot mean versus median critical value
 qplot(MeanCrit,MedianCrit,data=coverCompare[coverCompare$nus==0.25,],facets=n~Dist,ylim=c(0,100))
+
+####################
+#empirical asymptotic relative efficiency. 
+#Nope, the test statistic includes d(S,S-check)^2 which is going to zero making the ratio 1
+
+cCover<-ddply(coverCompare,.(nus,n,Dist),summarize,ratio=mean(MedianCrit/MeanCrit))
+
+qplot(n,ratio,data=cCover,facets=Dist~nus,geom='line',ylim=c(0,4))

@@ -238,8 +238,14 @@ plot(ks,cayRatio(ks),type='l')
 library(gsl)
 
 kap<-.1
-hatOVERtilde<-(32*pi^2*kap^2*besselI(2*kap,1)*((kap+1)*besselI(2*kap,1)-kap*besselI(2*kap,0)))/(exp(4*kap)*(6*sqrt(kap)-(3+8*kap)*dawson(2*sqrt(kap)) )^2) 
-hatOVERtilde
+
+fishRatio<-function(kap){
+	return((32*pi^2*kap^2*besselI(2*kap,1)*((kap+1)*besselI(2*kap,1)-kap*besselI(2*kap,0)))/(exp(4*kap)*(6*sqrt(kap)-(3+8*kap)*dawson(2*sqrt(kap)))^2))
+}
+
+
+ks<-seq(0,25,length=100)
+plot(ks,fishRatio(ks),type='l')
 
 
 ###########################
