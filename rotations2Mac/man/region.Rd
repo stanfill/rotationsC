@@ -4,11 +4,13 @@
 \alias{region.SO3}
 \title{Confidence Region for Mean Rotation}
 \usage{
-  region(Qs, method, alp, ...)
+  region(Qs, method, estimator, alp, ...)
 
-  \method{region}{Q4} (Qs, method, alp = NULL, ...)
+  \method{region}{Q4} (Qs, method, estimator, alp = NULL,
+    ...)
 
-  \method{region}{SO3} (Rs, method, alp = NULL, ...)
+  \method{region}{SO3} (Rs, method, estimator, alp = NULL,
+    ...)
 }
 \arguments{
   \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
@@ -17,6 +19,9 @@
 
   \item{method}{Character string specifying which type of
   interval is required}
+
+  \item{estimator}{Character string either 'mean' or
+  'median'}
 
   \item{alp}{The alpha level desired, e.g. 0.95 or 0.90}
 

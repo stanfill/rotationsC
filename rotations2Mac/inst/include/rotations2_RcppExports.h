@@ -138,20 +138,6 @@ namespace rotations2 {
         return Rcpp::as<arma::mat >(__result);
     }
 
-    inline arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2) {
-        typedef SEXP(*Ptr_rdistSO3C)(SEXP,SEXP);
-        static Ptr_rdistSO3C p_rdistSO3C = NULL;
-        if (p_rdistSO3C == NULL) {
-            validateSignature("arma::rowvec(*rdistSO3C)(arma::mat,arma::mat)");
-            p_rdistSO3C = (Ptr_rdistSO3C)R_GetCCallable("rotations2", "rotations2_rdistSO3C");
-        }
-        RNGScope __rngScope;
-        RObject __result = p_rdistSO3C(Rcpp::wrap(Rs), Rcpp::wrap(R2));
-        if (__result.inherits("try-error"))
-            throw Rcpp::exception(as<std::string>(__result).c_str());
-        return Rcpp::as<arma::rowvec >(__result);
-    }
-
     inline arma::mat logSO3C(arma::mat R) {
         typedef SEXP(*Ptr_logSO3C)(SEXP);
         static Ptr_logSO3C p_logSO3C = NULL;
@@ -306,6 +292,34 @@ namespace rotations2 {
         return Rcpp::as<NumericVector >(__result);
     }
 
+    inline arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2) {
+        typedef SEXP(*Ptr_rdistSO3C)(SEXP,SEXP);
+        static Ptr_rdistSO3C p_rdistSO3C = NULL;
+        if (p_rdistSO3C == NULL) {
+            validateSignature("arma::rowvec(*rdistSO3C)(arma::mat,arma::mat)");
+            p_rdistSO3C = (Ptr_rdistSO3C)R_GetCCallable("rotations2", "rotations2_rdistSO3C");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_rdistSO3C(Rcpp::wrap(Rs), Rcpp::wrap(R2));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<arma::rowvec >(__result);
+    }
+
+    inline NumericVector EdistC(NumericMatrix Q1, NumericVector Q2) {
+        typedef SEXP(*Ptr_EdistC)(SEXP,SEXP);
+        static Ptr_EdistC p_EdistC = NULL;
+        if (p_EdistC == NULL) {
+            validateSignature("NumericVector(*EdistC)(NumericMatrix,NumericVector)");
+            p_EdistC = (Ptr_EdistC)R_GetCCallable("rotations2", "rotations2_EdistC");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_EdistC(Rcpp::wrap(Q1), Rcpp::wrap(Q2));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<NumericVector >(__result);
+    }
+
     inline double oneRdistC(NumericMatrix Q1, NumericVector Q2) {
         typedef SEXP(*Ptr_oneRdistC)(SEXP,SEXP);
         static Ptr_oneRdistC p_oneRdistC = NULL;
@@ -334,6 +348,20 @@ namespace rotations2 {
         return Rcpp::as<NumericVector >(__result);
     }
 
+    inline NumericVector cdfunsCMedian(NumericMatrix Qs, NumericVector Qhat) {
+        typedef SEXP(*Ptr_cdfunsCMedian)(SEXP,SEXP);
+        static Ptr_cdfunsCMedian p_cdfunsCMedian = NULL;
+        if (p_cdfunsCMedian == NULL) {
+            validateSignature("NumericVector(*cdfunsCMedian)(NumericMatrix,NumericVector)");
+            p_cdfunsCMedian = (Ptr_cdfunsCMedian)R_GetCCallable("rotations2", "rotations2_cdfunsCMedian");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_cdfunsCMedian(Rcpp::wrap(Qs), Rcpp::wrap(Qhat));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<NumericVector >(__result);
+    }
+
     inline NumericVector zhangQ4(NumericMatrix Q, int m) {
         typedef SEXP(*Ptr_zhangQ4)(SEXP,SEXP);
         static Ptr_zhangQ4 p_zhangQ4 = NULL;
@@ -343,6 +371,34 @@ namespace rotations2 {
         }
         RNGScope __rngScope;
         RObject __result = p_zhangQ4(Rcpp::wrap(Q), Rcpp::wrap(m));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<NumericVector >(__result);
+    }
+
+    inline NumericVector cdfunsCSO3(arma::mat Rs, arma::mat Rhat) {
+        typedef SEXP(*Ptr_cdfunsCSO3)(SEXP,SEXP);
+        static Ptr_cdfunsCSO3 p_cdfunsCSO3 = NULL;
+        if (p_cdfunsCSO3 == NULL) {
+            validateSignature("NumericVector(*cdfunsCSO3)(arma::mat,arma::mat)");
+            p_cdfunsCSO3 = (Ptr_cdfunsCSO3)R_GetCCallable("rotations2", "rotations2_cdfunsCSO3");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_cdfunsCSO3(Rcpp::wrap(Rs), Rcpp::wrap(Rhat));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<NumericVector >(__result);
+    }
+
+    inline NumericVector zhangMedianC(arma::mat Rs, int m) {
+        typedef SEXP(*Ptr_zhangMedianC)(SEXP,SEXP);
+        static Ptr_zhangMedianC p_zhangMedianC = NULL;
+        if (p_zhangMedianC == NULL) {
+            validateSignature("NumericVector(*zhangMedianC)(arma::mat,int)");
+            p_zhangMedianC = (Ptr_zhangMedianC)R_GetCCallable("rotations2", "rotations2_zhangMedianC");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_zhangMedianC(Rcpp::wrap(Rs), Rcpp::wrap(m));
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<NumericVector >(__result);

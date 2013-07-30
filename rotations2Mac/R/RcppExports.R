@@ -33,10 +33,6 @@ expskewC <- function(M) {
     .Call('rotations2_expskewC', PACKAGE = 'rotations2', M)
 }
 
-rdistSO3C <- function(Rs, R2) {
-    .Call('rotations2_rdistSO3C', PACKAGE = 'rotations2', Rs, R2)
-}
-
 logSO3C <- function(R) {
     .Call('rotations2_logSO3C', PACKAGE = 'rotations2', R)
 }
@@ -81,6 +77,14 @@ RdistC <- function(Q1, Q2) {
     .Call('rotations2_RdistC', PACKAGE = 'rotations2', Q1, Q2)
 }
 
+rdistSO3C <- function(Rs, R2) {
+    .Call('rotations2_rdistSO3C', PACKAGE = 'rotations2', Rs, R2)
+}
+
+EdistC <- function(Q1, Q2) {
+    .Call('rotations2_EdistC', PACKAGE = 'rotations2', Q1, Q2)
+}
+
 oneRdistC <- function(Q1, Q2) {
     .Call('rotations2_oneRdistC', PACKAGE = 'rotations2', Q1, Q2)
 }
@@ -89,8 +93,20 @@ cdfunsC <- function(Qs, Qhat) {
     .Call('rotations2_cdfunsC', PACKAGE = 'rotations2', Qs, Qhat)
 }
 
+cdfunsCMedian <- function(Qs, Qhat) {
+    .Call('rotations2_cdfunsCMedian', PACKAGE = 'rotations2', Qs, Qhat)
+}
+
 zhangQ4 <- function(Q, m) {
     .Call('rotations2_zhangQ4', PACKAGE = 'rotations2', Q, m)
+}
+
+cdfunsCSO3 <- function(Rs, Rhat) {
+    .Call('rotations2_cdfunsCSO3', PACKAGE = 'rotations2', Rs, Rhat)
+}
+
+zhangMedianC <- function(Rs, m) {
+    .Call('rotations2_zhangMedianC', PACKAGE = 'rotations2', Rs, m)
 }
 
 # Register entry points for exported C++ functions

@@ -158,25 +158,6 @@ RcppExport SEXP rotations2_expskewC(SEXP MSEXP) {
         Rf_error(CHAR(Rf_asChar(__result)));
     return __result;
 }
-// rdistSO3C
-arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2);
-static SEXP rotations2_rdistSO3C_try(SEXP RsSEXP, SEXP R2SEXP) {
-BEGIN_RCPP
-    arma::mat Rs = Rcpp::as<arma::mat >(RsSEXP);
-    arma::mat R2 = Rcpp::as<arma::mat >(R2SEXP);
-    arma::rowvec __result = rdistSO3C(Rs, R2);
-    return Rcpp::wrap(__result);
-END_RCPP_RETURN_ERROR
-}
-RcppExport SEXP rotations2_rdistSO3C(SEXP RsSEXP, SEXP R2SEXP) {
-    Rcpp::RNGScope __rngScope;
-    SEXP __result = PROTECT(rotations2_rdistSO3C_try(RsSEXP, R2SEXP));
-    Rboolean __isError = Rf_inherits(__result, "try-error");
-    UNPROTECT(1);
-    if (__isError)
-        Rf_error(CHAR(Rf_asChar(__result)));
-    return __result;
-}
 // logSO3C
 arma::mat logSO3C(arma::mat R);
 static SEXP rotations2_logSO3C_try(SEXP RSEXP) {
@@ -386,6 +367,44 @@ RcppExport SEXP rotations2_RdistC(SEXP Q1SEXP, SEXP Q2SEXP) {
         Rf_error(CHAR(Rf_asChar(__result)));
     return __result;
 }
+// rdistSO3C
+arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2);
+static SEXP rotations2_rdistSO3C_try(SEXP RsSEXP, SEXP R2SEXP) {
+BEGIN_RCPP
+    arma::mat Rs = Rcpp::as<arma::mat >(RsSEXP);
+    arma::mat R2 = Rcpp::as<arma::mat >(R2SEXP);
+    arma::rowvec __result = rdistSO3C(Rs, R2);
+    return Rcpp::wrap(__result);
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations2_rdistSO3C(SEXP RsSEXP, SEXP R2SEXP) {
+    Rcpp::RNGScope __rngScope;
+    SEXP __result = PROTECT(rotations2_rdistSO3C_try(RsSEXP, R2SEXP));
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    UNPROTECT(1);
+    if (__isError)
+        Rf_error(CHAR(Rf_asChar(__result)));
+    return __result;
+}
+// EdistC
+NumericVector EdistC(NumericMatrix Q1, NumericVector Q2);
+static SEXP rotations2_EdistC_try(SEXP Q1SEXP, SEXP Q2SEXP) {
+BEGIN_RCPP
+    NumericMatrix Q1 = Rcpp::as<NumericMatrix >(Q1SEXP);
+    NumericVector Q2 = Rcpp::as<NumericVector >(Q2SEXP);
+    NumericVector __result = EdistC(Q1, Q2);
+    return Rcpp::wrap(__result);
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations2_EdistC(SEXP Q1SEXP, SEXP Q2SEXP) {
+    Rcpp::RNGScope __rngScope;
+    SEXP __result = PROTECT(rotations2_EdistC_try(Q1SEXP, Q2SEXP));
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    UNPROTECT(1);
+    if (__isError)
+        Rf_error(CHAR(Rf_asChar(__result)));
+    return __result;
+}
 // oneRdistC
 double oneRdistC(NumericMatrix Q1, NumericVector Q2);
 static SEXP rotations2_oneRdistC_try(SEXP Q1SEXP, SEXP Q2SEXP) {
@@ -424,6 +443,25 @@ RcppExport SEXP rotations2_cdfunsC(SEXP QsSEXP, SEXP QhatSEXP) {
         Rf_error(CHAR(Rf_asChar(__result)));
     return __result;
 }
+// cdfunsCMedian
+NumericVector cdfunsCMedian(NumericMatrix Qs, NumericVector Qhat);
+static SEXP rotations2_cdfunsCMedian_try(SEXP QsSEXP, SEXP QhatSEXP) {
+BEGIN_RCPP
+    NumericMatrix Qs = Rcpp::as<NumericMatrix >(QsSEXP);
+    NumericVector Qhat = Rcpp::as<NumericVector >(QhatSEXP);
+    NumericVector __result = cdfunsCMedian(Qs, Qhat);
+    return Rcpp::wrap(__result);
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations2_cdfunsCMedian(SEXP QsSEXP, SEXP QhatSEXP) {
+    Rcpp::RNGScope __rngScope;
+    SEXP __result = PROTECT(rotations2_cdfunsCMedian_try(QsSEXP, QhatSEXP));
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    UNPROTECT(1);
+    if (__isError)
+        Rf_error(CHAR(Rf_asChar(__result)));
+    return __result;
+}
 // zhangQ4
 NumericVector zhangQ4(NumericMatrix Q, int m);
 static SEXP rotations2_zhangQ4_try(SEXP QSEXP, SEXP mSEXP) {
@@ -443,6 +481,44 @@ RcppExport SEXP rotations2_zhangQ4(SEXP QSEXP, SEXP mSEXP) {
         Rf_error(CHAR(Rf_asChar(__result)));
     return __result;
 }
+// cdfunsCSO3
+NumericVector cdfunsCSO3(arma::mat Rs, arma::mat Rhat);
+static SEXP rotations2_cdfunsCSO3_try(SEXP RsSEXP, SEXP RhatSEXP) {
+BEGIN_RCPP
+    arma::mat Rs = Rcpp::as<arma::mat >(RsSEXP);
+    arma::mat Rhat = Rcpp::as<arma::mat >(RhatSEXP);
+    NumericVector __result = cdfunsCSO3(Rs, Rhat);
+    return Rcpp::wrap(__result);
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations2_cdfunsCSO3(SEXP RsSEXP, SEXP RhatSEXP) {
+    Rcpp::RNGScope __rngScope;
+    SEXP __result = PROTECT(rotations2_cdfunsCSO3_try(RsSEXP, RhatSEXP));
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    UNPROTECT(1);
+    if (__isError)
+        Rf_error(CHAR(Rf_asChar(__result)));
+    return __result;
+}
+// zhangMedianC
+NumericVector zhangMedianC(arma::mat Rs, int m);
+static SEXP rotations2_zhangMedianC_try(SEXP RsSEXP, SEXP mSEXP) {
+BEGIN_RCPP
+    arma::mat Rs = Rcpp::as<arma::mat >(RsSEXP);
+    int m = Rcpp::as<int >(mSEXP);
+    NumericVector __result = zhangMedianC(Rs, m);
+    return Rcpp::wrap(__result);
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations2_zhangMedianC(SEXP RsSEXP, SEXP mSEXP) {
+    Rcpp::RNGScope __rngScope;
+    SEXP __result = PROTECT(rotations2_zhangMedianC_try(RsSEXP, mSEXP));
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    UNPROTECT(1);
+    if (__isError)
+        Rf_error(CHAR(Rf_asChar(__result)));
+    return __result;
+}
 
 // validate (ensure exported C++ functions exist before calling them)
 static int rotations2_RcppExport_validate(const char* sig) { 
@@ -456,7 +532,6 @@ static int rotations2_RcppExport_validate(const char* sig) {
         signatures.insert("int(*checkQ4)(NumericMatrix)");
         signatures.insert("int(*checkSO3)(arma::mat)");
         signatures.insert("arma::mat(*expskewC)(arma::mat)");
-        signatures.insert("arma::rowvec(*rdistSO3C)(arma::mat,arma::mat)");
         signatures.insert("arma::mat(*logSO3C)(arma::mat)");
         signatures.insert("arma::mat(*projectSO3C)(arma::mat)");
         signatures.insert("arma::mat(*meanSO3C)(arma::mat)");
@@ -468,9 +543,14 @@ static int rotations2_RcppExport_validate(const char* sig) {
         signatures.insert("double(*fisherAxisCSymmetric)(arma::mat,arma::rowvec)");
         signatures.insert("arma::vec(*fisherBootC)(arma::mat,int,bool)");
         signatures.insert("NumericVector(*RdistC)(NumericMatrix,NumericVector)");
+        signatures.insert("arma::rowvec(*rdistSO3C)(arma::mat,arma::mat)");
+        signatures.insert("NumericVector(*EdistC)(NumericMatrix,NumericVector)");
         signatures.insert("double(*oneRdistC)(NumericMatrix,NumericVector)");
         signatures.insert("NumericVector(*cdfunsC)(NumericMatrix,NumericVector)");
+        signatures.insert("NumericVector(*cdfunsCMedian)(NumericMatrix,NumericVector)");
         signatures.insert("NumericVector(*zhangQ4)(NumericMatrix,int)");
+        signatures.insert("NumericVector(*cdfunsCSO3)(arma::mat,arma::mat)");
+        signatures.insert("NumericVector(*zhangMedianC)(arma::mat,int)");
     }
     return signatures.find(sig) != signatures.end();
 }
@@ -485,7 +565,6 @@ RcppExport SEXP rotations2_RcppExport_registerCCallable() {
     R_RegisterCCallable("rotations2", "rotations2_checkQ4", (DL_FUNC)rotations2_checkQ4_try);
     R_RegisterCCallable("rotations2", "rotations2_checkSO3", (DL_FUNC)rotations2_checkSO3_try);
     R_RegisterCCallable("rotations2", "rotations2_expskewC", (DL_FUNC)rotations2_expskewC_try);
-    R_RegisterCCallable("rotations2", "rotations2_rdistSO3C", (DL_FUNC)rotations2_rdistSO3C_try);
     R_RegisterCCallable("rotations2", "rotations2_logSO3C", (DL_FUNC)rotations2_logSO3C_try);
     R_RegisterCCallable("rotations2", "rotations2_projectSO3C", (DL_FUNC)rotations2_projectSO3C_try);
     R_RegisterCCallable("rotations2", "rotations2_meanSO3C", (DL_FUNC)rotations2_meanSO3C_try);
@@ -497,9 +576,14 @@ RcppExport SEXP rotations2_RcppExport_registerCCallable() {
     R_RegisterCCallable("rotations2", "rotations2_fisherAxisCSymmetric", (DL_FUNC)rotations2_fisherAxisCSymmetric_try);
     R_RegisterCCallable("rotations2", "rotations2_fisherBootC", (DL_FUNC)rotations2_fisherBootC_try);
     R_RegisterCCallable("rotations2", "rotations2_RdistC", (DL_FUNC)rotations2_RdistC_try);
+    R_RegisterCCallable("rotations2", "rotations2_rdistSO3C", (DL_FUNC)rotations2_rdistSO3C_try);
+    R_RegisterCCallable("rotations2", "rotations2_EdistC", (DL_FUNC)rotations2_EdistC_try);
     R_RegisterCCallable("rotations2", "rotations2_oneRdistC", (DL_FUNC)rotations2_oneRdistC_try);
     R_RegisterCCallable("rotations2", "rotations2_cdfunsC", (DL_FUNC)rotations2_cdfunsC_try);
+    R_RegisterCCallable("rotations2", "rotations2_cdfunsCMedian", (DL_FUNC)rotations2_cdfunsCMedian_try);
     R_RegisterCCallable("rotations2", "rotations2_zhangQ4", (DL_FUNC)rotations2_zhangQ4_try);
+    R_RegisterCCallable("rotations2", "rotations2_cdfunsCSO3", (DL_FUNC)rotations2_cdfunsCSO3_try);
+    R_RegisterCCallable("rotations2", "rotations2_zhangMedianC", (DL_FUNC)rotations2_zhangMedianC_try);
     R_RegisterCCallable("rotations2", "rotations2_RcppExport_validate", (DL_FUNC)rotations2_RcppExport_validate);
     return R_NilValue;
 }
