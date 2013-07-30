@@ -26,7 +26,7 @@ dimS<-nrow(coverCompare)
 
 #coverCompare<-read.csv("Results/MeanMedianComparison.csv")[,-1]
 
-for(j in 180001:dimS){
+for(j in 1:dimS){
 	
 	if(coverCompare$Dist[j]=='Cayley'){
 		

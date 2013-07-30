@@ -228,7 +228,7 @@ hatOVERtilde<-(3*pi*(kap+3)*(kap+1.5)^(2*kap+4))/(4*exp(1)*(kap+2)^2*(kap+1)^(2*
 hatOVERtilde
 
 cayRatio<-function(kap){
-	return((3*pi*(kap+3)*(kap+1.5)^(2*kap+4))/(4*exp(1)*(kap+2)^2*(kap+1)^(2*kap+3)))
+	return((3*pi*(kap+3)*(kap+1.5)^(2*kap+4))/(8*exp(1)*(kap+2)^2*(kap+1)^(2*kap+3)))
 }
 
 ks<-seq(0,25,length=100)
@@ -247,6 +247,13 @@ fishRatio<-function(kap){
 ks<-seq(0,25,length=100)
 plot(ks,fishRatio(ks),type='l')
 
+##Make a pretty plot comparing ARE of the two estimators
+
+ARE<-data.frame(kap=c(ks,ks),Are=c(cayRatio(ks),fishRatio(ks)),Distribution=c(rep("Cayley",100),rep("matrix Fisher",100)))
+qplot(kap,Are,data=ARE,linetype=Distribution,group=Distribution,lwd=I(1.5),geom='line',
+			xlab=expression(kappa),ylab="Asymptotic Relative Efficiency")+theme_bw()
+
+#ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/AREDist.pdf",width=6,height=4)
 
 ###########################
 ###########################
