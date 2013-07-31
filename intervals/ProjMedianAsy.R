@@ -224,11 +224,11 @@ abline(0,1)
 #Cayley distribution-requires stirling's formula to simplify Gamma function
 
 kap<-.1
-hatOVERtilde<-(3*pi*(kap+3)*(kap+1.5)^(2*kap+4))/(4*exp(1)*(kap+2)^2*(kap+1)^(2*kap+3))
+hatOVERtilde<-(8*exp(1)*(kap+2)^2*(kap+1)^(2*kap+3))/(3*pi*(kap+3)*(kap+1.5)^(2*kap+4))
 hatOVERtilde
 
 cayRatio<-function(kap){
-	return((3*pi*(kap+3)*(kap+1.5)^(2*kap+4))/(8*exp(1)*(kap+2)^2*(kap+1)^(2*kap+3)))
+	return((8*exp(1)*(kap+2)^2*(kap+1)^(2*kap+3))/(3*pi*(kap+3)*(kap+1.5)^(2*kap+4)))
 }
 
 ks<-seq(0,25,length=100)
@@ -240,7 +240,7 @@ library(gsl)
 kap<-.1
 
 fishRatio<-function(kap){
-	return((32*pi^2*kap^2*besselI(2*kap,1)*((kap+1)*besselI(2*kap,1)-kap*besselI(2*kap,0)))/(exp(4*kap)*(6*sqrt(kap)-(3+8*kap)*dawson(2*sqrt(kap)))^2))
+	return((exp(4*kap)*(6*sqrt(kap)-(3+8*kap)*dawson(2*sqrt(kap)))^2)/(32*pi^2*kap^2*besselI(2*kap,1)*((kap+1)*besselI(2*kap,1)-kap*besselI(2*kap,0))))
 }
 
 
@@ -253,7 +253,7 @@ ARE<-data.frame(kap=c(ks,ks),Are=c(cayRatio(ks),fishRatio(ks)),Distribution=c(re
 qplot(kap,Are,data=ARE,linetype=Distribution,group=Distribution,lwd=I(1.5),geom='line',
 			xlab=expression(kappa),ylab="Asymptotic Relative Efficiency")+theme_bw()
 
-#ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/AREDist.pdf",width=6,height=4)
+ggsave("/Users/stanfill/Dropbox/Thesis/Intervals/Figures/AREDist.pdf",width=6,height=4)
 
 ###########################
 ###########################
