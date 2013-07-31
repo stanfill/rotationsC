@@ -229,25 +229,25 @@ if(Dist=='cayley'){
 	
 	fullDF$kappa<-factor(fullDF$kappa,labels=c("kappa == 0.5","kappa == 8.0"))
 	
-	qplot(value,Prob,data=fullDF,colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,15))+
+	qplot(value,Prob,data=fullDF,colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,10))+
 		scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"))+
 		facet_grid(.~kappa,labeller=label_parsed)+theme_bw()+coord_fixed(ratio=15/1)+
 	  scale_size_discrete(range=c(0.75,1.5),guide='none')+
-	  guides(colour=guide_legend(label.hjust=0))
+	  guides(colour=guide_legend(label.hjust=0))+coord_equal(10)
 	
 	#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
-	#ggsave("FisherECDF.pdf",height=5,width=8)
+	#ggsave("FisherECDF.pdf",height=5,width=7)
 	#write.csv(fullDF,"FisherECDF.csv")
 	
 }else{
 	
 	fullDF$kappa<-factor(fullDF$kappa,labels=c("kappa == 0.05","kappa == 8.0"))
 	
-	qplot(value,Prob,data=fullDF,colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,15))+
+	qplot(value,Prob,data=fullDF,colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,10))+
 		scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"))+
 		facet_grid(.~kappa,labeller=label_parsed)+theme_bw()+coord_fixed(ratio=15/1)+
 	  guides(colour=guide_legend(label.hjust=0))+
-	  scale_size_discrete("",range=c(0.75,1.5),guide='none')
+	  scale_size_discrete("",range=c(0.75,1.5),guide='none')+coord_equal(10)
 
 	#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 	#ggsave("vonMisesECDF.pdf",height=5,width=8)

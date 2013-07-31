@@ -74,36 +74,36 @@ library(rotations2)
 source("intervals/IntervalFuns.R")	#This is needed for the ecdf function
 
 n<-c(10,50,100,300)
-nus<-c(.25,.75)
+kappa<-c(0.5,8)
 B<-1000				#Number of samples to use to estimate CDF
-Dist<-c('cayley','fisher','mises')
-
-simSize<-length(n)*length(nus)*length(Dist)
+#Dist<-c('cayley','fisher','mises')
+Dist<-'fisher'
+simSize<-length(n)*length(kappa)*length(Dist)
 
 tMat<-matrix(0,simSize,B)
 
-cdfDF<-data.frame(expand.grid(nus=nus,n=n,Dist=Dist),tMat)
+cdfDF<-data.frame(expand.grid(kappa=kappa,n=n,Dist=Dist),tMat)
 
 for(j in 1:simSize){
 	
 	if(cdfDF$Dist[j]=='cayley'){
 		
 		rangle<-rcayley
-		kappaj <- cayley_kappa(cdfDF$nu[j])
+		#kappaj <- cayley_kappa(cdfDF$nu[j])
 		
 	}else if(cdfDF$Dist[j]=='fisher'){
 		
 		rangle<-rfisher
-		kappaj <- fisher_kappa(cdfDF$nu[j])
+		#kappaj <- fisher_kappa(cdfDF$nu[j])
 		
 	}else{
 		rangle<-rvmises
-		kappaj <- vmises_kappa(cdfDF$nu[j])
+		#kappaj <- vmises_kappa(cdfDF$nu[j])
 	}
 	
 	for(i in 1:B){
 		
-		rs<-rangle(cdfDF$n[j],kappa=kappaj)
+		rs<-rangle(cdfDF$n[j],kappa=cdfDF$kappa[j])
 		
 		Rs<-genR(rs)
 		
@@ -125,13 +125,13 @@ for(j in 1:simSize){
 	}
 }
 
-resM<-melt(cdfDF,id=c("Dist","nus","n"))
-ss<-seq(0,15,length=B)
+resM<-melt(cdfDF,id=c("Dist","kappa","n"))
+ss<-seq(0,10,length=B)
 Probs<-pchisq(ss,3)
 
 resM$n<-as.factor(resM$n)
 resM$Prob<-0
-resM$ID<-paste(resM$Dist,resM$nu,resM$n)
+resM$ID<-paste(resM$Dist,resM$kappa,resM$n)
 kns<-unique(resM$ID)
 
 for(i in 1:length(unique(resM$ID))){
@@ -139,7 +139,7 @@ for(i in 1:length(unique(resM$ID))){
 	resM[resM$ID==kns[i],]$Prob<-ecdf(resM[resM$ID==kns[i],]$value)
 }
 
-chiDF<-data.frame(Dist="All",nus=rep(nus,B),n='Chisq',variable='Tr',value=rep(ss,each=2),Prob=rep(pchisq(ss,3),each=2))
+chiDF<-data.frame(Dist="All",kappa=rep(kappa,B),n='Chisq',variable='Tr',value=rep(ss,each=2),Prob=rep(pchisq(ss,3),each=2))
 chiDF$ID<-paste(chiDF$Dist,chiDF$nus,chiDF$n)
 
 fullDF<-rbind(resM,chiDF)
@@ -149,7 +149,7 @@ fullDF$n<-factor(fullDF$n,levels=Newlabs)
 fullDF$Stat<-1
 fullDF[fullDF$n=='Chisq',]$Stat<-2
 fullDF$Stat<-as.factor(fullDF$Stat)
-fullDF$nus<-factor(fullDF$nus,labels=c("nu == 0.25","nu == 0.75"))
+fullDF$kappa<-factor(fullDF$kappa,labels=c("kappa == 0.5","kappa == 8.0"))
 	
 
 qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("cayley",'All'),],colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,15))+
@@ -158,20 +158,20 @@ qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("cayley",'All'),],colour=n,lwd=Sta
 	scale_size_discrete(range=c(0.75,1.5),guide='none')+
 	guides(colour=guide_legend(label.hjust=0))
 	
-#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
+#setwd("/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 #ggsave("CayleyECDFMedian.pdf",height=5,width=8)
-#write.csv(fullDF,"CayleyECDF.csv")
+
 	
 	
-qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("fisher",'All'),],colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,15))+
+qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("fisher",'All'),],colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,10))+
 	scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"))+
-	facet_grid(.~nus,labeller=label_parsed)+theme_bw()+coord_fixed(ratio=15/1)+
+	facet_grid(.~kappa,labeller=label_parsed)+theme_bw()+coord_fixed(ratio=15/1)+
 	scale_size_discrete(range=c(0.75,1.5),guide='none')+
-	guides(colour=guide_legend(label.hjust=0))
+	guides(colour=guide_legend(label.hjust=0))+coord_equal(10)
 	
-#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
-#ggsave("FisherECDFMedian.pdf",height=5,width=8)
-#write.csv(fullDF,"FisherECDF.csv")
+#setwd("/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
+#ggsave("FisherECDFMedian.pdf",height=5,width=7)
+
 	
 
 qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("mises",'All'),],colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,15))+
@@ -182,7 +182,7 @@ qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("mises",'All'),],colour=n,lwd=Stat
 	
 #setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 #ggsave("vonMisesECDF.pdf",height=5,width=8)
-#write.csv(fullDF,"vonMisesECDF.csv")
+
 	
 
 ###########################
