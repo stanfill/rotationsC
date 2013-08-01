@@ -196,12 +196,12 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
   
 	if (!is.null(mean_regions)) {
 	  prentr <- changr <- zhangr  <- NA
-	  if(any(mean_regions%in%c('all','All'))) mean_regions<-c("prentice","zhang","chang")
-	  if (length(grep("prentice", mean_regions)) > 0) prentr<-region(Rs,estimator='mean',method='prentice',alp=alp)[col]
-	  if (length(grep("chang", mean_regions)) >0)    changr<-region(Rs,estimator='mean',method='chang',alp=alp)
-	  if (length(grep("zhang", mean_regions)) > 0)    zhangr<-region(Rs,estimator='mean',method='zhang',alp=alp,m=m)
+	  if(any(mean_regions%in%c('all','All'))) mean_regions<-c("eigenvalue theory","moment theory","moment bootstrap")
+	  if (length(grep("eigenvalue theory", mean_regions)) > 0) prentr<-region(Rs,estimator='mean',method='eigenvalue',type='theory',alp=alp)[col]
+	  if (length(grep("moment theory", mean_regions)) >0)    changr<-region(Rs,estimator='mean',method='moment',type='theory',alp=alp)
+	  if (length(grep("moment bootstrap", mean_regions)) > 0)    zhangr<-region(Rs,estimator='mean',method='moment',type='bootstrap',alp=alp,m=m)
 
-	  Regions<-data.frame(X1=c(prentr,changr,zhangr),Meth=c('Prentice','Chang','Zhang'))
+	  Regions<-data.frame(X1=c(prentr,changr,zhangr),Meth=c('Eigenvalue Theory','Moment Theory','Moment Bootstrap'))
 	  Regions <- na.omit(Regions)
 	  
     cisp.boot<-NULL
@@ -218,17 +218,17 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 	      cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(runif(2,-1,1),0), Regions$X1[i]),simplify="matrix")))
     }
 	  
-	  regs <- geom_point(aes(x=X, y=Y,colour=Method), data=data.frame(pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col),Method=rep(Regions$Meth,each=500)))
+	  regs <- geom_point(aes(x=X, y=Y,colour=Region), data=data.frame(pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col),Region=rep(Regions$Meth,each=500)))
 
 	}
   
 	if (!is.null(median_regions)) {
 		changr <- zhangr  <- NA
-		if(any(median_regions%in%c('all','All'))) median_regions<-c("zhang","chang")
-		if (length(grep("chang", median_regions)) >0)    changr<-region(Rs,method='chang',estimator='median',alp=alp)
-		if (length(grep("zhang", median_regions)) > 0)    zhangr<-region(Rs,method='zhang',estimator='median',alp=alp,m=m)
+		if(any(median_regions%in%c('all','All'))) median_regions<-c("bootstrap","theory")
+		if (length(grep("ootstrap", median_regions)) >0)    changr<-region(Rs,method='moment',type='bootstrap',estimator='median',alp=alp)
+		if (length(grep("heory", median_regions)) > 0)    zhangr<-region(Rs,method='moment',type='theory',estimator='median',alp=alp,m=m)
 		
-		MedRegions<-data.frame(X1=c(changr,zhangr),Meth=c('Chang','Zhang'))
+		MedRegions<-data.frame(X1=c(changr,zhangr),Meth=c('Moment Bootstrap','Moment Theory'))
 		MedRegions <- na.omit(MedRegions)
 		
 		cisp.boot<-NULL
@@ -245,7 +245,7 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 				cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(runif(2,-1,1),0), MedRegions$X1[i]),simplify="matrix")))
 		}
 		
-		regsMed <- geom_point(aes(x=X, y=Y,colour=Method), data=data.frame(pointsXYZ(cisp.boot, center=t(median(Rs))%*%center, column=col),Method=rep(MedRegions$Meth,each=500)))
+		regsMed <- geom_point(aes(x=X, y=Y,colour=Region), data=data.frame(pointsXYZ(cisp.boot, center=t(median(Rs))%*%center, column=col),Region=rep(MedRegions$Meth,each=500)))
 		
 	}
 	

@@ -5,7 +5,8 @@
 #' and \code{\link{zhang}}.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
-#' @param method Character string specifying which type of interval is required
+#' @param method Character string specifying which type of interval is required, "eigenvalue" or "moment" based theory
+#' @param type Characted string, "bootstrap" or "theory" are available
 #' @param estimator Character string either 'mean' or 'median'
 #' @param alp The alpha level desired, e.g. 0.95 or 0.90
 #' @param ... Additional arguments that are method specific
@@ -15,12 +16,12 @@
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Rs,method='prentice',alp=0.1)
-#' region(Rs,method='fisher',alp=0.1,symm=T)
-#' region(Rs,method='zhang',alp=0.1,m=100)
-#' region(Rs,method='chang',alp=0.1)
+#' region(Rs,method='eigenvalue',type='theory',alp=0.1)
+#' region(Rs,method='eigenvalue',type='bootstrap',alp=0.1,symm=T)
+#' region(Rs,method='moment',type='bootstrap',alp=0.1,m=100)
+#' region(Rs,method='moment',type='theory',alp=0.1)
 
-region<-function(Qs,method, estimator,alp,...){
+region<-function(Qs,method, type, estimator,alp,...){
 	UseMethod("region")
 }
 
@@ -29,7 +30,7 @@ region<-function(Qs,method, estimator,alp,...){
 #' @method region Q4
 #' @S3method region Q4
 
-region.Q4<-function(Qs,method, estimator,alp=NULL,...){
+region.Q4<-function(Qs,method, type, estimator,alp=NULL,...){
 	
 	Qs<-formatQ4(Qs)
 	
@@ -39,7 +40,7 @@ region.Q4<-function(Qs,method, estimator,alp=NULL,...){
 		warning("No alpha-level specified, 0.1 used by default.")
 	}
 	
-	if(method%in%c('Prentice','prentice')){
+	if(method%in%c('Eigenvalue','eigenvalue') & type%in%c("Theory","theory")){
 		
 		if(estimator!='mean'){
 			stop("The method due to Prentice is only available for the mean estimator.")
@@ -49,13 +50,13 @@ region.Q4<-function(Qs,method, estimator,alp=NULL,...){
 		
 		return(r)
 		
-	}else	if(method%in%c('Zhang','zhang')){
+	}else	if(method%in%c('Moment','moment') & type%in%c("Bootstrap","bootstrap")){
 		
 		r<-zhang.Q4(Qs=Qs,estimator=estimator,alp=alp,...)
 		
 		return(r)
 		
-	}else	if(method%in%c('Fisher','fisher')){
+	}else	if(method%in%c('Eigenvalue','eigenvalue') & type%in%c("Bootstrap","bootstrap")){
 		
 		if(estimator!='mean'){
 			stop("The method due to Fisher et al. is only available for the mean estimator.")
@@ -65,7 +66,7 @@ region.Q4<-function(Qs,method, estimator,alp=NULL,...){
 		
 		return(r)
 		
-	}else	if(method%in%c('Chang','chang')){
+	}else	if(method%in%c('Moment','moment') & type%in%c("Theory","theory")){
 		
 		r<-chang.Q4(Qs=Qs,estimator=estimator,alp=alp)
 		
@@ -73,7 +74,7 @@ region.Q4<-function(Qs,method, estimator,alp=NULL,...){
 		
 	}else{
 		
-		stop("Only the Prentice, Zhang, Chang and Fisher options are currently available")
+		stop("Please choose a correct combination of method, type and estimator.  See help file.")
 		
 	}
 	
@@ -84,7 +85,7 @@ region.Q4<-function(Qs,method, estimator,alp=NULL,...){
 #' @method region SO3
 #' @S3method region SO3
 
-region.SO3<-function(Rs,method,estimator,alp=NULL,...){
+region.SO3<-function(Rs,method,type,estimator,alp=NULL,...){
 	
 	Rs<-formatSO3(Rs)
 	
@@ -94,7 +95,7 @@ region.SO3<-function(Rs,method,estimator,alp=NULL,...){
 		warning("No alpha-level specified, 0.1 used by default.")
 	}
 	
-	if(method%in%c('Prentice','prentice')){
+	if(method%in%c('Eigenvalue','eigenvalue') & type%in%c("Theory","theory")){
 		
 		if(estimator!='mean'){
 			stop("The method due to Prentice is only available for the mean estimator.")
@@ -104,13 +105,13 @@ region.SO3<-function(Rs,method,estimator,alp=NULL,...){
 		
 		return(r)
 		
-	}else	if(method%in%c('Zhang','zhang')){
+	}else if(method%in%c('Moment','moment') & type%in%c("Bootstrap","bootstrap")){
 		
 		r<-zhang.SO3(Rs=Rs,estimator=estimator,alp=alp,...)
 		
 		return(r)
 		
-	}else	if(method%in%c('Fisher','fisher')){
+	}else if(method%in%c('Eigenvalue','eigenvalue') & type%in%c("Bootstrap","bootstrap")){
 		
 		if(estimator!='mean'){
 			stop("The method due to Fisher et al. is only available for the mean estimator.")
@@ -120,7 +121,7 @@ region.SO3<-function(Rs,method,estimator,alp=NULL,...){
 		
 		return(r)
 		
-	}else	if(method%in%c('Chang','chang')){
+	}else if(method%in%c('Moment','moment') & type%in%c("Theory","theory")){
 		
 		r<-chang.SO3(Rs=Rs,estimator=estimator,alp=alp)
 		
@@ -128,7 +129,7 @@ region.SO3<-function(Rs,method,estimator,alp=NULL,...){
 		
 	}else{
 		
-		stop("Only the Prentice, Zhang, Chang and Fisher options are currently available")
+	  stop("Please choose a correct combination of method, type and estimator.  See help file.")
 		
 	}
 	
@@ -151,7 +152,7 @@ region.SO3<-function(Rs,method,estimator,alp=NULL,...){
 #' @export
 #' @examples
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-#' region(Qs,method='prentice',alp=0.1)
+#' region(Qs,method='eigenvalue',type='theory',alp=0.1)
 
 prentice<-function(Qs,alp){
 	UseMethod("prentice")
@@ -222,7 +223,7 @@ prentice.SO3<-function(Rs,alp=NULL){
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Rs,method='zhang',alp=0.1)
+#' region(Rs,method='moment',type='bootstrap',alp=0.1)
 
 zhang<-function(Qs,estimator,alp,m){
 	UseMethod("zhang")
@@ -337,7 +338,7 @@ cdfuns<-function(Qs,estimator){
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Rs,method='chang',alp=0.1)
+#' region(Rs,method='moment',type='theory',alp=0.1)
 
 chang<-function(Qs,estimator,alp){
 	UseMethod("chang")
@@ -402,7 +403,7 @@ chang.Q4<-function(Qs,estimator,alp=NULL){
 #' @export
 #' @examples
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-#' region(Qs,method='fisher',alp=0.1,symm=T)
+#' region(Qs,method='eigenvalue',type='bootstrap',alp=0.1,symm=T)
 
 fisheretal<-function(Qs,alp,boot,m,symm){
 	UseMethod("fisheretal")
