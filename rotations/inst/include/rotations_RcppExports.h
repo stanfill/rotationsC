@@ -6,7 +6,7 @@
 
 #include <RcppArmadillo.h>
 #include <Rcpp.h>
-#include "../inst/include/rotations.h"
+#include "rotations.h"
 
 namespace rotations {
 
@@ -147,6 +147,20 @@ namespace rotations {
         }
         RNGScope __rngScope;
         RObject __result = p_logSO3C(Rcpp::wrap(R));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<arma::mat >(__result);
+    }
+
+    inline arma::mat logSO3CMulti(arma::mat R) {
+        typedef SEXP(*Ptr_logSO3CMulti)(SEXP);
+        static Ptr_logSO3CMulti p_logSO3CMulti = NULL;
+        if (p_logSO3CMulti == NULL) {
+            validateSignature("arma::mat(*logSO3CMulti)(arma::mat)");
+            p_logSO3CMulti = (Ptr_logSO3CMulti)R_GetCCallable("rotations", "rotations_logSO3CMulti");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_logSO3CMulti(Rcpp::wrap(R));
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);

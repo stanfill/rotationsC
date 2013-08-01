@@ -37,6 +37,10 @@ logSO3C <- function(R) {
     .Call('rotations_logSO3C', PACKAGE = 'rotations', R)
 }
 
+logSO3CMulti <- function(R) {
+    .Call('rotations_logSO3CMulti', PACKAGE = 'rotations', R)
+}
+
 projectSO3C <- function(M) {
     .Call('rotations_projectSO3C', PACKAGE = 'rotations', M)
 }

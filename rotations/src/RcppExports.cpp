@@ -176,6 +176,24 @@ RcppExport SEXP rotations_logSO3C(SEXP RSEXP) {
         Rf_error(CHAR(Rf_asChar(__result)));
     return __result;
 }
+// logSO3CMulti
+arma::mat logSO3CMulti(arma::mat R);
+static SEXP rotations_logSO3CMulti_try(SEXP RSEXP) {
+BEGIN_RCPP
+    arma::mat R = Rcpp::as<arma::mat >(RSEXP);
+    arma::mat __result = logSO3CMulti(R);
+    return Rcpp::wrap(__result);
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations_logSO3CMulti(SEXP RSEXP) {
+    Rcpp::RNGScope __rngScope;
+    SEXP __result = PROTECT(rotations_logSO3CMulti_try(RSEXP));
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    UNPROTECT(1);
+    if (__isError)
+        Rf_error(CHAR(Rf_asChar(__result)));
+    return __result;
+}
 // projectSO3C
 arma::mat projectSO3C(arma::mat M);
 static SEXP rotations_projectSO3C_try(SEXP MSEXP) {
@@ -533,6 +551,7 @@ static int rotations_RcppExport_validate(const char* sig) {
         signatures.insert("int(*checkSO3)(arma::mat)");
         signatures.insert("arma::mat(*expskewC)(arma::mat)");
         signatures.insert("arma::mat(*logSO3C)(arma::mat)");
+        signatures.insert("arma::mat(*logSO3CMulti)(arma::mat)");
         signatures.insert("arma::mat(*projectSO3C)(arma::mat)");
         signatures.insert("arma::mat(*meanSO3C)(arma::mat)");
         signatures.insert("arma::rowvec(*meanQ4C)(arma::mat)");
@@ -566,6 +585,7 @@ RcppExport SEXP rotations_RcppExport_registerCCallable() {
     R_RegisterCCallable("rotations", "rotations_checkSO3", (DL_FUNC)rotations_checkSO3_try);
     R_RegisterCCallable("rotations", "rotations_expskewC", (DL_FUNC)rotations_expskewC_try);
     R_RegisterCCallable("rotations", "rotations_logSO3C", (DL_FUNC)rotations_logSO3C_try);
+    R_RegisterCCallable("rotations", "rotations_logSO3CMulti", (DL_FUNC)rotations_logSO3CMulti_try);
     R_RegisterCCallable("rotations", "rotations_projectSO3C", (DL_FUNC)rotations_projectSO3C_try);
     R_RegisterCCallable("rotations", "rotations_meanSO3C", (DL_FUNC)rotations_meanSO3C_try);
     R_RegisterCCallable("rotations", "rotations_meanQ4C", (DL_FUNC)rotations_meanQ4C_try);

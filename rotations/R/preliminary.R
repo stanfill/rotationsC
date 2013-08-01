@@ -350,9 +350,12 @@ exp.skew <- function(H) {
 #' @method log SO3
 
 log.SO3 <- function(R) {
-  
-	R<-matrix(R,3,3)
-	return(logSO3C(R))
+  if(length(R)==9){
+	  R<-matrix(R,3,3)
+	  return(logSO3C(R))
+  }else{
+    return(logSO3CMulti(R))
+  }
   
 }
 

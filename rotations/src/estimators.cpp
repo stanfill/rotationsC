@@ -111,6 +111,42 @@ arma::mat logSO3C(arma::mat R){
   
 }
 
+// [[Rcpp::export]]
+arma::mat logSO3CMulti(arma::mat R){
+  //This is a version of logSO3C that allows for multiple rows in Rs
+  
+  int n = R.n_rows, i, j;
+  arma::mat I(3,3), logR(n,9), Ri(3,3), logRi(3,3);
+  logR.zeros();
+  I.eye();
+  Ri.zeros();
+  logRi.zeros();
+  double theta;
+  
+  for(i = 0; i<n ; i++ ){
+    
+    for(j = 0; j<9; j++){
+			Ri(j) = R(i,j);
+		}
+    
+    theta = acos(0.5*trace(Ri)-0.5);
+    
+    //If theta<0.0001 leave that row as zeros
+    if(theta > 0.00001){ 
+  
+      logRi = (Ri-Ri.t())*theta/(2*sin(theta));
+    
+      for(j = 0; j<9; j++){
+  	  	logR(i,j) = logRi(j);
+		  }
+      
+    }
+    
+  }
+  
+  return logR;
+  
+}
 
 // [[Rcpp::export]]
 arma::mat projectSO3C(arma::mat M){
