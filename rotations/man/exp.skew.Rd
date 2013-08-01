@@ -1,18 +1,21 @@
 \name{exp.skew}
 \alias{exp.skew}
-\title{This fuction will compute the natural exponential of skew-symmetric matrix.}
+\title{Matrix exponential}
 \usage{
-  exp.skew(A)
+  exp.skew(H)
 }
 \arguments{
-  \item{A}{3-dimensional skew-symmetric matrix, i.e.,
-  \eqn{\bm A=-\bm A^\top}}
+  \item{H}{3-by-3 skew-symmetric matrix, i.e. A such that
+  \eqn{\bm H=-\bm H^\top}}
 }
 \value{
   numeric matrix \eqn{e^{\bm A}}{e^A}
 }
 \description{
-  See \cite{Moakher (2002)}
+  Compute the matrix exponent for skew-symmetric matrices
+  according to the usual Taylor expansion. The expansion is
+  significantly simplified for skew-symmetric matrices, see
+  \cite{Moakher (2002)}.
 }
 \references{
   Moakher M (2002). "Means and averaging in the group of

@@ -44,7 +44,7 @@
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)
-region(Rs,method='zhang',alp=0.1)
+region(Rs,method='moment',type='bootstrap',alp=0.1)
 }
 \seealso{
   \code{\link{prentice}} \code{\link{fisheretal}}

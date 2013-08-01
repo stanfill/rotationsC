@@ -3,6 +3,7 @@
 
 #include <RcppArmadillo.h>
 #include <Rcpp.h>
+#include "../inst/include/rotations.h"
 #include <string>
 #include <set>
 

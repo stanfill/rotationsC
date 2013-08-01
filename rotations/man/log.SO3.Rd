@@ -1,14 +1,14 @@
 \name{log.SO3}
 \alias{log.SO3}
-\title{Natural Logarithm in SO(3)}
+\title{Matrix logarithm}
 \usage{
-  log.SO3(R)
+  \method{log}{SO3} (R)
 }
 \arguments{
-  \item{R}{numeric matrix in \eqn{SO(n)}}
+  \item{R}{3-by-3 numeric matrix in \eqn{SO(n)}}
 }
 \value{
-  mlog numeric matrix \eqn{\log(R)}{log(R)}
+  numeric matrix \eqn{\log(R)}{log(R)}
 }
 \description{
   For details see \cite{Moakher (2002)}

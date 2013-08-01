@@ -37,7 +37,7 @@
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)
-region(Rs,method='chang',alp=0.1)
+region(Rs,method='moment',type='theory',alp=0.1)
 }
 \references{
   Chang T and Rivest L (2001). "M-estimation for location

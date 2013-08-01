@@ -47,7 +47,7 @@
 }
 \examples{
 Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-region(Qs,method='fisher',alp=0.1,symm=T)
+region(Qs,method='eigenvalue',type='bootstrap',alp=0.1,symm=T)
 }
 \references{
   Fisher N, Hall P, Jing B and Wood A (1996). "Improved

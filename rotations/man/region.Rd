@@ -4,13 +4,13 @@
 \alias{region.SO3}
 \title{Confidence Region for Mean Rotation}
 \usage{
-  region(Qs, method, estimator, alp, ...)
+  region(Qs, method, type, estimator, alp, ...)
 
-  \method{region}{Q4} (Qs, method, estimator, alp = NULL,
-    ...)
+  \method{region}{Q4} (Qs, method, type, estimator,
+    alp = NULL, ...)
 
-  \method{region}{SO3} (Rs, method, estimator, alp = NULL,
-    ...)
+  \method{region}{SO3} (Rs, method, type, estimator,
+    alp = NULL, ...)
 }
 \arguments{
   \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
@@ -18,7 +18,11 @@
   quaternion form (p=4)}
 
   \item{method}{Character string specifying which type of
-  interval is required}
+  interval is required, "eigenvalue" or "moment" based
+  theory}
+
+  \item{type}{Characted string, "bootstrap" or "theory" are
+  available}
 
   \item{estimator}{Character string either 'mean' or
   'median'}
@@ -40,10 +44,10 @@
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)
-region(Rs,method='prentice',alp=0.1)
-region(Rs,method='fisher',alp=0.1,symm=T)
-region(Rs,method='zhang',alp=0.1,m=100)
-region(Rs,method='chang',alp=0.1)
+region(Rs,method='eigenvalue',type='theory',alp=0.1)
+region(Rs,method='eigenvalue',type='bootstrap',alp=0.1,symm=T)
+region(Rs,method='moment',type='bootstrap',alp=0.1,m=100)
+region(Rs,method='moment',type='theory',alp=0.1)
 }
 \references{
   Prentice MJ (1986). "Orientation statistics without

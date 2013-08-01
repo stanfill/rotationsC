@@ -320,30 +320,34 @@ genR <- function(r, S = NULL, space='SO3') {
 }
 
 
-#' This fuction will compute the natural exponential of skew-symmetric matrix.
+#' Matrix exponential
 #'
-#' See \cite{moakher02}
+#' Compute the matrix exponent for skew-symmetric matrices according to the usual Taylor expansion.
+#' The expansion is significantly simplified for skew-symmetric matrices, see \cite{moakher02}.
 #'
-#' @param A 3-dimensional skew-symmetric matrix, i.e., \eqn{\bm A=-\bm A^\top}
+#' @param H 3-by-3 skew-symmetric matrix, i.e. A such that \eqn{\bm H=-\bm H^\top}
 #' @return numeric matrix \eqn{e^{\bm A}}{e^A}
 #' @cite moakher02
+#' @export
 
-exp.skew <- function(A) {
+exp.skew <- function(H) {
   
-  if (sum(abs(A + t(A)))>10e-10) {
+  if (sum(abs(H + t(H)))>10e-10) {
     stop("The input matrix must be skew symmetric.")
   }
-  return(expskewC(A))
+  return(expskewC(H))
 }
 
 
-#' Natural Logarithm in SO(3)
+#' Matrix logarithm
 #'
 #' For details see \cite{moakher02}
 #'
-#' @param R numeric matrix in \eqn{SO(n)}
-#' @return mlog numeric matrix \eqn{\log(R)}{log(R)}
+#' @param R 3-by-3 numeric matrix in \eqn{SO(n)}
+#' @return numeric matrix \eqn{\log(R)}{log(R)}
 #' @cite moakher02
+#' @S3method log SO3
+#' @method log SO3
 
 log.SO3 <- function(R) {
   
