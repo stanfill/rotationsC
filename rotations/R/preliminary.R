@@ -161,12 +161,12 @@ angle.Q4 <- function(Qs){
 #' 
 #' Determine the misorientation axis of a rotation
 #' 
-#' Every rotation can be thought of as some reference coordinate system rotated about an axis through an angle.  These quantites
+#' Every rotation can be interpreted as some reference coordinate system rotated about an axis through an angle.  These quantites
 #' are referred to as the misorientation axis and misorientation angle, respectively, in the material sciences literature.
 #' This function returns the misorentation axis associated with a rotation assuming the reference coordinate system
 #' is the identity.
 #' 
-#' @param R,q \eqn{3\times 3}{3-by-3} matrix in SO3 or unit quaterion
+#' @param R,q 3-by-3 matrix in SO3 or unit quaterion
 #' @return axis in form of three dimensional vector of length one.
 #' @seealso \code{\link{angle}}
 #' @export
