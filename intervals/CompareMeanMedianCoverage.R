@@ -106,28 +106,39 @@ levels(cRateM$Method)<-c("Mean(C&R)","Mean(Z&N)","Median(C&R)","Median(Z&N)")
 levels(cRateM$Dist)<-c("Cayley","matrix~~Fisher")
 cRateM$nu<-factor(cRateM$nu,labels=c("nu == 0.25","nu == 0.5","nu == 0.75"))
 
+require(grid) #necessary to use the unit() function
+
 # Compare coverage rates by estimator and method
 qplot(n,value,data=cRateM,colour=Method,group=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
  	facet_grid(Dist~nu,labeller=label_parsed)+
  	geom_hline(yintercept=(1-alp)*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
  	scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+theme(panel.margin=unit(0.5,'lines'))
 
+#ggsave("/Users/stanfill/Dropbox/Thesis/Intervals/Figures/MeanMedianCoverCompare.pdf",width=8,height=6)
+
 
 #####################
 #Plot test statistics against one another?
 ccrit<-qchisq(1-alp,3)
 
-qplot(MeanStat,MedianStat,data=coverCompare[coverCompare$nus==0.25,],facets=n~Dist,
-	xlim=c(0,30),ylim=c(0,30))+geom_hline(yintercept=ccrit,colour='red')+
-	geom_vline(xintercept=ccrit,colour='red')
+p<-ggplot(coverCompare[coverCompare$nus==0.25,],aes(MeanStat,MedianStat))
+p+xlim(0,30)+ylim(0,30)+facet_grid(n~Dist)+geom_hline(yintercept=ccrit,colour='red')+
+  geom_vline(xintercept=ccrit,colour='red')+geom_point(alpha=I(.1))+xlab(expression(hat(S)[E]))+
+  ylab(expression(tilde(S)[E]))+coord_fixed()
+
+#ggsave("/Users/stanfill/Dropbox/Thesis/Intervals/Figures/MeanMedianStatCompare.pdf",width=5,height=10)
+
 
 qplot(MeanStat,MedianStat,data=coverCompare[coverCompare$nus==0.5,],facets=n~Dist,
 	xlim=c(0,30),ylim=c(0,30))+geom_hline(yintercept=ccrit,colour='red')+
 	geom_vline(xintercept=ccrit,colour='red')
 
-qplot(MeanStat,MedianStat,data=coverCompare[coverCompare$nus==0.75,],facets=n~Dist,
-	xlim=c(0,30),ylim=c(0,30))+geom_hline(yintercept=ccrit,colour='red')+
-	geom_vline(xintercept=ccrit,colour='red')
+p<-ggplot(coverCompare[coverCompare$nus==0.75,],aes(MeanStat,MedianStat))
+p+xlim(0,30)+ylim(0,30)+facet_grid(n~Dist)+geom_hline(yintercept=ccrit,colour='red')+
+  geom_vline(xintercept=ccrit,colour='red')+geom_point(alpha=I(.1))+xlab(expression(hat(S)[E]))+
+  ylab(expression(tilde(S)[E]))
+
+
 
 #####################
 #plot Mean-test statistics against bootstrap critical value
