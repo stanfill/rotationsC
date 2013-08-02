@@ -251,9 +251,10 @@ plot(ks,fishRatio(ks),type='l')
 
 ARE<-data.frame(kap=c(ks,ks),Are=c(cayRatio(ks),fishRatio(ks)),Distribution=c(rep("Cayley",100),rep("matrix Fisher",100)))
 qplot(kap,Are,data=ARE,linetype=Distribution,group=Distribution,lwd=I(1.5),geom='line',
-			xlab=expression(kappa),ylab="Asymptotic Relative Efficiency")+theme_bw()
+	xlab=expression(kappa),ylab="Asymptotic Relative Efficiency")+
+  theme_bw()+geom_hline(yintercept=8/(3*pi),colour='gray50')
 
-ggsave("/Users/stanfill/Dropbox/Thesis/Intervals/Figures/AREDist.pdf",width=6,height=4)
+#ggsave("/Users/stanfill/Dropbox/Thesis/Intervals/Figures/AREDist.pdf",width=6,height=4)
 
 ###########################
 ###########################
