@@ -248,13 +248,25 @@ ks<-seq(0,25,length=100)
 plot(ks,fishRatio(ks),type='l')
 
 ##Make a pretty plot comparing ARE of the two estimators
+cayRatio2<-function(kap){
+  #compue ARE of median for Cayley distribution without Stirings approximation of the 
+  #gamma function
+  return(8*(kap+2)^2*gamma(kap+2)^2/(3*pi*(kap+3)*gamma(kap+2.5)^2))
+}
 
-ARE<-data.frame(kap=c(ks,ks),Are=c(cayRatio(ks),fishRatio(ks)),Distribution=c(rep("Cayley",100),rep("matrix Fisher",100)))
+
+ARE<-data.frame(kap=c(ks,ks),Are=c(cayRatio2(ks),fishRatio(ks)),Distribution=c(rep("Cayley",100),rep("matrix Fisher",100)))
 qplot(kap,Are,data=ARE,linetype=Distribution,group=Distribution,lwd=I(1.5),geom='line',
 	xlab=expression(kappa),ylab="Asymptotic Relative Efficiency")+
   theme_bw()+geom_hline(yintercept=8/(3*pi),colour='gray50')
 
 #ggsave("/Users/stanfill/Dropbox/Thesis/Intervals/Figures/AREDist.pdf",width=6,height=4)
+
+###########################
+#Plot ARE for cayley with and without using Stirling's to simplify gamma function
+ks<-seq(0,25,length=50)
+plot(ks,cayRatio2(ks),type='l') #without stirling approximation
+lines(ks,cayRatio(ks),lty=2) #Using stirling approximation
 
 ###########################
 ###########################
