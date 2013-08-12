@@ -72,13 +72,17 @@ pcayley<-function(q,kappa=1,nu=NULL,lower.tail=TRUE){
   
   n<-length(q)
   cdf<-rep(NA,n)
+  a<-(2*kappa+1)*(1-cos(q))/(3*(1+cos(q)))
+  pos<-which(q>0)
   
-  for(i in 1:n)
-    cdf[i]<-max(min(integrate(dcayley,-pi,q[i],kappa,nu,Haar=F)$value,1),0)
-  
+  cdf<-pf(a,3,2*kappa+1)
+  cdf[pos]<-cdf[pos]/2+0.5
+  cdf[-pos]<-0.5-cdf[-pos]/2
+
   if(lower.tail) 
     return(cdf) else return((1-cdf))
 }
+
 
 #' @rdname Cayley
 #' @aliases Cayley dcayley pcayley rcayley
