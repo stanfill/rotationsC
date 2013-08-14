@@ -127,7 +127,7 @@ qplot(n,value,data=resM,colour=Method,group=Method,ylab='Coverage Rate (%)',xlab
 #Plot the test statistics cumulative dist function versus the 
 #theoretical limiting dist
 ###############################################################
-setwd("C:/Users/stanfill/Desktop/GitHub/rotationsC")
+setwd("/Users/stanfill/Documents/GitHub/rotationsC/intervals")
 library(Rcpp)
 Rcpp::sourceCpp('ZhangMethod.cpp')
 Rcpp::sourceCpp("FisherMethod.cpp")
@@ -138,9 +138,10 @@ library(plyr)
 source("IntervalFuns.R")
 
 n<-c(10,50,100,300)
-ks<-c(.05,8)
+
+ks<-c(2,8)
 B<-1000				#Number of samples to use to estimate CDF
-Dist<-'cayley'
+Dist<-'none'
 
 if(Dist=='cayley'){
 	rangle<-rcayley
@@ -154,30 +155,31 @@ simSize<-length(n)*length(ks)
 
 tMat<-matrix(0,simSize,B)
 
-
 cdfDF<-data.frame(expand.grid(kappa=ks,n=n),tMat)
 
 for(j in 1:simSize){
 
-	
 	for(i in 1:B){
 		
 		rs<-rangle(cdfDF$n[j],kappa=cdfDF$kappa[j])
 
 		Rs<-genR(rs,space='Q4')
 		#Rs<-genR(rs)
-		
-		cosrs<-cos(rs)
+    
+		ShatMean<-meanQ4C(Rs)
+		#ShatMean<-HartmedianSO3C(Rs,100,1e-5)
+		#ShatMean<-Q4(as.SO3(matrix(ShatMean,nrow=1)))
+    
+		rs2<-dist(Rs,ShatMean,method='intrinsic')
+		cosrs<-cos(rs2)
+    
+		#cosrs<-cos(rs)
 		
 		ecos<-mean(cosrs)
 		ecos2<-mean(cosrs^2)
 		
 		c<-(2/3)*(1-ecos2)
 		d<-(1/3)*(1+2*ecos)
-		
-		ShatMean<-meanQ4C(Rs)
-		#ShatMean<-HartmedianSO3C(Rs,100,1e-5)
-		#ShatMean<-Q4(as.SO3(matrix(ShatMean,nrow=1)))
 		
 		hsqMean<-RdistC(ShatMean,id.Q4)^2
 
@@ -187,7 +189,7 @@ for(j in 1:simSize){
 }
 
 resM<-melt(cdfDF,id=c("kappa","n"))
-ss<-seq(0,max(resM$value),length=B)
+ss<-seq(0,max(resM$value,na.rm=T),length=B)
 Probs<-pchisq(ss,3)
 
 resM$n<-as.factor(resM$n)
@@ -206,6 +208,7 @@ chiDF$ID<-paste(chiDF$kappa,chiDF$n)
 fullDF<-rbind(resM,chiDF)
 
 Newlabs<-c("Chisq","10","50","100","300")
+
 fullDF$n<-factor(fullDF$n,levels=Newlabs)
 fullDF$Stat<-1
 fullDF[fullDF$n=='Chisq',]$Stat<-2
@@ -213,21 +216,21 @@ fullDF$Stat<-as.factor(fullDF$Stat)
 
 if(Dist=='cayley'){
 	
-	fullDF$kappa<-factor(fullDF$kappa,labels=c("kappa == 0.5","kappa == 8.0"))
+	fullDF$kappa<-factor(fullDF$kappa,labels=c("kappa == 2","kappa == 8"))
 	
-	qplot(value,Prob,data=fullDF,colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,15))+
-		scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"))+
+	qplot(value,Prob,data=fullDF,colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,10))+
+		scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100",'n=300'))+
 		facet_grid(.~kappa,labeller=label_parsed)+theme_bw()+coord_fixed(ratio=15/1)+
     scale_size_discrete(range=c(0.75,1.5),guide='none')+
-	  guides(colour=guide_legend(label.hjust=0))
+	  guides(colour=guide_legend(label.hjust=0))+coord_equal(10)
 	
-	#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
+	#setwd("/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 	#ggsave("CayleyECDF.pdf",height=5,width=8)
 	#write.csv(fullDF,"CayleyECDF.csv")
 	
 }else if(Dist=='fisher'){
 	
-	fullDF$kappa<-factor(fullDF$kappa,labels=c("kappa == 0.5","kappa == 8.0"))
+	fullDF$kappa<-factor(fullDF$kappa,labels=c("kappa == 2","kappa == 8"))
 	
 	qplot(value,Prob,data=fullDF,colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,10))+
 		scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"))+
@@ -235,13 +238,13 @@ if(Dist=='cayley'){
 	  scale_size_discrete(range=c(0.75,1.5),guide='none')+
 	  guides(colour=guide_legend(label.hjust=0))+coord_equal(10)
 	
-	#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
+	#setwd("/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 	#ggsave("FisherECDF.pdf",height=5,width=7)
 	#write.csv(fullDF,"FisherECDF.csv")
 	
 }else{
 	
-	fullDF$kappa<-factor(fullDF$kappa,labels=c("kappa == 0.05","kappa == 8.0"))
+	fullDF$kappa<-factor(fullDF$kappa,labels=c("kappa == 2","kappa == 8"))
 	
 	qplot(value,Prob,data=fullDF,colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,10))+
 		scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"))+
@@ -249,7 +252,7 @@ if(Dist=='cayley'){
 	  guides(colour=guide_legend(label.hjust=0))+
 	  scale_size_discrete("",range=c(0.75,1.5),guide='none')+coord_equal(10)
 
-	#setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
+	#setwd("/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 	#ggsave("vonMisesECDF.pdf",height=5,width=8)
 	#write.csv(fullDF,"vonMisesECDF.csv")
 	
