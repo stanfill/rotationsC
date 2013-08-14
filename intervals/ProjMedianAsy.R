@@ -9,13 +9,13 @@
 #In this section I compare the empirical CDF of the test statistic to 
 #the theoretical chi^2_3 limiting distribution
 
-library(rotations2)
-setwd("C:/Users/stanfill/Desktop/GitHub/rotationsC/intervals")
+library(rotations)
+setwd("/Users/stanfill/Documents/GitHub/rotationsC/intervals")
 source("IntervalFuns.R")
 B<-1000
 n<-c(10,50,300)
 numN<-length(n)
-kap<-.1
+kap<-2
 tstats<-matrix(0,B,numN)
 
 for(j in 1:numN){
@@ -24,8 +24,10 @@ for(j in 1:numN){
 		rs<-rcayley(n[j],kappa=kap)
 		Rs<-genR(rs)
 		
-
-		cosrs<-cos(rs)
+		Shat<-median(Rs)
+    
+    rs2<-dist(Rs,Shat,method='intrinsic')
+		cosrs<-cos(rs2)
 		crs<-(cosrs+1)
 		drs<-(1+3*cosrs)/(sqrt(1-cosrs))
 		#cosrs2<-cos(rs/2)^2
@@ -34,9 +36,6 @@ for(j in 1:numN){
 		c<-mean(crs)/6  #I think this is C for proj median according to notes from 7/16
 		d<-mean(drs)/12
 
-		
-		Shat<-median(Rs)
-	
 		ShatMedian<-dist(Shat,method='intrinsic',p=2)
 	
 		tstats[i,j]<-2*n[j]*(d^2)*ShatMedian/c
@@ -49,7 +48,7 @@ for(j in 1:numN){
 #ses<-seq(0,max(tstats),length=B)
 #lines(ses,dchisq(ses,3))
 
-xmax<-15
+xmax<-10
 
 for(j in 1:numN){
 	tstats[,j]<-sort(tstats[,j])
@@ -70,14 +69,14 @@ lines(seqChi,pchisq(seqChi,3),lty=2)
 
 library(plyr)
 library(reshape2)
-library(rotations2)
+library(rotations)
 source("intervals/IntervalFuns.R")	#This is needed for the ecdf function
 
 n<-c(10,50,100,300)
-kappa<-c(0.5,8)
+kappa<-c(2,8)
 B<-1000				#Number of samples to use to estimate CDF
 #Dist<-c('cayley','fisher','mises')
-Dist<-'fisher'
+Dist<-c('cayley','fisher')
 simSize<-length(n)*length(kappa)*length(Dist)
 
 tMat<-matrix(0,simSize,B)
@@ -107,7 +106,10 @@ for(j in 1:simSize){
 		
 		Rs<-genR(rs)
 		
-		cosrs<-cos(rs)
+		Shat<-median(Rs)
+    rs2<-dist(Rs,Shat,method='intrinsic')
+    
+		cosrs<-cos(rs2)
 		crs<-(cosrs+1)
 		drs<-(1+3*cosrs)/(sqrt(1-cosrs))
 		#cosrs2<-cos(rs/2)^2
@@ -115,8 +117,6 @@ for(j in 1:simSize){
 		
 		c<-mean(crs)/6  #I think this is C for proj median according to notes from 7/16
 		d<-mean(drs)/12
-		
-		Shat<-median(Rs)
 		
 		hsqMean<-dist(Shat,method='intrinsic',p=2)
 		
@@ -149,7 +149,7 @@ fullDF$n<-factor(fullDF$n,levels=Newlabs)
 fullDF$Stat<-1
 fullDF[fullDF$n=='Chisq',]$Stat<-2
 fullDF$Stat<-as.factor(fullDF$Stat)
-fullDF$kappa<-factor(fullDF$kappa,labels=c("kappa == 0.5","kappa == 8.0"))
+fullDF$kappa<-factor(fullDF$kappa,labels=c("kappa == 2","kappa == 8"))
 	
 
 qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("cayley",'All'),],colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,15))+
