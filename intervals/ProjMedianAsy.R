@@ -152,11 +152,11 @@ fullDF$Stat<-as.factor(fullDF$Stat)
 fullDF$kappa<-factor(fullDF$kappa,labels=c("kappa == 2","kappa == 8"))
 	
 
-qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("cayley",'All'),],colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,15))+
+qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("cayley",'All'),],colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,10))+
 	scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"))+
-	facet_grid(.~nus,labeller=label_parsed)+theme_bw()+coord_fixed(ratio=15/1)+
+	facet_grid(.~kappa,labeller=label_parsed)+theme_bw()+
 	scale_size_discrete(range=c(0.75,1.5),guide='none')+
-	guides(colour=guide_legend(label.hjust=0))
+	guides(colour=guide_legend(label.hjust=0))+coord_equal(10)
 	
 #setwd("/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 #ggsave("CayleyECDFMedian.pdf",height=5,width=8)
@@ -165,7 +165,7 @@ qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("cayley",'All'),],colour=n,lwd=Sta
 	
 qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("fisher",'All'),],colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,10))+
 	scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100","n=300"))+
-	facet_grid(.~kappa,labeller=label_parsed)+theme_bw()+coord_fixed(ratio=15/1)+
+	facet_grid(.~kappa,labeller=label_parsed)+theme_bw()+
 	scale_size_discrete(range=c(0.75,1.5),guide='none')+
 	guides(colour=guide_legend(label.hjust=0))+coord_equal(10)
 	
@@ -183,7 +183,7 @@ qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("mises",'All'),],colour=n,lwd=Stat
 #setwd("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 #ggsave("vonMisesECDF.pdf",height=5,width=8)
 
-	
+#write.csv(fullDF,"medianECDF.csv")
 
 ###########################
 ###########################
@@ -446,18 +446,19 @@ for(j in 1:simSize){
 cRateM<-melt(coverRate,id=c('Dist','nus','n'))
 colnames(cRateM)[4]<-'Method'
 
-levels(cRateM$Method)<-c("NTH(C&R)","B(Z&N)")
+levels(cRateM$Method)<-c("Theory","Bootstrap")
 
 levels(cRateM$Dist)<-c("Cayley","matrix~~Fisher")
 cRateM$nu<-factor(cRateM$nu,labels=c("nu == 0.25","nu == 0.5","nu == 0.75"))
 
 
+#if can't find "unit" run library(grid)
 qplot(n,value,data=cRateM,colour=Method,group=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
 	facet_grid(Dist~nu,labeller=label_parsed)+
 	geom_hline(yintercept=(1-alp)*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
 	scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+theme(panel.margin=unit(0.5,'lines'))
 
-#ggsave("C:/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB1000Median.pdf",width=7,height=4.5)
+#ggsave("/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB10000Median.pdf",width=7,height=4.5)
 #ggsave("CoverRatesB1000Median.pdf",width=5,height=4)
 
 #library(xtable)
