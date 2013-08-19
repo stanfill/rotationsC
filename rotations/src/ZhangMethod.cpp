@@ -1,6 +1,6 @@
 #include <RcppArmadillo.h>   
 #include <Rcpp.h>
-#include "../inst/include/rotations2.h"
+#include "../inst/include/rotations.h"
 using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]] 
 // [[Rcpp::interfaces(r, cpp)]]
@@ -173,7 +173,7 @@ NumericVector zhangQ4(NumericMatrix Q, int m){
 	
 	NumericMatrix QstarRcpp;
 	
-	NumericVector Qhat = as<NumericVector>(wrap(rotations2::meanQ4C(QSamp)));
+	NumericVector Qhat = as<NumericVector>(wrap(rotations::meanQ4C(QSamp)));
 	//NumericVector Qhat = as<NumericVector>(wrap(meanQ4C(QSamp)));
 	
 	for(j=0;j<m;j++){
@@ -195,7 +195,7 @@ NumericVector zhangQ4(NumericMatrix Q, int m){
 			Qstar.row(i) = QSamp.row(samp[i]);		//Copying a matrix row by row produces a bunch of junk messages
 		}																				//so I do it with arma instead of standard Rcpp
 	
-		QhatStar = as<NumericVector>(wrap(rotations2::meanQ4C(Qstar))); //Both of these functinos return arma variables so
+		QhatStar = as<NumericVector>(wrap(rotations::meanQ4C(Qstar))); //Both of these functinos return arma variables so
 		//QhatStar = as<NumericVector>(wrap(meanQ4C(Qstar)));
 		QstarRcpp = as<NumericMatrix>(wrap(Qstar));					//They need to be converted to Rcpp type
 		
@@ -265,7 +265,7 @@ NumericVector zhangMedianC(arma::mat Rs, int m){
   //GetRNGstate();PutRNGstate();
   
   int n = Rs.n_rows, i,j;
-  arma::mat Shat = rotations2::medianSO3C(Rs,2000,1e-5);
+  arma::mat Shat = rotations::medianSO3C(Rs,2000,1e-5);
   arma::mat Rstar(n,9);
   arma::mat Sstar(3,3);
   NumericVector cdstar(2);
@@ -295,7 +295,7 @@ NumericVector zhangMedianC(arma::mat Rs, int m){
 			Rstar.row(i) = Rs.row(samp[i]);		//Copying a matrix row by row produces a bunch of junk messages
 		}	
     
-    Sstar = rotations2::medianSO3C(Rstar,2000,1e-5);
+    Sstar = rotations::medianSO3C(Rstar,2000,1e-5);
     
     cdstar = cdfunsCSO3(Rstar,Sstar);
     hsqrtMedian = rdistSO3C(Shat,Sstar);

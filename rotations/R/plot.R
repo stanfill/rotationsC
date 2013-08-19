@@ -126,8 +126,8 @@ pointsXYZ <- function(data, center, column=1) {
 #' @param to_range show only part of the globe that is in range of the data?
 #' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "geom.mean", "geom.median"
 #' @param label_points  vector of labels
-#' @param mean_regions character vector to specify which of the three confidence regions to show for the projected mean.  Possibilities are "all", "prentice", "chang", "zhang"
-#' @param median_regions character vector to specify which of the three confidence regions to show for the projected median.  Possibilities are "all", "chang", "zhang"
+#' @param mean_regions character vector to specify which of the three confidence regions to show for the projected mean.  Possibilities are "all", "eigenvalue theory", "moment theory", "moment bootstrap"
+#' @param median_regions character vector to specify which of the three confidence regions to show for the projected median.  Possibilities are "all", "theory", "bootstrap"
 #' @param alp alpha level to be used for confidence regions
 #' @param m number of bootstrap replicates to use in Zhang confidence region
 #' @param ... parameters passed onto the points layer
@@ -225,10 +225,10 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 	if (!is.null(median_regions)) {
 		changr <- zhangr  <- NA
 		if(any(median_regions%in%c('all','All'))) median_regions<-c("bootstrap","theory")
-		if (length(grep("ootstrap", median_regions)) >0)    changr<-region(Rs,method='moment',type='bootstrap',estimator='median',alp=alp)
-		if (length(grep("heory", median_regions)) > 0)    zhangr<-region(Rs,method='moment',type='theory',estimator='median',alp=alp,m=m)
+		if (length(grep("heory", median_regions)) >0)    changr<-region(Rs,method='moment',type='theory',estimator='median',alp=alp)
+		if (length(grep("ootstrap", median_regions)) > 0)    zhangr<-region(Rs,method='moment',type='bootstrap',estimator='median',alp=alp,m=m)
 		
-		MedRegions<-data.frame(X1=c(changr,zhangr),Meth=c('Moment Bootstrap','Moment Theory'))
+		MedRegions<-data.frame(X1=c(changr,zhangr),Meth=c('Moment Theory','Moment Bootstrap'))
 		MedRegions <- na.omit(MedRegions)
 		
 		cisp.boot<-NULL

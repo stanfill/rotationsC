@@ -1,6 +1,6 @@
 #include <RcppArmadillo.h>   
 #include <Rcpp.h>
-#include "../inst/include/rotations2.h"
+#include "../inst/include/rotations.h"
 using namespace Rcpp;
 
 // [[Rcpp::depends(RcppArmadillo)]] 
@@ -115,7 +115,7 @@ arma::vec fisherBootC(arma::mat Qs, int m, bool symm){
   int n = Qs.n_rows;
   int i , j , numUn;
   
-  arma::rowvec qhat = rotations2::meanQ4C(Qs);
+  arma::rowvec qhat = rotations::meanQ4C(Qs);
 	//arma::rowvec qhat = meanQ4C(Qs);
 
   arma::vec Tm(m);

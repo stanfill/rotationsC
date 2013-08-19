@@ -28,12 +28,12 @@
 
   \item{mean_regions}{character vector to specify which of
   the three confidence regions to show for the projected
-  mean.  Possibilities are "all", "prentice", "chang",
-  "zhang"}
+  mean.  Possibilities are "all", "eigenvalue theory",
+  "moment theory", "moment bootstrap"}
 
   \item{median_regions}{character vector to specify which
   of the three confidence regions to show for the projected
-  median.  Possibilities are "all", "chang", "zhang"}
+  median.  Possibilities are "all", "theory", "bootstrap"}
 
   \item{alp}{alpha level to be used for confidence regions}
 
