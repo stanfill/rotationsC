@@ -69,4 +69,9 @@ qplot(xpos,ypos,colour=dE,data=loc.stats,size=I(5))
 
 badEgg<-loc.stats[which.max(loc.stats$dE),]
 badRots<-as.SO3(data.matrix(dat.out[dat.out$location==698,3:11]))
-plot(badRots,center=median(badRots),show_estimates=c('proj.mean','proj.median'))
+#badRots<-as.SO3(badRots[-4,])
+plot(badRots,center=median(badRots),show_estimates=c('proj.mean','proj.median'),median_regions='bootstrap',mean_regions='moment bootstrap',alp=.1)
+plot(badRots,center=median(badRots),show_estimates=c('proj.mean','proj.median'),median_regions='bootstrap',mean_regions='moment bootstrap',alp=.1,col=2)
+plot(badRots,center=median(badRots),show_estimates=c('proj.mean','proj.median'),median_regions='bootstrap',mean_regions='moment bootstrap',alp=.1,col=3)
+
+
