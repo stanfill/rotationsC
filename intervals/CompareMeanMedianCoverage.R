@@ -6,7 +6,7 @@
 
 library(plyr)
 library(reshape2)
-library(rotations2)
+library(rotations)
 sourceCpp("intervals/ZhangMethod.cpp")  
 
 #ZhangMethod.cpp contains the functions that will compute c/d and perform the zhang bootstrap
@@ -101,7 +101,7 @@ compareRate<-ddply(coverCompare,.(Dist,nus,n),summarize,MeanCCover=100*sum(MeanC
 cRateM<-melt(compareRate,id=c('Dist','nus','n'))
 colnames(cRateM)[4]<-'Method'
  
-levels(cRateM$Method)<-c("Mean(C&R)","Mean(Z&N)","Median(C&R)","Median(Z&N)")
+levels(cRateM$Method)<-c("Mean(Theory)","Mean(Boot.)","Median(Theory)","Median(Boot.")
  
 levels(cRateM$Dist)<-c("Cayley","matrix~~Fisher")
 cRateM$nu<-factor(cRateM$nu,labels=c("nu == 0.25","nu == 0.5","nu == 0.75"))
