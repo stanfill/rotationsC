@@ -198,7 +198,7 @@ AvarTilde<-rep(0,B)
 
 for(i in 1:B){
 
-	rs<-rvmises(n,kap)
+	rs<-rcayley(n,kap)
 	cosrs<-cos(rs)
 	cos2rs<-cos(rs)^2
 
