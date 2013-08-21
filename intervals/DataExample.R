@@ -15,6 +15,7 @@ qplot(Subject,Replicate,data=drilldata)+facet_grid(Joint~Position,labeller=label
 ############
 #Try the nickel data of Bingham's Disertation
 ############
+library(rotations)
 library(ggplot2)
 library(plyr)
 library(reshape2)
@@ -79,20 +80,31 @@ qplot(xpos,ypos,colour=dE,data=loc.stats,size=I(5))
 
 #Find the location where the mean and median disagree most, this is likely a "contaminated" sample
 ex<-loc.stats[which.max(loc.stats$dE),]$location 
+
 #Randomly select a location with enough spread to be interesting
-possibles<-which(loc.stats$dE>.1)
-ex<-loc.stats[sample(possibles,1),]$location
+possibles<-which(loc.stats$dE>.1 & loc.stats$dE<.15)
+ex<-loc.stats[sample(possibles,1),]$location #1539 has two clusters of size 9 and 5
   
 exRots<-as.SO3(data.matrix(dat.out[dat.out$location==ex,3:11]))
 #exRots<-as.SO3(exRots[-4,]) #potentially remove the observation that isn't stricly a rotation
-p1<-plot(exRots,center=median(exRots),show_estimates=c('proj.mean','proj.median'),median_regions='bootstrap',mean_regions='moment bootstrap',alp=.1)
-p2<-plot(exRots,center=median(exRots),show_estimates=c('proj.mean','proj.median'),median_regions='bootstrap',mean_regions='moment bootstrap',alp=.1,col=2)
-p3<-plot(exRots,center=median(exRots),show_estimates=c('proj.mean','proj.median'),median_regions='bootstrap',mean_regions='moment bootstrap',alp=.1,col=3)
+p1<-plot(exRots,center=median(exRots),show_estimates=c('proj.mean','proj.median'),median_regions='bootstrap',mean_regions='moment bootstrap',alp=.1,m=300)
+p2<-plot(exRots,center=median(exRots),show_estimates=c('proj.mean','proj.median'),median_regions='bootstrap',mean_regions='moment bootstrap',alp=.1,m=300,col=2)
+p3<-plot(exRots,center=median(exRots),show_estimates=c('proj.mean','proj.median'),median_regions='bootstrap',mean_regions='moment bootstrap',alp=.1,m=300,col=3)
 
-legend <- g_legend(p1)
-
-setwd("/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 grid.arrange(p1+theme(legend.position='none'),p2+theme(legend.position='none'),p3+theme(legend.position='none'),ncol=3)
+
+#manually zoom-in on the interesting area
+legend <- g_legend(p1) #pull the legend off one so it can be added to grid.arrange seperately (if desired)
 grid.arrange(p1+theme(legend.position='none'),p2+theme(legend.position='none'),p3+theme(legend.position='none'),
              legend,ncol=4)
 
+
+lims<-0.75
+p1<-p1+xlim(c(-lims,lims))+ylim(c(-lims,lims))
+p1
+p2<-p2+xlim(c(-lims,lims))+ylim(c(-lims,lims))
+p2
+p3<-p3+xlim(c(-lims,lims))+ylim(c(-lims,lims))
+p3
+setwd("/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
+#Can't use ggsave, need to use 'Export' function

@@ -101,7 +101,7 @@ compareRate<-ddply(coverCompare,.(Dist,nus,n),summarize,MeanCCover=100*sum(MeanC
 cRateM<-melt(compareRate,id=c('Dist','nus','n'))
 colnames(cRateM)[4]<-'Method'
  
-levels(cRateM$Method)<-c("Mean(Theory)","Mean(Boot.)","Median(Theory)","Median(Boot.")
+levels(cRateM$Method)<-c("Mean(Theory)","Mean(Boot.)","Median(Theory)","Median(Boot.)")
  
 levels(cRateM$Dist)<-c("Cayley","matrix~~Fisher")
 cRateM$nu<-factor(cRateM$nu,labels=c("nu == 0.25","nu == 0.5","nu == 0.75"))
