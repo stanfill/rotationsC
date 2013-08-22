@@ -113,8 +113,15 @@ qplot(n,value,data=cRateM,colour=Method,group=Method,ylab='Coverage Rate (%)',xl
  	facet_grid(Dist~nu,labeller=label_parsed)+
  	geom_hline(yintercept=(1-alp)*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
  	scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+theme(panel.margin=unit(0.5,'lines'))
-
 #ggsave("/Users/stanfill/Dropbox/Thesis/Intervals/Figures/MeanMedianCoverCompare.pdf",width=8,height=6)
+
+qplot(n,value,data=cRateM,col=Method,linetype=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
+  scale_linetype_manual(values = rep(c("dashed","solid"),each=2))+
+  scale_colour_manual(values = rep(c("gray50","black"),2))+
+  facet_grid(Dist~nu,labeller=label_parsed)+
+  geom_hline(yintercept=(1-alp)*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
+  scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+theme(panel.margin=unit(0.5,'lines'))
+#ggsave("/Users/stanfill/Dropbox/Thesis/Intervals/Figures/MeanMedianCoverCompareBW.pdf",width=8,height=6)
 
 
 #####################
