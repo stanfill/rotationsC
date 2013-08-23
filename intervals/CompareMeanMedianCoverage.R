@@ -101,7 +101,7 @@ compareRate<-ddply(coverCompare,.(Dist,nus,n),summarize,MeanCCover=100*sum(MeanC
 cRateM<-melt(compareRate,id=c('Dist','nus','n'))
 colnames(cRateM)[4]<-'Method'
  
-levels(cRateM$Method)<-c("Mean(Theory)","Mean(Boot.)","Median(Theory)","Median(Boot.)")
+levels(cRateM$Method)<-c("Mean(NTH)","Mean(Boot.)","Median(NTH)","Median(Boot.)")
  
 levels(cRateM$Dist)<-c("Cayley","matrix~~Fisher")
 cRateM$nu<-factor(cRateM$nu,labels=c("nu == 0.25","nu == 0.5","nu == 0.75"))
@@ -120,7 +120,8 @@ qplot(n,value,data=cRateM,col=Method,linetype=Method,ylab='Coverage Rate (%)',xl
   scale_colour_manual(values = rep(c("gray50","black"),2))+
   facet_grid(Dist~nu,labeller=label_parsed)+
   geom_hline(yintercept=(1-alp)*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
-  scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+theme(panel.margin=unit(0.5,'lines'))
+  scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+
+  theme(panel.margin=unit(0.5,'lines'),legend.key.width=unit(3,"line"))  
 #ggsave("/Users/stanfill/Dropbox/Thesis/Intervals/Figures/MeanMedianCoverCompareBW.pdf",width=8,height=6)
 
 

@@ -109,7 +109,7 @@ resultsDf
 resM<-melt(resultsDf,id=c('Dist','nu','n'))
 colnames(resM)[4]<-'Method'
 #levels(resM$Method)[3:4]<-c("Nordman Normal","Nordman Bootstrap")
-levels(resM$Method)<-c("NTH(Eigen)","B(Eigen)","NTH(Moment)","B(Moment)")
+levels(resM$Method)<-c("Eigen(NTH)","Eigen(Boot.)","Moment(NTH)","Moment(Boot.)")
 
 levels(resM$Dist)<-c("Cayley","matrix~~Fisher","circular-von~~Mises")
 resM$nu<-factor(resM$nu,labels=c("nu == 0.25","nu == 0.50","nu == 0.75"))
@@ -128,8 +128,9 @@ qplot(n,value,data=resMnoCVM,col=Method,linetype=Method,ylab='Coverage Rate (%)'
   scale_colour_manual(values = rep(c("gray50","black"),2))+
   facet_grid(Dist~nu,labeller=label_parsed)+
   geom_hline(yintercept=alp*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
-  scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()
-ggsave("/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB10000NoCVM.pdf",width=8,height=6)
+  scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+
+  theme(legend.key.width=unit(3,"line"))  
+#ggsave("/Users/stanfill/Dropbox/Thesis/Intervals/Figures/CoverRatesB10000NoCVM.pdf",width=8,height=6)
 
 
 ###############################################################
