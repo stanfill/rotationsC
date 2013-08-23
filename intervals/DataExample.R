@@ -78,6 +78,11 @@ loc.stats$ypos <- ypos[loc.stats$location]
 #Plot grain map
 qplot(xpos,ypos,colour=dE,data=loc.stats,size=I(5))
 
+#####################
+#### Find grain boundries, locations where 
+#### mean and median disagree the most
+#####################
+
 #Find the location where the mean and median disagree most, this is likely a "contaminated" sample
 ex<-loc.stats[which.max(loc.stats$dE),]$location 
 
@@ -98,7 +103,6 @@ legend <- g_legend(p1) #pull the legend off one so it can be added to grid.arran
 grid.arrange(p1+theme(legend.position='none'),p2+theme(legend.position='none'),p3+theme(legend.position='none'),
              legend,ncol=4)
 
-
 lims<-0.75
 p1<-p1+xlim(c(-lims,lims))+ylim(c(-lims,lims))
 p1
@@ -108,3 +112,41 @@ p3<-p3+xlim(c(-lims,lims))+ylim(c(-lims,lims))
 p3
 setwd("/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 #Can't use ggsave, need to use 'Export' function
+
+#####################
+#### Randomly select locations within grains to
+#### estimate witin grain precision
+#####################
+
+#Select a grain by finding locations with similar dE1 values
+grain1<-loc.stats[loc.stats$dE1<2.55 & loc.stats$dE1>2.45 & loc.stats$n>10,]
+grain1Locs<-grain1$location
+qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain1Locs,])#where one grain map is grain 1?
+
+
+#That didn't work, try to find grains based on xpos ypos
+grain1<-loc.stats[loc.stats$ypos>5 & loc.stats$ypos<6,]
+grain1<-grain1[grain1$xpos>8.5 & grain1$xpos<11,]
+grain1<-grain1[grain1$dE1>2.4 &grain1$dE1<2.5,]
+grain1Locs<-grain1$location
+
+#where one grain map is grain 1?
+qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain1Locs,],xlim=c(0,12.5),ylim=c(0,10))
+
+#take the first rep because it is the most reliable
+samp<-dat.out[dat.out$location%in%grain1Locs & dat.out$rep==1,]
+sampRots<-as.SO3(data.matrix(samp[,3:11]))
+plot(sampRots,center=median(sampRots),median_regions="all",alp=.1) 
+plot(sampRots,center=median(sampRots),median_regions="all",alp=.1,col=2) 
+plot(sampRots,center=median(sampRots),median_regions="all",alp=.1,col=3) 
+
+region(sampRots,method='moment',type='theory',estimator='median',alp=.1)*180/pi
+region(sampRots,method='moment',type='bootstrap',estimator='median',alp=.1)*180/pi
+
+plot(sampRots,center=mean(sampRots),mean_regions="all",alp=.1) 
+plot(sampRots,center=mean(sampRots),mean_regions="all",alp=.1,col=2) 
+plot(sampRots,center=mean(sampRots),mean_regions="all",alp=.1,col=3) 
+
+region(sampRots,method='moment',type='theory',estimator='mean',alp=.1)*180/pi
+region(sampRots,method='moment',type='bootstrap',estimator='mean',alp=.1)*180/pi
+
