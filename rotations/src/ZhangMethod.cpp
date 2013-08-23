@@ -204,8 +204,9 @@ NumericVector zhangQ4(NumericMatrix Q, int m){
 		QhatStarMat = as<NumericMatrix>(wrap(QhatStar)); /*QhatStar needs to be a matrix to be used in RdistC*/
 		sqrth = oneRdistC(QhatStarMat,Qhat);
 		
-		if(cdstar[0]<0.00001){
+		if(cdstar[0]<0.0000001){
 			printf("c is too small");
+      cdstar[0]=0.0000001;
 		}
 		
 		testStat[j] = 2*n*pow(cdstar[1],2)*pow(sqrth,2)/cdstar[0];

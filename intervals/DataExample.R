@@ -113,6 +113,9 @@ p3
 setwd("/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
 #Can't use ggsave, need to use 'Export' function
 
+region(exRots,method='moment',type='bootstrap',estimator='median',alp=.1)*180/pi
+region(exRots,method='moment',type='bootstrap',estimator='mean',alp=.1)*180/pi
+
 #####################
 #### Randomly select locations within grains to
 #### estimate witin grain precision
@@ -124,29 +127,29 @@ grain1Locs<-grain1$location
 qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain1Locs,])#where one grain map is grain 1?
 
 
-#That didn't work, try to find grains based on xpos ypos
+#That didn't work, try to find grains based on xpos ypos & dE1
 grain1<-loc.stats[loc.stats$ypos>5 & loc.stats$ypos<6,]
 grain1<-grain1[grain1$xpos>8.5 & grain1$xpos<11,]
 grain1<-grain1[grain1$dE1>2.4 &grain1$dE1<2.5,]
 grain1Locs<-grain1$location
-
-#where one grain map is grain 1?
 qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain1Locs,],xlim=c(0,12.5),ylim=c(0,10))
 
 #take the first rep because it is the most reliable
 samp<-dat.out[dat.out$location%in%grain1Locs & dat.out$rep==1,]
+nSamp<-nrow(samp)
+#sampRots<-as.SO3(data.matrix(samp[sample(1:nSamp,10,replace=F),3:11]))
 sampRots<-as.SO3(data.matrix(samp[,3:11]))
 plot(sampRots,center=median(sampRots),median_regions="all",alp=.1) 
 plot(sampRots,center=median(sampRots),median_regions="all",alp=.1,col=2) 
 plot(sampRots,center=median(sampRots),median_regions="all",alp=.1,col=3) 
 
-region(sampRots,method='moment',type='theory',estimator='median',alp=.1)*180/pi
-region(sampRots,method='moment',type='bootstrap',estimator='median',alp=.1)*180/pi
+region(sampRots,method='moment',type='theory',estimator='median',alp=.05)*180/pi
+region(sampRots,method='moment',type='bootstrap',estimator='median',alp=.05,m=300)*180/pi
 
 plot(sampRots,center=mean(sampRots),mean_regions="all",alp=.1) 
 plot(sampRots,center=mean(sampRots),mean_regions="all",alp=.1,col=2) 
 plot(sampRots,center=mean(sampRots),mean_regions="all",alp=.1,col=3) 
 
-region(sampRots,method='moment',type='theory',estimator='mean',alp=.1)*180/pi
-region(sampRots,method='moment',type='bootstrap',estimator='mean',alp=.1)*180/pi
+region(sampRots,method='moment',type='theory',estimator='mean',alp=.05)*180/pi
+region(sampRots,method='moment',type='bootstrap',estimator='mean',alp=.05)*180/pi
 
