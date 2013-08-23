@@ -46,6 +46,23 @@ print.SO3<-function(Rs,...){
   }
 }
 
+#' @S3method print Q4
+#' @method print Q4
+
+print.Q4<-function(Qs,...){
+  
+  len<-length(Qs)
+  
+  if(len%%4!=0)
+    stop("Input is not of the correct length.")
+  
+  if(len==9){
+    print.default(as.Q4(matrix(Qs,1,4)))
+  }else{
+    print.default(Qs)
+  }
+}
+
 #' Rotational Distance
 #'
 #' Calculate the Euclidean or Riemannian distance between two rotations
