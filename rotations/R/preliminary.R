@@ -29,6 +29,22 @@ arsample.unif <- function(f, M, ...) {
 }
 
 
+#' @S3method print SO3
+#' @method print SO3
+
+print.SO3<-function(Rs,...){
+  
+  len<-length(Rs)
+  
+  if(len%%9!=0)
+    stop("Input is not of the correct length.")
+  
+  if(len==9){
+    print.default(as.SO3(matrix(Rs,3,3)))
+  }else{
+    print.default(Rs)
+  }
+}
 
 #' Rotational Distance
 #'
