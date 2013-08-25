@@ -1,5 +1,6 @@
 useDynLib(rotations)
 S3method(Q4,default)
+S3method(Q4,SO3)
 S3method(SO3,Q4)
 S3method(SO3,default)
 S3method(angle,Q4)

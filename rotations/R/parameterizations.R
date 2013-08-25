@@ -106,8 +106,8 @@ Q4.default <- function(U,theta=NULL){
 }
 
 #' @rdname Q4
-#' @method Q4 default
-#' @S3method Q4 default
+#' @method Q4 SO3
+#' @S3method Q4 SO3
 #' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3
 #' @export
 

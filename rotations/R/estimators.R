@@ -136,7 +136,7 @@ median.SO3 <- function(Rs, type = "projected", epsilon = 1e-05, maxIter = 2000) 
       
   }
     
-  class(S)<-"SO3"
+	class(S)<-"SO3"
   return(S)
 }
 
