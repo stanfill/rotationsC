@@ -444,7 +444,7 @@ fisheretal.Q4<-function(Qs,alp=NULL,boot=T,m=300,symm=T){
 
 optimAxis<-function(r,Qs,cut,symm){
 	
-	Shat<-Q4(axis2(mean(Qs)),r)
+	Shat<-Q4(axis(mean(Qs)),r)
 	if(symm){
 		Tm<-fisherAxisC(Qs,Shat)
 	}else{

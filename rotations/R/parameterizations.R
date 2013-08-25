@@ -115,7 +115,7 @@ Q4.SO3 <- function(R) {
   
 	R<-formatSO3(R)
  	theta <- angle(R)
- 	u <- axis2(R)
+ 	u <- axis(R)
  	x <- Q4(u,theta)
 
   return(x)
@@ -270,7 +270,7 @@ SO3.Q4<-function(q){
   
   theta<-angle(q)
   
-  u<-axis2(q)
+  u<-axis(q)
   
   return(SO3(u, theta)) 
 }

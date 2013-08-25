@@ -153,7 +153,7 @@ dist.Q4 <- function(Q1, Q2=id.Q4 ,method='projected', p=1) {
 #'  
 #' @param Rs,Qs rotation matrix
 #' @return angle of rotation
-#' @seealso \code{\link{axis2}}
+#' @seealso \code{\link{axis}}
 #' @export
 
 angle<-function(Rs){
@@ -205,15 +205,15 @@ angle.Q4 <- function(Qs){
 #' @seealso \code{\link{angle}}
 #' @export
 
-axis2<-function(R){
-  UseMethod("axis2")
+axis<-function(R){
+  UseMethod("axis")
 }
 
-#' @rdname axis2
-#' @method axis2 SO3
-#' @S3method axis2 SO3
+#' @rdname axis
+#' @method axis SO3
+#' @S3method axis SO3
 
-axis2.SO3<-function(R){
+axis.SO3<-function(R){
   
 	R<-formatSO3(R)
   n<-nrow(R)
@@ -229,11 +229,11 @@ axis2.SO3<-function(R){
 
 }
 
-#' @rdname axis2
-#' @method axis2 Q4
-#' @S3method axis2 Q4
+#' @rdname axis
+#' @method axis Q4
+#' @S3method axis Q4
 
-axis2.Q4 <- function(q){
+axis.Q4 <- function(q){
   
   q<-formatQ4(q)
   theta<-angle(q)
