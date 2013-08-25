@@ -40,9 +40,9 @@ print.SO3<-function(Rs,...){
     stop("Input is not of the correct length.")
   
   if(len==9){
-    print.default(as.SO3(matrix(Rs,3,3)))
+    print.default(as.SO3(matrix(Rs,3,3)),...)
   }else{
-    print.default(Rs)
+    print.default(Rs,...)
   }
 }
 
@@ -56,10 +56,11 @@ print.Q4<-function(Qs,...){
   if(len%%4!=0)
     stop("Input is not of the correct length.")
   
-  if(len==9){
-    print.default(as.Q4(matrix(Qs,1,4)))
+  if(len==4){
+    print.default(bquote(.(Qs[1])+.(Qs[2])*i+.(Qs[3])*j+.(Qs[4])*k),...)
   }else{
-    print.default(Qs)
+    colnames(Qs)<-c("Re","i","j","k")
+    print.default(Qs,...)
   }
 }
 
