@@ -59,7 +59,7 @@ print.Q4<-function(Qs,...){
   if(len==4){
     print.default(bquote(.(Qs[1])+.(Qs[2])*i+.(Qs[3])*j+.(Qs[4])*k),...)
   }else{
-    colnames(Qs)<-c("Re","i","j","k")
+    colnames(Qs)<-c("Real","i","j","k")
     print.default(Qs,...)
   }
 }

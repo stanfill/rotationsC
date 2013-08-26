@@ -110,8 +110,8 @@ region(MedSamp,method='moment',type='bootstrap',estimator='median',alp=.01)*180/
 
 MeanSamp<-as.SO3(data.matrix(avg.scans[,11:19]))
 mean(MeanSamp)
-region(MeanSamp,method='moment',type='theory',estimator='mean',alp=.05)*180/pi
-region(MeanSamp,method='moment',type='bootstrap',estimator='mean',alp=.05)*180/pi
+region(MeanSamp,method='moment',type='theory',estimator='mean',alp=.01)*180/pi
+region(MeanSamp,method='moment',type='bootstrap',estimator='mean',alp=.01)*180/pi
 
 #####################
 #### Estimate grain-specific central direction based on entire
@@ -140,7 +140,10 @@ grain.ests <- ddply(avg.scans, .(grain), function(x) {
 gmeans<-as.SO3(data.matrix(grain.ests[,2:10]))
 gmedians<-as.SO3(data.matrix(grain.ests[,11:19]))
 
+region(gmeans,method='moment',type='theory',estimator='mean',alp=.01)*180/pi/sqrt(3383)
 plot(gmeans,center=mean(gmeans),mean_regions='moment theory',alp=.1)
+
+region(gmedians,method='moment',type='theory',estimator='median',alp=.01)*180/pi/sqrt(3383)
 plot(gmedians,center=median(gmedians),median_regions='moment theory',alp=.1)
 
 #####################
