@@ -86,7 +86,9 @@ fit2<-kmeans(medianDF$dE1,8)
 loc.stats$grain<-fit2$cluster
 qplot(xpos,ypos,colour=grain,data=loc.stats,size=I(5)) #make sure this matches the dE1 grain-map
 
-#randomly sample 20 observations from each grain
+for(i in 1:length(dat.ests)){
+  dat.ests[[i]]$grain<-loc.stats[loc.stats$location==dat.ests[[i]]$location,]$grain
+}
 
 #####################
 #### Estimate central direction based on entire
@@ -102,8 +104,8 @@ nE<-nrow(avg.scans)
 
 MedSamp<-as.SO3(data.matrix(avg.scans[,2:10]))
 median(MedSamp)
-region(MedSamp,method='moment',type='theory',estimator='median',alp=.05)*180/pi
-region(MedSamp,method='moment',type='bootstrap',estimator='median',alp=.05)*180/pi
+region(MedSamp,method='moment',type='theory',estimator='median',alp=.01)*180/pi
+region(MedSamp,method='moment',type='bootstrap',estimator='median',alp=.01)*180/pi
 
 
 MeanSamp<-as.SO3(data.matrix(avg.scans[,11:19]))
@@ -116,23 +118,31 @@ region(MeanSamp,method='moment',type='bootstrap',estimator='mean',alp=.05)*180/p
 #### data set, average over scans first
 #####################
 
-grain.ests <- dlply(dat.out, .(grain), function(x) {
-  res <- na.omit(x)
-  res <- subset(res, check==TRUE)
+#add grain identifier to dat.ests
+avg.scans$grain<-1
+avg.scans[avg.scans$location%in%loc.stats[loc.stats$grain==2,]$location,]$grain<-2
+avg.scans[avg.scans$location%in%loc.stats[loc.stats$grain==3,]$location,]$grain<-3
+avg.scans[avg.scans$location%in%loc.stats[loc.stats$grain==4,]$location,]$grain<-4
+avg.scans[avg.scans$location%in%loc.stats[loc.stats$grain==5,]$location,]$grain<-5
+avg.scans[avg.scans$location%in%loc.stats[loc.stats$grain==6,]$location,]$grain<-6
+avg.scans[avg.scans$location%in%loc.stats[loc.stats$grain==7,]$location,]$grain<-7
+avg.scans[avg.scans$location%in%loc.stats[loc.stats$grain==8,]$location,]$grain<-8
+
+
+grain.ests <- ddply(avg.scans, .(grain), function(x) {
   
-  n <- nrow(res) 
-  SE2  <- SE1  <- NULL
-  if (n == 1) {
-    R <- as.SO3(matrix(unlist(res[1,3:11]), 3, 3))
-    SE2  <- SE1  <- R
-  } else if (n > 0) {
-    rots <- as.SO3(as.matrix(res[,3:11]))
-    SE2 <- mean(rots)
-    SE1 <- median(rots)
-  }
+  SE1<-matrix(median(as.SO3(data.matrix(x[,2:10]))),1,9)
+  SE2<-matrix(median(as.SO3(data.matrix(x[,11:19]))),1,9)
   
   data.frame(SE2=SE2, SE1=SE1)
 })
+
+gmeans<-as.SO3(data.matrix(grain.ests[,2:10]))
+gmedians<-as.SO3(data.matrix(grain.ests[,11:19]))
+
+plot(gmeans,center=mean(gmeans),mean_regions='moment theory',alp=.1)
+plot(gmedians,center=median(gmedians),median_regions='moment theory',alp=.1)
+
 #####################
 #### Find grain boundries, locations where 
 #### mean and median disagree the most
