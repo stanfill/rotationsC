@@ -19,7 +19,7 @@
 
   \method{Q4}{default} (U, theta = NULL)
 
-  \method{Q4}{default} (R)
+  \method{Q4}{SO3} (R)
 }
 \arguments{
   \item{q}{object to be coerced or tested}

@@ -29,6 +29,6 @@
   the reference coordinate system is the identity.
 }
 \seealso{
-  \code{\link{axis2}}
+  \code{\link{axis}}
 }
 

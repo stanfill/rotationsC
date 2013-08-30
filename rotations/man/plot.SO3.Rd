@@ -28,8 +28,8 @@
 
   \item{mean_regions}{character vector to specify which of
   the three confidence regions to show for the projected
-  mean.  Possibilities are "all", "eigenvalue theory",
-  "moment theory", "moment bootstrap"}
+  mean.  Possibilities are "all", "eigen theory", "moment
+  theory", "moment bootstrap"}
 
   \item{median_regions}{character vector to specify which
   of the three confidence regions to show for the projected

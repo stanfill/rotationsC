@@ -1,14 +1,14 @@
-#' Confidence Region for Mean Rotation
+#' Confidence Region for Central Orientation
 #'
-#' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean estimator.
+#' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean or median.
 #' The current methods available are due to \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}},
 #' and \code{\link{zhang}}.
 #'
 #' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
-#' @param method Character string specifying which type of interval is required, "eigenvalue" or "moment" based theory
+#' @param method Character string specifying which type of interval to report, "eigen" or "moment" based theory
 #' @param type Characted string, "bootstrap" or "theory" are available
-#' @param estimator Character string either 'mean' or 'median'
-#' @param alp The alpha level desired, e.g. 0.95 or 0.90
+#' @param estimator Character string either "mean" or '"median"
+#' @param alp The alpha level desired, e.g. 0.05 or 0.10
 #' @param ... Additional arguments that are method specific
 #' @return Radius of the confidence region centered at the projected mean
 #' @seealso \code{\link{prentice}} \code{\link{fisheretal}} \code{\link{chang}} \code{\link{zhang}}
@@ -16,10 +16,10 @@
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Rs,method='eigenvalue',type='theory',alp=0.1)
-#' region(Rs,method='eigenvalue',type='bootstrap',alp=0.1,symm=T)
-#' region(Rs,method='moment',type='bootstrap',alp=0.1,m=100)
-#' region(Rs,method='moment',type='theory',alp=0.1)
+#' region(Rs,method='eigen',type='theory',estimator='mean',alp=0.1)
+#' region(Rs,method='eigen',type='bootstrap',estimator='mean',alp=0.1,symm=T)
+#' region(Rs,method='moment',type='bootstrap',estimator='mean',alp=0.1,m=100)
+#' region(Rs,method='moment',type='theory',estimator='mean',alp=0.1)
 
 region<-function(Qs,method, type, estimator,alp,...){
 	UseMethod("region")
@@ -40,7 +40,7 @@ region.Q4<-function(Qs,method, type, estimator,alp=NULL,...){
 		warning("No alpha-level specified, 0.1 used by default.")
 	}
 	
-	if(method%in%c('Eigenvalue','eigenvalue') & type%in%c("Theory","theory")){
+	if(method%in%c('Eigen','eigen') & type%in%c("Theory","theory")){
 		
 		if(estimator!='mean'){
 			stop("The method due to Prentice is only available for the mean estimator.")
@@ -56,7 +56,7 @@ region.Q4<-function(Qs,method, type, estimator,alp=NULL,...){
 		
 		return(r)
 		
-	}else	if(method%in%c('Eigenvalue','eigenvalue') & type%in%c("Bootstrap","bootstrap")){
+	}else	if(method%in%c('Eigen','eigen') & type%in%c("Bootstrap","bootstrap")){
 		
 		if(estimator!='mean'){
 			stop("The method due to Fisher et al. is only available for the mean estimator.")
@@ -95,7 +95,7 @@ region.SO3<-function(Rs,method,type,estimator,alp=NULL,...){
 		warning("No alpha-level specified, 0.1 used by default.")
 	}
 	
-	if(method%in%c('Eigenvalue','eigenvalue') & type%in%c("Theory","theory")){
+	if(method%in%c('Eigen','eigen') & type%in%c("Theory","theory")){
 		
 		if(estimator!='mean'){
 			stop("The method due to Prentice is only available for the mean estimator.")
@@ -111,7 +111,7 @@ region.SO3<-function(Rs,method,type,estimator,alp=NULL,...){
 		
 		return(r)
 		
-	}else if(method%in%c('Eigenvalue','eigenvalue') & type%in%c("Bootstrap","bootstrap")){
+	}else if(method%in%c('Eigen','eigen') & type%in%c("Bootstrap","bootstrap")){
 		
 		if(estimator!='mean'){
 			stop("The method due to Fisher et al. is only available for the mean estimator.")
@@ -152,7 +152,7 @@ region.SO3<-function(Rs,method,type,estimator,alp=NULL,...){
 #' @export
 #' @examples
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-#' region(Qs,method='eigenvalue',type='theory',alp=0.1)
+#' region(Qs,method='eigen',type='theory',alp=0.1)
 
 prentice<-function(Qs,alp){
 	UseMethod("prentice")
@@ -403,7 +403,7 @@ chang.Q4<-function(Qs,estimator,alp=NULL){
 #' @export
 #' @examples
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-#' region(Qs,method='eigenvalue',type='bootstrap',alp=0.1,symm=T)
+#' region(Qs,method='eigen',type='bootstrap',alp=0.1,symm=T)
 
 fisheretal<-function(Qs,alp,boot,m,symm){
 	UseMethod("fisheretal")

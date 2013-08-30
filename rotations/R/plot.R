@@ -126,7 +126,7 @@ pointsXYZ <- function(data, center, column=1) {
 #' @param to_range show only part of the globe that is in range of the data?
 #' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "geom.mean", "geom.median"
 #' @param label_points  vector of labels
-#' @param mean_regions character vector to specify which of the three confidence regions to show for the projected mean.  Possibilities are "all", "eigenvalue theory", "moment theory", "moment bootstrap"
+#' @param mean_regions character vector to specify which of the three confidence regions to show for the projected mean.  Possibilities are "all", "eigen theory", "moment theory", "moment bootstrap"
 #' @param median_regions character vector to specify which of the three confidence regions to show for the projected median.  Possibilities are "all", "theory", "bootstrap"
 #' @param alp alpha level to be used for confidence regions
 #' @param m number of bootstrap replicates to use in Zhang confidence region
@@ -196,8 +196,8 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
   
 	if (!is.null(mean_regions)) {
 	  prentr <- changr <- zhangr  <- NA
-	  if(any(mean_regions%in%c('all','All'))) mean_regions<-c("eigenvalue theory","moment theory","moment bootstrap")
-	  if (length(grep("eigenvalue theory", mean_regions)) > 0) prentr<-region(Rs,estimator='mean',method='eigenvalue',type='theory',alp=alp)[col]
+	  if(any(mean_regions%in%c('all','All'))) mean_regions<-c("eigen theory","moment theory","moment bootstrap")
+	  if (length(grep("eigen theory", mean_regions)) > 0) prentr<-region(Rs,estimator='mean',method='eigen',type='theory',alp=alp)[col]
 	  if (length(grep("moment theory", mean_regions)) >0)    changr<-region(Rs,estimator='mean',method='moment',type='theory',alp=alp)
 	  if (length(grep("moment bootstrap", mean_regions)) > 0)    zhangr<-region(Rs,estimator='mean',method='moment',type='bootstrap',alp=alp,m=m)
 

@@ -2,7 +2,7 @@
 \alias{region}
 \alias{region.Q4}
 \alias{region.SO3}
-\title{Confidence Region for Mean Rotation}
+\title{Confidence Region for Central Orientation}
 \usage{
   region(Qs, method, type, estimator, alp, ...)
 
@@ -18,16 +18,15 @@
   quaternion form (p=4)}
 
   \item{method}{Character string specifying which type of
-  interval is required, "eigenvalue" or "moment" based
-  theory}
+  interval is required, "eigen" or "moment" based theory}
 
   \item{type}{Characted string, "bootstrap" or "theory" are
   available}
 
-  \item{estimator}{Character string either 'mean' or
-  'median'}
+  \item{estimator}{Character string either "mean" or
+  '"median"}
 
-  \item{alp}{The alpha level desired, e.g. 0.95 or 0.90}
+  \item{alp}{The alpha level desired, e.g. 0.05 or 0.10}
 
   \item{...}{Additional arguments that are method specific}
 }
@@ -38,16 +37,16 @@
 \description{
   Find the radius of a \eqn{100(1-\alpha)%} confidence
   region for the central orientation based on the projected
-  mean estimator. The current methods available are due to
+  mean or median. The current methods available are due to
   \code{\link{prentice}}, \code{\link{fisheretal}},
   \code{\link{chang}}, and \code{\link{zhang}}.
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)
-region(Rs,method='eigenvalue',type='theory',alp=0.1)
-region(Rs,method='eigenvalue',type='bootstrap',alp=0.1,symm=T)
-region(Rs,method='moment',type='bootstrap',alp=0.1,m=100)
-region(Rs,method='moment',type='theory',alp=0.1)
+region(Rs,method='eigen',type='theory',estimator='mean',alp=0.1)
+region(Rs,method='eigen',type='bootstrap',estimator='mean',alp=0.1,symm=T)
+region(Rs,method='moment',type='bootstrap',estimator='mean',alp=0.1,m=100)
+region(Rs,method='moment',type='theory',estimator='mean',alp=0.1)
 }
 \references{
   Prentice MJ (1986). "Orientation statistics without
