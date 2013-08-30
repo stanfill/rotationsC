@@ -201,7 +201,7 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 	  if (length(grep("moment theory", mean_regions)) >0)    changr<-region(Rs,estimator='mean',method='moment',type='theory',alp=alp)
 	  if (length(grep("moment bootstrap", mean_regions)) > 0)    zhangr<-region(Rs,estimator='mean',method='moment',type='bootstrap',alp=alp,m=m)
 
-	  Regions<-data.frame(X1=c(prentr,changr,zhangr),Meth=c('Mean\nEigenvalue Theory','Mean\n Moment Theory','Mean\n Moment Bootstrap'))
+	  Regions<-data.frame(X1=c(prentr,changr,zhangr),Meth=c('Mean\nEigenvalue Theory','Mean\nMoment Theory','Mean\nMoment Bootstrap'))
 	  Regions <- na.omit(Regions)
 	  
     cisp.boot<-NULL
@@ -228,7 +228,7 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 		if (length(grep("heory", median_regions)) >0)    changr<-region(Rs,method='moment',type='theory',estimator='median',alp=alp)
 		if (length(grep("ootstrap", median_regions)) > 0)    zhangr<-region(Rs,method='moment',type='bootstrap',estimator='median',alp=alp,m=m)
 		
-		MedRegions<-data.frame(X1=c(changr,zhangr),Meth=c('Medina\nMoment Theory','Median\nMoment Bootstrap'))
+		MedRegions<-data.frame(X1=c(changr,zhangr),Meth=c('Median\nMoment Theory','Median\nMoment Bootstrap'))
 		MedRegions <- na.omit(MedRegions)
 		
 		cisp.boot<-NULL
