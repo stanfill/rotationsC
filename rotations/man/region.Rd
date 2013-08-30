@@ -18,7 +18,7 @@
   quaternion form (p=4)}
 
   \item{method}{Character string specifying which type of
-  interval is required, "eigen" or "moment" based theory}
+  interval to report, "eigen" or "moment" based theory}
 
   \item{type}{Characted string, "bootstrap" or "theory" are
   available}
