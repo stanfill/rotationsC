@@ -265,7 +265,7 @@ zhang.SO3<-function(Rs,estimator,alp=NULL,m=300){
   	stop("Please choose an estimator mean or median.")
   }
   
-	return(rad)
+	return(min(rad,pi))
 }
 
 #' @rdname zhang
@@ -297,7 +297,7 @@ zhang.Q4<-function(Qs,estimator,alp=NULL,m=300){
 	}else{
 		stop("Please choose an estimator mean or median.")
 	}
-	return(rad)
+	return(min(rad,pi))
 }
 
 
@@ -380,7 +380,7 @@ chang.Q4<-function(Qs,estimator,alp=NULL){
 	
 	rad<-sqrt(as.numeric(qchisq(1-alp,3))*cdhat$c/(2*n*cdhat$d^2))
 	
-	return(rad)
+	return(min(rad,pi))
 }
 
 
@@ -438,7 +438,7 @@ fisheretal.Q4<-function(Qs,alp=NULL,boot=T,m=300,symm=T){
 	
 	rsym<-optim(.05,optimAxis,Qs=Qs,cut=qhat,symm=T,method='Brent',lower=0,upper=pi)$par
 	
-	return(rsym)
+	return(min(rad,pi))
 }
 
 

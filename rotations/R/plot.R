@@ -240,7 +240,6 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 			if(col==2)
 				cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(runif(1,-1,1),0,runif(1,-1,1)), MedRegions$X1[i]),simplify="matrix")))
 			
-			
 			if(col==3)
 				cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(runif(2,-1,1),0), MedRegions$X1[i]),simplify="matrix")))
 		}
