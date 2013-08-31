@@ -481,7 +481,7 @@ sum_dist.Q4 <- function(Qs, S = id.Q4, method='projected', p=1) {
   
 }
 
-#' Centering function
+#' Center rotation data
 #' 
 #' This function will take the sample Rs and return teh sample Rs centered at
 #' S, i.e., the returned sample is S'Rs.  If S is the true center then
@@ -493,20 +493,20 @@ sum_dist.Q4 <- function(Qs, S = id.Q4, method='projected', p=1) {
 #' @export
 #' @examples
 #' Rs<-ruars(5,rcayley)
-#' cRs<-centering(Rs,mean(Rs))
-#' mean(Rs) 
+#' cRs<-center(Rs,mean(Rs))
+#' mean(cRs) #Should be close to identity matrix
 
-centering<-function(Rs,S){
+center<-function(Rs,S){
   
-  UseMethod( "centering" )
+  UseMethod( "center" )
   
 }
 
-#' @rdname centering
-#' @method centering SO3
-#' @S3method centering SO3
+#' @rdname center
+#' @method center SO3
+#' @S3method center SO3
 
-centering.SO3<-function(Rs,S){
+center.SO3<-function(Rs,S){
 	#This takes a set of observations in SO3 and centers them around S
 	
 	Rs<-formatSO3(Rs)
@@ -519,11 +519,11 @@ centering.SO3<-function(Rs,S){
 }
 
 
-#' @rdname centering
-#' @method centering Q4
-#' @S3method centering Q4
+#' @rdname center
+#' @method center Q4
+#' @S3method center Q4
 
-centering.Q4<-function(Qs,S){
+center.Q4<-function(Qs,S){
 	#This takes a set of observations in Q4 and centers them around S
 	Qs<-formatQ4(Qs)
 	S<-formatQ4(S)

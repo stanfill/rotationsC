@@ -1,14 +1,14 @@
-\name{centering}
-\alias{centering}
-\alias{centering.Q4}
-\alias{centering.SO3}
-\title{Centering function}
+\name{center}
+\alias{center}
+\alias{center.Q4}
+\alias{center.SO3}
+\title{Center rotation data}
 \usage{
-  centering(Rs, S)
+  center(Rs, S)
 
-  \method{centering}{SO3} (Rs, S)
+  \method{center}{SO3} (Rs, S)
 
-  \method{centering}{Q4} (Qs, S)
+  \method{center}{Q4} (Qs, S)
 }
 \arguments{
   \item{Rs,Qs}{the sample to be centered}
@@ -26,7 +26,7 @@
 }
 \examples{
 Rs<-ruars(5,rcayley)
-cRs<-centering(Rs,mean(Rs))
-mean(Rs)
+cRs<-center(Rs,mean(Rs))
+mean(cRs) #Should be close to identity matrix
 }
 
