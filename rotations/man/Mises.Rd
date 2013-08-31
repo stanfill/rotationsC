@@ -34,8 +34,8 @@
   random deviates}
 }
 \description{
-  Density and random generation for the the circular von
-  Mises distribution with concentration kappa
+  Density and random generation for the circular-von Mises
+  distribution with concentration kappa
 }
 \details{
   The circular von Mises-based distribution has the density

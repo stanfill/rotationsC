@@ -104,7 +104,7 @@ mean.Q4 <- function(Qs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
 #' @param maxIter The maximum number of iterations allowed before returning most recent estimate
 #' @param ... additional arguments
 #' @return an estimate of the projected or geometric mean
-#' @seealso \code{\link{mean.SO3}}
+#' @seealso \code{\link{mean.SO3}} \code{\link{mean.Q4}}
 #' @cite hartley11
 #' @export
 
