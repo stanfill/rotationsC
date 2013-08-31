@@ -9,7 +9,7 @@
   matrices, i.e. H such that \eqn{\bm H=-\bm H^\top}}
 }
 \value{
-  numeric matrix \eqn{e^{\bm A}}{e^A}
+  matrix in SO(3) \eqn{e^{\bm A}}{e^A}
 }
 \description{
   Compute the matrix exponent for skew-symmetric matrices

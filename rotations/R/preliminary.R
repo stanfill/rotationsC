@@ -396,7 +396,8 @@ exp.skew <- function(H) {
 
 #' Rotation logarithm
 #'
-#' For details see \cite{moakher02}
+#' Compute the matrix logarithm of a matrix in SO(3).  The result is a 3-by-3 skew-symmetric matrix.  This function maps
+#' the lie group SO(3) into its tangent space, which is the lie algerbra so(3).  For details see \cite{moakher02}
 #'
 #' @param R a single or sample of matrices in \eqn{SO(3)}
 #' @return numeric matrix \eqn{\log(R)}{log(R)}
@@ -414,11 +415,12 @@ log.SO3 <- function(R) {
   
 }
 
-#' Projection Procedure
+#' Projection into SO(3)
 #'
 #' Project an arbitrary \eqn{3\times 3}{3-by-3} matrix into SO(3)
 #'
 #' This function uses the process given in \cite{moakher02} to project an arbitrary \eqn{3\times 3}{3-by-3} matrix into \eqn{SO(3)}.
+#' More specifically it finds the closest orthogonal 3-by-3 matrix with determinant one to the provided matrix.
 #' 
 #' @param M \eqn{3\times 3}{3-by-3} matrix to project
 #' @return projection of \eqn{\bm M}{M} into \eqn{SO(3)}
@@ -445,6 +447,7 @@ project.SO3 <- function(M) {
 #' @param method type of distance used method in 'projected' or 'intrinsic'
 #' @param p the order of the distances to compute
 #' @return the sum of the pth order distance between each sample in Rs and S
+#' @seealso \code{\link{dist.SO3}},\code{\link{dist.Q4}}
 #' @export
 #' @examples
 #' r<-rvmises(20,0.01)
@@ -458,8 +461,6 @@ sum_dist<-function(Rs, S = genR(0, space=class(Rs)), method='projected', p=1){
 
 }
 
-#' @return \code{NULL}
-#'
 #' @rdname sum_dist
 #' @method sum_dist SO3
 #' @S3method sum_dist SO3
@@ -470,9 +471,6 @@ sum_dist.SO3 <- function(Rs, S = id.SO3, method='projected', p=1) {
   
 }
 
-
-#' @return \code{NULL}
-#'
 #' @rdname sum_dist
 #' @method sum_dist Q4
 #' @S3method sum_dist Q4
@@ -483,37 +481,32 @@ sum_dist.Q4 <- function(Qs, S = id.Q4, method='projected', p=1) {
   
 }
 
-
-
-tLogMat <- function(x, S) {
-  tra <- log.SO3(t(S) %*% matrix(x, 3, 3))
-  return(as.vector(tra))
-}
-
-tLogMat2 <- function(x, S) {
-  tra <- log.SO3(matrix(x, 3, 3)%*%t(S))
-  return(as.vector(tra))
-}
-
-vecNorm <- function(x, S, ...) {
-  n <- sqrt(length(x))
-  cenX <- x - as.vector(S)
-  return(norm(matrix(cenX, n, n), ...))
-}
-
-
 #' Centering function
 #' 
 #' This function will take the sample Rs and return teh sample Rs centered at
-#' S, i.e., the returned sample is S'Rs, so if S is the true center then
-#' the projected mean should be id.SO3
+#' S, i.e., the returned sample is S'Rs.  If S is the true center then
+#' the projected mean should be the 3-by-3 identity matrix 
 #' 
-#' @param Rs the sample to be centered
+#' @param Rs,Qs the sample to be centered
 #' @param S the rotation to sample around
 #' @return The centered sample
 #' @export
+#' @examples
+#' Rs<-ruars(5,rcayley)
+#' cRs<-centering(Rs,mean(Rs))
+#' mean(Rs) 
 
-centeringSO3<-function(Rs,S){
+centering<-function(Rs,S){
+  
+  UseMethod( "centering" )
+  
+}
+
+#' @rdname centering
+#' @method centering SO3
+#' @S3method centering SO3
+
+centering.SO3<-function(Rs,S){
 	#This takes a set of observations in SO3 and centers them around S
 	
 	Rs<-formatSO3(Rs)
@@ -525,7 +518,12 @@ centeringSO3<-function(Rs,S){
 	return(as.SO3(Rs))
 }
 
-centeringQ4<-function(Qs,S){
+
+#' @rdname centering
+#' @method centering Q4
+#' @S3method centering Q4
+
+centering.Q4<-function(Qs,S){
 	#This takes a set of observations in Q4 and centers them around S
 	Qs<-formatQ4(Qs)
 	S<-formatQ4(S)
@@ -535,8 +533,10 @@ centeringQ4<-function(Qs,S){
 		Qs[i,]<-qMult(S,Qs[i,])
 	}
 
-	return(Qs)
+	return(as.Q4(Qs))
 }
+
+
 
 formatSO3<-function(Rs){
 	#This function will take input and format it to work with our functions
@@ -598,4 +598,20 @@ proj<-function(u,v){
 	num<-t(u)%*%v
 	denom<-t(u)%*%u
 	return(num*u/denom)
+}
+
+tLogMat <- function(x, S) {
+  tra <- log.SO3(t(S) %*% matrix(x, 3, 3))
+  return(as.vector(tra))
+}
+
+tLogMat2 <- function(x, S) {
+  tra <- log.SO3(matrix(x, 3, 3)%*%t(S))
+  return(as.vector(tra))
+}
+
+vecNorm <- function(x, S, ...) {
+  n <- sqrt(length(x))
+  cenX <- x - as.vector(S)
+  return(norm(matrix(cenX, n, n), ...))
 }

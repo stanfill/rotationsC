@@ -28,10 +28,6 @@
 \value{
   the sum of the pth order distance between each sample in
   Rs and S
-
-  \code{NULL}
-
-  \code{NULL}
 }
 \description{
   Compute the sum of the \eqn{p^{\text{th}}}{pth} order
@@ -42,5 +38,8 @@ r<-rvmises(20,0.01)
 Rs<-genR(r)
 Sp<-mean(Rs)
 sum_dist(Rs,S=Sp,p=2)
+}
+\seealso{
+  \code{\link{dist.SO3}},\code{\link{dist.Q4}}
 }
 
