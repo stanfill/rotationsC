@@ -64,6 +64,21 @@ print.Q4<-function(Qs,...){
   }
 }
 
+#print.Q4<-function(Qs,...){
+  
+#  len<-length(Qs)
+  
+#  if(len%%4!=0)
+#    stop("Input is not of the correct length.")
+  
+#  if(len==4){
+#    print.default(sprintf("%f + %f*i+ %f*j+%f*k ",Qs[1],Qs[2],Qs[3],Qs[4]),...)
+#  }else{
+#    colnames(Qs)<-c("Real","i","j","k")
+#    print.default(Qs,...)
+#  }
+#}
+
 #' Rotational Distance
 #'
 #' Calculate the Euclidean or Riemannian distance between two rotations
