@@ -138,6 +138,20 @@ namespace rotations {
         return Rcpp::as<arma::mat >(__result);
     }
 
+    inline arma::mat expskewCMulti(arma::mat M) {
+        typedef SEXP(*Ptr_expskewCMulti)(SEXP);
+        static Ptr_expskewCMulti p_expskewCMulti = NULL;
+        if (p_expskewCMulti == NULL) {
+            validateSignature("arma::mat(*expskewCMulti)(arma::mat)");
+            p_expskewCMulti = (Ptr_expskewCMulti)R_GetCCallable("rotations", "rotations_expskewCMulti");
+        }
+        RNGScope __rngScope;
+        RObject __result = p_expskewCMulti(Rcpp::wrap(M));
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<arma::mat >(__result);
+    }
+
     inline arma::mat logSO3C(arma::mat R) {
         typedef SEXP(*Ptr_logSO3C)(SEXP);
         static Ptr_logSO3C p_logSO3C = NULL;

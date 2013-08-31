@@ -158,6 +158,24 @@ RcppExport SEXP rotations_expskewC(SEXP MSEXP) {
         Rf_error(CHAR(Rf_asChar(__result)));
     return __result;
 }
+// expskewCMulti
+arma::mat expskewCMulti(arma::mat M);
+static SEXP rotations_expskewCMulti_try(SEXP MSEXP) {
+BEGIN_RCPP
+    arma::mat M = Rcpp::as<arma::mat >(MSEXP);
+    arma::mat __result = expskewCMulti(M);
+    return Rcpp::wrap(__result);
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations_expskewCMulti(SEXP MSEXP) {
+    Rcpp::RNGScope __rngScope;
+    SEXP __result = PROTECT(rotations_expskewCMulti_try(MSEXP));
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    UNPROTECT(1);
+    if (__isError)
+        Rf_error(CHAR(Rf_asChar(__result)));
+    return __result;
+}
 // logSO3C
 arma::mat logSO3C(arma::mat R);
 static SEXP rotations_logSO3C_try(SEXP RSEXP) {
@@ -550,6 +568,7 @@ static int rotations_RcppExport_validate(const char* sig) {
         signatures.insert("int(*checkQ4)(NumericMatrix)");
         signatures.insert("int(*checkSO3)(arma::mat)");
         signatures.insert("arma::mat(*expskewC)(arma::mat)");
+        signatures.insert("arma::mat(*expskewCMulti)(arma::mat)");
         signatures.insert("arma::mat(*logSO3C)(arma::mat)");
         signatures.insert("arma::mat(*logSO3CMulti)(arma::mat)");
         signatures.insert("arma::mat(*projectSO3C)(arma::mat)");
@@ -584,6 +603,7 @@ RcppExport SEXP rotations_RcppExport_registerCCallable() {
     R_RegisterCCallable("rotations", "rotations_checkQ4", (DL_FUNC)rotations_checkQ4_try);
     R_RegisterCCallable("rotations", "rotations_checkSO3", (DL_FUNC)rotations_checkSO3_try);
     R_RegisterCCallable("rotations", "rotations_expskewC", (DL_FUNC)rotations_expskewC_try);
+    R_RegisterCCallable("rotations", "rotations_expskewCMulti", (DL_FUNC)rotations_expskewCMulti_try);
     R_RegisterCCallable("rotations", "rotations_logSO3C", (DL_FUNC)rotations_logSO3C_try);
     R_RegisterCCallable("rotations", "rotations_logSO3CMulti", (DL_FUNC)rotations_logSO3CMulti_try);
     R_RegisterCCallable("rotations", "rotations_projectSO3C", (DL_FUNC)rotations_projectSO3C_try);

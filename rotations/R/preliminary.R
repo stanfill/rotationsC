@@ -334,10 +334,10 @@ genR <- function(r, S = NULL, space='SO3') {
   		
   	}else{
 
-  	S<-formatSO3(S)
-  	o<-centeringSO3(o,t(S))
-  	class(o) <- "SO3"
-  	return(o)
+  	  S<-formatSO3(S)
+  	  o<-centeringSO3(o,t(S))
+  	  class(o) <- "SO3"
+  	  return(o)
   	
   	}
   	
@@ -373,26 +373,32 @@ genR <- function(r, S = NULL, space='SO3') {
 #'
 #' Compute the matrix exponent for skew-symmetric matrices according to the usual Taylor expansion.
 #' The expansion is significantly simplified for skew-symmetric matrices, see \cite{moakher02}.
+#' Maps a matrix belonging to the lie algebra so(3) into the lie group SO(3).
 #'
-#' @param H 3-by-3 skew-symmetric matrix, i.e. A such that \eqn{\bm H=-\bm H^\top}
-#' @return numeric matrix \eqn{e^{\bm A}}{e^A}
+#' @param H singular or sample of 3-by-3 skew-symmetric matrices, i.e. H such that \eqn{\bm H=-\bm H^\top}
+#' @return matrix in SO(3) \eqn{e^{\bm A}}{e^A}
 #' @cite moakher02
 #' @export
 
 exp.skew <- function(H) {
-  
-  if (sum(abs(H + t(H)))>10e-10) {
-    stop("The input matrix must be skew symmetric.")
+
+  if(length(H)==9){
+    
+    H<-matrix(H,3,3)
+
+    return(as.SO3(expskewC(H)))
+    
+  }else{
+    return(as.SO3(expskewCMulti(H)))
   }
-  return(expskewC(H))
 }
 
 
-#' Matrix logarithm
+#' Rotation logarithm
 #'
 #' For details see \cite{moakher02}
 #'
-#' @param R 3-by-3 numeric matrix in \eqn{SO(n)}
+#' @param R a single or sample of matrices in \eqn{SO(3)}
 #' @return numeric matrix \eqn{\log(R)}{log(R)}
 #' @cite moakher02
 #' @S3method log SO3

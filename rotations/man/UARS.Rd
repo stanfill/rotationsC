@@ -5,25 +5,25 @@
 \alias{UARS}
 \title{Generic UARS Distribution}
 \usage{
-  duars(R, dangle, S = diag(3), kappa = 1, ...)
+  duars(R, dangle, S = id.SO3, kappa = 1, ...)
 
-  puars(R, pangle, S = diag(3), kappa = 1, ...)
+  puars(R, pangle, S = id.SO3, kappa = 1, ...)
 
   ruars(n, rangle, S = NULL, kappa = 1, space = "SO3", ...)
 }
 \arguments{
   \item{R}{Value at which to evaluate the UARS density}
 
-  \item{dangle}{The function to evaulate the angles from:
+  \item{dangle}{The function to evaulate the angles from
   e.g. dcayley, dvmises, dfisher, dhaar}
 
-  \item{pangle}{The form of the angular density: e.g.
+  \item{pangle}{The form of the angular density e.g.
   pcayley, pvmises, pfisher, phaar}
 
-  \item{rangle}{The function from which to simulate angles:
+  \item{rangle}{The function from which to simulate angles
   e.g. rcayley, rvmises, rhaar, rfisher}
 
-  \item{S}{principal direction of the distribution}
+  \item{S}{central orientation of the distribution}
 
   \item{kappa}{concentration of the distribution}
 

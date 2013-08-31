@@ -1,11 +1,11 @@
 \name{log.SO3}
 \alias{log.SO3}
-\title{Matrix logarithm}
+\title{Rotation logarithm}
 \usage{
   \method{log}{SO3} (R)
 }
 \arguments{
-  \item{R}{3-by-3 numeric matrix in \eqn{SO(n)}}
+  \item{R}{a single or sample of matrices in \eqn{SO(3)}}
 }
 \value{
   numeric matrix \eqn{\log(R)}{log(R)}

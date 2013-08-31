@@ -68,12 +68,12 @@ int checkSO3(arma::mat Rs){
 // [[Rcpp::export]]
 arma::mat expskewC(arma::mat M){
   /*This function takes a 3-by-3 skew symmetric matrix (in so(3)) and
-  returs the exponential, a 3-by-3 roations (in SO(3))*/
+  returns the exponential, a 3-by-3 rotations (in SO(3))*/
   
   double MMt = sum(sum(M-M.t()));
   
   if(abs(MMt)>0.01){
-    throw Rcpp::exception("The expskewC function is expecting a 3-by-3 skew symmetric matrix");
+    throw Rcpp::exception("The exp.skew function is expecting a 3-by-3 skew symmetric matrix");
   }
   
   arma::mat expM(3,3);
@@ -91,6 +91,33 @@ arma::mat expskewC(arma::mat M){
   
 }
 
+// [[Rcpp::export]]
+arma::mat expskewCMulti(arma::mat M){
+  /*This function takes a sample of 3-by-3 skew symmetric matrices (in so(3)) and
+  returs the exponential, a sample of 3-by-3 rotations (in SO(3))*/
+  
+  int n = M.n_rows, i, j;
+  arma::mat eMi(3,3), Mi(3,3);
+  arma::mat expM;
+  expM = M; /*take dimensionality of input matrix*/
+  expM.zeros(); /*make it all zeros*/
+  
+  for(i = 0 ; i<n ; i++ ){
+    
+    for(j = 0; j<9 ; j++ ){
+      Mi(j)=M(i,j);
+    }
+    
+    eMi = expskewC(Mi);
+    
+    for(j=0; j<9 ; j++ ){
+      expM(i,j) = eMi(j);
+    }
+    
+  }
+  return expM;
+  
+}
 
 // [[Rcpp::export]]
 arma::mat logSO3C(arma::mat R){

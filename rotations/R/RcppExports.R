@@ -33,6 +33,10 @@ expskewC <- function(M) {
     .Call('rotations_expskewC', PACKAGE = 'rotations', M)
 }
 
+expskewCMulti <- function(M) {
+    .Call('rotations_expskewCMulti', PACKAGE = 'rotations', M)
+}
+
 logSO3C <- function(R) {
     .Call('rotations_logSO3C', PACKAGE = 'rotations', R)
 }
