@@ -438,7 +438,7 @@ fisheretal.Q4<-function(Qs,alp=NULL,boot=T,m=300,symm=T){
 	
 	rsym<-optim(.05,optimAxis,Qs=Qs,cut=qhat,symm=T,method='Brent',lower=0,upper=pi)$par
 	
-	return(min(rad,pi))
+	return(min(rsym,pi))
 }
 
 
