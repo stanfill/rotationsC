@@ -276,14 +276,33 @@ plot(sampRots3,center=median(sampRots3),median_regions="all",alp=.1)
 plot(sampRots3,center=median(sampRots3),median_regions="all",alp=.1,col=2) 
 plot(sampRots3,center=median(sampRots3),median_regions="all",alp=.1,col=3) 
 
+#confidence region radius
 region(sampRots3,method='moment',type='theory',estimator='median',alp=.01)*180/pi
 region(sampRots3,method='moment',type='bootstrap',estimator='median',alp=.01,m=500)*180/pi
+
+#standard error estimate of h vector
+hTilNTH<-sqrt(region(sampRots3,method='moment',type='theory',estimator='median',alp=.01)^2*nSamp3/qchisq((1-.01),3))*180/pi
+hTilNTH
+hTilBOOT<-sqrt(region(sampRots3,method='moment',type='bootstrap',estimator='median',alp=.01)^2*nSamp3/qchisq((1-.01),3))*180/pi
+hTilBOOT
+
+#standard error estimate for r (very close to region radius / 2)
+rMedSEnth<-sqrt(hTilNTH^2*3/nSamp3)
+rMedSEnth
+rMedSEboot<-sqrt(hTilBOOT^2*3/nSamp3)
+rMedSEboot
+
 
 plot(sampRots3,center=mean(sampRots3),mean_regions="all",alp=.1) 
 plot(sampRots3,center=mean(sampRots3),mean_regions="all",alp=.1,col=2) 
 plot(sampRots3,center=mean(sampRots3),mean_regions="all",alp=.1,col=3) 
 
+#confidence region radius (in SO(3))
 region(sampRots3,method='moment',type='theory',estimator='mean',alp=.01)*180/pi
 region(sampRots3,method='moment',type='bootstrap',estimator='mean',alp=.01)*180/pi
 region(sampRots3,method='eigen',type='bootstrap',estimator='mean',alp=.01)*180/pi
+
+#standard error estimate of h vector (in R^3)
+sqrt(region(sampRots3,method='moment',type='theory',estimator='mean',alp=.05)^2*nSamp3/qchisq((1-.05),3))*180/pi
+sqrt(region(sampRots3,method='moment',type='bootstrap',estimator='mean',alp=.01)^2*nSamp3/qchisq((1-.01),3))*180/pi
 
