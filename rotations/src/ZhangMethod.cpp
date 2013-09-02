@@ -91,7 +91,7 @@ double oneRdistC(NumericMatrix Q1, NumericVector Q2){
 // [[Rcpp::export]]
 NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 	
-	//Compute the values c and d to form the pivotal test statistic
+	//Compute the projected mean values of c and d to form the pivotal test statistic
 	//This estimates c=2E(1-cos(r^2))/3 and d=E(1+2cos(r))/3 from a sample
 	int n = Qs.nrow(), i;
 	double crs;
@@ -221,8 +221,8 @@ NumericVector zhangQ4(NumericMatrix Q, int m){
 // [[Rcpp::export]]
 NumericVector cdfunsCSO3(arma::mat Rs, arma::mat Rhat){
   
-	//Compute the values c and d to form the pivotal test statistic for SO3 data, used by
-	//the zhangMedianC function
+	//Compute the projected median values of c and d to form the pivotal test statistic 
+  //for SO3 data, used by the zhangMedianC function
 	
 	int n = Rs.n_rows, i;
 	double crs, OnemCrs;

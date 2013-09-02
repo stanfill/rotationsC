@@ -210,15 +210,15 @@ plot(sampRots,center=median(sampRots),median_regions="all",alp=.1)
 plot(sampRots,center=median(sampRots),median_regions="all",alp=.1,col=2) 
 plot(sampRots,center=median(sampRots),median_regions="all",alp=.1,col=3) 
 
-region(sampRots,method='moment',type='theory',estimator='median',alp=.01)*180/pi
-region(sampRots,method='moment',type='bootstrap',estimator='median',alp=.01,m=500)*180/pi
+region(sampRots,method='moment',type='theory',estimator='median',alp=.005)*180/pi
+region(sampRots,method='moment',type='bootstrap',estimator='median',alp=.005,m=500)*180/pi
 
 plot(sampRots,center=mean(sampRots),mean_regions="all",alp=.1) 
 plot(sampRots,center=mean(sampRots),mean_regions="all",alp=.1,col=2) 
 plot(sampRots,center=mean(sampRots),mean_regions="all",alp=.1,col=3) 
 
-region(sampRots,method='moment',type='theory',estimator='mean',alp=.01)*180/pi
-region(sampRots,method='moment',type='bootstrap',estimator='mean',alp=.01)*180/pi
+region(sampRots,method='moment',type='theory',estimator='mean',alp=.005)*180/pi
+region(sampRots,method='moment',type='bootstrap',estimator='mean',alp=.005)*180/pi
 
 
 ####
