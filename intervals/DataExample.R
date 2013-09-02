@@ -204,14 +204,14 @@ samp<-dat.out[dat.out$location%in%grain1Locs & dat.out$rep==1,]
 samp<-samp[samp$V1<0 & samp$V2<0,]
 nSamp<-nrow(samp)
 nSamp
-#sampRots<-as.SO3(data.matrix(samp[sample(1:nSamp,10,replace=F),3:11])) #randomly select 10 locations
+#sampRots<-as.SO3(data.matrix(samp[sample(1:nSamp,50,replace=F),3:11])) #randomly select 10 locations
 sampRots<-as.SO3(data.matrix(samp[,3:11])) #take them all
 plot(sampRots,center=median(sampRots),median_regions="all",alp=.1) 
 plot(sampRots,center=median(sampRots),median_regions="all",alp=.1,col=2) 
 plot(sampRots,center=median(sampRots),median_regions="all",alp=.1,col=3) 
 
 region(sampRots,method='moment',type='theory',estimator='median',alp=.01)*180/pi
-region(sampRots,method='moment',type='bootstrap',estimator='median',alp=.01,m=300)*180/pi
+region(sampRots,method='moment',type='bootstrap',estimator='median',alp=.01,m=500)*180/pi
 
 plot(sampRots,center=mean(sampRots),mean_regions="all",alp=.1) 
 plot(sampRots,center=mean(sampRots),mean_regions="all",alp=.1,col=2) 
@@ -222,7 +222,7 @@ region(sampRots,method='moment',type='bootstrap',estimator='mean',alp=.01)*180/p
 
 
 ####
-#Try a different grain
+#Try a different grain, grain 2
 
 qplot(xpos,ypos,colour=dE2,data=loc.stats,size=I(4))
 
@@ -253,4 +253,37 @@ plot(sampRots2,center=mean(sampRots2),mean_regions="all",alp=.1,col=3)
 
 region(sampRots2,method='moment',type='theory',estimator='mean',alp=.01)*180/pi
 region(sampRots2,method='moment',type='bootstrap',estimator='mean',alp=.01)*180/pi
+
+####Try another grain, grain 3
+
+qplot(xpos,ypos,colour=dE2,data=loc.stats,size=I(4))
+
+#Try to find grains based on xpos ypos & dE1
+grain3<-loc.stats[loc.stats$xpos>0 & loc.stats$xpos<6,]
+grain3<-grain3[grain3$ypos>2.5 & grain3$ypos<7.5,]
+grain3<-grain3[grain3$dE1>1.5 & grain3$dE1<1.7,]  #I think this gives us the .5 deg threshold Bingham mentions
+grain3Locs<-grain3$location
+qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain3Locs,],xlim=c(0,12),ylim=c(0,10.04591),size=I(4))
+
+#take the first rep because it is the most reliable
+samp3<-dat.out[dat.out$location%in%grain3Locs & dat.out$rep==1,]
+samp3<-samp3[samp3$V1>.4 & samp3$V1<.5,]
+nSamp3<-nrow(samp3)
+nSamp3
+sampRots3<-as.SO3(data.matrix(samp3[sample(1:nSamp3,50,replace=F),3:11])) #randomly select 50 locations
+#sampRots<-as.SO3(data.matrix(samp[,3:11])) #take them all
+plot(sampRots3,center=median(sampRots3),median_regions="all",alp=.1) 
+plot(sampRots3,center=median(sampRots3),median_regions="all",alp=.1,col=2) 
+plot(sampRots3,center=median(sampRots3),median_regions="all",alp=.1,col=3) 
+
+region(sampRots3,method='moment',type='theory',estimator='median',alp=.01)*180/pi
+region(sampRots3,method='moment',type='bootstrap',estimator='median',alp=.01,m=500)*180/pi
+
+plot(sampRots3,center=mean(sampRots3),mean_regions="all",alp=.1) 
+plot(sampRots3,center=mean(sampRots3),mean_regions="all",alp=.1,col=2) 
+plot(sampRots3,center=mean(sampRots3),mean_regions="all",alp=.1,col=3) 
+
+region(sampRots3,method='moment',type='theory',estimator='mean',alp=.01)*180/pi
+region(sampRots3,method='moment',type='bootstrap',estimator='mean',alp=.01)*180/pi
+region(sampRots3,method='eigen',type='bootstrap',estimator='mean',alp=.01)*180/pi
 
