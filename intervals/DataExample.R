@@ -210,15 +210,15 @@ plot(sampRots,center=median(sampRots),median_regions="all",alp=.1)
 plot(sampRots,center=median(sampRots),median_regions="all",alp=.1,col=2) 
 plot(sampRots,center=median(sampRots),median_regions="all",alp=.1,col=3) 
 
-region(sampRots,method='moment',type='theory',estimator='median',alp=.005)*180/pi
-region(sampRots,method='moment',type='bootstrap',estimator='median',alp=.005,m=500)*180/pi
+region(sampRots,method='moment',type='theory',estimator='median',alp=.01)*180/pi*sqrt(nSamp)
+region(sampRots,method='moment',type='bootstrap',estimator='median',alp=.01,m=500)*180/pi*sqrt(nSamp)
 
 plot(sampRots,center=mean(sampRots),mean_regions="all",alp=.1) 
 plot(sampRots,center=mean(sampRots),mean_regions="all",alp=.1,col=2) 
 plot(sampRots,center=mean(sampRots),mean_regions="all",alp=.1,col=3) 
 
-region(sampRots,method='moment',type='theory',estimator='mean',alp=.005)*180/pi
-region(sampRots,method='moment',type='bootstrap',estimator='mean',alp=.005)*180/pi
+region(sampRots,method='moment',type='theory',estimator='mean',alp=.01)*180/pi*sqrt(nSamp)
+region(sampRots,method='moment',type='bootstrap',estimator='mean',alp=.01)*180/pi*sqrt(nSamp)
 
 
 ####
@@ -235,7 +235,7 @@ qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain2Locs,],xli
 
 #take the first rep because it is the most reliable
 samp2<-dat.out[dat.out$location%in%grain2Locs & dat.out$rep==1,]
-#samp<-samp[ samp$V2<.5,]
+samp2<-samp2[ samp2$V2<.5,]
 nSamp2<-nrow(samp2)
 nSamp2
 #sampRots<-as.SO3(data.matrix(samp[sample(1:nSamp,10,replace=F),3:11])) #randomly select 10 locations
@@ -244,15 +244,15 @@ plot(sampRots2,center=median(sampRots2),median_regions="all",alp=.1)
 plot(sampRots2,center=median(sampRots2),median_regions="all",alp=.1,col=2) 
 plot(sampRots2,center=median(sampRots2),median_regions="all",alp=.1,col=3) 
 
-region(sampRots2,method='moment',type='theory',estimator='median',alp=.01)*180/pi
-region(sampRots2,method='moment',type='bootstrap',estimator='median',alp=.01,m=300)*180/pi
+region(sampRots2,method='moment',type='theory',estimator='median',alp=.01)*180/pi*sqrt(nSamp2)
+region(sampRots2,method='moment',type='bootstrap',estimator='median',alp=.01,m=300)*180/pi*sqrt(nSamp2)
 
 plot(sampRots2,center=mean(sampRots2),mean_regions="all",alp=.1) 
 plot(sampRots2,center=mean(sampRots2),mean_regions="all",alp=.1,col=2) 
 plot(sampRots2,center=mean(sampRots2),mean_regions="all",alp=.1,col=3) 
 
-region(sampRots2,method='moment',type='theory',estimator='mean',alp=.01)*180/pi
-region(sampRots2,method='moment',type='bootstrap',estimator='mean',alp=.01)*180/pi
+region(sampRots2,method='moment',type='theory',estimator='mean',alp=.01)*180/pi*sqrt(nSamp2)
+region(sampRots2,method='moment',type='bootstrap',estimator='mean',alp=.01)*180/pi*sqrt(nSamp2)
 
 ####Try another grain, grain 3
 
@@ -270,15 +270,23 @@ samp3<-dat.out[dat.out$location%in%grain3Locs & dat.out$rep==1,]
 samp3<-samp3[samp3$V1>.4 & samp3$V1<.5,]
 nSamp3<-nrow(samp3)
 nSamp3
-sampRots3<-as.SO3(data.matrix(samp3[sample(1:nSamp3,50,replace=F),3:11])) #randomly select 50 locations
-#sampRots<-as.SO3(data.matrix(samp[,3:11])) #take them all
+#sampRots3<-as.SO3(data.matrix(samp3[sample(1:nSamp3,50,replace=F),3:11])) #randomly select 50 locations
+sampRots3<-as.SO3(data.matrix(samp3[,3:11])) #take them all
+
+
+####Median
 plot(sampRots3,center=median(sampRots3),median_regions="all",alp=.1) 
 plot(sampRots3,center=median(sampRots3),median_regions="all",alp=.1,col=2) 
 plot(sampRots3,center=median(sampRots3),median_regions="all",alp=.1,col=3) 
 
-#confidence region radius
+#confidence region radius for central direction
 region(sampRots3,method='moment',type='theory',estimator='median',alp=.01)*180/pi
 region(sampRots3,method='moment',type='bootstrap',estimator='median',alp=.01,m=500)*180/pi
+
+#confidence region radius for single location
+region(sampRots3,method='moment',type='theory',estimator='median',alp=.01)*180/pi*sqrt(nrow(sampRots3))
+region(sampRots3,method='moment',type='bootstrap',estimator='median',alp=.01,m=1000)*180/pi*sqrt(nrow(sampRots3))
+
 
 #standard error estimate of h vector
 hTilNTH<-sqrt(region(sampRots3,method='moment',type='theory',estimator='median',alp=.01)^2*nSamp3/qchisq((1-.01),3))*180/pi
@@ -292,17 +300,47 @@ rMedSEnth
 rMedSEboot<-sqrt(hTilBOOT^2*3/nSamp3)
 rMedSEboot
 
-
+####Mean
 plot(sampRots3,center=mean(sampRots3),mean_regions="all",alp=.1) 
 plot(sampRots3,center=mean(sampRots3),mean_regions="all",alp=.1,col=2) 
 plot(sampRots3,center=mean(sampRots3),mean_regions="all",alp=.1,col=3) 
 
-#confidence region radius (in SO(3))
+#confidence region radius (in SO(3)) for central direction
 region(sampRots3,method='moment',type='theory',estimator='mean',alp=.01)*180/pi
 region(sampRots3,method='moment',type='bootstrap',estimator='mean',alp=.01)*180/pi
-region(sampRots3,method='eigen',type='bootstrap',estimator='mean',alp=.01)*180/pi
+
+#confidence region radius (in SO(3)) for single location!
+region(sampRots3,method='moment',type='theory',estimator='mean',alp=.01)*180/pi*sqrt(nrow(sampRots3))
+region(sampRots3,method='moment',type='bootstrap',estimator='mean',alp=.01,m=500)*180/pi*sqrt(nrow(sampRots3))
+
 
 #standard error estimate of h vector (in R^3)
 sqrt(region(sampRots3,method='moment',type='theory',estimator='mean',alp=.05)^2*nSamp3/qchisq((1-.05),3))*180/pi
 sqrt(region(sampRots3,method='moment',type='bootstrap',estimator='mean',alp=.01)^2*nSamp3/qchisq((1-.01),3))*180/pi
 
+
+####################
+#Formally identify grains and compute 4 CRs for each (doesn't work)
+
+scan1<-dat.out[dat.out$check==T & dat.out$rep==1,]
+hist(scan1$V2,breaks=100)
+fit<-kmeans(scan1$V1,50)
+scan1$cluster<-as.factor(fit$cluster)
+qplot(xpos,ypos,colour=cluster,data=scan1,size=I(4))
+
+rots<-as.SO3(data.matrix(scan1[scan1$cluster==1,3:11]))
+n<-nrow(rots)
+MeanMom<-region(rots,method='moment',type='theory',estimator='mean',alp=.01)
+MeanMom<-MeanMom*180/pi*sqrt(n)
+MeanMom
+
+crs<-ddply(scan1,.(cluster),function(res) {
+  
+  rots <- as.SO3(as.matrix(res[,3:11]))
+  n<-nrow(rots)
+  MeanMom<-region(rots,method='moment',type='theory',estimator='mean',alp=.01)
+  MeanMom<-MeanMom*180/pi*sqrt(n)
+
+  data.frame(cluster=res$cluster[1], n=n, MeanMom=MeanMom)
+})
+crs
