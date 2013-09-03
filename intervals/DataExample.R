@@ -78,6 +78,16 @@ loc.stats$ypos <- ypos[loc.stats$location]
 #Plot grain map
 qplot(xpos,ypos,colour=dE1,data=loc.stats,size=I(5))
 
+d <- ggplot(loc.stats, aes(xpos, ypos, color=dE1))
+d2 <- d + geom_point(size=2.5) + scale_colour_gradient(expression(d[R](tilde(S)[E], I["3x3"])), low="grey99", high="grey10", limits=c(0, pi), breaks=c( pi/4, pi/2, 3*pi/4), labels=expression( pi/4, pi/2, 3*pi/4)) + 
+  theme_bw() + xlab("") + ylab("") + coord_equal() + scale_x_continuous(limits=c(0, 12.5), breaks=seq(0, 12.5, by=2.5), labels=expression(0*mu*m, 2.5*mu*m, 5*mu*m, 7.5*mu*m, 10*mu*m, 12.5*mu*m)) + 
+  scale_y_continuous(limits=c(0, 10), breaks=seq(0, 10, by=2.5), labels=expression(0*mu*m, 2.5*mu*m, 5*mu*m, 7.5*mu*m, 10*mu*m)) + 
+  #geom_point(shape="o", colour="yellow", size=5, data=loc.stats[idx,])  + 
+  theme(plot.margin=unit(rep(0,4), "lines"))
+d2
+#ggsave(file="/Users/stanfill/Dropbox/Thesis/Intervals/Figures/grain-map.png", width=5.75, height=4.25)
+
+##
 #Identify grains based on their central direction dE1 or dE2
 hist(loc.stats$dE1,breaks=100)
 medianDF<-data.frame(location=as.factor(loc.stats$location),dE1=loc.stats$dE1)
@@ -317,6 +327,183 @@ region(sampRots3,method='moment',type='bootstrap',estimator='mean',alp=.01,m=500
 #standard error estimate of h vector (in R^3)
 sqrt(region(sampRots3,method='moment',type='theory',estimator='mean',alp=.05)^2*nSamp3/qchisq((1-.05),3))*180/pi
 sqrt(region(sampRots3,method='moment',type='bootstrap',estimator='mean',alp=.01)^2*nSamp3/qchisq((1-.01),3))*180/pi
+
+
+####
+#Try a different grain, grain 4
+
+qplot(xpos,ypos,colour=dE2,data=loc.stats,size=I(4))
+
+#That didn't work, try to find grains based on xpos ypos & dE1
+grain4<-loc.stats[loc.stats$xpos>7.5 & loc.stats$xpos<12.5,]
+grain4<-grain4[grain4$ypos>2.5 & grain4$ypos<8,]
+grain4<-grain4[grain4$dE1>2.4 & grain4$dE1<2.5,]  #I think this gives us the .5 deg threshold Bingham mentions
+grain4Locs<-grain4$location
+qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain4Locs,],xlim=c(0,12),ylim=c(0,10.04591),size=I(4))
+
+#take the first rep because it is the most reliable
+samp4<-dat.out[dat.out$location%in%grain4Locs & dat.out$rep==1,]
+nSamp4<-nrow(samp4)
+nSamp4
+#sampRots<-as.SO3(data.matrix(samp[sample(1:nSamp,10,replace=F),3:11])) #randomly select 10 locations
+sampRots4<-as.SO3(data.matrix(samp4[,3:11])) #take them all
+plot(sampRots4,center=median(sampRots4),median_regions="all",alp=.1) 
+plot(sampRots4,center=median(sampRots4),median_regions="all",alp=.1,col=2) 
+plot(sampRots4,center=median(sampRots4),median_regions="all",alp=.1,col=3) 
+
+region(sampRots4,method='moment',type='theory',estimator='median',alp=.01)*180/pi*sqrt(nSamp4)
+region(sampRots4,method='moment',type='bootstrap',estimator='median',alp=.01,m=500)*180/pi*sqrt(nSamp4)
+
+plot(sampRots4,center=mean(sampRots4),mean_regions="all",alp=.1) 
+plot(sampRots4,center=mean(sampRots4),mean_regions="all",alp=.1,col=2) 
+plot(sampRots4,center=mean(sampRots4),mean_regions="all",alp=.1,col=3) 
+
+region(sampRots4,method='moment',type='theory',estimator='mean',alp=.01)*180/pi*sqrt(nSamp4)
+region(sampRots4,method='moment',type='bootstrap',estimator='mean',alp=.01)*180/pi*sqrt(nSamp4)
+
+####
+#Try a different grain, grain 5
+
+qplot(xpos,ypos,colour=dE2,data=loc.stats,size=I(4))
+
+#That didn't work, try to find grains based on xpos ypos & dE1
+grain5<-loc.stats[loc.stats$xpos>7.5 & loc.stats$xpos<12.5,]
+grain5<-grain5[grain5$ypos>7.5 & grain5$ypos<10,]
+grain5<-grain5[ grain5$dE1<1.5,]  #I think this gives us the .5 deg threshold Bingham mentions
+grain5Locs<-grain5$location
+qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain5Locs,],xlim=c(0,12),ylim=c(0,10.04591),size=I(4))
+
+#take the first rep because it is the most reliable
+samp5<-dat.out[dat.out$location%in%grain5Locs & dat.out$rep==1,]
+#samp5<-samp5[ samp4$V2<.5,]
+nSamp5<-nrow(samp5)
+nSamp5
+#sampRots<-as.SO3(data.matrix(samp[sample(1:nSamp,10,replace=F),3:11])) #randomly select 10 locations
+sampRots5<-as.SO3(data.matrix(samp5[,3:11])) #take them all
+plot(sampRots5,center=median(sampRots5),median_regions="all",alp=.1) 
+plot(sampRots5,center=median(sampRots5),median_regions="all",alp=.1,col=2) 
+plot(sampRots5,center=median(sampRots5),median_regions="all",alp=.1,col=3) 
+
+region(sampRots5,method='moment',type='theory',estimator='median',alp=.01)*180/pi*sqrt(nSamp5)
+region(sampRots5,method='moment',type='bootstrap',estimator='median',alp=.01,m=500)*180/pi*sqrt(nSamp5)
+
+plot(sampRots5,center=mean(sampRots5),mean_regions="all",alp=.1) 
+plot(sampRots5,center=mean(sampRots5),mean_regions="all",alp=.1,col=2) 
+plot(sampRots5,center=mean(sampRots5),mean_regions="all",alp=.1,col=3) 
+
+region(sampRots5,method='moment',type='theory',estimator='mean',alp=.01)*180/pi*sqrt(nSamp5)
+region(sampRots5,method='moment',type='bootstrap',estimator='mean',alp=.01,m=500)*180/pi*sqrt(nSamp5)
+
+####
+#Try a different grain, grain 6
+
+qplot(xpos,ypos,colour=dE2,data=loc.stats,size=I(4))
+
+#That didn't work, try to find grains based on xpos ypos & dE1
+grain6<-loc.stats[ loc.stats$xpos<5,]
+grain6<-grain6[ grain6$ypos<4,]
+grain6<-grain6[ grain6$dE1>2.5 & grain6$dE1<2.7,]  #I think this gives us the .5 deg threshold Bingham mentions
+grain6Locs<-grain6$location
+qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain6Locs,],xlim=c(0,12),ylim=c(0,10.04591),size=I(4))
+
+#take the first rep because it is the most reliable
+samp6<-dat.out[dat.out$location%in%grain6Locs & dat.out$rep==1,]
+samp6<-samp6[ samp6$V2>.5,]
+nSamp6<-nrow(samp6)
+nSamp6
+#sampRots<-as.SO3(data.matrix(samp[sample(1:nSamp,10,replace=F),3:11])) #randomly select 10 locations
+sampRots6<-as.SO3(data.matrix(samp6[,3:11])) #take them all
+plot(sampRots6,center=median(sampRots6),median_regions="all",alp=.1) 
+plot(sampRots6,center=median(sampRots6),median_regions="all",alp=.1,col=2) 
+plot(sampRots6,center=median(sampRots6),median_regions="all",alp=.1,col=3) 
+
+region(sampRots6,method='moment',type='theory',estimator='median',alp=.01)*180/pi*sqrt(nSamp6)
+region(sampRots6,method='moment',type='bootstrap',estimator='median',alp=.01,m=500)*180/pi*sqrt(nSamp6)
+
+plot(sampRots6,center=mean(sampRots6),mean_regions="all",alp=.1) 
+plot(sampRots6,center=mean(sampRots6),mean_regions="all",alp=.1,col=2) 
+plot(sampRots6,center=mean(sampRots6),mean_regions="all",alp=.1,col=3) 
+
+region(sampRots6,method='moment',type='theory',estimator='mean',alp=.01)*180/pi*sqrt(nSamp6)
+region(sampRots6,method='moment',type='bootstrap',estimator='mean',alp=.01,m=500)*180/pi*sqrt(nSamp6)
+
+####
+#Try a different grain, grain 7
+
+qplot(xpos,ypos,colour=dE2,data=loc.stats,size=I(4))
+
+#That didn't work, try to find grains based on xpos ypos & dE1
+grain7<-loc.stats[ loc.stats$xpos>5 & loc.stats$xpos<10,]
+grain7<-grain7[ grain7$ypos<4,]
+grain7<-grain7[ grain7$dE1>2.75 & grain7$dE1<2.95,]  #I think this gives us the .5 deg threshold Bingham mentions
+grain7Locs<-grain7$location
+qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain7Locs,],xlim=c(0,12),ylim=c(0,10.04591),size=I(4))
+
+#take the first rep because it is the most reliable
+samp7<-dat.out[dat.out$location%in%grain7Locs & dat.out$rep==1,]
+samp7<-samp7[ samp7$V1>.5,]
+nSamp7<-nrow(samp7)
+nSamp7
+#sampRots<-as.SO3(data.matrix(samp[sample(1:nSamp,10,replace=F),3:11])) #randomly select 10 locations
+sampRots7<-as.SO3(data.matrix(samp7[,3:11])) #take them all
+plot(sampRots7,center=median(sampRots7),median_regions="all",alp=.1) 
+plot(sampRots7,center=median(sampRots7),median_regions="all",alp=.1,col=2) 
+plot(sampRots7,center=median(sampRots7),median_regions="all",alp=.1,col=3) 
+
+region(sampRots7,method='moment',type='theory',estimator='median',alp=.01)*180/pi*sqrt(nSamp7)
+region(sampRots7,method='moment',type='bootstrap',estimator='median',alp=.01,m=500)*180/pi*sqrt(nSamp7)
+
+plot(sampRots7,center=mean(sampRots7),mean_regions="all",alp=.1) 
+plot(sampRots7,center=mean(sampRots7),mean_regions="all",alp=.1,col=2) 
+plot(sampRots7,center=mean(sampRots7),mean_regions="all",alp=.1,col=3) 
+
+region(sampRots7,method='moment',type='theory',estimator='mean',alp=.01)*180/pi*sqrt(nSamp7)
+region(sampRots7,method='moment',type='bootstrap',estimator='mean',alp=.01,m=500)*180/pi*sqrt(nSamp7)
+
+
+####
+#Try a different grain, grain 8
+
+qplot(xpos,ypos,colour=dE2,data=loc.stats,size=I(4))
+
+#That didn't work, try to find grains based on xpos ypos & dE1
+grain8<-loc.stats[ loc.stats$xpos<2.5,]
+grain8<-grain8[ grain8$ypos>7.5,]
+grain8<-grain8[ grain8$dE1>2 & grain8$dE1<2.5,]  #I think this gives us the .5 deg threshold Bingham mentions
+grain8Locs<-grain8$location
+qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain8Locs,],xlim=c(0,12),ylim=c(0,10.04591),size=I(4))
+
+#take the first rep because it is the most reliable
+samp8<-dat.out[dat.out$location%in%grain8Locs & dat.out$rep==1,]
+samp8<-samp8[ samp8$V1>.79,]
+nSamp8<-nrow(samp8)
+nSamp8
+#sampRots<-as.SO3(data.matrix(samp[sample(1:nSamp,10,replace=F),3:11])) #randomly select 10 locations
+sampRots8<-as.SO3(data.matrix(samp8[,3:11])) #take them all
+plot(sampRots8,center=median(sampRots8),median_regions="all",alp=.1) 
+plot(sampRots7,center=median(sampRots7),median_regions="all",alp=.1,col=2) 
+plot(sampRots7,center=median(sampRots7),median_regions="all",alp=.1,col=3) 
+
+region(sampRots8,method='moment',type='theory',estimator='median',alp=.01)*180/pi*sqrt(nSamp8)
+region(sampRots8,method='moment',type='bootstrap',estimator='median',alp=.01,m=500)*180/pi*sqrt(nSamp8)
+
+plot(sampRots7,center=mean(sampRots7),mean_regions="all",alp=.1) 
+plot(sampRots7,center=mean(sampRots7),mean_regions="all",alp=.1,col=2) 
+plot(sampRots7,center=mean(sampRots7),mean_regions="all",alp=.1,col=3) 
+
+region(sampRots8,method='moment',type='theory',estimator='mean',alp=.01)*180/pi*sqrt(nSamp8)
+region(sampRots8,method='moment',type='bootstrap',estimator='mean',alp=.01,m=500)*180/pi*sqrt(nSamp8)
+
+
+#Slideshow to identify all the grains so far:
+qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain1Locs,],xlim=c(0,12),ylim=c(0,10.04591),size=I(4))
+qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain2Locs,],xlim=c(0,12),ylim=c(0,10.04591),size=I(4))
+qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain3Locs,],xlim=c(0,12),ylim=c(0,10.04591),size=I(4))
+qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain4Locs,],xlim=c(0,12),ylim=c(0,10.04591),size=I(4))
+qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain5Locs,],xlim=c(0,12),ylim=c(0,10.04591),size=I(4))
+qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain6Locs,],xlim=c(0,12),ylim=c(0,10.04591),size=I(4))
+qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain7Locs,],xlim=c(0,12),ylim=c(0,10.04591),size=I(4))
+qplot(xpos,ypos,colour=dE1,data=loc.stats[loc.stats$location%in%grain8Locs,],xlim=c(0,12),ylim=c(0,10.04591),size=I(4))
 
 
 ####################
