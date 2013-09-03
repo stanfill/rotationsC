@@ -195,13 +195,14 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
 	}
   
 	if (!is.null(mean_regions)) {
-	  prentr <- changr <- zhangr  <- NA
-	  if(any(mean_regions%in%c('all','All'))) mean_regions<-c("eigen theory","moment theory","moment bootstrap")
+	  prentr <- fishr <- changr <- zhangr  <- NA
+	  if(any(mean_regions%in%c('all','All'))) mean_regions<-c("eigen theory","eigen bootstrap","moment theory","moment bootstrap")
 	  if (length(grep("eigen theory", mean_regions)) > 0) prentr<-region(Rs,estimator='mean',method='eigen',type='theory',alp=alp)[col]
-	  if (length(grep("moment theory", mean_regions)) >0)    changr<-region(Rs,estimator='mean',method='moment',type='theory',alp=alp)
+	  if (length(grep("eigen bootstrap", mean_regions)) > 0) fishr<-region(Rs,estimator='mean',method='eigen',type='bootstrap',alp=alp,m=m)
+    if (length(grep("moment theory", mean_regions)) >0)    changr<-region(Rs,estimator='mean',method='moment',type='theory',alp=alp)
 	  if (length(grep("moment bootstrap", mean_regions)) > 0)    zhangr<-region(Rs,estimator='mean',method='moment',type='bootstrap',alp=alp,m=m)
 
-	  Regions<-data.frame(X1=c(prentr,changr,zhangr),Meth=c('Mean\nEigenvalue Theory','Mean\nMoment Theory','Mean\nMoment Bootstrap'))
+	  Regions<-data.frame(X1=c(prentr,fishr,changr,zhangr),Meth=c('Mean\nEigen Theory','Mean\nEigen Bootstrap','Mean\nMoment Theory','Mean\nMoment Bootstrap'))
 	  Regions <- na.omit(Regions)
 	  
     cisp.boot<-NULL
@@ -212,7 +213,6 @@ plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, labe
       
       if(col==2)
         cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(runif(1,-1,1),0,runif(1,-1,1)), Regions$X1[i]),simplify="matrix")))
-      
       
       if(col==3)
 	      cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(runif(2,-1,1),0), Regions$X1[i]),simplify="matrix")))
