@@ -335,7 +335,7 @@ genR <- function(r, S = NULL, space='SO3') {
   	}else{
 
   	  S<-formatSO3(S)
-  	  o<-centeringSO3(o,t(S))
+  	  o<-center.SO3(o,t(S))
   	  class(o) <- "SO3"
   	  return(o)
   	
@@ -358,7 +358,7 @@ genR <- function(r, S = NULL, space='SO3') {
   	
   		S<-formatQ4(S)
   		S[2:4]<--S[2:4]
-  		q<-centeringQ4(q,S)
+  		q<-center.Q4(q,S)
   	
   		class(q)<-"Q4"
   		return(q)
