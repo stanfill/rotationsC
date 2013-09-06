@@ -27,3 +27,4 @@ Collate:
     'regions.R'
     'RcppExports.R'
     'plot.R'
+    'grid-search.R'
