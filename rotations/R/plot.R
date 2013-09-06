@@ -121,7 +121,7 @@ pointsXYZ <- function(data, center, column=1) {
 #' matrix and the user can choose to display this center or not.  Based on \code{ggplot2} package by \cite{wickham09}.
 #'
 #' @param x n rotations in SO3 format
-#' @param center point about which to center the observations
+#' @param center rotation about which to center the observations
 #' @param col integer 1 to 3 indicating which column to display
 #' @param to_range show only part of the globe that is in range of the data?
 #' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "geom.mean", "geom.median"
@@ -141,7 +141,7 @@ pointsXYZ <- function(data, center, column=1) {
 #' # Z is computed internally and contains information on depth
 #' plot(Rs,center=mean(Rs),show_estimates=c("proj.mean", "geom.mean"), label_points=sample(LETTERS, 200, replace=TRUE)) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
 
-plot.SO3 <- function(x, center, col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300,  ...) {
+plot.SO3 <- function(x, center = SO3(diag(c(1,1,1))), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300,  ...) {
 	Rs <- as.SO3(x)
 	xlimits <- c(-1,1)
 	ylimits <- c(-1,1)

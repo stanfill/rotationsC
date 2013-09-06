@@ -39,7 +39,7 @@ rar <- function(n, f, M, ...) {
 #' @param Haar logical; if TRUE density is evaluated with respect to Haar
 #' @return  \item{dcayley}{gives the density}
 #'          \item{pcayley}{gives the distribution function}
-#'          \item{rcayley}{generates random deviates}
+#'          \item{rcayley}{generates a vector of random deviates}
 #' @seealso \link{Angular-distributions} for other distributions in the rotations package
 #' @cite Schaeben97 leon06
 
