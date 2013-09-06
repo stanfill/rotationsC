@@ -147,6 +147,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 	ylimits <- c(-1,1)
 	
 	X <- Y <- Est <- NULL
+  center<-matrix(center,3,3)
 	proj2d <- pointsXYZ(Rs, center=center, column=col)
 	if(to_range) {
 		xlimits <- range(proj2d$X)
