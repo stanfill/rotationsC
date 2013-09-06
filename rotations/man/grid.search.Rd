@@ -1,0 +1,43 @@
+\name{grid.search}
+\alias{grid.search}
+\title{Grid based optimization for user defined main direction of a rotation sample}
+\usage{
+  grid.search(sample, error, minerr = 1e-05,
+    start = mean(sample), theta = NULL)
+}
+\arguments{
+  \item{sample}{sample of rotations}
+
+  \item{error}{user defined function to observed distance
+  between sample and estimate, has to have parameters for
+  the sample and the estimate}
+
+  \item{minerr}{minimal distance to consider for
+  convergence}
+
+  \item{start}{starting value for the estimation}
+
+  \item{theta}{size of the grid considered}
+}
+\value{
+  list of \itemize{ \item Shat estimate of the main
+  direction \item iter number of iterations necessary for
+  convergence \item theta final size of the grid \item
+  minerr error used for convergence \item error numeric
+  value of total sample's distance from main direction }
+}
+\description{
+  Grid based optimization for user defined main direction
+  of a rotation sample
+}
+\examples{
+# minimize L1 norm:
+L1.error <- function(sample, Shat) {
+  sum(dist(sample, Shat, method="intrinsic", p=1))
+}
+
+cayley.sample <- ruars(n = 10, rangle = rcayley, nu = 1, space = 'SO3')
+SL1 <- grid.search(cayley.sample, L1.error)
+plot(cayley.sample, center=SL1$Shat, show_estimates="all")
+}
+

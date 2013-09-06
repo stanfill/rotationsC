@@ -1,21 +1,8 @@
-phi <- seq(0, 2*pi, length=9)
-theta <- seq(0, pi, length=9)
 
-angles <- data.frame(expand.grid(list(phi=phi, theta=theta)))
-angles <- subset(angles, (theta != 0) & (phi != 0))
-
-require(plyr)
-us <- ldply(1:nrow(angles), function(x) {
-	angle <- unlist(angles[x,])
-	theta <- angle[2]
-	phi <- angle[1]
-	U <- c(sin(theta)*cos(phi), sin(theta)*sin(phi), cos(theta))
-	return(cbind(phi=phi, theta=theta, U1=U[1], U2=U[2], U3=U[3]))
-})
-
-sphereA <- function(A, theta) {
+sphereA <- function(sphere, A, theta) {
 	## gives a grid of rotation matrices with the same distance from rotation A
-  R <- SO3(as.matrix(us[,3:5]), theta=rep(theta, length=nrow(us)))
+  R <- sphere #SO3(as.matrix(us[,3:5]), theta=rep(theta, length=nrow(us)))
+    
 # multiplication isn't right
   X <- matrix(A, nrow=3)
   for (i in 1:nrow(R)) {
@@ -24,14 +11,32 @@ sphereA <- function(A, theta) {
   R
 }
 
+search.sphere <- function(k = 9) {
+  ## create a set of equidistant rotation matrices as search sphere
+  phi <- seq(0, 2*pi, length=k)
+  theta <- seq(0, pi, length=k)
+  
+  angles <- data.frame(expand.grid(list(phi=phi, theta=theta)))
+  angles <- subset(angles, (theta != 0) & (phi != 0))
+  
+  require(plyr)
+  us <- ldply(1:nrow(angles), function(x) {
+    angle <- unlist(angles[x,])
+    theta <- angle[2]
+    phi <- angle[1]
+    U <- c(sin(theta)*cos(phi), sin(theta)*sin(phi), cos(theta))
+    return(cbind(phi=phi, theta=theta, U1=U[1], U2=U[2], U3=U[3]))
+  })
+  SO3(as.matrix(us[,3:5]), theta=rep(theta, length=nrow(us)))
+}
 
 
 L2.error <- function(sample, Shat) {
   sum(dist(sample, Shat, method="intrinsic", p=2))
 }
 
-error.grid <- function(sample, Shat, theta=1, error) {
-	rShat <- sphereA(Shat, theta)
+error.grid <- function(sample, Shat, theta=1, error, sphere) {
+	rShat <- sphereA(Shat, theta, sphere=sphere)
 	err <- vector(length=nrow(rShat))
   
 	for (i in 1:nrow(rShat)) {
@@ -72,15 +77,17 @@ grid.search <- function(sample, error, minerr =1e-5, start = mean(sample), theta
 # 		Shat <- as.SO3(sample[start,])
 # 	else if (all(dim(start) == 3))
 # 		Shat <- as.SO3(start)
+
   Shat <- start
   
   err <- error(sample, Shat)
 	if (is.null(theta)) theta <- 0.5*err/nrow(sample)
+  sphere <- search.sphere(9)
   
 	iter <- 0
 	while (theta > minerr) {
-	  rA <- sphereA(Shat, theta)
-	  rA.error <- error.grid(sample, Shat, theta, error)
+	  rA <- sphereA(Shat, theta, sphere=sphere)
+	  rA.error <- error.grid(sample, Shat, theta, error, sphere=sphere)
 	  if (min(rA.error, na.rm=TRUE) < err) {
 	    Shat <- as.SO3(matrix(unlist(rA[which.min(rA.error),]), ncol=3))
 	  } else {
