@@ -335,7 +335,7 @@ genR <- function(r, S = NULL, space='SO3') {
   	}else{
 
   	  S<-formatSO3(S)
-  	  o<-center.SO3(o,t(S))
+  	  o<-center.SO3(o,S)
   	  class(o) <- "SO3"
   	  return(o)
   	

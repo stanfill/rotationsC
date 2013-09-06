@@ -18,11 +18,13 @@ numN<-length(n)
 kap<-2
 tstats<-matrix(0,B,numN)
 
+S<-as.SO3(matrix(genR(pi/4),3,3))
+
 for(j in 1:numN){
 	
 	for(i in 1:B){
 		rs<-rcayley(n[j],kappa=kap)
-		Rs<-genR(rs)
+		Rs<-genR(rs,S=S)
 		
 		Shat<-median(Rs)
     
