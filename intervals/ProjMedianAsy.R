@@ -19,6 +19,7 @@ kap<-2
 tstats<-matrix(0,B,numN)
 
 S<-as.SO3(matrix(genR(pi/4),3,3))
+#S<-id.SO3
 
 for(j in 1:numN){
 	
@@ -38,7 +39,7 @@ for(j in 1:numN){
 		c<-mean(crs)/6  #I think this is C for proj median according to notes from 7/16
 		d<-mean(drs)/12
 
-		ShatMedian<-dist(Shat,method='intrinsic',p=2)
+		ShatMedian<-dist(Shat,S,method='intrinsic',p=2)
 	
 		tstats[i,j]<-2*n[j]*(d^2)*ShatMedian/c
 	

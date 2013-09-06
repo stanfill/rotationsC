@@ -27,8 +27,8 @@
 }
 \value{
   \item{dcayley}{gives the density} \item{pcayley}{gives
-  the distribution function} \item{rcayley}{generates
-  random deviates}
+  the distribution function} \item{rcayley}{generates a
+  vector of random deviates}
 }
 \description{
   Density and random generation for the Cayley distribution
