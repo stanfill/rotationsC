@@ -19,15 +19,10 @@ search.sphere <- function(k = 9) {
   angles <- data.frame(expand.grid(list(phi=phi, theta=theta)))
   angles <- subset(angles, (theta != 0) & (phi != 0))
   
-  require(plyr)
-  us <- ldply(1:nrow(angles), function(x) {
-    angle <- unlist(angles[x,])
-    theta <- angle[2]
-    phi <- angle[1]
-    U <- c(sin(theta)*cos(phi), sin(theta)*sin(phi), cos(theta))
-    return(cbind(phi=phi, theta=theta, U1=U[1], U2=U[2], U3=U[3]))
-  })
-  SO3(as.matrix(us[,3:5]), theta=rep(theta, length=nrow(us)))
+  Us <- with(angles, data.frame(U1 = sin(theta)*cos(phi), 
+                                U2=sin(theta)*sin(phi), 
+                                U3=cos(theta)))
+  SO3(as.matrix(Us), theta=rep(theta, length=nrow(us)))
 }
 
 
