@@ -335,7 +335,7 @@ genR <- function(r, S = NULL, space='SO3') {
   	}else{
 
   	  S<-formatSO3(S)
-  	  o<-center.SO3(o,S)
+  	  o<-center2.SO3(o,S)
   	  class(o) <- "SO3"
   	  return(o)
   	
@@ -518,6 +518,17 @@ center.SO3<-function(Rs,S){
 	return(as.SO3(Rs))
 }
 
+center2.SO3<-function(Rs,S){
+  #This takes a set of observations in SO3 and centers them around S
+  
+  Rs<-formatSO3(Rs)
+  S<-matrix(formatSO3(S),3,3)
+  
+  for(i in 1:nrow(Rs)){
+    Rs[i,]<-S%*%matrix(Rs[i,],3,3)
+  }
+  return(as.SO3(Rs))
+}
 
 #' @rdname center
 #' @method center Q4
