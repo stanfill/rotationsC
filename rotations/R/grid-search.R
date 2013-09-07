@@ -37,7 +37,7 @@ error.grid <- function(sample, Shat, theta=1, error, sphere) {
   return(err)
 }
 
-#' Grid based optimization for user defined main direction of a rotation sample
+#' Gradient based optimization for user defined main direction of a rotation sample
 #' 
 #' @param sample sample of rotations
 #' @param error user defined function to observed distance between sample and estimate, has to have parameters for the sample and the estimate
@@ -60,10 +60,10 @@ error.grid <- function(sample, Shat, theta=1, error, sphere) {
 #' }
 #' 
 #' cayley.sample <- ruars(n = 10, rangle = rcayley, nu = 1, space = 'SO3')
-#' SL1 <- grid.search(cayley.sample, L1.error)
+#' SL1 <- gradient.search(cayley.sample, L1.error)
 #' plot(cayley.sample, center=SL1$Shat, show_estimates="all")
 
-grid.search <- function(sample, error, minerr =1e-5, start = mean(sample), theta=NULL) {
+gradient.search <- function(sample, error, minerr =1e-5, start = mean(sample), theta=NULL) {
 # 	if (length(start) == 1)
 # 		Shat <- as.SO3(sample[start,])
 # 	else if (all(dim(start) == 3))
