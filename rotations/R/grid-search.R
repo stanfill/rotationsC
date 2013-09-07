@@ -1,9 +1,18 @@
+search.sphere <- function(k=9) {
+  phi <- seq(0, 2*pi, length=k)
+  theta <- seq(0, pi, length=k)
+  
+  angles <- data.frame(expand.grid(list(phi=phi, theta=theta)))
+  angles <- subset(angles, (theta != 0) & (phi != 0))
+  
+  us <- with(angles, data.frame(U1=sin(theta)*cos(phi), U2=sin(theta)*sin(phi), U3=cos(theta)))
+  us
+}
 
-sphereA <- function(sphere, A, theta) {
-	## gives a grid of rotation matrices with the same distance from rotation A
-  R <- sphere #SO3(as.matrix(us[,3:5]), theta=rep(theta, length=nrow(us)))
-    
-# multiplication isn't right
+sphereA <- function(A, theta, sphere) {
+  ## gives a grid of rotation matrices with the same distance from rotation A
+  R <- SO3(as.matrix(sphere), theta=rep(theta, length=nrow(sphere)))
+  # multiplication isn't right
   X <- matrix(A, nrow=3)
   for (i in 1:nrow(R)) {
     R[i,] <- as.SO3(X %*% matrix(R[i,], nrow=3))   
@@ -11,19 +20,6 @@ sphereA <- function(sphere, A, theta) {
   R
 }
 
-search.sphere <- function(k = 9) {
-  ## create a set of equidistant rotation matrices as search sphere
-  phi <- seq(0, 2*pi, length=k)
-  theta <- seq(0, pi, length=k)
-  
-  angles <- data.frame(expand.grid(list(phi=phi, theta=theta)))
-  angles <- subset(angles, (theta != 0) & (phi != 0))
-  
-  Us <- with(angles, data.frame(U1 = sin(theta)*cos(phi), 
-                                U2=sin(theta)*sin(phi), 
-                                U3=cos(theta)))
-  SO3(as.matrix(Us), theta=rep(theta, length=nrow(us)))
-}
 
 
 L2.error <- function(sample, Shat) {
@@ -31,14 +27,14 @@ L2.error <- function(sample, Shat) {
 }
 
 error.grid <- function(sample, Shat, theta=1, error, sphere) {
-	rShat <- sphereA(Shat, theta, sphere=sphere)
-	err <- vector(length=nrow(rShat))
+  rShat <- sphereA(Shat, theta, sphere)
+  err <- vector(length=nrow(rShat))
   
-	for (i in 1:nrow(rShat)) {
-		R <- matrix(unlist(rShat[i, 1:9]), ncol=3)
-		err[i] <- error(sample, R)
-	}
-	return(err)
+  for (i in 1:nrow(rShat)) {
+    R <- matrix(unlist(rShat[i, 1:9]), ncol=3)
+    err[i] <- error(sample, R)
+  }
+  return(err)
 }
 
 #' Grid based optimization for user defined main direction of a rotation sample
@@ -74,10 +70,9 @@ grid.search <- function(sample, error, minerr =1e-5, start = mean(sample), theta
 # 		Shat <- as.SO3(start)
 
   Shat <- start
-  
+  sphere <- search.sphere()
   err <- error(sample, Shat)
 	if (is.null(theta)) theta <- 0.5*err/nrow(sample)
-  sphere <- search.sphere(9)
   
 	iter <- 0
 	while (theta > minerr) {
@@ -90,7 +85,6 @@ grid.search <- function(sample, error, minerr =1e-5, start = mean(sample), theta
 	  }
 	  err <- error(sample, Shat)
 	  iter <- iter+1
-    if (is.na(theta) | is.na(minerr)) browser()
 	}
 
 #	print(paste("iterations:",iter))
