@@ -1,4 +1,5 @@
 \name{plot.SO3}
+\alias{plot}
 \alias{plot.SO3}
 \title{Visualizing random rotations.}
 \usage{
