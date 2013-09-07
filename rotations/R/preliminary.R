@@ -382,7 +382,7 @@ genR <- function(r, S = NULL, space='SO3') {
 #' @cite moakher02
 #' @export
 
-exp.skew <- function(x) {
+exp_skew <- function(x) {
 
   if(length(x)==9){
     

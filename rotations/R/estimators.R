@@ -270,9 +270,9 @@ weighted.mean.Q4 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter 
 	if(nrow(Qs)==1)
 		return(Qs)
 	
-	Rs<-as.SO3(t(apply(Qs,1,SO3.Q4)))
+	Rs<-SO3(Qs)
 	
-	R<-weighted.mean(Rs,w,type,epsilon,maxIter)
+	R<-weighted.mean.SO3(Rs,w,type,epsilon,maxIter)
 	
 	return(Q4.SO3(R))
 	

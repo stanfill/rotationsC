@@ -14,9 +14,15 @@ ESBD scans from a piece of nickel
     \item{\code{xpos}}{location x position}
     \item{\code{ypos}}{location y position}
     \item{\code{rep}}{Which scan that observation was collected during}
-    \item{\code{v1}\code{v2}\code{v3}}{x-axis of crystal orientation at that location/rep}
-    \item{\code{v4}\code{v5}\code{v6}}{y-axis of crystal orientation at that location/rep}
-    \item{\code{v7}\code{v8}\code{v9}}{z-axis of crystal orientation at that location/rep}
+    \item{\code{v1}}{First element of x-axis describing crystal orientation at corresponding location/rep}
+    \item{\code{v2}}{Second element of x-axis describing crystal orientation at corresponding location/rep}
+    \item{\code{v3}}{Third element of x-axis describing crystal orientation at corresponding location/rep}
+    \item{\code{v4}}{First element of y-axis describing crystal orientation at corresponding location/rep}
+    \item{\code{v5}}{Second element of y-axis describing crystal orientation at corresponding location/rep}
+    \item{\code{v6}}{Third element of y-axis describing crystal orientation at corresponding location/rep}
+    \item{\code{v7}}{First element of z-axis describing crystal orientation at corresponding location/rep}
+    \item{\code{v8}}{Second element of z-axis describing crystal orientation at corresponding location/rep}
+    \item{\code{v9}}{Third element of z-axis describing crystal orientation at corresponding location/rep}
   }
 }
 %\details{

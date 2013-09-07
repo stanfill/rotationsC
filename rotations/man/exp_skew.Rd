@@ -1,8 +1,8 @@
-\name{exp.skew}
-\alias{exp.skew}
+\name{exp_skew}
+\alias{exp_skew}
 \title{Matrix exponential}
 \usage{
-  exp.skew(x)
+  exp_skew(x)
 }
 \arguments{
   \item{x}{singular or sample of 3-by-3 skew-symmetric
