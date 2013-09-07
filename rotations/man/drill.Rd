@@ -15,7 +15,10 @@ The \code{drill} dataset was collected to assess variation in human movement whi
     \item{\code{Joint}}{Joint name (Wrist, elbow, shoulder)}
     \item{\code{Position}}{Drilling position (1-6)}
     \item{\code{Replicate}}{Replicate number (1-5)}
-    \item{\code{Q1},\code{Q2},\code{Q3},\code{Q4}}{Orientation in quaternion parameterization}
+    \item{\code{Q1}}{First element of orientation (quaternion)}
+    \item{\code{Q2}}{Second element of orientation (quaternion)}
+    \item{\code{Q3}}{Third element of orientation (quaternion)}
+    \item{\code{Q4}}{Fourth element of orientation (quaternion)}
   }
 }
 %%\details{

@@ -37,6 +37,7 @@ rar <- function(n, f, M, ...) {
 #' @param kappa Concentration paramter
 #' @param nu The circular variance, can be used in place of kappa
 #' @param Haar logical; if TRUE density is evaluated with respect to Haar
+#' @param lower.tail  logical; if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}
 #' @return  \item{dcayley}{gives the density}
 #'          \item{pcayley}{gives the distribution function}
 #'          \item{rcayley}{generates a vector of random deviates}
@@ -118,6 +119,7 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
 #' @param kappa concentration paramter
 #' @param nu circular variance, can be used in place of kappa
 #' @param Haar logical; if TRUE density is evaluated with respect to Haar
+#' @param lower.tail  logical; if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}
 #' @return  \item{dfisher}{gives the density}
 #'          \item{pfisher}{gives the distribution function}
 #'          \item{rfisher}{generates random deviates}
@@ -191,6 +193,7 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 #' @name Haar
 #' @aliases Haar dhaar phaar rhaar
 #' @param r,q vector of quantiles
+#' @param lower.tail  logical; if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}
 #' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required
 #' @return  \item{dhaar}{gives the density}
 #'          \item{phaar}{gives the distribution function}
@@ -256,7 +259,7 @@ rhaar<-function(n){
 #' @param kappa concentration paramter
 #' @param nu The circular variance, can be used in place of kappa
 #' @param Haar logical; if TRUE density is evaluated with respect to Haar
-#' @param lower.tail logica; if TRUE probabilites are \eqn{P(X\leq x)}{P(X\le x)} otherwise, \eqn{P(X>x)}
+#' @param lower.tail  logical; if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}
 #' @return  \item{dvmises}{gives the density}
 #'          \item{pvmises}{gives the distribution function}
 #'          \item{rvmises}{generates random deviates}
@@ -362,6 +365,7 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #' @name UARS
 #' @aliases UARS puars duars ruars
 #' @param R Value at which to evaluate the UARS density
+#' @param n number of observations. If \code{length(n)>1}, the length is taken to be the number required
 #' @param dangle The function to evaulate the angles from e.g. dcayley, dvmises, dfisher, dhaar
 #' @param pangle The form of the angular density e.g. pcayley, pvmises, pfisher, phaar
 #' @param rangle The function from which to simulate angles e.g. rcayley, rvmises, rhaar, rfisher

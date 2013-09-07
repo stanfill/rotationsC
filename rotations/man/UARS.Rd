@@ -14,6 +14,9 @@
 \arguments{
   \item{R}{Value at which to evaluate the UARS density}
 
+  \item{n}{number of observations. If \code{length(n)>1},
+  the length is taken to be the number required}
+
   \item{dangle}{The function to evaulate the angles from
   e.g. dcayley, dvmises, dfisher, dhaar}
 

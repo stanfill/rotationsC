@@ -134,9 +134,7 @@ id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 #'
 #' @export
 #' @param R object to be coerced or tested
-#' @param U n-by-3 matrix where rows represent axes of rotation
 #' @param theta vector of rotation angles
-#' @param q n-by-4 matrix of quaternions to be translated into rotations
 #' @param ... additional arguments
 #' @format \code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix
 #' @return 	\item{as.SO3}{coerces its object into an SO3 type} 

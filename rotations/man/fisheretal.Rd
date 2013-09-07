@@ -4,17 +4,17 @@
 \alias{fisheretal.SO3}
 \title{Fisher confidence region method}
 \usage{
-  fisheretal(Qs, alp, boot, m, symm)
+  fisheretal(x, alp, boot, m, symm)
 
-  \method{fisheretal}{Q4} (Qs, alp = NULL, boot = T,
+  \method{fisheretal}{Q4} (x, alp = NULL, boot = T,
     m = 300, symm = TRUE)
 
-  \method{fisheretal}{SO3} (Rs, alp = NULL, boot = T,
+  \method{fisheretal}{SO3} (x, alp = NULL, boot = T,
     m = 300, symm = T)
 }
 \arguments{
-  \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
-  row corresponds to a random rotation in matrix (p=9) or
+  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  corresponds to a random rotation in matrix (p=9) or
   quaternion form (p=4)}
 
   \item{alp}{The alpha level desired, e.g. 0.05 or 0.10}

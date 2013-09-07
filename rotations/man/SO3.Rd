@@ -24,13 +24,7 @@
 \arguments{
   \item{R}{object to be coerced or tested}
 
-  \item{U}{n-by-3 matrix where rows represent axes of
-  rotation}
-
   \item{theta}{vector of rotation angles}
-
-  \item{q}{n-by-4 matrix of quaternions to be translated
-  into rotations}
 
   \item{...}{additional arguments}
 }

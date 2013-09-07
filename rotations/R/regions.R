@@ -46,13 +46,13 @@ region.Q4<-function(x,method, type, estimator,alp=NULL,...){
 			stop("The method due to Prentice is only available for the mean estimator.")
 		}
 		
-		r<-prentice.Q4(Qs=Qs,alp=alp)
+		r<-prentice.Q4(x=Qs,alp=alp)
 		
 		return(r)
 		
 	}else	if(method%in%c('Moment','moment') & type%in%c("Bootstrap","bootstrap")){
 		
-		r<-zhang.Q4(Qs=Qs,estimator=estimator,alp=alp,...)
+		r<-zhang.Q4(x=Qs,estimator=estimator,alp=alp,...)
 		
 		return(r)
 		
@@ -62,13 +62,13 @@ region.Q4<-function(x,method, type, estimator,alp=NULL,...){
 			stop("The method due to Fisher et al. is only available for the mean estimator.")
 		}
 		
-		r<-fisheretal.Q4(Qs=Qs,alp=alp,...)
+		r<-fisheretal.Q4(x=Qs,alp=alp,...)
 		
 		return(r)
 		
 	}else	if(method%in%c('Moment','moment') & type%in%c("Theory","theory")){
 		
-		r<-chang.Q4(Qs=Qs,estimator=estimator,alp=alp)
+		r<-chang.Q4(x=Qs,estimator=estimator,alp=alp)
 		
 		return(r)
 		
@@ -172,8 +172,8 @@ prentice.Q4<-function(x,alp=NULL){
 		alp<-.1
 		warning("No alpha-level specified, 0.1 used by default.")
 	}
-	
-	n<-nrow(x)
+	Qs<-x
+	n<-nrow(Qs)
 	Shat<-mean(Qs)
 	Phat<-pMat(Shat)
 	
