@@ -28,7 +28,7 @@ rar <- function(n, f, M, ...) {
 #' Density and random generation for the Cayley distribution with concentration kappa (\eqn{\kappa})
 #'
 #' The symmetric Cayley distribution with concentration kappa (or circular variance nu) had density 
-#' \deqn{C(r |\kappa)=\frac{1}{\sqrt{\pi}} \frac{\Gamma(\kappa+2)}{\Gamma(\kappa+1/2)}2^{-(\kappa+1)}(1+\cos r)^\kappa(1-\cos r).}{C(r |\kappa)= \Gamma(\kappa+2)(1+cos r)^\kappa(1-cos r)/[\Gamma(\kappa+1/2)2^(\kappa+1)\sqrt{\pi}].}
+#' \deqn{C(r |\kappa)=\frac{1}{\sqrt{\pi}} \frac{\Gamma(\kappa+2)}{\Gamma(\kappa+1/2)}2^{-(\kappa+1)}(1+\cos r)^\kappa(1-\cos r).}{C(r |\kappa)= \Gamma(\kappa+2)(1+cos r)^\kappa(1-cos r)/[\Gamma(\kappa+1/2)2^(\kappa+1)\sqrt\pi].}
 #'
 #' @name Cayley
 #' @aliases Cayley rcayley dcayley
@@ -37,12 +37,12 @@ rar <- function(n, f, M, ...) {
 #' @param kappa Concentration paramter
 #' @param nu The circular variance, can be used in place of kappa
 #' @param Haar logical; if TRUE density is evaluated with respect to Haar
-#' @param lower.tail  logical; if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}
+#' @param lower.tail logical; if TRUE (default) probabilities are \eqn{P(X\leq x)}{P(X\le x)} otherwise, \eqn{P(X>x)}
 #' @return  \item{dcayley}{gives the density}
 #'          \item{pcayley}{gives the distribution function}
 #'          \item{rcayley}{generates a vector of random deviates}
 #' @seealso \link{Angular-distributions} for other distributions in the rotations package
-#' @cite Schaeben97 leon06
+#' @cite Schaeben1997 leon2006
 
 NULL
 
