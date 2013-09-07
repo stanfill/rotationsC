@@ -4,17 +4,17 @@
 \alias{sum_dist.SO3}
 \title{Sample Distance}
 \usage{
-  sum_dist(Rs, S = genR(0, space = class(Rs)),
+  sum_dist(x, S = genR(0, space = class(Rs)),
     method = "projected", p = 1)
 
-  \method{sum_dist}{SO3} (Rs, S = id.SO3,
+  \method{sum_dist}{SO3} (x, S = id.SO3,
     method = "projected", p = 1)
 
-  \method{sum_dist}{Q4} (Qs, S = id.Q4,
+  \method{sum_dist}{Q4} (x, S = id.Q4,
     method = "projected", p = 1)
 }
 \arguments{
-  \item{Rs}{a matrix of rotation observations, one row per
+  \item{x}{a matrix of rotation observations, one row per
   observation}
 
   \item{S}{the individual matrix of interest, usually an

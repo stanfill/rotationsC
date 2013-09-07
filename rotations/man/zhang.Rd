@@ -4,15 +4,15 @@
 \alias{zhang.SO3}
 \title{Zhang confidence region method}
 \usage{
-  zhang(Qs, estimator, alp, m)
+  zhang(x, estimator, alp, m)
 
-  \method{zhang}{SO3} (Rs, estimator, alp = NULL, m = 300)
+  \method{zhang}{SO3} (x, estimator, alp = NULL, m = 300)
 
-  \method{zhang}{Q4} (Qs, estimator, alp = NULL, m = 300)
+  \method{zhang}{Q4} (x, estimator, alp = NULL, m = 300)
 }
 \arguments{
-  \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
-  row corresponds to a random rotation in matrix (p=9) or
+  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  corresponds to a random rotation in matrix (p=9) or
   quaternion form (p=4)}
 
   \item{estimator}{Character string either 'mean' or

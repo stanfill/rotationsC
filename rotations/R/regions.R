@@ -4,7 +4,7 @@
 #' The current methods available are due to \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}},
 #' and \code{\link{zhang}}.
 #'
-#' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
+#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param method Character string specifying which type of interval to report, "eigen" or "moment" based theory
 #' @param type Characted string, "bootstrap" or "theory" are available
 #' @param estimator Character string either "mean" or '"median"
@@ -17,11 +17,11 @@
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
 #' region(Rs,method='eigen',type='theory',estimator='mean',alp=0.1)
-#' region(Rs,method='eigen',type='bootstrap',estimator='mean',alp=0.1,symm=T)
+#' region(Rs,method='eigen',type='bootstrap',estimator='mean',alp=0.1,symm=TRUE)
 #' region(Rs,method='moment',type='bootstrap',estimator='mean',alp=0.1,m=100)
 #' region(Rs,method='moment',type='theory',estimator='mean',alp=0.1)
 
-region<-function(Qs,method, type, estimator,alp,...){
+region<-function(x,method, type, estimator,alp,...){
 	UseMethod("region")
 }
 
@@ -30,9 +30,9 @@ region<-function(Qs,method, type, estimator,alp,...){
 #' @method region Q4
 #' @S3method region Q4
 
-region.Q4<-function(Qs,method, type, estimator,alp=NULL,...){
+region.Q4<-function(x,method, type, estimator,alp=NULL,...){
 	
-	Qs<-formatQ4(Qs)
+	Qs<-formatQ4(x)
 	
 	if(is.null(alp)){
 		#Take a default alpha=0.1 if no level is specified
@@ -85,9 +85,9 @@ region.Q4<-function(Qs,method, type, estimator,alp=NULL,...){
 #' @method region SO3
 #' @S3method region SO3
 
-region.SO3<-function(Rs,method,type,estimator,alp=NULL,...){
+region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 	
-	Rs<-formatSO3(Rs)
+	Rs<-formatSO3(x)
 	
 	if(is.null(alp)){
 		#Take a default alpha=0.1 if no level is specified
@@ -101,13 +101,13 @@ region.SO3<-function(Rs,method,type,estimator,alp=NULL,...){
 			stop("The method due to Prentice is only available for the mean estimator.")
 		}
 		
-		r<-prentice.SO3(Rs=Rs,alp=alp)
+		r<-prentice.SO3(x=Rs,alp=alp)
 		
 		return(r)
 		
 	}else if(method%in%c('Moment','moment') & type%in%c("Bootstrap","bootstrap")){
 		
-		r<-zhang.SO3(Rs=Rs,estimator=estimator,alp=alp,...)
+		r<-zhang.SO3(x=Rs,estimator=estimator,alp=alp,...)
 		
 		return(r)
 		
@@ -117,13 +117,13 @@ region.SO3<-function(Rs,method,type,estimator,alp=NULL,...){
 			stop("The method due to Fisher et al. is only available for the mean estimator.")
 		}
 		
-		r<-fisheretal.SO3(Rs=Rs,alp=alp,...)
+		r<-fisheretal.SO3(x=Rs,alp=alp,...)
 		
 		return(r)
 		
 	}else if(method%in%c('Moment','moment') & type%in%c("Theory","theory")){
 		
-		r<-chang.SO3(Rs=Rs,estimator=estimator,alp=alp)
+		r<-chang.SO3(x=Rs,estimator=estimator,alp=alp)
 		
 		return(r)
 		
@@ -144,7 +144,7 @@ region.SO3<-function(Rs,method,type,estimator,alp=NULL,...){
 #' in each axis is different so each axis will have its own radius.  In \cite{bingham09} they take the largest radius and use it to
 #' form regions that are symmetric about each axis.
 #'
-#' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
+#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param alp The alpha level desired, e.g. 0.05 or 0.10
 #' @return Radius of the confidence region centered at the projected mean for each of the x-, y- and z-axis
 #' @seealso \code{\link{fisheretal}} \code{\link{chang}} \code{\link{zhang}}
@@ -154,7 +154,7 @@ region.SO3<-function(Rs,method,type,estimator,alp=NULL,...){
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
 #' region(Qs,method='eigen',type='theory',alp=0.1,estimator='mean')
 
-prentice<-function(Qs,alp){
+prentice<-function(x,alp){
 	UseMethod("prentice")
 }
 
@@ -163,17 +163,17 @@ prentice<-function(Qs,alp){
 #' @method prentice Q4
 #' @S3method prentice Q4
 
-prentice.Q4<-function(Qs,alp=NULL){
+prentice.Q4<-function(x,alp=NULL){
 	#This takes a sample qs and returns the radius of the confidence region
 	#centered at the projected mean
-	
+
 	if(is.null(alp)){
 		#Take a default alpha=0.1 if no level is specified
 		alp<-.1
 		warning("No alpha-level specified, 0.1 used by default.")
 	}
 	
-	n<-nrow(Qs)
+	n<-nrow(x)
 	Shat<-mean(Qs)
 	Phat<-pMat(Shat)
 	
@@ -199,8 +199,8 @@ prentice.Q4<-function(Qs,alp=NULL){
 #' @method prentice SO3
 #' @S3method prentice SO3
 
-prentice.SO3<-function(Rs,alp=NULL){
-	Qs<-Q4(Rs)
+prentice.SO3<-function(x,alp=NULL){
+	Qs<-Q4(x)
 	r<-prentice.Q4(Qs,alp)
 	return(r)
 }
@@ -214,7 +214,7 @@ prentice.SO3<-function(Rs,alp=NULL){
 #' radius so the radius reported is for all three axis.  A normal theory version of this procedure uses the theoretical
 #' chi-square limiting distribution and is given by the \code{\link{chang}} option.
 #'
-#' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
+#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param estimator Character string either 'mean' or 'median'
 #' @param alp The alpha level desired, e.g. 0.05 or 0.10
 #' @param m Number of replicates to use to estiamte cut point
@@ -225,7 +225,7 @@ prentice.SO3<-function(Rs,alp=NULL){
 #' Rs<-ruars(20,rcayley,kappa=100)
 #' region(Rs,method='moment',type='bootstrap',alp=0.1,estimator='mean')
 
-zhang<-function(Qs,estimator,alp,m){
+zhang<-function(x,estimator,alp,m){
 	UseMethod("zhang")
 }
 
@@ -234,14 +234,14 @@ zhang<-function(Qs,estimator,alp,m){
 #' @method zhang SO3
 #' @S3method zhang SO3
 
-zhang.SO3<-function(Rs,estimator,alp=NULL,m=300){
+zhang.SO3<-function(x,estimator,alp=NULL,m=300){
 	
 	#Rs is a n-by-9 matrix where each row is an 3-by-3 rotation matrix
 	#m is the number of resamples to find q_1-a
 	#alp is the level of confidence desired, e.g. 0.95 or 0.90
 	#pivot logical; should the pivotal (T) bootstrap be used or nonpivotal (F)
 	
-  Rs<-formatSO3(Rs)
+  Rs<-formatSO3(x)
   
   if(estimator=='median'){
   	
@@ -272,8 +272,8 @@ zhang.SO3<-function(Rs,estimator,alp=NULL,m=300){
 #' @method zhang Q4
 #' @S3method zhang Q4
 
-zhang.Q4<-function(Qs,estimator,alp=NULL,m=300){
-	
+zhang.Q4<-function(x,estimator,alp=NULL,m=300){
+
 	if(estimator=='mean'){
 	
 		if(is.null(alp)){
@@ -282,7 +282,7 @@ zhang.Q4<-function(Qs,estimator,alp=NULL,m=300){
 			warning("No alpha-level specified, 0.1 used by default.")
 		}
 	
-		Qs<-formatQ4(Qs)
+		Qs<-formatQ4(x)
 		n<-nrow(Qs)
   	stats<-zhangQ4(Qs,m)
 		#Shat<-mean(Qs)
@@ -329,7 +329,7 @@ cdfuns<-function(Qs,estimator){
 #' estimator based on a result due to \cite{chang2001}.  By construction each axis will have the same
 #' radius so the radius reported is for all three axis.
 #'
-#' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
+#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param estimator Character string either 'mean' or 'median'
 #' @param alp The alpha level desired, e.g. 0.05 or 0.10
 #' @return Radius of the confidence region centered at the projected mean
@@ -340,7 +340,7 @@ cdfuns<-function(Qs,estimator){
 #' Rs<-ruars(20,rcayley,kappa=100)
 #' region(Rs,method='moment',type='theory',alp=0.1,estimator='mean')
 
-chang<-function(Qs,estimator,alp){
+chang<-function(x,estimator,alp){
 	UseMethod("chang")
 }
 
@@ -349,13 +349,13 @@ chang<-function(Qs,estimator,alp){
 #' @method chang SO3
 #' @S3method chang SO3
 
-chang.SO3<-function(Rs,estimator,alp=NULL){
+chang.SO3<-function(x,estimator,alp=NULL){
 	
 	#Rs is a n-by-9 matrix where each row is an 3-by-3 rotation matrix
 	#alp is the level of confidence desired, e.g. 0.95 or 0.90
 	#pivot logical; should the pivotal (T) bootstrap be used or nonpivotal (F)
 	
-	Rs<-formatSO3(Rs)
+	Rs<-formatSO3(x)
 	Qs<-Q4(Rs)
 	rad<-chang.Q4(Qs,estimator,alp)
 	return(rad)
@@ -365,7 +365,7 @@ chang.SO3<-function(Rs,estimator,alp=NULL){
 #' @method chang Q4
 #' @S3method chang Q4
 
-chang.Q4<-function(Qs,estimator,alp=NULL){
+chang.Q4<-function(x,estimator,alp=NULL){
 	
 	if(is.null(alp)){
 		#Take a default alpha=0.1 if no level is specified
@@ -373,7 +373,7 @@ chang.Q4<-function(Qs,estimator,alp=NULL){
 		warning("No alpha-level specified, 0.1 used by default.")
 	}
 	
-	Qs<-formatQ4(Qs)
+	Qs<-formatQ4(x)
 	n<-nrow(Qs)
 	
 	cdhat<-cdfuns(Qs,estimator)
@@ -392,7 +392,7 @@ chang.Q4<-function(Qs,estimator,alp=NULL){
 #' estimator using the method for the mean polar axis as proposed in \cite{fisher1996}.  To be able to reduce their method
 #' to a radius requires the additonal assumption of rotational symmetry, equation (10) in \cite{fisher1996}. 
 #'
-#' @param Rs,Qs A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
+#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param alp The alpha level desired, e.g. 0.05 or 0.10
 #' @param boot Should the bootstrap or normal theory critical value be used
 #' @param m number of bootstrap replicates to use to estimate critical value
@@ -405,7 +405,7 @@ chang.Q4<-function(Qs,estimator,alp=NULL){
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
 #' region(Qs,method='eigen',type='bootstrap',alp=0.1,symm=TRUE,estimator='mean')
 
-fisheretal<-function(Qs,alp,boot,m,symm){
+fisheretal<-function(x,alp,boot,m,symm){
 	UseMethod("fisheretal")
 }
 
@@ -414,7 +414,7 @@ fisheretal<-function(Qs,alp,boot,m,symm){
 #' @method fisheretal Q4
 #' @S3method fisheretal Q4
 
-fisheretal.Q4<-function(Qs,alp=NULL,boot=T,m=300,symm=TRUE){
+fisheretal.Q4<-function(x,alp=NULL,boot=T,m=300,symm=TRUE){
 	
 	if(is.null(alp)){
 		#Take a default alpha=0.1 if no level is specified
@@ -422,7 +422,7 @@ fisheretal.Q4<-function(Qs,alp=NULL,boot=T,m=300,symm=TRUE){
 		warning("No alpha-level specified, 0.1 used by default.")
 	}
 	
-	Qs<-formatQ4(Qs)
+	Qs<-formatQ4(x)
 	
 	if(boot){
     
@@ -458,9 +458,9 @@ optimAxis<-function(r,Qs,cut,symm){
 #' @method fisheretal SO3
 #' @S3method fisheretal SO3
 
-fisheretal.SO3<-function(Rs,alp=NULL,boot=T,m=300,symm=T){
+fisheretal.SO3<-function(x,alp=NULL,boot=T,m=300,symm=T){
 	
-	Qs<-Q4(Rs)
+	Qs<-Q4(x)
 	r<-fisheretal.Q4(Qs,alp,boot,m,symm)
 	
 	return(r)

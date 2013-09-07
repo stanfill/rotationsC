@@ -15,12 +15,12 @@ The \code{drill} dataset was collected to assess variation in human movement whi
     \item{\code{Joint}}{Joint name (Wrist, elbow, shoulder)}
     \item{\code{Position}}{Drilling position (1-6)}
     \item{\code{Replicate}}{Replicate number (1-5)}
-    \item{\code{Q1}-\code{Q4}}{Orientation in quaternion parameterization}
+    \item{\code{Q1},\code{Q2},\code{Q3},\code{Q4}}{Orientation in quaternion parameterization}
   }
 }
-\details{
+%%\details{
 %%  ~~ If necessary, more details than the __description__ above ~~
-}
+%%}
 \source{
 http://www.mat.ulaval.ca/departement-et-professeurs/direction-et-personnel/professeurs/louis-paul-rivest/publications/
 }

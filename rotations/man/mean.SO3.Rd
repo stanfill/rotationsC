@@ -2,11 +2,11 @@
 \alias{mean.SO3}
 \title{Mean Rotation}
 \usage{
-  \method{mean}{SO3} (Rs, type = "projected",
+  \method{mean}{SO3} (x, type = "projected",
     epsilon = 1e-05, maxIter = 2000, ...)
 }
 \arguments{
-  \item{Rs}{A \eqn{n\times 9}{n-by-9} matrix where each row
+  \item{x}{A \eqn{n\times 9}{n-by-9} matrix where each row
   corresponds to a random rotation in matrix form}
 
   \item{type}{String indicating 'projected' or 'geometric'

@@ -4,14 +4,14 @@
 \alias{center.SO3}
 \title{Center rotation data}
 \usage{
-  center(Rs, S)
+  center(x, S)
 
-  \method{center}{SO3} (Rs, S)
+  \method{center}{SO3} (x, S)
 
-  \method{center}{Q4} (Qs, S)
+  \method{center}{Q4} (x, S)
 }
 \arguments{
-  \item{Rs,Qs}{the sample to be centered}
+  \item{x}{the sample of rotations to be centered}
 
   \item{S}{the rotation to sample around}
 }

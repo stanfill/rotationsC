@@ -4,15 +4,15 @@
 \alias{chang.SO3}
 \title{Chang and Rivest confidence region method}
 \usage{
-  chang(Qs, estimator, alp)
+  chang(x, estimator, alp)
 
-  \method{chang}{SO3} (Rs, estimator, alp = NULL)
+  \method{chang}{SO3} (x, estimator, alp = NULL)
 
-  \method{chang}{Q4} (Qs, estimator, alp = NULL)
+  \method{chang}{Q4} (x, estimator, alp = NULL)
 }
 \arguments{
-  \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
-  row corresponds to a random rotation in matrix (p=9) or
+  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  corresponds to a random rotation in matrix (p=9) or
   quaternion form (p=4)}
 
   \item{estimator}{Character string either 'mean' or

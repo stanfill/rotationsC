@@ -2,11 +2,11 @@
 \alias{weighted.mean.SO3}
 \title{Weighted Mean Rotation}
 \usage{
-  \method{weighted.mean}{SO3} (Rs, w, type = "projected",
+  \method{weighted.mean}{SO3} (x, w, type = "projected",
     epsilon = 1e-05, maxIter = 2000, ...)
 }
 \arguments{
-  \item{Rs}{A \eqn{n\times 9}{n-by-9} matrix where each row
+  \item{x}{A \eqn{n\times 9}{n-by-9} matrix where each row
   corresponds to a random rotation in matrix form}
 
   \item{w}{a numerical vector of weights the same length as

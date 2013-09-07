@@ -4,15 +4,15 @@
 \alias{prentice.SO3}
 \title{Prentice confidence region method}
 \usage{
-  prentice(Qs, alp)
+  prentice(x, alp)
 
-  \method{prentice}{Q4} (Qs, alp = NULL)
+  \method{prentice}{Q4} (x, alp = NULL)
 
-  \method{prentice}{SO3} (Rs, alp = NULL)
+  \method{prentice}{SO3} (x, alp = NULL)
 }
 \arguments{
-  \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
-  row corresponds to a random rotation in matrix (p=9) or
+  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  corresponds to a random rotation in matrix (p=9) or
   quaternion form (p=4)}
 
   \item{alp}{The alpha level desired, e.g. 0.05 or 0.10}

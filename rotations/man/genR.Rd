@@ -33,7 +33,7 @@
 }
 \examples{
 r<-rvmises(20,0.01)
-genrC2(r)
+genR(r)
 }
 \references{
   Bingham M, Nordman D and Vardeman S (2009). "Modeling and

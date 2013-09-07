@@ -2,10 +2,10 @@
 \alias{exp.skew}
 \title{Matrix exponential}
 \usage{
-  exp.skew(H)
+  exp.skew(x)
 }
 \arguments{
-  \item{H}{singular or sample of 3-by-3 skew-symmetric
+  \item{x}{singular or sample of 3-by-3 skew-symmetric
   matrices, i.e. H such that \eqn{\bm H=-\bm H^\top}}
 }
 \value{

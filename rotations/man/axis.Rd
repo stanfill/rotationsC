@@ -4,14 +4,16 @@
 \alias{axis.SO3}
 \title{Misorientation Axis}
 \usage{
-  axis(R)
+  axis(x, ...)
 
-  \method{axis}{SO3} (R)
+  \method{axis}{SO3} (x, ...)
 
-  \method{axis}{Q4} (q)
+  \method{axis}{Q4} (x, ...)
 }
 \arguments{
-  \item{R,q}{3-by-3 matrix in SO3 or unit quaterion}
+  \item{x}{3-by-3 matrix in SO3 or unit quaterion}
+
+  \item{...}{additional arguements}
 }
 \value{
   axis in form of three dimensional vector of length one.

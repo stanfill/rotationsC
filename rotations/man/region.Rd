@@ -4,17 +4,17 @@
 \alias{region.SO3}
 \title{Confidence Region for Central Orientation}
 \usage{
-  region(Qs, method, type, estimator, alp, ...)
+  region(x, method, type, estimator, alp, ...)
 
-  \method{region}{Q4} (Qs, method, type, estimator,
+  \method{region}{Q4} (x, method, type, estimator,
     alp = NULL, ...)
 
-  \method{region}{SO3} (Rs, method, type, estimator,
+  \method{region}{SO3} (x, method, type, estimator,
     alp = NULL, ...)
 }
 \arguments{
-  \item{Rs,Qs}{A \eqn{n\times p}{n-by-p} matrix where each
-  row corresponds to a random rotation in matrix (p=9) or
+  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  corresponds to a random rotation in matrix (p=9) or
   quaternion form (p=4)}
 
   \item{method}{Character string specifying which type of
@@ -44,7 +44,7 @@
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)
 region(Rs,method='eigen',type='theory',estimator='mean',alp=0.1)
-region(Rs,method='eigen',type='bootstrap',estimator='mean',alp=0.1,symm=T)
+region(Rs,method='eigen',type='bootstrap',estimator='mean',alp=0.1,symm=TRUE)
 region(Rs,method='moment',type='bootstrap',estimator='mean',alp=0.1,m=100)
 region(Rs,method='moment',type='theory',estimator='mean',alp=0.1)
 }

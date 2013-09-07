@@ -205,7 +205,7 @@ NumericVector zhangQ4(NumericMatrix Q, int m){
 		sqrth = oneRdistC(QhatStarMat,Qhat);
 		
 		if(cdstar[0]<0.0000001){
-			printf("c is too small");
+			//printf("c is too small");
       cdstar[0]=0.0000001;
 		}
 		

@@ -6,11 +6,11 @@
 \usage{
   median(x, ...)
 
-  \method{median}{SO3} (Rs, type = "projected",
-    epsilon = 1e-05, maxIter = 2000)
+  \method{median}{SO3} (x, type = "projected",
+    epsilon = 1e-05, maxIter = 2000, ...)
 
-  \method{median}{Q4} (Qs, type = "projected",
-    epsilon = 1e-05, maxIter = 2000)
+  \method{median}{Q4} (x, type = "projected",
+    epsilon = 1e-05, maxIter = 2000, ...)
 }
 \arguments{
   \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row

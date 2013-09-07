@@ -2,11 +2,11 @@
 \alias{mean.Q4}
 \title{Mean Rotation}
 \usage{
-  \method{mean}{Q4} (Qs, type = "projected",
-    epsilon = 1e-05, maxIter = 2000)
+  \method{mean}{Q4} (x, type = "projected",
+    epsilon = 1e-05, maxIter = 2000, ...)
 }
 \arguments{
-  \item{Qs}{A \eqn{n\times 4}{n-by-4} matrix where each row
+  \item{x}{A \eqn{n\times 4}{n-by-4} matrix where each row
   corresponds to a random rotation in unit quaternion}
 
   \item{type}{String indicating 'projeted' or 'geometric'
@@ -15,6 +15,8 @@
   \item{epsilon}{Stopping rule}
 
   \item{maxIter}{The maximum number of iterations allowed}
+
+  \item{...}{additional arguements}
 }
 \value{
   projected or geometric mean of the sample

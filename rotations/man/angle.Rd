@@ -4,14 +4,14 @@
 \alias{angle.SO3}
 \title{Misorientation Angle}
 \usage{
-  angle(Rs)
+  angle(x)
 
-  \method{angle}{SO3} (Rs)
+  \method{angle}{SO3} (x)
 
-  \method{angle}{Q4} (Qs)
+  \method{angle}{Q4} (x)
 }
 \arguments{
-  \item{Rs,Qs}{rotation matrix}
+  \item{x}{rotation matrix or quaternion}
 }
 \value{
   angle of rotation

@@ -7,7 +7,7 @@
 #' For a sample of \eqn{n} random rotations \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the mean-type estimator is defined as \deqn{\widehat{\bm{S}}=\argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd_D^2(\bm{R}_i,\bm{S})}{argmin d^2(bar(R),S)} where \eqn{\bar{\bm{R}}=\frac{1}{n}\sum_{i=1}^n\bm{R}_i}{bar(R)=\sum Ri/n} and the distance metric \eqn{d_D}{d}
 #' is the Riemannian or Euclidean.  For more on the projected mean see \cite{moakher02} and for the geometric mean see \cite{manton04}.
 #'
-#' @param Rs A \eqn{n\times 9}{n-by-9} matrix where each row corresponds to a random rotation in matrix form
+#' @param x A \eqn{n\times 9}{n-by-9} matrix where each row corresponds to a random rotation in matrix form
 #' @param type String indicating 'projected' or 'geometric' type mean estimator
 #' @param epsilon Stopping rule for the geometric-mean
 #' @param maxIter Maximum number of iterations allowed for geometric-mean
@@ -21,9 +21,9 @@
 #' Rs<-ruars(20,rvmises,kappa=0.01)
 #' mean(Rs)
 
-mean.SO3 <- function(Rs, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
+mean.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
 	
-	Rs<-formatSO3(Rs)	
+	Rs<-formatSO3(x)	
 	
 	if(nrow(Rs)==1)
 		return(Rs)
@@ -53,10 +53,11 @@ mean.SO3 <- function(Rs, type = "projected", epsilon = 1e-05, maxIter = 2000, ..
 #' function is called.
 #'
 #' 
-#' @param Qs A \eqn{n\times 4}{n-by-4} matrix where each row corresponds to a random rotation in unit quaternion
+#' @param x A \eqn{n\times 4}{n-by-4} matrix where each row corresponds to a random rotation in unit quaternion
 #' @param type String indicating 'projeted' or 'geometric' type mean estimator
 #' @param epsilon Stopping rule 
 #' @param maxIter The maximum number of iterations allowed
+#' @param ... additional arguements
 #' @return projected or geometric mean of the sample
 #' @seealso \code{\link{mean.SO3}}
 #' @cite moakher02, manton04
@@ -67,9 +68,9 @@ mean.SO3 <- function(Rs, type = "projected", epsilon = 1e-05, maxIter = 2000, ..
 #' Qs<-ruars(20,rcayley,space="Q4")
 #' mean(Qs,type='geometric')
 
-mean.Q4 <- function(Qs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
+mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) {
 	
-	Qs<-formatQ4(Qs)
+	Qs<-formatQ4(x)
 	
 	if(nrow(Qs)==1)
 		return(Qs)
@@ -116,9 +117,9 @@ median<-function(x,...){
 #' @method median SO3
 #' @S3method median SO3
 
-median.SO3 <- function(Rs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
+median.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) {
   
-	Rs<-formatSO3(Rs)
+	Rs<-formatSO3(x)
 	n<-nrow(Rs)
 	
 	if(nrow(Rs)==1)
@@ -145,9 +146,9 @@ median.SO3 <- function(Rs, type = "projected", epsilon = 1e-05, maxIter = 2000) 
 #' @method median Q4
 #' @S3method median Q4
 
-median.Q4 <- function(Qs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
+median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) {
 	
-	Qs<-formatQ4(Qs)
+	Qs<-formatQ4(x)
 	
 	if(length(Qs)==4)
 		return(Qs)
@@ -169,7 +170,7 @@ median.Q4 <- function(Qs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
 #' For a sample of \eqn{n} random rotations \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the mean-type estimator is defined as \deqn{\widehat{\bm{S}}=\argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd_D^2(\bm{R}_i,\bm{S})}{argmin d(bar(R),S)} where \eqn{\bar{\bm{R}}=\frac{1}{n}\sum_{i=1}^n\bm{R}_i}{bar(R)=\sum R_i/n} and the distance metric \eqn{d_D}{d}
 #' is the Riemannian or Euclidean.  For more on the projected mean see \cite{moakher02} and for the geometric mean see \cite{manton04}.
 #'
-#' @param Rs A \eqn{n\times 9}{n-by-9} matrix where each row corresponds to a random rotation in matrix form
+#' @param x A \eqn{n\times 9}{n-by-9} matrix where each row corresponds to a random rotation in matrix form
 #' @param w a numerical vector of weights the same length as the number of rows in Rs giving the weights to use for elements of Rs
 #' @param type String indicating 'projeted' or 'geometric' type mean estimator
 #' @param epsilon Stopping rule for the geometric method
@@ -185,9 +186,9 @@ median.Q4 <- function(Qs, type = "projected", epsilon = 1e-05, maxIter = 2000) {
 #' wt<-abs(1/angle(Rs))
 #' weighted.mean(Rs,wt)
 
-weighted.mean.SO3 <- function(Rs, w, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
+weighted.mean.SO3 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
 	
-	Rs<-formatSO3(Rs)
+	Rs<-formatSO3(x)
 	
 	if(nrow(Rs)==1)
 		return(Rs)
@@ -244,11 +245,12 @@ weighted.mean.SO3 <- function(Rs, w, type = "projected", epsilon = 1e-05, maxIte
 #' and normalizing.  Our simulations don't match this claim.
 #'
 #' 
-#' @param Qs A \eqn{n\times 4} matrix where each row corresponds to a random rotation in unit quaternion
+#' @param x A \eqn{n\times 4} matrix where each row corresponds to a random rotation in unit quaternion
 #' @param w a numerical vector of weights the same length as Rs giving the weights to use for elements of Rs
 #' @param type String indicating 'projeted' or 'geometric' type mean estimator
 #' @param epsilon Stopping rule for the geometric method
 #' @param maxIter The maximum number of iterations allowed before returning most recent estimate
+#' @param ... only used for consistency with mean.default
 #' @return weighted projected or geometric mean of the sample
 #' @seealso \code{\link{mean.SO3}}
 #' @cite moakher02, manton04
@@ -261,9 +263,9 @@ weighted.mean.SO3 <- function(Rs, w, type = "projected", epsilon = 1e-05, maxIte
 #' Qs<-genR(r,space="Q4")
 #' weighted.mean(Qs,wt)
 
-weighted.mean.Q4 <- function(Qs, w, type = "projected", epsilon = 1e-05, maxIter = 2000) {
+weighted.mean.Q4 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter = 2000,...) {
 	
-	Qs<-formatQ4(Qs)
+	Qs<-formatQ4(x)
 	
 	if(nrow(Qs)==1)
 		return(Qs)

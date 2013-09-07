@@ -6,14 +6,14 @@
 \usage{
   dist(x, ...)
 
-  \method{dist}{SO3} (R1, R2 = id.SO3,
-    method = "projected", p = 1)
+  \method{dist}{SO3} (x, R2 = id.SO3, method = "projected",
+    p = 1, ...)
 
-  \method{dist}{Q4} (Q1, Q2 = id.Q4, method = "projected",
-    p = 1)
+  \method{dist}{Q4} (x, Q2 = id.Q4, method = "projected",
+    p = 1, ...)
 }
 \arguments{
-  \item{R1,Q1}{a rotation in matrix or quaternion
+  \item{x}{a rotation in matrix or quaternion
   representation}
 
   \item{R2,Q2}{the second rotation in the same

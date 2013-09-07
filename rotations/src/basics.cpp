@@ -58,7 +58,7 @@ arma::mat Q4defaultC(arma::mat U, arma::vec theta){
 	q.zeros();
 	
 	if(n1 != n){
-		printf("Error, u and theta different length");
+		//printf("Error, u and theta different length");
 		return q;
 	}
 	
@@ -122,7 +122,7 @@ arma::mat genrC(arma::vec r, arma::mat S , int SO3, arma::mat u) {
   //int n1 = phi.size(), n2 = theta.size();
     
   if(n1 != n || n2!=3){
-    printf("u is wrong size");
+    //printf("u is wrong size");
     arma::mat q(n,4);
     q.zeros();
     return q;

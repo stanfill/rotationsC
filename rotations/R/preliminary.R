@@ -32,8 +32,8 @@ arsample.unif <- function(f, M, ...) {
 #' @S3method print SO3
 #' @method print SO3
 
-print.SO3<-function(Rs,...){
-  
+print.SO3<-function(x,...){
+  Rs<-x
   len<-length(Rs)
   
   if(len%%9!=0)
@@ -49,8 +49,8 @@ print.SO3<-function(Rs,...){
 #' @S3method print Q4
 #' @method print Q4
 
-print.Q4<-function(Qs,...){
-  
+print.Q4<-function(x,...){
+  Qs<-x
   len<-length(Qs)
   
   if(len%%4!=0)
@@ -89,7 +89,7 @@ print.Q4<-function(Qs,...){
 #' The intrinsic distance is defined as \deqn{||Log(R_1^\top R_2)||_F}{||Log(R1'R2)||} where \eqn{Log} is the matrix logarithm, and it corresponds
 #' to the misorientation angle of \eqn{R_1^\top R_2}{R1'R2}.
 #'
-#' @param R1,Q1 a rotation in matrix or quaternion representation
+#' @param x a rotation in matrix or quaternion representation
 #' @param R2,Q2 the second rotation in the same parameterization as R1
 #' @param method String indicating 'projected' or 'intrinsic' method of distance 
 #' @param p the order of the distance 
@@ -106,9 +106,9 @@ dist<-function(x,...){
 #' @method dist SO3
 #' @S3method dist SO3
 
-dist.SO3 <- function(R1, R2=id.SO3, method='projected' , p=1) {
+dist.SO3 <- function(x, R2=id.SO3, method='projected' , p=1,...) {
   
-  R1<-formatSO3(R1)
+  R1<-formatSO3(x)
   
   if(method=='projected'){
     
@@ -136,9 +136,9 @@ dist.SO3 <- function(R1, R2=id.SO3, method='projected' , p=1) {
 #' @method dist Q4
 #' @S3method dist Q4
 
-dist.Q4 <- function(Q1, Q2=id.Q4 ,method='projected', p=1) {
+dist.Q4 <- function(x, Q2=id.Q4 ,method='projected', p=1,...) {
 
-  Q1<-formatQ4(Q1)
+  Q1<-formatQ4(x)
   Q2<-formatQ4(Q2)
   
   if(method=='intrinsic'){
@@ -166,12 +166,12 @@ dist.Q4 <- function(Q1, Q2=id.Q4 ,method='projected', p=1) {
 #' This function returns the misorentation angle associated with a rotation assuming the reference coordinate system
 #' is the identity.
 #'  
-#' @param Rs,Qs rotation matrix
+#' @param x rotation matrix or quaternion
 #' @return angle of rotation
 #' @seealso \code{\link{axis}}
 #' @export
 
-angle<-function(Rs){
+angle<-function(x){
   UseMethod("angle")
 }
 
@@ -180,9 +180,9 @@ angle<-function(Rs){
 #' @method angle SO3
 #' @S3method angle SO3
 
-angle.SO3 <- function(Rs){
+angle.SO3 <- function(x){
 	
-	Rs<-formatSO3(Rs)
+	Rs<-formatSO3(x)
 	n<-nrow(Rs)
 	theta<-c(rdistSO3C(Rs,id.SO3))
   return(theta)
@@ -193,9 +193,9 @@ angle.SO3 <- function(Rs){
 #' @method angle Q4
 #' @S3method angle Q4
 
-angle.Q4 <- function(Qs){
+angle.Q4 <- function(x){
 	
-  Qs<-formatQ4(Qs)
+  Qs<-formatQ4(x)
 	n<-nrow(Qs)
 	theta<-rep(0,n)
 	
@@ -215,12 +215,13 @@ angle.Q4 <- function(Qs){
 #' This function returns the misorentation axis associated with a rotation assuming the reference coordinate system
 #' is the identity.
 #' 
-#' @param R,q 3-by-3 matrix in SO3 or unit quaterion
+#' @param x 3-by-3 matrix in SO3 or unit quaterion
+#' @param ... additional arguements
 #' @return axis in form of three dimensional vector of length one.
 #' @seealso \code{\link{angle}}
 #' @export
 
-axis<-function(R){
+axis<-function(x,...){
   UseMethod("axis")
 }
 
@@ -228,9 +229,9 @@ axis<-function(R){
 #' @method axis SO3
 #' @S3method axis SO3
 
-axis.SO3<-function(R){
+axis.SO3<-function(x,...){
   
-	R<-formatSO3(R)
+	R<-formatSO3(x)
   n<-nrow(R)
 	u<-matrix(NA,n,3)
 	
@@ -248,9 +249,9 @@ axis.SO3<-function(R){
 #' @method axis Q4
 #' @S3method axis Q4
 
-axis.Q4 <- function(q){
+axis.Q4 <- function(x,...){
   
-  q<-formatQ4(q)
+  q<-formatQ4(x)
   theta<-angle(q)
   
   u <- q[,2:4]/sin(theta/2)
@@ -302,7 +303,7 @@ eskew <- function(U) {
 #' @export
 #' @examples
 #' r<-rvmises(20,0.01)
-#' genrC2(r)
+#' genR(r)
 
 genR <- function(r, S = NULL, space='SO3') {
   
@@ -376,21 +377,21 @@ genR <- function(r, S = NULL, space='SO3') {
 #' The expansion is significantly simplified for skew-symmetric matrices, see \cite{moakher02}.
 #' Maps a matrix belonging to the lie algebra so(3) into the lie group SO(3).
 #'
-#' @param H singular or sample of 3-by-3 skew-symmetric matrices, i.e. H such that \eqn{\bm H=-\bm H^\top}
+#' @param x singular or sample of 3-by-3 skew-symmetric matrices, i.e. H such that \eqn{\bm H=-\bm H^\top}
 #' @return matrix in SO(3) \eqn{e^{\bm A}}{e^A}
 #' @cite moakher02
 #' @export
 
-exp.skew <- function(H) {
+exp.skew <- function(x) {
 
-  if(length(H)==9){
+  if(length(x)==9){
     
-    H<-matrix(H,3,3)
+    x<-matrix(x,3,3)
 
-    return(as.SO3(expskewC(H)))
+    return(as.SO3(expskewC(x)))
     
   }else{
-    return(as.SO3(expskewCMulti(H)))
+    return(as.SO3(expskewCMulti(x)))
   }
 }
 
@@ -400,18 +401,19 @@ exp.skew <- function(H) {
 #' Compute the matrix logarithm of a matrix in SO(3).  The result is a 3-by-3 skew-symmetric matrix.  This function maps
 #' the lie group SO(3) into its tangent space, which is the lie algerbra so(3).  For details see \cite{moakher02}
 #'
-#' @param R a single or sample of matrices in \eqn{SO(3)}
+#' @param x a single or sample of matrices in \eqn{SO(3)}
+#' @param ... additional arguements
 #' @return numeric matrix \eqn{\log(R)}{log(R)}
 #' @cite moakher02
 #' @S3method log SO3
 #' @method log SO3
 
-log.SO3 <- function(R) {
-  if(length(R)==9){
-	  R<-matrix(R,3,3)
-	  return(logSO3C(R))
+log.SO3 <- function(x,...) {
+  if(length(x)==9){
+	  x<-matrix(x,3,3)
+	  return(logSO3C(x))
   }else{
-    return(logSO3CMulti(R))
+    return(logSO3CMulti(x))
   }
   
 }
@@ -443,7 +445,7 @@ project.SO3 <- function(M) {
 #'
 #' Compute the sum of the \eqn{p^{\text{th}}}{pth} order distances between Rs and S
 #'
-#' @param Rs a matrix of rotation observations, one row per observation
+#' @param x a matrix of rotation observations, one row per observation
 #' @param S the individual matrix of interest, usually an estimate of the mean
 #' @param method type of distance used method in 'projected' or 'intrinsic'
 #' @param p the order of the distances to compute
@@ -456,7 +458,7 @@ project.SO3 <- function(M) {
 #' Sp<-mean(Rs)
 #' sum_dist(Rs,S=Sp,p=2)
 
-sum_dist<-function(Rs, S = genR(0, space=class(Rs)), method='projected', p=1){
+sum_dist<-function(x, S = genR(0, space=class(Rs)), method='projected', p=1){
   
   UseMethod( "sum_dist" )
 
@@ -466,9 +468,9 @@ sum_dist<-function(Rs, S = genR(0, space=class(Rs)), method='projected', p=1){
 #' @method sum_dist SO3
 #' @S3method sum_dist SO3
 
-sum_dist.SO3 <- function(Rs, S = id.SO3, method='projected', p=1) {
+sum_dist.SO3 <- function(x, S = id.SO3, method='projected', p=1) {
 
-  return(sum(dist(Rs,S, method=method, p=p)))
+  return(sum(dist(x,S, method=method, p=p)))
   
 }
 
@@ -476,9 +478,9 @@ sum_dist.SO3 <- function(Rs, S = id.SO3, method='projected', p=1) {
 #' @method sum_dist Q4
 #' @S3method sum_dist Q4
 
-sum_dist.Q4 <- function(Qs, S = id.Q4, method='projected', p=1) {
+sum_dist.Q4 <- function(x, S = id.Q4, method='projected', p=1) {
   
-  return(sum(dist(Qs,S, method=method, p=p)))
+  return(sum(dist(x,S, method=method, p=p)))
   
 }
 
@@ -488,7 +490,7 @@ sum_dist.Q4 <- function(Qs, S = id.Q4, method='projected', p=1) {
 #' S, i.e., the returned sample is S'Rs.  If S is the true center then
 #' the projected mean should be the 3-by-3 identity matrix 
 #' 
-#' @param Rs,Qs the sample to be centered
+#' @param x the sample of rotations to be centered
 #' @param S the rotation to sample around
 #' @return The centered sample
 #' @export
@@ -497,7 +499,7 @@ sum_dist.Q4 <- function(Qs, S = id.Q4, method='projected', p=1) {
 #' cRs<-center(Rs,mean(Rs))
 #' mean(cRs) #Should be close to identity matrix
 
-center<-function(Rs,S){
+center<-function(x,S){
   
   UseMethod( "center" )
   
@@ -507,10 +509,10 @@ center<-function(Rs,S){
 #' @method center SO3
 #' @S3method center SO3
 
-center.SO3<-function(Rs,S){
+center.SO3<-function(x,S){
 	#This takes a set of observations in SO3 and centers them around S
 	
-	Rs<-formatSO3(Rs)
+	Rs<-formatSO3(x)
 	S<-matrix(formatSO3(S),3,3)
 	
 	for(i in 1:nrow(Rs)){
@@ -524,9 +526,9 @@ center.SO3<-function(Rs,S){
 #' @method center Q4
 #' @S3method center Q4
 
-center.Q4<-function(Qs,S){
+center.Q4<-function(x,S){
 	#This takes a set of observations in Q4 and centers them around S
-	Qs<-formatQ4(Qs)
+	Qs<-formatQ4(x)
 	S<-formatQ4(S)
 	S[2:4]<--S[2:4]
 	

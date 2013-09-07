@@ -2,11 +2,11 @@
 \alias{weighted.mean.Q4}
 \title{Weighted Rotation Median}
 \usage{
-  \method{weighted.mean}{Q4} (Qs, w, type = "projected",
-    epsilon = 1e-05, maxIter = 2000)
+  \method{weighted.mean}{Q4} (x, w, type = "projected",
+    epsilon = 1e-05, maxIter = 2000, ...)
 }
 \arguments{
-  \item{Qs}{A \eqn{n\times 4} matrix where each row
+  \item{x}{A \eqn{n\times 4} matrix where each row
   corresponds to a random rotation in unit quaternion}
 
   \item{w}{a numerical vector of weights the same length as
@@ -19,6 +19,8 @@
 
   \item{maxIter}{The maximum number of iterations allowed
   before returning most recent estimate}
+
+  \item{...}{only used for consistency with mean.default}
 }
 \value{
   weighted projected or geometric mean of the sample
