@@ -152,7 +152,7 @@ region.SO3<-function(Rs,method,type,estimator,alp=NULL,...){
 #' @export
 #' @examples
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-#' region(Qs,method='eigen',type='theory',alp=0.1)
+#' region(Qs,method='eigen',type='theory',alp=0.1,estimator='mean')
 
 prentice<-function(Qs,alp){
 	UseMethod("prentice")
@@ -223,7 +223,7 @@ prentice.SO3<-function(Rs,alp=NULL){
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Rs,method='moment',type='bootstrap',alp=0.1)
+#' region(Rs,method='moment',type='bootstrap',alp=0.1,estimator='mean')
 
 zhang<-function(Qs,estimator,alp,m){
 	UseMethod("zhang")
@@ -338,7 +338,7 @@ cdfuns<-function(Qs,estimator){
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Rs,method='moment',type='theory',alp=0.1)
+#' region(Rs,method='moment',type='theory',alp=0.1,estimator='mean')
 
 chang<-function(Qs,estimator,alp){
 	UseMethod("chang")
@@ -403,7 +403,7 @@ chang.Q4<-function(Qs,estimator,alp=NULL){
 #' @export
 #' @examples
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-#' region(Qs,method='eigen',type='bootstrap',alp=0.1,symm=T)
+#' region(Qs,method='eigen',type='bootstrap',alp=0.1,symm=TRUE,estimator='mean')
 
 fisheretal<-function(Qs,alp,boot,m,symm){
 	UseMethod("fisheretal")
@@ -414,7 +414,7 @@ fisheretal<-function(Qs,alp,boot,m,symm){
 #' @method fisheretal Q4
 #' @S3method fisheretal Q4
 
-fisheretal.Q4<-function(Qs,alp=NULL,boot=T,m=300,symm=T){
+fisheretal.Q4<-function(Qs,alp=NULL,boot=T,m=300,symm=TRUE){
 	
 	if(is.null(alp)){
 		#Take a default alpha=0.1 if no level is specified

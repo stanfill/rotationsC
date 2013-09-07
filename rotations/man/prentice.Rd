@@ -38,7 +38,7 @@
 }
 \examples{
 Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-region(Qs,method='eigen',type='theory',alp=0.1)
+region(Qs,method='eigen',type='theory',alp=0.1,estimator='mean')
 }
 \references{
   Prentice MJ (1986). "Orientation statistics without

@@ -11,15 +11,15 @@
 \usage{
   SO3(R, ...)
 
+  \method{SO3}{default} (R, theta = NULL, ...)
+
+  \method{SO3}{Q4} (R, ...)
+
   as.SO3(R)
 
   is.SO3(R)
 
   id.SO3
-
-  \method{SO3}{default} (U, theta = NULL)
-
-  \method{SO3}{Q4} (q)
 }
 \arguments{
   \item{R}{object to be coerced or tested}

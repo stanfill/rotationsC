@@ -1,8 +1,8 @@
-\name{grid.search}
-\alias{grid.search}
-\title{Grid based optimization for user defined main direction of a rotation sample}
+\name{gradient.search}
+\alias{gradient.search}
+\title{Gradient based optimization for user defined main direction of a rotation sample}
 \usage{
-  grid.search(sample, error, minerr = 1e-05,
+  gradient.search(sample, error, minerr = 1e-05,
     start = mean(sample), theta = NULL)
 }
 \arguments{
@@ -27,8 +27,8 @@
   value of total sample's distance from main direction }
 }
 \description{
-  Grid based optimization for user defined main direction
-  of a rotation sample
+  Gradient based optimization for user defined main
+  direction of a rotation sample
 }
 \examples{
 # minimize L1 norm:
@@ -37,7 +37,7 @@ L1.error <- function(sample, Shat) {
 }
 
 cayley.sample <- ruars(n = 10, rangle = rcayley, nu = 1, space = 'SO3')
-SL1 <- grid.search(cayley.sample, L1.error)
+SL1 <- gradient.search(cayley.sample, L1.error)
 plot(cayley.sample, center=SL1$Shat, show_estimates="all")
 }
 

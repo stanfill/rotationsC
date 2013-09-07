@@ -7,7 +7,7 @@
   fisheretal(Qs, alp, boot, m, symm)
 
   \method{fisheretal}{Q4} (Qs, alp = NULL, boot = T,
-    m = 300, symm = T)
+    m = 300, symm = TRUE)
 
   \method{fisheretal}{SO3} (Rs, alp = NULL, boot = T,
     m = 300, symm = T)
@@ -47,7 +47,7 @@
 }
 \examples{
 Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-region(Qs,method='eigen',type='bootstrap',alp=0.1,symm=T)
+region(Qs,method='eigen',type='bootstrap',alp=0.1,symm=TRUE,estimator='mean')
 }
 \references{
   Fisher N, Hall P, Jing B and Wood A (1996). "Improved

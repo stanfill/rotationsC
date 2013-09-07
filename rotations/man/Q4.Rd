@@ -11,26 +11,20 @@
 \usage{
   Q4(q, ...)
 
+  \method{Q4}{default} (q, theta = NULL, ...)
+
+  \method{Q4}{SO3} (q, ...)
+
   as.Q4(q)
 
   is.Q4(q)
 
   id.Q4
-
-  \method{Q4}{default} (U, theta = NULL)
-
-  \method{Q4}{SO3} (R)
 }
 \arguments{
   \item{q}{object to be coerced or tested}
 
-  \item{U}{n-by-3 matrix where rows represent axes of
-  rotation}
-
   \item{theta}{vector of rotation angles}
-
-  \item{R}{n-by-9 matrix of rotation matrices to be
-  translated into quaternions}
 
   \item{...}{additional arguments}
 }
