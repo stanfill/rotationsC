@@ -28,7 +28,7 @@ rar <- function(n, f, M, ...) {
 #' Density and random generation for the Cayley distribution with concentration kappa (\eqn{\kappa})
 #'
 #' The symmetric Cayley distribution with concentration kappa (or circular variance nu) had density 
-#' \deqn{C_\mathrm{C}(r |\kappa)=\frac{1}{\sqrt{\pi}} \frac{\Gamma(\kappa+2)}{\Gamma(\kappa+1/2)}2^{-(\kappa+1)}(1+\cos r)^\kappa(1-\cos r).}{C(r |\kappa)= \Gamma(\kappa+2)(1+cos r)^\kappa(1-cos r)/[\Gamma(\kappa+1/2)2^(\kappa+1)\sqrt\pi].}
+#' \deqn{C(r |\kappa)=\frac{1}{\sqrt{\pi}} \frac{\Gamma(\kappa+2)}{\Gamma(\kappa+1/2)}2^{-(\kappa+1)}(1+\cos r)^\kappa(1-\cos r).}{C(r |\kappa)= \Gamma(\kappa+2)(1+cos r)^\kappa(1-cos r)/[\Gamma(\kappa+1/2)2^(\kappa+1)\sqrt{\pi}].}
 #'
 #' @name Cayley
 #' @aliases Cayley rcayley dcayley

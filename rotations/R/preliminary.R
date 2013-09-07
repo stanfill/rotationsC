@@ -453,12 +453,11 @@ project.SO3 <- function(M) {
 #' @seealso \code{\link{dist.SO3}},\code{\link{dist.Q4}}
 #' @export
 #' @examples
-#' r<-rvmises(20,0.01)
-#' Rs<-genR(r)
+#' Rs<-ruars(20,rvmises,kappa=10)
 #' Sp<-mean(Rs)
 #' sum_dist(Rs,S=Sp,p=2)
 
-sum_dist<-function(x, S = genR(0, space=class(Rs)), method='projected', p=1){
+sum_dist<-function(x, S = genR(0, space=class(x)), method='projected', p=1){
   
   UseMethod( "sum_dist" )
 

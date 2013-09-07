@@ -4,7 +4,7 @@
 \alias{sum_dist.SO3}
 \title{Sample Distance}
 \usage{
-  sum_dist(x, S = genR(0, space = class(Rs)),
+  sum_dist(x, S = genR(0, space = class(x)),
     method = "projected", p = 1)
 
   \method{sum_dist}{SO3} (x, S = id.SO3,
@@ -34,8 +34,7 @@
   between Rs and S
 }
 \examples{
-r<-rvmises(20,0.01)
-Rs<-genR(r)
+Rs<-ruars(20,rvmises,kappa=10)
 Sp<-mean(Rs)
 sum_dist(Rs,S=Sp,p=2)
 }
