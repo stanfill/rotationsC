@@ -1,12 +1,11 @@
 \name{plot.SO3}
-\alias{plot}
 \alias{plot.SO3}
 \title{Visualizing random rotations.}
 \usage{
-  plot(x,center=mean(x), col=1, to_range=FALSE,
-    show_estimates=NULL, label_points=NULL,
-    mean_regions=NULL, median_regions=NULL, alp=NULL,
-    m=300, ...)
+  \method{plot}{SO3} (x, center = mean(x), col = 1,
+    to_range = FALSE, show_estimates = NULL,
+    label_points = NULL, mean_regions = NULL,
+    median_regions = NULL, alp = NULL, m = 300, ...)
 }
 \arguments{
   \item{x}{n rotations in SO3 format}
