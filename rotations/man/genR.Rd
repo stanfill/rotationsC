@@ -21,9 +21,9 @@
   Spin methodology
 }
 \details{
-  Given a vector \eqn{u\in\mathbb{R}^2}{u in R^2} of length
-  one and angle of rotation \eqn{r}, a rotation can be
-  formed using Rodrigues formula \deqn{\cos(r)I_{3\times
+  Given a vector \eqn{u\in R^2}{u in R^2} of length one and
+  angle of rotation \eqn{r}, a rotation can be formed using
+  Rodrigues formula \deqn{\cos(r)I_{3\times
   3}+\sin(r)\Phi(u)+(1-\cos(r))uu^\top}{cos(r)I+sin(r)\Phi(u)+(1-cos(r))uu'}
   where \eqn{I_{3\times 3}}{I} is the \eqn{3\times
   3}{3-by-3} identity matrix,\eqn{\Phi(u)} is a

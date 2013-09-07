@@ -222,7 +222,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 	      cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(runif(2,-1,1),0), Regions$X1[i]),simplify="matrix")))
     }
 	  
-	  regs <- geom_point(aes(x=X, y=Y,colour=Region), data=data.frame(pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col),Region=rep(Regions$Meth,each=500)))
+	  regs <- geom_point(aes(x=X, y=Y,colour=Regions), data=data.frame(pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col),Regions=rep(Regions$Meth,each=500)))
 
 	}
   
@@ -248,7 +248,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 				cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(runif(2,-1,1),0), MedRegions$X1[i]),simplify="matrix")))
 		}
 		
-		regsMed <- geom_point(aes(x=X, y=Y,colour=Region), data=data.frame(pointsXYZ(cisp.boot, center=t(median(Rs))%*%center, column=col),Region=rep(MedRegions$Meth,each=500)))
+		regsMed <- geom_point(aes(x=X, y=Y,colour=Regions), data=data.frame(pointsXYZ(cisp.boot, center=t(median(Rs))%*%center, column=col),Regions=rep(MedRegions$Meth,each=500)))
 		
 	}
 	

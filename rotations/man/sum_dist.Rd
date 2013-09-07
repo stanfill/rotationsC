@@ -30,8 +30,8 @@
   Rs and S
 }
 \description{
-  Compute the sum of the \eqn{p^{\text{th}}}{pth} order
-  distances between Rs and S
+  Compute the sum of the \eqn{p^{th}}{pth} order distances
+  between Rs and S
 }
 \examples{
 r<-rvmises(20,0.01)

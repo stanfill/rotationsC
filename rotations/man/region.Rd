@@ -35,7 +35,7 @@
   mean
 }
 \description{
-  Find the radius of a \eqn{100(1-\alpha)%} confidence
+  Find the radius of a \eqn{100(1-\alpha)}\% confidence
   region for the central orientation based on the projected
   mean or median. The current methods available are due to
   \code{\link{prentice}}, \code{\link{fisheretal}},

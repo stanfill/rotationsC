@@ -36,7 +36,7 @@
 }
 \details{
   The median-type estimators are defined as
-  \deqn{\widetilde{\bm{S}}=\argmin_{\bm{S}\in
+  \deqn{\widetilde{\bm{S}}=argmin_{\bm{S}\in
   SO(3)}\sum_{i=1}^nd_D(\bm{R}_i,\bm{S}).}{argmin\sum
   d(Ri,S).} If the choice of distance metric, \eqn{d_D}{d},
   is Riemannian then the estimator is called the geometric,

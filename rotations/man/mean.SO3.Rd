@@ -36,7 +36,7 @@
   \eqn{n} random rotations \eqn{\bm{R}_i\in SO(3),
   i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the mean-type
   estimator is defined as
-  \deqn{\widehat{\bm{S}}=\argmin_{\bm{S}\in
+  \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in
   SO(3)}\sum_{i=1}^nd_D^2(\bm{R}_i,\bm{S})}{argmin
   d^2(bar(R),S)} where
   \eqn{\bar{\bm{R}}=\frac{1}{n}\sum_{i=1}^n\bm{R}_i}{bar(R)=\sum

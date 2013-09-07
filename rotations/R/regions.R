@@ -1,6 +1,6 @@
 #' Confidence Region for Central Orientation
 #'
-#' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean or median.
+#' Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean or median.
 #' The current methods available are due to \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}},
 #' and \code{\link{zhang}}.
 #'
@@ -137,9 +137,9 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 
 #' Prentice confidence region method
 #'
-#' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the projected mean
+#' Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the projected mean
 #'
-#' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean
+#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
 #' estimator using the method due to \cite{prentice1986}.  For a rotation specific version see \cite{rancourt2000}. The variablity
 #' in each axis is different so each axis will have its own radius.  In \cite{bingham09} they take the largest radius and use it to
 #' form regions that are symmetric about each axis.
@@ -207,9 +207,9 @@ prentice.SO3<-function(x,alp=NULL){
 
 #' Zhang confidence region method
 #'
-#' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation
+#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation
 #' 
-#' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean
+#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
 #' estimator using the method due to Zhang & Nordman (2009) (unpublished MS thesis).  By construction each axis will have the same
 #' radius so the radius reported is for all three axis.  A normal theory version of this procedure uses the theoretical
 #' chi-square limiting distribution and is given by the \code{\link{chang}} option.
@@ -323,9 +323,9 @@ cdfuns<-function(Qs,estimator){
 
 #' Chang and Rivest confidence region method
 #'
-#' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation
+#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation
 #' 
-#' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean
+#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
 #' estimator based on a result due to \cite{chang2001}.  By construction each axis will have the same
 #' radius so the radius reported is for all three axis.
 #'
@@ -386,9 +386,9 @@ chang.Q4<-function(x,estimator,alp=NULL){
 
 #' Fisher confidence region method
 #'
-#' Find the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation
+#' Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation
 #'
-#' Compute the radius of a \eqn{100(1-\alpha)%} confidence region for the central orientation based on the projected mean
+#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
 #' estimator using the method for the mean polar axis as proposed in \cite{fisher1996}.  To be able to reduce their method
 #' to a radius requires the additonal assumption of rotational symmetry, equation (10) in \cite{fisher1996}. 
 #'
@@ -432,7 +432,7 @@ fisheretal.Q4<-function(x,alp=NULL,boot=T,m=300,symm=TRUE){
 		
 	}else{
 		
-		qhat<-qchisq(a,3)
+		qhat<-qchisq(alp,3)
 		
 	}
 	

@@ -25,11 +25,11 @@
   mean
 }
 \description{
-  Compute the radius of a \eqn{100(1-\alpha)%} confidence
+  Compute the radius of a \eqn{100(1-\alpha)}\% confidence
   region for the central orientation
 }
 \details{
-  Compute the radius of a \eqn{100(1-\alpha)%} confidence
+  Compute the radius of a \eqn{100(1-\alpha)}\% confidence
   region for the central orientation based on the projected
   mean estimator based on a result due to \cite{Chang et
   al. (2001)}.  By construction each axis will have the

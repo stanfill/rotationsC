@@ -33,11 +33,11 @@
   mean
 }
 \description{
-  Find the radius of a \eqn{100(1-\alpha)%} confidence
+  Find the radius of a \eqn{100(1-\alpha)}\% confidence
   region for the central orientation
 }
 \details{
-  Compute the radius of a \eqn{100(1-\alpha)%} confidence
+  Compute the radius of a \eqn{100(1-\alpha)}\% confidence
   region for the central orientation based on the projected
   mean estimator using the method for the mean polar axis
   as proposed in \cite{Fisher et al. (1996)}.  To be able
