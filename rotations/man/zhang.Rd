@@ -2,7 +2,7 @@
 \alias{zhang}
 \alias{zhang.Q4}
 \alias{zhang.SO3}
-\title{Zhang confidence region method}
+\title{Zhang and Nordman confidence region method}
 \usage{
   zhang(x, estimator, alp, m)
 
@@ -13,19 +13,19 @@
 \arguments{
   \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
   corresponds to a random rotation in matrix (p=9) or
-  quaternion form (p=4)}
+  quaternion (p=4) form}
 
-  \item{estimator}{Character string either 'mean' or
-  'median'}
+  \item{estimator}{Character string either "mean" or
+  "median"}
 
   \item{alp}{The alpha level desired, e.g. 0.05 or 0.10}
 
-  \item{m}{Number of replicates to use to estiamte cut
-  point}
+  \item{m}{Number of replicates to use to estiamte the
+  critical value}
 }
 \value{
-  Radius of the confidence region centered at the projected
-  mean
+  Radius of the confidence region centered at the specified
+  estimator
 }
 \description{
   Compute the radius of a \eqn{100(1-\alpha)}\% confidence
@@ -47,7 +47,7 @@ Rs<-ruars(20,rcayley,kappa=100)
 region(Rs,method='moment',type='bootstrap',alp=0.1,estimator='mean')
 }
 \seealso{
-  \code{\link{prentice}} \code{\link{fisheretal}}
+  \code{\link{prentice}}, \code{\link{fisheretal}},
   \code{\link{chang}}
 }
 

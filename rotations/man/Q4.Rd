@@ -49,10 +49,10 @@
   the angle theta.  For each axis, U, and angle theta the
   quaternion is formed through
   \deqn{q=[cos(\theta/2),sin(\theta/2)U]^\top.}{q=[cos(theta/2),sin(theta/2)U]'.}
-  If the theta element is left empty then the
-  Frobenius-norm of each axis is taken to the the angle
-  theta.  If an \code{\link{SO3}} object is given then this
-  function will return the quaternion equivalent.
+  If the theta element is left empty then the length of
+  each axis is taken to be the angle of rotation theta.  If
+  an \code{\link{SO3}} object is given then this function
+  will return the quaternion equivalent.
 }
 \keyword{datasets}
 

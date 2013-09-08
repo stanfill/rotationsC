@@ -13,13 +13,13 @@
 \arguments{
   \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
   corresponds to a random rotation in matrix (p=9) or
-  quaternion form (p=4)}
+  quaternion (p=4) form}
 
   \item{alp}{The alpha level desired, e.g. 0.05 or 0.10}
 }
 \value{
   Radius of the confidence region centered at the projected
-  mean for each of the x-, y- and z-axis
+  mean for each of the x-, y- and z-axes
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)}\% confidence
@@ -34,7 +34,7 @@
   axis is different so each axis will have its own radius.
   In \cite{Bingham et al. (2009)} they take the largest
   radius and use it to form regions that are symmetric
-  about each axis.
+  about all three axes.
 }
 \examples{
 Qs<-ruars(20,rcayley,kappa=100,space='Q4')

@@ -17,7 +17,7 @@
   corresponds to a random rotation in matrix form
   (\eqn{p=9}) or quaternion form (\eqn{p=4})}
 
-  \item{type}{String indicating 'projeted' or 'geometric'
+  \item{type}{String indicating "projeted" or "geometric"
   type mean estimator}
 
   \item{epsilon}{Stopping rule}

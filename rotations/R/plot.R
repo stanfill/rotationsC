@@ -95,10 +95,10 @@ roteye <- function(origin, center, column=1) {
 #' 
 #' Projection of rotation matrices onto sphere with given center.
 #'
-#' @param data data frame of rotation matrices in 3 x 3 matrix representation
+#' @param data data frame of rotation matrices in \eqn{3\times 3}{3-by-3} matrix representation
 #' @param center point about which to center the observations
 #' @param column integer 1 to 3 indicating which column to display
-#' @return  data frame with columns X, Y, Z standing for the respective coordinates in 3d space
+#' @return  data frame with columns X, Y, Z standing for the respective coordinates in 3D space
 #' @export
 #' 
 pointsXYZ <- function(data, center, column=1) {

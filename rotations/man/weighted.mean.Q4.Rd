@@ -12,7 +12,7 @@
   \item{w}{a numerical vector of weights the same length as
   Rs giving the weights to use for elements of Rs}
 
-  \item{type}{String indicating 'projeted' or 'geometric'
+  \item{type}{String indicating "projected" or "geometric"
   type mean estimator}
 
   \item{epsilon}{Stopping rule for the geometric method}

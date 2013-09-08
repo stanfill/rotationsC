@@ -6,7 +6,7 @@
 \alias{SO3}
 \alias{SO3.default}
 \alias{SO3.Q4}
-\title{Rotation Matrices}
+\title{Rotation matrices}
 \format{\code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix}
 \usage{
   SO3(R, ...)
@@ -50,8 +50,8 @@
   the angle theta.  For each axis, U, and angle theta the
   matrix is formed through
   \deqn{R=exp[\Phi(Ur)]}{R=exp[\Phi(Ur)].} If the theta
-  element is left empty then the Frobenius-norm of each
-  axis is taken to the the angle theta.  If a
+  element is left empty then the length of each axis is
+  taken to be the angle of rotation theta.  If a
   \code{\link{Q4}} object is given then this function will
   return the rotation matrix equivalent.
 }

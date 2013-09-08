@@ -24,7 +24,7 @@ setOldClass("Q4")
 #' Construct a unit quaternion to represent a rotation.  Each quaternion can be interpreted as a rotation of some reference frame 
 #' about the axis U (of unit length) through the angle theta.  For each axis, U, and angle theta the quaternion is formed through
 #' \deqn{q=[cos(\theta/2),sin(\theta/2)U]^\top.}{q=[cos(theta/2),sin(theta/2)U]'.}  If the theta element is left empty then the 
-#' Frobenius-norm of each axis is taken to the the angle theta.  If an \code{\link{SO3}} object is given then this function will
+#' length of each axis is taken to be the angle of rotation theta.  If an \code{\link{SO3}} object is given then this function will
 #' return the quaternion equivalent.
 #'
 #' @export
@@ -122,14 +122,14 @@ is.Q4 <- function(q) {
 id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 
 
-#' Rotation Matrices
+#' Rotation matrices
 #' 
 #' Creates or tests for objects of type "SO3"
 #' 
 #' Construct a 3-by-3 matrix to represent a rotation.  Each rotation matrix can be interpreted as a rotation of some reference frame 
 #' about the axis U (of unit length) through the angle theta.  For each axis, U, and angle theta the matrix is formed through
 #' \deqn{R=exp[\Phi(Ur)]}{R=exp[\Phi(Ur)].}  If the theta element is left empty then the 
-#' Frobenius-norm of each axis is taken to the the angle theta.  If a \code{\link{Q4}} object is given then this function will
+#' length of each axis is taken to be the angle of rotation theta.  If a \code{\link{Q4}} object is given then this function will
 #' return the rotation matrix equivalent.
 #'
 #' @export

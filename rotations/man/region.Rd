@@ -2,7 +2,7 @@
 \alias{region}
 \alias{region.Q4}
 \alias{region.SO3}
-\title{Confidence Region for Central Orientation}
+\title{Confidence region for central orientation}
 \usage{
   region(x, method, type, estimator, alp, ...)
 

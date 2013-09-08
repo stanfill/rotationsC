@@ -9,7 +9,7 @@
   \item{x}{A \eqn{n\times 4}{n-by-4} matrix where each row
   corresponds to a random rotation in unit quaternion}
 
-  \item{type}{String indicating 'projeted' or 'geometric'
+  \item{type}{String indicating "projeted" or "geometric"
   type mean estimator}
 
   \item{epsilon}{Stopping rule}

@@ -443,11 +443,11 @@ project.SO3 <- function(M) {
 }
 
 
-#' Sample Distance
+#' Sample distance
 #'
 #' Compute the sum of the \eqn{p^{th}}{pth} order distances between Rs and S
 #'
-#' @param x a matrix of rotation observations, one row per observation
+#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form
 #' @param S the individual matrix of interest, usually an estimate of the mean
 #' @param method type of distance used method in 'projected' or 'intrinsic'
 #' @param p the order of the distances to compute

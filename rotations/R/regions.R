@@ -1,4 +1,4 @@
-#' Confidence Region for Central Orientation
+#' Confidence region for central orientation
 #'
 #' Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean or median.
 #' The current methods available are due to \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}},
@@ -142,11 +142,11 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
 #' estimator using the method due to \cite{prentice1986}.  For a rotation specific version see \cite{rancourt2000}. The variablity
 #' in each axis is different so each axis will have its own radius.  In \cite{bingham09} they take the largest radius and use it to
-#' form regions that are symmetric about each axis.
+#' form regions that are symmetric about all three axes.
 #'
-#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
+#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form
 #' @param alp The alpha level desired, e.g. 0.05 or 0.10
-#' @return Radius of the confidence region centered at the projected mean for each of the x-, y- and z-axis
+#' @return Radius of the confidence region centered at the projected mean for each of the x-, y- and z-axes
 #' @seealso \code{\link{fisheretal}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite prentice1986, rancourt2000, bingham09
 #' @export
@@ -205,7 +205,7 @@ prentice.SO3<-function(x,alp=NULL){
 	return(r)
 }
 
-#' Zhang confidence region method
+#' Zhang and Nordman confidence region method
 #'
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation
 #' 
@@ -214,12 +214,12 @@ prentice.SO3<-function(x,alp=NULL){
 #' radius so the radius reported is for all three axis.  A normal theory version of this procedure uses the theoretical
 #' chi-square limiting distribution and is given by the \code{\link{chang}} option.
 #'
-#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
-#' @param estimator Character string either 'mean' or 'median'
+#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form
+#' @param estimator Character string either "mean" or "median"
 #' @param alp The alpha level desired, e.g. 0.05 or 0.10
-#' @param m Number of replicates to use to estiamte cut point
-#' @return Radius of the confidence region centered at the projected mean
-#' @seealso \code{\link{prentice}} \code{\link{fisheretal}} \code{\link{chang}}
+#' @param m Number of replicates to use to estiamte the critical value
+#' @return Radius of the confidence region centered at the specified estimator
+#' @seealso \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}}
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)

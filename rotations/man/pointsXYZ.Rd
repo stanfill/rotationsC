@@ -5,8 +5,8 @@
   pointsXYZ(data, center, column = 1)
 }
 \arguments{
-  \item{data}{data frame of rotation matrices in 3 x 3
-  matrix representation}
+  \item{data}{data frame of rotation matrices in
+  \eqn{3\times 3}{3-by-3} matrix representation}
 
   \item{center}{point about which to center the
   observations}
@@ -16,7 +16,7 @@
 }
 \value{
   data frame with columns X, Y, Z standing for the
-  respective coordinates in 3d space
+  respective coordinates in 3D space
 }
 \description{
   Projection of rotation matrices onto sphere with given

@@ -9,7 +9,7 @@
   \item{x}{A \eqn{n\times 9}{n-by-9} matrix where each row
   corresponds to a random rotation in matrix form}
 
-  \item{type}{String indicating 'projected' or 'geometric'
+  \item{type}{String indicating "projeted" or "geometric"
   type mean estimator}
 
   \item{epsilon}{Stopping rule for the geometric-mean}

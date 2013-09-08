@@ -8,7 +8,7 @@
 #' is Riemannian or Euclidean.  For more on the projected mean see \cite{moakher02} and for the geometric mean see \cite{manton04}.
 #'
 #' @param x A \eqn{n\times 9}{n-by-9} matrix where each row corresponds to a random rotation in matrix form
-#' @param type String indicating 'projected' or 'geometric' type mean estimator
+#' @param type String indicating "projeted" or "geometric" type mean estimator
 #' @param epsilon Stopping rule for the geometric-mean
 #' @param maxIter Maximum number of iterations allowed for geometric-mean
 #' @param ... additional arguments passed to mean
@@ -54,7 +54,7 @@ mean.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000, ...
 #'
 #' 
 #' @param x A \eqn{n\times 4}{n-by-4} matrix where each row corresponds to a random rotation in unit quaternion
-#' @param type String indicating 'projeted' or 'geometric' type mean estimator
+#' @param type String indicating "projeted" or "geometric" type mean estimator
 #' @param epsilon Stopping rule 
 #' @param maxIter The maximum number of iterations allowed
 #' @param ... additional arguements
@@ -100,7 +100,7 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 #' The algorithm used in the geometric case is discussed in \cite{hartley11} and the projected case was written by the authors.
 #'
 #' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix form (\eqn{p=9}) or quaternion form (\eqn{p=4})
-#' @param type String indicating 'projeted' or 'geometric' type mean estimator
+#' @param type String indicating "projeted" or "geometric" type mean estimator
 #' @param epsilon Stopping rule
 #' @param maxIter The maximum number of iterations allowed before returning most recent estimate
 #' @param ... additional arguments
@@ -167,12 +167,12 @@ median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...
 #'
 #' This function takes a sample of \eqn{3\times 3}{3-by-3} rotations (in the form of a \eqn{n\times 9}{n-by-9} matrix where \eqn{n>1} is the sample size) and returns the weighted projected arithmetic mean denoted \eqn{\widehat{\bm S}_P}{S_P} or
 #' geometric mean \eqn{\widehat{\bm S}_G}{S_G} according to the \code{type} option.
-#' For a sample of \eqn{n} random rotations \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the mean-type estimator is defined as \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd_D^2(\bm{R}_i,\bm{S})}{argmin d(bar(R),S)} where \eqn{\bar{\bm{R}}=\frac{1}{n}\sum_{i=1}^n\bm{R}_i}{bar(R)=\sum R_i/n} and the distance metric \eqn{d_D}{d}
+#' For a sample of \eqn{n} random rotations \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the mean-type estimator is defined as \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd^2(\bm{R}_i,\bm{S})}{argmin d(bar(R),S)} where \eqn{\bar{\bm{R}}=\frac{1}{n}\sum_{i=1}^n\bm{R}_i}{bar(R)=\sum R_i/n} and the distance metric \eqn{d}{d}
 #' is the Riemannian or Euclidean.  For more on the projected mean see \cite{moakher02} and for the geometric mean see \cite{manton04}.
 #'
 #' @param x A \eqn{n\times 9}{n-by-9} matrix where each row corresponds to a random rotation in matrix form
 #' @param w a numerical vector of weights the same length as the number of rows in Rs giving the weights to use for elements of Rs
-#' @param type String indicating 'projeted' or 'geometric' type mean estimator
+#' @param type String indicating "projeted" or "geometric" type mean estimator
 #' @param epsilon Stopping rule for the geometric method
 #' @param maxIter The maximum number of iterations allowed before returning most recent estimate
 #' @param ... only used for consistency with mean.default
@@ -247,7 +247,7 @@ weighted.mean.SO3 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter
 #' 
 #' @param x A \eqn{n\times 4} matrix where each row corresponds to a random rotation in unit quaternion
 #' @param w a numerical vector of weights the same length as Rs giving the weights to use for elements of Rs
-#' @param type String indicating 'projeted' or 'geometric' type mean estimator
+#' @param type String indicating "projected" or "geometric" type mean estimator
 #' @param epsilon Stopping rule for the geometric method
 #' @param maxIter The maximum number of iterations allowed before returning most recent estimate
 #' @param ... only used for consistency with mean.default

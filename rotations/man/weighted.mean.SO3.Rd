@@ -13,7 +13,7 @@
   the number of rows in Rs giving the weights to use for
   elements of Rs}
 
-  \item{type}{String indicating 'projeted' or 'geometric'
+  \item{type}{String indicating "projeted" or "geometric"
   type mean estimator}
 
   \item{epsilon}{Stopping rule for the geometric method}
@@ -41,10 +41,10 @@
   \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3),
   i=1,2,\dots,n}, the mean-type estimator is defined as
   \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in
-  SO(3)}\sum_{i=1}^nd_D^2(\bm{R}_i,\bm{S})}{argmin
+  SO(3)}\sum_{i=1}^nd^2(\bm{R}_i,\bm{S})}{argmin
   d(bar(R),S)} where
   \eqn{\bar{\bm{R}}=\frac{1}{n}\sum_{i=1}^n\bm{R}_i}{bar(R)=\sum
-  R_i/n} and the distance metric \eqn{d_D}{d} is the
+  R_i/n} and the distance metric \eqn{d}{d} is the
   Riemannian or Euclidean.  For more on the projected mean
   see \cite{Moakher (2002)} and for the geometric mean see
   \cite{Manton (2004)}.

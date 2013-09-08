@@ -2,7 +2,7 @@
 \alias{sum_dist}
 \alias{sum_dist.Q4}
 \alias{sum_dist.SO3}
-\title{Sample Distance}
+\title{Sample distance}
 \usage{
   sum_dist(x, S = genR(0, space = class(x)),
     method = "projected", p = 1)
@@ -14,8 +14,9 @@
     method = "projected", p = 1)
 }
 \arguments{
-  \item{x}{a matrix of rotation observations, one row per
-  observation}
+  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  corresponds to a random rotation in matrix (p=9) or
+  quaternion (p=4) form}
 
   \item{S}{the individual matrix of interest, usually an
   estimate of the mean}
