@@ -15,19 +15,19 @@
   \item{r,q}{vector of quantiles}
 
   \item{n}{number of observations.  If \code{length(n)>1},
-  the length is taken to be the number required}
+  the length is taken to be the number required.}
 
-  \item{kappa}{concentration paramter}
+  \item{kappa}{concentration paramter.}
 
-  \item{nu}{The circular variance, can be used in place of
-  kappa}
+  \item{nu}{circular variance, can be used in place of
+  \code{kappa}.}
 
   \item{Haar}{logical; if TRUE density is evaluated with
-  respect to the Haar measure}
+  respect to the Haar measure.}
 
   \item{lower.tail}{logical; if TRUE (default),
   probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X >
-  x)}}
+  x)}.}
 }
 \value{
   \item{dvmises}{gives the density} \item{pvmises}{gives

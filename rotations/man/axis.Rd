@@ -11,14 +11,14 @@
   \method{axis}{Q4} (x, ...)
 }
 \arguments{
-  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
   corresponds to a random rotation in matrix (p=9) or
-  quaternion (p=4) form}
+  quaternion (p=4) form.}
 
-  \item{...}{additional arguements}
+  \item{...}{additional arguements.}
 }
 \value{
-  axis in form of three dimensional vector of length one.
+  Axis in form of three dimensional vector of length one.
 }
 \description{
   Determine the misorientation axis of a rotation

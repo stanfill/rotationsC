@@ -5,10 +5,11 @@
   project.SO3(M)
 }
 \arguments{
-  \item{M}{\eqn{3\times 3}{3-by-3} matrix to project}
+  \item{M}{\eqn{3\times 3}{3-by-3} matrix to project into
+  \eqn{SO(3)}.}
 }
 \value{
-  projection of \eqn{\bm M}{M} into \eqn{SO(3)}
+  Projection of \eqn{\bm M}{M} into \eqn{SO(3)}.
 }
 \description{
   Project an arbitrary \eqn{3\times 3}{3-by-3} matrix into

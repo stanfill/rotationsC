@@ -13,23 +13,23 @@
     m = 300, symm = T)
 }
 \arguments{
-  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
   corresponds to a random rotation in matrix (p=9) or
-  quaternion (p=4) form}
+  quaternion (p=4) form.}
 
-  \item{alp}{The alpha level desired, e.g. 0.05 or 0.10}
+  \item{alp}{alpha level desired, e.g. 0.05 or 0.10.}
 
-  \item{boot}{Should the bootstrap or normal theory
-  critical value be used}
+  \item{boot}{should the bootstrap or normal theory
+  critical value be used.}
 
   \item{m}{number of bootstrap replicates to use to
-  estimate critical value}
+  estimate critical value.}
 
   \item{symm}{logical; if TRUE (default), a symmetric
-  region is constructed}
+  region is constructed.}
 }
 \value{
-  radius of the confidence region centered at the projected
+  Radius of the confidence region centered at the projected
   mean
 }
 \description{

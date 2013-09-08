@@ -5,13 +5,13 @@
   \method{log}{SO3} (x, ...)
 }
 \arguments{
-  \item{x}{A \eqn{n\times 9}{n-by-9} matrix where each row
-  corresponds to a random rotation matrix}
+  \item{x}{\eqn{n\times 9}{n-by-9} matrix where each row
+  corresponds to a random rotation matrix.}
 
-  \item{...}{additional arguements}
+  \item{...}{additional arguements.}
 }
 \value{
-  skew symmetric matrix \eqn{\log(R)}{log(R)}
+  Skew symmetric matrix \eqn{\log(R)}{log(R)}.
 }
 \description{
   Compute the logarithm of a rotation matrix.  The result
@@ -19,7 +19,7 @@
   the lie group SO(3) into its tangent space, which is the
   space of all \eqn{3\times 3}{3-by-3} skew symmetric
   matrices, which is the lie algerbra so(3).  For details
-  see e.g. \cite{Moakher (2002)}
+  see e.g. \cite{Moakher (2002)}.
 }
 \references{
   Moakher M (2002). "Means and averaging in the group of

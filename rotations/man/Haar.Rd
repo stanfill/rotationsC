@@ -12,14 +12,14 @@
   rhaar(n)
 }
 \arguments{
-  \item{r,q}{vector of quantiles}
+  \item{r,q}{vector of quantiles.}
+
+  \item{n}{number of observations.  If \code{length(n)>1},
+  the length is taken to be the number required.}
 
   \item{lower.tail}{logical; if TRUE (default),
   probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X >
-  x)}}
-
-  \item{n}{number of observations.  If \code{length(n)>1},
-  the length is taken to be the number required}
+  x)}.}
 }
 \value{
   \item{dhaar}{gives the density} \item{phaar}{gives the

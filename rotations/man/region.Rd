@@ -13,26 +13,27 @@
     alp = NULL, ...)
 }
 \arguments{
-  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
   corresponds to a random rotation in matrix (p=9) or
-  quaternion (p=4) form}
+  quaternion (p=4) form.}
 
-  \item{method}{Character string specifying which type of
-  interval to report, "eigen" or "moment" based theory}
+  \item{method}{character string specifying which type of
+  interval to report, "eigen" or "moment" based theory.}
 
-  \item{type}{Characted string, "bootstrap" or "theory" are
-  available}
+  \item{type}{characted string, "bootstrap" or "theory" are
+  available.}
 
-  \item{estimator}{Character string either "mean" or
-  '"median"}
+  \item{estimator}{character string either "mean" or
+  "median."}
 
-  \item{alp}{The alpha level desired, e.g. 0.05 or 0.10}
+  \item{alp}{the alpha level desired, e.g. 0.05 or 0.10.}
 
-  \item{...}{Additional arguments that are method specific}
+  \item{...}{additional arguments that are method
+  specific.}
 }
 \value{
   Radius of the confidence region centered at the projected
-  mean
+  mean.
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)}\% confidence

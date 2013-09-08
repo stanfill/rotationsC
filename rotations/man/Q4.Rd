@@ -7,7 +7,7 @@
 \alias{Q4.default}
 \alias{Q4.SO3}
 \title{Quaternions}
-\format{\code{id.Q4} is the identity rotation given by the matrix \eqn{[1,0,0,0]^\top}{[1,0,0,0]'}}
+\format{\code{id.Q4} is the identity rotation given by the matrix \eqn{[1,0,0,0]^\top}{[1,0,0,0]'}.}
 \usage{
   Q4(q, ...)
 
@@ -22,22 +22,22 @@
   id.Q4
 }
 \arguments{
-  \item{q}{object to be coerced or tested}
+  \item{q}{object to be coerced or tested.}
 
-  \item{theta}{vector of rotation angles}
+  \item{theta}{vector of rotation angles.}
 
-  \item{...}{additional arguments}
+  \item{...}{additional arguments.}
 }
 \value{
-  \item{as.Q4}{coerces its object into an Q4 type}
+  \item{as.Q4}{coerces its object into an Q4 type.}
   \item{is.Q4}{returns \code{TRUE} or \code{False}
   depending on whether its argument satifies the conditions
   to be an quaternion.  Namely, is four-dimensional and of
   unit length.} \item{Q4.default}{returns an n-by-4 matrix
   where each row is a quaternion constructed from axis U
-  and angle theta} \item{Q4.SO3}{returns n-by-4 matrix
+  and angle theta.} \item{Q4.SO3}{returns n-by-4 matrix
   where each row is a quaternion constructed from the
-  corresponding rotation matrix}
+  corresponding rotation matrix.}
 }
 \description{
   Creates or tests for objects of type "Q4"

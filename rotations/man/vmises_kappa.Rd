@@ -5,10 +5,10 @@
   vmises_kappa(nu)
 }
 \arguments{
-  \item{nu}{The circular variance}
+  \item{nu}{circular variance.}
 }
 \value{
-  Concentration parameter corresponding to nu
+  Concentration parameter corresponding to nu.
 }
 \description{
   The concentration parameter \eqn{\kappa} does not

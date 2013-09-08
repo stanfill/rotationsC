@@ -7,7 +7,7 @@
 \alias{SO3.default}
 \alias{SO3.Q4}
 \title{Rotation matrices}
-\format{\code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix}
+\format{\code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix.}
 \usage{
   SO3(R, ...)
 
@@ -22,23 +22,23 @@
   id.SO3
 }
 \arguments{
-  \item{R}{object to be coerced or tested}
+  \item{R}{object to be coerced or tested.}
 
-  \item{theta}{vector of rotation angles}
+  \item{theta}{vector of rotation angles.}
 
-  \item{...}{additional arguments}
+  \item{...}{additional arguments.}
 }
 \value{
-  \item{as.SO3}{coerces its object into an SO3 type}
+  \item{as.SO3}{coerces its object into an SO3 type.}
   \item{is.SO3}{returns \code{TRUE} or \code{False}
   depending on whether its argument satifies the conditions
   to be an rotation matrix.  Namely, has determinant one
   and its transpose is its inverse.}
   \item{SO3.default}{returns an n-by-9 matrix where each
   row is a rotation matrix constructed from axis U and
-  angle theta} \item{SO3.Q4}{returns n-by-9 matrix where
+  angle theta.} \item{SO3.Q4}{returns n-by-9 matrix where
   each row is a rotation matrix constructed from the
-  corresponding quaternion}
+  corresponding quaternion.}
 }
 \description{
   Creates or tests for objects of type "SO3"

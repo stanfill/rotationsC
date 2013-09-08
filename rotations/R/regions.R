@@ -4,13 +4,13 @@
 #' The current methods available are due to \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}},
 #' and \code{\link{zhang}}.
 #'
-#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form
-#' @param method Character string specifying which type of interval to report, "eigen" or "moment" based theory
-#' @param type Characted string, "bootstrap" or "theory" are available
-#' @param estimator Character string either "mean" or '"median"
-#' @param alp The alpha level desired, e.g. 0.05 or 0.10
-#' @param ... Additional arguments that are method specific
-#' @return Radius of the confidence region centered at the projected mean
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @param method character string specifying which type of interval to report, "eigen" or "moment" based theory.
+#' @param type characted string, "bootstrap" or "theory" are available.
+#' @param estimator character string either "mean" or "median."
+#' @param alp the alpha level desired, e.g. 0.05 or 0.10.
+#' @param ... additional arguments that are method specific.
+#' @return Radius of the confidence region centered at the projected mean.
 #' @seealso \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite prentice1986, fisher1996, rancourt2000, chang2001
 #' @export
@@ -144,9 +144,9 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 #' in each axis is different so each axis will have its own radius.  In \cite{bingham09} they take the largest radius and use it to
 #' form regions that are symmetric about all three axes.
 #'
-#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form
-#' @param alp The alpha level desired, e.g. 0.05 or 0.10
-#' @return Radius of the confidence region centered at the projected mean for each of the x-, y- and z-axes
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @param alp alpha level desired, e.g. 0.05 or 0.10.
+#' @return Radius of the confidence region centered at the projected mean for each of the x-, y- and z-axes.
 #' @seealso \code{\link{fisheretal}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite prentice1986, rancourt2000, bingham09
 #' @export
@@ -214,11 +214,11 @@ prentice.SO3<-function(x,alp=NULL){
 #' radius so the radius reported is for all three axis.  A normal theory version of this procedure uses the theoretical
 #' chi-square limiting distribution and is given by the \code{\link{chang}} option.
 #'
-#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form
-#' @param estimator Character string either "mean" or "median"
-#' @param alp The alpha level desired, e.g. 0.05 or 0.10
-#' @param m Number of replicates to use to estiamte the critical value
-#' @return Radius of the confidence region centered at the specified estimator
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @param estimator character string either "mean" or "median."
+#' @param alp alpha level desired, e.g. 0.05 or 0.10.
+#' @param m number of replicates to use to estiamte the critical value.
+#' @return Radius of the confidence region centered at the specified estimator.
 #' @seealso \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}}
 #' @export
 #' @examples
@@ -329,10 +329,10 @@ cdfuns<-function(Qs,estimator){
 #' or median based on a result due to \cite{chang2001} amongst others.  By construction each axis will have the same
 #' radius so the radius reported is for all three axis.
 #'
-#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form
-#' @param estimator Character string either "mean" or "median"
-#' @param alp The alpha level desired, e.g. 0.05 or 0.10
-#' @return Radius of the confidence region centered at the specified estimator
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @param estimator character string either "mean" or "median."
+#' @param alp alpha level desired, e.g. 0.05 or 0.10.
+#' @return Radius of the confidence region centered at the specified estimator.
 #' @cite chang2001
 #' @seealso \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{zhang}}
 #' @export
@@ -392,12 +392,12 @@ chang.Q4<-function(x,estimator,alp=NULL){
 #' estimator using the method for the mean polar axis as proposed in \cite{fisher1996}.  To be able to reduce their method
 #' to a radius requires the additonal assumption of rotational symmetry, equation (10) in \cite{fisher1996}. 
 #'
-#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form
-#' @param alp The alpha level desired, e.g. 0.05 or 0.10
-#' @param boot Should the bootstrap or normal theory critical value be used
-#' @param m number of bootstrap replicates to use to estimate critical value
-#' @param symm logical; if TRUE (default), a symmetric region is constructed
-#' @return radius of the confidence region centered at the projected mean
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @param alp alpha level desired, e.g. 0.05 or 0.10.
+#' @param boot should the bootstrap or normal theory critical value be used.
+#' @param m number of bootstrap replicates to use to estimate critical value.
+#' @param symm logical; if TRUE (default), a symmetric region is constructed.
+#' @return Radius of the confidence region centered at the projected mean
 #' @seealso \code{\link{prentice}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite fisher1996
 #' @export

@@ -13,23 +13,23 @@
     p = 1, ...)
 }
 \arguments{
-  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
   corresponds to a random rotation in matrix (p=9) or
-  quaternion (p=4) form}
+  quaternion (p=4) form.}
 
   \item{R2,Q2}{the second rotation in the same
-  parameterization as R1}
+  parameterization as x.}
 
-  \item{method}{String indicating 'projected' or
-  'intrinsic' method of distance}
+  \item{method}{string indicating "projected" or
+  "intrinsic" method of distance.}
 
-  \item{p}{the order of the distance}
+  \item{p}{the order of the distance.}
 
-  \item{...}{Additional arguments}
+  \item{...}{additional arguments.}
 }
 \value{
-  the rotational distance between each rotation in x and R2
-  or Q2
+  The rotational distance between each rotation in x and R2
+  or Q2.
 }
 \description{
   Calculate the Euclidean or Riemannian distance between
@@ -37,7 +37,7 @@
 }
 \details{
   This function will calculate the intrinsic (Riemannian)
-  or extrinsic (Euclidean) distance between two rotations.
+  or projected (Euclidean) distance between two rotations.
   \code{R2} and \code{Q2} are set to the identity rotations
   by default.  For rotations \eqn{R_1}{R1} and
   \eqn{R_2}{R2} both in \eqn{SO(3)}, the Euclidean distance

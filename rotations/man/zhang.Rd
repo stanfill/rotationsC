@@ -11,21 +11,21 @@
   \method{zhang}{Q4} (x, estimator, alp = NULL, m = 300)
 }
 \arguments{
-  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
   corresponds to a random rotation in matrix (p=9) or
-  quaternion (p=4) form}
+  quaternion (p=4) form.}
 
-  \item{estimator}{Character string either "mean" or
-  "median"}
+  \item{estimator}{character string either "mean" or
+  "median."}
 
-  \item{alp}{The alpha level desired, e.g. 0.05 or 0.10}
+  \item{alp}{alpha level desired, e.g. 0.05 or 0.10.}
 
-  \item{m}{Number of replicates to use to estiamte the
-  critical value}
+  \item{m}{number of replicates to use to estiamte the
+  critical value.}
 }
 \value{
   Radius of the confidence region centered at the specified
-  estimator
+  estimator.
 }
 \description{
   Compute the radius of a \eqn{100(1-\alpha)}\% confidence

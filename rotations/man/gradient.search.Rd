@@ -6,18 +6,18 @@
     start = mean(sample), theta = NULL)
 }
 \arguments{
-  \item{sample}{sample of rotations}
+  \item{sample}{sample of rotations.}
 
   \item{error}{user defined function to observed distance
   between sample and estimate, has to have parameters for
-  the sample and the estimate}
+  the sample and the estimate.}
 
   \item{minerr}{minimal distance to consider for
-  convergence}
+  convergence.}
 
-  \item{start}{starting value for the estimation}
+  \item{start}{starting value for the estimation.}
 
-  \item{theta}{size of the grid considered}
+  \item{theta}{size of the grid considered .}
 }
 \value{
   list of \itemize{ \item Shat estimate of the main

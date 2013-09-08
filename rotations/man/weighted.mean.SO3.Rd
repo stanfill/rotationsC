@@ -10,26 +10,26 @@
     epsilon = 1e-05, maxIter = 2000, ...)
 }
 \arguments{
-  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
   corresponds to a random rotation in matrix form
-  (\eqn{p=9}) or quaternion (\eqn{p=4}) form}
+  (\eqn{p=9}) or quaternion (\eqn{p=4}) form.}
 
-  \item{w}{a numerical vector of weights the same length as
-  the number of rows in Rs giving the weights to use for
-  elements of Rs}
+  \item{w}{vector of weights the same length as the number
+  of rows in x giving the weights to use for elements of
+  x.}
 
-  \item{type}{String indicating "projeted" or "geometric"
-  type mean estimator}
+  \item{type}{string indicating "projeted" or "geometric"
+  type mean estimator.}
 
-  \item{epsilon}{Stopping rule for the geometric method}
+  \item{epsilon}{stopping rule for the geometric method.}
 
-  \item{maxIter}{The maximum number of iterations allowed
-  before returning most recent estimate}
+  \item{maxIter}{maximum number of iterations allowed
+  before returning most recent estimate.}
 
-  \item{...}{only used for consistency with mean.default}
+  \item{...}{only used for consistency with mean.default.}
 }
 \value{
-  weighted projected mean of the sample
+  Weighted mean of the sample.
 }
 \description{
   Compute the weighted geometric or projected mean of a

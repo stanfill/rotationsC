@@ -8,13 +8,13 @@
     median_regions = NULL, alp = NULL, m = 300, ...)
 }
 \arguments{
-  \item{x}{n rotations in SO3 format}
+  \item{x}{n rotations in \code{SO3} format.}
 
   \item{center}{rotation about which to center the
-  observations}
+  observations.}
 
   \item{col}{integer 1 to 3 indicating which column to
-  display}
+  display.}
 
   \item{to_range}{show only part of the globe that is in
   range of the data?}
@@ -22,29 +22,30 @@
   \item{show_estimates}{character vector to specify which
   of the four estimates of the principal direction to show.
   Possibilities are "all", "proj.mean", "proj.median",
-  "geom.mean", "geom.median"}
+  "geom.mean", "geom.median."}
 
-  \item{label_points}{vector of labels}
+  \item{label_points}{vector of labels.}
 
   \item{mean_regions}{character vector to specify which of
   the three confidence regions to show for the projected
-  mean.  Possibilities are "all", "eigen theory", "moment
-  theory", "moment bootstrap"}
+  mean.  Possibilities are "all", "eigen theory","eigen
+  bootstrap, "moment theory", "moment bootstrap."}
 
   \item{median_regions}{character vector to specify which
   of the three confidence regions to show for the projected
-  median.  Possibilities are "all", "theory", "bootstrap"}
+  median.  Possibilities are "all", "theory", "bootstrap."}
 
-  \item{alp}{alpha level to be used for confidence regions}
+  \item{alp}{alpha level to be used for confidence
+  regions.}
 
   \item{m}{number of bootstrap replicates to use in Zhang
-  confidence region}
+  confidence region.}
 
-  \item{...}{parameters passed onto the points layer}
+  \item{...}{parameters passed onto the points layer.}
 }
 \value{
-  a ggplot2 object with the data displayed on spherical
-  grid
+  A \code{ggplot2} object with the data displayed on
+  spherical grid.
 }
 \description{
   This function produces a three-dimensional globe onto

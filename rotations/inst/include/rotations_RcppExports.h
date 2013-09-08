@@ -6,7 +6,7 @@
 
 #include <RcppArmadillo.h>
 #include <Rcpp.h>
-#include "rotations.h"
+#include "../inst/include/rotations.h"
 
 namespace rotations {
 

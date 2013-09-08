@@ -14,21 +14,21 @@
     method = "projected", p = 1)
 }
 \arguments{
-  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
   corresponds to a random rotation in matrix (p=9) or
-  quaternion (p=4) form}
+  quaternion (p=4) form.}
 
   \item{S}{the individual matrix of interest, usually an
-  estimate of the mean}
+  estimate of the mean.}
 
-  \item{method}{type of distance used method in 'projected'
-  or 'intrinsic'}
+  \item{method}{type of distance used method in "projected"
+  or "intrinsic"}
 
-  \item{p}{the order of the distances to compute}
+  \item{p}{the order of the distances to compute.}
 }
 \value{
-  the sum of the pth order distance between each sample in
-  Rs and S
+  The sum of the pth order distance between each sample in
+  Rs and S.
 }
 \description{
   Compute the sum of the \eqn{p^{th}}{pth} order distances

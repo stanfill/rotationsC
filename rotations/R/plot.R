@@ -95,10 +95,10 @@ roteye <- function(origin, center, column=1) {
 #' 
 #' Projection of rotation matrices onto sphere with given center.
 #'
-#' @param data data frame of rotation matrices in \eqn{3\times 3}{3-by-3} matrix representation
-#' @param center point about which to center the observations
-#' @param column integer 1 to 3 indicating which column to display
-#' @return  data frame with columns X, Y, Z standing for the respective coordinates in 3D space
+#' @param data data frame of rotation matrices in \eqn{3\times 3}{3-by-3} matrix representation.
+#' @param center point about which to center the observations.
+#' @param column integer 1 to 3 indicating which column to display.
+#' @return  Data frame with columns X, Y, Z standing for the respective coordinates in 3D space.
 #' @export
 #' 
 pointsXYZ <- function(data, center, column=1) {
@@ -120,18 +120,18 @@ pointsXYZ <- function(data, center, column=1) {
 #' This function produces a three-dimensional globe onto which  one of the  columns of the provided sample of rotations is drawn.  The data are centered around a provided
 #' matrix and the user can choose to display this center or not.  Based on \code{ggplot2} package by \cite{wickham09}.
 #'
-#' @param x n rotations in SO3 format
-#' @param center rotation about which to center the observations
-#' @param col integer 1 to 3 indicating which column to display
+#' @param x n rotations in \code{SO3} format.
+#' @param center rotation about which to center the observations.
+#' @param col integer 1 to 3 indicating which column to display.
 #' @param to_range show only part of the globe that is in range of the data?
-#' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "geom.mean", "geom.median"
-#' @param label_points  vector of labels
-#' @param mean_regions character vector to specify which of the three confidence regions to show for the projected mean.  Possibilities are "all", "eigen theory", "moment theory", "moment bootstrap"
-#' @param median_regions character vector to specify which of the three confidence regions to show for the projected median.  Possibilities are "all", "theory", "bootstrap"
-#' @param alp alpha level to be used for confidence regions
-#' @param m number of bootstrap replicates to use in Zhang confidence region
-#' @param ... parameters passed onto the points layer
-#' @return  a ggplot2 object with the data displayed on spherical grid
+#' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "geom.mean", "geom.median."
+#' @param label_points  vector of labels.
+#' @param mean_regions character vector to specify which of the three confidence regions to show for the projected mean.  Possibilities are "all", "eigen theory","eigen bootstrap, "moment theory", "moment bootstrap."
+#' @param median_regions character vector to specify which of the three confidence regions to show for the projected median.  Possibilities are "all", "theory", "bootstrap."
+#' @param alp alpha level to be used for confidence regions.
+#' @param m number of bootstrap replicates to use in Zhang confidence region.
+#' @param ... parameters passed onto the points layer.
+#' @return  A \code{ggplot2} object with the data displayed on spherical grid.
 #' @S3method plot SO3
 #' @method plot SO3
 #' @cite wickham09

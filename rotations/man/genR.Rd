@@ -5,16 +5,16 @@
   genR(r, S = NULL, space = "SO3")
 }
 \arguments{
-  \item{r}{vector of angles}
+  \item{r}{vector of angles.}
 
-  \item{S}{The central orientation}
+  \item{S}{central orientation.}
 
-  \item{space}{Indicates the desired representation:
-  rotation matrix "SO3" or quaternions "Q4"}
+  \item{space}{indicates the desired representation:
+  rotation matrix "SO3" or quaternions "Q4."}
 }
 \value{
-  a matrix where each row is a sample point in the desired
-  space
+  A matrix where each row is a sample point in the desired
+  space.
 }
 \description{
   Generate rotations according to the Uniform-Axis Random

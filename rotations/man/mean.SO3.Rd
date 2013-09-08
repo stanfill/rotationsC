@@ -10,22 +10,23 @@
     epsilon = 1e-05, maxIter = 2000, ...)
 }
 \arguments{
-  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
   corresponds to a random rotation in matrix form
-  (\eqn{p=9}) or quaternion (\eqn{p=4}) form}
+  (\eqn{p=9}) or quaternion (\eqn{p=4}) form.}
 
-  \item{type}{String indicating "projeted" or "geometric"
-  type mean estimator}
+  \item{type}{string indicating "projeted" or "geometric"
+  type mean estimator.}
 
-  \item{epsilon}{Stopping rule for the geometric-mean}
+  \item{epsilon}{stopping rule for the geometric-mean.}
 
-  \item{maxIter}{Maximum number of iterations allowed for
-  geometric-mean}
+  \item{maxIter}{maximum number of iterations allowed for
+  geometric-mean.}
 
-  \item{...}{additional arguments passed to mean}
+  \item{...}{additional arguments.}
 }
 \value{
-  Estimate of the projected or geometric mean of the sample
+  Estimate of the projected or geometric mean of the
+  sample.
 }
 \description{
   Compute the sample geometric or projected mean

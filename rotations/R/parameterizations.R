@@ -28,15 +28,15 @@ setOldClass("Q4")
 #' return the quaternion equivalent.
 #'
 #' @export
-#' @param q object to be coerced or tested
-#' @param theta vector of rotation angles
-#' @param ... additional arguments
-#' @format \code{id.Q4} is the identity rotation given by the matrix \eqn{[1,0,0,0]^\top}{[1,0,0,0]'}
-#' @return 	\item{as.Q4}{coerces its object into an Q4 type} 
+#' @param q object to be coerced or tested.
+#' @param theta vector of rotation angles.
+#' @param ... additional arguments.
+#' @format \code{id.Q4} is the identity rotation given by the matrix \eqn{[1,0,0,0]^\top}{[1,0,0,0]'}.
+#' @return 	\item{as.Q4}{coerces its object into an Q4 type.} 
 #' 					\item{is.Q4}{returns \code{TRUE} or \code{False} depending on whether its argument satifies the conditions to be an
 #' 					quaternion.  Namely, is four-dimensional and of unit length.}
-#' 					\item{Q4.default}{returns an n-by-4 matrix where each row is a quaternion constructed from axis U and angle theta}
-#' 					\item{Q4.SO3}{returns n-by-4 matrix where each row is a quaternion constructed from the corresponding rotation matrix}
+#' 					\item{Q4.default}{returns an n-by-4 matrix where each row is a quaternion constructed from axis U and angle theta.}
+#' 					\item{Q4.SO3}{returns n-by-4 matrix where each row is a quaternion constructed from the corresponding rotation matrix.}
 #' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3
 
 Q4<-function(q,...){
@@ -133,15 +133,15 @@ id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 #' return the rotation matrix equivalent.
 #'
 #' @export
-#' @param R object to be coerced or tested
-#' @param theta vector of rotation angles
-#' @param ... additional arguments
-#' @format \code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix
-#' @return 	\item{as.SO3}{coerces its object into an SO3 type} 
+#' @param R object to be coerced or tested.
+#' @param theta vector of rotation angles.
+#' @param ... additional arguments.
+#' @format \code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix.
+#' @return 	\item{as.SO3}{coerces its object into an SO3 type.} 
 #' 					\item{is.SO3}{returns \code{TRUE} or \code{False} depending on whether its argument satifies the conditions to be an
 #' 					rotation matrix.  Namely, has determinant one and its transpose is its inverse.}
-#' 					\item{SO3.default}{returns an n-by-9 matrix where each row is a rotation matrix constructed from axis U and angle theta}
-#' 					\item{SO3.Q4}{returns n-by-9 matrix where each row is a rotation matrix constructed from the corresponding quaternion}
+#' 					\item{SO3.default}{returns an n-by-9 matrix where each row is a rotation matrix constructed from axis U and angle theta.}
+#' 					\item{SO3.Q4}{returns n-by-9 matrix where each row is a rotation matrix constructed from the corresponding quaternion.}
 #' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4
 
 SO3 <- function(R,...){

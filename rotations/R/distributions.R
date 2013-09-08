@@ -32,12 +32,12 @@ rar <- function(n, f, M, ...) {
 #'
 #' @name Cayley
 #' @aliases Cayley rcayley dcayley
-#' @param r,q vector of quantiles
-#' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required
-#' @param kappa Concentration paramter
-#' @param nu The circular variance, can be used in place of kappa
-#' @param Haar logical; if TRUE density is evaluated with respect to the Haar measure
-#' @param lower.tail logical; if TRUE (default) probabilities are \eqn{P(X\leq x)}{P(X\le x)} otherwise, \eqn{P(X>x)}
+#' @param r,q vector of quantiles.
+#' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required.
+#' @param kappa concentration paramter.
+#' @param nu circular variance, can be used in place of \code{kappa}.
+#' @param Haar logical; if TRUE density is evaluated with respect to the Haar measure.
+#' @param lower.tail logical; if TRUE (default) probabilities are \eqn{P(X\leq x)}{P(X\le x)} otherwise, \eqn{P(X>x)}.
 #' @return  \item{dcayley}{gives the density}
 #'          \item{pcayley}{gives the distribution function}
 #'          \item{rcayley}{generates a vector of random deviates}
@@ -114,12 +114,12 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
 #'
 #' @name Fisher
 #' @aliases Fisher dfisher rfisher pfisher
-#' @param r,q vector of quantiles
-#' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required
-#' @param kappa concentration paramter
-#' @param nu circular variance, can be used in place of kappa
-#' @param Haar logical; if TRUE density is evaluated with respect to the Haar measure
-#' @param lower.tail  logical; if TRUE (default), probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X > x)}
+#' @param r,q vector of quantiles.
+#' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required.
+#' @param kappa concentration paramter.
+#' @param nu circular variance, can be used in place of \code{kappa}.
+#' @param Haar logical; if TRUE density is evaluated with respect to the Haar measure.
+#' @param lower.tail  logical; if TRUE (default), probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X > x)}.
 #' @return  \item{dfisher}{gives the density}
 #'          \item{pfisher}{gives the distribution function}
 #'          \item{rfisher}{generates random deviates}
@@ -192,9 +192,9 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 #'
 #' @name Haar
 #' @aliases Haar dhaar phaar rhaar
-#' @param r,q vector of quantiles
-#' @param lower.tail  logical; if TRUE (default), probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X > x)}
-#' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required
+#' @param r,q vector of quantiles.
+#' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required.
+#' @param lower.tail  logical; if TRUE (default), probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X > x)}.
 #' @return  \item{dhaar}{gives the density}
 #'          \item{phaar}{gives the distribution function}
 #'          \item{rhaar}{generates random deviates}
@@ -255,11 +255,11 @@ rhaar<-function(n){
 #' @name Mises
 #' @aliases Mises dvmises rvmises pvmises
 #' @param r,q vector of quantiles
-#' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required
-#' @param kappa concentration paramter
-#' @param nu The circular variance, can be used in place of kappa
-#' @param Haar logical; if TRUE density is evaluated with respect to the Haar measure
-#' @param lower.tail  logical; if TRUE (default), probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X > x)}
+#' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required.
+#' @param kappa concentration paramter.
+#' @param nu circular variance, can be used in place of \code{kappa}.
+#' @param Haar logical; if TRUE density is evaluated with respect to the Haar measure.
+#' @param lower.tail  logical; if TRUE (default), probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X > x)}.
 #' @return  \item{dvmises}{gives the density}
 #'          \item{pvmises}{gives the distribution function}
 #'          \item{rvmises}{generates random deviates}
@@ -364,15 +364,15 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #'
 #' @name UARS
 #' @aliases UARS puars duars ruars
-#' @param R Value at which to evaluate the UARS density
-#' @param n number of observations. If \code{length(n)>1}, the length is taken to be the number required
-#' @param dangle The function to evaulate the angles from e.g. dcayley, dvmises, dfisher, dhaar
-#' @param pangle The form of the angular density e.g. pcayley, pvmises, pfisher, phaar
-#' @param rangle The function from which to simulate angles e.g. rcayley, rvmises, rhaar, rfisher
-#' @param S central orientation of the distribution
-#' @param kappa concentration of the distribution
-#' @param space Indicates the desired representation: matrix (SO3) or quaternion (Q4)
-#' @param ... additional arguments passed to the angular distribution
+#' @param R Value at which to evaluate the UARS density.
+#' @param n number of observations. If \code{length(n)>1}, the length is taken to be the number required.
+#' @param dangle The function to evaulate the angles from e.g. dcayley, dvmises, dfisher, dhaar.
+#' @param pangle The form of the angular density e.g. pcayley, pvmises, pfisher, phaar.
+#' @param rangle The function from which to simulate angles e.g. rcayley, rvmises, rhaar, rfisher.
+#' @param S central orientation of the distribution.
+#' @param kappa concentration parameter.
+#' @param space indicates the desired representation: matrix ("SO3") or quaternion ("Q4").
+#' @param ... additional arguments.
 #' @return  \item{duars}{gives the density}
 #'          \item{puars}{gives the distribution function}
 #'          \item{ruars}{generates random deviates}

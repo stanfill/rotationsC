@@ -6,17 +6,17 @@
 }
 \arguments{
   \item{data}{data frame of rotation matrices in
-  \eqn{3\times 3}{3-by-3} matrix representation}
+  \eqn{3\times 3}{3-by-3} matrix representation.}
 
   \item{center}{point about which to center the
-  observations}
+  observations.}
 
   \item{column}{integer 1 to 3 indicating which column to
-  display}
+  display.}
 }
 \value{
-  data frame with columns X, Y, Z standing for the
-  respective coordinates in 3D space
+  Data frame with columns X, Y, Z standing for the
+  respective coordinates in 3D space.
 }
 \description{
   Projection of rotation matrices onto sphere with given
