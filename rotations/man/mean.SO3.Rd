@@ -14,7 +14,7 @@
   corresponds to a random rotation in matrix form
   (\eqn{p=9}) or quaternion (\eqn{p=4}) form.}
 
-  \item{type}{string indicating "projeted" or "geometric"
+  \item{type}{string indicating "projected" or "geometric"
   type mean estimator.}
 
   \item{epsilon}{stopping rule for the geometric-mean.}
@@ -41,10 +41,8 @@
   SO(3), i=1,2,\dots,n}, the mean-type estimator is defined
   as \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in
   SO(3)}\sum_{i=1}^nd^2(\bm{R}_i,\bm{S})}{argmin\sum
-  d^2(bar(R),S)} where
-  \eqn{\bar{\bm{R}}=\frac{1}{n}\sum_{i=1}^n\bm{R}_i}{bar(R)=\sum
-  Ri/n} and the distance metric \eqn{d} is Riemannian or
-  Euclidean.  For more on the projected mean see
+  d^2(Ri,S)} where \eqn{d} is the Riemannian or Euclidean
+  distance. For more on the projected mean see
   \cite{Moakher (2002)} and for the geometric mean see
   \cite{Manton (2004)}. For the projected mean from a
   quaternion point of view see \cite{Tyler (1981)}.

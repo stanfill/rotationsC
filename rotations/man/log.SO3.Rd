@@ -15,11 +15,11 @@
 }
 \description{
   Compute the logarithm of a rotation matrix.  The result
-  is a 3-by-3 skew-symmetric matrix.  This function maps
-  the lie group SO(3) into its tangent space, which is the
-  space of all \eqn{3\times 3}{3-by-3} skew symmetric
-  matrices, which is the lie algerbra so(3).  For details
-  see e.g. \cite{Moakher (2002)}.
+  is a \eqn{3\times 3}{3-by-3} skew-symmetric matrix.  This
+  function maps the lie group \eqn{SO(3)} into its tangent
+  space, which is the space of all \eqn{3\times 3}{3-by-3}
+  skew symmetric matrices, which is the lie algerbra
+  \eqn{so(3)}.  For details see e.g. \cite{Moakher (2002)}.
 }
 \references{
   Moakher M (2002). "Means and averaging in the group of

@@ -21,7 +21,7 @@
   Axis in form of three dimensional vector of length one.
 }
 \description{
-  Determine the misorientation axis of a rotation
+  Determine the misorientation axis of a rotation.
 }
 \details{
   Every rotation can be interpreted as some reference

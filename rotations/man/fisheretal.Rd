@@ -30,7 +30,7 @@
 }
 \value{
   Radius of the confidence region centered at the projected
-  mean
+  mean.
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)}\% confidence

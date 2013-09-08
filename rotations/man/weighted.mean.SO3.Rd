@@ -18,7 +18,7 @@
   of rows in x giving the weights to use for elements of
   x.}
 
-  \item{type}{string indicating "projeted" or "geometric"
+  \item{type}{string indicating "projectced" or "geometric"
   type mean estimator.}
 
   \item{epsilon}{stopping rule for the geometric method.}

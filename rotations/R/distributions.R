@@ -2,7 +2,7 @@
 #' 
 #' Density, distribution function and random variate generation for symmetric probability distributions in the rotations package.
 #' 
-#' The functions for the density function and random variate generation are named in the usual form dxxxx, pxxxx and rxxxx 
+#' The functions for the density function and random variate generation are named in the usual form dxxxx, pxxxx and rxxxx, 
 #' respectively.        
 #' \itemize{
 #' 	\item See \code{\link{Cayley}} for the Cayley distribution.
@@ -41,7 +41,7 @@ rar <- function(n, f, M, ...) {
 #' @return  \item{dcayley}{gives the density}
 #'          \item{pcayley}{gives the distribution function}
 #'          \item{rcayley}{generates a vector of random deviates}
-#' @seealso \link{Angular-distributions} for other distributions in the rotations package
+#' @seealso \link{Angular-distributions} for other distributions in the rotations package.
 #' @cite Schaeben1997 leon2006
 
 NULL
@@ -123,7 +123,7 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
 #' @return  \item{dfisher}{gives the density}
 #'          \item{pfisher}{gives the distribution function}
 #'          \item{rfisher}{generates random deviates}
-#' @seealso \link{Angular-distributions} for other distributions in the rotations package
+#' @seealso \link{Angular-distributions} for other distributions in the rotations package.
 
 NULL
 
@@ -198,7 +198,7 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 #' @return  \item{dhaar}{gives the density}
 #'          \item{phaar}{gives the distribution function}
 #'          \item{rhaar}{generates random deviates}
-#' @seealso \link{Angular-distributions} for other distributions in the rotations package
+#' @seealso \link{Angular-distributions} for other distributions in the rotations package.
 
 NULL
 
@@ -263,7 +263,7 @@ rhaar<-function(n){
 #' @return  \item{dvmises}{gives the density}
 #'          \item{pvmises}{gives the distribution function}
 #'          \item{rvmises}{generates random deviates}
-#' @seealso \link{Angular-distributions} for other distributions in the rotations package
+#' @seealso \link{Angular-distributions} for other distributions in the rotations package.
 
 NULL
 
@@ -356,10 +356,10 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 
 #' Generic UARS Distribution
 #'
-#' Density, distribution function and random generation for the the generic uniform-axis random-spin class of distributions.
+#' Density, distribution function and random generation for the the generic uniform axis-random spin (UARS) class of distributions.
 #' 
 #' For the rotation R with central orientation S and concentration \eqn{kappa} the UARS density is given by 
-#' \deqn{f(R|S,\kappa)=\frac{4\pi}{3-tr(S'R)}C(acos[tr(S'R)-1]/2|\kappa)}{f(R|S,\kappa)=4\pi C(acos[tr(S'R)-1]/2|\kappa)/[3-tr(S'R)]}
+#' \deqn{f(R|S,\kappa)=\frac{4\pi}{3-tr(S^\top R)}C(acos[tr(S^\top R)-1]/2|\kappa)}{f(R|S,\kappa)=4\pi C(acos[tr(S'R)-1]/2|\kappa)/[3-tr(S'R)]}
 #' where \eqn{C(r|\kappa)} is one of the \link{Angular-distributions}.
 #'
 #' @name UARS
@@ -376,7 +376,7 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #' @return  \item{duars}{gives the density}
 #'          \item{puars}{gives the distribution function}
 #'          \item{ruars}{generates random deviates}
-#' @seealso For more on the angular distribution options see \link{Angular-distributions}
+#' @seealso For more on the angular distribution options see \link{Angular-distributions}.
 #' @cite bingham09
 
 NULL

@@ -51,6 +51,6 @@
 }
 \seealso{
   \link{Angular-distributions} for other distributions in
-  the rotations package
+  the rotations package.
 }
 

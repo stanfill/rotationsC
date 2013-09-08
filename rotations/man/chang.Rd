@@ -34,7 +34,7 @@
   projected mean or median based on a result due to
   \cite{Chang et al. (2001)} amongst others.  By
   construction each axis will have the same radius so the
-  radius reported is for all three axis.
+  radius reported is for all three axes.
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)

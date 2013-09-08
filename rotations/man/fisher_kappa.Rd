@@ -12,9 +12,9 @@
 }
 \description{
   The concentration parameter \eqn{\kappa} does not
-  translate across circular distribuations.  A commonly
-  used measure of spread in circular distributions that
-  does translate is the circular variance defined as
+  translate across circular distributions A commonly used
+  measure of spread in circular distributions that does
+  translate is the circular variance defined as
   \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where
   \eqn{E[\cos(r)]}{E[cos(r)]} is the mean resultant length.
   See \cite{Mardia et al. (2009)} for more details.  This

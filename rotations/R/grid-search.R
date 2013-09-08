@@ -45,7 +45,7 @@ error.grid <- function(sample, Shat, theta=1, error, sphere) {
 #' @param error user defined function to observed distance between sample and estimate, has to have parameters for the sample and the estimate.
 #' @param minerr minimal distance to consider for convergence.
 #' @param start starting value for the estimation.
-#' @param theta size of the grid considered  .
+#' @param theta size of the grid considered.
 #' @return list of 
 #' \itemize{
 #' \item Shat estimate of the main direction

@@ -40,7 +40,7 @@
   corresponding rotation matrix.}
 }
 \description{
-  Creates or tests for objects of type "Q4."
+  Creates or tests for objects of class "Q4."
 }
 \details{
   Construct a unit quaternion to represent a rotation.

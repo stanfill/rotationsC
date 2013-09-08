@@ -5,7 +5,8 @@
   exp_skew(H)
 }
 \arguments{
-  \item{H}{singular or sample of \eqn{3\times 3}{3-by-3}
+  \item{H}{single \eqn{3\times 3}{3-by-3} skew-symmetric
+  matrix or \eqn{n\times 9}{n-by-9} sample of
   skew-symmetric matrices.}
 }
 \value{

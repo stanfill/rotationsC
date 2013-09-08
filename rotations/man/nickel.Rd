@@ -5,7 +5,7 @@
 Nickel electron backscatter diffraction data set
 }
 \description{
-This data set consists of electron backscatter diffraction (EBSD) data obtained by scanning a fixed  12.5 \eqn{\mu}m-by-10 \eqn{\mu}m nickel surface at individual locations spaced 0.2 \eqn{\mu}m apart. This scan was repeated 14 times for each of the 3,449 locations yielding a total of 48,286 observations (Bingham et al. 2009; Bingham et al. 2010). Every observation corresponds to the orientation, expressed as a rotation matrix, of a cubic crystal on the metal surface at a particular location.  Be aware that there are missing values and erroneous scans at some locations and scans.
+This data set consists of electron backscatter diffraction (EBSD) data obtained by scanning a fixed  12.5 \eqn{\mu}m-by-10 \eqn{\mu}m nickel surface at individual locations spaced 0.2 \eqn{\mu}m apart. This scan was repeated 14 times for each of the 3,449 locations yielding a total of 48,286 observations. Every observation corresponds to the orientation, expressed as a rotation matrix, of a cubic crystal on the metal surface at a particular location.  Be aware that there are missing values and erroneous scans at some locations and scans.  See Bingham et al. (2009) and Bingham et al. (2010) for more details and analysis.
 }
 \usage{data(nickel)}
 \format{

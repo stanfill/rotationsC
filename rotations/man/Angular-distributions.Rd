@@ -9,7 +9,7 @@
 \details{
   The functions for the density function and random variate
   generation are named in the usual form dxxxx, pxxxx and
-  rxxxx respectively. \itemize{ \item See
+  rxxxx, respectively. \itemize{ \item See
   \code{\link{Cayley}} for the Cayley distribution.  \item
   See \code{\link{Fisher}} for the matrix Fisher
   distribution.  \item See \code{\link{Haar}} for the

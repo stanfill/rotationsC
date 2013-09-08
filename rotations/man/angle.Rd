@@ -11,12 +11,12 @@
   \method{angle}{Q4} (x)
 }
 \arguments{
-  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
   corresponds to a random rotation in matrix (p=9) or
-  quaternion (p=4) form}
+  quaternion (p=4) form.}
 }
 \value{
-  angle of rotation
+  Angle of rotation.
 }
 \description{
   Compute the misorientation angle of a rotation.

@@ -1,4 +1,6 @@
-#' SO3 class
+#' SO3 class.
+#'
+#' Class for \eqn{3\times 3}{3-by-3} matrix representation of rotations.
 #'
 #' @name SO3-class
 #' @seealso See the \code{\link{SO3}} functions
@@ -7,9 +9,9 @@
 setOldClass("SO3")
 
 
-#' Q4 class
+#' Q4 class.
 #'
-#' Class for quaterion representation of rotations
+#' Class for quaterion representation of rotations.
 #' 
 #' @name Q4-class
 #' @seealso See the \code{\link{Q4}} functions
@@ -19,7 +21,7 @@ setOldClass("Q4")
 
 #' Quaternions
 #' 
-#' Creates or tests for objects of type "Q4."
+#' Creates or tests for objects of class "Q4."
 #' 
 #' Construct a unit quaternion to represent a rotation.  Each quaternion can be interpreted as a rotation of some reference frame 
 #' about the axis U (of unit length) through the angle theta.  For each axis, U, and angle theta the quaternion is formed through
@@ -124,7 +126,7 @@ id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 
 #' Rotation matrices
 #' 
-#' Creates or tests for objects of type "SO3."
+#' Creates or tests for objects of class "SO3."
 #' 
 #' Construct a 3-by-3 matrix to represent a rotation.  Each rotation matrix can be interpreted as a rotation of some reference frame 
 #' about the axis U (of unit length) through the angle theta.  For each axis, U, and angle theta the matrix is formed through

@@ -167,8 +167,8 @@ dist.Q4 <- function(x, Q2=id.Q4 ,method='projected', p=1,...) {
 #' This function returns the misorentation angle associated with a rotation assuming the reference coordinate system
 #' is the identity.
 #'  
-#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form
-#' @return angle of rotation
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @return Angle of rotation.
 #' @seealso \code{\link{axis}}
 #' @export
 
@@ -209,7 +209,7 @@ angle.Q4 <- function(x){
 
 #' Misorientation axis
 #' 
-#' Determine the misorientation axis of a rotation
+#' Determine the misorientation axis of a rotation.
 #' 
 #' Every rotation can be interpreted as some reference coordinate system rotated about an axis through an angle.  These quantites
 #' are referred to as the misorientation axis and misorientation angle, respectively, in the material sciences literature.
@@ -287,20 +287,19 @@ eskew <- function(U) {
 
 
 
-#' Generate Rotations
+#' Generate rotations
 #'
-#' Generate rotations according to the Uniform-Axis Random Spin methodology.
+#' Generate rotations according to Rodrigues' formula.
 #'
-#' Given a vector \eqn{u\in R^2}{u in R^2} of length one and angle of rotation \eqn{r}, a rotation can be formed using Rodrigues formula
+#' Given a vector \eqn{u\in R^3}{u in R^3} of length one and angle of rotation \eqn{r}, a rotation can be formed using Rodrigues' formula
 #' \deqn{\cos(r)I_{3\times 3}+\sin(r)\Phi(u)+(1-\cos(r))uu^\top}{cos(r)I+sin(r)\Phi(u)+(1-cos(r))uu'} 
-#' where \eqn{I_{3\times 3}}{I} is the \eqn{3\times 3}{3-by-3} identity matrix,\eqn{\Phi(u)} is a \eqn{3\times 3}{3-by-3} skew-symmetric matirix
+#' where \eqn{I_{3\times 3}}{I} is the \eqn{3\times 3}{3-by-3} identity matrix, \eqn{\Phi(u)} is a \eqn{3\times 3}{3-by-3} skew-symmetric matirix
 #' with upper triangular elements \eqn{-u_3}{-u3}, \eqn{u_2}{u2} and \eqn{-u_1}{-u1} in that order.
 #'
 #' @param r vector of angles.
 #' @param S central orientation.
 #' @param space indicates the desired representation: rotation matrix "SO3" or quaternions "Q4." 
 #' @return A matrix where each row is a sample point in the desired space.
-#' @cite bingham09
 #' @export
 #' @examples
 #' r<-rvmises(20,0.01)
@@ -379,7 +378,7 @@ genR <- function(r, S = NULL, space='SO3') {
 #' The expansion is significantly simplified for skew-symmetric matrices, see \cite{moakher02}.
 #' Maps a matrix belonging to the lie algebra \eqn{so(3)} into the lie group \eqn{SO(3)}.
 #'
-#' @param H singular or sample of \eqn{3\times 3}{3-by-3} skew-symmetric matrices.
+#' @param H single \eqn{3\times 3}{3-by-3} skew-symmetric matrix or \eqn{n\times 9}{n-by-9} sample of skew-symmetric matrices.
 #' @return Matrix in \eqn{SO(3)} \eqn{e^{\bm A}}{e^A}.
 #' @cite moakher02
 #' @export
@@ -400,9 +399,9 @@ exp_skew <- function(H) {
 
 #' Rotation logarithm
 #'
-#' Compute the logarithm of a rotation matrix.  The result is a 3-by-3 skew-symmetric matrix.  This function maps
-#' the lie group SO(3) into its tangent space, which is the space of all \eqn{3\times 3}{3-by-3} skew symmetric matrices,
-#' which is the lie algerbra so(3).  For details see e.g. \cite{moakher02}.
+#' Compute the logarithm of a rotation matrix.  The result is a \eqn{3\times 3}{3-by-3} skew-symmetric matrix.  This function maps
+#' the lie group \eqn{SO(3)} into its tangent space, which is the space of all \eqn{3\times 3}{3-by-3} skew symmetric matrices,
+#' which is the lie algerbra \eqn{so(3)}.  For details see e.g. \cite{moakher02}.
 #'
 #' @param x \eqn{n\times 9}{n-by-9} matrix where each row corresponds to a random rotation matrix.
 #' @param ... additional arguements.
@@ -489,7 +488,7 @@ sum_dist.Q4 <- function(x, S = id.Q4, method='projected', p=1) {
 #' Center rotation data
 #' 
 #' This function will take the sample Rs and return the sample Rs centered at
-#' S, i.e., the returned sample is \eqn{S^\top R}{S'R}.  If S is the true center then
+#' S, i.e. the returned sample is \eqn{S^\top R}{S'R}.  If S is the true center then
 #' the projected mean should be close to the 3-by-3 identity matrix 
 #' 
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.

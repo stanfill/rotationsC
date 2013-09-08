@@ -1,7 +1,7 @@
 #' Confidence region for central orientation
 #'
 #' Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean or median.
-#' The current methods available are due to \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}},
+#' For more on the currently available methods see \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}},
 #' and \code{\link{zhang}}.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
@@ -327,7 +327,7 @@ cdfuns<-function(Qs,estimator){
 #' 
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation centered at the projected mean
 #' or median based on a result due to \cite{chang2001} amongst others.  By construction each axis will have the same
-#' radius so the radius reported is for all three axis.
+#' radius so the radius reported is for all three axes.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
 #' @param estimator character string either "mean" or "median."
@@ -397,7 +397,7 @@ chang.Q4<-function(x,estimator,alp=NULL){
 #' @param boot should the bootstrap or normal theory critical value be used.
 #' @param m number of bootstrap replicates to use to estimate critical value.
 #' @param symm logical; if TRUE (default), a symmetric region is constructed.
-#' @return Radius of the confidence region centered at the projected mean
+#' @return Radius of the confidence region centered at the projected mean.
 #' @seealso \code{\link{prentice}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite fisher1996
 #' @export

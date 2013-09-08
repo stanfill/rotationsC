@@ -141,7 +141,9 @@ pointsXYZ <- function(data, center, column=1) {
 #' Rs<-genR(r)
 #' plot(Rs,center=mean(Rs),show_estimates=NULL,shape=4)
 #' # Z is computed internally and contains information on depth
-#' plot(Rs,center=mean(Rs),show_estimates=c("proj.mean", "geom.mean"), label_points=sample(LETTERS, 200, replace=TRUE)) + aes(size=Z, alpha=Z) + scale_size(limits=c(-1,1), range=c(0.5,2.5))
+#' plot(Rs,center=mean(Rs),show_estimates=c("proj.mean", "geom.mean"), 
+#'  label_points=sample(LETTERS, 200, replace=TRUE)) + aes(size=Z, alpha=Z) + 
+#'  scale_size(limits=c(-1,1), range=c(0.5,2.5))
 
 plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300,  ...) {
 

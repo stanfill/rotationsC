@@ -42,13 +42,14 @@
 }
 \description{
   Density, distribution function and random generation for
-  the the generic uniform-axis random-spin class of
+  the the generic uniform axis-random spin (UARS) class of
   distributions.
 }
 \details{
   For the rotation R with central orientation S and
   concentration \eqn{kappa} the UARS density is given by
-  \deqn{f(R|S,\kappa)=\frac{4\pi}{3-tr(S'R)}C(acos[tr(S'R)-1]/2|\kappa)}{f(R|S,\kappa)=4\pi
+  \deqn{f(R|S,\kappa)=\frac{4\pi}{3-tr(S^\top
+  R)}C(acos[tr(S^\top R)-1]/2|\kappa)}{f(R|S,\kappa)=4\pi
   C(acos[tr(S'R)-1]/2|\kappa)/[3-tr(S'R)]} where
   \eqn{C(r|\kappa)} is one of the
   \link{Angular-distributions}.
@@ -62,6 +63,6 @@
 }
 \seealso{
   For more on the angular distribution options see
-  \link{Angular-distributions}
+  \link{Angular-distributions}.
 }
 

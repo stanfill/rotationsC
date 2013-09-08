@@ -41,7 +41,7 @@
   corresponding quaternion.}
 }
 \description{
-  Creates or tests for objects of type "SO3."
+  Creates or tests for objects of class "SO3."
 }
 \details{
   Construct a 3-by-3 matrix to represent a rotation.  Each

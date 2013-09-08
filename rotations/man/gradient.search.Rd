@@ -17,7 +17,7 @@
 
   \item{start}{starting value for the estimation.}
 
-  \item{theta}{size of the grid considered .}
+  \item{theta}{size of the grid considered.}
 }
 \value{
   list of \itemize{ \item Shat estimate of the main
