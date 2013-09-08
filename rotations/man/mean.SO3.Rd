@@ -1,8 +1,12 @@
 \name{mean.SO3}
+\alias{mean.Q4}
 \alias{mean.SO3}
 \title{Mean rotation}
 \usage{
   \method{mean}{SO3} (x, type = "projected",
+    epsilon = 1e-05, maxIter = 2000, ...)
+
+  \method{mean}{Q4} (x, type = "projected",
     epsilon = 1e-05, maxIter = 2000, ...)
 }
 \arguments{
@@ -26,16 +30,24 @@
   Compute the sample geometric or projected mean
 }
 \details{
-  This function takes a sample of \eqn{3\times 3}{3-by-3}
-  rotations (in the form of a \eqn{n\times 9}{n-by-9}
-  matrix where \eqn{n>1} is the sample size) and returns
-  the projected arithmetic mean denoted \eqn{\widehat{\bm
-  S}_P}{S_P} or geometric mean \eqn{\widehat{\bm S}_G}{S_G}
-  according to the \code{type} option. For a sample of
-  \eqn{n} random rotations \eqn{\bm{R}_i\in SO(3),
-  i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the mean-type
-  estimator is defined as
-  \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in
+  This function takes a sample of \eqn{n} unit quaternions
+  and approximates the mean rotation.  If the projected
+  mean is called for then the according to \cite{Tyler
+  (1981)} an estimate of the mean is the eigenvector
+  corresponding to the largest eigenvalue of
+  \eqn{\frac{1}{n}\sum_{i=1}^nq_i^\top q_i}{Q`Q/n}.  If the
+  geometric mean is called then the quaternions are
+  transformed into \eqn{3\times 3}{3-by-3} matrices and the
+  \code{mean.SO3} function is called. This function takes a
+  sample of \eqn{3\times 3}{3-by-3} rotations (in the form
+  of a \eqn{n\times 9}{n-by-9} matrix where \eqn{n>1} is
+  the sample size) and returns the projected arithmetic
+  mean denoted \eqn{\widehat{\bm S}_P}{S_P} or geometric
+  mean \eqn{\widehat{\bm S}_G}{S_G} according to the
+  \code{type} option. For a sample of \eqn{n} random
+  rotations \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in
+  SO(3), i=1,2,\dots,n}, the mean-type estimator is defined
+  as \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in
   SO(3)}\sum_{i=1}^nd^2(\bm{R}_i,\bm{S})}{argmin
   d^2(bar(R),S)} where
   \eqn{\bar{\bm{R}}=\frac{1}{n}\sum_{i=1}^n\bm{R}_i}{bar(R)=\sum
@@ -47,17 +59,22 @@
 \examples{
 Rs<-ruars(20,rvmises,kappa=0.01)
 mean(Rs)
+Qs<-Q4(Rs)
+mean(Qs)
 }
 \references{
+  Tyler DE (1981). "Asymptotic inference for eigenvectors."
+  _The Annals of Statistics_, pp. 725-736.
+
+  Moakher M (2002). "Means and averaging in the group of
+  rotations." _SIAM Journal on Matrix Analysis and
+  Applications_, *24*(1), pp. 1-16.
+
   Manton JH (2004). "A globally convergent numerical
   algorithm for computing the centre of mass on compact Lie
   groups." In _Control, Automation, Robotics and Vision
   Conference, 2004. ICARCV 2004 8th_, volume 3, pp.
   2211-2216. IEEE.
-
-  Moakher M (2002). "Means and averaging in the group of
-  rotations." _SIAM Journal on Matrix Analysis and
-  Applications_, *24*(1), pp. 1-16.
 }
 \seealso{
   \code{\link{median.SO3}}

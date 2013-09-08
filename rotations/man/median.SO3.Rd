@@ -1,5 +1,4 @@
-\name{median}
-\alias{median}
+\name{median.SO3}
 \alias{median.Q4}
 \alias{median.SO3}
 \title{Median rotation}
@@ -51,6 +50,6 @@
   (CVPR)_, pp. 3041-3048. IEEE.
 }
 \seealso{
-  \code{\link{mean.SO3}}, \code{\link{mean.Q4}}
+  \code{\link{mean.SO3}}
 }
 
