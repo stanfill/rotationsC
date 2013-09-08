@@ -30,7 +30,7 @@
   region for the central orientation based on the projected
   mean estimator using the method due to \cite{Prentice
   (1986)}.  For a rotation specific version see
-  \cite{Rancourt et al. (2000)}. The variablity in each
+  \cite{Rancourt et al. (2000)}. The variability in each
   axis is different so each axis will have its own radius.
   In \cite{Bingham et al. (2009)} they take the largest
   radius and use it to form regions that are symmetric
@@ -42,20 +42,20 @@ region(Qs,method='eigen',type='theory',alp=0.1,estimator='mean')
 }
 \references{
   Prentice MJ (1986). "Orientation statistics without
-  parametric assumptions." _Journal of the Royal
-  Statistical Society. Series B (Methodological)_, pp.
+  parametric assumptions." Journal of the Royal
+  Statistical Society. Series B (Methodological), pp.
   214-222.
 
   Rancourt D, Rivest L and Asselin J (2000). "Using
   orientation statistics to investigate variations in human
-  kinematics." _Journal of the Royal Statistical Society:
-  Series C (Applied Statistics)_, *49*(1), pp. 81-94.
+  kinematics." Journal of the Royal Statistical Society:
+  Series C (Applied Statistics), 49(1), pp. 81-94.
 
   Bingham M, Nordman D and Vardeman S (2009). "Modeling and
   Inference for Measured Crystal Orientations and a
   Tractable Class of Symmetric Distributions for Rotations
-  in three Dimensions." _Journal of the American
-  Statistical Association_, *104*(488), pp. 1385-1397.
+  in three Dimensions." Journal of the American
+  Statistical Association, 104(488), pp. 1385-1397.
 }
 \seealso{
   \code{\link{fisheretal}}, \code{\link{chang}},

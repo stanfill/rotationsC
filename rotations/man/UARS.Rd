@@ -17,7 +17,7 @@
   \item{n}{number of observations. If \code{length(n)>1},
   the length is taken to be the number required.}
 
-  \item{dangle}{The function to evaulate the angles from
+  \item{dangle}{The function to evaluate the angles from
   e.g. dcayley, dvmises, dfisher, dhaar.}
 
   \item{pangle}{The form of the angular density e.g.
@@ -58,8 +58,8 @@
   Bingham M, Nordman D and Vardeman S (2009). "Modeling and
   Inference for Measured Crystal Orientations and a
   Tractable Class of Symmetric Distributions for Rotations
-  in three Dimensions." _Journal of the American
-  Statistical Association_, *104*(488), pp. 1385-1397.
+  in three Dimensions." Journal of the American
+  Statistical Association, 104(488), pp. 1385-1397.
 }
 \seealso{
   For more on the angular distribution options see

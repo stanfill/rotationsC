@@ -23,8 +23,7 @@
   for the matrix-Fisher distribution.
 }
 \references{
-  Mardia KV and Jupp PE (2009). _Directional statistics_,
-  volume 494. Wiley. com.
+  Mardia, K. V., & Jupp, P. E. Directional statistics. 2000.
 }
 \seealso{
   \code{\link{Fisher}}
