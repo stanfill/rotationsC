@@ -2,7 +2,7 @@
 \alias{axis}
 \alias{axis.Q4}
 \alias{axis.SO3}
-\title{Misorientation Axis}
+\title{Misorientation axis}
 \usage{
   axis(x, ...)
 
@@ -11,7 +11,9 @@
   \method{axis}{Q4} (x, ...)
 }
 \arguments{
-  \item{x}{3-by-3 matrix in SO3 or unit quaterion}
+  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  corresponds to a random rotation in matrix (p=9) or
+  quaternion (p=4) form}
 
   \item{...}{additional arguements}
 }

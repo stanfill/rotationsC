@@ -2,8 +2,9 @@
 \alias{Angular-distributions}
 \title{Angular distributions}
 \description{
-  Density and random variate generation for symmetric
-  probability distributions in the rotations package
+  Density, distribution function and random variate
+  generation for symmetric probability distributions in the
+  rotations package
 }
 \details{
   The functions for the density function and random variate

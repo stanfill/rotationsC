@@ -2,11 +2,11 @@
 \alias{exp_skew}
 \title{Matrix exponential}
 \usage{
-  exp_skew(x)
+  exp_skew(H)
 }
 \arguments{
-  \item{x}{singular or sample of 3-by-3 skew-symmetric
-  matrices, i.e. H such that \eqn{\bm H=-\bm H^\top}}
+  \item{H}{singular or sample of \eqn{3\times 3}{3-by-3}
+  skew-symmetric matrices}
 }
 \value{
   matrix in SO(3) \eqn{e^{\bm A}}{e^A}

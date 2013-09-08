@@ -303,7 +303,8 @@ eskew <- function(U) {
 #' @export
 #' @examples
 #' r<-rvmises(20,0.01)
-#' genR(r)
+#' Rs<-genR(r,space="SO3")
+#' Qs<-genR(r,space="Q4")
 
 genR <- function(r, S = NULL, space='SO3') {
   
@@ -398,12 +399,13 @@ exp_skew <- function(H) {
 
 #' Rotation logarithm
 #'
-#' Compute the matrix logarithm of a matrix in SO(3).  The result is a 3-by-3 skew-symmetric matrix.  This function maps
-#' the lie group SO(3) into its tangent space, which is the lie algerbra so(3).  For details see \cite{moakher02}
+#' Compute the logarithm of a rotation matrix.  The result is a 3-by-3 skew-symmetric matrix.  This function maps
+#' the lie group SO(3) into its tangent space, which is the space of all \eqn{3\times 3}{3-by-3} skew symmetric matrices,
+#' which is the lie algerbra so(3).  For details see e.g. \cite{moakher02}
 #'
-#' @param x a single or sample of matrices in \eqn{SO(3)}
+#' @param x A \eqn{n\times 9}{n-by-9} matrix where each row corresponds to a random rotation matrix
 #' @param ... additional arguements
-#' @return numeric matrix \eqn{\log(R)}{log(R)}
+#' @return skew symmetric matrix \eqn{\log(R)}{log(R)}
 #' @cite moakher02
 #' @S3method log SO3
 #' @method log SO3

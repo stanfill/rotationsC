@@ -5,19 +5,21 @@
   \method{log}{SO3} (x, ...)
 }
 \arguments{
-  \item{x}{a single or sample of matrices in \eqn{SO(3)}}
+  \item{x}{A \eqn{n\times 9}{n-by-9} matrix where each row
+  corresponds to a random rotation matrix}
 
   \item{...}{additional arguements}
 }
 \value{
-  numeric matrix \eqn{\log(R)}{log(R)}
+  skew symmetric matrix \eqn{\log(R)}{log(R)}
 }
 \description{
-  Compute the matrix logarithm of a matrix in SO(3).  The
-  result is a 3-by-3 skew-symmetric matrix.  This function
-  maps the lie group SO(3) into its tangent space, which is
-  the lie algerbra so(3).  For details see \cite{Moakher
-  (2002)}
+  Compute the logarithm of a rotation matrix.  The result
+  is a 3-by-3 skew-symmetric matrix.  This function maps
+  the lie group SO(3) into its tangent space, which is the
+  space of all \eqn{3\times 3}{3-by-3} skew symmetric
+  matrices, which is the lie algerbra so(3).  For details
+  see e.g. \cite{Moakher (2002)}
 }
 \references{
   Moakher M (2002). "Means and averaging in the group of

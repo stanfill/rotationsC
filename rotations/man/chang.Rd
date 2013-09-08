@@ -13,16 +13,16 @@
 \arguments{
   \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
   corresponds to a random rotation in matrix (p=9) or
-  quaternion form (p=4)}
+  quaternion (p=4) form}
 
-  \item{estimator}{Character string either 'mean' or
-  'median'}
+  \item{estimator}{Character string either "mean" or
+  "median"}
 
   \item{alp}{The alpha level desired, e.g. 0.05 or 0.10}
 }
 \value{
-  Radius of the confidence region centered at the projected
-  mean
+  Radius of the confidence region centered at the specified
+  estimator
 }
 \description{
   Compute the radius of a \eqn{100(1-\alpha)}\% confidence
@@ -30,10 +30,11 @@
 }
 \details{
   Compute the radius of a \eqn{100(1-\alpha)}\% confidence
-  region for the central orientation based on the projected
-  mean estimator based on a result due to \cite{Chang et
-  al. (2001)}.  By construction each axis will have the
-  same radius so the radius reported is for all three axis.
+  region for the central orientation centered at the
+  projected mean or median based on a result due to
+  \cite{Chang et al. (2001)} amongst others.  By
+  construction each axis will have the same radius so the
+  radius reported is for all three axis.
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)
@@ -46,7 +47,7 @@ region(Rs,method='moment',type='theory',alp=0.1,estimator='mean')
   784-814.
 }
 \seealso{
-  \code{\link{prentice}} \code{\link{fisheretal}}
+  \code{\link{prentice}}, \code{\link{fisheretal}},
   \code{\link{zhang}}
 }
 

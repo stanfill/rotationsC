@@ -42,8 +42,9 @@
   deviates}
 }
 \description{
-  Density and random generation for the the generic
-  uniform-axis random-spin class of distributions
+  Density, distribution function and random generation for
+  the the generic uniform-axis random-spin class of
+  distributions
 }
 \details{
   For the rotation R with central orientation S and

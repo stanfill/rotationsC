@@ -1,11 +1,11 @@
-#' Mean Rotation
+#' Mean rotation
 #'
-#' Compute the geometric or projected mean of a sample of rotations
+#' Compute the sample geometric or projected mean
 #'
 #' This function takes a sample of \eqn{3\times 3}{3-by-3} rotations (in the form of a \eqn{n\times 9}{n-by-9} matrix where \eqn{n>1} is the sample size) and returns the projected arithmetic mean denoted \eqn{\widehat{\bm S}_P}{S_P} or
 #' geometric mean \eqn{\widehat{\bm S}_G}{S_G} according to the \code{type} option.
-#' For a sample of \eqn{n} random rotations \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the mean-type estimator is defined as \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd_D^2(\bm{R}_i,\bm{S})}{argmin d^2(bar(R),S)} where \eqn{\bar{\bm{R}}=\frac{1}{n}\sum_{i=1}^n\bm{R}_i}{bar(R)=\sum Ri/n} and the distance metric \eqn{d_D}{d}
-#' is the Riemannian or Euclidean.  For more on the projected mean see \cite{moakher02} and for the geometric mean see \cite{manton04}.
+#' For a sample of \eqn{n} random rotations \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the mean-type estimator is defined as \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd^2(\bm{R}_i,\bm{S})}{argmin d^2(bar(R),S)} where \eqn{\bar{\bm{R}}=\frac{1}{n}\sum_{i=1}^n\bm{R}_i}{bar(R)=\sum Ri/n} and the distance metric \eqn{d}{d}
+#' is Riemannian or Euclidean.  For more on the projected mean see \cite{moakher02} and for the geometric mean see \cite{manton04}.
 #'
 #' @param x A \eqn{n\times 9}{n-by-9} matrix where each row corresponds to a random rotation in matrix form
 #' @param type String indicating 'projected' or 'geometric' type mean estimator
@@ -42,9 +42,9 @@ mean.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000, ...
   return(R)
 }
 
-#' Mean Rotation
+#' Mean rotation
 #' 
-#' Compute the projected or geometric mean of a sample of rotations
+#' Compute the sample projected or geometric mean
 #'
 #' This function takes a sample of \eqn{n} unit quaternions and approximates the mean rotation.  If the projected mean
 #' is called for then the according to \cite{tyler1981} an estimate of the mean is the eigenvector corresponding to the largest
@@ -92,20 +92,20 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 }
 
 
-#' Median Rotation
+#' Median rotation
 #' 
-#' Compute the projected or geometric median of a sample of rotations
+#' Compute the sample projected or geometric median
 #'
-#' The median-type estimators are defined as \deqn{\widetilde{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd_D(\bm{R}_i,\bm{S}).}{argmin\sum d(Ri,S).}  If the choice of distance metric, \eqn{d_D}{d}, is Riemannian then the estimator is called the geometric, and if the distance metric in Euclidean then it projected.
+#' The median-type estimators are defined as \deqn{\widetilde{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd(\bm{R}_i,\bm{S}).}{argmin\sum d(Ri,S).}  If the choice of distance metric, \eqn{d}{d}, is Riemannian then the estimator is called the geometric, and if the distance metric in Euclidean then it projected.
 #' The algorithm used in the geometric case is discussed in \cite{hartley11} and the projected case was written by the authors.
 #'
 #' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix form (\eqn{p=9}) or quaternion form (\eqn{p=4})
 #' @param type String indicating 'projeted' or 'geometric' type mean estimator
-#' @param epsilon Stopping rule for the geometric method
+#' @param epsilon Stopping rule
 #' @param maxIter The maximum number of iterations allowed before returning most recent estimate
 #' @param ... additional arguments
 #' @return an estimate of the projected or geometric mean
-#' @seealso \code{\link{mean.SO3}} \code{\link{mean.Q4}}
+#' @seealso \code{\link{mean.SO3}}, \code{\link{mean.Q4}}
 #' @cite hartley11
 #' @export
 
@@ -177,7 +177,7 @@ median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...
 #' @param maxIter The maximum number of iterations allowed before returning most recent estimate
 #' @param ... only used for consistency with mean.default
 #' @return weighted projected mean of the sample
-#' @seealso \code{\link{median.SO3}} \code{\link{mean.SO3}}
+#' @seealso \code{\link{median.SO3}}, \code{\link{mean.SO3}}
 #' @cite moakher02
 #' @S3method weighted.mean SO3
 #' @method weighted.mean SO3

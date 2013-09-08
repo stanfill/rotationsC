@@ -1,6 +1,9 @@
 #' A package for working with rotaional data.
 #'
-#' This package implements tools for working with rotational data: it allows simulation from the most commonly used  distributions on the sphere, it estimates differen mean and median type estimators for the main direction of a number of rotations, it provides (bootstrap) confidence regions for the estimates, and it allows to visualize rotational data. 
+#' This package implements tools for working with rotational data: it allows simulation from the 
+#' most commonly used  distributions on \eqn{SO(3)}, it includes methods for different mean and median type 
+#' estimators for the central orientation of a sample, it provides confidence regions 
+#' for those estimates and it includes a novel visualization technique for rotation data. 
 #' 
 #' @docType package
 #' @name package-rotations

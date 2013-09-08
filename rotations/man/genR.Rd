@@ -7,10 +7,10 @@
 \arguments{
   \item{r}{vector of angles}
 
-  \item{S}{The principle direction}
+  \item{S}{The central orientation}
 
-  \item{space}{Indicates the desired representation: matrix
-  in SO3, quaternion, or Euler angles}
+  \item{space}{Indicates the desired representation:
+  rotation matrix "SO3" or quaternions "Q4"}
 }
 \value{
   a matrix where each row is a sample point in the desired
@@ -33,7 +33,8 @@
 }
 \examples{
 r<-rvmises(20,0.01)
-genR(r)
+Rs<-genR(r,space="SO3")
+Qs<-genR(r,space="Q4")
 }
 \references{
   Bingham M, Nordman D and Vardeman S (2009). "Modeling and

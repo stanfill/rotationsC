@@ -2,7 +2,7 @@
 \alias{angle}
 \alias{angle.Q4}
 \alias{angle.SO3}
-\title{Misorientation Angle}
+\title{Misorientation angle}
 \usage{
   angle(x)
 
@@ -11,7 +11,9 @@
   \method{angle}{Q4} (x)
 }
 \arguments{
-  \item{x}{rotation matrix or quaternion}
+  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  corresponds to a random rotation in matrix (p=9) or
+  quaternion (p=4) form}
 }
 \value{
   angle of rotation

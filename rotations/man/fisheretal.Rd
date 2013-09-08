@@ -15,7 +15,7 @@
 \arguments{
   \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
   corresponds to a random rotation in matrix (p=9) or
-  quaternion form (p=4)}
+  quaternion (p=4) form}
 
   \item{alp}{The alpha level desired, e.g. 0.05 or 0.10}
 
@@ -25,8 +25,8 @@
   \item{m}{number of bootstrap replicates to use to
   estimate critical value}
 
-  \item{symm}{true/false on if rotationally symmetric
-  regions should be computed or not}
+  \item{symm}{logical; if TRUE (default), a symmetric
+  region is constructed}
 }
 \value{
   radius of the confidence region centered at the projected
@@ -56,7 +56,7 @@ region(Qs,method='eigen',type='bootstrap',alp=0.1,symm=TRUE,estimator='mean')
   Association_, *91*(435), pp. 1062-1070.
 }
 \seealso{
-  \code{\link{prentice}} \code{\link{chang}}
+  \code{\link{prentice}}, \code{\link{chang}},
   \code{\link{zhang}}
 }
 

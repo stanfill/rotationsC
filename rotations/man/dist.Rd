@@ -2,7 +2,7 @@
 \alias{dist}
 \alias{dist.Q4}
 \alias{dist.SO3}
-\title{Rotational Distance}
+\title{Compute the rotational distance}
 \usage{
   dist(x, ...)
 
@@ -13,8 +13,9 @@
     p = 1, ...)
 }
 \arguments{
-  \item{x}{a rotation in matrix or quaternion
-  representation}
+  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  corresponds to a random rotation in matrix (p=9) or
+  quaternion (p=4) form}
 
   \item{R2,Q2}{the second rotation in the same
   parameterization as R1}
@@ -27,7 +28,8 @@
   \item{...}{Additional arguments}
 }
 \value{
-  the rotational distance between R1 and R2 or Q1 and Q2
+  the rotational distance between each rotation in x and R2
+  or Q2
 }
 \description{
   Calculate the Euclidean or Riemannian distance between
@@ -35,14 +37,13 @@
 }
 \details{
   This function will calculate the intrinsic (Riemannian)
-  or projected (Euclidean) distance between two rotations.
-  If only one rotation is specified the other will be set
-  to the identity and the distance between the two is
-  returned.  For rotations \eqn{R_1}{R1} and \eqn{R_2}{R2}
-  both in \eqn{SO(3)}, the Euclidean distance between them
-  is \deqn{||R_1-R_2||_F}{||R1-R2||} where
+  or extrinsic (Euclidean) distance between two rotations.
+  \code{R2} and \code{Q2} are set to the identity rotations
+  by default.  For rotations \eqn{R_1}{R1} and
+  \eqn{R_2}{R2} both in \eqn{SO(3)}, the Euclidean distance
+  between them is \deqn{||R_1-R_2||_F}{||R1-R2||} where
   \eqn{||\cdot||_F}{|| ||} is the Frobenius norm. The
-  intrinsic distance is defined as \deqn{||Log(R_1^\top
+  Riemannian distance is defined as \deqn{||Log(R_1^\top
   R_2)||_F}{||Log(R1'R2)||} where \eqn{Log} is the matrix
   logarithm, and it corresponds to the misorientation angle
   of \eqn{R_1^\top R_2}{R1'R2}.
