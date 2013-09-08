@@ -2,12 +2,13 @@
 #'
 #' Compute the sample geometric or projected mean
 #'
-#'
-#' For a sample of \eqn{n} rotations \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the mean-type estimator is defined as \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd^2(\bm{R}_i,\bm{S})}{argmin d^2(bar(R),S)} 
+#' This function takes a sample of 3D rotations (in matrix or quaternion form) and returns the projected arithmetic mean denoted \eqn{\widehat{\bm S}_P}{S_P} or
+#' geometric mean \eqn{\widehat{\bm S}_G}{S_G} according to the \code{type} option.
+#' For a sample of \eqn{n} rotations in matrix form \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the mean-type estimator is defined as \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd^2(\bm{R}_i,\bm{S})}{argmin\sum d^2(bar(R),S)} 
 #' where \eqn{\bar{\bm{R}}=\frac{1}{n}\sum_{i=1}^n\bm{R}_i}{bar(R)=\sum Ri/n} and the distance metric \eqn{d}
 #' is Riemannian or Euclidean.  For more on the projected mean see \cite{moakher02} and for the geometric mean see \cite{manton04}.
 #' For the projected mean from a quaternion point of view see \cite{tyler1981}.
-#'
+#' 
 #' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix form (\eqn{p=9}) or quaternion (\eqn{p=4}) form
 #' @param type String indicating "projeted" or "geometric" type mean estimator
 #' @param epsilon Stopping rule for the geometric-mean
@@ -99,7 +100,7 @@ median<-function(x,...){
 }
 
 #' @rdname median.SO3
-#' @aliases median.Q4
+#' @aliases median.Q4 median
 #' @method median SO3
 #' @S3method median SO3
 
@@ -129,7 +130,7 @@ median.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,..
 
 
 #' @rdname median.SO3
-#' @aliases median.SO3
+#' @aliases median.SO3 median
 #' @method median Q4
 #' @S3method median Q4
 
@@ -152,12 +153,12 @@ median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...
 #'
 #' Compute the weighted geometric or projected mean of a sample of rotations
 #'
-#' This function takes a sample of \eqn{3\times 3}{3-by-3} rotations (in the form of a \eqn{n\times 9}{n-by-9} matrix where \eqn{n>1} is the sample size) and returns the weighted projected arithmetic mean denoted \eqn{\widehat{\bm S}_P}{S_P} or
+#' This function takes a sample of 3D rotations (in matrix or quaternion form) and returns the weighted projected arithmetic mean denoted \eqn{\widehat{\bm S}_P}{S_P} or
 #' geometric mean \eqn{\widehat{\bm S}_G}{S_G} according to the \code{type} option.
-#' For a sample of \eqn{n} random rotations \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the mean-type estimator is defined as \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd^2(\bm{R}_i,\bm{S})}{argmin d(bar(R),S)} where \eqn{\bar{\bm{R}}=\frac{1}{n}\sum_{i=1}^n\bm{R}_i}{bar(R)=\sum R_i/n} and the distance metric \eqn{d}{d}
+#' For a sample of \eqn{n} rotations in matrix form \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the mean-type estimator is defined as \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd^2(\bm{R}_i,\bm{S})}{argmin\sum d(bar(R),S)} where \eqn{\bar{\bm{R}}=\frac{1}{n}\sum_{i=1}^n\bm{R}_i}{bar(R)=\sum R_i/n} and the distance metric \eqn{d}
 #' is the Riemannian or Euclidean.  For more on the projected mean see \cite{moakher02} and for the geometric mean see \cite{manton04}.
 #'
-#' @param x A \eqn{n\times 9}{n-by-9} matrix where each row corresponds to a random rotation in matrix form
+#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix form (\eqn{p=9}) or quaternion (\eqn{p=4}) form
 #' @param w a numerical vector of weights the same length as the number of rows in Rs giving the weights to use for elements of Rs
 #' @param type String indicating "projeted" or "geometric" type mean estimator
 #' @param epsilon Stopping rule for the geometric method
@@ -173,6 +174,8 @@ median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...
 #' Rs<-ruars(20,rvmises,kappa=0.01)
 #' wt<-abs(1/angle(Rs))
 #' weighted.mean(Rs,wt)
+#' Qs<-Q4(Rs)
+#' weighted.mean(Qs,wt)
 
 weighted.mean.SO3 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
 	
@@ -223,33 +226,11 @@ weighted.mean.SO3 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter
 	return(R)
 }
 
-#' Weighted Rotation Median
-#' 
-#' Compute the weighted projected or geometric mean of a sample of rotations
-#'
-#' This function takes a sample of n unit quaternions and approximates the mean rotation.  If the projected mean
-#' is called for then the quaternions are turned reparameterized to matrices and mean.SO3 is called.  If the geometric
-#' mean is called then according to \cite{gramkow01} a better approximation is achieved by taking average quaternion
-#' and normalizing.  Our simulations don't match this claim.
-#'
-#' 
-#' @param x A \eqn{n\times 4} matrix where each row corresponds to a random rotation in unit quaternion
-#' @param w a numerical vector of weights the same length as Rs giving the weights to use for elements of Rs
-#' @param type String indicating "projected" or "geometric" type mean estimator
-#' @param epsilon Stopping rule for the geometric method
-#' @param maxIter The maximum number of iterations allowed before returning most recent estimate
-#' @param ... only used for consistency with mean.default
-#' @return weighted projected or geometric mean of the sample
-#' @seealso \code{\link{mean.SO3}}
-#' @cite moakher02, manton04
+#' @rdname weighted.mean.SO3
+#' @aliases weighted.mean.SO3
 #' @S3method weighted.mean Q4
 #' @method weighted.mean Q4
-#' @export
-#' @examples
-#' r<-rvmises(20,0.01)
-#' wt<-abs(1/r)
-#' Qs<-genR(r,space="Q4")
-#' weighted.mean(Qs,wt)
+
 
 weighted.mean.Q4 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter = 2000,...) {
 	

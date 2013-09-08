@@ -1,4 +1,5 @@
 \name{median.SO3}
+\alias{median}
 \alias{median.Q4}
 \alias{median.SO3}
 \title{Median rotation}
@@ -14,7 +15,7 @@
 \arguments{
   \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
   corresponds to a random rotation in matrix form
-  (\eqn{p=9}) or quaternion form (\eqn{p=4})}
+  (\eqn{p=9}) or quaternion (\eqn{p=4}) form}
 
   \item{type}{String indicating "projeted" or "geometric"
   type mean estimator}

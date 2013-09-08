@@ -10,8 +10,9 @@
     epsilon = 1e-05, maxIter = 2000, ...)
 }
 \arguments{
-  \item{x}{A \eqn{n\times 9}{n-by-9} matrix where each row
-  corresponds to a random rotation in matrix form}
+  \item{x}{A \eqn{n\times p}{n-by-p} matrix where each row
+  corresponds to a random rotation in matrix form
+  (\eqn{p=9}) or quaternion (\eqn{p=4}) form}
 
   \item{type}{String indicating "projeted" or "geometric"
   type mean estimator}
@@ -30,31 +31,22 @@
   Compute the sample geometric or projected mean
 }
 \details{
-  This function takes a sample of \eqn{n} unit quaternions
-  and approximates the mean rotation.  If the projected
-  mean is called for then the according to \cite{Tyler
-  (1981)} an estimate of the mean is the eigenvector
-  corresponding to the largest eigenvalue of
-  \eqn{\frac{1}{n}\sum_{i=1}^nq_i^\top q_i}{Q`Q/n}.  If the
-  geometric mean is called then the quaternions are
-  transformed into \eqn{3\times 3}{3-by-3} matrices and the
-  \code{mean.SO3} function is called. This function takes a
-  sample of \eqn{3\times 3}{3-by-3} rotations (in the form
-  of a \eqn{n\times 9}{n-by-9} matrix where \eqn{n>1} is
-  the sample size) and returns the projected arithmetic
+  This function takes a sample of 3D rotations (in matrix
+  or quaternion form) and returns the projected arithmetic
   mean denoted \eqn{\widehat{\bm S}_P}{S_P} or geometric
   mean \eqn{\widehat{\bm S}_G}{S_G} according to the
-  \code{type} option. For a sample of \eqn{n} random
-  rotations \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in
+  \code{type} option. For a sample of \eqn{n} rotations in
+  matrix form \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in
   SO(3), i=1,2,\dots,n}, the mean-type estimator is defined
   as \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in
-  SO(3)}\sum_{i=1}^nd^2(\bm{R}_i,\bm{S})}{argmin
+  SO(3)}\sum_{i=1}^nd^2(\bm{R}_i,\bm{S})}{argmin\sum
   d^2(bar(R),S)} where
   \eqn{\bar{\bm{R}}=\frac{1}{n}\sum_{i=1}^n\bm{R}_i}{bar(R)=\sum
-  Ri/n} and the distance metric \eqn{d}{d} is Riemannian or
+  Ri/n} and the distance metric \eqn{d} is Riemannian or
   Euclidean.  For more on the projected mean see
   \cite{Moakher (2002)} and for the geometric mean see
-  \cite{Manton (2004)}.
+  \cite{Manton (2004)}. For the projected mean from a
+  quaternion point of view see \cite{Tyler (1981)}.
 }
 \examples{
 Rs<-ruars(20,rvmises,kappa=0.01)
@@ -63,9 +55,6 @@ Qs<-Q4(Rs)
 mean(Qs)
 }
 \references{
-  Tyler DE (1981). "Asymptotic inference for eigenvectors."
-  _The Annals of Statistics_, pp. 725-736.
-
   Moakher M (2002). "Means and averaging in the group of
   rotations." _SIAM Journal on Matrix Analysis and
   Applications_, *24*(1), pp. 1-16.
@@ -75,6 +64,9 @@ mean(Qs)
   groups." In _Control, Automation, Robotics and Vision
   Conference, 2004. ICARCV 2004 8th_, volume 3, pp.
   2211-2216. IEEE.
+
+  Tyler DE (1981). "Asymptotic inference for eigenvectors."
+  _The Annals of Statistics_, pp. 725-736.
 }
 \seealso{
   \code{\link{median.SO3}}
