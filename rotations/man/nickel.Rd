@@ -32,7 +32,7 @@ This data set consists of electron backscatter diffraction (EBSD) data obtained 
 The data set was collected by The Ames Lab located in Ames, IA. 
 }
 \references{
-Bingham, M. A., Nordman, D., & Vardeman, S. (2009). "Modeling and Inference for Measured Crystal Orientations and a Tractable Class of Symmetric Distributions for Rotations in three Dimensions." Journal of the American Statistical Association, 104(488), pp. 1385-1397.
+Bingham, M. A., Nordman, D., & Vardeman, S. (2009). "Modeling and inference for measured crystal orientations and a tractable class of symmetric distributions for rotations in three dimensions." Journal of the American Statistical Association, 104(488), pp. 1385-1397.
 
 Bingham, M. A., Lograsso, B. K., & Laabs, F. C. (2010). "A statistical analysis of the variation in measured crystal orientations obtained through electron backscatter diffraction."" Ultramicroscopy, 110(10), pp. 1312-1319.
 }

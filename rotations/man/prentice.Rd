@@ -51,11 +51,7 @@ region(Qs,method='eigen',type='theory',alp=0.1,estimator='mean')
   kinematics." Journal of the Royal Statistical Society:
   Series C (Applied Statistics), 49(1), pp. 81-94.
 
-  Bingham M, Nordman D and Vardeman S (2009). "Modeling and
-  Inference for Measured Crystal Orientations and a
-  Tractable Class of Symmetric Distributions for Rotations
-  in three Dimensions." Journal of the American
-  Statistical Association, 104(488), pp. 1385-1397.
+Bingham, M. A., Nordman, D., & Vardeman, S. (2009). "Modeling and inference for measured crystal orientations and a tractable class of symmetric distributions for rotations in three dimensions." Journal of the American Statistical Association, 104(488), pp. 1385-1397.
 }
 \seealso{
   \code{\link{fisheretal}}, \code{\link{chang}},

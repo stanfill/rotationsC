@@ -17,7 +17,7 @@
   translate is the circular variance defined as
   \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where
   \eqn{E[\cos(r)]}{E[cos(r)]} is the mean resultant length.
-  See \cite{Mardia et al. (2009)} for more details.  This
+  See \cite{Mardia et al. (2000)} for more details.  This
   function translates the circular variance \eqn{\nu} into
   the corresponding concentration parameter \eqn{\kappa}
   for the circular-von Mises distribution.

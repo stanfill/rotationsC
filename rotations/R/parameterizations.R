@@ -3,7 +3,7 @@
 #' Class for \eqn{3\times 3}{3-by-3} matrix representation of rotations.
 #'
 #' @name SO3-class
-#' @seealso See the \code{\link{SO3}} functions
+#' @seealso See the \code{\link{SO3}} functions.
 #'
 #' @exportClass SO3
 setOldClass("SO3")
@@ -14,7 +14,7 @@ setOldClass("SO3")
 #' Class for quaterion representation of rotations.
 #' 
 #' @name Q4-class
-#' @seealso See the \code{\link{Q4}} functions
+#' @seealso See the \code{\link{Q4}} functions.
 #'
 #' @exportClass Q4
 setOldClass("Q4")

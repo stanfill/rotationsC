@@ -6,6 +6,6 @@
   of rotations.
 }
 \seealso{
-  See the \code{\link{SO3}} functions
+  See the \code{\link{SO3}} functions.
 }
 

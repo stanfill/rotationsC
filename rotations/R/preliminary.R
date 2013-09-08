@@ -492,7 +492,7 @@ project.SO3 <- function(M) {
 #' @param method type of distance used method in "projected" or "intrinsic"
 #' @param p the order of the distances to compute.
 #' @return The sum of the pth order distance between each sample in Rs and S.
-#' @seealso \code{\link{dist.SO3}},\code{\link{dist.Q4}}
+#' @seealso \code{\link{dist.SO3}}, \code{\link{dist.Q4}}
 #' @export
 #' @examples
 #' Rs<-ruars(20,rvmises,kappa=10)

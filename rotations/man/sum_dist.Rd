@@ -40,6 +40,6 @@ Sp<-mean(Rs)
 sum_dist(Rs,S=Sp,p=2)
 }
 \seealso{
-  \code{\link{dist.SO3}},\code{\link{dist.Q4}}
+  \code{\link{dist.SO3}}, \code{\link{dist.Q4}}
 }
 

@@ -5,6 +5,6 @@
   Class for quaterion representation of rotations.
 }
 \seealso{
-  See the \code{\link{Q4}} functions
+  See the \code{\link{Q4}} functions.
 }
 

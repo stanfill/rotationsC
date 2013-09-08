@@ -65,7 +65,7 @@ mean(Qs)
   2211-2216. IEEE.
 
   Tyler DE (1981). "Asymptotic inference for eigenvectors."
-  _The Annals of Statistics_, pp. 725-736.
+  The Annals of Statistics, pp. 725-736.
 }
 \seealso{
   \code{\link{median.SO3}}
