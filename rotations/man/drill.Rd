@@ -2,10 +2,10 @@
 \alias{drill}
 \docType{data}
 \title{
-Drill Dataset
+Drill dataset
 }
 \description{
-The \code{drill} dataset was collected to assess variation in human movement while performing a task Rancourt (1995).  Eight subjects drilled into a metal plate while being monitored by infared cameras. Quaternions are used to represent the orientation of each subjects' wrist, elbow and shoulder in one of six positions.  For some subjects several replicates are available.  See Rancourt et al. (2000) for one approach to analyzing these data.
+The \code{drill} dataset was collected to assess variation in human movement while performing a task (Rancourt 1995).  Eight subjects drilled into a metal plate while being monitored by infared cameras. Quaternions are used to represent the orientation of each subjects' wrist, elbow and shoulder in one of six positions.  For some subjects several replicates are available.  See Rancourt et al. (2000) for one approach to analyzing these data.
 }
 \usage{data(drill)}
 \format{

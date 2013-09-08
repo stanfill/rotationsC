@@ -1,6 +1,6 @@
 #' Angular distributions
 #' 
-#' Density and random variate generation for symmetric probability distributions in the rotations package
+#' Density, distribution function and random variate generation for symmetric probability distributions in the rotations package
 #' 
 #' The functions for the density function and random variate generation are named in the usual form dxxxx, pxxxx and rxxxx 
 #' respectively.        
@@ -23,12 +23,12 @@ rar <- function(n, f, M, ...) {
 }
 
 
-#' The Symmetric Cayley Distribution
+#' The symmetric Cayley distribution
 #'
-#' Density and random generation for the Cayley distribution with concentration kappa (\eqn{\kappa})
+#' Density, distribution function and random generation for the Cayley distribution with concentration kappa (\eqn{\kappa})
 #'
 #' The symmetric Cayley distribution with concentration kappa (or circular variance nu) had density 
-#' \deqn{C(r |\kappa)=\frac{1}{\sqrt{\pi}} \frac{\Gamma(\kappa+2)}{\Gamma(\kappa+1/2)}2^{-(\kappa+1)}(1+\cos r)^\kappa(1-\cos r).}{C(r |\kappa)= \Gamma(\kappa+2)(1+cos r)^\kappa(1-cos r)/[\Gamma(\kappa+1/2)2^(\kappa+1)\sqrt\pi].}
+#' \deqn{C_C(r |\kappa)=\frac{1}{\sqrt{\pi}} \frac{\Gamma(\kappa+2)}{\Gamma(\kappa+1/2)}2^{-(\kappa+1)}(1+\cos r)^\kappa(1-\cos r).}{C(r |\kappa)= \Gamma(\kappa+2)(1+cos r)^\kappa(1-cos r)/[\Gamma(\kappa+1/2)2^(\kappa+1)\sqrt\pi].}
 #'
 #' @name Cayley
 #' @aliases Cayley rcayley dcayley
@@ -36,7 +36,7 @@ rar <- function(n, f, M, ...) {
 #' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required
 #' @param kappa Concentration paramter
 #' @param nu The circular variance, can be used in place of kappa
-#' @param Haar logical; if TRUE density is evaluated with respect to Haar
+#' @param Haar logical; if TRUE density is evaluated with respect to the Haar measure
 #' @param lower.tail logical; if TRUE (default) probabilities are \eqn{P(X\leq x)}{P(X\le x)} otherwise, \eqn{P(X>x)}
 #' @return  \item{dcayley}{gives the density}
 #'          \item{pcayley}{gives the distribution function}
@@ -103,14 +103,14 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
   return(theta)
 }
 
-#' The Matrix-Fisher Distribution
+#' The matrix-Fisher distribution
 #'
-#' Density and random generation for the matrix-Fisher distribution with concentration kappa (\eqn{\kappa})
+#' Density, distribution function and random generation for the matrix-Fisher distribution with concentration kappa (\eqn{\kappa})
 #'
-#' The matrix-Fisher distribution with concentration kappa (or circular variance nu) has density
+#' The matrix-Fisher distribution with concentration kappa has density
 #' \deqn{C_\mathrm{{F}}(r|\kappa)=\frac{1}{2\pi[\mathrm{I_0}(2\kappa)-\mathrm{I_1}(2\kappa)]}e^{2\kappa\cos(r)}[1-\cos(r)]}{C(r|\kappa)=exp[2\kappa cos(r)][1-cos(r)]/(2\pi[I0(2\kappa)-I1(2\kappa)])}
 #' where \eqn{\mathrm{I_p}(\cdot)}{Ip()} denotes the Bessel function of order \eqn{p} defined as  
-#' \eqn{\mathrm{I_p}(\kappa)=\frac{1}{2\pi}\int_{-\pi}^{\pi}\cos(pr)e^{\kappa\cos r}dr}{Ip(\kappa)} is the modified Bessel function with parameters \eqn{p} and \eqn{kappa}.
+#' \eqn{\mathrm{I_p}(\kappa)=\frac{1}{2\pi}\int_{-\pi}^{\pi}\cos(pr)e^{\kappa\cos r}dr}{Ip(\kappa)}.
 #'
 #' @name Fisher
 #' @aliases Fisher dfisher rfisher pfisher
@@ -118,8 +118,8 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
 #' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required
 #' @param kappa concentration paramter
 #' @param nu circular variance, can be used in place of kappa
-#' @param Haar logical; if TRUE density is evaluated with respect to Haar
-#' @param lower.tail  logical; if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}
+#' @param Haar logical; if TRUE density is evaluated with respect to the Haar measure
+#' @param lower.tail  logical; if TRUE (default), probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X > x)}
 #' @return  \item{dfisher}{gives the density}
 #'          \item{pfisher}{gives the distribution function}
 #'          \item{rfisher}{generates random deviates}
@@ -183,10 +183,10 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
   return(rar(n, dfisher, M, kappa = kappa, Haar=F))
 }
 
-#' Haar Measure
+#' Haar measure
 #'
-#' Uniform density on the circle
-#' 
+#' Density, distribution function and random generation for the uniform distribution on \eqn{SO(3)}
+#'
 #' The uniform density on the circle  (also referred to as Haar measure)
 #' has the density \deqn{C_U(r)=\frac{[1-cos(r)]}{2\pi}.}{C(r)=[1-cos(r)]/2\pi.}
 #'
@@ -244,9 +244,9 @@ rhaar<-function(n){
   return(rar(n, dhaar, 1/pi))
 }
 
-#' The Circular-von Mises Distribution
+#' The circular-von Mises distribution
 #'
-#' Density and random generation for the circular-von Mises distribution with concentration kappa
+#' Density, distribution function and random generation for the circular-von Mises distribution with concentration kappa
 #' 
 #' The circular von Mises-based distribution has the density
 #' \deqn{C_\mathrm{M}(r|\kappa)=\frac{1}{2\pi \mathrm{I_0}(\kappa)}e^{\kappa cos(r)}.}{C(r|\kappa)=exp[\kappa cos(r)]/[2\pi I(\kappa)]}
@@ -258,7 +258,7 @@ rhaar<-function(n){
 #' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required
 #' @param kappa concentration paramter
 #' @param nu The circular variance, can be used in place of kappa
-#' @param Haar logical; if TRUE density is evaluated with respect to Haar
+#' @param Haar logical; if TRUE density is evaluated with respect to the Haar measure
 #' @param lower.tail  logical; if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}
 #' @return  \item{dvmises}{gives the density}
 #'          \item{pvmises}{gives the distribution function}
@@ -356,7 +356,7 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 
 #' Generic UARS Distribution
 #'
-#' Density and random generation for the the generic uniform-axis random-spin class of distributions
+#' Density, distribution function and random generation for the the generic uniform-axis random-spin class of distributions
 #' 
 #' For the rotation R with central orientation S and concentration \eqn{kappa} the UARS density is given by 
 #' \deqn{f(R|S,\kappa)=\frac{4\pi}{3-tr(S'R)}C(acos[tr(S'R)-1]/2|\kappa)}{f(R|S,\kappa)=4\pi C(acos[tr(S'R)-1]/2|\kappa)/[3-tr(S'R)]}

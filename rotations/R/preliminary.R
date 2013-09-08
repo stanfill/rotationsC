@@ -79,22 +79,22 @@ print.Q4<-function(x,...){
 #  }
 #}
 
-#' Rotational Distance
+#' Compute the rotational distance
 #'
 #' Calculate the Euclidean or Riemannian distance between two rotations
 #'
-#' This function will calculate the intrinsic (Riemannian) or projected (Euclidean) distance between two rotations.  If only one rotation is specified
-#' the other will be set to the identity and the distance between the two is returned.  For rotations \eqn{R_1}{R1} and \eqn{R_2}{R2}
+#' This function will calculate the intrinsic (Riemannian) or extrinsic (Euclidean) distance between two rotations.
+#' \code{R2} and \code{Q2} are set to the identity rotations by default.  For rotations \eqn{R_1}{R1} and \eqn{R_2}{R2}
 #' both in \eqn{SO(3)}, the Euclidean distance between them is \deqn{||R_1-R_2||_F}{||R1-R2||} where \eqn{||\cdot||_F}{|| ||} is the Frobenius norm.
-#' The intrinsic distance is defined as \deqn{||Log(R_1^\top R_2)||_F}{||Log(R1'R2)||} where \eqn{Log} is the matrix logarithm, and it corresponds
+#' The Riemannian distance is defined as \deqn{||Log(R_1^\top R_2)||_F}{||Log(R1'R2)||} where \eqn{Log} is the matrix logarithm, and it corresponds
 #' to the misorientation angle of \eqn{R_1^\top R_2}{R1'R2}.
 #'
-#' @param x a rotation in matrix or quaternion representation
+#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form
 #' @param R2,Q2 the second rotation in the same parameterization as R1
 #' @param method String indicating 'projected' or 'intrinsic' method of distance 
 #' @param p the order of the distance 
 #' @param ... Additional arguments
-#' @return the rotational distance between R1 and R2 or Q1 and Q2
+#' @return the rotational distance between each rotation in x and R2 or Q2
 #' @export
 
 dist<-function(x,...){
@@ -157,7 +157,7 @@ dist.Q4 <- function(x, Q2=id.Q4 ,method='projected', p=1,...) {
 }
 
 
-#' Misorientation Angle
+#' Misorientation angle
 #' 
 #' Compute the misorientation angle of a rotation
 #' 
@@ -166,7 +166,7 @@ dist.Q4 <- function(x, Q2=id.Q4 ,method='projected', p=1,...) {
 #' This function returns the misorentation angle associated with a rotation assuming the reference coordinate system
 #' is the identity.
 #'  
-#' @param x rotation matrix or quaternion
+#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form
 #' @return angle of rotation
 #' @seealso \code{\link{axis}}
 #' @export
@@ -206,7 +206,7 @@ angle.Q4 <- function(x){
 }
 
 
-#' Misorientation Axis
+#' Misorientation axis
 #' 
 #' Determine the misorientation axis of a rotation
 #' 
@@ -215,7 +215,7 @@ angle.Q4 <- function(x){
 #' This function returns the misorentation axis associated with a rotation assuming the reference coordinate system
 #' is the identity.
 #' 
-#' @param x 3-by-3 matrix in SO3 or unit quaterion
+#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form
 #' @param ... additional arguements
 #' @return axis in form of three dimensional vector of length one.
 #' @seealso \code{\link{angle}}
@@ -296,8 +296,8 @@ eskew <- function(U) {
 #' with upper triangular elements \eqn{-u_3}{-u3}, \eqn{u_2}{u2} and \eqn{-u_1}{-u1} in that order.
 #'
 #' @param r vector of angles
-#' @param S The principle direction
-#' @param space Indicates the desired representation: matrix in SO3, quaternion, or Euler angles 
+#' @param S The central orientation
+#' @param space Indicates the desired representation: rotation matrix "SO3" or quaternions "Q4" 
 #' @return a matrix where each row is a sample point in the desired space
 #' @cite bingham09
 #' @export
@@ -377,21 +377,21 @@ genR <- function(r, S = NULL, space='SO3') {
 #' The expansion is significantly simplified for skew-symmetric matrices, see \cite{moakher02}.
 #' Maps a matrix belonging to the lie algebra so(3) into the lie group SO(3).
 #'
-#' @param x singular or sample of 3-by-3 skew-symmetric matrices, i.e. H such that \eqn{\bm H=-\bm H^\top}
+#' @param H singular or sample of \eqn{3\times 3}{3-by-3} skew-symmetric matrices
 #' @return matrix in SO(3) \eqn{e^{\bm A}}{e^A}
 #' @cite moakher02
 #' @export
 
-exp_skew <- function(x) {
+exp_skew <- function(H) {
 
-  if(length(x)==9){
+  if(length(H)==9){
     
-    x<-matrix(x,3,3)
+    H<-matrix(H,3,3)
 
-    return(as.SO3(expskewC(x)))
+    return(as.SO3(expskewC(H)))
     
   }else{
-    return(as.SO3(expskewCMulti(x)))
+    return(as.SO3(expskewCMulti(H)))
   }
 }
 
@@ -485,12 +485,12 @@ sum_dist.Q4 <- function(x, S = id.Q4, method='projected', p=1) {
 
 #' Center rotation data
 #' 
-#' This function will take the sample Rs and return teh sample Rs centered at
-#' S, i.e., the returned sample is S'Rs.  If S is the true center then
-#' the projected mean should be the 3-by-3 identity matrix 
+#' This function will take the sample Rs and return the sample Rs centered at
+#' S, i.e., the returned sample is \eqn{S^\top R}{S'R}.  If S is the true center then
+#' the projected mean should be close to the 3-by-3 identity matrix 
 #' 
-#' @param x the sample of rotations to be centered
-#' @param S the rotation to sample around
+#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form
+#' @param S the rotation about which to center x
 #' @return The centered sample
 #' @export
 #' @examples

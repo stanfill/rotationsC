@@ -4,14 +4,14 @@
 #' The current methods available are due to \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}},
 #' and \code{\link{zhang}}.
 #'
-#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
+#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form
 #' @param method Character string specifying which type of interval to report, "eigen" or "moment" based theory
 #' @param type Characted string, "bootstrap" or "theory" are available
 #' @param estimator Character string either "mean" or '"median"
 #' @param alp The alpha level desired, e.g. 0.05 or 0.10
 #' @param ... Additional arguments that are method specific
 #' @return Radius of the confidence region centered at the projected mean
-#' @seealso \code{\link{prentice}} \code{\link{fisheretal}} \code{\link{chang}} \code{\link{zhang}}
+#' @seealso \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite prentice1986, fisher1996, rancourt2000, chang2001
 #' @export
 #' @examples
@@ -147,7 +147,7 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 #' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
 #' @param alp The alpha level desired, e.g. 0.05 or 0.10
 #' @return Radius of the confidence region centered at the projected mean for each of the x-, y- and z-axis
-#' @seealso \code{\link{fisheretal}} \code{\link{chang}} \code{\link{zhang}}
+#' @seealso \code{\link{fisheretal}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite prentice1986, rancourt2000, bingham09
 #' @export
 #' @examples
@@ -325,16 +325,16 @@ cdfuns<-function(Qs,estimator){
 #'
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation
 #' 
-#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
-#' estimator based on a result due to \cite{chang2001}.  By construction each axis will have the same
+#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation centered at the projected mean
+#' or median based on a result due to \cite{chang2001} amongst others.  By construction each axis will have the same
 #' radius so the radius reported is for all three axis.
 #'
-#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
-#' @param estimator Character string either 'mean' or 'median'
+#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form
+#' @param estimator Character string either "mean" or "median"
 #' @param alp The alpha level desired, e.g. 0.05 or 0.10
-#' @return Radius of the confidence region centered at the projected mean
+#' @return Radius of the confidence region centered at the specified estimator
 #' @cite chang2001
-#' @seealso \code{\link{prentice}} \code{\link{fisheretal}} \code{\link{zhang}}
+#' @seealso \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{zhang}}
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
@@ -392,13 +392,13 @@ chang.Q4<-function(x,estimator,alp=NULL){
 #' estimator using the method for the mean polar axis as proposed in \cite{fisher1996}.  To be able to reduce their method
 #' to a radius requires the additonal assumption of rotational symmetry, equation (10) in \cite{fisher1996}. 
 #'
-#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion form (p=4)
+#' @param x A \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form
 #' @param alp The alpha level desired, e.g. 0.05 or 0.10
 #' @param boot Should the bootstrap or normal theory critical value be used
 #' @param m number of bootstrap replicates to use to estimate critical value
-#' @param symm true/false on if rotationally symmetric regions should be computed or not
+#' @param symm logical; if TRUE (default), a symmetric region is constructed
 #' @return radius of the confidence region centered at the projected mean
-#' @seealso \code{\link{prentice}} \code{\link{chang}} \code{\link{zhang}}
+#' @seealso \code{\link{prentice}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite fisher1996
 #' @export
 #' @examples
