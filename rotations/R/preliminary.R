@@ -57,7 +57,47 @@ print.Q4<-function(x,...){
     stop("Input is not of the correct length.")
   
   if(len==4){
-    print.default(bquote(.(Qs[1])+.(Qs[2])*i+.(Qs[3])*j+.(Qs[4])*k),...)
+    
+    negs<-length(which(Qs[2:4]<0))
+    
+    if(negs==0){ 
+      
+      print.default(bquote(.(Qs[1])+.(Qs[2])*i+.(Qs[3])*j+.(Qs[4])*k),...)
+      
+    }else if(negs==1){
+      
+      if(Qs[2]<0){
+        Qs[2]<--Qs[2]
+        print.default(bquote(.(Qs[1])-.(Qs[2])*i+.(Qs[3])*j+.(Qs[4])*k),...)
+      }else if(Qs[3]<0){
+        Qs[3]<--Qs[3]
+        print.default(bquote(.(Qs[1])+.(Qs[2])*i-.(Qs[3])*j+.(Qs[4])*k),...)
+      }else{
+        Qs[4]<--Qs[4]
+        print.default(bquote(.(Qs[1])+.(Qs[2])*i+.(Qs[3])*j-.(Qs[4])*k),...)
+      }
+      
+    }else if(negs==2){
+      
+      if(all(Qs[2:3]<0)){
+        
+        Qs[2:3]<-abs(Qs[2:3])
+        print.default(bquote(.(Qs[1])-.(Qs[2])*i-.(Qs[3])*j+.(Qs[4])*k),...)
+        
+      }else if(all(Qs[3:4]<0)){
+        
+        Qs[3:4]<-abs(Qs[3:4])
+        print.default(bquote(.(Qs[1])+.(Qs[2])*i-.(Qs[3])*j-.(Qs[4])*k),...)
+        
+      }else{
+        Qs[2:4]<-abs(Qs[2:4])
+        print.default(bquote(.(Qs[1])-.(Qs[2])*i+.(Qs[3])*j-.(Qs[4])*k),...)
+      }
+    }else{ 
+      Qs[2:4]<-abs(Qs[2:4])
+      print.default(bquote(.(Qs[1])-.(Qs[2])*i-.(Qs[3])*j-.(Qs[4])*k),...)
+    }
+    
   }else{
     colnames(Qs)<-c("Real","i","j","k")
     print.default(Qs,...)
