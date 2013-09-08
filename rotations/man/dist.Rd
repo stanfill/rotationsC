@@ -46,6 +46,7 @@
   Riemannian distance is defined as \deqn{||Log(R_1^\top
   R_2)||_F}{||Log(R1'R2)||} where \eqn{Log} is the matrix
   logarithm, and it corresponds to the misorientation angle
-  of \eqn{R_1^\top R_2}{R1'R2}.
+  of \eqn{R_1^\top R_2}{R1'R2}. To compute the distance
+  matrix use \code{stats::dist()}.
 }
 

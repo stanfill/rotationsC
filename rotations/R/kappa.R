@@ -1,9 +1,9 @@
 #'  Circular variance and concentration parameter 
 #'  
 #'  The concentration parameter \eqn{\kappa} does not translate across circular distribuations.  A commonly used
-#'  measure of spread in circular distributions that does translated across distributions
-#'  is circular variance defined as \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]} 
-#'  is the mean resultant length.  See \cite{mardia2009} for more.
+#'  measure of spread in circular distributions that does translate
+#'  is the circular variance defined as \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]} 
+#'  is the mean resultant length.  See \cite{mardia2009} for more details.
 #'  This function translates the circular variance \eqn{\nu} into the corresponding concentration parameter \eqn{\kappa}
 #'  for the Cayley distribution.
 #'  
@@ -24,9 +24,9 @@ fisher_nu_kappa<-function(kappa,nu){
 #'  Circular variance and concentration parameter 
 #'  
 #'  The concentration parameter \eqn{\kappa} does not translate across circular distribuations.  A commonly used
-#'  measure of spread in circular distributions that does translated across distributions
-#'  is circular variance defined as \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]} 
-#'  is the mean resultant length.  See \cite{mardia2009} for more.
+#'  measure of spread in circular distributions that does translate
+#'  is the circular variance defined as \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]} 
+#'  is the mean resultant length.  See \cite{mardia2009} for more details.
 #'  This function translates the circular variance \eqn{\nu} into the corresponding concentration parameter \eqn{\kappa}
 #'  for the matrix-Fisher distribution.
 #'  
@@ -54,9 +54,9 @@ mises_nu_kappa<-function(kappa,nu){
 #'  Circular variance and concentration parameter
 #'  
 #'  The concentration parameter \eqn{\kappa} does not translate across circular distribuations.  A commonly used
-#'  measure of spread in circular distributions that does translated across distributions
-#'  is circular variance defined as \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]} 
-#'  is the mean resultant length.  See \cite{mardia2009} for more.
+#'  measure of spread in circular distributions that does translate
+#'  is the circular variance defined as \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]} 
+#'  is the mean resultant length.  See \cite{mardia2009} for more details.
 #'  This function translates the circular variance \eqn{\nu} into the corresponding concentration parameter \eqn{\kappa}
 #'  for the circular-von Mises distribution.
 #'  

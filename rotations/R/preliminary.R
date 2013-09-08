@@ -88,6 +88,7 @@ print.Q4<-function(x,...){
 #' both in \eqn{SO(3)}, the Euclidean distance between them is \deqn{||R_1-R_2||_F}{||R1-R2||} where \eqn{||\cdot||_F}{|| ||} is the Frobenius norm.
 #' The Riemannian distance is defined as \deqn{||Log(R_1^\top R_2)||_F}{||Log(R1'R2)||} where \eqn{Log} is the matrix logarithm, and it corresponds
 #' to the misorientation angle of \eqn{R_1^\top R_2}{R1'R2}.
+#' To compute the distance matrix use \code{stats::dist()}.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
 #' @param R2,Q2 the second rotation in the same parameterization as x.
