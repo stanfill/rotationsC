@@ -1,6 +1,6 @@
 #' Angular distributions
 #' 
-#' Density, distribution function and random variate generation for symmetric probability distributions in the rotations package
+#' Density, distribution function and random variate generation for symmetric probability distributions in the rotations package.
 #' 
 #' The functions for the density function and random variate generation are named in the usual form dxxxx, pxxxx and rxxxx 
 #' respectively.        
@@ -25,7 +25,7 @@ rar <- function(n, f, M, ...) {
 
 #' The symmetric Cayley distribution
 #'
-#' Density, distribution function and random generation for the Cayley distribution with concentration kappa (\eqn{\kappa})
+#' Density, distribution function and random generation for the Cayley distribution with concentration \code{kappa} \eqn{\kappa}.
 #'
 #' The symmetric Cayley distribution with concentration kappa (or circular variance nu) had density 
 #' \deqn{C_C(r |\kappa)=\frac{1}{\sqrt{\pi}} \frac{\Gamma(\kappa+2)}{\Gamma(\kappa+1/2)}2^{-(\kappa+1)}(1+\cos r)^\kappa(1-\cos r).}{C(r |\kappa)= \Gamma(\kappa+2)(1+cos r)^\kappa(1-cos r)/[\Gamma(\kappa+1/2)2^(\kappa+1)\sqrt\pi].}
@@ -105,7 +105,7 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
 
 #' The matrix-Fisher distribution
 #'
-#' Density, distribution function and random generation for the matrix-Fisher distribution with concentration kappa (\eqn{\kappa})
+#' Density, distribution function and random generation for the matrix-Fisher distribution with concentration \code{kappa} \eqn{\kappa}.
 #'
 #' The matrix-Fisher distribution with concentration kappa has density
 #' \deqn{C_\mathrm{{F}}(r|\kappa)=\frac{1}{2\pi[\mathrm{I_0}(2\kappa)-\mathrm{I_1}(2\kappa)]}e^{2\kappa\cos(r)}[1-\cos(r)]}{C(r|\kappa)=exp[2\kappa cos(r)][1-cos(r)]/(2\pi[I0(2\kappa)-I1(2\kappa)])}
@@ -185,7 +185,7 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 
 #' Uniform distribution on \eqn{SO(3)}
 #'
-#' Density, distribution function and random generation for the uniform distribution on \eqn{SO(3)}
+#' Density, distribution function and random generation for the uniform distribution on \eqn{SO(3)}.
 #'
 #' The uniform distribution on the space \eqn{SO(3)}  (also referred to as the Haar measure)
 #' has density \deqn{C_U(r)=\frac{[1-cos(r)]}{2\pi}.}{C(r)=[1-cos(r)]/2\pi.}
@@ -246,7 +246,7 @@ rhaar<-function(n){
 
 #' The circular-von Mises distribution
 #'
-#' Density, distribution function and random generation for the circular-von Mises distribution with concentration kappa
+#' Density, distribution function and random generation for the circular-von Mises distribution with concentration \code{kappa} \eqn{\kappa}.
 #' 
 #' The circular von Mises-based distribution has the density
 #' \deqn{C_\mathrm{M}(r|\kappa)=\frac{1}{2\pi \mathrm{I_0}(\kappa)}e^{\kappa cos(r)}.}{C(r|\kappa)=exp[\kappa cos(r)]/[2\pi I(\kappa)]}
@@ -356,7 +356,7 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 
 #' Generic UARS Distribution
 #'
-#' Density, distribution function and random generation for the the generic uniform-axis random-spin class of distributions
+#' Density, distribution function and random generation for the the generic uniform-axis random-spin class of distributions.
 #' 
 #' For the rotation R with central orientation S and concentration \eqn{kappa} the UARS density is given by 
 #' \deqn{f(R|S,\kappa)=\frac{4\pi}{3-tr(S'R)}C(acos[tr(S'R)-1]/2|\kappa)}{f(R|S,\kappa)=4\pi C(acos[tr(S'R)-1]/2|\kappa)/[3-tr(S'R)]}

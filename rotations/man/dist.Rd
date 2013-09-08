@@ -33,7 +33,7 @@
 }
 \description{
   Calculate the Euclidean or Riemannian distance between
-  two rotations
+  two rotations.
 }
 \details{
   This function will calculate the intrinsic (Riemannian)

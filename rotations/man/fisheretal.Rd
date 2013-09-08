@@ -34,7 +34,7 @@
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)}\% confidence
-  region for the central orientation
+  region for the central orientation.
 }
 \details{
   Compute the radius of a \eqn{100(1-\alpha)}\% confidence

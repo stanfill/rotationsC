@@ -13,7 +13,7 @@
 }
 \description{
   Project an arbitrary \eqn{3\times 3}{3-by-3} matrix into
-  SO(3)
+  \eqn{SO(3)}.
 }
 \details{
   This function uses the process given in \cite{Moakher

@@ -1,6 +1,6 @@
 \name{gradient.search}
 \alias{gradient.search}
-\title{Gradient based optimization for user defined main direction of a rotation sample}
+\title{Gradient optimization for rotation data}
 \usage{
   gradient.search(sample, error, minerr = 1e-05,
     start = mean(sample), theta = NULL)
@@ -27,8 +27,8 @@
   value of total sample's distance from main direction }
 }
 \description{
-  Gradient based optimization for user defined main
-  direction of a rotation sample
+  Gradient based optimization for user defined central
+  orientation of a rotation sample.
 }
 \examples{
 # minimize L1 norm:

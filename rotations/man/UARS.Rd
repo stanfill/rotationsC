@@ -43,7 +43,7 @@
 \description{
   Density, distribution function and random generation for
   the the generic uniform-axis random-spin class of
-  distributions
+  distributions.
 }
 \details{
   For the rotation R with central orientation S and

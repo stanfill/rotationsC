@@ -81,7 +81,7 @@ print.Q4<-function(x,...){
 
 #' Compute the rotational distance
 #'
-#' Calculate the Euclidean or Riemannian distance between two rotations
+#' Calculate the Euclidean or Riemannian distance between two rotations.
 #'
 #' This function will calculate the intrinsic (Riemannian) or projected (Euclidean) distance between two rotations.
 #' \code{R2} and \code{Q2} are set to the identity rotations by default.  For rotations \eqn{R_1}{R1} and \eqn{R_2}{R2}
@@ -160,7 +160,7 @@ dist.Q4 <- function(x, Q2=id.Q4 ,method='projected', p=1,...) {
 
 #' Misorientation angle
 #' 
-#' Compute the misorientation angle of a rotation
+#' Compute the misorientation angle of a rotation.
 #' 
 #' Every rotation can be thought of as some reference coordinate system rotated about an axis through an angle.  These quantites
 #' are referred to as the misorientation axis and misorientation angle, respectively, in the material sciences literature.
@@ -289,7 +289,7 @@ eskew <- function(U) {
 
 #' Generate Rotations
 #'
-#' Generate rotations according to the Uniform-Axis Random Spin methodology
+#' Generate rotations according to the Uniform-Axis Random Spin methodology.
 #'
 #' Given a vector \eqn{u\in R^2}{u in R^2} of length one and angle of rotation \eqn{r}, a rotation can be formed using Rodrigues formula
 #' \deqn{\cos(r)I_{3\times 3}+\sin(r)\Phi(u)+(1-\cos(r))uu^\top}{cos(r)I+sin(r)\Phi(u)+(1-cos(r))uu'} 
@@ -423,7 +423,7 @@ log.SO3 <- function(x,...) {
 
 #' Projection into SO(3)
 #'
-#' Project an arbitrary \eqn{3\times 3}{3-by-3} matrix into SO(3)
+#' Project an arbitrary \eqn{3\times 3}{3-by-3} matrix into \eqn{SO(3)}.
 #'
 #' This function uses the process given in \cite{moakher02} to project an arbitrary \eqn{3\times 3}{3-by-3} matrix into \eqn{SO(3)}.
 #' More specifically it finds the closest orthogonal 3-by-3 matrix with determinant one to the provided matrix.
@@ -446,7 +446,7 @@ project.SO3 <- function(M) {
 
 #' Sample distance
 #'
-#' Compute the sum of the \eqn{p^{th}}{pth} order distances between Rs and S
+#' Compute the sum of the \eqn{p^{th}}{pth} order distances between Rs and S.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
 #' @param S the individual matrix of interest, usually an estimate of the mean.

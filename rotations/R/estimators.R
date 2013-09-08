@@ -1,6 +1,6 @@
 #' Mean rotation
 #'
-#' Compute the sample geometric or projected mean
+#' Compute the sample geometric or projected mean.
 #'
 #' This function takes a sample of 3D rotations (in matrix or quaternion form) and returns the projected arithmetic mean denoted \eqn{\widehat{\bm S}_P}{S_P} or
 #' geometric mean \eqn{\widehat{\bm S}_G}{S_G} according to the \code{type} option.
@@ -78,7 +78,7 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 
 #' Median rotation
 #' 
-#' Compute the sample projected or geometric median
+#' Compute the sample projected or geometric median.
 #'
 #' The median-type estimators are defined as \deqn{\widetilde{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd(\bm{R}_i,\bm{S}).}{argmin\sum d(Ri,S).}  If the choice of distance metric, \eqn{d}{d}, is Riemannian then the estimator is called the geometric, and if the distance metric in Euclidean then it projected.
 #' The algorithm used in the geometric case is discussed in \cite{hartley11} and the projected case was written by the authors.
@@ -151,7 +151,7 @@ median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...
 
 #' Weighted Mean Rotation
 #'
-#' Compute the weighted geometric or projected mean of a sample of rotations
+#' Compute the weighted geometric or projected mean of a sample of rotations.
 #'
 #' This function takes a sample of 3D rotations (in matrix or quaternion form) and returns the weighted projected arithmetic mean denoted \eqn{\widehat{\bm S}_P}{S_P} or
 #' geometric mean \eqn{\widehat{\bm S}_G}{S_G} according to the \code{type} option.

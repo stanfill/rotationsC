@@ -36,8 +36,8 @@
 }
 \description{
   Density, distribution function and random generation for
-  the Cayley distribution with concentration kappa
-  (\eqn{\kappa})
+  the Cayley distribution with concentration \code{kappa}
+  \eqn{\kappa}.
 }
 \details{
   The symmetric Cayley distribution with concentration

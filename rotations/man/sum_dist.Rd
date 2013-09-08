@@ -32,7 +32,7 @@
 }
 \description{
   Compute the sum of the \eqn{p^{th}}{pth} order distances
-  between Rs and S
+  between Rs and S.
 }
 \examples{
 Rs<-ruars(20,rvmises,kappa=10)

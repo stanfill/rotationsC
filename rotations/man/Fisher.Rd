@@ -36,8 +36,8 @@
 }
 \description{
   Density, distribution function and random generation for
-  the matrix-Fisher distribution with concentration kappa
-  (\eqn{\kappa})
+  the matrix-Fisher distribution with concentration
+  \code{kappa} \eqn{\kappa}.
 }
 \details{
   The matrix-Fisher distribution with concentration kappa

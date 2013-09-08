@@ -29,7 +29,7 @@
   sample.
 }
 \description{
-  Compute the sample geometric or projected mean
+  Compute the sample geometric or projected mean.
 }
 \details{
   This function takes a sample of 3D rotations (in matrix

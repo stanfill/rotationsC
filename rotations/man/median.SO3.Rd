@@ -31,7 +31,7 @@
   An estimate of the projected or geometric mean.
 }
 \description{
-  Compute the sample projected or geometric median
+  Compute the sample projected or geometric median.
 }
 \details{
   The median-type estimators are defined as

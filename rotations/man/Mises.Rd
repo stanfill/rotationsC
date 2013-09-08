@@ -37,7 +37,7 @@
 \description{
   Density, distribution function and random generation for
   the circular-von Mises distribution with concentration
-  kappa
+  \code{kappa} \eqn{\kappa}.
 }
 \details{
   The circular von Mises-based distribution has the density

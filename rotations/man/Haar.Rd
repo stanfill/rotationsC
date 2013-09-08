@@ -28,7 +28,7 @@
 }
 \description{
   Density, distribution function and random generation for
-  the uniform distribution on \eqn{SO(3)}
+  the uniform distribution on \eqn{SO(3)}.
 }
 \details{
   The uniform distribution on the space \eqn{SO(3)} (also

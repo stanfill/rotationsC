@@ -33,7 +33,7 @@
 }
 \description{
   Compute the weighted geometric or projected mean of a
-  sample of rotations
+  sample of rotations.
 }
 \details{
   This function takes a sample of 3D rotations (in matrix

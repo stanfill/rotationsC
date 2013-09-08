@@ -4,7 +4,7 @@
 \description{
   Density, distribution function and random variate
   generation for symmetric probability distributions in the
-  rotations package
+  rotations package.
 }
 \details{
   The functions for the density function and random variate

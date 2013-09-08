@@ -18,7 +18,7 @@
 }
 \description{
   Generate rotations according to the Uniform-Axis Random
-  Spin methodology
+  Spin methodology.
 }
 \details{
   Given a vector \eqn{u\in R^2}{u in R^2} of length one and

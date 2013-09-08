@@ -23,7 +23,7 @@
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)}\% confidence
-  region for the projected mean
+  region for the projected mean.
 }
 \details{
   Compute the radius of a \eqn{100(1-\alpha)}\% confidence

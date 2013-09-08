@@ -37,7 +37,9 @@ error.grid <- function(sample, Shat, theta=1, error, sphere) {
   return(err)
 }
 
-#' Gradient based optimization for user defined main direction of a rotation sample
+#' Gradient optimization for rotation data
+#' 
+#' Gradient based optimization for user defined central orientation of a rotation sample.
 #' 
 #' @param sample sample of rotations.
 #' @param error user defined function to observed distance between sample and estimate, has to have parameters for the sample and the estimate.
