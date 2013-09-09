@@ -10,13 +10,8 @@ Description: This package implements tools for working with rotational data: it 
   estimators for the central orientation of a sample, it provides confidence regions 
   for those estimates and it includes a novel visualization technique for rotation data. 
 License: MIT + file LICENSE
-Depends: R (>= 2.10),
-    ggplot2,
-    grid,
-    Rcpp,
-    RcppArmadillo,
-    methods
-Imports: Rcpp, RcppArmadillo, ggplot2, methods
+Depends: R (>= 2.10), ggplot2
+Imports: grid, Rcpp, RcppArmadillo, methods
 LinkingTo: Rcpp, RcppArmadillo
 Collate:
     'help.R'
