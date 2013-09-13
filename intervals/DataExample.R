@@ -49,18 +49,19 @@ dat.ests <- dlply(dat.out, .(location), function(x) {
   res <- subset(res, check==TRUE)
   
   n <- nrow(res) 
-  SE2  <- SE1  <- NULL
+  R1 <- SE2  <- SE1  <- NULL
   if (n == 1) {
     R <- as.SO3(matrix(unlist(res[1,3:11]), 3, 3))
-    SE2  <- SE1  <- R
+    R1 <- SE2  <- SE1  <- R
   } else if (n > 0) {
     rots <- as.SO3(as.matrix(res[,3:11]))
     SE2 <- mean(rots)
     SE1 <- median(rots)
+    R1 <- as.SO3(as.matrix(res[1,3:11]))
   }
 
   location <- as.numeric(as.character(unique(x$location)))
-  return(list(location=location, n=n, SE2=SE2, SE1=SE1))
+  return(list(location=location, n=n, SE2=SE2, SE1=SE1, R1=R1))
 })
 
 ## find distances between estimators and angles to identity for each
@@ -69,7 +70,7 @@ loc.stats <- ldply(dat.ests, function(x) {
   if (x$n > 0)
     data.frame(location=x$location, n=x$n, 
                dE1=angle(x$SE1), dE2=angle(x$SE2),
-               dE=dist(x$SE1, x$SE2, method="intrinsic", p=1)
+               dE=dist(x$SE1, x$SE2, method="intrinsic", p=1),dR1=angle(x$R1)
     )
 })
 loc.stats$xpos <- xpos[loc.stats$location]
@@ -78,6 +79,7 @@ loc.stats$ypos <- ypos[loc.stats$location]
 #Plot grain map
 qplot(xpos,ypos,colour=dE1,data=loc.stats,size=I(5))
 
+#Grain map based on median off all 14 scans
 d <- ggplot(loc.stats, aes(xpos, ypos, color=dE1))
 d2 <- d + geom_point(size=2.5) + scale_colour_gradient(expression(d[R](tilde(S)[E], I["3x3"])), low="grey99", high="grey10", limits=c(0, pi), breaks=c( pi/4, pi/2, 3*pi/4), labels=expression( pi/4, pi/2, 3*pi/4)) + 
   theme_bw() + xlab("") + ylab("") + coord_equal() + scale_x_continuous(limits=c(0, 12.5), breaks=seq(0, 12.5, by=2.5), labels=expression(0*mu*m, 2.5*mu*m, 5*mu*m, 7.5*mu*m, 10*mu*m, 12.5*mu*m)) + 
@@ -86,6 +88,21 @@ d2 <- d + geom_point(size=2.5) + scale_colour_gradient(expression(d[R](tilde(S)[
   theme(plot.margin=unit(rep(0,4), "lines"))
 d2
 #ggsave(file="/Users/stanfill/Dropbox/Thesis/Intervals/Figures/grain-map.png", width=5.75, height=4.25)
+
+#Grain map based on observation at scan1
+d3 <- ggplot(loc.stats, aes(xpos, ypos, color=dR1))
+d4 <- d3 + geom_point(size=2.5) + scale_colour_gradient(expression(d[R](R[ij], I["3x3"])), low="grey99", high="grey10", limits=c(0, pi), breaks=c( pi/4, pi/2, 3*pi/4), labels=expression( pi/4, pi/2, 3*pi/4)) + 
+  theme_bw() + xlab("") + ylab("") + coord_equal() + scale_x_continuous(limits=c(0, 12.5), breaks=seq(0, 12.5, by=2.5), labels=expression(0*mu*m, 2.5*mu*m, 5*mu*m, 7.5*mu*m, 10*mu*m, 12.5*mu*m)) + 
+  scale_y_continuous(limits=c(0, 10), breaks=seq(0, 10, by=2.5), labels=expression(0*mu*m, 2.5*mu*m, 5*mu*m, 7.5*mu*m, 10*mu*m)) + 
+  #geom_point(shape="o", colour="yellow", size=5, data=loc.stats[idx,])  + 
+  theme(plot.margin=unit(rep(0,4), "lines"))
+d4
+#ggsave(file="/Users/stanfill/Dropbox/Thesis/Intervals/Figures/grain-map-first-scan.png", width=5.75, height=4.25)
+
+#Add labels for the identified grains
+d4+annotate("text", x=c(3.5,7.5,.75,11,10,.75,7.5,.75),y=c(4,4.5,5,5,9,1,1,9),
+            label=c(as.character(1:8)),colour='white',size=I(10))
+ggsave(file="/Users/stanfill/Dropbox/Thesis/Intervals/Figures/grain-map-first-scan-labels.png", width=5.75, height=4.25)
 
 ##
 #Identify grains based on their central direction dE1 or dE2
