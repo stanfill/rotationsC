@@ -308,3 +308,24 @@ id.SO3 <- as.SO3(diag(c(1,1,1)))
   y<-matrix(y,3,3)
   return(as.SO3(t(y)%*%x))
 }
+
+#' @S3method + Q4
+#' @method + Q4
+'+.Q4'<-function(x,y){
+  x<-SO3(x)
+  y<-SO3(x)
+  return(Q4(x+y))
+}
+
+#' @S3method - Q4
+#' @method - Q4
+'-.Q4'<-function(x,y=NULL){
+  
+  if(is.null(y)){ 
+    x[2:4]<--x[2:4]
+    return(x)
+  }
+  x<-SO3(x)
+  y<-SO3(y)
+  return(Q4(x-y))
+}
