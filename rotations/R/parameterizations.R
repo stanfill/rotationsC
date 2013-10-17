@@ -288,7 +288,7 @@ id.SO3 <- as.SO3(diag(c(1,1,1)))
 #' @S3method [ Q4
 #' @method [ Q4
 '[.Q4'<-function(x,i,...){
-  y<-matrix(x,dim(x))
+  y<-matrix(x,length(x)/4,4)
   y<-y[i,...]
   return(as.Q4(y))
 }
