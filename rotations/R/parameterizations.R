@@ -276,3 +276,19 @@ is.SO3 <- function(R) {
 
 id.SO3 <- as.SO3(diag(c(1,1,1)))
 
+
+#' @S3method [ SO3
+#' @method [ SO3
+'[.SO3'<-function(x,i,...){
+  x<-matrix(x,dim(x))
+  x<-x[i,...]
+  return(as.SO3(x))
+}
+
+#' @S3method [ Q4
+#' @method [ Q4
+'[.Q4'<-function(x,i,...){
+  y<-matrix(x,dim(x))
+  y<-y[i,...]
+  return(as.Q4(y))
+}

@@ -6,7 +6,6 @@
 
 #include <RcppArmadillo.h>
 #include <Rcpp.h>
-#include "rotations.h"
 
 namespace rotations {
 
@@ -33,8 +32,11 @@ namespace rotations {
             validateSignature("arma::mat(*eskewC)(arma::rowvec)");
             p_eskewC = (Ptr_eskewC)R_GetCCallable("rotations", "rotations_eskewC");
         }
-        RNGScope __rngScope;
-        RObject __result = p_eskewC(Rcpp::wrap(U));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_eskewC(Rcpp::wrap(U));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);
@@ -47,8 +49,11 @@ namespace rotations {
             validateSignature("arma::mat(*SO3defaultC)(arma::mat,arma::vec)");
             p_SO3defaultC = (Ptr_SO3defaultC)R_GetCCallable("rotations", "rotations_SO3defaultC");
         }
-        RNGScope __rngScope;
-        RObject __result = p_SO3defaultC(Rcpp::wrap(U), Rcpp::wrap(theta));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_SO3defaultC(Rcpp::wrap(U), Rcpp::wrap(theta));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);
@@ -61,8 +66,11 @@ namespace rotations {
             validateSignature("arma::mat(*Q4defaultC)(arma::mat,arma::vec)");
             p_Q4defaultC = (Ptr_Q4defaultC)R_GetCCallable("rotations", "rotations_Q4defaultC");
         }
-        RNGScope __rngScope;
-        RObject __result = p_Q4defaultC(Rcpp::wrap(U), Rcpp::wrap(theta));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_Q4defaultC(Rcpp::wrap(U), Rcpp::wrap(theta));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);
@@ -75,8 +83,11 @@ namespace rotations {
             validateSignature("arma::mat(*pMatC)(arma::mat)");
             p_pMatC = (Ptr_pMatC)R_GetCCallable("rotations", "rotations_pMatC");
         }
-        RNGScope __rngScope;
-        RObject __result = p_pMatC(Rcpp::wrap(p));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_pMatC(Rcpp::wrap(p));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);
@@ -89,8 +100,11 @@ namespace rotations {
             validateSignature("arma::mat(*genrC)(arma::vec,arma::mat,int,arma::mat)");
             p_genrC = (Ptr_genrC)R_GetCCallable("rotations", "rotations_genrC");
         }
-        RNGScope __rngScope;
-        RObject __result = p_genrC(Rcpp::wrap(r), Rcpp::wrap(S), Rcpp::wrap(SO3), Rcpp::wrap(u));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_genrC(Rcpp::wrap(r), Rcpp::wrap(S), Rcpp::wrap(SO3), Rcpp::wrap(u));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);
@@ -103,8 +117,11 @@ namespace rotations {
             validateSignature("int(*checkQ4)(NumericMatrix)");
             p_checkQ4 = (Ptr_checkQ4)R_GetCCallable("rotations", "rotations_checkQ4");
         }
-        RNGScope __rngScope;
-        RObject __result = p_checkQ4(Rcpp::wrap(Q));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_checkQ4(Rcpp::wrap(Q));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<int >(__result);
@@ -117,8 +134,11 @@ namespace rotations {
             validateSignature("int(*checkSO3)(arma::mat)");
             p_checkSO3 = (Ptr_checkSO3)R_GetCCallable("rotations", "rotations_checkSO3");
         }
-        RNGScope __rngScope;
-        RObject __result = p_checkSO3(Rcpp::wrap(Rs));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_checkSO3(Rcpp::wrap(Rs));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<int >(__result);
@@ -131,8 +151,11 @@ namespace rotations {
             validateSignature("arma::mat(*expskewC)(arma::mat)");
             p_expskewC = (Ptr_expskewC)R_GetCCallable("rotations", "rotations_expskewC");
         }
-        RNGScope __rngScope;
-        RObject __result = p_expskewC(Rcpp::wrap(M));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_expskewC(Rcpp::wrap(M));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);
@@ -145,8 +168,11 @@ namespace rotations {
             validateSignature("arma::mat(*expskewCMulti)(arma::mat)");
             p_expskewCMulti = (Ptr_expskewCMulti)R_GetCCallable("rotations", "rotations_expskewCMulti");
         }
-        RNGScope __rngScope;
-        RObject __result = p_expskewCMulti(Rcpp::wrap(M));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_expskewCMulti(Rcpp::wrap(M));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);
@@ -159,8 +185,11 @@ namespace rotations {
             validateSignature("arma::mat(*logSO3C)(arma::mat)");
             p_logSO3C = (Ptr_logSO3C)R_GetCCallable("rotations", "rotations_logSO3C");
         }
-        RNGScope __rngScope;
-        RObject __result = p_logSO3C(Rcpp::wrap(R));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_logSO3C(Rcpp::wrap(R));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);
@@ -173,8 +202,11 @@ namespace rotations {
             validateSignature("arma::mat(*logSO3CMulti)(arma::mat)");
             p_logSO3CMulti = (Ptr_logSO3CMulti)R_GetCCallable("rotations", "rotations_logSO3CMulti");
         }
-        RNGScope __rngScope;
-        RObject __result = p_logSO3CMulti(Rcpp::wrap(R));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_logSO3CMulti(Rcpp::wrap(R));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);
@@ -187,8 +219,11 @@ namespace rotations {
             validateSignature("arma::mat(*projectSO3C)(arma::mat)");
             p_projectSO3C = (Ptr_projectSO3C)R_GetCCallable("rotations", "rotations_projectSO3C");
         }
-        RNGScope __rngScope;
-        RObject __result = p_projectSO3C(Rcpp::wrap(M));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_projectSO3C(Rcpp::wrap(M));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);
@@ -201,8 +236,11 @@ namespace rotations {
             validateSignature("arma::mat(*meanSO3C)(arma::mat)");
             p_meanSO3C = (Ptr_meanSO3C)R_GetCCallable("rotations", "rotations_meanSO3C");
         }
-        RNGScope __rngScope;
-        RObject __result = p_meanSO3C(Rcpp::wrap(Rs));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_meanSO3C(Rcpp::wrap(Rs));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);
@@ -215,8 +253,11 @@ namespace rotations {
             validateSignature("arma::rowvec(*meanQ4C)(arma::mat)");
             p_meanQ4C = (Ptr_meanQ4C)R_GetCCallable("rotations", "rotations_meanQ4C");
         }
-        RNGScope __rngScope;
-        RObject __result = p_meanQ4C(Rcpp::wrap(Q));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_meanQ4C(Rcpp::wrap(Q));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::rowvec >(__result);
@@ -229,8 +270,11 @@ namespace rotations {
             validateSignature("arma::mat(*medianSO3C)(arma::mat,int,double)");
             p_medianSO3C = (Ptr_medianSO3C)R_GetCCallable("rotations", "rotations_medianSO3C");
         }
-        RNGScope __rngScope;
-        RObject __result = p_medianSO3C(Rcpp::wrap(Rs), Rcpp::wrap(maxIterations), Rcpp::wrap(maxEps));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_medianSO3C(Rcpp::wrap(Rs), Rcpp::wrap(maxIterations), Rcpp::wrap(maxEps));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);
@@ -243,8 +287,11 @@ namespace rotations {
             validateSignature("arma::mat(*HartmedianSO3C)(arma::mat,int,double)");
             p_HartmedianSO3C = (Ptr_HartmedianSO3C)R_GetCCallable("rotations", "rotations_HartmedianSO3C");
         }
-        RNGScope __rngScope;
-        RObject __result = p_HartmedianSO3C(Rcpp::wrap(Rs), Rcpp::wrap(maxIterations), Rcpp::wrap(maxEps));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_HartmedianSO3C(Rcpp::wrap(Rs), Rcpp::wrap(maxIterations), Rcpp::wrap(maxEps));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);
@@ -257,8 +304,11 @@ namespace rotations {
             validateSignature("arma::mat(*gmeanSO3C)(arma::mat,int,double)");
             p_gmeanSO3C = (Ptr_gmeanSO3C)R_GetCCallable("rotations", "rotations_gmeanSO3C");
         }
-        RNGScope __rngScope;
-        RObject __result = p_gmeanSO3C(Rcpp::wrap(Rs), Rcpp::wrap(maxIterations), Rcpp::wrap(maxEps));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_gmeanSO3C(Rcpp::wrap(Rs), Rcpp::wrap(maxIterations), Rcpp::wrap(maxEps));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::mat >(__result);
@@ -271,8 +321,11 @@ namespace rotations {
             validateSignature("double(*fisherAxisC)(arma::mat,arma::rowvec)");
             p_fisherAxisC = (Ptr_fisherAxisC)R_GetCCallable("rotations", "rotations_fisherAxisC");
         }
-        RNGScope __rngScope;
-        RObject __result = p_fisherAxisC(Rcpp::wrap(Qs), Rcpp::wrap(Qhat));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_fisherAxisC(Rcpp::wrap(Qs), Rcpp::wrap(Qhat));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<double >(__result);
@@ -285,8 +338,11 @@ namespace rotations {
             validateSignature("double(*fisherAxisCSymmetric)(arma::mat,arma::rowvec)");
             p_fisherAxisCSymmetric = (Ptr_fisherAxisCSymmetric)R_GetCCallable("rotations", "rotations_fisherAxisCSymmetric");
         }
-        RNGScope __rngScope;
-        RObject __result = p_fisherAxisCSymmetric(Rcpp::wrap(Qs), Rcpp::wrap(Qhat));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_fisherAxisCSymmetric(Rcpp::wrap(Qs), Rcpp::wrap(Qhat));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<double >(__result);
@@ -299,8 +355,11 @@ namespace rotations {
             validateSignature("arma::vec(*fisherBootC)(arma::mat,int,bool)");
             p_fisherBootC = (Ptr_fisherBootC)R_GetCCallable("rotations", "rotations_fisherBootC");
         }
-        RNGScope __rngScope;
-        RObject __result = p_fisherBootC(Rcpp::wrap(Qs), Rcpp::wrap(m), Rcpp::wrap(symm));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_fisherBootC(Rcpp::wrap(Qs), Rcpp::wrap(m), Rcpp::wrap(symm));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::vec >(__result);
@@ -313,8 +372,11 @@ namespace rotations {
             validateSignature("NumericVector(*RdistC)(NumericMatrix,NumericVector)");
             p_RdistC = (Ptr_RdistC)R_GetCCallable("rotations", "rotations_RdistC");
         }
-        RNGScope __rngScope;
-        RObject __result = p_RdistC(Rcpp::wrap(Q1), Rcpp::wrap(Q2));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_RdistC(Rcpp::wrap(Q1), Rcpp::wrap(Q2));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<NumericVector >(__result);
@@ -327,8 +389,11 @@ namespace rotations {
             validateSignature("arma::rowvec(*rdistSO3C)(arma::mat,arma::mat)");
             p_rdistSO3C = (Ptr_rdistSO3C)R_GetCCallable("rotations", "rotations_rdistSO3C");
         }
-        RNGScope __rngScope;
-        RObject __result = p_rdistSO3C(Rcpp::wrap(Rs), Rcpp::wrap(R2));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_rdistSO3C(Rcpp::wrap(Rs), Rcpp::wrap(R2));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::rowvec >(__result);
@@ -341,8 +406,11 @@ namespace rotations {
             validateSignature("NumericVector(*EdistC)(NumericMatrix,NumericVector)");
             p_EdistC = (Ptr_EdistC)R_GetCCallable("rotations", "rotations_EdistC");
         }
-        RNGScope __rngScope;
-        RObject __result = p_EdistC(Rcpp::wrap(Q1), Rcpp::wrap(Q2));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_EdistC(Rcpp::wrap(Q1), Rcpp::wrap(Q2));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<NumericVector >(__result);
@@ -355,8 +423,11 @@ namespace rotations {
             validateSignature("double(*oneRdistC)(NumericMatrix,NumericVector)");
             p_oneRdistC = (Ptr_oneRdistC)R_GetCCallable("rotations", "rotations_oneRdistC");
         }
-        RNGScope __rngScope;
-        RObject __result = p_oneRdistC(Rcpp::wrap(Q1), Rcpp::wrap(Q2));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_oneRdistC(Rcpp::wrap(Q1), Rcpp::wrap(Q2));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<double >(__result);
@@ -369,8 +440,11 @@ namespace rotations {
             validateSignature("NumericVector(*cdfunsC)(NumericMatrix,NumericVector)");
             p_cdfunsC = (Ptr_cdfunsC)R_GetCCallable("rotations", "rotations_cdfunsC");
         }
-        RNGScope __rngScope;
-        RObject __result = p_cdfunsC(Rcpp::wrap(Qs), Rcpp::wrap(Qhat));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_cdfunsC(Rcpp::wrap(Qs), Rcpp::wrap(Qhat));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<NumericVector >(__result);
@@ -383,8 +457,11 @@ namespace rotations {
             validateSignature("NumericVector(*cdfunsCMedian)(NumericMatrix,NumericVector)");
             p_cdfunsCMedian = (Ptr_cdfunsCMedian)R_GetCCallable("rotations", "rotations_cdfunsCMedian");
         }
-        RNGScope __rngScope;
-        RObject __result = p_cdfunsCMedian(Rcpp::wrap(Qs), Rcpp::wrap(Qhat));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_cdfunsCMedian(Rcpp::wrap(Qs), Rcpp::wrap(Qhat));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<NumericVector >(__result);
@@ -397,8 +474,11 @@ namespace rotations {
             validateSignature("NumericVector(*zhangQ4)(NumericMatrix,int)");
             p_zhangQ4 = (Ptr_zhangQ4)R_GetCCallable("rotations", "rotations_zhangQ4");
         }
-        RNGScope __rngScope;
-        RObject __result = p_zhangQ4(Rcpp::wrap(Q), Rcpp::wrap(m));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_zhangQ4(Rcpp::wrap(Q), Rcpp::wrap(m));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<NumericVector >(__result);
@@ -411,8 +491,11 @@ namespace rotations {
             validateSignature("NumericVector(*cdfunsCSO3)(arma::mat,arma::mat)");
             p_cdfunsCSO3 = (Ptr_cdfunsCSO3)R_GetCCallable("rotations", "rotations_cdfunsCSO3");
         }
-        RNGScope __rngScope;
-        RObject __result = p_cdfunsCSO3(Rcpp::wrap(Rs), Rcpp::wrap(Rhat));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_cdfunsCSO3(Rcpp::wrap(Rs), Rcpp::wrap(Rhat));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<NumericVector >(__result);
@@ -425,8 +508,11 @@ namespace rotations {
             validateSignature("NumericVector(*zhangMedianC)(arma::mat,int)");
             p_zhangMedianC = (Ptr_zhangMedianC)R_GetCCallable("rotations", "rotations_zhangMedianC");
         }
-        RNGScope __rngScope;
-        RObject __result = p_zhangMedianC(Rcpp::wrap(Rs), Rcpp::wrap(m));
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_zhangMedianC(Rcpp::wrap(Rs), Rcpp::wrap(m));
+        }
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<NumericVector >(__result);
