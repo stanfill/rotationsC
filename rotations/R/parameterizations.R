@@ -299,14 +299,18 @@ id.SO3 <- as.SO3(diag(c(1,1,1)))
 #' (or objects which can be coerced to them).
 #' 
 #' The rotation group SO(3) is a multiplicative group so addition of rotations \eqn{R1} and \eqn{R2}
-#' is \eqn{R1+R2=R2R1}.
+#' is \eqn{R1+R2=R2R1}.  The difference between rotations \eqn{R1} and \eqn{R2} is
+#' \eqn{R1-R2=R2'R1}.  With this definiton it is clear that \eqn{R1+R2-R2=R2'R2R1=R1}  Finally,
+#' if only one rotation is provided to subtraction then the inverse (transpose) it returned, 
+#' i.e. \eqn{-R2=R2'}.
 #' 
 #' @name Arithmetic
 #' @aliases "+.SO3" "-.SO3" "+.Q4" "-.Q4"
 #' @param x first arguement
 #' @param y second arguement (optional for subtraction)
 #' @return  \item{+}{the result of both rotations}
-#'          \item{-}{the difference of the rotations}
+#'          \item{-}{the difference of the rotations, or the inverse rotation of only one arguement is provided}
+
 
 NULL
 
@@ -314,6 +318,7 @@ NULL
 #' @aliases "-.SO3" "+.Q4" "-.Q4"
 #' @S3method + SO3
 #' @method + SO3
+
 '+.SO3'<-function(x,y){
   x<-matrix(x,3,3)
   y<-matrix(y,3,3)
@@ -324,6 +329,7 @@ NULL
 #' @aliases "+.SO3" "+.Q4" "-.Q4"
 #' @S3method - SO3
 #' @method - SO3
+
 '-.SO3'<-function(x,y=NULL){
   x<-matrix(x,3,3)
   if(is.null(y)) return(as.SO3(t(x)))
@@ -335,6 +341,7 @@ NULL
 #' @aliases "+.SO3" "-.SO3" "-.Q4"
 #' @S3method + Q4
 #' @method + Q4
+
 '+.Q4'<-function(x,y){
   x<-SO3(x)
   y<-SO3(x)
@@ -345,6 +352,7 @@ NULL
 #' @aliases "+.SO3" "-.SO3" "+.Q4"
 #' @S3method - Q4
 #' @method - Q4
+
 '-.Q4'<-function(x,y=NULL){
   
   if(is.null(y)){ 
