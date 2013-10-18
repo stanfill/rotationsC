@@ -3,13 +3,13 @@
 #'  The concentration parameter \eqn{\kappa} does not translate across circular distributions  A commonly used
 #'  measure of spread in circular distributions that does translate
 #'  is the circular variance defined as \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]} 
-#'  is the mean resultant length.  See \cite{mardia2009} for more details.
+#'  is the mean resultant length.  See \cite{mardia2000} for more details.
 #'  This function translates the circular variance \eqn{\nu} into the corresponding concentration parameter \eqn{\kappa}
 #'  for the Cayley distribution.
 #'  
 #'  @param nu circular variance.
 #'  @return Concentration parameter corresponding to nu.
-#'  @cite mardia2009
+#'  @cite mardia2000
 #'  @seealso \code{\link{Cayley}}
 #'  @export
 
@@ -26,14 +26,14 @@ fisher_nu_kappa<-function(kappa,nu){
 #'  The concentration parameter \eqn{\kappa} does not translate across circular distributions  A commonly used
 #'  measure of spread in circular distributions that does translate
 #'  is the circular variance defined as \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]} 
-#'  is the mean resultant length.  See \cite{mardia2009} for more details.
+#'  is the mean resultant length.  See \cite{mardia2000} for more details.
 #'  This function translates the circular variance \eqn{\nu} into the corresponding concentration parameter \eqn{\kappa}
 #'  for the matrix-Fisher distribution.
 #'  
 #'  @param nu circular variance.
 #'  @return Concentration parameter corresponding to nu.
 #'  @seealso \code{\link{Fisher}}
-#'  @cite mardia2009
+#'  @cite mardia2000
 #'  @export
 
 fisher_kappa<-function(nu){
@@ -56,14 +56,14 @@ mises_nu_kappa<-function(kappa,nu){
 #'  The concentration parameter \eqn{\kappa} does not translate across circular distributions.  A commonly used
 #'  measure of spread in circular distributions that does translate
 #'  is the circular variance defined as \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]} 
-#'  is the mean resultant length.  See \cite{mardia2009} for more details.
+#'  is the mean resultant length.  See \cite{mardia2000} for more details.
 #'  This function translates the circular variance \eqn{\nu} into the corresponding concentration parameter \eqn{\kappa}
 #'  for the circular-von Mises distribution.
 #'  
 #'  @param nu circular variance.
 #'  @return Concentration parameter corresponding to nu.
 #'  @seealso \code{\link{Mises}}
-#'  @cite mardia2009
+#'  @cite mardia2000
 #'  @export
 
 vmises_kappa<-function(nu){

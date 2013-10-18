@@ -293,6 +293,25 @@ id.SO3 <- as.SO3(diag(c(1,1,1)))
   return(as.Q4(y))
 }
 
+#' Arithmetic Operators on SO(3)
+#' 
+#' These binary operators perform arithmetic on rotations in quaternion or rotation matrix form
+#' (or objects which can be coerced to them).
+#' 
+#' The rotation group SO(3) is a multiplicative group so addition of rotations \eqn{R1} and \eqn{R2}
+#' is \eqn{R1+R2=R2R1}.
+#' 
+#' @name Arithmetic
+#' @aliases "+.SO3" "-.SO3" "+.Q4" "-.Q4"
+#' @param x first arguement
+#' @param y second arguement (optional for subtraction)
+#' @return  \item{+}{the result of both rotations}
+#'          \item{-}{the difference of the rotations}
+
+NULL
+
+#' @rdname Arithmetic
+#' @aliases "-.SO3" "+.Q4" "-.Q4"
 #' @S3method + SO3
 #' @method + SO3
 '+.SO3'<-function(x,y){
@@ -301,14 +320,19 @@ id.SO3 <- as.SO3(diag(c(1,1,1)))
   return(as.SO3(y%*%x))
 }
 
+#' @rdname Arithmetic
+#' @aliases "+.SO3" "+.Q4" "-.Q4"
 #' @S3method - SO3
 #' @method - SO3
 '-.SO3'<-function(x,y=NULL){
-  if(is.null(y)) return(as.SO3(t(matrix(x,3,3))))
+  x<-matrix(x,3,3)
+  if(is.null(y)) return(as.SO3(t(x)))
   y<-matrix(y,3,3)
   return(as.SO3(t(y)%*%x))
 }
 
+#' @rdname Arithmetic
+#' @aliases "+.SO3" "-.SO3" "-.Q4"
 #' @S3method + Q4
 #' @method + Q4
 '+.Q4'<-function(x,y){
@@ -317,6 +341,8 @@ id.SO3 <- as.SO3(diag(c(1,1,1)))
   return(Q4(x+y))
 }
 
+#' @rdname Arithmetic
+#' @aliases "+.SO3" "-.SO3" "+.Q4"
 #' @S3method - Q4
 #' @method - Q4
 '-.Q4'<-function(x,y=NULL){

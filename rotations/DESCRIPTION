@@ -5,13 +5,21 @@ Version: 0.1
 Author: Bryan Stanfill <stanfill@iastate.edu>, Heike Hofmann
     <hofmann@iastate.edu>, Ulrike Genschel <ulrike@iastate.edu>
 Maintainer: Bryan Stanfill <stanfill@iastate.edu>
-Description: This package implements tools for working with rotational data: it allows simulation from the 
-  most commonly used  distributions on SO(3), it includes methods for different mean and median type 
-  estimators for the central orientation of a sample, it provides confidence regions 
-  for those estimates and it includes a novel visualization technique for rotation data. 
+Description: This package implements tools for working with rotational data: it
+    allows simulation from the most commonly used distributions on SO(3), it
+    includes methods for different mean and median type estimators for the
+    central orientation of a sample, it provides confidence regions for those
+    estimates and it includes a novel visualization technique for rotation
+    data.
 License: MIT + file LICENSE
-Depends: R (>= 2.10), ggplot2, Rcpp, RcppArmadillo
-Imports: grid,  methods
+Depends:
+    R (>= 2.10),
+    ggplot2,
+    Rcpp,
+    RcppArmadillo
+Imports:
+    grid,
+    methods
 LinkingTo: Rcpp, RcppArmadillo
 Collate:
     'help.R'

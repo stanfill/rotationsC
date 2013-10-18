@@ -20,7 +20,7 @@
 
   \item{alp}{alpha level desired, e.g. 0.05 or 0.10.}
 
-  \item{m}{number of replicates to use to estimate the
+  \item{m}{number of replicates to use to estiamte the
   critical value.}
 }
 \value{

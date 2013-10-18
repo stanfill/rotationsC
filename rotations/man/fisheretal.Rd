@@ -41,7 +41,7 @@
   region for the central orientation based on the projected
   mean estimator using the method for the mean polar axis
   as proposed in \cite{Fisher et al. (1996)}.  To be able
-  to reduce their method to a radius requires the additional
+  to reduce their method to a radius requires the additonal
   assumption of rotational symmetry, equation (10) in
   \cite{Fisher et al. (1996)}.
 }
@@ -52,8 +52,8 @@ region(Qs,method='eigen',type='bootstrap',alp=0.1,symm=TRUE,estimator='mean')
 \references{
   Fisher N, Hall P, Jing B and Wood A (1996). "Improved
   pivotal methods for constructing confidence regions with
-  directional data." Journal of the American Statistical
-  Association, 91(435), pp. 1062-1070.
+  directional data." _Journal of the American Statistical
+  Association_, *91*(435), pp. 1062-1070.
 }
 \seealso{
   \code{\link{prentice}}, \code{\link{chang}},

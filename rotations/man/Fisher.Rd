@@ -17,7 +17,7 @@
   \item{n}{number of observations.  If \code{length(n)>1},
   the length is taken to be the number required.}
 
-  \item{kappa}{concentration parameter.}
+  \item{kappa}{concentration paramter.}
 
   \item{nu}{circular variance, can be used in place of
   \code{kappa}.}
