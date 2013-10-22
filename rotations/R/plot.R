@@ -148,29 +148,30 @@ pointsXYZ <- function(data, center, column=1) {
 
 plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300,  ...) {
 
-  if(col=='all')
+  if(col=='all'){
     col<-c(1,2,3)
+  }
   
   if(length(col)>1){
     if(1 %in% col){
-      p1<-plot(x,center=center,col=1,to_range=to_range,show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m)
+      p1<-plot(x,center=center,col=1,to_range=to_range,show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,...)
       p1<-p1+theme(axis.title.x=element_text(size=rel(1.5)))+xlab("x-axis")
     }else p1<-NULL
     
     if(2 %in% col){
-      p2<-plot(x,center=center,col=2,to_range=to_range,show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m)
+      p2<-plot(x,center=center,col=2,to_range=to_range,show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,...)
       p2<-p2+theme(axis.title.x=element_text(size=rel(1.5)))+xlab("y-axis")
     }else p2<-NULL
     
     if(3 %in% col){
-      p3<-plot(x,center=center,col=3,to_range=to_range,show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m)
+      p3<-plot(x,center=center,col=3,to_range=to_range,show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,...)
       p3<-p3+theme(axis.title.x=element_text(size=rel(1.5)))+xlab("z-axis")
     }else p3<-NULL
     
     ps<-list(p1,p2,p3)
     ps<-ps[!sapply(ps, is.null)]
     
-    multiplot(plotlist=ps,layout=matrix(col,nrow=1,byrow=T))
+    multiplot(plotlist=ps,layout=matrix((1:length(col)),nrow=1,byrow=T))
   }
   
   Rs <- as.SO3(x)
