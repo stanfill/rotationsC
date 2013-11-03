@@ -11,7 +11,7 @@ gvmUARS<-function(RS,S,kappa){
   
   cRs <- center(Rs,S) #Each row of cRs is S'R
   trcRs <- rowSums(cRs[,c(1,5,9)]) #each row is tr(S'R)
-  
+
   n1<-exp(kappa*sum(trcRs-1)/2)
   I0k<-besselI(kappa,0)
   I1k<-besselI(kappa,1)
@@ -74,9 +74,9 @@ S_MCMC<-function(Rs,oldS,rho,kappa,gfun){
   Wj1 <-rbinom(1,1,min(1,rj1,na.rm=T))
  
   if(Wj1==1){
-    return(Sstar)
+    return(list(S=Sstar,Acc=1))
   }else
-    return(oldS)
+    return(list(S=oldS,Acc=0))
 }
 
 kap_MCMC<-function(Rs,oldKappa,sigma,S,gfun){
@@ -94,9 +94,9 @@ kap_MCMC<-function(Rs,oldKappa,sigma,S,gfun){
   Wj2 <- rbinom(1,1,min(1,rj2,na.rm=T))
   
   if(Wj2==1){
-    return(kappaStar)
+    return(list(kappa=kappaStar,Acc=1))
   }else{
-    return(oldKappa)
+    return(list(kappa=oldKappa,Acc=0))
   }
   
 }
@@ -107,26 +107,32 @@ both_MCMC<-function(Rs,S0,kappa0,rho,sigma,burnin,B,gfun){
   Sdraws<-matrix(0,B,9)
   Kdraws<-rep(0,B)
   
-  Snew<-S0
-  Knew<-kappa0
+  Snew<-list(S=S0,Acc=0)
+  Knew<-list(kappa=kappa0,Acc=0)
   
   for(i in 1:(burnin+1)){
-    Snew<-S_MCMC(Rs,Snew,rho,Knew,gfun)
-    Knew<-kap_MCMC(Rs,Knew,sigma,Snew,gfun)
+    Snew<-S_MCMC(Rs,Snew$S,rho,Knew$kappa,gfun)
+    Knew<-kap_MCMC(Rs,Knew$kappa,sigma,Snew$S,gfun)
   }
   
-  Sdraws[1,]<-Snew
-  Kdraws[1]<-Knew
+  Sdraws[1,]<-Snew$S
+  Kdraws[1]<-Knew$kappa
+  Saccept<-1
+  Kaccept<-1
   
   for(j in 2:B){
     Sold<-as.SO3(matrix(Sdraws[(j-1),]))
-    Sdraws[j,]<-S_MCMC(Rs,Sold,rho,Kdraws[j-1],gfun)
+    Sd<-S_MCMC(Rs,Sold,rho,Kdraws[j-1],gfun)
+    Sdraws[j,]<-Sd$S
+    Saccept<-Saccept+Sd$Acc
     
     Snew<-as.SO3(matrix(Sdraws[(j),]))
-    Kdraws[j]<-kap_MCMC(Rs,Kdraws[j-1],sigma,Snew,gfun)
+    Kd<-kap_MCMC(Rs,Kdraws[j-1],sigma,Snew,gfun)
+    Kdraws[j]<-Kd$kappa
+    Kaccept<-Kaccept+Kd$Acc
   }
   
-  return(list(S=Sdraws,kappa=Kdraws))
+  return(list(S=Sdraws,Sacc=Saccept/B,kappa=Kdraws,Kacc=Kaccept/B))
   
 }
 

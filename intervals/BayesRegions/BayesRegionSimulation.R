@@ -7,7 +7,8 @@ kap<-1
 Rs<-ruars(100,rvmises,kappa=kap)
 
 #Table 1 in Bingham 2009 suggests rho=1000, sigma=1 when for sample n=100 and kappa=1
-mcRes<-both_MCMC(Rs,mean(Rs),kappa0=1,rho=1000,sigma=1,burnin=100,B=500,gfun=gvmUARS)
+mcRes<-both_MCMC(Rs,mean(Rs),kappa0=1,rho=100,sigma=.5,burnin=100,B=500,gfun=gvmUARS)
+mcRes$Sacc; mcRes$Kacc #Check acceptance rates
 
 Sres<-as.SO3(mcRes$S)
 plot(Sres)
@@ -20,6 +21,7 @@ Shat<-mean(Sres)
 ds<-afun(Sres,Shat)
 rad<-quantile(ds,.95)
 afun(id.SO3,Shat)<rad
+hist(ds);abline(v=c(rad,afun(id.SO3,Shat)),col=c(1,2))
 
 #############
 #matrix Fisher Distribution
@@ -27,7 +29,9 @@ kap<-1
 Rs<-ruars(100,rfisher,kappa=kap)
 
 #Table 2 in Bingham 2010 suggests phi=1000, sigma=1 when for sample n=100 and kappa=1
-mcRes<-both_MCMC(Rs,mean(Rs),kappa0=kap,rho=1000,sigma=1,burnin=100,B=500,gfun=gfUARS)
+mcRes<-both_MCMC(Rs,mean(Rs),kappa0=kap,rho=25,sigma=.25,burnin=100,B=500,gfun=gfUARS)
+mcRes$Sacc; mcRes$Kacc #Check acceptance rates
+
 
 Sres<-as.SO3(mcRes$S)
 plot(Sres)
@@ -40,6 +44,7 @@ Shat<-mean(Sres)
 ds<-afun(Sres,Shat)
 rad<-quantile(ds,.95)
 afun(id.SO3,Shat)<rad
+hist(ds);abline(v=c(rad,afun(id.SO3,Shat)),col=c(1,2))
 
 #############
 #Cayley Distribution
@@ -47,7 +52,8 @@ kap<-1
 Rs<-ruars(100,rcayley,kappa=kap)
 
 #Table 2 in Bingham 2010 suggests phi=1000, sigma=1 when for sample n=100 and kappa=1
-mcRes<-both_MCMC(Rs,mean(Rs),kappa0=kap,rho=1000,sigma=1,burnin=100,B=500,gfun=gcayUARS)
+mcRes<-both_MCMC(Rs,mean(Rs),kappa0=kap,rho=50,sigma=.4,burnin=100,B=500,gfun=gcayUARS)
+mcRes$Sacc; mcRes$Kacc #Check acceptance rates
 
 Sres<-as.SO3(mcRes$S)
 plot(Sres)
@@ -60,3 +66,4 @@ Shat<-mean(Sres)
 ds<-afun(Sres,Shat)
 rad<-quantile(ds,.95)
 afun(id.SO3,Shat)<rad
+hist(ds);abline(v=c(rad,afun(id.SO3,Shat)),col=c(1,2))
