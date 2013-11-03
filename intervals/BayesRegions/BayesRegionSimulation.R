@@ -27,7 +27,7 @@ kap<-1
 Rs<-ruars(100,rfisher,kappa=kap)
 
 #Table 2 in Bingham 2010 suggests phi=1000, sigma=1 when for sample n=100 and kappa=1
-mcRes<-both_MCMC(Rs,mean(Rs),kappa0=kap,rho=1000,sigma=1,burnin=50,B=100,gfun=gfUARS)
+mcRes<-both_MCMC(Rs,mean(Rs),kappa0=kap,rho=1000,sigma=1,burnin=100,B=500,gfun=gfUARS)
 
 Sres<-as.SO3(mcRes$S)
 plot(Sres)
