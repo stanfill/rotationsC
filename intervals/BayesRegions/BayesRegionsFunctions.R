@@ -46,6 +46,20 @@ gfUARS<-function(RS,S,kappa){
   
 }
 
+gcayUARS<-function(Rs,S,kappa){
+  
+  n<-nrow(Rs)
+  cRs <- center(Rs,S) #Each row of cRs is S'R
+  trcRs <- rowSums(cRs[,c(1,5,9)]) #each row is tr(S'R)
+  
+  p1<-(sqrt(pi)*gamma(kappa+2)/gamma(kappa+.5))^n
+  p2<-sqrt(trigamma(kappa+.5)-trigamma(kappa+2))
+  p3<-prod((.5+.25*(trcRs-1))^kappa)
+  
+  return(p1*p2*p3)
+  
+}
+
 S_MCMC<-function(Rs,oldS,rho,kappa,gfun){
   
   #Rs - the sample
