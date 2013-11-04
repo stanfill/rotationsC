@@ -44,9 +44,7 @@ double gvmUARSC(arma::mat Rs, arma::mat S, double kappa){
   double n1 = exp(kappa*sum(traces-1)/2);
   
   double I0k = R::bessel_i(kappa,0,1);
-  //Rcout << "I0k " << I0k << std::endl;
   double I1k = R::bessel_i(kappa,1,1);
-  //Rcout << "I0k " << I0k << std::endl;
   
   double n2 = sqrt(pow(I0k,2)-(I0k*I1k/kappa)-pow(I1k,2));
   double d1 = pow(I0k,(n+1));
@@ -57,6 +55,28 @@ double gvmUARSC(arma::mat Rs, arma::mat S, double kappa){
   }
   
   return (n1*n2)/(d1*d3);
+}
+
+
+// [[Rcpp::export]]
+double gfUARSC(arma::mat Rs, arma::mat S, double kappa){
+  
+  int n = Rs.n_rows;
+  arma::mat cRs = centerCpp(Rs,S);
+  arma::mat trcRs(n,3);
+  
+  trcRs.col(0)=cRs.col(0);
+  trcRs.col(1)=cRs.col(4);
+  trcRs.col(2)=cRs.col(8);
+  
+  arma::colvec traces = sum(trcRs,1);
+  
+  double n1 = exp(kappa*sum(traces)-n);
+  double I02k = R::bessel_i(2*kappa,0,1);
+  double I12k = R::bessel_i(2*kappa,1,1);
+  double n2 = sqrt(2*pow(I02k,2)/kappa-2*I02k*I12k/pow(kappa,2)+((1/pow(kappa,2))-(2/kappa))*pow(I12k,2)); 
+  double d1 = pow(I02k-I12k,n+1);
+  return (n1*n2)/d1;
 }
 
 

@@ -7,7 +7,7 @@ kap<-1
 Rs<-ruars(100,rvmises,kappa=kap)
 
 #Table 1 in Bingham 2009 suggests rho=1000, sigma=1 when for sample n=100 and kappa=1
-mcRes<-both_MCMC(Rs,mean(Rs),kappa0=1,rho=100,sigma=.5,burnin=100,B=500,gfun=gvmUARS)
+mcRes<-both_MCMC(Rs,mean(Rs),kappa0=1,rho=1000,sigma=1,burnin=1000,B=1000,gfun=gvmUARSC,rfun=rvmises)
 mcRes$Sacc; mcRes$Kacc #Check acceptance rates
 
 Sres<-as.SO3(mcRes$S)
@@ -29,7 +29,7 @@ kap<-1
 Rs<-ruars(100,rfisher,kappa=kap)
 
 #Table 2 in Bingham 2010 suggests phi=1000, sigma=1 when for sample n=100 and kappa=1
-mcRes<-both_MCMC(Rs,mean(Rs),kappa0=kap,rho=25,sigma=.25,burnin=100,B=500,gfun=gfUARS)
+mcRes<-both_MCMC(Rs,mean(Rs),kappa0=kap,rho=1000,sigma=.5,burnin=1000,B=1000,gfun=gfUARSC,rfun=rcayley)
 mcRes$Sacc; mcRes$Kacc #Check acceptance rates
 
 
@@ -52,7 +52,7 @@ kap<-1
 Rs<-ruars(100,rcayley,kappa=kap)
 
 #Table 2 in Bingham 2010 suggests phi=1000, sigma=1 when for sample n=100 and kappa=1
-mcRes<-both_MCMC(Rs,mean(Rs),kappa0=kap,rho=50,sigma=.4,burnin=100,B=500,gfun=gcayUARS)
+mcRes<-both_MCMC(Rs,mean(Rs),kappa0=kap,rho=150,sigma=.4,burnin=1000,B=5000,gfun=gcayUARSC,rfun=rcayley)
 mcRes$Sacc; mcRes$Kacc #Check acceptance rates
 
 Sres<-as.SO3(mcRes$S)

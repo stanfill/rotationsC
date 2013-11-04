@@ -19,6 +19,10 @@ gvmUARS(Rs,mean(Rs),1)
 gvmUARSC(Rs,mean(Rs),1)
 microbenchmark(gvmUARS(Rs,mean(Rs),1),gvmUARSC(Rs,mean(Rs),1))
 
+gfUARS(Rs,mean(Rs),1)
+gfUARSC(Rs,mean(Rs),1)
+microbenchmark(gcayUARS(Rs,mean(Rs),1),gcayUARSC(Rs,mean(Rs),1))
+
 gcayUARS(Rs,mean(Rs),10)
 gcayUARSC(Rs,mean(Rs),10)
 microbenchmark(gcayUARS(Rs,mean(Rs),1),gcayUARSC(Rs,mean(Rs),1))

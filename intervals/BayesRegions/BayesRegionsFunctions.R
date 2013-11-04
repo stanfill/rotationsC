@@ -60,7 +60,7 @@ gcayUARS<-function(Rs,S,kappa){
   
 }
 
-S_MCMC<-function(Rs,oldS,rho,kappa,gfun){
+S_MCMC<-function(Rs,oldS,rho,kappa,gfun,rfun){
   
   #Rs - the sample
   #oldS - the previous draw from distribution on S
@@ -68,10 +68,15 @@ S_MCMC<-function(Rs,oldS,rho,kappa,gfun){
   #kappa - concentration for likelihood
   #gfun - the g() function, either gvmUARS or gfUARS
   
-  Sstar <- ruars(1,rvmises,S=oldS,kappa=rho)
+  Sstar <- matrix(ruars(n=1,rangle=rfun,S=oldS,kappa=rho),3,3)
+  oldS<-matrix(oldS,3,3)
   
   rj1 <- gfun(Rs,Sstar,kappa)/gfun(Rs,oldS,kappa)
-  Wj1 <-rbinom(1,1,min(1,rj1,na.rm=T))
+  
+  if(is.nan(rj1)) rj1<-0  #Temporary fix until I think of something better
+  
+  
+  Wj1 <-rbinom(1,1,min(1,rj1))
  
   if(Wj1==1){
     return(list(S=Sstar,Acc=1))
@@ -88,10 +93,12 @@ kap_MCMC<-function(Rs,oldKappa,sigma,S,gfun){
   #gfun - the g() function, either gvmUARS or gfUARS
   
   kappaStar <- exp(rnorm(1,log(oldKappa),sigma))
-  
+  S<-matrix(S,3,3)
   rj2 <- (kappaStar*gfun(Rs,S,kappaStar))/(oldKappa*gfun(Rs,S,oldKappa))
   
-  Wj2 <- rbinom(1,1,min(1,rj2,na.rm=T))
+  if(is.nan(rj2)) rj2<-0  #Temporary fix until I think of something better
+  
+  Wj2 <- rbinom(1,1,min(1,rj2))
   
   if(Wj2==1){
     return(list(kappa=kappaStar,Acc=1))
@@ -102,7 +109,7 @@ kap_MCMC<-function(Rs,oldKappa,sigma,S,gfun){
 }
 
 
-both_MCMC<-function(Rs,S0,kappa0,rho,sigma,burnin,B,gfun){
+both_MCMC<-function(Rs,S0,kappa0,rho,sigma,burnin,B,gfun,rfun){
   
   Sdraws<-matrix(0,B,9)
   Kdraws<-rep(0,B)
@@ -111,7 +118,7 @@ both_MCMC<-function(Rs,S0,kappa0,rho,sigma,burnin,B,gfun){
   Knew<-list(kappa=kappa0,Acc=0)
   
   for(i in 1:(burnin+1)){
-    Snew<-S_MCMC(Rs,Snew$S,rho,Knew$kappa,gfun)
+    Snew<-S_MCMC(Rs,Snew$S,rho,Knew$kappa,gfun,rfun)
     Knew<-kap_MCMC(Rs,Knew$kappa,sigma,Snew$S,gfun)
   }
   
@@ -122,7 +129,7 @@ both_MCMC<-function(Rs,S0,kappa0,rho,sigma,burnin,B,gfun){
   
   for(j in 2:B){
     Sold<-as.SO3(matrix(Sdraws[(j-1),]))
-    Sd<-S_MCMC(Rs,Sold,rho,Kdraws[j-1],gfun)
+    Sd<-S_MCMC(Rs,Sold,rho,Kdraws[j-1],gfun,rfun)
     Sdraws[j,]<-Sd$S
     Saccept<-Saccept+Sd$Acc
     
