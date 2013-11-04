@@ -169,16 +169,21 @@ double rcayleyCpp(double kappa){
 }
 
 // [[Rcpp::export]]
-arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa){
+arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, bool Cayley){
   RNGScope scope;
   
-  double r, rj1, prob;
+  double r, rj1;
   NumericVector W1(1);
   r = rcayleyCpp(rho);
   arma::mat Sstar = genrC(oldS,r);
   
-  rj1 = gcayUARSC(Rs,Sstar,kappa);
-  rj1 /= gcayUARSC(Rs,oldS,kappa);
+  if(Cayley){
+    rj1 = gcayUARSC(Rs,Sstar,kappa);
+    rj1 /= gcayUARSC(Rs,oldS,kappa);
+  }else{
+    rj1 = gfUARSC(Rs,Sstar,kappa);
+    rj1 /= gfUARSC(Rs,oldS,kappa);
+  }
   
   if(rj1>1){
     rj1 = 1;
@@ -195,5 +200,74 @@ arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa){
 }
 
 // [[Rcpp::export]]
+double kap_MCMC_CPP(arma::mat Rs, double oldKappa, double sigma, arma::mat S, bool Cayley){
+  RNGScope scope;
+  
+  double  rj2, kappaStar;
+  NumericVector kappaS(1), W2(1);
+  
+  kappaS = rnorm(1,log(oldKappa),sigma);
+  kappaStar = exp(kappaS[0]);
+  
+  if(Cayley){
+    rj2 = kappaStar*gcayUARSC(Rs,S,kappaStar);
+    rj2 /= oldKappa*gcayUARSC(Rs,S,kappaStar);
+  }else{
+    rj2 = kappaStar*gfUARSC(Rs,S,kappaStar);
+    rj2 /= oldKappa*gfUARSC(Rs,S,kappaStar);
+  }
+  
+  if(rj2>1){
+    rj2 = 1;
+  }
+  
+  W2=rbinom(1,1,rj2);
+  
+  if(W2[0]==1){
+    return kappaStar;
+  }else{
+    return oldKappa;
+  }
+  
+}
 
 
+// [[Rcpp::export]]
+arma::rowvec afun_CPP(arma::mat R1, arma::mat R2){
+  
+  int j, n = R1.n_rows;
+  arma::mat Ri(3,3);
+  arma::rowvec as(n), ds(3);
+  as.zeros();
+  
+  for(int i=0;i<n;i++){
+    
+    for(j=0;j<9;j++){
+      Ri[j]=R1(i,j);
+    }
+    
+    Ri = Ri.t()*R2;
+    
+    ds(0)=acos(Ri(0,0));
+    ds(1)=acos(Ri(1,1));
+    ds(2)=acos(Ri(2,2));
+    
+    as[i]=max(ds);
+  }
+  return as;
+}
+
+/*afun<-function(R1,R2){
+  
+  n<-length(R1)/9
+  R1<-matrix(R1,n,9)
+  R2<-matrix(R2,3,3)
+  as<-rep(0,n)
+  
+  for(i in 1:n){
+    Ri<-matrix(R1[i,],3,3)
+    as[i]<-max(acos(diag(t(Ri)%*%R2)))
+  }
+  return(as)
+  
+}*/

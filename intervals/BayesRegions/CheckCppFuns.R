@@ -26,6 +26,35 @@ gcayUARS(Rs,mean(Rs),10)
 gcayUARSC(Rs,mean(Rs),10)
 microbenchmark(gcayUARS(Rs,mean(Rs),1),gcayUARSC(Rs,mean(Rs),1))
 
-S_MCMC_CPP(Rs,mean(Rs),1000,1)
+S_MCMC_CPP(Rs,mean(Rs),1000,1,TRUE)
 S_MCMC(Rs,mean(Rs),1000,1,gcayUARSC,rcayley)
 microbenchmark(S_MCMC(Rs,mean(Rs),1000,1,gcayUARSC,rcayley),S_MCMC_CPP(Rs,mean(Rs),1000,1))
+
+
+kap_MCMC(Rs,1,1,mean(Rs),gcayUARSC)
+kap_MCMC_CPP(Rs,1,1,mean(Rs),TRUE)
+microbenchmark(kap_MCMC(Rs,1,1,mean(Rs),gcayUARSC),kap_MCMC_CPP(Rs,1,1,mean(Rs)))
+
+
+afun(Rs,mean(Rs))
+as.vector(afun_CPP(Rs,mean(Rs)))
+microbenchmark(afun(Rs,mean(Rs)),afun_CPP(Rs,mean(Rs)))
+
+
+kap<-1
+Rs<-ruars(100,rcayley,kappa=kap)
+
+#Table 2 in Bingham 2010 suggests phi=1000, sigma=1 when for sample n=100 and kappa=1
+mcRes<-both_MCMC(Rs,mean(Rs),kappa0=kap,rho=150,sigma=.4,burnin=1000,B=5000,gfun=gcayUARSC,rfun=rcayley)
+mcRes$Sacc; mcRes$Kacc #Check acceptance rates
+
+
+mcResC<-both_MCMC_CPP(Rs,mean(Rs),kappa0=kap,rho=150,sigma=.4,burnin=1000,B=5000)
+mcResC$Sacc; mcResC$Kacc
+
+SresC<-as.SO3(mcResC$S)
+plot(SresC)
+ares<-afun(SresC,mean(SresC))
+plot(ares,type='l',ylab='r')
+plot(mcRes$kappa,type='l',ylab=expression(kappa))
+

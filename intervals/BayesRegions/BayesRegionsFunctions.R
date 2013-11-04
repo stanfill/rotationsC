@@ -143,6 +143,40 @@ both_MCMC<-function(Rs,S0,kappa0,rho,sigma,burnin,B,gfun,rfun){
   
 }
 
+both_MCMC_CPP<-function(Rs,S0,kappa0,rho,sigma,burnin,B,Cayley){
+  #Valid for Cayley only right now
+  
+  Sdraws<-matrix(0,B,9)
+  Kdraws<-rep(0,B)
+  
+  Snew=S0
+  Knew=kappa0
+  
+  for(i in 1:(burnin+1)){
+    Snew<-S_MCMC_CPP(Rs,Snew,rho,Knew,Cayley)
+    Knew<-kap_MCMC_CPP(Rs,Knew,sigma,Snew,Cayley)
+  }
+  
+  Sdraws[1,]<-Snew
+  Kdraws[1]<-Knew
+  Saccept<-0
+  Kaccept<-0
+  
+  for(j in 2:B){
+    Sold<-matrix(Sdraws[(j-1),],3,3)
+    Sdraws[j,]<-S_MCMC_CPP(Rs,Sold,rho,Kdraws[j-1],Cayley)
+    Saccept<-Saccept+as.numeric(all(Sdraws[j-1,]==Sdraws[j,]))
+    
+    Snew<-matrix(Sdraws[(j),],3,3)
+    Kd<-kap_MCMC_CPP(Rs,Kdraws[j-1],sigma,Snew,Cayley)
+    Kdraws[j]<-Kd
+    Kaccept<-Kaccept+as.numeric(Kdraws[j]==Kdraws[j-1])
+  }
+  
+  return(list(S=Sdraws,Sacc=Saccept/B,kappa=Kdraws,Kacc=Kaccept/B))
+  
+}
+
 #Compute the angles between each axis of R1 and R2
 afun<-function(R1,R2){
   
