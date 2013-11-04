@@ -1,0 +1,27 @@
+library(rotations)
+source('~/Documents/GitHub/rotationsC/intervals/BayesRegions/BayesRegionsFunctions.R')
+Rcpp::sourceCpp('intervals/BayesRegions/CppBayesFunctions.cpp')
+
+n<-c(10,20,50,100)
+cayKap<-c(10,4,2)
+fishKap<-c(3.17,1.71,1.15)
+B<-100
+alp<-0.9
+cover<-0
+kap<-1
+
+for(i in 1:B){
+
+  Rs<-ruars(100,rfisher,kappa=kap)
+
+  #Table 2 in Bingham 2010 suggests phi=1000, sigma=1 when for sample n=100 and kappa=1
+  mcRes<-both_MCMC_CPP(Rs,mean(Rs),kappa0=kap,rho=900,sigma=.5,burnin=1000,B=5000,Cayley=FALSE)
+  Sres<-as.SO3(mcRes$S)
+  Shat<-mean(Sres)
+  ds<-afun_CPP(Sres,Shat)
+  rad<-quantile(ds,alp)
+  cover<-cover+as.numeric(afun(id.SO3,Shat)<rad)
+
+}
+
+cover/B
