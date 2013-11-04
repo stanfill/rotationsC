@@ -185,6 +185,10 @@ arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, boo
     rj1 /= gfUARSC(Rs,oldS,kappa);
   }
   
+  if(!std::isfinite(rj1)){
+    rj1 = 0;
+  }
+  
   if(rj1>1){
     rj1 = 1;
   }
@@ -216,6 +220,11 @@ double kap_MCMC_CPP(arma::mat Rs, double oldKappa, double sigma, arma::mat S, bo
     rj2 = kappaStar*gfUARSC(Rs,S,kappaStar);
     rj2 /= oldKappa*gfUARSC(Rs,S,kappaStar);
   }
+  
+  if(!std::isfinite(rj2)){
+    rj2 = 0;
+  }
+  
   
   if(rj2>1){
     rj2 = 1;

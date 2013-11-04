@@ -144,7 +144,7 @@ both_MCMC<-function(Rs,S0,kappa0,rho,sigma,burnin,B,gfun,rfun){
 }
 
 both_MCMC_CPP<-function(Rs,S0,kappa0,rho,sigma,burnin,B,Cayley){
-  #Valid for Cayley only right now
+  #Valid for Cayley and matrix Fisher only right now
   
   Sdraws<-matrix(0,B,9)
   Kdraws<-rep(0,B)
