@@ -14,15 +14,15 @@ microbenchmark(center(Rs,mean(Rs)),centerCpp(Rs,mean(Rs)))
 
 rowSums(cRs[,c(1,5,9)])
 
-gvmUARS(Rs,mean(Rs),1)
+log(gvmUARS(Rs,mean(Rs),1))
 gvmUARSC(Rs,mean(Rs),1)
 microbenchmark(gvmUARS(Rs,mean(Rs),1),gvmUARSC(Rs,mean(Rs),1))
 
-gfUARS(Rs,mean(Rs),1)
-gfUARSC(Rs,mean(Rs),1)
+log(gfUARS(Rs,mean(Rs),2))
+gfUARSC(Rs,mean(Rs),2)
 microbenchmark(gcayUARS(Rs,mean(Rs),1),gcayUARSC(Rs,mean(Rs),1))
 
-gcayUARS(Rs,mean(Rs),10)
+log(gcayUARS(Rs,mean(Rs),10))
 gcayUARSC(Rs,mean(Rs),10)
 microbenchmark(gcayUARS(Rs,mean(Rs),1),gcayUARSC(Rs,mean(Rs),1))
 
@@ -49,15 +49,14 @@ mcRes<-both_MCMC(Rs,mean(Rs),kappa0=kap,rho=150,sigma=.4,burnin=1000,B=5000,gfun
 mcRes$Sacc; mcRes$Kacc #Check acceptance rates
 
 
-mcResC<-both_MCMC_CPP(Rs,mean(Rs),kappa0=kap,rho=150,sigma=.4,burnin=1000,B=5000)
-mcResC$Sacc; mcResC$Kacc
+mcResC<-both_MCMC_CPP(Rs,mean(Rs),kappa0=kap,rho=1000,sigma=.25,burnin=1000,B=5000,Cayley=F)
+mcResC$Saccept; mcResC$Kaccept
 
 SresC<-as.SO3(mcResC$S)
 plot(SresC)
 ares<-afun(SresC,mean(SresC))
 plot(ares,type='l',ylab='r')
-plot(mcRes$kappa,type='l',ylab=expression(kappa))
-
+plot(mcResC$kappa,type='l',ylab=expression(kappa))
 
 Rs<-ruars(20,rcayley)
 
