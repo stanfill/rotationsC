@@ -58,3 +58,18 @@ ares<-afun(SresC,mean(SresC))
 plot(ares,type='l',ylab='r')
 plot(mcRes$kappa,type='l',ylab=expression(kappa))
 
+
+Rs<-ruars(20,rcayley)
+
+res1<-both_MCMC_CPP_CPP( Rs, mean(Rs), 1, 1000, .4, 100, 1000, TRUE)
+res1$Saccept;res1$Kaccept
+Ss<-as.SO3(res1$Rs)
+plot(Ss)
+
+
+res2<-both_MCMC_CPP( Rs, mean(Rs), 1, 1000, .4, 100, 1000, TRUE)
+res2$Sacc;res2$Kacc  
+
+microbenchmark(both_MCMC_CPP_CPP( Rs, mean(Rs), 1, 1000, .4, 100, 100, TRUE),
+               both_MCMC_CPP( Rs, mean(Rs), 1, 1000, .4, 100, 100, TRUE))
+

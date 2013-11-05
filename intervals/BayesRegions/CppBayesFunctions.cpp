@@ -266,17 +266,57 @@ arma::rowvec afun_CPP(arma::mat R1, arma::mat R2){
   return as;
 }
 
-/*afun<-function(R1,R2){
+
+// [[Rcpp::export]]
+
+List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double sigma, int burnin, int B, bool Cayley){
   
-  n<-length(R1)/9
-  R1<-matrix(R1,n,9)
-  R2<-matrix(R2,3,3)
-  as<-rep(0,n)
+  int i=0,j=0;
+  double Scount=0, Kcount=0;
+  arma::mat Sdraws(B,9);
+  Sdraws.zeros();
+  NumericVector Kdraws(B);
+  arma::mat Snew = S0;
+  double Knew = kappa0;
+  List out;
   
-  for(i in 1:n){
-    Ri<-matrix(R1[i,],3,3)
-    as[i]<-max(acos(diag(t(Ri)%*%R2)))
+  for(i=0;i<burnin;i++){
+    Snew = S_MCMC_CPP(Rs,Snew,rho,Knew,Cayley);
+    Knew = kap_MCMC_CPP(Rs,Knew,sigma,Snew,Cayley);
   }
-  return(as)
   
-}*/
+  Kdraws(0) = Knew;
+  
+  for(j=0;j<9;j++){
+    Sdraws(0,j) = Snew[j];
+  }
+  
+  for(i=1;i<B;i++){
+    S0 = Snew;
+    Snew = S_MCMC_CPP(Rs,S0,rho,Kdraws[(i-1)],Cayley);
+    
+    if(accu(abs(S0-Snew))<10e-5){
+      Sdraws.row(i)=Sdraws.row((i-1));
+    }else{
+        Scount += 1;
+        
+        for(j=0;j<9;j++){
+          Sdraws(i,j) = Snew[j];
+        }
+    }
+    
+    Kdraws[i] = kap_MCMC_CPP(Rs,Kdraws[(i-1)],sigma,Snew,Cayley);
+    
+    if(abs(Kdraws[i]-Kdraws[(i-1)])>10e-10){
+      Kcount +=1;
+    }
+    
+  }
+  
+  out["S"] = Sdraws;
+  out["kappa"] = Kdraws;
+  out["Saccept"] = Scount/B;
+  out["Kaccept"] = Kcount/B;
+  
+  return out;
+}
