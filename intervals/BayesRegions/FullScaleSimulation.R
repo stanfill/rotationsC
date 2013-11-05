@@ -10,8 +10,8 @@ B<-1000
 alp<-0.9
 kap<-1
 
-FishresDf<-data.frame(cover=rep(0,B),width=rep(0,B))
-CayresDf<-data.frame(cover=rep(0,B),width=rep(0,B))
+FishresDf<-data.frame(cover=rep(0,B),width=rep(0,B),Saccept=rep(0,B),Kaccept=rep(0,B))
+CayresDf<-data.frame(cover=rep(0,B),width=rep(0,B),Saccept=rep(0,B),Kaccept=rep(0,B))
 
 for(i in 1:B){
 
@@ -27,7 +27,8 @@ for(i in 1:B){
   cover<-as.numeric(afun(id.SO3,Shat)<rad)
   FishresDf$cover[i]=cover
   FishresDf$width[i]=rad
-  
+  FishresDf$Saccept[i]=mcRes$Saccept
+  FishresDf$Kaccept[i]=mcRes$Kaccept
 
   Rs<-ruars(100,rcayley,kappa=kap)
   #Table 2 in Bingham 2010 suggests phi=1000, sigma=1 when for sample n=100 and kappa=1
@@ -40,6 +41,8 @@ for(i in 1:B){
   cover<-as.numeric(afun(id.SO3,Shat)<rad)
   CayresDf$cover[i]=cover
   CayresDf$width[i]=rad
+  CayresDf$Saccept[i]=mcRes$Saccept
+  CayresDf$Kaccept[i]=mcRes$Kaccept
   
   if(B%%100==0){
     write.csv(FishresDf,"Results/FisherResults_n100_k1.csv")
