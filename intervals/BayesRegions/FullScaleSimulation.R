@@ -2,24 +2,23 @@ library(rotations,lib='.')
 #source('BayesRegionsFunctions.R')
 Rcpp::sourceCpp('CppBayesFunctions.cpp')
 
-n<-c(10,20,50,100)
-#cayKap<-c(10,4,2)
-#fishKap<-c(3.17,1.71,1.15)
+n<-rep(c(10,20,50,100),3)
+cayKap<-c(2,4,10)
+fishKap<-c(1.15,1.71,3.17)
 B<-1000
-Cay_rho<-rep(c(39,75,210,350),each=B)
-Cay_sigma<-rep(c(.78,.6,.38,.28),each=B)
+Cay_rho<-rep(c(22,35,105,200,39,75,210,350,95,175,450,850),each=B)
+Cay_sigma<-rep(c(.9,.75,.42,.3,.78,.6,.38,.28,.8,.55,.35,.225),each=B)
 
-fish_rho<-rep(c(28,45,175,300),each=B)
-fish_sigma<-rep(c(.65,.45,.28,.2),each=B)
+fish_rho<-rep(c(20,45,100,200,28,45,175,300,60,140,425,725),each=B)
+fish_sigma<-rep(c(.65,.45,.3,.22,.65,.45,.28,.2,.65,.45,.28,.2),each=B)
 
 alp<-0.9
 
-
-FishresDf<-data.frame(Kappa=rep(1.71,4*B),n=rep(n,each=B),cover=rep(0,4*B),width=rep(0,4*B),Saccept=rep(0,4*B),Kaccept=rep(0,4*B))
-CayresDf<-data.frame(Kappa=rep(4,4*B),n=rep(n,each=B),cover=rep(0,4*B),width=rep(0,4*B),Saccept=rep(0,4*B),Kaccept=rep(0,4*B))
+FishresDf<-data.frame(Kappa=rep(fishKap,each=4*B),n=rep(n,each=B),cover=0,width=0,Saccept=0,Kaccept=0)
+CayresDf<-data.frame(Kappa=rep(cayKap,each=4*B),n=rep(n,each=B),cover=0,width=0,Saccept=0,Kaccept=0)
 id<-matrix(id.SO3,1,9)
 
-for(i in 1:(4*B)){
+for(i in 1:nrow(FishresDf)){
 
   #Fisher simulations 
   
@@ -55,11 +54,11 @@ for(i in 1:(4*B)){
   CayresDf$Kaccept[i]=mcRes$Kaccept
   
   if(B%%1000==0){
-    write.csv(FishresDf,"Results/FisherResults_nu25.csv")
-    write.csv(CayresDf,"Results/CayleyResults_nu25.csv")
+    write.csv(FishresDf,"Results/FisherResults.csv")
+    write.csv(CayresDf,"Results/CayleyResults.csv")
   }
   
 }
 
-write.csv(FishresDf,"Results/FisherResults_nu25.csv")
-write.csv(CayresDf,"Results/CayleyResults_nu25.csv")
+write.csv(FishresDf,"Results/FisherResults.csv")
+write.csv(CayresDf,"Results/CayleyResults.csv")
