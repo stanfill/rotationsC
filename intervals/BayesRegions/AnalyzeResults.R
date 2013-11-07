@@ -22,3 +22,5 @@ fishSum$Dist<-"Fisher"
 togSum<-rbind(caySum,fishSum)
 
 qplot(n,Perc,data=togSum,facets=.~nu,geom='line',group=Dist,colour=Dist)+geom_hline(yintercept=0.9)
+
+qplot(n,Width,data=togSum,facets=.~nu,geom='line',group=Dist,colour=Dist)
