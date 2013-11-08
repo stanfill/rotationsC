@@ -110,6 +110,142 @@ namespace rotations {
         return Rcpp::as<arma::mat >(__result);
     }
 
+    inline arma::mat centerCpp(arma::mat Rs, arma::mat S) {
+        typedef SEXP(*Ptr_centerCpp)(SEXP,SEXP);
+        static Ptr_centerCpp p_centerCpp = NULL;
+        if (p_centerCpp == NULL) {
+            validateSignature("arma::mat(*centerCpp)(arma::mat,arma::mat)");
+            p_centerCpp = (Ptr_centerCpp)R_GetCCallable("rotations", "rotations_centerCpp");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_centerCpp(Rcpp::wrap(Rs), Rcpp::wrap(S));
+        }
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<arma::mat >(__result);
+    }
+
+    inline double gvmUARSC(arma::mat Rs, arma::mat S, double kappa) {
+        typedef SEXP(*Ptr_gvmUARSC)(SEXP,SEXP,SEXP);
+        static Ptr_gvmUARSC p_gvmUARSC = NULL;
+        if (p_gvmUARSC == NULL) {
+            validateSignature("double(*gvmUARSC)(arma::mat,arma::mat,double)");
+            p_gvmUARSC = (Ptr_gvmUARSC)R_GetCCallable("rotations", "rotations_gvmUARSC");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_gvmUARSC(Rcpp::wrap(Rs), Rcpp::wrap(S), Rcpp::wrap(kappa));
+        }
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<double >(__result);
+    }
+
+    inline double gfUARSC(arma::mat Rs, arma::mat S, double kappa) {
+        typedef SEXP(*Ptr_gfUARSC)(SEXP,SEXP,SEXP);
+        static Ptr_gfUARSC p_gfUARSC = NULL;
+        if (p_gfUARSC == NULL) {
+            validateSignature("double(*gfUARSC)(arma::mat,arma::mat,double)");
+            p_gfUARSC = (Ptr_gfUARSC)R_GetCCallable("rotations", "rotations_gfUARSC");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_gfUARSC(Rcpp::wrap(Rs), Rcpp::wrap(S), Rcpp::wrap(kappa));
+        }
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<double >(__result);
+    }
+
+    inline double gcayUARSC(arma::mat Rs, arma::mat S, double kappa) {
+        typedef SEXP(*Ptr_gcayUARSC)(SEXP,SEXP,SEXP);
+        static Ptr_gcayUARSC p_gcayUARSC = NULL;
+        if (p_gcayUARSC == NULL) {
+            validateSignature("double(*gcayUARSC)(arma::mat,arma::mat,double)");
+            p_gcayUARSC = (Ptr_gcayUARSC)R_GetCCallable("rotations", "rotations_gcayUARSC");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_gcayUARSC(Rcpp::wrap(Rs), Rcpp::wrap(S), Rcpp::wrap(kappa));
+        }
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<double >(__result);
+    }
+
+    inline arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, bool Cayley) {
+        typedef SEXP(*Ptr_S_MCMC_CPP)(SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_S_MCMC_CPP p_S_MCMC_CPP = NULL;
+        if (p_S_MCMC_CPP == NULL) {
+            validateSignature("arma::mat(*S_MCMC_CPP)(arma::mat,arma::mat,double,double,bool)");
+            p_S_MCMC_CPP = (Ptr_S_MCMC_CPP)R_GetCCallable("rotations", "rotations_S_MCMC_CPP");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_S_MCMC_CPP(Rcpp::wrap(Rs), Rcpp::wrap(oldS), Rcpp::wrap(rho), Rcpp::wrap(kappa), Rcpp::wrap(Cayley));
+        }
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<arma::mat >(__result);
+    }
+
+    inline double kap_MCMC_CPP(arma::mat Rs, double oldKappa, double sigma, arma::mat S, bool Cayley) {
+        typedef SEXP(*Ptr_kap_MCMC_CPP)(SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_kap_MCMC_CPP p_kap_MCMC_CPP = NULL;
+        if (p_kap_MCMC_CPP == NULL) {
+            validateSignature("double(*kap_MCMC_CPP)(arma::mat,double,double,arma::mat,bool)");
+            p_kap_MCMC_CPP = (Ptr_kap_MCMC_CPP)R_GetCCallable("rotations", "rotations_kap_MCMC_CPP");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_kap_MCMC_CPP(Rcpp::wrap(Rs), Rcpp::wrap(oldKappa), Rcpp::wrap(sigma), Rcpp::wrap(S), Rcpp::wrap(Cayley));
+        }
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<double >(__result);
+    }
+
+    inline arma::rowvec afun_CPP(arma::mat R1, arma::mat R2) {
+        typedef SEXP(*Ptr_afun_CPP)(SEXP,SEXP);
+        static Ptr_afun_CPP p_afun_CPP = NULL;
+        if (p_afun_CPP == NULL) {
+            validateSignature("arma::rowvec(*afun_CPP)(arma::mat,arma::mat)");
+            p_afun_CPP = (Ptr_afun_CPP)R_GetCCallable("rotations", "rotations_afun_CPP");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_afun_CPP(Rcpp::wrap(R1), Rcpp::wrap(R2));
+        }
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<arma::rowvec >(__result);
+    }
+
+    inline List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double sigma, int burnin, int B, bool Cayley) {
+        typedef SEXP(*Ptr_both_MCMC_CPP)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_both_MCMC_CPP p_both_MCMC_CPP = NULL;
+        if (p_both_MCMC_CPP == NULL) {
+            validateSignature("List(*both_MCMC_CPP)(arma::mat,arma::mat,double,double,double,int,int,bool)");
+            p_both_MCMC_CPP = (Ptr_both_MCMC_CPP)R_GetCCallable("rotations", "rotations_both_MCMC_CPP");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_both_MCMC_CPP(Rcpp::wrap(Rs), Rcpp::wrap(S0), Rcpp::wrap(kappa0), Rcpp::wrap(rho), Rcpp::wrap(sigma), Rcpp::wrap(burnin), Rcpp::wrap(B), Rcpp::wrap(Cayley));
+        }
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<List >(__result);
+    }
+
     inline int checkQ4(NumericMatrix Q) {
         typedef SEXP(*Ptr_checkQ4)(SEXP);
         static Ptr_checkQ4 p_checkQ4 = NULL;

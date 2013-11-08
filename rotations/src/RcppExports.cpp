@@ -159,6 +159,261 @@ RcppExport SEXP rotations_genrC(SEXP rSEXP, SEXP SSEXP, SEXP SO3SEXP, SEXP uSEXP
     UNPROTECT(1);
     return __result;
 }
+// centerCpp
+arma::mat centerCpp(arma::mat Rs, arma::mat S);
+static SEXP rotations_centerCpp_try(SEXP RsSEXP, SEXP SSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::traits::input_parameter< arma::mat >::type Rs(RsSEXP );
+        Rcpp::traits::input_parameter< arma::mat >::type S(SSEXP );
+        arma::mat __result = centerCpp(Rs, S);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations_centerCpp(SEXP RsSEXP, SEXP SSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(rotations_centerCpp_try(RsSEXP, SSEXP));
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
+// gvmUARSC
+double gvmUARSC(arma::mat Rs, arma::mat S, double kappa);
+static SEXP rotations_gvmUARSC_try(SEXP RsSEXP, SEXP SSEXP, SEXP kappaSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::traits::input_parameter< arma::mat >::type Rs(RsSEXP );
+        Rcpp::traits::input_parameter< arma::mat >::type S(SSEXP );
+        Rcpp::traits::input_parameter< double >::type kappa(kappaSEXP );
+        double __result = gvmUARSC(Rs, S, kappa);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations_gvmUARSC(SEXP RsSEXP, SEXP SSEXP, SEXP kappaSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(rotations_gvmUARSC_try(RsSEXP, SSEXP, kappaSEXP));
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
+// gfUARSC
+double gfUARSC(arma::mat Rs, arma::mat S, double kappa);
+static SEXP rotations_gfUARSC_try(SEXP RsSEXP, SEXP SSEXP, SEXP kappaSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::traits::input_parameter< arma::mat >::type Rs(RsSEXP );
+        Rcpp::traits::input_parameter< arma::mat >::type S(SSEXP );
+        Rcpp::traits::input_parameter< double >::type kappa(kappaSEXP );
+        double __result = gfUARSC(Rs, S, kappa);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations_gfUARSC(SEXP RsSEXP, SEXP SSEXP, SEXP kappaSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(rotations_gfUARSC_try(RsSEXP, SSEXP, kappaSEXP));
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
+// gcayUARSC
+double gcayUARSC(arma::mat Rs, arma::mat S, double kappa);
+static SEXP rotations_gcayUARSC_try(SEXP RsSEXP, SEXP SSEXP, SEXP kappaSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::traits::input_parameter< arma::mat >::type Rs(RsSEXP );
+        Rcpp::traits::input_parameter< arma::mat >::type S(SSEXP );
+        Rcpp::traits::input_parameter< double >::type kappa(kappaSEXP );
+        double __result = gcayUARSC(Rs, S, kappa);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations_gcayUARSC(SEXP RsSEXP, SEXP SSEXP, SEXP kappaSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(rotations_gcayUARSC_try(RsSEXP, SSEXP, kappaSEXP));
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
+// S_MCMC_CPP
+arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, bool Cayley);
+static SEXP rotations_S_MCMC_CPP_try(SEXP RsSEXP, SEXP oldSSEXP, SEXP rhoSEXP, SEXP kappaSEXP, SEXP CayleySEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::traits::input_parameter< arma::mat >::type Rs(RsSEXP );
+        Rcpp::traits::input_parameter< arma::mat >::type oldS(oldSSEXP );
+        Rcpp::traits::input_parameter< double >::type rho(rhoSEXP );
+        Rcpp::traits::input_parameter< double >::type kappa(kappaSEXP );
+        Rcpp::traits::input_parameter< bool >::type Cayley(CayleySEXP );
+        arma::mat __result = S_MCMC_CPP(Rs, oldS, rho, kappa, Cayley);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations_S_MCMC_CPP(SEXP RsSEXP, SEXP oldSSEXP, SEXP rhoSEXP, SEXP kappaSEXP, SEXP CayleySEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(rotations_S_MCMC_CPP_try(RsSEXP, oldSSEXP, rhoSEXP, kappaSEXP, CayleySEXP));
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
+// kap_MCMC_CPP
+double kap_MCMC_CPP(arma::mat Rs, double oldKappa, double sigma, arma::mat S, bool Cayley);
+static SEXP rotations_kap_MCMC_CPP_try(SEXP RsSEXP, SEXP oldKappaSEXP, SEXP sigmaSEXP, SEXP SSEXP, SEXP CayleySEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::traits::input_parameter< arma::mat >::type Rs(RsSEXP );
+        Rcpp::traits::input_parameter< double >::type oldKappa(oldKappaSEXP );
+        Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP );
+        Rcpp::traits::input_parameter< arma::mat >::type S(SSEXP );
+        Rcpp::traits::input_parameter< bool >::type Cayley(CayleySEXP );
+        double __result = kap_MCMC_CPP(Rs, oldKappa, sigma, S, Cayley);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations_kap_MCMC_CPP(SEXP RsSEXP, SEXP oldKappaSEXP, SEXP sigmaSEXP, SEXP SSEXP, SEXP CayleySEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(rotations_kap_MCMC_CPP_try(RsSEXP, oldKappaSEXP, sigmaSEXP, SSEXP, CayleySEXP));
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
+// afun_CPP
+arma::rowvec afun_CPP(arma::mat R1, arma::mat R2);
+static SEXP rotations_afun_CPP_try(SEXP R1SEXP, SEXP R2SEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::traits::input_parameter< arma::mat >::type R1(R1SEXP );
+        Rcpp::traits::input_parameter< arma::mat >::type R2(R2SEXP );
+        arma::rowvec __result = afun_CPP(R1, R2);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations_afun_CPP(SEXP R1SEXP, SEXP R2SEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(rotations_afun_CPP_try(R1SEXP, R2SEXP));
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
+// both_MCMC_CPP
+List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double sigma, int burnin, int B, bool Cayley);
+static SEXP rotations_both_MCMC_CPP_try(SEXP RsSEXP, SEXP S0SEXP, SEXP kappa0SEXP, SEXP rhoSEXP, SEXP sigmaSEXP, SEXP burninSEXP, SEXP BSEXP, SEXP CayleySEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::traits::input_parameter< arma::mat >::type Rs(RsSEXP );
+        Rcpp::traits::input_parameter< arma::mat >::type S0(S0SEXP );
+        Rcpp::traits::input_parameter< double >::type kappa0(kappa0SEXP );
+        Rcpp::traits::input_parameter< double >::type rho(rhoSEXP );
+        Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP );
+        Rcpp::traits::input_parameter< int >::type burnin(burninSEXP );
+        Rcpp::traits::input_parameter< int >::type B(BSEXP );
+        Rcpp::traits::input_parameter< bool >::type Cayley(CayleySEXP );
+        List __result = both_MCMC_CPP(Rs, S0, kappa0, rho, sigma, burnin, B, Cayley);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations_both_MCMC_CPP(SEXP RsSEXP, SEXP S0SEXP, SEXP kappa0SEXP, SEXP rhoSEXP, SEXP sigmaSEXP, SEXP burninSEXP, SEXP BSEXP, SEXP CayleySEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(rotations_both_MCMC_CPP_try(RsSEXP, S0SEXP, kappa0SEXP, rhoSEXP, sigmaSEXP, burninSEXP, BSEXP, CayleySEXP));
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
 // checkQ4
 int checkQ4(NumericMatrix Q);
 static SEXP rotations_checkQ4_try(SEXP QSEXP) {
@@ -884,6 +1139,14 @@ static int rotations_RcppExport_validate(const char* sig) {
         signatures.insert("arma::mat(*Q4defaultC)(arma::mat,arma::vec)");
         signatures.insert("arma::mat(*pMatC)(arma::mat)");
         signatures.insert("arma::mat(*genrC)(arma::vec,arma::mat,int,arma::mat)");
+        signatures.insert("arma::mat(*centerCpp)(arma::mat,arma::mat)");
+        signatures.insert("double(*gvmUARSC)(arma::mat,arma::mat,double)");
+        signatures.insert("double(*gfUARSC)(arma::mat,arma::mat,double)");
+        signatures.insert("double(*gcayUARSC)(arma::mat,arma::mat,double)");
+        signatures.insert("arma::mat(*S_MCMC_CPP)(arma::mat,arma::mat,double,double,bool)");
+        signatures.insert("double(*kap_MCMC_CPP)(arma::mat,double,double,arma::mat,bool)");
+        signatures.insert("arma::rowvec(*afun_CPP)(arma::mat,arma::mat)");
+        signatures.insert("List(*both_MCMC_CPP)(arma::mat,arma::mat,double,double,double,int,int,bool)");
         signatures.insert("int(*checkQ4)(NumericMatrix)");
         signatures.insert("int(*checkSO3)(arma::mat)");
         signatures.insert("arma::mat(*expskewC)(arma::mat)");
@@ -919,6 +1182,14 @@ RcppExport SEXP rotations_RcppExport_registerCCallable() {
     R_RegisterCCallable("rotations", "rotations_Q4defaultC", (DL_FUNC)rotations_Q4defaultC_try);
     R_RegisterCCallable("rotations", "rotations_pMatC", (DL_FUNC)rotations_pMatC_try);
     R_RegisterCCallable("rotations", "rotations_genrC", (DL_FUNC)rotations_genrC_try);
+    R_RegisterCCallable("rotations", "rotations_centerCpp", (DL_FUNC)rotations_centerCpp_try);
+    R_RegisterCCallable("rotations", "rotations_gvmUARSC", (DL_FUNC)rotations_gvmUARSC_try);
+    R_RegisterCCallable("rotations", "rotations_gfUARSC", (DL_FUNC)rotations_gfUARSC_try);
+    R_RegisterCCallable("rotations", "rotations_gcayUARSC", (DL_FUNC)rotations_gcayUARSC_try);
+    R_RegisterCCallable("rotations", "rotations_S_MCMC_CPP", (DL_FUNC)rotations_S_MCMC_CPP_try);
+    R_RegisterCCallable("rotations", "rotations_kap_MCMC_CPP", (DL_FUNC)rotations_kap_MCMC_CPP_try);
+    R_RegisterCCallable("rotations", "rotations_afun_CPP", (DL_FUNC)rotations_afun_CPP_try);
+    R_RegisterCCallable("rotations", "rotations_both_MCMC_CPP", (DL_FUNC)rotations_both_MCMC_CPP_try);
     R_RegisterCCallable("rotations", "rotations_checkQ4", (DL_FUNC)rotations_checkQ4_try);
     R_RegisterCCallable("rotations", "rotations_checkSO3", (DL_FUNC)rotations_checkSO3_try);
     R_RegisterCCallable("rotations", "rotations_expskewC", (DL_FUNC)rotations_expskewC_try);

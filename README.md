@@ -18,6 +18,8 @@ The differences between the CRAN and GitHub versions of the *rotations* package 
 
 * The `plot` function can now print multiple columns of a sample of rotations simultaneously through the argument `col`.  For example `col=c(1,3)` will print two labelled eyeballs, one for the $x$- and one for the $z$-axis.
 
+* Bayesian credible regions have been added to the `region` function by setting `method='Bayes'`.  Additional arguments `tuneS`, `tuneK`, `burnin` and `B` will set the tuning parameters for the central orientation, concentration parameter, burnin for the MCMC and total number of draws from the posterior, respectively.  See the help file for more details.
+
 *intervals*
 --------------------------------------------------------
 This folder contains the code necessary to run the simulations for the intervals research
