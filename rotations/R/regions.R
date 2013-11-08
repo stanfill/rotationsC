@@ -485,7 +485,7 @@ fisheretal.SO3<-function(x,alp=NULL,boot=T,m=300,symm=T){
 #' Rs<-ruars(20,rcayley,kappa=100)
 #' region(Rs,method='eigen',type='bootstrap',alp=0.1,symm=TRUE,estimator='mean')
 
-bayesCR<-function(x,lpangle,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=NULL){
+bayesCR<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=NULL){
   UseMethod("bayesCR")
 }
 
@@ -494,7 +494,23 @@ bayesCR<-function(x,lpangle,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=NULL){
 #' @method bayesCR SO3
 #' @S3method bayesCR SO3
 
-bayesCR.SO3<-function(x,lpangle,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=NULL){
+bayesCR.SO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=NULL){
+  
+  if(type %in% c("Cayley","cayley")){
+    
+    lpangle = lpcayley
+    
+  }else if(type %in% c("Fisher","fisher")){
+    
+    lpangle = lpfisher
+    
+  }else if(type %in% c("Mises","mises")){
+    
+    lpangle = lpvmises
+    
+  }else{
+    stop("Invalid choise of type, please choose Cayley, Fisher or Mises.")
+  }
   
   listRes<-both_MCMC_CPP(x,S0, kappa0,tuneS,tuneK,burn_in,m, lpangle)
     

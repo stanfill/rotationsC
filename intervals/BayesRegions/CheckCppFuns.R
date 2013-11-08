@@ -72,3 +72,11 @@ res2$Sacc;res2$Kacc
 microbenchmark(both_MCMC_CPP_CPP( Rs, mean(Rs), 1, 1000, .4, 100, 100, TRUE),
                both_MCMC_CPP( Rs, mean(Rs), 1, 1000, .4, 100, 100, TRUE))
 
+
+
+
+#Package version of bayesCR
+
+Rs<-ruars(20,rcayley,kappa=2)
+cr<-bayesCR(Rs,type='Cayley',S0=mean(Rs),kappa0=2,tuneS=22,tuneK=0.9,burn_in=100,m=500,alp=.9)
+str(cr)

@@ -23,7 +23,7 @@ for(i in 1:nrow(FishresDf)){
   #Fisher simulations 
   
   Rs<-ruars(FishresDf$n[i],rfisher,kappa=FishresDf$Kappa[i])
-  mcRes<-both_MCMC_CPP(Rs,mean(Rs),kappa0=FishresDf$Kappa[i],rho=fish_rho[i],sigma=fish_sigma[i],burnin=5000,B=5000,Cayley=FALSE)
+  mcRes<-both_MCMC_CPP(Rs,mean(Rs),kappa0=FishresDf$Kappa[i],rho=fish_rho[i],sigma=fish_sigma[i],burnin=5000,B=5000,f=gfUARSC)
   #mcRes$Saccept;mcRes$Kaccept
   
   Sres<-as.SO3(mcRes$S)
@@ -40,7 +40,7 @@ for(i in 1:nrow(FishresDf)){
   #Cayley Simulations
   
   Rs<-ruars(CayresDf$n[i],rcayley,kappa=CayresDf$Kappa[i])
-  mcRes<-both_MCMC_CPP(Rs,mean(Rs),kappa0=CayresDf$Kappa[i],rho=Cay_rho[i],sigma=Cay_sigma[i],burnin=5000,B=5000,Cayley=TRUE)
+  mcRes<-both_MCMC_CPP(Rs,mean(Rs),kappa0=CayresDf$Kappa[i],rho=Cay_rho[i],sigma=Cay_sigma[i],burnin=5000,B=5000,f=gcayUARSC)
   #mcRes$Saccept;mcRes$Kaccept
   
   Sres<-as.SO3(mcRes$S)
