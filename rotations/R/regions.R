@@ -466,3 +466,54 @@ fisheretal.SO3<-function(x,alp=NULL,boot=T,m=300,symm=T){
 	return(r)
 }
 
+
+#' Bayes credible regions
+#'
+#' Find the radius of a \eqn{100(1-\alpha)}\% credible region for the central orientation and concentration parameter.
+#'
+#' Compute the radius of a \eqn{100(1-\alpha)}\% credible region for the central orientation and concentration parameter
+#' as proposed in \cite{bingham2009b} and \cite{bingham2010}.  To be able to reduce their method
+#' to a radius requires the additonal assumption of rotational symmetry, equation (10) in \cite{fisher1996}. 
+#'
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @param alp alpha level desired, e.g. 0.05 or 0.10.
+#' @param boot should the bootstrap or normal theory critical value be used.
+#' @param m number of draws from the posterior distribution to base CR on.
+#' @return Radius of the confidence region centered at the posterior mode.
+#' @seealso \code{\link{prentice}}, \code{\link{chang}}, \code{\link{zhang}}
+#' @cite bingham2009b bingham2010
+#' @export
+#' @examples
+#' Rs<-ruars(20,rcayley,kappa=100)
+#' region(Rs,method='eigen',type='bootstrap',alp=0.1,symm=TRUE,estimator='mean')
+
+bayesCR<-function(x,alp,boot,m,symm){
+  UseMethod("bayesCR")
+}
+
+
+#' @rdname bayesCR
+#' @method bayesCR Q4
+#' @S3method bayesCR Q4
+
+bayesCR.Q4<-function(x,alp=NULL,boot=T,m=300,symm=TRUE){
+  
+  Qs<-Q4(x)
+  listRs<-fisheretal.SO3()
+  
+}
+
+
+#' @rdname bayesCR
+#' @method bayesCR SO3
+#' @S3method bayesCR SO3
+mcRes<-both_MCMC_CPP(Rs,mean(Rs),kappa0=FishresDf$Kappa[i],rho=fish_rho[i],sigma=fish_sigma[i],burnin=5000,B=5000,Cayley=FALSE)
+
+
+bayesCR.SO3<-function(x,f,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=NULL){
+  
+  Qs<-Q4(x)
+  r<-fisheretal.Q4(Qs,alp,boot,m,symm)
+  
+  return(r)
+}

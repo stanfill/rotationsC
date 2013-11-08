@@ -49,7 +49,7 @@ mcRes<-both_MCMC(Rs,mean(Rs),kappa0=kap,rho=150,sigma=.4,burnin=1000,B=5000,gfun
 mcRes$Sacc; mcRes$Kacc #Check acceptance rates
 
 
-mcResC<-both_MCMC_CPP(Rs,mean(Rs),kappa0=kap,rho=1000,sigma=.25,burnin=1000,B=5000,Cayley=F)
+mcResC<-both_MCMC_CPP(Rs,mean(Rs),kappa0=kap,rho=1000,sigma=.25,burnin=1000,B=5000,gfUARSC)
 mcResC$Saccept; mcResC$Kaccept
 
 SresC<-as.SO3(mcResC$S)

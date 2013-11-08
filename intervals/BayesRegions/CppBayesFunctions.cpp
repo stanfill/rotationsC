@@ -192,7 +192,7 @@ double rcayleyCpp(double kappa){
 }
 
 // [[Rcpp::export]]
-arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, bool Cayley){
+arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, Function f){
   RNGScope scope;
   
   double r, rj1;
@@ -204,13 +204,9 @@ arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, boo
   
   
   //Compute transition probability: g(Sstar,kappa)/g(oldS,kappa)
-  if(Cayley){
-    rj1 = gcayUARSC(Rs,Sstar,kappa)-gcayUARSC(Rs,oldS,kappa);
-    rj1 = exp(rj1) ;
-  }else{
-    rj1 = gfUARSC(Rs,Sstar,kappa)-gfUARSC(Rs,oldS,kappa);
-    rj1 = exp(rj1);
-  }
+  rj1 = as<double>(f(Rs,Sstar,kappa));
+  rj1 -= as<double>(f(Rs,oldS,kappa));
+  rj1 = exp(rj1);  
   
   if(!std::isfinite(rj1)){
     rj1 = 0;
@@ -233,7 +229,7 @@ arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, boo
 }
 
 // [[Rcpp::export]]
-double kap_MCMC_CPP(arma::mat Rs, double oldKappa, double sigma, arma::mat S, bool Cayley){
+double kap_MCMC_CPP(arma::mat Rs, double oldKappa, double sigma, arma::mat S, Function f){
   RNGScope scope;
   
   double  rj2, kappaStar;
@@ -244,13 +240,9 @@ double kap_MCMC_CPP(arma::mat Rs, double oldKappa, double sigma, arma::mat S, bo
   kappaStar = exp(kappaS[0]);
   
   //Compute transition probability
-  if(Cayley){
-    rj2 = exp(gcayUARSC(Rs,S,kappaStar)-gcayUARSC(Rs,S,oldKappa));
-    rj2 *= (kappaStar/oldKappa);
-  }else{
-    rj2 = exp(gfUARSC(Rs,S,kappaStar)-gfUARSC(Rs,S,oldKappa));
-    rj2 *= (kappaStar/oldKappa);
-  }
+  rj2 = as<double>(f(Rs,S,kappaStar));
+  rj2 -= as<double>(f(Rs,S,oldKappa));
+  rj2 = (kappaStar/oldKappa)*exp(rj2);
   
   if(!std::isfinite(rj2)){
     rj2 = 0;
@@ -302,7 +294,7 @@ arma::rowvec afun_CPP(arma::mat R1, arma::mat R2){
 
 // [[Rcpp::export]]
 
-List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double sigma, int burnin, int B, bool Cayley){
+List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double sigma, int burnin, int B, Function f){
   
   // Rs - the sample
   // S0 - initial central orientation
@@ -324,8 +316,8 @@ List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double
   List out;
   
   for(i=0;i<burnin;i++){
-    Snew = S_MCMC_CPP(Rs,Snew,rho,Knew,Cayley);
-    Knew = kap_MCMC_CPP(Rs,Knew,sigma,Snew,Cayley);
+    Snew = S_MCMC_CPP(Rs,Snew,rho,Knew,f);
+    Knew = kap_MCMC_CPP(Rs,Knew,sigma,Snew,f);
   }
   
   Kdraws[0] = Knew;
@@ -336,7 +328,7 @@ List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double
   
   for(i=1;i<B;i++){
     S0 = Snew;
-    Snew = S_MCMC_CPP(Rs,S0,rho,Kdraws[(i-1)],Cayley);
+    Snew = S_MCMC_CPP(Rs,S0,rho,Kdraws[(i-1)],f);
     
     if(accu(abs(S0-Snew))<10e-5){
       Sdraws.row(i)=Sdraws.row((i-1));
@@ -348,7 +340,7 @@ List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double
         }
     }
     
-    Kdraws[i] = kap_MCMC_CPP(Rs,Kdraws[(i-1)],sigma,Snew,Cayley);
+    Kdraws[i] = kap_MCMC_CPP(Rs,Kdraws[(i-1)],sigma,Snew,f);
     Ksame = Kdraws[i]-Kdraws[(i-1)];
     
     if(Ksame<0){
