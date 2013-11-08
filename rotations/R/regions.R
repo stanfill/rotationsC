@@ -492,8 +492,8 @@ fisheretal.SO3<-function(x,alp=NULL,boot=T,m=300,symm=T){
 #' Find the radius of a \eqn{100(1-\alpha)}\% credible region for the central orientation and concentration parameter.
 #'
 #' Compute the radius of a \eqn{100(1-\alpha)}\% credible region for the central orientation and concentration parameter
-#' as proposed in \cite{bingham2009b} and \cite{bingham2010}.  To be able to reduce their method
-#' to a radius requires the additonal assumption of rotational symmetry, equation (10) in \cite{fisher1996}. 
+#' as described in \cite{bingham2009b} and \cite{bingham2010}.  The posterior mode is returned along with the radius
+#' of the credible region centered at the posterior mode.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
 #' @param type Angular distribution assumed on R.  Options are \code{Cayley}, \code{Fisher} or \code{Mises}

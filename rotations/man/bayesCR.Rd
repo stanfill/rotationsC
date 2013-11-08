@@ -18,8 +18,8 @@
   corresponds to a random rotation in matrix (p=9) or
   quaternion (p=4) form.}
 
-  \item{type}{Angular distribution assumed on R.  Choices:
-  Cayley, Fisher or Mises}
+  \item{type}{Angular distribution assumed on R.  Options
+  are \code{Cayley}, \code{Fisher} or \code{Mises}}
 
   \item{S0}{initial estimate of central orientation}
 
@@ -51,11 +51,10 @@
 \details{
   Compute the radius of a \eqn{100(1-\alpha)}\% credible
   region for the central orientation and concentration
-  parameter as proposed in \cite{Bingham et al. (2009)} and
-  \cite{Bingham et al. (2010)}.  To be able to reduce their
-  method to a radius requires the additonal assumption of
-  rotational symmetry, equation (10) in \cite{Fisher et al.
-  (1996)}.
+  parameter as described in \cite{Bingham et al. (2009)}
+  and \cite{Bingham et al. (2010)}.  The posterior mode is
+  returned along with the radius of the credible region
+  centered at the posterior mode.
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=4)
