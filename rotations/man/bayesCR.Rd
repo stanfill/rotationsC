@@ -1,24 +1,47 @@
 \name{bayesCR}
 \alias{bayesCR}
+\alias{bayesCR.Q4}
 \alias{bayesCR.SO3}
 \title{Bayes credible regions}
 \usage{
-  bayesCR(x, lpangle, S0, kappa0, tuneS, tuneK, burn_in,
-    m = 5000, alp = NULL)
+  bayesCR(x, type, S0, kappa0, tuneS, tuneK, burn_in,
+    m = 5000, alp = 0.1)
 
-  \method{bayesCR}{SO3} (x, lpangle, S0, kappa0, tuneS,
-    tuneK, burn_in, m = 5000, alp = NULL)
+  \method{bayesCR}{SO3} (x, type, S0, kappa0, tuneS, tuneK,
+    burn_in, m = 5000, alp = 0.1)
+
+  \method{bayesCR}{Q4} (x, type, S0, kappa0, tuneS, tuneK,
+    burn_in, m = 5000, alp = 0.1)
 }
 \arguments{
   \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
   corresponds to a random rotation in matrix (p=9) or
   quaternion (p=4) form.}
 
+  \item{type}{Angular distribution assumed on R.  Choices:
+  Cayley, Fisher or Mises}
+
+  \item{S0}{initial estimate of central orientation}
+
+  \item{kappa0}{initial estimate of concentration
+  parameter}
+
+  \item{tuneS}{tuning parameter for proposal distribution
+  for central direction S}
+
+  \item{tuneK}{tuning parameter for proposal distribution
+  for concentration parameter kappa}
+
+  \item{burn_in}{number of draws to ignore in the MCMC}
+
+  \item{m}{number of draws to keep from posterior
+  distribution}
+
   \item{alp}{alpha level desired, e.g. 0.05 or 0.10.}
 }
 \value{
-  Radius of the confidence region centered at the posterior
-  mode.
+  \item{S}{the posterior mode} \item{Radius}{the radius of
+  the credible region centered at S}
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)}\% credible
@@ -28,24 +51,27 @@
 \details{
   Compute the radius of a \eqn{100(1-\alpha)}\% credible
   region for the central orientation and concentration
-  parameter as proposed in \cite{bingham2009b} and
-  \cite{bingham2010}.  To be able to reduce their method to
-  a radius requires the additonal assumption of rotational
-  symmetry, equation (10) in \cite{Fisher et al. (1996)}.
+  parameter as proposed in \cite{Bingham et al. (2009)} and
+  \cite{Bingham et al. (2010)}.  To be able to reduce their
+  method to a radius requires the additonal assumption of
+  rotational symmetry, equation (10) in \cite{Fisher et al.
+  (1996)}.
 }
 \examples{
-Rs<-ruars(20,rcayley,kappa=100)
-region(Rs,method='eigen',type='bootstrap',alp=0.1,symm=TRUE,estimator='mean')
+Rs<-ruars(20,rcayley,kappa=4)
+region(Rs,method='Bayes',type='Cayley',S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01)
 }
 \references{
-  bingham2009b
+  Bingham MA, Vardeman SB and Nordman DJ (2009). "Bayes
+  one-sample and one-way random effects analyses for 3-D
+  orientations with application to materials science."
+  _Bayesian Analysis_, *4*(3), pp. 607-629.
 
-  bingham2010
-
-  Fisher N, Hall P, Jing B and Wood A (1996). "Improved
-  pivotal methods for constructing confidence regions with
-  directional data." _Journal of the American Statistical
-  Association_, *91*(435), pp. 1062-1070.
+  Bingham MA, Nordman DJ and Vardeman SB (2010).
+  "Finite-sample investigation of likelihood and Bayes
+  inference for the symmetric von Mises-Fisher
+  distribution." _Computational Statistics \& Data
+  Analysis_, *54*(5), pp. 1317-1327.
 }
 \seealso{
   \code{\link{prentice}}, \code{\link{chang}},

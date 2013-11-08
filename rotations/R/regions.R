@@ -496,7 +496,7 @@ fisheretal.SO3<-function(x,alp=NULL,boot=T,m=300,symm=T){
 #' to a radius requires the additonal assumption of rotational symmetry, equation (10) in \cite{fisher1996}. 
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
-#' @param type Angular distribution assumed on R.  Choices: Cayley, Fisher or Mises
+#' @param type Angular distribution assumed on R.  Options are \code{Cayley}, \code{Fisher} or \code{Mises}
 #' @param S0 initial estimate of central orientation
 #' @param kappa0 initial estimate of concentration parameter
 #' @param tuneS tuning parameter for proposal distribution for central direction S
@@ -504,9 +504,8 @@ fisheretal.SO3<-function(x,alp=NULL,boot=T,m=300,symm=T){
 #' @param burn_in number of draws to ignore in the MCMC
 #' @param m number of draws to keep from posterior distribution
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
-#' @return A list of two items is returned:
-#'          \item S - the posterior mode
-#'          \item Radius - the radius of the credible region centered at S
+#' @return  \item{S}{the posterior mode}
+#'          \item{Radius}{the radius of the credible region centered at S}
 #' @seealso \code{\link{prentice}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite bingham2009b bingham2010
 #' @export
