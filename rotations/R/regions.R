@@ -72,6 +72,16 @@ region.Q4<-function(x,method, type, estimator,alp=NULL,...){
 		
 		return(r)
 		
+	}else if(method%in%c('Bayes','bayes')){
+	  
+	  if(estimator!='mean'){
+	    stop("Bayes confidence regions are only available for the mean estimator.")
+	  }
+	  
+	  r<-bayesCR.Q4(x=Qs,alp=alp,...)
+	  
+	  return(r)
+	  
 	}else{
 		
 		stop("Please choose a correct combination of method, type and estimator.  See help file.")
@@ -127,6 +137,16 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 		
 		return(r)
 		
+	}else if(method%in%c('Bayes','bayes')){
+	  
+	  if(estimator!='mean'){
+	    stop("Bayes confidence regions are only available for the mean estimator.")
+	  }
+	  
+	  r<-bayesCR.SO3(x=Rs,alp=alp,...)
+	  
+	  return(r)
+	  
 	}else{
 		
 	  stop("Please choose a correct combination of method, type and estimator.  See help file.")
@@ -432,7 +452,7 @@ fisheretal.Q4<-function(x,alp=NULL,boot=T,m=300,symm=TRUE){
 		
 	}else{
 		
-		qhat<-qchisq(alp,3)
+		qhat<-qchisq(1-alp,3)
 		
 	}
 	
@@ -476,16 +496,25 @@ fisheretal.SO3<-function(x,alp=NULL,boot=T,m=300,symm=T){
 #' to a radius requires the additonal assumption of rotational symmetry, equation (10) in \cite{fisher1996}. 
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @param type Angular distribution assumed on R.  Choices: Cayley, Fisher or Mises
+#' @param S0 initial estimate of central orientation
+#' @param kappa0 initial estimate of concentration parameter
+#' @param tuneS tuning parameter for proposal distribution for central direction S
+#' @param tuneK tuning parameter for proposal distribution for concentration parameter kappa
+#' @param burn_in number of draws to ignore in the MCMC
+#' @param m number of draws to keep from posterior distribution
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
-#' @return Radius of the confidence region centered at the posterior mode.
+#' @return A list of two items is returned:
+#'          \item S - the posterior mode
+#'          \item Radius - the radius of the credible region centered at S
 #' @seealso \code{\link{prentice}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite bingham2009b bingham2010
 #' @export
 #' @examples
-#' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Rs,method='eigen',type='bootstrap',alp=0.1,symm=TRUE,estimator='mean')
+#' Rs<-ruars(20,rcayley,kappa=4)
+#' region(Rs,method='Bayes',type='Cayley',S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01)
 
-bayesCR<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=NULL){
+bayesCR<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
   UseMethod("bayesCR")
 }
 
@@ -494,25 +523,40 @@ bayesCR<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=NULL){
 #' @method bayesCR SO3
 #' @S3method bayesCR SO3
 
-bayesCR.SO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=NULL){
+bayesCR.SO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
   
   if(type %in% c("Cayley","cayley")){
     
-    lpangle = lpcayley
+    lpangle <- lpcayley
     
   }else if(type %in% c("Fisher","fisher")){
     
-    lpangle = lpfisher
+    lpangle <- lpfisher
     
   }else if(type %in% c("Mises","mises")){
     
-    lpangle = lpvmises
+    lpangle <- lpvmises
     
   }else{
-    stop("Invalid choise of type, please choose Cayley, Fisher or Mises.")
+    stop("Invalid choise of type: please choose Cayley, Fisher or Mises.")
   }
   
   listRes<-both_MCMC_CPP(x,S0, kappa0,tuneS,tuneK,burn_in,m, lpangle)
-    
-  return(listRes)
+  Sdraws<-as.SO3(listRes$S)
+  Shat<-mean(Sdraws)
+  rs<-dist(Sdraws,Shat)
+
+  return(list(Shat=Shat,Radius=quantile(rs,1-alp)))
+}
+
+#' @rdname bayesCR
+#' @method bayesCR Q4
+#' @S3method bayesCR Q4
+
+bayesCR.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
+  
+  Rs<-SO3(x)
+  
+  return(bayesCR(Rs,type,S0,kappa0,tuneS,tuneK,burn_in,m,alp))
+
 }

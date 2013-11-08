@@ -32,6 +32,8 @@ arma::mat centerCpp(arma::mat Rs, arma::mat S){
 // [[Rcpp::export]]
 double lpvmises(arma::mat Rs, arma::mat S, double kappa){
   
+  //Evaluate the log-posterior for R~von Mises(S,kappa)
+  
   int n = Rs.n_rows;
   arma::mat cRs = centerCpp(Rs,S);
   arma::mat trcRs(n,3);
@@ -72,6 +74,9 @@ double lpvmises(arma::mat Rs, arma::mat S, double kappa){
 // [[Rcpp::export]]
 double lpfisher(arma::mat Rs, arma::mat S, double kappa){
   
+  //Evaluate the log-posterior for R~matrix Fisher(S,kappa)
+
+  
   int n = Rs.n_rows;
   arma::mat cRs = centerCpp(Rs,S);
   arma::mat trcRs(n,3);
@@ -104,7 +109,9 @@ double lpfisher(arma::mat Rs, arma::mat S, double kappa){
 // [[Rcpp::export]]
 double lpcayley(arma::mat Rs, arma::mat S, double kappa){
  
-   int n = Rs.n_rows;
+  //Evaluate the log-posterior for R~Cayley(S,kappa) 
+ 
+  int n = Rs.n_rows;
   arma::mat cRs = centerCpp(Rs,S);
   arma::mat trcRs(n,3);
   
