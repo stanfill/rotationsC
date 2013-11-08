@@ -12,11 +12,11 @@
 \usage{
   \method{+}{SO3} (x, y)
 
-  \method{-}{SO3} (x, y)
+  \method{-}{SO3} (x, y = NULL)
 
   \method{+}{Q4} (x, y)
 
-  \method{-}{Q4} (x, y)
+  \method{-}{Q4} (x, y = NULL)
 }
 \arguments{
   \item{x}{first arguement}

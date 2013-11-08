@@ -13,8 +13,9 @@
   \item{center}{rotation about which to center the
   observations.}
 
-  \item{col}{integer 1 to 3 indicating which column to
-  display.}
+  \item{col}{integer or vector 1 to 3 indicating which
+  column(s) to display.  If \code{length(col)>1} then each
+  eyeball is labelled.}
 
   \item{to_range}{show only part of the globe that is in
   range of the data?}

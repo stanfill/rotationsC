@@ -25,32 +25,32 @@ centerCpp <- function(Rs, S) {
     .Call('rotations_centerCpp', PACKAGE = 'rotations', Rs, S)
 }
 
-gvmUARSC <- function(Rs, S, kappa) {
-    .Call('rotations_gvmUARSC', PACKAGE = 'rotations', Rs, S, kappa)
+lpvmises <- function(Rs, S, kappa) {
+    .Call('rotations_lpvmises', PACKAGE = 'rotations', Rs, S, kappa)
 }
 
-gfUARSC <- function(Rs, S, kappa) {
-    .Call('rotations_gfUARSC', PACKAGE = 'rotations', Rs, S, kappa)
+lpfisher <- function(Rs, S, kappa) {
+    .Call('rotations_lpfisher', PACKAGE = 'rotations', Rs, S, kappa)
 }
 
-gcayUARSC <- function(Rs, S, kappa) {
-    .Call('rotations_gcayUARSC', PACKAGE = 'rotations', Rs, S, kappa)
+lpcayley <- function(Rs, S, kappa) {
+    .Call('rotations_lpcayley', PACKAGE = 'rotations', Rs, S, kappa)
 }
 
-S_MCMC_CPP <- function(Rs, oldS, rho, kappa, Cayley) {
-    .Call('rotations_S_MCMC_CPP', PACKAGE = 'rotations', Rs, oldS, rho, kappa, Cayley)
+S_MCMC_CPP <- function(Rs, oldS, rho, kappa, f) {
+    .Call('rotations_S_MCMC_CPP', PACKAGE = 'rotations', Rs, oldS, rho, kappa, f)
 }
 
-kap_MCMC_CPP <- function(Rs, oldKappa, sigma, S, Cayley) {
-    .Call('rotations_kap_MCMC_CPP', PACKAGE = 'rotations', Rs, oldKappa, sigma, S, Cayley)
+kap_MCMC_CPP <- function(Rs, oldKappa, sigma, S, f) {
+    .Call('rotations_kap_MCMC_CPP', PACKAGE = 'rotations', Rs, oldKappa, sigma, S, f)
 }
 
 afun_CPP <- function(R1, R2) {
     .Call('rotations_afun_CPP', PACKAGE = 'rotations', R1, R2)
 }
 
-both_MCMC_CPP <- function(Rs, S0, kappa0, rho, sigma, burnin, B, Cayley) {
-    .Call('rotations_both_MCMC_CPP', PACKAGE = 'rotations', Rs, S0, kappa0, rho, sigma, burnin, B, Cayley)
+both_MCMC_CPP <- function(Rs, S0, kappa0, rho, sigma, burnin, B, f) {
+    .Call('rotations_both_MCMC_CPP', PACKAGE = 'rotations', Rs, S0, kappa0, rho, sigma, burnin, B, f)
 }
 
 checkQ4 <- function(Q) {
