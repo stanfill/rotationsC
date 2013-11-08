@@ -123,7 +123,7 @@ pointsXYZ <- function(data, center, column=1) {
 #'
 #' @param x n rotations in \code{SO3} format.
 #' @param center rotation about which to center the observations.
-#' @param col integer or vector 1 to 3 indicating which column to display or 'all' for all three columns.
+#' @param col integer or vector 1 to 3 indicating which column(s) to display.  If \code{length(col)>1} then each eyeball is labelled.
 #' @param to_range show only part of the globe that is in range of the data?
 #' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "geom.mean", "geom.median."
 #' @param label_points  vector of labels.
@@ -148,10 +148,6 @@ pointsXYZ <- function(data, center, column=1) {
 
 plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300,  ...) {
 
-  if(col=='all'){
-    col<-c(1,2,3)
-  }
-  
   if(length(col)>1){
     if(1 %in% col){
       p1<-plot(x,center=center,col=1,to_range=to_range,show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,...)

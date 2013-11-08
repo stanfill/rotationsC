@@ -1,19 +1,24 @@
-## *intervals*
+*rotations*
 ========================================================
+A staple version of the *rotations* package is available for download from CRAN.  For MAC users, the next version of *rotations* can be downloaded as shown below.
 
-This folder contains the code necessary to run the simulations for the intervals research
-
-## *rotations*
-========================================================
-The *rotations* package is also available in this folder.  It uses C++ to greatly increase computing time, especially for the estimators.  Because of differences in compilers, only a Mac version is available at this time.  Sorry.  To install, both a Fortran and C++ compiler are required.
-
-
-### Installation instructions:
-
-
-#### For Mac: 
+### Installation instructions for Mac: 
 ```
 library(devtools)
 install_github('rotationsC','stanfill',subdir='rotations')
 library(rotations)
 ```
+
+### Change log:
+The differences between the CRAN and GitHub versions of the *rotations* package are as follows:
+
+* The `]` operator has been redefined to maintain the `SO3` or `Q4` class of the object.
+
+* Addition `+` and subtraction `-` have been redefined for the multiplicative group $SO(3)$.  That is, for $R_1$ and $R_2$ in $SO(3)$, $R_1+R_2=R_2R_1$, $R_1-R_2=R_2^\top R_1$ and $-R_1=R_1^\top$.
+
+* The `plot` function can now print multiple columns of a sample of rotations simultaneously through the argument `col`.  For example `col=c(1,3)` will print two labelled eyeballs, one for the $x$- and one for the $z$-axis.
+
+*intervals*
+--------------------------------------------------------
+This folder contains the code necessary to run the simulations for the intervals research
+
