@@ -150,7 +150,7 @@ str.Q4<-function(object,...){
 #' @method [ Q4
 '[.Q4'<-function(x,i,...){
   x<-matrix(x,dim(x))
-  x<-y[i,...]
+  x<-x[i,...]
   return(as.Q4(x))
 }
 
@@ -160,7 +160,7 @@ str.Q4<-function(object,...){
 
   x<-matrix(x,dim(x))
   y<-matrix(y,dim(y))
-  if(x==y || x==-y)  return(TRUE) else return(FALSE)
+  if(all(x==y) || all(x==-y))  return(TRUE) else return(FALSE)
 
 }
 
@@ -228,7 +228,7 @@ NULL
   
   
   if(is.null(y)){ 
-    x[2:4]<--1*x[2:4]
+    x[2:4]<- -1*x[2:4]
     return(x)
   }
   x<-SO3(x)
