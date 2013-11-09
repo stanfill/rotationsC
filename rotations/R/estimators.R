@@ -144,10 +144,10 @@ median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...
 	if(length(Qs)==4)
 		return(Qs)
 
-  Rs<-SO3(Qs)
+  Rs<-SO3.Q4(Qs)
   
-  R<-median(Rs,type,epsilon,maxIter)
-  
+  R<-median.SO3(Rs,type,epsilon,maxIter,...)
+
   return(Q4.SO3(R))
 }
 

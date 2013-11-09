@@ -1,17 +1,17 @@
-\name{bayesCR}
-\alias{bayesCR}
-\alias{bayesCR.Q4}
-\alias{bayesCR.SO3}
-\title{Bayes credible regions}
+\name{bayes.mean}
+\alias{bayes.mean}
+\alias{bayes.mean.Q4}
+\alias{bayes.mean.SO3}
+\title{Parameter estimates based on MCMC}
 \usage{
-  bayesCR(x, type, S0, kappa0, tuneS, tuneK, burn_in,
-    m = 5000, alp = 0.1)
+  bayes.mean(x, type, S0, kappa0, tuneS, tuneK, burn_in,
+    m = 5000)
 
-  \method{bayesCR}{SO3} (x, type, S0, kappa0, tuneS, tuneK,
-    burn_in, m = 5000, alp = 0.1)
+  \method{bayes.mean}{SO3} (x, type, S0, kappa0, tuneS,
+    tuneK, burn_in, m = 5000)
 
-  \method{bayesCR}{Q4} (x, type, S0, kappa0, tuneS, tuneK,
-    burn_in, m = 5000, alp = 0.1)
+  \method{bayes.mean}{Q4} (x, type, S0, kappa0, tuneS,
+    tuneK, burn_in, m = 5000)
 }
 \arguments{
   \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
@@ -36,29 +36,29 @@
 
   \item{m}{number of draws to keep from posterior
   distribution}
-
-  \item{alp}{alpha level desired, e.g. 0.05 or 0.10.}
 }
 \value{
-  \item{S}{the posterior mode} \item{Radius}{the radius of
-  the credible region centered at S}
+  \item{Shat}{Draws from the posterior distribution for
+  central orientation S} \item{kappa}{Draws from the
+  posterior distribution for concentration parameter kappa}
 }
 \description{
-  Find the radius of a \eqn{100(1-\alpha)}\% credible
-  region for the central orientation and concentration
-  parameter.
+  Use Gibbs-within-MCMC to infer about the central
+  orientation and concentration parameter of a sample of
+  rotations.
 }
 \details{
-  Compute the radius of a \eqn{100(1-\alpha)}\% credible
-  region for the central orientation and concentration
-  parameter as described in \cite{Bingham et al. (2009)}
-  and \cite{Bingham et al. (2010)}.  The posterior mode is
-  returned along with the radius of the credible region
-  centered at the posterior mode.
+  The procedures detailed in \cite{Bingham et al. (2009)}
+  and \cite{Bingham et al. (2010)} are implemented to to
+  get draws from the posterior distribution for the central
+  orientation and concentration parameters for a sample of
+  3D rotations.  A uniform prior on SO(3) is used for the
+  central orientation and Jeffrey's prior is used for the
+  concentration parameter.
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=4)
-region(Rs,type='Cayley',method='Bayes',estimator='mean',S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01)
+ests<-bayes.mean(Rs,type='Cayley',S0=mean(Rs),kappa0=4,tuneS=39,tuneK=.8,burn_in=100,m=5000)
 }
 \references{
   Bingham MA, Vardeman SB and Nordman DJ (2009). "Bayes
@@ -71,9 +71,5 @@ region(Rs,type='Cayley',method='Bayes',estimator='mean',S0=mean(Rs),kappa0=2,tun
   inference for the symmetric von Mises-Fisher
   distribution." _Computational Statistics \& Data
   Analysis_, *54*(5), pp. 1317-1327.
-}
-\seealso{
-  \code{\link{prentice}}, \code{\link{chang}},
-  \code{\link{zhang}}
 }
 
