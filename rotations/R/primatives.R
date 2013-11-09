@@ -127,7 +127,6 @@ head.Q4<-function(x,n=6L,...){
   n <- if (n < 0L)  max(nrow(x) + n, 0L)  else min(n, nrow(x))
   
   x[seq_len(n), ]
-  
 }
 
 #' @S3method str Q4
@@ -191,9 +190,10 @@ NULL
 #' @method + SO3
 
 '+.SO3'<-function(x,y){
-  x<-matrix(x,3,3)
-  y<-matrix(y,3,3)
-  return(as.SO3(y%*%x))
+
+  y<-t(matrix(y,3,3))
+  return(center(x,y))
+
 }
 
 #' @rdname Arithmetic
@@ -202,10 +202,10 @@ NULL
 #' @method - SO3
 
 '-.SO3'<-function(x,y=NULL){
-  x<-matrix(x,3,3)
-  if(is.null(y)) return(as.SO3(t(x)))
-  y<-matrix(y,3,3)
-  return(as.SO3(t(y)%*%x))
+
+  if(is.null(y)) return(as.SO3(t(matrix(x,3,3))))
+  
+  return(center.SO3(x,y))
 }
 
 #' @rdname Arithmetic
