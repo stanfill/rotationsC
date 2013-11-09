@@ -214,9 +214,8 @@ NULL
 #' @method + Q4
 
 '+.Q4'<-function(x,y){
-  x<-SO3(x)
-  y<-SO3(x)
-  return(Q4(x+y))
+
+  return(Q4(SO3(x)+SO3(y)))
 }
 
 #' @rdname Arithmetic
@@ -225,13 +224,11 @@ NULL
 #' @method - Q4
 
 '-.Q4'<-function(x,y=NULL){
-  
-  
+    
   if(is.null(y)){ 
     x[2:4]<- -1*x[2:4]
     return(x)
   }
-  x<-SO3(x)
-  y<-SO3(y)
-  return(Q4(x-y))
+
+  return(Q4(SO3(x)-SO3(y)))
 }
