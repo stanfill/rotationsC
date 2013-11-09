@@ -1,6 +1,5 @@
 #' @S3method print SO3
 #' @method print SO3
-
 print.SO3<-function(x,...){
   Rs<-x
   len<-length(Rs)
@@ -17,7 +16,6 @@ print.SO3<-function(x,...){
 
 #' @S3method head SO3
 #' @method head SO3
-
 head.SO3<-function(x,n=6L,...){
   
   #The following two lines are from 'head.matrix'
@@ -30,18 +28,14 @@ head.SO3<-function(x,n=6L,...){
 
 #' @S3method str SO3
 #' @method str SO3
-
 str.SO3<-function(object,...){
   
-  n<-nrow(object)
-  p<-ncol(object)
-  object<-matrix(object,n,p)
+  object<-matrix(object,dim(object))
   str(object)
 }
 
 #' @S3method print Q4
 #' @method print Q4
-
 print.Q4<-function(x,...){
   Qs<-x
   len<-length(Qs)
@@ -126,7 +120,6 @@ print.Q4<-function(x,...){
 
 #' @S3method head Q4
 #' @method head Q4
-
 head.Q4<-function(x,n=6L,...){
   
   #The following two lines are from 'head.matrix'
@@ -139,12 +132,9 @@ head.Q4<-function(x,n=6L,...){
 
 #' @S3method str Q4
 #' @method str Q4
-
 str.Q4<-function(object,...){
   
-  n<-nrow(object)
-  p<-ncol(object)
-  object<-matrix(object,n,p)
+  object<-matrix(object,dim(object))
   str(object)
 }
 
@@ -159,9 +149,19 @@ str.Q4<-function(object,...){
 #' @S3method [ Q4
 #' @method [ Q4
 '[.Q4'<-function(x,i,...){
-  y<-matrix(x,length(x)/4,4)
-  y<-y[i,...]
-  return(as.Q4(y))
+  x<-matrix(x,dim(x))
+  x<-y[i,...]
+  return(as.Q4(x))
+}
+
+#' @S3method == Q4
+#' @method == Q4
+'==.Q4'<-function(x,y,...){
+
+  x<-matrix(x,dim(x))
+  y<-matrix(y,dim(y))
+  if(x==y || x==-y)  return(TRUE) else return(FALSE)
+
 }
 
 #' Arithmetic Operators on SO(3)
@@ -226,8 +226,9 @@ NULL
 
 '-.Q4'<-function(x,y=NULL){
   
+  
   if(is.null(y)){ 
-    x[2:4]<--x[2:4]
+    x[2:4]<--1*x[2:4]
     return(x)
   }
   x<-SO3(x)
