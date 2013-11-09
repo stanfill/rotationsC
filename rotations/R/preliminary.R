@@ -36,8 +36,8 @@ print.SO3<-function(x,...){
   Rs<-x
   len<-length(Rs)
   
-  if(len%%9!=0)
-    stop("Input is not of the correct length.")
+  #if(len%%9!=0)
+  #  stop("Input is not of the correct length.")
   
   if(len==9){
     print.default(as.SO3(matrix(Rs,3,3)),...)
@@ -53,8 +53,8 @@ print.Q4<-function(x,...){
   Qs<-x
   len<-length(Qs)
   
-  if(len%%4!=0)
-    stop("Input is not of the correct length.")
+  #if(len%%4!=0)
+  #  stop("Input is not of the correct length.")
   
   if(len==4){
     Qs<-matrix(Qs,1,4)
@@ -99,8 +99,20 @@ print.Q4<-function(x,...){
     }
     
   }else{
-    colnames(Qs)<-c("Real","i","j","k")
-    print.default(Qs,...)
+    if(is.null(ncol(Qs))) {
+      
+      print.default(Qs,...)
+      
+    }else if(ncol(Qs)==4){
+      
+      colnames(Qs)<-c("Real","i","j","k")
+      print.default(Qs,...)
+      
+    }else{
+      
+      print.default(Qs,...)
+      
+    }
   }
 }
 
