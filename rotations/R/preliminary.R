@@ -57,7 +57,7 @@ print.Q4<-function(x,...){
     stop("Input is not of the correct length.")
   
   if(len==4){
-    
+    Qs<-matrix(Qs,1,4)
     negs<-length(which(Qs[2:4]<0))
     
     if(negs==0){ 
@@ -603,8 +603,9 @@ formatSO3<-function(Rs){
 
 formatQ4<-function(Qs){
 	
-  if(length(Qs)%%4!=0)
-    stop("Data needs to have length divisible by 4.")
+  #This condition is checked later on
+  #if(length(Qs)%%4!=0)
+  #  stop("Data needs to have length divisible by 4.")
   
   Qs<-matrix(Qs,length(Qs)/4,4)
   
@@ -612,10 +613,10 @@ formatQ4<-function(Qs){
   	warning("At least one of the given observations is not a unit quaternion.  Use result with caution.")
   
   
-  if(length(Qs)==4)
-    return(as.Q4(Qs))
-  else
-    return(as.Q4(Qs))
+  #if(length(Qs)==4)
+  #  return(as.Q4(Qs))
+  #else
+  return(as.Q4(Qs))
 }
 
 pMat<-function(p){

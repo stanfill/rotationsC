@@ -78,7 +78,7 @@ region.Q4<-function(x,method, type, estimator,alp=NULL,...){
 	    stop("Bayes confidence regions are only available for the mean estimator.")
 	  }
 	  
-	  r<-bayesCR.Q4(x=Qs,alp=alp,...)
+	  r<-bayesCR.Q4(x=Qs,type=type,alp=alp,...)
 	  
 	  return(r)
 	  
@@ -143,7 +143,7 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 	    stop("Bayes confidence regions are only available for the mean estimator.")
 	  }
 	  
-	  r<-bayesCR.SO3(x=Rs,alp=alp,...)
+	  r<-bayesCR.SO3(x=Rs,type=type,alp=alp,...)
 	  
 	  return(r)
 	  

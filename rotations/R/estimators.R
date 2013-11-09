@@ -65,7 +65,7 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 		
 	}else{
 		
-		Rs<-SO3(Qs)
+		Rs<-SO3.Q4(Qs)
   	R<-gmeanSO3C(Rs,maxIter,epsilon)
 		R<-Q4.SO3(R)
 	}
