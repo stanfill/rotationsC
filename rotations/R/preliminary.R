@@ -53,9 +53,9 @@ head.SO3<-function(x,n=6L,...){
   
   #The following two lines are from 'head.matrix'
   stopifnot(length(n) == 1L)
-  n <- if (n < 0L)  max(nrow(x) + n, 0L)  else min(n, nrow(x))
-  
-  x[seq_len(n), ]
+  n <- if(n < 0L)  max(nrow(x) + n, 0L)  else min(n, nrow(x))
+
+  x[seq_len(n) ,]
   
 }
 
