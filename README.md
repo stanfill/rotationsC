@@ -1,6 +1,6 @@
 *rotations*
 ========================================================
-A staple version of the *rotations* package is available for download from CRAN.  For MAC users, the next version of *rotations* can be downloaded as shown below.
+A stable version of the *rotations* package is available for download from CRAN.  For MAC users, the next version of *rotations* can be downloaded from GitHub.  Windows users will need to download the repo, compile the C++ code and install locally.
 
 ### Installation instructions for Mac: 
 ```
@@ -24,7 +24,7 @@ The differences between the CRAN and GitHub versions of the *rotations* package 
   * Each of the following functions requires the user to supply `type`, `tuneS`, `tuneK`, `burnin` and `B`.  These arguments  determine the transition probability form, tuning parameters for the central orientation, concentration parameter, burnin for the MCMC and total number of draws from the posterior, respectively.  Currently only `'Cayley'`, `'Fisher'` and `'Mises'` are valid options for `type`.  See the respective help files for more details.
   * The function `MCMCSO3` implements a Gibbs-within-MCMC algorithm to get draws from the posterior distributions for the concentration parameter $S$ and concentration parameter $\kappa$.  A list of four items is returned: `S` is a B-by-p matrix where each row corresponds to a draw from the posterior for the central orientation S, `kappa` is a vector of B draws from the posterior for the concentration parameter $\kappa$ and the transition probabilities for the central orientation and concentration are given by `Saccept` and `Kaccept`,respectively.
   * Bayesian point estimates for the central orientation and concentration parameter are given by `bayes.mean`.
-  * Bayesian credible regions have been added to the `region` by adding the option `method='Bayes'`.  
+  * Bayesian credible regions have been added to the `region` by setting `method='Bayes'`.  
 
 *intervals*
 --------------------------------------------------------
