@@ -51,27 +51,28 @@
   rotations.
 }
 \details{
-  Compute the radius of a \eqn{100(1-\alpha)}\% credible
-  region for the central orientation and concentration
-  parameter as described in \cite{Bingham et al. (2009)}
-  and \cite{Bingham et al. (2010)}.  The posterior mode is
-  returned along with the radius of the credible region
-  centered at the posterior mode.
+  The procedures detailed in \cite{Bingham et al. (2009)}
+  and \cite{Bingham et al. (2010)} are implemented to to
+  get draws from the posterior distribution for the central
+  orientation and concentration parameters for a sample of
+  3D rotations.  A uniform prior on SO(3) is used for the
+  central orientation and Jeffrey's prior is used for the
+  concentration parameter.
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=4)
 draws<-MCMCSO3(Rs,type='Cayley',S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,m=5000)
 }
 \references{
+  Bingham MA, Vardeman SB and Nordman DJ (2009). "Bayes
+  one-sample and one-way random effects analyses for 3-D
+  orientations with application to materials science."
+  _Bayesian Analysis_, *4*(3), pp. 607-629.
+
   Bingham MA, Nordman DJ and Vardeman SB (2010).
   "Finite-sample investigation of likelihood and Bayes
   inference for the symmetric von Mises-Fisher
   distribution." _Computational Statistics \& Data
   Analysis_, *54*(5), pp. 1317-1327.
-
-  Bingham MA, Vardeman SB and Nordman DJ (2009). "Bayes
-  one-sample and one-way random effects analyses for 3-D
-  orientations with application to materials science."
-  _Bayesian Analysis_, *4*(3), pp. 607-629.
 }
 

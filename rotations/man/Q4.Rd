@@ -5,6 +5,7 @@
 \alias{is.Q4}
 \alias{Q4}
 \alias{Q4.default}
+\alias{Q4.Q4}
 \alias{Q4.SO3}
 \title{Quaternions}
 \format{\code{id.Q4} is the identity rotation given by the matrix \eqn{[1,0,0,0]^\top}{[1,0,0,0]'}.}
@@ -14,6 +15,8 @@
   \method{Q4}{default} (q, theta = NULL, ...)
 
   \method{Q4}{SO3} (q, ...)
+
+  \method{Q4}{Q4} (q, ...)
 
   as.Q4(q)
 

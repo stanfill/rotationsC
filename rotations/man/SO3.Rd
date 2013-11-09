@@ -16,7 +16,7 @@
 
   \method{SO3}{Q4} (R, ...)
 
-  \method{SO3}{SO3} (R)
+  \method{SO3}{SO3} (R, ...)
 
   as.SO3(R)
 

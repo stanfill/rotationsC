@@ -72,8 +72,8 @@ Q4.default <- function(q,theta=NULL,...){
   if(n!=ntheta)
     stop("Number of angles must match number of axes")
   
-  if(any(ulen!=1))
-    U<-U/ulen
+  #if(any(ulen!=1))
+  #  U<-U/ulen
   
   x <- Q4defaultC(U,theta)
   

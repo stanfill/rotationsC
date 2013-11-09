@@ -153,7 +153,10 @@ dist.SO3 <- function(x, R2=id.SO3, method='projected' , p=1,...) {
   
   if(method=='projected'){
     
-    R2<-matrix(R2,nrow(R1),9,byrow=T)
+    n<-nrow(R1)
+    R1<-matrix(R1,n,9)
+    R2<-matrix(R2,n,9,byrow=T)
+    
     so3dist<-sqrt(rowSums((R1-R2)^2))^p
     
   }else if(method=='intrinsic'){
@@ -556,7 +559,7 @@ center.SO3<-function(x,S){
 	Rs<-formatSO3(x)
 	S<-matrix(formatSO3(S),3,3)
 	
-  Rs<-centerCPP(Rs,S)
+  Rs<-centerCpp(Rs,S)
 	return(as.SO3(Rs))
 }
 

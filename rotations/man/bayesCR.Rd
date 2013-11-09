@@ -61,16 +61,16 @@ Rs<-ruars(20,rcayley,kappa=4)
 region(Rs,method='Bayes',type='Cayley',S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01)
 }
 \references{
+  Bingham MA, Vardeman SB and Nordman DJ (2009). "Bayes
+  one-sample and one-way random effects analyses for 3-D
+  orientations with application to materials science."
+  _Bayesian Analysis_, *4*(3), pp. 607-629.
+
   Bingham MA, Nordman DJ and Vardeman SB (2010).
   "Finite-sample investigation of likelihood and Bayes
   inference for the symmetric von Mises-Fisher
   distribution." _Computational Statistics \& Data
   Analysis_, *54*(5), pp. 1317-1327.
-
-  Bingham MA, Vardeman SB and Nordman DJ (2009). "Bayes
-  one-sample and one-way random effects analyses for 3-D
-  orientations with application to materials science."
-  _Bayesian Analysis_, *4*(3), pp. 607-629.
 }
 \seealso{
   \code{\link{prentice}}, \code{\link{chang}},
