@@ -46,6 +46,19 @@ print.SO3<-function(x,...){
   }
 }
 
+#' @S3method head SO3
+#' @method head SO3
+
+head.SO3<-function(x,n=6L,...){
+  
+  #The following two lines are from 'head.matrix'
+  stopifnot(length(n) == 1L)
+  n <- if (n < 0L)  max(nrow(x) + n, 0L)  else min(n, nrow(x))
+  
+  x[seq_len(n), ]
+  
+}
+
 #' @S3method print Q4
 #' @method print Q4
 
@@ -130,6 +143,19 @@ print.Q4<-function(x,...){
 #    print.default(Qs,...)
 #  }
 #}
+
+#' @S3method head Q4
+#' @method head Q4
+
+head.Q4<-function(x,n=6L,...){
+  
+  #The following two lines are from 'head.matrix'
+  stopifnot(length(n) == 1L)
+  n <- if (n < 0L)  max(nrow(x) + n, 0L)  else min(n, nrow(x))
+  
+  x[seq_len(n), ]
+  
+}
 
 #' Compute the rotational distance
 #'
