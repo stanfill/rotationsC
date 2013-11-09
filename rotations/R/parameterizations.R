@@ -39,7 +39,7 @@ setOldClass("Q4")
 #' 					quaternion.  Namely, is four-dimensional and of unit length.}
 #' 					\item{Q4.default}{returns an n-by-4 matrix where each row is a quaternion constructed from axis U and angle theta.}
 #' 					\item{Q4.SO3}{returns n-by-4 matrix where each row is a quaternion constructed from the corresponding rotation matrix.}
-#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3
+#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4
 
 Q4<-function(q,...){
   UseMethod("Q4")
@@ -48,7 +48,7 @@ Q4<-function(q,...){
 #' @rdname Q4
 #' @method Q4 default
 #' @S3method Q4 default
-#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3
+#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4
 #' @export
 
 Q4.default <- function(q,theta=NULL,...){  
@@ -84,7 +84,7 @@ Q4.default <- function(q,theta=NULL,...){
 #' @rdname Q4
 #' @method Q4 SO3
 #' @S3method Q4 SO3
-#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3
+#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4
 #' @export
 
 Q4.SO3 <- function(q,...) {
@@ -99,7 +99,18 @@ Q4.SO3 <- function(q,...) {
 }
 
 #' @rdname Q4
-#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3
+#' @method Q4 Q4
+#' @S3method Q4 Q4
+#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4
+#' @export
+
+Q4.Q4 <- function(q,...) {
+  
+  return(q)
+}
+
+#' @rdname Q4
+#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4
 #' @export
 
 as.Q4<-function(q){
@@ -108,7 +119,7 @@ as.Q4<-function(q){
 }
 
 #' @rdname Q4
-#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3
+#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4
 #' @export
 
 is.Q4 <- function(q) {
@@ -118,7 +129,7 @@ is.Q4 <- function(q) {
 }
 
 #' @rdname Q4
-#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3
+#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4
 #' @export
 #' 
 id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
@@ -144,7 +155,7 @@ id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 #' 					rotation matrix.  Namely, has determinant one and its transpose is its inverse.}
 #' 					\item{SO3.default}{returns an n-by-9 matrix where each row is a rotation matrix constructed from axis U and angle theta.}
 #' 					\item{SO3.Q4}{returns n-by-9 matrix where each row is a rotation matrix constructed from the corresponding quaternion.}
-#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4
+#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4 SO3.SO3
 
 SO3 <- function(R,...){
   UseMethod("SO3")
@@ -153,7 +164,7 @@ SO3 <- function(R,...){
 #' @rdname SO3
 #' @method SO3 default
 #' @S3method SO3 default
-#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4
+#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4 SO3.SO3
 #' @export
 
 
@@ -225,7 +236,7 @@ SO3.default <- function(R, theta=NULL,...) {
 #' @rdname SO3
 #' @method SO3 Q4
 #' @S3method SO3 Q4
-#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4
+#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4 SO3.SO3
 #' @export
 
 SO3.Q4<-function(R,...){
@@ -249,7 +260,17 @@ SO3.Q4<-function(R,...){
 }
 
 #' @rdname SO3
-#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4
+#' @method SO3 SO3
+#' @S3method SO3 SO3
+#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4 SO3.SO3
+#' @export
+
+SO3.SO3<-function(R,...){
+  return(R)
+}
+
+#' @rdname SO3
+#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4 SO3.SO3
 #' @export
 
 as.SO3<-function(R){
@@ -258,7 +279,7 @@ as.SO3<-function(R){
 }
 
 #' @rdname SO3
-#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4
+#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4 SO3.SO3
 #' @export
 
 is.SO3 <- function(R) {
@@ -271,7 +292,7 @@ is.SO3 <- function(R) {
 }
 
 #' @rdname SO3
-#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4
+#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4 SO3.SO3
 #' @export
 
 id.SO3 <- as.SO3(diag(c(1,1,1)))

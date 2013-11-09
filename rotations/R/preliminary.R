@@ -556,9 +556,7 @@ center.SO3<-function(x,S){
 	Rs<-formatSO3(x)
 	S<-matrix(formatSO3(S),3,3)
 	
-	for(i in 1:nrow(Rs)){
-		Rs[i,]<-t(S)%*%matrix(Rs[i,],3,3)
-	}
+  Rs<-centerCPP(Rs,S)
 	return(as.SO3(Rs))
 }
 

@@ -6,6 +6,7 @@
 \alias{SO3}
 \alias{SO3.default}
 \alias{SO3.Q4}
+\alias{SO3.SO3}
 \title{Rotation matrices}
 \format{\code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix.}
 \usage{
@@ -14,6 +15,8 @@
   \method{SO3}{default} (R, theta = NULL, ...)
 
   \method{SO3}{Q4} (R, ...)
+
+  \method{SO3}{SO3} (R)
 
   as.SO3(R)
 

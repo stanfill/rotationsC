@@ -1,17 +1,17 @@
-\name{bayesCR}
-\alias{bayesCR}
-\alias{bayesCR.Q4}
-\alias{bayesCR.SO3}
-\title{Bayes credible regions}
+\name{MCMCSO3}
+\alias{MCMCSO3}
+\alias{MCMCSO3.Q4}
+\alias{MCMCSO3.SO3}
+\title{MCMC for rotation data}
 \usage{
-  bayesCR(x, type, S0, kappa0, tuneS, tuneK, burn_in,
-    m = 5000, alp = 0.1)
+  MCMCSO3(x, type, S0, kappa0, tuneS, tuneK, burn_in,
+    m = 5000)
 
-  \method{bayesCR}{SO3} (x, type, S0, kappa0, tuneS, tuneK,
-    burn_in, m = 5000, alp = 0.1)
+  \method{MCMCSO3}{SO3} (x, type, S0, kappa0, tuneS, tuneK,
+    burn_in, m = 5000)
 
-  \method{bayesCR}{Q4} (x, type, S0, kappa0, tuneS, tuneK,
-    burn_in, m = 5000, alp = 0.1)
+  \method{MCMCSO3}{Q4} (x, type, S0, kappa0, tuneS, tuneK,
+    burn_in, m = 5000)
 }
 \arguments{
   \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
@@ -36,17 +36,19 @@
 
   \item{m}{number of draws to keep from posterior
   distribution}
-
-  \item{alp}{alpha level desired, e.g. 0.05 or 0.10.}
 }
 \value{
-  \item{S}{the posterior mode} \item{Radius}{the radius of
-  the credible region centered at S}
+  \item{S}{Draws from the posterior distribution for
+  central orientation S} \item{kappa}{Draws from the
+  posterior distribution for concentration parameter kappa}
+  \item{Saccept}{Transition probability for central
+  orientation S} \item{Kaccept}{Transition probability for
+  concentration parameter kappa}
 }
 \description{
-  Find the radius of a \eqn{100(1-\alpha)}\% credible
-  region for the central orientation and concentration
-  parameter.
+  Use Gibbs-within-MCMC to infer about the central
+  orientation and concentration parameter of a sample of
+  rotations.
 }
 \details{
   Compute the radius of a \eqn{100(1-\alpha)}\% credible
@@ -58,7 +60,7 @@
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=4)
-region(Rs,method='Bayes',type='Cayley',S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01)
+draws<-MCMCSO3(Rs,type='Cayley',S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,m=5000)
 }
 \references{
   Bingham MA, Nordman DJ and Vardeman SB (2010).
@@ -71,9 +73,5 @@ region(Rs,method='Bayes',type='Cayley',S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,bu
   one-sample and one-way random effects analyses for 3-D
   orientations with application to materials science."
   _Bayesian Analysis_, *4*(3), pp. 607-629.
-}
-\seealso{
-  \code{\link{prentice}}, \code{\link{chang}},
-  \code{\link{zhang}}
 }
 

@@ -32,3 +32,4 @@ Collate:
     'RcppExports.R'
     'plot.R'
     'grid-search.R'
+    'bayes.R'

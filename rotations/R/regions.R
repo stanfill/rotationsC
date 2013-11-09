@@ -555,6 +555,7 @@ bayesCR.SO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
 bayesCR.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
   
   Rs<-SO3(x)
+  S0<-SO3(S0)
   SO3Res<-bayesCR(Rs,type,S0,kappa0,tuneS,tuneK,burn_in,m,alp)
   Q4Res<-list(Qhat=Q4(So3Res$Shat),Radius=So3Res$Radius)
   return(Q4Res)
