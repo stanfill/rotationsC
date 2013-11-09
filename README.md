@@ -18,7 +18,7 @@ The differences between the CRAN and GitHub versions of the *rotations* package 
 
 * The `plot` function can now print multiple columns of a sample of rotations simultaneously through the argument `col`.  For example `col=c(1,3)` will print two labelled eyeballs, one for the $x$- and one for the $z$-axis.
 
-* The `head` function has been modified to handle objects of class `'SO3'` and `'Q4'`.
+* The `head` and `str` functions have been modified to properly handle objects of class `'SO3'` and `'Q4'`.
 
 * Functions for Bayesian analysis
   * Each of the following functions requires the user to supply `type`, `tuneS`, `tuneK`, `burnin` and `B`.  These arguments  determine the transition probability form, tuning parameters for the central orientation, concentration parameter, burnin for the MCMC and total number of draws from the posterior, respectively.  Currently only `'Cayley'`, `'Fisher'` and `'Mises'` are valid options for `type`.  See the respective help files for more details.

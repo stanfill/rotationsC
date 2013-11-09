@@ -33,3 +33,4 @@ Collate:
     'plot.R'
     'grid-search.R'
     'bayes.R'
+    'primatives.R'
