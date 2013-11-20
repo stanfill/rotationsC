@@ -188,7 +188,8 @@ SO3.default <- function(R, theta=NULL,...) {
   }
   
   R<-matrix(NA,n,9)
-  
+  #print(U)
+  #print(ulen)
   for(i in 1:n){
     
     if(ulen[i]!=0)
