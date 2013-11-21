@@ -242,11 +242,11 @@ if(Dist=='cayley'){
 	qplot(value,Prob,data=fullDF,colour=n,lwd=Stat,geom="line",xlab='x',ylab="F(x)",xlim=c(0,10))+
 		scale_colour_grey("",labels=c(expression(chi[3]^2),"n=10","n=50","n=100",'n=300'))+
 		facet_grid(.~kappa,labeller=label_parsed)+theme_bw()+coord_fixed(ratio=15/1)+
-    scale_size_discrete(range=c(0.75,1.5),guide='none')+
-	  guides(colour=guide_legend(label.hjust=0))+coord_equal(10)
+    scale_size_discrete(range=c(1,2),guide='none')+theme(legend.position=c(.9,.3),panel.margin = unit(1, "lines"))+
+	  guides(colour=guide_legend(label.hjust=0,override.aes=list(size=2)))+coord_equal(10)
 	
-	#setwd("/Users/stanfill/Dropbox/Thesis/Intervals/Figures")
-	#ggsave("CayleyECDF.pdf",height=5,width=8)
+	setwd("/Users/stanfill/Dropbox/Thesis/Intervals - Mean/Figures")
+	ggsave("CayleyECDF.pdf",height=4,width=8)
 	#write.csv(fullDF,"CayleyECDF.csv")
 	
 }else if(Dist=='fisher'){
