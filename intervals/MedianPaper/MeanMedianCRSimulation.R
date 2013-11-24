@@ -7,9 +7,13 @@
 
 library(plyr)
 library(reshape2)
-library(rotations)
-source("intervals/MedianPaper/contaminationFunctions.R")
-sourceCpp("intervals/ZhangMethod.cpp")  
+#library(rotations)
+#source("intervals/MedianPaper/contaminationFunctions.R")
+#sourceCpp("intervals/ZhangMethod.cpp")  
+
+library(rotations,lib='../BayesCR')
+source("contaminationFunctions.R")
+sourceCpp("ZhangMethod.cpp") 
 
 #ZhangMethod.cpp contains the functions that will compute c/d and perform the zhang bootstrap
 
@@ -69,8 +73,14 @@ for(j in 1:dimS){
   #compute the volume of the mean-based bootstrap theory CR and save it under 'MeanNTH'
   critValBootMed<-as.numeric(quantile(zhangMedianC(Rs,300),1-alp,na.rm=T))
   CRcompare$MedianBoot[j]<-sqrt(ctilde*critValBootMed/(2*nj*dtilde^2))  
+ 
+  if(j%%100==0){
+    write.csv(CRcompare,"Results/MeanMedianContComp.csv")
+  }
   
 }
+
+write.csv(CRcompare,"Results/MeanMedianContComp.csv")
 
 CRcompSum<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,MeanDist=mean(MeanDist),MedianDist=mean(MedianDist),
                  MeanNTH=mean(MeanNTH),MedianNTH=mean(MedianNTH),
