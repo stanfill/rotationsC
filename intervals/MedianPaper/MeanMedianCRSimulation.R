@@ -83,33 +83,44 @@ for(j in 1:dimS){
 write.csv(CRcompare,"Results/MeanMedianContCompFisher.csv")
 #CRcompare<-read.csv("Results/MeanMedianContComp.csv")[,-1]
 
+#Remove rows that haven't finished running yet
+CRcompare<-CRcompare[rowSums(CRcompare[,5:10])>0,]
 
-CRcompSum<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,MeanDist=mean(MeanDist),MedianDist=mean(MedianDist),
+CRcompSum<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,Mean=mean(MeanDist),Median=mean(MedianDist),
                  MeanNTH=mean(MeanNTH),MedianNTH=min(mean(MedianNTH),pi),
                  MeanBoot=mean(MeanBoot),MedianBoot=min(mean(MedianBoot),pi))
 
-#CRcompSum
 #Compare Estimator Bias
 CRcompM<-melt(CRcompSum,id=c("eps","kappa","n","Dist"))
-BiasDF<-CRcompM[CRcompM$variable%in%c("MeanDist","MedianDist"),]
-qplot(eps,value,data=BiasDF,geom='line',colour=variable,group=variable)+facet_grid(n~.,scales="free_y")
+BiasDF<-CRcompM[CRcompM$variable%in%c("Mean","Median"),]
+colnames(BiasDF)[5]<-"Estimator"
+qplot(eps,value,data=BiasDF,geom='line',colour=Estimator,group=Estimator,size=I(1.25),xlab=expression(epsilon),ylab="Bias")+
+  facet_grid(n~.,scales="free_y")+theme_bw()
+#ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/BiasComp.pdf",width=8,height=5)
 
 #Compare Confidence Region Volume (?)
-VolumeDF<-CRcompM[!CRcompM$variable%in%c("MeanDist","MedianDist"),]
+VolumeDF<-CRcompM[!CRcompM$variable%in%c("Mean","Median"),]
 VolumeDF$Boot<-0; VolumeDF[grep("Boot",VolumeDF$variable),]$Boot<-1
-qplot(eps,value,data=VolumeDF,geom='line',size=I(1.25),colour=variable,group=variable)+facet_grid(n~.,scales="free_y")
+qplot(eps,value,data=VolumeDF,geom='line',size=I(1.25),colour=variable,group=variable,xlab=expression(epsilon),ylab="CR Size")+
+  facet_grid(n~.,scales="free_y")+theme_bw()
+
 
 #Median Boot with n=10 is bad, remove it
 VolumeDFEdited<-VolumeDF[VolumeDF$value<pi,]
-qplot(eps,value,data=VolumeDFEdited,geom='line',size=I(1.25),colour=variable,group=variable)+facet_grid(n~.,scales="free_y")
+qplot(eps,value,data=VolumeDFEdited,geom='line',size=I(1.25),colour=variable,group=variable,xlab=expression(epsilon),ylab="CR Size")+
+  facet_grid(n~.,scales="free_y")+theme_bw()+labs(colour="")
+#ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/VolumeComp.pdf",width=8,height=5)
 
 
 #Compare region coverage rates
-CRcoverage<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,MeanNTHC=sum(MeanDist<MeanNTH)/length(MeanNTH),MedianNTHC=sum(MedianDist<MedianNTH)/length(MedianNTH),
-                  MeanBootC=sum(MeanDist<MeanBoot)/length(MeanNTH),MedianBootC=sum(MedianDist<MedianBoot)/length(MeanNTH))
+CRcoverage<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,MeanNTH=sum(MeanDist<MeanNTH)/length(eps),MedianNTH=sum(MedianDist<MedianNTH)/length(eps),
+                  MeanBoot=sum(MeanDist<MeanBoot)/length(eps),MedianBoot=sum(MedianDist<MedianBoot)/length(eps))
 CRcoverM<-melt(CRcoverage,id=c("eps","kappa","n","Dist"))
-qplot(eps,value,data=CRcoverM,geom='line',colour=variable,group=variable,size=I(1.25))+
-  facet_grid(n~.,scales='free_y')+geom_hline(yintercept=.9)
+CRcoverM<-CRcoverM[CRcoverM$value>0,]#Remove rows that haven't finished running yet
+
+qplot(eps,100*value,data=CRcoverM,geom='line',colour=variable,group=variable,size=I(1.25),xlab=expression(epsilon),ylab="Coverage (%)")+
+  facet_grid(n~.,scales='free_y')+geom_hline(yintercept=90)+theme_bw()+labs(colour="")
+#ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/CoverageComp.pdf",width=8,height=5)
 
 #coverCompare<-read.csv("Results/MeanMedianComparison.csv")[,-1]
 
