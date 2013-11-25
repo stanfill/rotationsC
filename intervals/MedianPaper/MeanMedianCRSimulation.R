@@ -19,13 +19,13 @@ sourceCpp("ZhangMethod.cpp")
 
 alp<-.1
 critVal<-qchisq(1-alp,3)
-n<-c(10,50,100)
+n<-c(25,50,100)
 kappa1<-20      
 kappa2<-kappa1      #Contamination distribution kappa
 eps<-c(0,.1,.2) #Amount of contamination
-B<-10000  			#Number of samples to use to estimate CDF
+B<-5000  			#Number of samples to use to estimate CDF
 Distfn<-c(rcayley,rfisher)
-Dist<-c("Cayley")
+Dist<-c("Fisher")
 
 simSize<-length(eps)*length(n)*length(kappa1)*length(Dist)
 
@@ -38,7 +38,7 @@ Scont<-genR(pi/2)
 for(j in 1:dimS){
   
   nj<-CRcompare$n[j]
-  Rs<-ruarsCont(nj,rcayley,kappa1=CRcompare$kappa[j],p=CRcompare$eps[j],S=id.SO3,Scont=Scont)
+  Rs<-ruarsCont(nj,rfisher,kappa1=CRcompare$kappa[j],p=CRcompare$eps[j],S=id.SO3,Scont=Scont)
   Qs<-Q4(Rs)
   
   #Mean
@@ -74,27 +74,42 @@ for(j in 1:dimS){
   critValBootMed<-as.numeric(quantile(zhangMedianC(Rs,300),1-alp,na.rm=T))
   CRcompare$MedianBoot[j]<-sqrt(ctilde*critValBootMed/(2*nj*dtilde^2))  
  
-  if(j%%100==0){
-    write.csv(CRcompare,"Results/MeanMedianContComp.csv")
+  if(j%%1000==0){
+    write.csv(CRcompare,"Results/MeanMedianContCompFisher.csv")
   }
   
 }
 
-write.csv(CRcompare,"Results/MeanMedianContComp.csv")
+write.csv(CRcompare,"Results/MeanMedianContCompFisher.csv")
+#CRcompare<-read.csv("Results/MeanMedianContComp.csv")[,-1]
+
 
 CRcompSum<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,MeanDist=mean(MeanDist),MedianDist=mean(MedianDist),
-                 MeanNTH=mean(MeanNTH),MedianNTH=mean(MedianNTH),
-                 MeanBoot=mean(MeanBoot),MedianBoot=mean(MedianBoot))
+                 MeanNTH=mean(MeanNTH),MedianNTH=min(mean(MedianNTH),pi),
+                 MeanBoot=mean(MeanBoot),MedianBoot=min(mean(MedianBoot),pi))
 
+#CRcompSum
+#Compare Estimator Bias
 CRcompM<-melt(CRcompSum,id=c("eps","kappa","n","Dist"))
 BiasDF<-CRcompM[CRcompM$variable%in%c("MeanDist","MedianDist"),]
-qplot(eps,value,data=BiasDF,geom='line',colour=variable,group=variable,facets=.~n)
+qplot(eps,value,data=BiasDF,geom='line',colour=variable,group=variable)+facet_grid(n~.,scales="free_y")
 
+#Compare Confidence Region Volume (?)
 VolumeDF<-CRcompM[!CRcompM$variable%in%c("MeanDist","MedianDist"),]
 VolumeDF$Boot<-0; VolumeDF[grep("Boot",VolumeDF$variable),]$Boot<-1
+qplot(eps,value,data=VolumeDF,geom='line',size=I(1.25),colour=variable,group=variable)+facet_grid(n~.,scales="free_y")
 
-qplot(eps,value,data=VolumeDF,geom='line',size=I(2),colour=variable,group=variable,facets=.~n)
+#Median Boot with n=10 is bad, remove it
+VolumeDFEdited<-VolumeDF[VolumeDF$value<pi,]
+qplot(eps,value,data=VolumeDFEdited,geom='line',size=I(1.25),colour=variable,group=variable)+facet_grid(n~.,scales="free_y")
 
+
+#Compare region coverage rates
+CRcoverage<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,MeanNTHC=sum(MeanDist<MeanNTH)/length(MeanNTH),MedianNTHC=sum(MedianDist<MedianNTH)/length(MedianNTH),
+                  MeanBootC=sum(MeanDist<MeanBoot)/length(MeanNTH),MedianBootC=sum(MedianDist<MedianBoot)/length(MeanNTH))
+CRcoverM<-melt(CRcoverage,id=c("eps","kappa","n","Dist"))
+qplot(eps,value,data=CRcoverM,geom='line',colour=variable,group=variable,size=I(1.25))+
+  facet_grid(n~.,scales='free_y')+geom_hline(yintercept=.9)
 
 #coverCompare<-read.csv("Results/MeanMedianComparison.csv")[,-1]
 
