@@ -274,7 +274,7 @@ zhang.SO3<-function(x,estimator,alp=NULL,m=300){
   	n<-nrow(Rs)
   	stats<-zhangMedianC(Rs,m)
   	cdtilde<-cdfunsCSO3(Rs,median(Rs))
-  	rad<-sqrt(as.numeric(quantile(stats,1-alp))*cdtilde[1]/(2*n*cdtilde[2]^2))
+  	rad<-sqrt(as.numeric(quantile(stats,1-alp,na.rm=T))*cdtilde[1]/(2*n*cdtilde[2]^2))
   	
   }else if(estimator=='mean'){
   
@@ -307,7 +307,7 @@ zhang.Q4<-function(x,estimator,alp=NULL,m=300){
   	stats<-zhangQ4(Qs,m)
 		#Shat<-mean(Qs)
   	cdhat<-cdfuns(Qs,estimator)
-		rad<-sqrt(as.numeric(quantile(stats,1-alp))*cdhat$c/(2*n*cdhat$d^2))
+		rad<-sqrt(as.numeric(quantile(stats,1-alp,na.rm=T))*cdhat$c/(2*n*cdhat$d^2))
 		
 	}else if(estimator=='median'){
 		
@@ -448,7 +448,7 @@ fisheretal.Q4<-function(x,alp=NULL,boot=T,m=300,symm=TRUE){
     
 	  Tstats <- fisherBootC(Qs,m,symm)
     
-		qhat<-as.numeric(quantile(Tstats,1-alp))
+		qhat<-as.numeric(quantile(Tstats,1-alp,na.rm=T))
 		
 	}else{
 		
