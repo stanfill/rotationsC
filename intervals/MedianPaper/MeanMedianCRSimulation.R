@@ -81,7 +81,7 @@ for(j in 1:dimS){
 }
 
 write.csv(CRcompare,"Results/MeanMedianContCompFisher.csv")
-#CRcompare<-read.csv("Results/MeanMedianContCompNo10.csv")[,-1]
+#CRcompare<-read.csv("Results/MeanMedianContComp.csv")[,-1]
 
 #Remove rows that haven't finished running yet
 CRcompare<-CRcompare[rowSums(CRcompare[,5:10])>0,]
@@ -121,3 +121,9 @@ CRcoverM<-CRcoverM[CRcoverM$value>0,]#Remove rows that haven't finished running 
 qplot(eps,100*value,data=CRcoverM,geom='line',colour=variable,group=variable,size=I(1.25),xlab=expression(epsilon),ylab="Coverage (%)")+
   facet_grid(n~.,scales='free_y')+geom_hline(yintercept=90)+theme_bw()+labs(colour="")
 #ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/CoverageComp.pdf",width=8,height=5)
+
+#Small sample Relative efficiency
+CRcompare$RE<-(CRcompare$MeanNTH^2)/(CRcompare$MedianNTH^2)
+RelativeE<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,SSRE=mean(RE))
+RelativeE$n<-as.factor(RelativeE$n)
+qplot(eps,SSRE,data=RelativeE,colour=n,group=n,geom='line')
