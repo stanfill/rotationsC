@@ -194,32 +194,38 @@ qplot(value,Prob,data=fullDF[fullDF$Dist%in%c("mises",'All'),],colour=n,lwd=Stat
 
 library(rotations2)
 n<-100
-kap<-1
+kap<-c(.01,1)
 B<-100
 AvarHat<-rep(0,B)
+AvarHat<-matrix(c(AvarHat,AvarHat),ncol=2)
 AvarTilde<-rep(0,B)
+AvarTilde<-matrix(c(AvarTilde,AvarTilde),ncol=2)
 
-for(i in 1:B){
+for(j in 1:2){
+  for(i in 1:B){
 
-	rs<-rcayley(n,kap)
-	cosrs<-cos(rs)
-	cos2rs<-cos(rs)^2
+	  rs<-rcayley(n,kap)
+	  cosrs<-cos(rs)
+	  cos2rs<-cos(rs)^2
 
-	crs<-(cosrs+1)
-	drs<-(1+3*cosrs)/(sqrt(1-cosrs))
+	  crs<-(cosrs+1)
+	  drs<-(1+3*cosrs)/(sqrt(1-cosrs))
 
-	chat<-2*mean(1-cos2rs)/3
-	dhat<-mean(1+2*cosrs)/3
-	AvarHat[i]<-chat/(2*dhat^2)
+	  chat<-2*mean(1-cos2rs)/3
+	  dhat<-mean(1+2*cosrs)/3
+	  AvarHat[i,j]<-chat/(2*dhat^2)
 
-	ctilde<-mean(crs)/6  
-	dtilde<-mean(drs)/12
-	AvarTilde[i]<-ctilde/(2*dtilde^2)
+	  ctilde<-mean(crs)/6  
+	  dtilde<-mean(drs)/12
+	  AvarTilde[i,j]<-ctilde/(2*dtilde^2)
 
+  }
 }
-
+colMeans(AvarHat)/colMeans(AvarTilde)
 #Empirically AvarTilde > AvarHat
-plot(AvarHat,AvarTilde,pch=19)
+plot(AvarHat[,1],AvarTilde[,1],pch=19)
+abline(0,1)
+plot(AvarHat[,2],AvarTilde[,2],pch=19)
 abline(0,1)
 
 ##
@@ -270,6 +276,62 @@ qplot(kap,Are,data=ARE,linetype=Distribution,group=Distribution,lwd=I(1.5),geom=
 ks<-seq(0,25,length=50)
 plot(ks,cayRatio2(ks),type='l') #without stirling approximation
 lines(ks,cayRatio(ks),lty=2) #Using stirling approximation
+
+
+###########################
+#Use Fisher information matrix (FIM) from Leon et al. (2006) and
+#c and d to plot ARE for cayley with and without using Stirling's to simplify gamma function
+
+cayAre<-function(kap){
+  c<-(4*kap+2)/(kap^2+5*kap+6)
+  d<-kap/(kap+2)
+  Mean<-c/(2*d^2)
+  
+  FIM<-kap^2/(2*kap-1)
+  
+  c2<-(2*kap+1)/(6*kap+12)
+  d2<-sqrt(2/pi)*kap*gamma(kap+2)/(3*gamma(kap+2.5))
+  Median<-c2/(2*d2^2)
+  return(list(Hat=(1/FIM)/Mean,Tilde=(1/FIM)/Median))
+}
+
+ks<-seq(.51,25,length=50)
+plot(ks,cayAre(ks)$Hat,type='l')
+lines(ks,cayAre(ks)$Tilde,lty=2)
+lines(ks,cayAre(ks)$Tilde/cayAre(ks)$Hat,lty=3)
+
+###########################
+#See if this is true for Beta distribution.  It is.
+
+#median has AV equal to 1/[2f(mu)]^2 where mu=alpha/(alpha+beta)
+
+betaARE<-function(kappa){
+  alpha<-kappa+0.5
+  beta<-1.5
+  mu<-alpha/(alpha+beta)
+  
+  Median<-(2*dbeta(mu,alpha,beta))^-2
+  Mean<-(alpha*beta)/((alpha+beta)^2*(alpha+beta+1))
+  return(Mean/Median)
+}
+
+ks<-seq(.51,25,length=50)
+plot(ks,betaARE(ks),type='l')
+
+x<-seq(0,1,length=100)
+plot(x,dbeta(x,.51,1.5),type='l')
+lines(x,dbeta(x,.6,1.5),col=2)
+lines(x,dbeta(x,.7,1.5),col=3)
+lines(x,dbeta(x,1,1.5),col=4)
+
+normARE<-function(sigma){
+  Median<-(2*dnorm(0,0,sigma))^-2
+  Mean<-sigma^2
+  return(Mean/Median)
+}
+
+ks<-seq(.51,25,length=50)
+plot(ks,normARE(ks),type='l')
 
 ###########################
 ###########################
