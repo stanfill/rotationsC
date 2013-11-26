@@ -42,7 +42,7 @@ for(j in 1:dimS){
   rs<-rfisher(nj,kappa=CRcompare$kappa[j])
   Rs<-genRCont(rs,p=CRcompare$eps[j],S=id.SO3,Scont=Scont)
   #Rs<-ruarsCont(nj,rfisher,kappa1=CRcompare$kappa[j],p=CRcompare$eps[j],S=id.SO3,Scont=Scont)
-  Qs<-Q4(Rs)
+  Qs<-newQ4(Rs)
   
   #Mean
   Qhat<-mean(Qs)
@@ -84,7 +84,7 @@ for(j in 1:dimS){
 }
 
 write.csv(CRcompare,"Results/MeanMedianContCompFisher.csv")
-#CRcompare<-read.csv("Results/MeanMedianContCompNo10.csv")[,-1]
+#CRcompare<-read.csv("Results/MeanMedianContComp.csv")[,-1]
 
 #Remove rows that haven't finished running yet
 #CRcompare<-CRcompare[rowSums(CRcompare[,5:10])>0,]
@@ -116,7 +116,7 @@ qplot(eps,value,data=VolumeDF,geom='line',size=I(1.25),colour=variable,group=var
 
 #Median Boot with n=10 is bad, remove it
 VolumeDFEdited<-VolumeDF[VolumeDF$value<pi,]
-qplot(eps,value,data=VolumeDFEdited,geom='line',size=I(1.25),colour=variable,group=variable,xlab=expression(epsilon),ylab="Region Size")+
+qplot(eps,value,data=VolumeDFEdited,geom='line',size=I(1.25),colour=variable,group=variable,xlab=expression(epsilon),ylab="CR Size")+
   facet_grid(n~.,scales="free_y",labeller = label_parsed)+theme_bw()+theme(legend.position="none")+theme(aspect.ratio=1/2)
 #ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/VolumeComp.pdf",width=4,height=6,units="in")
 

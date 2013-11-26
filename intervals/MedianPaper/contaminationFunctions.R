@@ -61,3 +61,11 @@ genRCont<-function(rs,p,S=id.SO3,Scont,space='SO3'){
   return(Rs)
   
 }
+
+newQ4<-function(Rs){
+  rs<-angle(Rs)
+  us<-axis(Rs)
+  Qs<-cbind(cos(rs/2),sin(rs/2)*us)
+  Qs<-as.Q4(Qs)
+  return(Qs)
+}

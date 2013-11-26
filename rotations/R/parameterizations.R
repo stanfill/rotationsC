@@ -75,8 +75,10 @@ Q4.default <- function(q,theta=NULL,...){
   #if(any(ulen!=1))
   #  U<-U/ulen
   
-  x <- Q4defaultC(U,theta)
+  #CPP version is causing seg faults, try just doing it in R
+  #x <- Q4defaultC(U,theta)
   
+  x <- cbind(cos(theta/2), sin(theta/2) * U)
   class(x)<-"Q4"
   return(x)
 }
