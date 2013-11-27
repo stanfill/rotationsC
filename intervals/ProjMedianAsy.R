@@ -334,6 +334,25 @@ ks<-seq(.51,25,length=50)
 plot(ks,normARE(ks),type='l')
 
 ###########################
+#Idea, compare f(0) for cayley and fisher as a function of kappa
+kap<-seq(.1,2,length=20)
+fcay<-dcayley(0.0001,kappa=kap,Haar=T)
+ffisher<-dfisher(0.0001,kappa=kap,Haar=T)
+
+plot(kap,ffisher,type='l',ylim=c(min(fcay,ffisher),max(fcay,ffisher)))
+lines(kap,fcay,col=2)
+
+#Nope, try d-cayley versus d-fisher for median
+dcay<-sqrt(2/pi)*kap*gamma(kap+2)/(3*gamma(kap+2.5))
+dfish<-exp(2*kap)*(6*sqrt(kap)-(3+8*kap)*dawson(2*sqrt(kap)))/(24*sqrt(2)*pi*kap^1.5*(besselI(2*kap,0)-besselI(2*kap,1)))
+plot(kap,dfish,type='l',ylim=c(min(dcay,dfish),max(dcay,dfish)))
+lines(kap,dcay,col=2)
+
+#Not convinced, try d-hat verus d-tilde for cayley
+dhat<-kap/(kap+2)
+plot(kap,dhat,type='l',ylim=c(min(dcay,dhat),max(dcay,dhat)))
+lines(kap,dcay,col=2)
+###########################
 ###########################
 #Compare theoretical to empirical c and d values for distributions
 
