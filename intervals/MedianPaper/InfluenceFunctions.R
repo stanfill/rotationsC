@@ -35,6 +35,62 @@ IFMedian<-function(r,kap,Fisher=T,SIF=F){
   }
 }
 
+GESMean<-function(kap,Fisher=F,SIF=F,IF=F){
+  
+  if(Fisher){
+    d<-(((kap+1)/kap)*besselI(2*kap,1)-besselI(2*kap,0))/(3*(besselI(2*kap,0)-besselI(2*kap,1)))
+    c<-(((kap+1)/kap)*besselI(2*kap,1)-besselI(2*kap,0))/(3*kap*(besselI(2*kap,0)-besselI(2*kap,1)))
+    x<-2*d*d/c
+  }else{
+    d<-kap/(kap+2)
+    c<-(4*kap+2)/(kap^2+5*kap+6)
+    x<-kap^2/(2*kap-1)
+  }
+  
+  
+  if(SIF){
+    #Standardize
+    if(IF){
+      #Information standardized
+      return(sqrt(x/d))
+    }else{
+      #Self Standardized
+      return(sqrt(2/c))
+    }
+  }else{
+    #Don't standardize
+    return(1/d)
+  }
+}
+
+
+GESMedian<-function(kap,Fisher=F,SIF=F,IF=F){
+  
+  if(Fisher){
+    d<-exp(2*kap)*(6*sqrt(kap)-(3+8*kap)*dawson(2*sqrt(kap)))/(24*sqrt(2)*pi*kap^1.5*(besselI(2*kap,0)-besselI(2*kap,1)))
+    c<-besselI(2*kap,1)/(12*kap*(besselI(2*kap,0)-besselI(2*kap,1)))
+    x<-2*d*d/c
+  }else{
+    d<-sqrt(2/pi)*kap*gamma(kap+2)/(3*gamma(kap+2.5))
+    c<-(2*kap+1)/(6*kap+12)
+    x<-kap^2/(2*kap-1)
+  }
+  
+  if(SIF){
+    #Standardize
+    if(IF){
+      #Information standardized
+      return(sqrt(x/(2*d^2)))
+    }else{
+      #Self Standardized
+      return(1/sqrt(c))
+    }
+  }else{
+    #Don't standardize
+    return(1/(sqrt(2)*d))
+  }
+}
+
 #############
 #Compare IFs
 library(gsl)
@@ -132,4 +188,41 @@ KF<-sqrt(kap*besselI(kap,0)/besselI(kap,1))
 IFDFFish<-data.frame(r=rep(rs,3),kappa=as.factor(rep(kap,each=100)),Mean=c(IFMean(rs,kap[1],T),IFMean(rs,kap[2],T),IFMean(rs,kap[3],T)),
                      Median=c(IFMedian(rs,kap[1],T),IFMedian(rs,kap[2],T),IFMedian(rs,kap[3],T)))
 IFDFFish
+
+#############
+#Compare estimator sensitivity as a function of kappa
+library(ggplot2)
+library(reshape2)
+library(plyr)
+library(gsl)
+kap<-seq(.51,5,length=100)
+
+#Use the unstandardized IF
+GESDF<-data.frame(kappa=rep(kap,2),Dist=rep(c("Cayley","Fisher"),each=100),
+                  Median=c(GESMedian(kap,F),GESMedian(kap,T)),Mean=c(GESMean(kap,F),GESMean(kap,T)))
+
+GESdfm<-melt(GESDF,id=c("kappa","Dist"))
+colnames(GESdfm)[3:4]<-c("Estimator","GES")
+#Facet by Estimator
+qplot(kappa,GES,data=GESdfm,geom='line',colour=Estimator,facets=.~Dist)+theme_bw()
+
+#Use the self-standardized IF
+SGESDF<-data.frame(kappa=rep(kap,2),Dist=rep(c("Cayley","Fisher"),each=100),
+                  Median=c(GESMedian(kap,F,T),GESMedian(kap,T,T)),Mean=c(GESMean(kap,F,T),GESMean(kap,T,T)))
+
+SGESdfm<-melt(SGESDF,id=c("kappa","Dist"))
+colnames(SGESdfm)[3:4]<-c("Estimator","SGES")
+#Facet by Estimator
+qplot(kappa,SGES,data=SGESdfm,geom='line',colour=Estimator,facets=.~Dist)+theme_bw()
+
+#Use the information-standardized IF
+ISGESDF<-data.frame(kappa=rep(kap,2),Dist=rep(c("Cayley","Fisher"),each=100),
+                   Median=c(GESMedian(kap,F,T,T),GESMedian(kap,T,T,T)),Mean=c(GESMean(kap,F,T,T),GESMean(kap,T,T,T)))
+ISGESDF$Ratio<-ISGESDF$Median/ISGESDF$Mean
+
+ISGESdfm<-melt(ISGESDF,id=c("kappa","Dist"))
+colnames(ISGESdfm)[3:4]<-c("Estimator","ISGES")
+#Facet by Estimator
+qplot(kappa,ISGES,data=ISGESdfm[ISGESdfm$Estimator!='Ratio',],geom='line',colour=Estimator,facets=.~Dist)+theme_bw()
+qplot(kappa,ISGES,data=ISGESdfm[ISGESdfm$Estimator=='Ratio',],geom='line',facets=.~Dist)+theme_bw()
 
