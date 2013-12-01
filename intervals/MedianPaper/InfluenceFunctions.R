@@ -52,7 +52,7 @@ GESMean<-function(kap,Fisher=F,SIF=F,IF=F){
     #Standardize
     if(IF){
       #Information standardized
-      return(sqrt(x/d))
+      return(sqrt(x/d^2))
     }else{
       #Self Standardized
       return(sqrt(2/c))
@@ -195,7 +195,7 @@ library(ggplot2)
 library(reshape2)
 library(plyr)
 library(gsl)
-kap<-seq(.51,5,length=100)
+kap<-seq(.01,5,length=100)
 
 #Use the unstandardized IF
 GESDF<-data.frame(kappa=rep(kap,2),Dist=rep(c("Cayley","Fisher"),each=100),
