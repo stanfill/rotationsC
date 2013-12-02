@@ -299,7 +299,7 @@ ks<-seq(.51,25,length=50)
 plot(ks,cayAre(ks)$Hat,type='l')
 lines(ks,cayAre(ks)$Tilde,lty=2)
 lines(ks,cayAre(ks)$Tilde/cayAre(ks)$Hat,lty=3)
-
+legend("bottomright",c("MLE/MOM","MLE/Median","MOM/Median"),lty=c(1,2,3))
 ###########################
 #See if this is true for Beta distribution.  It is.
 
