@@ -195,7 +195,7 @@ library(ggplot2)
 library(reshape2)
 library(plyr)
 library(gsl)
-kap<-seq(.01,5,length=100)
+kap<-seq(.01,7,length=100)
 
 #Use the unstandardized IF
 GESDF<-data.frame(kappa=rep(kap,2),Dist=rep(c("Cayley","Fisher"),each=100),
@@ -216,13 +216,16 @@ colnames(SGESdfm)[3:4]<-c("Estimator","SGES")
 qplot(kappa,SGES,data=SGESdfm,geom='line',colour=Estimator,facets=.~Dist)+theme_bw()
 
 #Use the information-standardized IF
-ISGESDF<-data.frame(kappa=rep(kap,2),Dist=rep(c("Cayley","Fisher"),each=100),
+ISGESDF<-data.frame(kappa=rep(kap,2),Dist=rep(c("Cayley","matrix Fisher"),each=100),
                    Median=c(GESMedian(kap,F,T,T),GESMedian(kap,T,T,T)),Mean=c(GESMean(kap,F,T,T),GESMean(kap,T,T,T)))
 ISGESDF$Ratio<-ISGESDF$Median/ISGESDF$Mean
 
 ISGESdfm<-melt(ISGESDF,id=c("kappa","Dist"))
 colnames(ISGESdfm)[3:4]<-c("Estimator","ISGES")
 #Facet by Estimator
-qplot(kappa,ISGES,data=ISGESdfm[ISGESdfm$Estimator!='Ratio',],geom='line',colour=Estimator,facets=.~Dist)+theme_bw()
+qplot(kappa,ISGES,data=ISGESdfm[ISGESdfm$Estimator!='Ratio',],size=I(1.25),geom='line',colour=Estimator,ylim=c(1,6),xlab=expression(kappa),ylab="SGES")+
+  theme_bw()+theme(aspect.ratio=1)+facet_grid(.~Dist)+geom_vline(xintercept=0,colour='gray')+theme(legend.position=c(.9,.8))
+ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/SGES.pdf",width=6,height=3.5)
+
 qplot(kappa,ISGES,data=ISGESdfm[ISGESdfm$Estimator=='Ratio',],geom='line',facets=.~Dist)+theme_bw()
 
