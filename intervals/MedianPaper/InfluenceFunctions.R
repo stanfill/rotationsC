@@ -195,6 +195,7 @@ library(ggplot2)
 library(reshape2)
 library(plyr)
 library(gsl)
+library(grid)
 kap<-seq(.01,7,length=100)
 
 #Use the unstandardized IF
@@ -224,8 +225,8 @@ ISGESdfm<-melt(ISGESDF,id=c("kappa","Dist"))
 colnames(ISGESdfm)[3:4]<-c("Estimator","ISGES")
 #Facet by Estimator
 qplot(kappa,ISGES,data=ISGESdfm[ISGESdfm$Estimator!='Ratio',],size=I(1.25),geom='line',colour=Estimator,ylim=c(1,6),xlab=expression(kappa),ylab="SGES")+
-  theme_bw()+theme(aspect.ratio=1)+facet_grid(.~Dist)+geom_vline(xintercept=0,colour='gray')+theme(legend.position=c(.9,.8))
-ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/SGES.pdf",width=6,height=3.5)
+  theme_bw()+facet_grid(.~Dist)+theme(aspect.ratio=1,panel.margin=unit(2, "lines"),legend.position=c(.9,.8))+geom_vline(xintercept=0,colour='gray')
+ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/SGES.pdf",width=6.5,height=3.5)
 
 qplot(kappa,ISGES,data=ISGESdfm[ISGESdfm$Estimator=='Ratio',],geom='line',facets=.~Dist)+theme_bw()
 
