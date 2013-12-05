@@ -44,6 +44,7 @@ multiplot(plotlist=psLeg,layout=matrix(c(1:4),nrow=1,byrow=T))
 
 #Randomly select a location with enough spread to be interesting
 possibles<-which(loc.stats$dE>.1 & loc.stats$dE<.15)
+possibles<-c(possibles,ex)
 m<-length(possibles)
 DataExDF<-data.frame(Location=rep(0,m),MeanNTH=rep(0,m),MedianNTH=rep(0,m),MeanBoot=rep(0,m),MedianBoot=rep(0,m))
 
