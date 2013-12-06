@@ -139,9 +139,10 @@ levels(resM2$Dist)<-c("Cayley","matrix Fisher","circular-von Mises")
 resM2$LargeN<-"Small n"
 resM2[resM2$n>30,]$LargeN<-"Large n"
 resM2$LargeN<-factor(resM2$LargeN,levels=c("Small n","Large n"))
-resM2$nu<-factor(resM2$nu,labels=c("nu == 0.25","nu == 0.50","nu == 0.75"))
+resM2$factorNu<-factor(resM2$nu,labels=c("nu == 0.25","nu == 0.50","nu == 0.75"))
 
-qplot(n,value,data=resM2[resM2$nu=="nu == 0.25",],col=Method,linetype=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
+
+qplot(n,value,data=resM2[resM2$nu==0.25,],col=Method,linetype=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
   scale_linetype_manual(values = rep(c("dashed","solid"),each=2))+
   scale_colour_manual(values = rep(c("gray50","black"),2))+
   facet_wrap(Dist~LargeN,scales='free',ncol=2)+
@@ -149,7 +150,7 @@ qplot(n,value,data=resM2[resM2$nu=="nu == 0.25",],col=Method,linetype=Method,yla
   scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+
   theme(legend.key.width=unit(3,"line"),legend.position='top',panel.margin = unit(.75, "lines"))
 
-qplot(n,value,data=resM2[resM2$nu=="nu == 0.75",],col=Method,linetype=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
+qplot(n,value,data=resM2[resM2$nu==0.75,],col=Method,linetype=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
   scale_linetype_manual(values = rep(c("dashed","solid"),each=2))+
   scale_colour_manual(values = rep(c("gray50","black"),2))+
   facet_wrap(Dist~LargeN,scales='free',ncol=2)+
@@ -157,6 +158,28 @@ qplot(n,value,data=resM2[resM2$nu=="nu == 0.75",],col=Method,linetype=Method,yla
   scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+
   theme(legend.key.width=unit(3,"line"),legend.position='top',panel.margin = unit(.75, "lines"))
 
+resM2$Variability<-"High Var."
+resM2[resM2$nu==0.5,]$Variability<-"Medium Var."
+resM2[resM2$nu==0.25,]$Variability<-"Low Var."
+resM2$Variability<-factor(resM2$Variability,levels=c("Low Var.","Medium Var.","High Var."))
+levels(resM2$Dist)<-c("Cayley","matrix~~Fisher","circular-von~~Mises")
+resM2$Dist<-factor(resM2$Dist,levels=c("Cayley","circular-von~~Mises","matrix~~Fisher"))
+
+qplot(n,value,data=resM2[resM2$LargeN=="Small n" & resM2$nu!=0.5,],col=Method,linetype=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
+  scale_linetype_manual(values = rep(c("dashed","solid"),each=2))+
+  scale_colour_manual(values = rep(c("gray50","black"),2))+
+  facet_grid(Dist~factorNu,labeller=label_parsed)+
+  geom_hline(yintercept=alp*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
+  scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+
+  theme(legend.key.width=unit(3,"line"),legend.position='top',panel.margin = unit(.5, "lines"))
+
+qplot(n,value,data=resM2[resM2$LargeN!="Small n" & resM2$nu!=0.5,],col=Method,linetype=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
+  scale_linetype_manual(values = rep(c("dashed","solid"),each=2))+
+  scale_colour_manual(values = rep(c("gray50","black"),2))+
+  facet_grid(Dist~factorNu,labeller=label_parsed)+
+  geom_hline(yintercept=alp*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
+  scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+
+  theme(legend.key.width=unit(3,"line"),legend.position='top',panel.margin = unit(.5, "lines"))
 
 ###############
 #No circular von Mises for mean median comparison
