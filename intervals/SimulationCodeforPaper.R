@@ -113,6 +113,7 @@ levels(resM$Method)<-c("Eigen(NTH)","Eigen(Boot.)","Moment(NTH)","Moment(Boot.)"
 
 levels(resM$Dist)<-c("Cayley","matrix~~Fisher","circular-von~~Mises")
 resM$Dist<-factor(resM$Dist,levels=c("Cayley","circular-von~~Mises","matrix~~Fisher"))
+resM2<-resM
 resM$nu<-factor(resM$nu,labels=c("nu == 0.25","nu == 0.50","nu == 0.75"))
 #resM$n<-as.factor(resM$n)
 
@@ -131,7 +132,34 @@ qplot(n,value,data=resM,col=Method,linetype=Method,ylab='Coverage Rate (%)',xlab
   theme(legend.key.width=unit(3,"line"),legend.position='top',panel.margin = unit(.75, "lines"))
 #ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Mean/Figures/CoverRatesB10000.pdf",width=7,height=6)
 
+#############
+#Massage the plots to accentuate the differences as a function of n and nu
 
+levels(resM2$Dist)<-c("Cayley","matrix Fisher","circular-von Mises")
+resM2$LargeN<-"Small n"
+resM2[resM2$n>30,]$LargeN<-"Large n"
+resM2$LargeN<-factor(resM2$LargeN,levels=c("Small n","Large n"))
+resM2$nu<-factor(resM2$nu,labels=c("nu == 0.25","nu == 0.50","nu == 0.75"))
+
+qplot(n,value,data=resM2[resM2$nu=="nu == 0.25",],col=Method,linetype=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
+  scale_linetype_manual(values = rep(c("dashed","solid"),each=2))+
+  scale_colour_manual(values = rep(c("gray50","black"),2))+
+  facet_wrap(Dist~LargeN,scales='free',ncol=2)+
+  geom_hline(yintercept=alp*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
+  scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+
+  theme(legend.key.width=unit(3,"line"),legend.position='top',panel.margin = unit(.75, "lines"))
+
+qplot(n,value,data=resM2[resM2$nu=="nu == 0.75",],col=Method,linetype=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
+  scale_linetype_manual(values = rep(c("dashed","solid"),each=2))+
+  scale_colour_manual(values = rep(c("gray50","black"),2))+
+  facet_wrap(Dist~LargeN,scales='free',ncol=2)+
+  geom_hline(yintercept=alp*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
+  scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+
+  theme(legend.key.width=unit(3,"line"),legend.position='top',panel.margin = unit(.75, "lines"))
+
+
+###############
+#No circular von Mises for mean median comparison
 resMnoCVM<-resM[resM$Dist!="circular-von~~Mises",]
 
 qplot(n,value,data=resMnoCVM,col=Method,linetype=Method,ylab='Coverage Rate (%)',xlab='Sample Size')+
