@@ -69,7 +69,8 @@ GESMedian<-function(kap,Fisher=F,SIF=F,IF=F){
   if(Fisher){
     d<-exp(2*kap)*(6*sqrt(kap)-(3+8*kap)*dawson(2*sqrt(kap)))/(24*sqrt(2)*pi*kap^1.5*(besselI(2*kap,0)-besselI(2*kap,1)))
     c<-besselI(2*kap,1)/(12*kap*(besselI(2*kap,0)-besselI(2*kap,1)))
-    x<-2*d*d/c
+    #x<-2*d*d/c
+    x<-(2/3)*((kap+1)*besselI(2*kap,1)-kap*besselI(2*kap,0))/(besselI(2*kap,0)-besselI(2*kap,1))
   }else{
     d<-sqrt(2/pi)*kap*gamma(kap+2)/(3*gamma(kap+2.5))
     c<-(2*kap+1)/(6*kap+12)
@@ -225,8 +226,9 @@ ISGESdfm<-melt(ISGESDF,id=c("kappa","Dist"))
 colnames(ISGESdfm)[3:4]<-c("Estimator","ISGES")
 #Facet by Estimator
 qplot(kappa,ISGES,data=ISGESdfm[ISGESdfm$Estimator!='Ratio',],size=I(1.25),geom='line',colour=Estimator,ylim=c(1,6),xlab=expression(kappa),ylab="SGES")+
-  theme_bw()+facet_grid(.~Dist)+theme(aspect.ratio=1,panel.margin=unit(2, "lines"),legend.position=c(.9,.8))+geom_vline(xintercept=0,colour='gray')
-ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/SGES.pdf",width=6.5,height=3.5)
+  theme_bw()+facet_grid(.~Dist)+theme(aspect.ratio=1,panel.margin=unit(2, "lines"),legend.position=c(.9,.8))+geom_vline(xintercept=0,colour='gray')+
+  geom_hline(yintercept=1.87997,colour='gray')
+#ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/SGES.pdf",width=6.5,height=3.5)
 
 qplot(kappa,ISGES,data=ISGESdfm[ISGESdfm$Estimator=='Ratio',],geom='line',facets=.~Dist)+theme_bw()
 
