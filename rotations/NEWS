@@ -4,18 +4,17 @@ rotations version 0.2
 
 Changes -
 
+* Multiple columns can be supplied to `col` in `plot` via grid.arrange.  Each requested column is identified by its axis and one legend is printed when applicable.  For example `col=c(1,3)` will print two labelled eyeballs, one for the x- and one for the z-axis.
+
+* Quaternions are only unique up to their sign, that is if q is a quaternion the q=-q.  So `==` has be redefined such that `q==-q` will return `TRUE`.
 
 New Features -
 
 * The `'['` operator has been redefined to maintain the `SO3` or `Q4` class of the object.
 
-* Addition `+` and subtraction `-` have been redefined for the multiplicative group $SO(3)$.  That is, for $R_1$ and $R_2$ in $SO(3)$, $R_1+R_2=R_2R_1$, $R_1-R_2=R_2^\top R_1$ and $-R_1=R_1^\top$.
-
-* The `plot` function can now print multiple columns of a sample of rotations simultaneously through the argument `col`.  For example `col=c(1,3)` will print two labelled eyeballs, one for the $x$- and one for the $z$-axis.
+* Addition `+` and subtraction `-` have been redefined for the multiplicative group $SO(3)$.  That is, for R1 and R2 in SO(3), R1+R2=R2R1, R1-R2=R2'R1 and -R1=R1'.
 
 * The `head` and `str` functions have been modified to properly handle objects of class `'SO3'` and `'Q4'`.
-
-* Quaternions are unique up to their sign, that is if q is a quaternion the q=-q.  So `==` has be redifined such that `q==-q` will return `TRUE`.
 
 * Functions for Bayesian analysis
   * Each of the following functions requires the user to supply `type`, `tuneS`, `tuneK`, `burnin` and `B`.  These arguments  determine the transition probability form, tuning parameters for the central orientation, concentration parameter, burnin for the MCMC and total number of draws from the posterior, respectively.  Currently only `'Cayley'`, `'Fisher'` and `'Mises'` are valid options for `type`.  See the respective help files for more details.
@@ -27,4 +26,4 @@ New Features -
 
 rotations version 0.1
 
-* Firsr CRAN release
+* First CRAN release
