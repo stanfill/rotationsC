@@ -1,5 +1,5 @@
 library(ggplot2)
-require(grid)
+require(gridExra)
 
 #this had to be added because the .Call version of SO3.default can't be called from insider the function...I think
 oldSO3 <- function(U, theta=NULL) {
@@ -149,26 +149,8 @@ pointsXYZ <- function(data, center, column=1) {
 plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300,  ...) {
 
   if(length(col)>1){
-    if(1 %in% col){
-      p1<-plot(x,center=center,col=1,to_range=to_range,show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,...)
-      p1<-p1+theme(axis.title.x=element_text(size=rel(1.5)))+xlab("x-axis")
-    }else p1<-NULL
-    
-    if(2 %in% col){
-      p2<-plot(x,center=center,col=2,to_range=to_range,show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,...)
-      p2<-p2+theme(axis.title.x=element_text(size=rel(1.5)))+xlab("y-axis")
-    }else p2<-NULL
-    
-    if(3 %in% col){
-      p3<-plot(x,center=center,col=3,to_range=to_range,show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,...)
-      p3<-p3+theme(axis.title.x=element_text(size=rel(1.5)))+xlab("z-axis")
-    }else p3<-NULL
-    
-    ps<-list(p1,p2,p3)
-    ps<-ps[!sapply(ps, is.null)]
-    
-    multiplot(plotlist=ps,layout=matrix((1:length(col)),nrow=1,byrow=T))
-  }
+    mplotSO3(x, center=center, col=col, to_range=to_range, show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,...)
+  }else{
   
   Rs <- as.SO3(x)
 	xlimits <- c(-1,1)
@@ -288,52 +270,69 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
     regs+
 		regsMed+
 		xlim(xlimits) + ylim(ylimits)
+  }
 }
 
-# Multiple plot function
-# 
-# Taken from http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/
-#
-# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
-# - cols:   Number of columns in layout
-# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
-#
-# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
-# then plot 1 will go in the upper left, 2 will go in the upper right, and
-# 3 will go all the way across the bottom.
-#
-multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
-  #require(grid)
+#Function written by Luciano Selzer and published on Stackoverflow on Aug 9 2012 and edited by user "sebastian-c".
+#It removes the guide from a ggplot2 object that can then be drawn by calling "grid.draw()" on what is returned
+g_legend<-function(a.gplot){
+  tmp <- ggplot_gtable(ggplot_build(a.gplot))
+  leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+  if(length(leg)>0){
+    legend <- tmp$grobs[[leg]]
+    return(legend)
+  }else return(NULL)
+}
+
+
+#If more then one column is called in plot.SO3 then this is called to independencly create an eyeball for each column
+#and print them in a single row with the legend at the end, if applicable.
+mplotSO3<-function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300,  ...){
   
-  # Make a list from the ... arguments and plotlist
-  plots <- c(list(...), plotlist)
+  p4<-NULL
+  if(1 %in% col){
+    p1<-plot(x,center=center,col=1,to_range=to_range,show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,...)
+    p1<-p1+theme(axis.title.x=element_text(size=rel(1.5)))+xlab("x-axis")
+    p4<-g_legend(p1)
+    p1<-p1+theme(legend.position='none')
+  }else p1<-NULL
+
+  if(2 %in% col){
+    p2<-plot(x,center=center,col=2,to_range=to_range,show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,...)
+    p2<-p2+theme(axis.title.x=element_text(size=rel(1.5)))+xlab("y-axis")
+    p4<-g_legend(p2)
+    p2<-p2+theme(legend.position='none')
+  }else p2<-NULL
+
+  if(3 %in% col){
+    p3<-plot(x,center=center,col=3,to_range=to_range,show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,...)
+    p3<-p3+theme(axis.title.x=element_text(size=rel(1.5)))+xlab("z-axis")
+    p4<-g_legend(p3)
+    p3<-p3+theme(legend.position='none')
+  }else p3<-NULL
+
   
-  numPlots = length(plots)
   
-  # If layout is NULL, then use 'cols' to determine layout
-  if (is.null(layout)) {
-    # Make the panel
-    # ncol: Number of columns of plots
-    # nrow: Number of rows needed, calculated from # of cols
-    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
-                     ncol = cols, nrow = ceiling(numPlots/cols))
+  ps<-list(p1,p2,p3,p4)
+  ps<-!sapply(ps, is.null)
+  if(all(ps==c(T,T,T,T))){
+    grid.arrange(p1,p2,p3,p4,nrow=1,widths=c(2,2,2,1))
+  }else if(all(ps==c(T,T,F,T))){
+    grid.arrange(p1,p2,p4,nrow=1,widths=c(2,2,1))
+  }else if(all(ps==c(T,F,T,T))){
+    grid.arrange(p1,p3,p4,nrow=1,widths=c(2,2,1))
+  }else if(all(ps==c(F,T,T,T))){
+    grid.arrange(p2,p3,p4,nrow=1,widths=c(2,2,1))
+  }else if(all(ps==c(T,T,T,F))){
+    grid.arrange(p1,p2,p3,nrow=1)
+  }else if(all(ps==c(T,T,F,F))){
+    grid.arrange(p1,p2,nrow=1)
+  }else if(all(ps==c(T,F,T,F))){
+    grid.arrange(p1,p3,nrow=1)
+  } else if(all(ps==c(F,T,T,F))){
+    grid.arrange(p2,p3,nrow=1)
+  }else{
+    stop("Specify the columns correctly.")
   }
-  
-  if (numPlots==1) {
-    print(plots[[1]])
-    
-  } else {
-    # Set up the page
-    grid.newpage()
-    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
-    
-    # Make each plot, in the correct location
-    for (i in 1:numPlots) {
-      # Get the i,j matrix positions of the regions that contain this subplot
-      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
-      
-      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
-                                      layout.pos.col = matchidx$col))
-    }
-  }
+
 }

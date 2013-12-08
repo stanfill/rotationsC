@@ -16,9 +16,10 @@ Depends:
     R (>= 3.0),
     ggplot2,
     Rcpp,
-    RcppArmadillo
-Imports:
+    RcppArmadillo,
     grid,
+    gridExtra
+Imports:
     methods
 LinkingTo: Rcpp, RcppArmadillo
 Collate:
