@@ -1,4 +1,7 @@
 useDynLib(rotations)
+importFrom(utils,head)
+importFrom(stats,weighted.mean)
+import(methods,Rcpp,RcppArmadillo,ggplot2)
 S3method("+",Q4)
 S3method("+",SO3)
 S3method("-",Q4)

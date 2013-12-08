@@ -47,7 +47,7 @@ Rs<-ruars(20,rcayley,kappa=100)
 region(Rs,method='moment',type='bootstrap',alp=0.1,estimator='mean')
 }
 \seealso{
-  \code{\link{prentice}}, \code{\link{fisheretal}},
-  \code{\link{chang}}
+  \code{\link{bayesCR}}, \code{\link{prentice}},
+  \code{\link{fisheretal}}, \code{\link{chang}}
 }
 

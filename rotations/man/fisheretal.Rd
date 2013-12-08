@@ -56,7 +56,7 @@ region(Qs,method='eigen',type='bootstrap',alp=0.1,symm=TRUE,estimator='mean')
   Association_, *91*(435), pp. 1062-1070.
 }
 \seealso{
-  \code{\link{prentice}}, \code{\link{chang}},
-  \code{\link{zhang}}
+  \code{\link{bayesCR}}, \code{\link{prentice}},
+  \code{\link{chang}}, \code{\link{zhang}}
 }
 

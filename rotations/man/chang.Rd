@@ -47,7 +47,7 @@ region(Rs,method='moment',type='theory',alp=0.1,estimator='mean')
   784-814.
 }
 \seealso{
-  \code{\link{prentice}}, \code{\link{fisheretal}},
-  \code{\link{zhang}}
+  \code{\link{bayesCR}}, \code{\link{prentice}},
+  \code{\link{fisheretal}}, \code{\link{zhang}}
 }
 

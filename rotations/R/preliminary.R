@@ -532,6 +532,7 @@ formatQ4<-function(Qs){
 pMat<-function(p){
 	#Make the matrix P from quaternion p according to 3.1 of Rancourt, Rivest and Asselin (2000)
 	#This is one way to multiply quaternions
+  p<-as.vector(p)
 	Pmat<-matrix(0,4,4)
 	Pmat[,1]<-p
 	Pmat[,2]<-p[c(2,1,4,3)]*c(-1,1,1,-1)

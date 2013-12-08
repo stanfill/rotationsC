@@ -58,7 +58,7 @@ region(Qs,method='eigen',type='theory',alp=0.1,estimator='mean')
   Statistical Association_, *104*(488), pp. 1385-1397.
 }
 \seealso{
-  \code{\link{fisheretal}}, \code{\link{chang}},
-  \code{\link{zhang}}
+  \code{\link{bayesCR}}, \code{\link{fisheretal}},
+  \code{\link{chang}}, \code{\link{zhang}}
 }
 

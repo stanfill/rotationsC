@@ -63,7 +63,8 @@ error.grid <- function(sample, Shat, theta=1, error, sphere) {
 #' 
 #' cayley.sample <- ruars(n = 10, rangle = rcayley, nu = 1, space = 'SO3')
 #' SL1 <- gradient.search(cayley.sample, L1.error, start=id.SO3)
-#' # visually no perceptible difference between median estimates from in-built function and gradient based search (for almost all starting values)
+#' # visually no perceptible difference between median estimates from in-built function and 
+#' # gradient based search (for almost all starting values)
 #' plot(cayley.sample, center=SL1$Shat, show_estimates="all")
 
 gradient.search <- function(sample, error, minerr =1e-5, start = mean(sample), theta=NULL) {

@@ -155,11 +155,11 @@ str.Q4<-function(object,...){
 
 #' @S3method == Q4
 #' @method == Q4
-'==.Q4'<-function(x,y,...){
+'==.Q4'<-function(e1,e2){
 
-  x<-matrix(x,dim(x))
-  y<-matrix(y,dim(y))
-  if(all(x==y) || all(x==-y))  return(TRUE) else return(FALSE)
+  e1<-matrix(e1,dim(e1))
+  e2<-matrix(e2,dim(e2))
+  if(all(e1==e2) || all(e1==-e2))  return(TRUE) else return(FALSE)
 
 }
 

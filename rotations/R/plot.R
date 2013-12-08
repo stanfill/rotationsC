@@ -1,5 +1,5 @@
-library(ggplot2)
-require(gridExra)
+#library(ggplot2)
+
 
 #this had to be added because the .Call version of SO3.default can't be called from insider the function...I think
 oldSO3 <- function(U, theta=NULL) {
@@ -28,8 +28,8 @@ oldSO3 <- function(U, theta=NULL) {
 	return(R)
 }
 
-suppressMessages(library(ggplot2))
-require(gridExtra)
+#suppressMessages(library(ggplot2))
+#require(gridExtra)
 
 # set origin of concentric circles
 origin <- matrix(oldSO3(c(1,-1,0), pi/16),3,3)
@@ -316,21 +316,21 @@ mplotSO3<-function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL
   ps<-list(p1,p2,p3,p4)
   ps<-!sapply(ps, is.null)
   if(all(ps==c(T,T,T,T))){
-    grid.arrange(p1,p2,p3,p4,nrow=1,widths=c(2,2,2,1))
+    gridExtra::grid.arrange(p1,p2,p3,p4,nrow=1,widths=c(2,2,2,1))
   }else if(all(ps==c(T,T,F,T))){
-    grid.arrange(p1,p2,p4,nrow=1,widths=c(2,2,1))
+    gridExtra::grid.arrange(p1,p2,p4,nrow=1,widths=c(2,2,1))
   }else if(all(ps==c(T,F,T,T))){
-    grid.arrange(p1,p3,p4,nrow=1,widths=c(2,2,1))
+    gridExtra::grid.arrange(p1,p3,p4,nrow=1,widths=c(2,2,1))
   }else if(all(ps==c(F,T,T,T))){
-    grid.arrange(p2,p3,p4,nrow=1,widths=c(2,2,1))
+    gridExtra::grid.arrange(p2,p3,p4,nrow=1,widths=c(2,2,1))
   }else if(all(ps==c(T,T,T,F))){
-    grid.arrange(p1,p2,p3,nrow=1)
+    gridExtra::grid.arrange(p1,p2,p3,nrow=1)
   }else if(all(ps==c(T,T,F,F))){
-    grid.arrange(p1,p2,nrow=1)
+    gridExtra::grid.arrange(p1,p2,nrow=1)
   }else if(all(ps==c(T,F,T,F))){
-    grid.arrange(p1,p3,nrow=1)
+    gridExtra::grid.arrange(p1,p3,nrow=1)
   } else if(all(ps==c(F,T,T,F))){
-    grid.arrange(p2,p3,nrow=1)
+    gridExtra::grid.arrange(p2,p3,nrow=1)
   }else{
     stop("Specify the columns correctly.")
   }

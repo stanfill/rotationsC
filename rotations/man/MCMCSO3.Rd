@@ -19,7 +19,8 @@
   quaternion (p=4) form.}
 
   \item{type}{Angular distribution assumed on R.  Options
-  are \code{Cayley}, \code{Fisher} or \code{Mises}}
+  are \code{\link{Cayley}}, \code{\link{Fisher}} or
+  \code{\link{Mises}}}
 
   \item{S0}{initial estimate of central orientation}
 
@@ -27,10 +28,10 @@
   parameter}
 
   \item{tuneS}{tuning parameter for proposal distribution
-  for central direction S}
+  for central direction S, concentration}
 
   \item{tuneK}{tuning parameter for proposal distribution
-  for concentration parameter kappa}
+  for concentration parameter kappa, standard deviation}
 
   \item{burn_in}{number of draws to ignore in the MCMC}
 
@@ -41,9 +42,9 @@
   \item{S}{Draws from the posterior distribution for
   central orientation S} \item{kappa}{Draws from the
   posterior distribution for concentration parameter kappa}
-  \item{Saccept}{Transition probability for central
-  orientation S} \item{Kaccept}{Transition probability for
-  concentration parameter kappa}
+  \item{Saccept}{Acceptance rate for cenral orientaion
+  draws} \item{Kaccept}{Acceptance rate for concentration
+  draws}
 }
 \description{
   Use Gibbs-within-MCMC to infer about the central
@@ -52,8 +53,8 @@
 }
 \details{
   The procedures detailed in \cite{Bingham et al. (2009)}
-  and \cite{Bingham et al. (2010)} are implemented to to
-  get draws from the posterior distribution for the central
+  and \cite{Bingham et al. (2010)} are implemented to get
+  draws from the posterior distribution for the central
   orientation and concentration parameters for a sample of
   3D rotations.  A uniform prior on SO(3) is used for the
   central orientation and Jeffrey's prior is used for the

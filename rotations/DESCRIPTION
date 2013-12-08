@@ -17,10 +17,12 @@ Depends:
     ggplot2,
     Rcpp,
     RcppArmadillo,
-    grid,
-    gridExtra
+    grid
 Imports:
+    utils,
     methods
+Suggests:
+    gridExtra
 LinkingTo: Rcpp, RcppArmadillo
 Collate:
     'help.R'
