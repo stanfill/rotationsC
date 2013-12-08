@@ -12,7 +12,7 @@ New Features -
 
 * The `'['` operator has been redefined to maintain the `SO3` or `Q4` class of the object.
 
-* Addition `+` and subtraction `-` have been redefined for the multiplicative group $SO(3)$.  That is, for R1 and R2 in SO(3), R1+R2=R2R1, R1-R2=R2'R1 and -R1=R1'.
+* Addition `+` and subtraction `-` have been redefined for the multiplicative group SO(3).  That is, for R1 and R2 in SO(3), R1+R2=R2R1, R1-R2=R2'R1 and -R1=R1'.  Similarly for quaternions.
 
 * The `head` and `str` functions have been modified to properly handle objects of class `'SO3'` and `'Q4'`.
 
