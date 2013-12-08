@@ -2,23 +2,23 @@
 #'
 #' Use Gibbs-within-MCMC to infer about the central orientation and concentration parameter of a sample of rotations.
 #'
-#' The procedures detailed in \cite{bingham2009b} and \cite{bingham2010} are implemented to to get
+#' The procedures detailed in \cite{bingham2009b} and \cite{bingham2010} are implemented to get
 #' draws from the posterior distribution for the central orientation and concentration parameters for 
 #' a sample of 3D rotations.  A uniform prior on SO(3) is used for the central orientation and
 #' Jeffrey's prior is used for the concentration parameter.  
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
-#' @param type Angular distribution assumed on R.  Options are \code{Cayley}, \code{Fisher} or \code{Mises}
+#' @param type Angular distribution assumed on R.  Options are \code{\link{Cayley}}, \code{\link{Fisher}} or \code{\link{Mises}}
 #' @param S0 initial estimate of central orientation
 #' @param kappa0 initial estimate of concentration parameter
-#' @param tuneS tuning parameter for proposal distribution for central direction S
-#' @param tuneK tuning parameter for proposal distribution for concentration parameter kappa
+#' @param tuneS tuning parameter for proposal distribution for central direction S, concentration
+#' @param tuneK tuning parameter for proposal distribution for concentration parameter kappa, standard deviation
 #' @param burn_in number of draws to ignore in the MCMC
 #' @param m number of draws to keep from posterior distribution
 #' @return  \item{S}{Draws from the posterior distribution for central orientation S}
 #'          \item{kappa}{Draws from the posterior distribution for concentration parameter kappa}
-#'          \item{Saccept}{Transition probability for central orientation S}
-#'          \item{Kaccept}{Transition probability for concentration parameter kappa}
+#'          \item{Saccept}{Acceptance rate for cenral orientaion draws}
+#'          \item{Kaccept}{Acceptance rate for concentration draws}
 #' @cite bingham2009b bingham2010
 #' @export
 #' @examples
@@ -91,7 +91,7 @@ MCMCSO3.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
 #' @return  \item{S}{the posterior mode}
 #'          \item{Radius}{the radius of the credible region centered at S}
-#' @seealso \code{\link{prentice}}, \code{\link{chang}}, \code{\link{zhang}}
+#' @seealso \code{\link{fisheretal}}, \code{\link{prentice}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite bingham2009b bingham2010
 #' @export
 #' @examples

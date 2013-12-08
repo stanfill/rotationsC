@@ -11,7 +11,7 @@
 #' @param alp the alpha level desired, e.g. 0.05 or 0.10.
 #' @param ... additional arguments that are method specific.
 #' @return Radius of the confidence region centered at the projected mean.
-#' @seealso \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}}, \code{\link{zhang}}
+#' @seealso \code{\link{bayesCR}}, \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite prentice1986, fisher1996, rancourt2000, chang2001
 #' @export
 #' @examples
@@ -167,7 +167,7 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
 #' @return Radius of the confidence region centered at the projected mean for each of the x-, y- and z-axes.
-#' @seealso \code{\link{fisheretal}}, \code{\link{chang}}, \code{\link{zhang}}
+#' @seealso \code{\link{bayesCR}}, \code{\link{fisheretal}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite prentice1986, rancourt2000, bingham09
 #' @export
 #' @examples
@@ -239,7 +239,7 @@ prentice.SO3<-function(x,alp=NULL){
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
 #' @param m number of replicates to use to estiamte the critical value.
 #' @return Radius of the confidence region centered at the specified estimator.
-#' @seealso \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}}
+#' @seealso \code{\link{bayesCR}}, \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}}
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
@@ -354,7 +354,7 @@ cdfuns<-function(Qs,estimator){
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
 #' @return Radius of the confidence region centered at the specified estimator.
 #' @cite chang2001
-#' @seealso \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{zhang}}
+#' @seealso \code{\link{bayesCR}}, \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{zhang}}
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
@@ -418,7 +418,7 @@ chang.Q4<-function(x,estimator,alp=NULL){
 #' @param m number of bootstrap replicates to use to estimate critical value.
 #' @param symm logical; if TRUE (default), a symmetric region is constructed.
 #' @return Radius of the confidence region centered at the projected mean.
-#' @seealso \code{\link{prentice}}, \code{\link{chang}}, \code{\link{zhang}}
+#' @seealso \code{\link{bayesCR}}, \code{\link{prentice}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite fisher1996
 #' @export
 #' @examples
