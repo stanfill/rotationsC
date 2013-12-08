@@ -29,7 +29,7 @@ oldSO3 <- function(U, theta=NULL) {
 }
 
 suppressMessages(library(ggplot2))
-require(grid)
+require(gridExtra)
 
 # set origin of concentric circles
 origin <- matrix(oldSO3(c(1,-1,0), pi/16),3,3)
