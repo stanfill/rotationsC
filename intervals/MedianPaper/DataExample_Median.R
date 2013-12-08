@@ -25,18 +25,26 @@ ex<-loc.stats[which.max(loc.stats$dE),]$location #Should be 698
   
 exRots<-as.SO3(data.matrix(dat.out[dat.out$location==ex,3:11]))
 #exRots<-as.SO3(exRots[-4,]) #potentially remove the observation that isn't stricly a rotation
+
+#Use new plot function to show all columns at once
+plot(exRots,col=c(1,2,3),center=median(exRots),show_estimates=c('proj.mean','proj.median'),median_regions='theory',mean_regions='moment theory',alp=.1)
+plot(exRots,col=c(1,2,3),center=median(exRots),show_estimates=c('proj.mean','proj.median'),median_regions='bootstrap',mean_regions='moment bootstrap',alp=.1,m=100)
+
+
+#Manually put the three axes on the same plot
 p1<-plot(exRots,center=median(exRots),show_estimates=c('proj.mean','proj.median'),median_regions='bootstrap',mean_regions='moment bootstrap',alp=.1,m=300)
 p2<-plot(exRots,center=median(exRots),show_estimates=c('proj.mean','proj.median'),median_regions='bootstrap',mean_regions='moment bootstrap',alp=.1,m=300,col=2)
 p3<-plot(exRots,center=median(exRots),show_estimates=c('proj.mean','proj.median'),median_regions='bootstrap',mean_regions='moment bootstrap',alp=.1,m=300,col=3)
+p4<-g_legend(p1)
+p1<-p1+theme(legend.position='none')
+p2<-p2+theme(legend.position='none')
+p3<-p3+theme(legend.position='none')
 
-ps<-list(p1+theme(legend.position='none'),p2+theme(legend.position='none'),p3+theme(legend.position='none'))
-multiplot(plotlist=ps,layout=matrix(c(1:3),nrow=1,byrow=T))
+grid.arrange(p1,p2,p3,p4,nrow=1,widths=c(2,2,2,2))
+grid.arrange(p1,p2,p3,p4,nrow=2,widths=c(2,2,2,1))
 #ggsave doesn't work, use "Export." I used "width=900" and "height=300"
 
-#Add legend back if necessairy
-legend <- g_legend(p1) #pull the legend off--doesn't work
-psLeg<-list(p1+theme(legend.position='none'),p2+theme(legend.position='none'),p3+theme(legend.position='none'),legend)
-multiplot(plotlist=psLeg,layout=matrix(c(1:4),nrow=1,byrow=T))
+
 
 #####################
 #### Find all locations where mean/median differ substantially
@@ -44,7 +52,7 @@ multiplot(plotlist=psLeg,layout=matrix(c(1:4),nrow=1,byrow=T))
 
 #Randomly select a location with enough spread to be interesting
 possibles<-which(loc.stats$dE>.1 & loc.stats$dE<.15)
-possibles<-c(possibles,which.max(loc.stats$dE))
+possibles<-sort(c(possibles,which.max(loc.stats$dE)))
 m<-length(possibles)
 DataExDF<-data.frame(Location=rep(0,m),MeanNTH=rep(0,m),MedianNTH=rep(0,m),MeanBoot=rep(0,m),MedianBoot=rep(0,m))
 
@@ -58,11 +66,8 @@ for(i in 1:m){
   DataExDF$MedianBoot[i]<-region(exRots,method='moment',type='bootstrap',estimator='median',alp=.1,m=500)*180/pi
 }
 
-library(xtable)
 DataExDF$Location<-as.factor(DataExDF$Location)
 xtable(DataExDF,digits=3)
-
-
 #####################
 #### Find all locations where mean/median differ substantially, highlight them in grain map
 #####################

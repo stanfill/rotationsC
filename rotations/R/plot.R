@@ -316,7 +316,7 @@ mplotSO3<-function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL
   ps<-list(p1,p2,p3,p4)
   ps<-!sapply(ps, is.null)
   if(all(ps==c(T,T,T,T))){
-    gridExtra::grid.arrange(p1,p2,p3,p4,nrow=1,widths=c(2,2,2,1))
+    gridExtra::grid.arrange(p1,p2,p3,p4,nrow=2,widths=c(2,2,2,1))
   }else if(all(ps==c(T,T,F,T))){
     gridExtra::grid.arrange(p1,p2,p4,nrow=1,widths=c(2,2,1))
   }else if(all(ps==c(T,F,T,T))){
