@@ -40,7 +40,8 @@
   \code{kappa} \eqn{\kappa}.
 }
 \details{
-  The circular von Mises-based distribution has the density
+  The circular von Mises distribution with concentration
+  \eqn{\kappa} has density
   \deqn{C_\mathrm{M}(r|\kappa)=\frac{1}{2\pi
   \mathrm{I_0}(\kappa)}e^{\kappa
   cos(r)}.}{C(r|\kappa)=exp[\kappa cos(r)]/[2\pi

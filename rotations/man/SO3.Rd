@@ -50,11 +50,11 @@
   Construct a 3-by-3 matrix to represent a rotation.  Each
   rotation matrix can be interpreted as a rotation of some
   reference frame about the axis \eqn{U} (of unit length)
-  through the angle theta.  For each axis \eqn{U} and angle
-  theta the matrix is formed through
-  \deqn{R=\exp[\Phi(Ur)]}{R=exp[\Phi(Ur)].} If the theta
-  element is left empty then the length of each axis is
-  taken to be the angle of rotation theta.  If a
+  through the angle \eqn{\theta}.  For each axis and angle
+  the matrix is formed through
+  \deqn{R=\exp[\Phi(U\theta)]}{R=exp[\Phi(U\theta)].} If no
+  angle of rotation are supplied then the length of each
+  axis is taken to be the angle of rotation theta.  If a
   \code{\link{Q4}} object is given then this function will
   return the rotation matrix equivalent.
 }

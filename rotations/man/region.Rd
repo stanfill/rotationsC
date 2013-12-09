@@ -22,12 +22,12 @@
   theory.}
 
   \item{type}{characted string, "bootstrap" or "theory" are
-  available.  For Bayes regions, give the typle of
+  available.  For Bayes regions, give the type of
   likelihood: "Cayley","Mises" or "Fisher."}
 
   \item{estimator}{character string either "mean" or
-  "median."  Note that not all method/types are available
-  for both estimators.}
+  "median."  Note that not all method/type combinations are
+  available for both estimators.}
 
   \item{alp}{the alpha level desired, e.g. 0.05 or 0.10.}
 

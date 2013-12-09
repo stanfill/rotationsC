@@ -54,8 +54,8 @@
   draws from the posterior distribution for the central
   orientation and concentration parameters for a sample of
   3D rotations.  A uniform prior on SO(3) is used for the
-  central orientation and the appropriate Jeffrey's prior
-  is used for the concentration parameter.
+  central orientation and the appropriate Jeffreys prior is
+  used for the concentration parameter.
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=4)

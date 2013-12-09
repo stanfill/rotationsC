@@ -68,6 +68,7 @@ mean(Qs)
   _The Annals of Statistics_, pp. 725-736.
 }
 \seealso{
-  \code{\link{median.SO3}}, \code{\link{bayes.mean}}
+  \code{\link{median.SO3}}, \code{\link{bayes.mean}},
+  \code{\link{weighted.mean.SO3}}
 }
 

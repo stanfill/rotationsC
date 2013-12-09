@@ -57,6 +57,7 @@
   Rotations." _Technometrics_, *55*(4), pp. 524-535.
 }
 \seealso{
-  \code{\link{mean.SO3}}, \code{\link{bayes.mean}}
+  \code{\link{mean.SO3}}, \code{\link{bayes.mean}},
+  \code{\link{weighted.mean.SO3}}
 }
 

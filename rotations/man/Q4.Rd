@@ -50,13 +50,13 @@
   Construct a unit quaternion to represent a rotation.
   Each quaternion can be interpreted as a rotation of some
   reference frame about the axis \eqn{U} (of unit length)
-  through the angle theta.  For each axis \eqn{U} and angle
-  theta the quaternion is formed through
+  through the angle \eqn{\theta}.  For each axis and angle
+  the quaternion is formed through
   \deqn{q=[cos(\theta/2),sin(\theta/2)U]^\top.}{q=[cos(theta/2),sin(theta/2)U]'.}
-  If the theta element is left empty then the length of
-  each axis is taken to be the angle of rotation theta.  If
-  an \code{\link{SO3}} object is given then this function
-  will return the quaternion equivalent.
+  If no angle is supplied then the length of each axis is
+  taken to be the angle of rotation theta.  If an
+  \code{\link{SO3}} object is given then this function will
+  return the quaternion equivalent.
 }
 \keyword{datasets}
 
