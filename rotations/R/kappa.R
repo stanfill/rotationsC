@@ -9,7 +9,7 @@
 #'  This function translates the circular variance \eqn{\nu} into the corresponding concentration parameter \eqn{\kappa}
 #'  for the Cayley distribution.
 #'  
-#'  @param nu circular variance.
+#'  @param nu circular variance
 #'  @return Concentration parameter corresponding to nu.
 #'  @cite mardia2000
 #'  @seealso \code{\link{Cayley}}
@@ -34,7 +34,7 @@ fisher_nu_kappa<-function(kappa,nu){
 #'  This function translates the circular variance \eqn{\nu} into the corresponding concentration parameter \eqn{\kappa}
 #'  for the matrix-Fisher distribution.
 #'  
-#'  @param nu circular variance.
+#'  @param nu circular variance
 #'  @return Concentration parameter corresponding to nu.
 #'  @seealso \code{\link{Fisher}}
 #'  @cite mardia2000
@@ -66,7 +66,7 @@ mises_nu_kappa<-function(kappa,nu){
 #'  This function translates the circular variance \eqn{\nu} into the corresponding concentration parameter \eqn{\kappa}
 #'  for the circular-von Mises distribution.
 #'  
-#'  @param nu circular variance.
+#'  @param nu circular variance
 #'  @return Concentration parameter corresponding to nu.
 #'  @seealso \code{\link{Mises}}
 #'  @cite mardia2000

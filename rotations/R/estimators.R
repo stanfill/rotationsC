@@ -14,7 +14,7 @@
 #' @param epsilon stopping rule for the geometric-mean.
 #' @param maxIter maximum number of iterations allowed for geometric-mean.
 #' @param ... additional arguments.
-#' @return Estimate of the projected or geometric mean of the sample.
+#' @return Estimate of the projected or geometric mean of the sample in the same parameterization.
 #' @aliases mean.Q4
 #' @seealso \code{\link{median.SO3}}, \code{\link{bayes.mean}}
 #' @cite tyler1981, moakher02, manton04
@@ -84,7 +84,7 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 #' If the choice of distance metric \eqn{d} is Riemannian then the estimator is called the geometric median, 
 #' and if the distance metric in Euclidean then it is called the projected median.
 #' The algorithm used in the geometric case is discussed in \cite{hartley11} 
-#' and the projected case was written by the authors.
+#' and the projected case is in \cite{stanfill2013}.
 #'
 #' @name median.SO3
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix form (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
@@ -92,10 +92,10 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 #' @param epsilon stopping rule.
 #' @param maxIter maximum number of iterations allowed before returning most recent estimate.
 #' @param ... additional arguments.
-#' @return An estimate of the projected or geometric mean.
+#' @return Estimate of the projected or geometric median in the same parameterization.
 #' @aliases median.Q4 median.SO3
 #' @seealso \code{\link{mean.SO3}}, \code{\link{bayes.mean}}
-#' @cite hartley11
+#' @cite hartley11 stanfill2013
 #' @export
 
 median<-function(x,...){
@@ -167,7 +167,7 @@ median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...
 #' @param epsilon stopping rule for the geometric method.
 #' @param maxIter maximum number of iterations allowed before returning most recent estimate.
 #' @param ... only used for consistency with mean.default.
-#' @return Weighted mean of the sample.
+#' @return Weighted mean of the sample in the same parameterization.
 #' @seealso \code{\link{median.SO3}}, \code{\link{mean.SO3}}, \code{\link{bayes.mean}}
 #' @aliases weighted.mean.Q4
 #' @cite moakher02

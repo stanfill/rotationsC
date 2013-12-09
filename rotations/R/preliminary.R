@@ -252,7 +252,7 @@ eskew <- function(U) {
 #' @param r vector of angles.
 #' @param S central orientation.
 #' @param space indicates the desired representation: rotation matrix "SO3" or quaternions "Q4." 
-#' @return A matrix where each row is a sample point in the desired space.
+#' @return A matrix where each row is a random rotation matrix or quaternion.
 #' @export
 #' @examples
 #' r<-rvmises(20,0.01)
@@ -352,9 +352,9 @@ exp_skew <- function(H) {
 
 #' Rotation logarithm
 #'
-#' Compute the logarithm of a rotation matrix.  The result is a \eqn{3\times 3}{3-by-3} skew-symmetric matrix.  This function maps
+#' Compute the logarithm of a rotation matrix, which results in a \eqn{3\times 3}{3-by-3} skew-symmetric matrix.  This function maps
 #' the lie group \eqn{SO(3)} into its tangent space, which is the space of all \eqn{3\times 3}{3-by-3} skew symmetric matrices,
-#' which is the lie algerbra \eqn{so(3)}.  For details see e.g. \cite{moakher02}.
+#' the lie algerbra \eqn{so(3)}.  For details see e.g. \cite{moakher02}.
 #'
 #' @param x \eqn{n\times 9}{n-by-9} matrix where each row corresponds to a random rotation matrix.
 #' @param ... additional arguements.
