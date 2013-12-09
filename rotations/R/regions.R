@@ -1,18 +1,18 @@
-#' Confidence region for central orientation
+#' Confidence and creible regions for the central orientation
 #'
-#' Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean or median.
+#' Find the radius of a \eqn{100(1-\alpha)}\% confidence or credible region for the central orientation based on the projected mean or median.
 #' For more on the currently available methods see \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}},
 #' \code{\link{zhang}} and \code{\link{bayesCR}}.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
-#' @param method character string specifying which type of interval to report, "eigen" or "moment" based theory.
-#' @param type characted string, "bootstrap" or "theory" are available.  For Bayes regions, give the distribution: "Cayley","Mises" or "Fisher."
-#' @param estimator character string either "mean" or "median."
+#' @param method character string specifying which type of interval to report, "bayes", "eigen" or "moment" based theory.
+#' @param type characted string, "bootstrap" or "theory" are available.  For Bayes regions, give the typle of likelihood: "Cayley","Mises" or "Fisher."
+#' @param estimator character string either "mean" or "median."  Note that not all method/types are available for both estimators.
 #' @param alp the alpha level desired, e.g. 0.05 or 0.10.
 #' @param ... additional arguments that are method specific.
-#' @return Radius of the confidence region centered at the projected mean.
+#' @return For frequentist regions only the radius of the confidence region centered at the specified estimator is returned.
+#'   For Bayes regions the posterior mode and radius of the credible region centered at that mode is returned.
 #' @seealso \code{\link{bayesCR}}, \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}}, \code{\link{zhang}}
-#' @cite prentice1986, fisher1996, rancourt2000, chang2001
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=100)
@@ -20,6 +20,8 @@
 #' region(Rs,method='eigen',type='bootstrap',estimator='mean',alp=0.1,symm=TRUE)
 #' region(Rs,method='moment',type='bootstrap',estimator='mean',alp=0.1,m=100)
 #' region(Rs,method='moment',type='theory',estimator='mean',alp=0.1)
+#' region(Rs,method='Bayes',type='Cayley',estimator='mean',
+#' S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01)
 
 region<-function(x,method, type, estimator,alp,...){
 	UseMethod("region")
@@ -155,7 +157,7 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 	
 }
 
-#' Normal theory eigenvector based region method
+#' Eigenvector theory confidence region
 #'
 #' Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the projected mean based on eigenvector based result.
 #'
@@ -225,7 +227,7 @@ prentice.SO3<-function(x,alp=NULL){
 	return(r)
 }
 
-#' M-estimator based boostrap confidence region method
+#' M-estimator theory pivotal boostrap confidence region
 #'
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estiamtor theory.
 #' 
@@ -341,7 +343,7 @@ cdfuns<-function(Qs,estimator){
 	return(list(c=cd[1],d=cd[2]))
 }
 
-#' M-estimator based normal theory confidence region method
+#' M-estimator theory confidence region
 #'
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estimator theory.
 #' 
@@ -404,7 +406,7 @@ chang.Q4<-function(x,estimator,alp=NULL){
 }
 
 
-#' Bootstrap eigenvector based confidence region method
+#' Eigenvector theory pivotal bootstrap confidence region
 #'
 #' Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on eigenvector theory.
 #'
