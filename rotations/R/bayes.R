@@ -1,6 +1,6 @@
 #' MCMC for rotation data
 #'
-#' Use Gibbs-within-MCMC to infer about the central orientation and concentration parameter of a sample of rotations.
+#' Use non-informative Bayes to infer about the central orientation and concentration parameter for a sample of rotations.
 #'
 #' The procedures detailed in \cite{bingham2009b} and \cite{bingham2010} are implemented to get
 #' draws from the posterior distribution for the central orientation and concentration parameters for 
@@ -11,9 +11,9 @@
 #' @param type Angular distribution assumed on R.  Options are \code{\link{Cayley}}, \code{\link{Fisher}} or \code{\link{Mises}}
 #' @param S0 initial estimate of central orientation
 #' @param kappa0 initial estimate of concentration parameter
-#' @param tuneS tuning parameter for proposal distribution for central direction S, concentration
-#' @param tuneK tuning parameter for proposal distribution for concentration parameter kappa, standard deviation
-#' @param burn_in number of draws to ignore in the MCMC
+#' @param tuneS central orientation tuning parameter, concentration of proposal distribution
+#' @param tuneK concentration tuning parameter, standard deviation of proposal distribution
+#' @param burn_in number of draws to use as burn-in
 #' @param m number of draws to keep from posterior distribution
 #' @return  \item{S}{Draws from the posterior distribution for central orientation S}
 #'          \item{kappa}{Draws from the posterior distribution for concentration parameter kappa}
@@ -74,19 +74,20 @@ MCMCSO3.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 
 #' Bayes credible regions
 #'
-#' Find the radius of a \eqn{100(1-\alpha)}\% credible region for the central orientation and concentration parameter.
+#' Find the radius of a \eqn{100(1-\alpha)}\% credible region for the central orientation and concentration parameter using 
+#' non-informative Bayes.
 #'
 #' Compute the radius of a \eqn{100(1-\alpha)}\% credible region for the central orientation and concentration parameter
 #' as described in \cite{bingham2009b} and \cite{bingham2010}.  The posterior mode is returned along with the radius
 #' of the credible region centered at the posterior mode.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
-#' @param type Angular distribution assumed on R.  Options are \code{Cayley}, \code{Fisher} or \code{Mises}
+#' @param type Angular distribution assumed on R.  Options are \code{\link{Cayley}}, \code{\link{Fisher}} or \code{\link{Mises}}
 #' @param S0 initial estimate of central orientation
 #' @param kappa0 initial estimate of concentration parameter
-#' @param tuneS tuning parameter for proposal distribution for central direction S
-#' @param tuneK tuning parameter for proposal distribution for concentration parameter kappa
-#' @param burn_in number of draws to ignore in the MCMC
+#' @param tuneS central orientation tuning parameter, concentration of proposal distribution
+#' @param tuneK concentration tuning parameter, standard deviation of proposal distribution
+#' @param burn_in number of draws to use as burn-in
 #' @param m number of draws to keep from posterior distribution
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
 #' @return  \item{S}{the posterior mode}
@@ -148,25 +149,26 @@ bayesCR.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
   
 }
 
-#' Parameter estimates based on MCMC
+#' Parameter estimates based on Non-informative Bayes
 #'
-#' Use Gibbs-within-MCMC to infer about the central orientation and concentration parameter of a sample of rotations.
+#' Use non-informative Bayes to estimate the central orientation and concentration parameter of a sample of rotations.
 #'
-#' The procedures detailed in \cite{bingham2009b} and \cite{bingham2010} are implemented to to get
+#' The procedures detailed in \cite{bingham2009b} and \cite{bingham2010} are implemented to get
 #' draws from the posterior distribution for the central orientation and concentration parameters for 
-#' a sample of 3D rotations.  A uniform prior on SO(3) is used for the central orientation and
+#' a sample of 3D rotations.  A uniform prior on SO(3) is used for the central orientation and the appropriate
 #' Jeffrey's prior is used for the concentration parameter.  
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
-#' @param type Angular distribution assumed on R.  Options are \code{Cayley}, \code{Fisher} or \code{Mises}
+#' @param type Angular distribution assumed on R.  Options are \code{\link{Cayley}}, \code{\link{Fisher}} or \code{\link{Mises}}
 #' @param S0 initial estimate of central orientation
 #' @param kappa0 initial estimate of concentration parameter
-#' @param tuneS tuning parameter for proposal distribution for central direction S
-#' @param tuneK tuning parameter for proposal distribution for concentration parameter kappa
-#' @param burn_in number of draws to ignore in the MCMC
+#' @param tuneS central orientation tuning parameter, concentration of proposal distribution
+#' @param tuneK concentration tuning parameter, standard deviation of proposal distribution
+#' @param burn_in number of draws to use as burn-in
 #' @param m number of draws to keep from posterior distribution
 #' @return  \item{Shat}{Draws from the posterior distribution for central orientation S}
 #'          \item{kappa}{Draws from the posterior distribution for concentration parameter kappa}
+#' @seealso \code{\link{mean.SO3}}, \code{\link{median.SO3}}
 #' @cite bingham2009b bingham2010
 #' @export
 #' @examples

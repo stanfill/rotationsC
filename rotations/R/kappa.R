@@ -1,5 +1,7 @@
 #'  Circular variance and concentration parameter 
 #'  
+#'  Return the concentration parameter that corresponds to a given circular variance.
+#'  
 #'  The concentration parameter \eqn{\kappa} does not translate across circular distributions  A commonly used
 #'  measure of spread in circular distributions that does translate
 #'  is the circular variance defined as \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]} 
@@ -22,6 +24,8 @@ fisher_nu_kappa<-function(kappa,nu){
 }
 
 #'  Circular variance and concentration parameter 
+#'  
+#'  Return the concentration parameter that corresponds to a given circular variance.
 #'  
 #'  The concentration parameter \eqn{\kappa} does not translate across circular distributions  A commonly used
 #'  measure of spread in circular distributions that does translate
@@ -52,6 +56,8 @@ mises_nu_kappa<-function(kappa,nu){
 }
 
 #'  Circular variance and concentration parameter
+#'  
+#'  Return the concentration parameter that corresponds to a given circular variance.
 #'  
 #'  The concentration parameter \eqn{\kappa} does not translate across circular distributions.  A commonly used
 #'  measure of spread in circular distributions that does translate

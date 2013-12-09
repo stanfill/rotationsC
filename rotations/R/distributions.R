@@ -29,6 +29,7 @@ rar <- function(n, f, M, ...) {
 #'
 #' The symmetric Cayley distribution with concentration kappa (or circular variance nu) had density 
 #' \deqn{C_C(r |\kappa)=\frac{1}{\sqrt{\pi}} \frac{\Gamma(\kappa+2)}{\Gamma(\kappa+1/2)}2^{-(\kappa+1)}(1+\cos r)^\kappa(1-\cos r).}{C(r |\kappa)= \Gamma(\kappa+2)(1+cos r)^\kappa(1-cos r)/[\Gamma(\kappa+1/2)2^(\kappa+1)\sqrt\pi].}
+#' Is equivalent to the de la Vallee Poussin distribution of \cite{Schaeben1997}.
 #'
 #' @name Cayley
 #' @aliases Cayley rcayley dcayley
