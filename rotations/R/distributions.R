@@ -359,7 +359,7 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #'
 #' Density, distribution function and random generation for the the generic uniform axis-random spin (UARS) class of distributions.
 #' 
-#' For the rotation R with central orientation S and concentration \eqn{kappa} the UARS density is given by 
+#' For the rotation R with central orientation S and concentration \eqn{\kappa} the UARS density is given by 
 #' \deqn{f(R|S,\kappa)=\frac{4\pi}{3-tr(S^\top R)}C(\cos^{-1}[tr(S^\top R)-1]/2|\kappa)}{f(R|S,\kappa)=4\pi C(acos[tr(S'R)-1]/2|\kappa)/[3-tr(S'R)]}
 #' where \eqn{C(r|\kappa)} is one of the \link{Angular-distributions}.
 #'
