@@ -8,6 +8,8 @@ Changes -
 
 * Quaternions are only unique up to their sign, that is if q is a quaternion the q=-q.  So `==` has be redefined such that `q==-q` will return `TRUE`.
 
+* In 'dist' the 'method' arguement now accepts the option 'extrinsic' and returns the same result had the 'projected' option been used.
+
 New Features -
 
 * The `'['` operator has been redefined to maintain the `SO3` or `Q4` class of the object.

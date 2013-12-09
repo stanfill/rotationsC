@@ -5,7 +5,7 @@
 #' The procedures detailed in \cite{bingham2009b} and \cite{bingham2010} are implemented to get
 #' draws from the posterior distribution for the central orientation and concentration parameters for 
 #' a sample of 3D rotations.  A uniform prior on SO(3) is used for the central orientation and the appropriate
-#' Jeffrey's prior is used for the concentration parameter.  
+#' Jeffreys prior is used for the concentration parameter.  
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param type Angular distribution assumed on R.  Options are \code{\link{Cayley}}, \code{\link{Fisher}} or \code{\link{Mises}}
@@ -156,7 +156,7 @@ bayesCR.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
 #' The procedures detailed in \cite{bingham2009b} and \cite{bingham2010} are implemented to get
 #' draws from the posterior distribution for the central orientation and concentration parameters for 
 #' a sample of 3D rotations.  A uniform prior on SO(3) is used for the central orientation and the appropriate
-#' Jeffrey's prior is used for the concentration parameter.  
+#' Jeffreys prior is used for the concentration parameter.  
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param type Angular distribution assumed on R.  Options are \code{\link{Cayley}}, \code{\link{Fisher}} or \code{\link{Mises}}
