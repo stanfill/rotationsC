@@ -41,7 +41,7 @@
 }
 \details{
   The symmetric Cayley distribution with concentration
-  \eqn{kappa} has density \deqn{C_C(r
+  \eqn{\kappa} has density \deqn{C_C(r
   |\kappa)=\frac{1}{\sqrt{\pi}}
   \frac{\Gamma(\kappa+2)}{\Gamma(\kappa+1/2)}2^{-(\kappa+1)}(1+\cos
   r)^\kappa(1-\cos r).}{C(r |\kappa)=

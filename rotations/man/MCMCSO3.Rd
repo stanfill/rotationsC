@@ -39,7 +39,7 @@
   distribution}
 }
 \value{
-  \item{S}{Draws from the posterior distribution for
+  list of \item{S}{Draws from the posterior distribution for
   central orientation S} \item{kappa}{Draws from the
   posterior distribution for concentration parameter kappa}
   \item{Saccept}{Acceptance rate for cenral orientaion

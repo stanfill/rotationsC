@@ -327,7 +327,7 @@ genR <- function(r, S = NULL, space='SO3') {
 
 #' Matrix exponential
 #'
-#' Compute the matrix exponent for skew-symmetric matrices according to the usual Taylor expansion.
+#' Compute the matrix exponential for skew-symmetric matrices according to the usual Taylor expansion.
 #' The expansion is significantly simplified for skew-symmetric matrices, see \cite{moakher02}.
 #' Maps a matrix belonging to the lie algebra \eqn{so(3)} into the lie group \eqn{SO(3)}.
 #'

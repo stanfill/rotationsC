@@ -8,7 +8,7 @@
 \alias{+.Q4}
 \alias{+.SO3}
 \alias{Arithmetic}
-\title{Arithmetic Operators on SO(3)}
+\title{Arithmetic operators on SO(3)}
 \usage{
   \method{+}{SO3} (x, y)
 

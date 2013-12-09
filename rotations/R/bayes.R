@@ -15,7 +15,7 @@
 #' @param tuneK concentration tuning parameter, standard deviation of proposal distribution
 #' @param burn_in number of draws to use as burn-in
 #' @param m number of draws to keep from posterior distribution
-#' @return  \item{S}{Draws from the posterior distribution for central orientation S}
+#' @return  list of \item{S}{Draws from the posterior distribution for central orientation S}
 #'          \item{kappa}{Draws from the posterior distribution for concentration parameter kappa}
 #'          \item{Saccept}{Acceptance rate for cenral orientaion draws}
 #'          \item{Kaccept}{Acceptance rate for concentration draws}
@@ -90,7 +90,7 @@ MCMCSO3.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 #' @param burn_in number of draws to use as burn-in
 #' @param m number of draws to keep from posterior distribution
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
-#' @return  \item{Shat,Qhat}{the posterior mode}
+#' @return  list of \item{Shat,Qhat}{the posterior mode}
 #'          \item{Radius}{the radius of the credible region centered at the posterior mode}
 #' @seealso \code{\link{fisheretal}}, \code{\link{prentice}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite bingham2009b bingham2010
@@ -149,7 +149,7 @@ bayesCR.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
   
 }
 
-#' Parameter estimates based on Non-informative Bayes
+#' Parameter estimates based on non-informative Bayes
 #'
 #' Use non-informative Bayes to estimate the central orientation and concentration parameter of a sample of rotations.
 #'
@@ -166,7 +166,7 @@ bayesCR.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
 #' @param tuneK concentration tuning parameter, standard deviation of proposal distribution
 #' @param burn_in number of draws to use as burn-in
 #' @param m number of draws to keep from posterior distribution
-#' @return  \item{Shat}{Draws from the posterior distribution for central orientation S}
+#' @return  list of \item{Shat}{Draws from the posterior distribution for central orientation S}
 #'          \item{kappa}{Draws from the posterior distribution for concentration parameter kappa}
 #' @seealso \code{\link{mean.SO3}}, \code{\link{median.SO3}}
 #' @cite bingham2009b bingham2010

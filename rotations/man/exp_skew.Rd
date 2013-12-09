@@ -13,7 +13,7 @@
   Matrix \eqn{e^{\bm H}}{e^H} in \eqn{SO(3)} .
 }
 \description{
-  Compute the matrix exponent for skew-symmetric matrices
+  Compute the matrix exponential for skew-symmetric matrices
   according to the usual Taylor expansion. The expansion is
   significantly simplified for skew-symmetric matrices, see
   \cite{Moakher (2002)}. Maps a matrix belonging to the lie

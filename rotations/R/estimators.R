@@ -152,7 +152,7 @@ median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...
 }
 
 
-#' Weighted Mean Rotation
+#' Weighted mean rotation
 #'
 #' Compute the weighted geometric or projected mean of a sample of rotations.
 #'

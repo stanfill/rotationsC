@@ -27,7 +27,7 @@ rar <- function(n, f, M, ...) {
 #'
 #' Density, distribution function and random generation for the Cayley distribution with concentration \code{kappa} \eqn{\kappa}.
 #'
-#' The symmetric Cayley distribution with concentration \eqn{kappa} has density 
+#' The symmetric Cayley distribution with concentration \eqn{\kappa} has density 
 #' \deqn{C_C(r |\kappa)=\frac{1}{\sqrt{\pi}} \frac{\Gamma(\kappa+2)}{\Gamma(\kappa+1/2)}2^{-(\kappa+1)}(1+\cos r)^\kappa(1-\cos r).}{C(r |\kappa)= \Gamma(\kappa+2)(1+cos r)^\kappa(1-cos r)/[\Gamma(\kappa+1/2)2^(\kappa+1)\sqrt\pi].}
 #' The Cayley distribution is equivalent to the de la Vallee Poussin distribution of \cite{Schaeben1997}.
 #'
@@ -108,7 +108,7 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
 #'
 #' Density, distribution function and random generation for the matrix-Fisher distribution with concentration \code{kappa} \eqn{\kappa}.
 #'
-#' The matrix-Fisher distribution with concentration \eqn{kappa} has density
+#' The matrix-Fisher distribution with concentration \eqn{\kappa} has density
 #' \deqn{C_\mathrm{{F}}(r|\kappa)=\frac{1}{2\pi[\mathrm{I_0}(2\kappa)-\mathrm{I_1}(2\kappa)]}e^{2\kappa\cos(r)}[1-\cos(r)]}{C(r|\kappa)=exp[2\kappa cos(r)][1-cos(r)]/(2\pi[I0(2\kappa)-I1(2\kappa)])}
 #' with respect to Lebesgue measure where \eqn{\mathrm{I}_p(\cdot)}{Ip()} denotes the Bessel function of order \eqn{p} defined as  
 #' \eqn{\mathrm{I}_p(\kappa)=\frac{1}{2\pi}\int_{-\pi}^{\pi}\cos(pr)e^{\kappa\cos r}dr}{Ip(\kappa)}.

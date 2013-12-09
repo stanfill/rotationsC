@@ -163,8 +163,7 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 #'
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
 #' estimator using the method due to \cite{prentice1986}.  For a rotation specific version see \cite{rancourt2000}. The variablity
-#' in each axis is different so each axis will have its own radius.  In \cite{bingham09} they take the largest radius and use it to
-#' form regions that are symmetric about all three axes.
+#' in each axis is different so each axis will have its own radius. 
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.

@@ -4,12 +4,11 @@
 \alias{package-rotations-package}
 \title{A package for working with rotaional data.}
 \description{
-  This package implements tools for working with rotational
-  data: it allows simulation from the most commonly used
-  distributions on \eqn{SO(3)}, it includes methods for
-  different mean and median type estimators for the central
-  orientation of a sample, it provides confidence regions
-  for those estimates and it includes a novel visualization
-  technique for rotation data.
+This package implements tools for working with rotational data: it
+    allows simulation from the most commonly used distributions on SO(3), it
+    includes methods for different Bayes, mean and median type estimators for the
+    central orientation of a sample, it provides confidence and credible regions
+    for the central orientation based on those estimators and it includes a novel 
+    visualization technique for rotation data.
 }
 

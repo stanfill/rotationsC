@@ -163,7 +163,7 @@ str.Q4<-function(object,...){
 
 }
 
-#' Arithmetic Operators on SO(3)
+#' Arithmetic operators on SO(3)
 #' 
 #' These binary operators perform arithmetic on rotations in quaternion or rotation matrix form
 #' (or objects which can be coerced into them).

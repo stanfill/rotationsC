@@ -1,7 +1,7 @@
 \name{weighted.mean.SO3}
 \alias{weighted.mean.Q4}
 \alias{weighted.mean.SO3}
-\title{Weighted Mean Rotation}
+\title{Weighted mean rotation}
 \usage{
   \method{weighted.mean}{SO3} (x, w, type = "projected",
     epsilon = 1e-05, maxIter = 2000, ...)

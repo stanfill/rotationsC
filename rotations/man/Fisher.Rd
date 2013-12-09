@@ -41,7 +41,7 @@
 }
 \details{
   The matrix-Fisher distribution with concentration
-  \eqn{kappa} has density
+  \eqn{\kappa} has density
   \deqn{C_\mathrm{{F}}(r|\kappa)=\frac{1}{2\pi[\mathrm{I_0}(2\kappa)-\mathrm{I_1}(2\kappa)]}e^{2\kappa\cos(r)}[1-\cos(r)]}{C(r|\kappa)=exp[2\kappa
   cos(r)][1-cos(r)]/(2\pi[I0(2\kappa)-I1(2\kappa)])} with
   respect to Lebesgue measure where

@@ -2,7 +2,7 @@
 \alias{bayes.mean}
 \alias{bayes.mean.Q4}
 \alias{bayes.mean.SO3}
-\title{Parameter estimates based on Non-informative Bayes}
+\title{Parameter estimates based on non-informative Bayes}
 \usage{
   bayes.mean(x, type, S0, kappa0, tuneS, tuneK, burn_in,
     m = 5000)
@@ -39,7 +39,7 @@
   distribution}
 }
 \value{
-  \item{Shat}{Draws from the posterior distribution for
+  list of \item{Shat}{Draws from the posterior distribution for
   central orientation S} \item{kappa}{Draws from the
   posterior distribution for concentration parameter kappa}
 }

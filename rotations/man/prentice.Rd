@@ -33,9 +33,6 @@
   (1986)}.  For a rotation specific version see
   \cite{Rancourt et al. (2000)}. The variablity in each
   axis is different so each axis will have its own radius.
-  In \cite{Bingham et al. (2009)} they take the largest
-  radius and use it to form regions that are symmetric
-  about all three axes.
 }
 \examples{
 Qs<-ruars(20,rcayley,kappa=100,space='Q4')

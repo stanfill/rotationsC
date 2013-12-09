@@ -41,7 +41,7 @@
   \item{alp}{alpha level desired, e.g. 0.05 or 0.10.}
 }
 \value{
-  \item{Shat,Qhat}{the posterior mode} \item{Radius}{the
+  list of \item{Shat,Qhat}{the posterior mode} \item{Radius}{the
   radius of the credible region centered at the posterior
   mode}
 }
@@ -72,7 +72,7 @@ S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01)
   Bingham MA, Nordman DJ and Vardeman SB (2010).
   "Finite-sample investigation of likelihood and Bayes
   inference for the symmetric von Mises-Fisher
-  distribution." _Computational Statistics & Data
+  distribution." Computational Statistics & Data
   Analysis, 54(5), pp. 1317-1327.
 }
 \seealso{
