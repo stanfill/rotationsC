@@ -249,7 +249,7 @@ rhaar<-function(n){
 #'
 #' Density, distribution function and random generation for the circular-von Mises distribution with concentration \code{kappa} \eqn{\kappa}.
 #' 
-#' The circular von Mises-based distribution has the density
+#' The circular von Mises distribution with concentration \eqn{\kappa} has density
 #' \deqn{C_\mathrm{M}(r|\kappa)=\frac{1}{2\pi \mathrm{I_0}(\kappa)}e^{\kappa cos(r)}.}{C(r|\kappa)=exp[\kappa cos(r)]/[2\pi I(\kappa)]}
 #' where \eqn{\mathrm{I_0}(\kappa)}{I(\kappa)} is the modified bessel function of order 0.
 #'

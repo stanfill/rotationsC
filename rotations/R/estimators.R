@@ -16,7 +16,7 @@
 #' @param ... additional arguments.
 #' @return Estimate of the projected or geometric mean of the sample in the same parameterization.
 #' @aliases mean.Q4
-#' @seealso \code{\link{median.SO3}}, \code{\link{bayes.mean}}
+#' @seealso \code{\link{median.SO3}}, \code{\link{bayes.mean}}, \code{\link{weighted.mean.SO3}}
 #' @cite tyler1981, moakher02, manton04
 #' @S3method mean SO3
 #' @method mean SO3
@@ -94,7 +94,7 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 #' @param ... additional arguments.
 #' @return Estimate of the projected or geometric median in the same parameterization.
 #' @aliases median.Q4 median.SO3
-#' @seealso \code{\link{mean.SO3}}, \code{\link{bayes.mean}}
+#' @seealso \code{\link{mean.SO3}}, \code{\link{bayes.mean}}, \code{\link{weighted.mean.SO3}}
 #' @cite hartley11 stanfill2013
 #' @export
 

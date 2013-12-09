@@ -6,8 +6,8 @@
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param method character string specifying which type of interval to report, "bayes", "eigen" or "moment" based theory.
-#' @param type characted string, "bootstrap" or "theory" are available.  For Bayes regions, give the typle of likelihood: "Cayley","Mises" or "Fisher."
-#' @param estimator character string either "mean" or "median."  Note that not all method/types are available for both estimators.
+#' @param type characted string, "bootstrap" or "theory" are available.  For Bayes regions, give the type of likelihood: "Cayley","Mises" or "Fisher."
+#' @param estimator character string either "mean" or "median."  Note that not all method/type combinations are available for both estimators.
 #' @param alp the alpha level desired, e.g. 0.05 or 0.10.
 #' @param ... additional arguments that are method specific.
 #' @return For frequentist regions only the radius of the confidence region centered at the specified estimator is returned.
@@ -170,7 +170,7 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
 #' @return Radius of the confidence region centered at the projected mean for each of the x-, y- and z-axes.
 #' @seealso \code{\link{bayesCR}}, \code{\link{fisheretal}}, \code{\link{chang}}, \code{\link{zhang}}
-#' @cite prentice1986, rancourt2000, bingham09
+#' @cite prentice1986, rancourt2000
 #' @export
 #' @examples
 #' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
