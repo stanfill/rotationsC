@@ -16,11 +16,11 @@
   \eqn{SO(3)}.
 }
 \details{
-  This function uses the process given in \cite{Moakher
-  (2002)} to project an arbitrary \eqn{3\times 3}{3-by-3}
-  matrix into \eqn{SO(3)}. More specifically it finds the
-  closest orthogonal 3-by-3 matrix with determinant one to
-  the provided matrix.
+  This function uses the process detailed in Section 3.1 of
+  \cite{Moakher (2002)} to project an arbitrary
+  \eqn{3\times 3}{3-by-3} matrix into \eqn{SO(3)}. More
+  specifically it finds the closest orthogonal 3-by-3
+  matrix with determinant one to the provided matrix.
 }
 \examples{
 M<-matrix(rnorm(9),3,3)

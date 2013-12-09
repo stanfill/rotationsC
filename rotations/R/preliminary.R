@@ -40,7 +40,7 @@ arsample.unif <- function(f, M, ...) {
 #' to the misorientation angle of \eqn{R_1^\top R_2}{R1'R2}.
 #' To compute the distance matrix use \code{stats::dist()}.
 #'
-#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param R2,Q2 the second rotation in the same parameterization as x.
 #' @param method string indicating "extrinsic" or "intrinsic" method of distance. 
 #' @param p the order of the distance.
@@ -120,7 +120,7 @@ dist.Q4 <- function(x, Q2=id.Q4 ,method='extrinsic', p=1,...) {
 #' This function returns the misorentation angle associated with a rotation assuming the reference coordinate system
 #' is the identity.
 #'  
-#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @return Angle of rotation.
 #' @seealso \code{\link{axis}}
 #' @export
@@ -169,7 +169,7 @@ angle.Q4 <- function(x){
 #' This function returns the misorentation axis associated with a rotation assuming the reference coordinate system
 #' is the identity.
 #' 
-#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param ... additional arguements.
 #' @return Axis in form of three dimensional vector of length one.
 #' @seealso \code{\link{angle}}
@@ -332,7 +332,7 @@ genR <- function(r, S = NULL, space='SO3') {
 #' Maps a matrix belonging to the lie algebra \eqn{so(3)} into the lie group \eqn{SO(3)}.
 #'
 #' @param H single \eqn{3\times 3}{3-by-3} skew-symmetric matrix or \eqn{n\times 9}{n-by-9} sample of skew-symmetric matrices.
-#' @return Matrix in \eqn{SO(3)} \eqn{e^{\bm H}}{e^H}.
+#' @return Matrix \eqn{e^{\bm H}}{e^H} in \eqn{SO(3)} .
 #' @cite moakher02
 #' @export
 
@@ -377,7 +377,7 @@ log.SO3 <- function(x,...) {
 #'
 #' Project an arbitrary \eqn{3\times 3}{3-by-3} matrix into \eqn{SO(3)}.
 #'
-#' This function uses the process detailed in \cite{moakher02} to project an arbitrary \eqn{3\times 3}{3-by-3} matrix into \eqn{SO(3)}.
+#' This function uses the process detailed in Section 3.1 of \cite{moakher02} to project an arbitrary \eqn{3\times 3}{3-by-3} matrix into \eqn{SO(3)}.
 #' More specifically it finds the closest orthogonal 3-by-3 matrix with determinant one to the provided matrix.
 #' 
 #' @param M \eqn{3\times 3}{3-by-3} matrix to project into \eqn{SO(3)}.
@@ -444,7 +444,7 @@ sum_dist.Q4 <- function(x, S = id.Q4, method='extrinsic', p=1) {
 #' S.  That is, if each row of Rs is R then the returned sample is \eqn{S^\top R}{S'R}.  
 #' If S is the true center then the projected mean should be close to the 3-by-3 identity matrix. 
 #' 
-#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param S the rotation about which to center x.
 #' @return The centered sample.
 #' @export

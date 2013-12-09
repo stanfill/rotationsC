@@ -10,7 +10,7 @@
   skew-symmetric matrices.}
 }
 \value{
-  Matrix in \eqn{SO(3)} \eqn{e^{\bm H}}{e^H}.
+  Matrix \eqn{e^{\bm H}}{e^H} in \eqn{SO(3)} .
 }
 \description{
   Compute the matrix exponent for skew-symmetric matrices

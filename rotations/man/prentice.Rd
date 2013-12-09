@@ -2,7 +2,7 @@
 \alias{prentice}
 \alias{prentice.Q4}
 \alias{prentice.SO3}
-\title{Normal theory eigenvector based region method}
+\title{Eigenvector theory confidence region}
 \usage{
   prentice(x, alp)
 

@@ -2,7 +2,7 @@
 \alias{chang}
 \alias{chang.Q4}
 \alias{chang.SO3}
-\title{M-estimator based normal theory confidence region method}
+\title{M-estimator theory confidence region}
 \usage{
   chang(x, estimator, alp)
 

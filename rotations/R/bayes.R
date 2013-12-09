@@ -4,7 +4,7 @@
 #'
 #' The procedures detailed in \cite{bingham2009b} and \cite{bingham2010} are implemented to get
 #' draws from the posterior distribution for the central orientation and concentration parameters for 
-#' a sample of 3D rotations.  A uniform prior on SO(3) is used for the central orientation and
+#' a sample of 3D rotations.  A uniform prior on SO(3) is used for the central orientation and the appropriate
 #' Jeffrey's prior is used for the concentration parameter.  
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
@@ -90,8 +90,8 @@ MCMCSO3.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 #' @param burn_in number of draws to use as burn-in
 #' @param m number of draws to keep from posterior distribution
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
-#' @return  \item{S}{the posterior mode}
-#'          \item{Radius}{the radius of the credible region centered at S}
+#' @return  \item{Shat,Qhat}{the posterior mode}
+#'          \item{Radius}{the radius of the credible region centered at the posterior mode}
 #' @seealso \code{\link{fisheretal}}, \code{\link{prentice}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite bingham2009b bingham2010
 #' @export

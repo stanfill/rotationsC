@@ -2,7 +2,7 @@
 \alias{fisheretal}
 \alias{fisheretal.Q4}
 \alias{fisheretal.SO3}
-\title{Bootstrap eigenvector based confidence region method}
+\title{Eigenvector theory pivotal bootstrap confidence region}
 \usage{
   fisheretal(x, alp, boot, m, symm)
 

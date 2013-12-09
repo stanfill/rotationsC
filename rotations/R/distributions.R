@@ -29,7 +29,7 @@ rar <- function(n, f, M, ...) {
 #'
 #' The symmetric Cayley distribution with concentration kappa (or circular variance nu) had density 
 #' \deqn{C_C(r |\kappa)=\frac{1}{\sqrt{\pi}} \frac{\Gamma(\kappa+2)}{\Gamma(\kappa+1/2)}2^{-(\kappa+1)}(1+\cos r)^\kappa(1-\cos r).}{C(r |\kappa)= \Gamma(\kappa+2)(1+cos r)^\kappa(1-cos r)/[\Gamma(\kappa+1/2)2^(\kappa+1)\sqrt\pi].}
-#' Is equivalent to the de la Vallee Poussin distribution of \cite{Schaeben1997}.
+#' The Cayley distribution is equivalent to the de la Vallee Poussin distribution of \cite{Schaeben1997}.
 #'
 #' @name Cayley
 #' @aliases Cayley rcayley dcayley
@@ -360,7 +360,7 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #' Density, distribution function and random generation for the the generic uniform axis-random spin (UARS) class of distributions.
 #' 
 #' For the rotation R with central orientation S and concentration \eqn{kappa} the UARS density is given by 
-#' \deqn{f(R|S,\kappa)=\frac{4\pi}{3-tr(S^\top R)}C(acos[tr(S^\top R)-1]/2|\kappa)}{f(R|S,\kappa)=4\pi C(acos[tr(S'R)-1]/2|\kappa)/[3-tr(S'R)]}
+#' \deqn{f(R|S,\kappa)=\frac{4\pi}{3-tr(S^\top R)}C(\cos^{-1}[tr(S^\top R)-1]/2|\kappa)}{f(R|S,\kappa)=4\pi C(acos[tr(S'R)-1]/2|\kappa)/[3-tr(S'R)]}
 #' where \eqn{C(r|\kappa)} is one of the \link{Angular-distributions}.
 #'
 #' @name UARS

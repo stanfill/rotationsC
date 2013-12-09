@@ -41,8 +41,9 @@
   \item{alp}{alpha level desired, e.g. 0.05 or 0.10.}
 }
 \value{
-  \item{S}{the posterior mode} \item{Radius}{the radius of
-  the credible region centered at S}
+  \item{Shat,Qhat}{the posterior mode} \item{Radius}{the
+  radius of the credible region centered at the posterior
+  mode}
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)}\% credible

@@ -2,7 +2,7 @@
 \alias{zhang}
 \alias{zhang.Q4}
 \alias{zhang.SO3}
-\title{M-estimator based boostrap confidence region method}
+\title{M-estimator theory pivotal boostrap confidence region}
 \usage{
   zhang(x, estimator, alp, m)
 
