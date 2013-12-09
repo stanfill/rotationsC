@@ -24,7 +24,7 @@ setOldClass("Q4")
 #' Creates or tests for objects of class "Q4."
 #' 
 #' Construct a unit quaternion to represent a rotation.  Each quaternion can be interpreted as a rotation of some reference frame 
-#' about the axis U (of unit length) through the angle theta.  For each axis, U, and angle theta the quaternion is formed through
+#' about the axis \eqn{U} (of unit length) through the angle theta.  For each axis \eqn{U} and angle theta the quaternion is formed through
 #' \deqn{q=[cos(\theta/2),sin(\theta/2)U]^\top.}{q=[cos(theta/2),sin(theta/2)U]'.}  If the theta element is left empty then the 
 #' length of each axis is taken to be the angle of rotation theta.  If an \code{\link{SO3}} object is given then this function will
 #' return the quaternion equivalent.
@@ -36,9 +36,9 @@ setOldClass("Q4")
 #' @format \code{id.Q4} is the identity rotation given by the matrix \eqn{[1,0,0,0]^\top}{[1,0,0,0]'}.
 #' @return 	\item{as.Q4}{coerces its object into an Q4 type.} 
 #' 					\item{is.Q4}{returns \code{TRUE} or \code{False} depending on whether its argument satifies the conditions to be an
-#' 					quaternion.  Namely, is four-dimensional and of unit length.}
-#' 					\item{Q4.default}{returns an n-by-4 matrix where each row is a quaternion constructed from axis U and angle theta.}
-#' 					\item{Q4.SO3}{returns n-by-4 matrix where each row is a quaternion constructed from the corresponding rotation matrix.}
+#' 					quaternion; namely it must be four-dimensional and of unit length.}
+#' 					\item{Q4.default}{returns an \eqn{n}-by-4 matrix where each row is a quaternion constructed from axis \eqn{U} and angle theta.}
+#' 					\item{Q4.SO3}{returns \eqn{n}-by-4 matrix where each row is a quaternion constructed from the corresponding rotation matrix.}
 #' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4
 
 Q4<-function(q,...){
@@ -142,8 +142,8 @@ id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 #' Creates or tests for objects of class "SO3."
 #' 
 #' Construct a 3-by-3 matrix to represent a rotation.  Each rotation matrix can be interpreted as a rotation of some reference frame 
-#' about the axis U (of unit length) through the angle theta.  For each axis, U, and angle theta the matrix is formed through
-#' \deqn{R=exp[\Phi(Ur)]}{R=exp[\Phi(Ur)].}  If the theta element is left empty then the 
+#' about the axis \eqn{U} (of unit length) through the angle theta.  For each axis \eqn{U} and angle theta the matrix is formed through
+#' \deqn{R=\exp[\Phi(Ur)]}{R=exp[\Phi(Ur)].}  If the theta element is left empty then the 
 #' length of each axis is taken to be the angle of rotation theta.  If a \code{\link{Q4}} object is given then this function will
 #' return the rotation matrix equivalent.
 #'
@@ -155,8 +155,8 @@ id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 #' @return 	\item{as.SO3}{coerces its object into an SO3 type.} 
 #' 					\item{is.SO3}{returns \code{TRUE} or \code{False} depending on whether its argument satifies the conditions to be an
 #' 					rotation matrix.  Namely, has determinant one and its transpose is its inverse.}
-#' 					\item{SO3.default}{returns an n-by-9 matrix where each row is a rotation matrix constructed from axis U and angle theta.}
-#' 					\item{SO3.Q4}{returns n-by-9 matrix where each row is a rotation matrix constructed from the corresponding quaternion.}
+#' 					\item{SO3.default}{returns an \eqn{n}-by-9 matrix where each row is a rotation matrix constructed from axis \eqn{U} and angle theta.}
+#' 					\item{SO3.Q4}{returns \eqn{n}-by-9 matrix where each row is a rotation matrix constructed from the corresponding quaternion.}
 #' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4 SO3.SO3
 
 SO3 <- function(R,...){

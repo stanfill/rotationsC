@@ -123,7 +123,7 @@ pointsXYZ <- function(data, center, column=1) {
 #'
 #' @param x n rotations in \code{SO3} format.
 #' @param center rotation about which to center the observations.
-#' @param col integer or vector 1 to 3 indicating which column(s) to display.  If \code{length(col)>1} then each eyeball is labelled.
+#' @param col integer or vector 1 to 3 indicating which column(s) to display.  If \code{length(col)>1} then each eyeball is labelled with the corresponding axis.
 #' @param to_range show only part of the globe that is in range of the data?
 #' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "geom.mean", "geom.median."
 #' @param label_points  vector of labels.

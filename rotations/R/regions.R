@@ -2,11 +2,11 @@
 #'
 #' Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean or median.
 #' For more on the currently available methods see \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}},
-#' and \code{\link{zhang}}.
+#' \code{\link{zhang}} and \code{\link{bayesCR}}.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
 #' @param method character string specifying which type of interval to report, "eigen" or "moment" based theory.
-#' @param type characted string, "bootstrap" or "theory" are available.
+#' @param type characted string, "bootstrap" or "theory" are available.  For Bayes regions, give the distribution: "Cayley","Mises" or "Fisher."
 #' @param estimator character string either "mean" or "median."
 #' @param alp the alpha level desired, e.g. 0.05 or 0.10.
 #' @param ... additional arguments that are method specific.
