@@ -4,7 +4,7 @@
 #' For more on the currently available methods see \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}},
 #' \code{\link{zhang}} and \code{\link{bayesCR}}.
 #'
-#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param method character string specifying which type of interval to report, "eigen" or "moment" based theory.
 #' @param type characted string, "bootstrap" or "theory" are available.  For Bayes regions, give the distribution: "Cayley","Mises" or "Fisher."
 #' @param estimator character string either "mean" or "median."
@@ -164,7 +164,7 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 #' in each axis is different so each axis will have its own radius.  In \cite{bingham09} they take the largest radius and use it to
 #' form regions that are symmetric about all three axes.
 #'
-#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
 #' @return Radius of the confidence region centered at the projected mean for each of the x-, y- and z-axes.
 #' @seealso \code{\link{bayesCR}}, \code{\link{fisheretal}}, \code{\link{chang}}, \code{\link{zhang}}
@@ -234,7 +234,7 @@ prentice.SO3<-function(x,alp=NULL){
 #' radius so the radius reported is for all three axis.  A normal theory version of this procedure uses the theoretical
 #' chi-square limiting distribution and is given by the \code{\link{chang}} option.
 #'
-#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param estimator character string either "mean" or "median."
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
 #' @param m number of replicates to use to estiamte the critical value.
@@ -349,7 +349,7 @@ cdfuns<-function(Qs,estimator){
 #' or median based on a result due to \cite{chang2001} amongst others.  By construction each axis will have the same
 #' radius so the radius reported is for all three axes.
 #'
-#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param estimator character string either "mean" or "median."
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
 #' @return Radius of the confidence region centered at the specified estimator.
@@ -412,7 +412,7 @@ chang.Q4<-function(x,estimator,alp=NULL){
 #' estimator using the method for the mean polar axis as proposed in \cite{fisher1996}.  To be able to reduce their method
 #' to a radius requires the additonal assumption of rotational symmetry, equation (10) in \cite{fisher1996}. 
 #'
-#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
 #' @param boot should the bootstrap or normal theory critical value be used.
 #' @param m number of bootstrap replicates to use to estimate critical value.
