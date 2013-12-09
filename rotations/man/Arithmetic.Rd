@@ -24,23 +24,26 @@
   \item{y}{second arguement (optional for subtraction)}
 }
 \value{
-  \item{+}{the result of both rotations} \item{-}{the
-  difference of the rotations, or the inverse rotation of
-  only one arguement is provided}
+  \item{+}{the result of rotating the identity frame
+  through x then y} \item{-}{the difference of the
+  rotations, or the inverse rotation of only one arguement
+  is provided}
 }
 \description{
   These binary operators perform arithmetic on rotations in
   quaternion or rotation matrix form (or objects which can
-  be coerced to them).
+  be coerced into them).
 }
 \details{
   The rotation group SO(3) is a multiplicative group so
-  addition of rotations \eqn{R1} and \eqn{R2} is
-  \eqn{R1+R2=R2R1}.  The difference between rotations
-  \eqn{R1} and \eqn{R2} is \eqn{R1-R2=R2'R1}.  With this
-  definiton it is clear that \eqn{R1+R2-R2=R2'R2R1=R1}
-  Finally, if only one rotation is provided to subtraction
-  then the inverse (transpose) it returned, i.e.
-  \eqn{-R2=R2'}.
+  ``adding" rotations \eqn{R_1}{R1} and \eqn{R_2}{R2} is
+  \eqn{R_1+R_2=R_2R_1}{R1+R2=R2R1}.  The difference between
+  rotations \eqn{R_1}{R1} and \eqn{R_2}{R2} is
+  \eqn{R_1-R_2=R_2^\top R_1}{R1-R2=R2'R1}.  With this
+  definiton it is clear that \eqn{R_1+R_2-R_2=R_2^\top
+  R_2R_1=R_1}{R1+R2-R2=R2'R2R1=R1}.  Finally, if only one
+  rotation is provided to subtraction then the inverse
+  (transpose) it returned, i.e.
+  \eqn{-R_2=R_2^\top}{-R2=R2'}.
 }
 

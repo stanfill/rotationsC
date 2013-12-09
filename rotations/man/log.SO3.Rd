@@ -14,12 +14,12 @@
   Skew symmetric matrix \eqn{\log(R)}{log(R)}.
 }
 \description{
-  Compute the logarithm of a rotation matrix.  The result
-  is a \eqn{3\times 3}{3-by-3} skew-symmetric matrix.  This
+  Compute the logarithm of a rotation matrix, which results
+  in a \eqn{3\times 3}{3-by-3} skew-symmetric matrix.  This
   function maps the lie group \eqn{SO(3)} into its tangent
   space, which is the space of all \eqn{3\times 3}{3-by-3}
-  skew symmetric matrices, which is the lie algerbra
-  \eqn{so(3)}.  For details see e.g. \cite{Moakher (2002)}.
+  skew symmetric matrices, the lie algerbra \eqn{so(3)}.
+  For details see e.g. \cite{Moakher (2002)}.
 }
 \references{
   Moakher M (2002). "Means and averaging in the group of

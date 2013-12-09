@@ -28,7 +28,8 @@
   \item{...}{additional arguments.}
 }
 \value{
-  An estimate of the projected or geometric mean.
+  Estimate of the projected or geometric median in the same
+  parameterization.
 }
 \description{
   Compute the sample projected or geometric median.
@@ -42,16 +43,20 @@
   median, and if the distance metric in Euclidean then it
   is called the projected median. The algorithm used in the
   geometric case is discussed in \cite{Hartley et al.
-  (2011)} and the projected case was written by the
-  authors.
+  (2011)} and the projected case is in \cite{Stanfill et
+  al. (2013)}.
 }
 \references{
   Hartley R, Aftab K and Trumpf J (2011). "L1 rotation
   averaging using the Weiszfeld algorithm." In _2011 IEEE
   Conference on Computer Vision and Pattern Recognition
   (CVPR)_, pp. 3041-3048. IEEE.
+
+  Stanfill B, Genschel U and Hofmann H (2013). "Point
+  Estimation of the Central Orientation of Random
+  Rotations." _Technometrics_, *55*(4), pp. 524-535.
 }
 \seealso{
-  \code{\link{mean.SO3}}
+  \code{\link{mean.SO3}}, \code{\link{bayes.mean}}
 }
 

@@ -2,7 +2,7 @@
 \alias{bayes.mean}
 \alias{bayes.mean.Q4}
 \alias{bayes.mean.SO3}
-\title{Parameter estimates based on MCMC}
+\title{Parameter estimates based on Non-informative Bayes}
 \usage{
   bayes.mean(x, type, S0, kappa0, tuneS, tuneK, burn_in,
     m = 5000)
@@ -15,24 +15,25 @@
 }
 \arguments{
   \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
-  corresponds to a random rotation in matrix (p=9) or
-  quaternion (p=4) form.}
+  corresponds to a random rotation in matrix (\eqn{p=9}) or
+  quaternion (\eqn{p=4}) form.}
 
   \item{type}{Angular distribution assumed on R.  Options
-  are \code{Cayley}, \code{Fisher} or \code{Mises}}
+  are \code{\link{Cayley}}, \code{\link{Fisher}} or
+  \code{\link{Mises}}}
 
   \item{S0}{initial estimate of central orientation}
 
   \item{kappa0}{initial estimate of concentration
   parameter}
 
-  \item{tuneS}{tuning parameter for proposal distribution
-  for central direction S}
+  \item{tuneS}{central orientation tuning parameter,
+  concentration of proposal distribution}
 
-  \item{tuneK}{tuning parameter for proposal distribution
-  for concentration parameter kappa}
+  \item{tuneK}{concentration tuning parameter, standard
+  deviation of proposal distribution}
 
-  \item{burn_in}{number of draws to ignore in the MCMC}
+  \item{burn_in}{number of draws to use as burn-in}
 
   \item{m}{number of draws to keep from posterior
   distribution}
@@ -43,18 +44,18 @@
   posterior distribution for concentration parameter kappa}
 }
 \description{
-  Use Gibbs-within-MCMC to infer about the central
+  Use non-informative Bayes to estimate the central
   orientation and concentration parameter of a sample of
   rotations.
 }
 \details{
   The procedures detailed in \cite{Bingham et al. (2009)}
-  and \cite{Bingham et al. (2010)} are implemented to to
-  get draws from the posterior distribution for the central
+  and \cite{Bingham et al. (2010)} are implemented to get
+  draws from the posterior distribution for the central
   orientation and concentration parameters for a sample of
   3D rotations.  A uniform prior on SO(3) is used for the
-  central orientation and Jeffrey's prior is used for the
-  concentration parameter.
+  central orientation and the appropriate Jeffrey's prior
+  is used for the concentration parameter.
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=4)
@@ -71,5 +72,8 @@ ests<-bayes.mean(Rs,type='Cayley',S0=mean(Rs),kappa0=4,tuneS=39,tuneK=.8,burn_in
   inference for the symmetric von Mises-Fisher
   distribution." _Computational Statistics \& Data
   Analysis_, *54*(5), pp. 1317-1327.
+}
+\seealso{
+  \code{\link{mean.SO3}}, \code{\link{median.SO3}}
 }
 

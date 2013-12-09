@@ -22,10 +22,10 @@
 }
 \description{
   This function will take the sample Rs and return the
-  sample Rs centered at S, i.e. the returned sample is
-  \eqn{S^\top R}{S'R}.  If S is the true center then the
-  projected mean should be close to the 3-by-3 identity
-  matrix
+  sample Rs centered at S.  That is, if each row of Rs is R
+  then the returned sample is \eqn{S^\top R}{S'R}. If S is
+  the true center then the projected mean should be close
+  to the 3-by-3 identity matrix.
 }
 \examples{
 Rs<-ruars(5,rcayley)

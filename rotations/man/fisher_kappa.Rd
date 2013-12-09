@@ -5,12 +5,16 @@
   fisher_kappa(nu)
 }
 \arguments{
-  \item{nu}{circular variance.}
+  \item{nu}{circular variance}
 }
 \value{
   Concentration parameter corresponding to nu.
 }
 \description{
+  Return the concentration parameter that corresponds to a
+  given circular variance.
+}
+\details{
   The concentration parameter \eqn{\kappa} does not
   translate across circular distributions A commonly used
   measure of spread in circular distributions that does

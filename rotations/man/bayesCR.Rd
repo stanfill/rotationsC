@@ -15,24 +15,25 @@
 }
 \arguments{
   \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
-  corresponds to a random rotation in matrix (p=9) or
-  quaternion (p=4) form.}
+  corresponds to a random rotation in matrix (\eqn{p=9}) or
+  quaternion (\eqn{p=4}) form.}
 
   \item{type}{Angular distribution assumed on R.  Options
-  are \code{Cayley}, \code{Fisher} or \code{Mises}}
+  are \code{\link{Cayley}}, \code{\link{Fisher}} or
+  \code{\link{Mises}}}
 
   \item{S0}{initial estimate of central orientation}
 
   \item{kappa0}{initial estimate of concentration
   parameter}
 
-  \item{tuneS}{tuning parameter for proposal distribution
-  for central direction S}
+  \item{tuneS}{central orientation tuning parameter,
+  concentration of proposal distribution}
 
-  \item{tuneK}{tuning parameter for proposal distribution
-  for concentration parameter kappa}
+  \item{tuneK}{concentration tuning parameter, standard
+  deviation of proposal distribution}
 
-  \item{burn_in}{number of draws to ignore in the MCMC}
+  \item{burn_in}{number of draws to use as burn-in}
 
   \item{m}{number of draws to keep from posterior
   distribution}
@@ -46,7 +47,7 @@
 \description{
   Find the radius of a \eqn{100(1-\alpha)}\% credible
   region for the central orientation and concentration
-  parameter.
+  parameter using non-informative Bayes.
 }
 \details{
   Compute the radius of a \eqn{100(1-\alpha)}\% credible

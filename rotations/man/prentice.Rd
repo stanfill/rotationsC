@@ -2,7 +2,7 @@
 \alias{prentice}
 \alias{prentice.Q4}
 \alias{prentice.SO3}
-\title{Prentice confidence region method}
+\title{Normal theory eigenvector based region method}
 \usage{
   prentice(x, alp)
 
@@ -12,8 +12,8 @@
 }
 \arguments{
   \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
-  corresponds to a random rotation in matrix (p=9) or
-  quaternion (p=4) form.}
+  corresponds to a random rotation in matrix (\eqn{p=9}) or
+  quaternion (\eqn{p=4}) form.}
 
   \item{alp}{alpha level desired, e.g. 0.05 or 0.10.}
 }
@@ -23,7 +23,8 @@
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)}\% confidence
-  region for the projected mean.
+  region for the projected mean based on eigenvector based
+  result.
 }
 \details{
   Compute the radius of a \eqn{100(1-\alpha)}\% confidence

@@ -13,8 +13,8 @@
   rotation matrix "SO3" or quaternions "Q4."}
 }
 \value{
-  A matrix where each row is a sample point in the desired
-  space.
+  A matrix where each row is a random rotation matrix or
+  quaternion.
 }
 \description{
   Generate rotations according to Rodrigues' formula.

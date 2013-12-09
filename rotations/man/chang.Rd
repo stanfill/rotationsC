@@ -2,7 +2,7 @@
 \alias{chang}
 \alias{chang.Q4}
 \alias{chang.SO3}
-\title{Chang and Rivest confidence region method}
+\title{M-estimator based normal theory confidence region method}
 \usage{
   chang(x, estimator, alp)
 
@@ -12,8 +12,8 @@
 }
 \arguments{
   \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
-  corresponds to a random rotation in matrix (p=9) or
-  quaternion (p=4) form.}
+  corresponds to a random rotation in matrix (\eqn{p=9}) or
+  quaternion (\eqn{p=4}) form.}
 
   \item{estimator}{character string either "mean" or
   "median."}
@@ -26,7 +26,8 @@
 }
 \description{
   Compute the radius of a \eqn{100(1-\alpha)}\% confidence
-  region for the central orientation.
+  region for the central orientation based on M-estimator
+  theory.
 }
 \details{
   Compute the radius of a \eqn{100(1-\alpha)}\% confidence

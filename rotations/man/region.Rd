@@ -14,14 +14,15 @@
 }
 \arguments{
   \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
-  corresponds to a random rotation in matrix (p=9) or
-  quaternion (p=4) form.}
+  corresponds to a random rotation in matrix (\eqn{p=9}) or
+  quaternion (\eqn{p=4}) form.}
 
   \item{method}{character string specifying which type of
   interval to report, "eigen" or "moment" based theory.}
 
   \item{type}{characted string, "bootstrap" or "theory" are
-  available.}
+  available.  For Bayes regions, give the distribution:
+  "Cayley","Mises" or "Fisher."}
 
   \item{estimator}{character string either "mean" or
   "median."}
@@ -40,8 +41,8 @@
   region for the central orientation based on the projected
   mean or median. For more on the currently available
   methods see \code{\link{prentice}},
-  \code{\link{fisheretal}}, \code{\link{chang}}, and
-  \code{\link{zhang}}.
+  \code{\link{fisheretal}}, \code{\link{chang}},
+  \code{\link{zhang}} and \code{\link{bayesCR}}.
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=100)

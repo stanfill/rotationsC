@@ -2,7 +2,7 @@
 \alias{fisheretal}
 \alias{fisheretal.Q4}
 \alias{fisheretal.SO3}
-\title{Fisher confidence region method}
+\title{Bootstrap eigenvector based confidence region method}
 \usage{
   fisheretal(x, alp, boot, m, symm)
 
@@ -14,8 +14,8 @@
 }
 \arguments{
   \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
-  corresponds to a random rotation in matrix (p=9) or
-  quaternion (p=4) form.}
+  corresponds to a random rotation in matrix (\eqn{p=9}) or
+  quaternion (\eqn{p=4}) form.}
 
   \item{alp}{alpha level desired, e.g. 0.05 or 0.10.}
 
@@ -34,7 +34,8 @@
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)}\% confidence
-  region for the central orientation.
+  region for the central orientation based on eigenvector
+  theory.
 }
 \details{
   Compute the radius of a \eqn{100(1-\alpha)}\% confidence

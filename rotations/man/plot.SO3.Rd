@@ -15,7 +15,7 @@
 
   \item{col}{integer or vector 1 to 3 indicating which
   column(s) to display.  If \code{length(col)>1} then each
-  eyeball is labelled.}
+  eyeball is labelled with the corresponding axis.}
 
   \item{to_range}{show only part of the globe that is in
   range of the data?}

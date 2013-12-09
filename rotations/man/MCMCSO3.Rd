@@ -15,8 +15,8 @@
 }
 \arguments{
   \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
-  corresponds to a random rotation in matrix (p=9) or
-  quaternion (p=4) form.}
+  corresponds to a random rotation in matrix (\eqn{p=9}) or
+  quaternion (\eqn{p=4}) form.}
 
   \item{type}{Angular distribution assumed on R.  Options
   are \code{\link{Cayley}}, \code{\link{Fisher}} or
@@ -27,13 +27,13 @@
   \item{kappa0}{initial estimate of concentration
   parameter}
 
-  \item{tuneS}{tuning parameter for proposal distribution
-  for central direction S, concentration}
+  \item{tuneS}{central orientation tuning parameter,
+  concentration of proposal distribution}
 
-  \item{tuneK}{tuning parameter for proposal distribution
-  for concentration parameter kappa, standard deviation}
+  \item{tuneK}{concentration tuning parameter, standard
+  deviation of proposal distribution}
 
-  \item{burn_in}{number of draws to ignore in the MCMC}
+  \item{burn_in}{number of draws to use as burn-in}
 
   \item{m}{number of draws to keep from posterior
   distribution}
@@ -47,8 +47,8 @@
   draws}
 }
 \description{
-  Use Gibbs-within-MCMC to infer about the central
-  orientation and concentration parameter of a sample of
+  Use non-informative Bayes to infer about the central
+  orientation and concentration parameter for a sample of
   rotations.
 }
 \details{

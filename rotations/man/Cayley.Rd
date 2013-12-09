@@ -46,7 +46,9 @@
   \frac{\Gamma(\kappa+2)}{\Gamma(\kappa+1/2)}2^{-(\kappa+1)}(1+\cos
   r)^\kappa(1-\cos r).}{C(r |\kappa)=
   \Gamma(\kappa+2)(1+cos r)^\kappa(1-cos
-  r)/[\Gamma(\kappa+1/2)2^(\kappa+1)\sqrt\pi].}
+  r)/[\Gamma(\kappa+1/2)2^(\kappa+1)\sqrt\pi].} Is
+  equivalent to the de la Vallee Poussin distribution of
+  \cite{Schaeben (1997)}.
 }
 \references{
   Schaeben H (1997). "A Simple Standard Orientation Density

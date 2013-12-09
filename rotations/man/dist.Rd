@@ -2,14 +2,14 @@
 \alias{dist}
 \alias{dist.Q4}
 \alias{dist.SO3}
-\title{Compute the rotational distance}
+\title{Rotational distance}
 \usage{
   dist(x, ...)
 
-  \method{dist}{SO3} (x, R2 = id.SO3, method = "projected",
+  \method{dist}{SO3} (x, R2 = id.SO3, method = "extrinsic",
     p = 1, ...)
 
-  \method{dist}{Q4} (x, Q2 = id.Q4, method = "projected",
+  \method{dist}{Q4} (x, Q2 = id.Q4, method = "extrinsic",
     p = 1, ...)
 }
 \arguments{
@@ -20,7 +20,7 @@
   \item{R2,Q2}{the second rotation in the same
   parameterization as x.}
 
-  \item{method}{string indicating "projected" or
+  \item{method}{string indicating "extrinsic" or
   "intrinsic" method of distance.}
 
   \item{p}{the order of the distance.}
@@ -32,12 +32,12 @@
   or Q2.
 }
 \description{
-  Calculate the Euclidean or Riemannian distance between
-  two rotations.
+  Calculate the extrinsic or intrinsic distance between two
+  rotations.
 }
 \details{
   This function will calculate the intrinsic (Riemannian)
-  or projected (Euclidean) distance between two rotations.
+  or extrinsic (Euclidean) distance between two rotations.
   \code{R2} and \code{Q2} are set to the identity rotations
   by default.  For rotations \eqn{R_1}{R1} and
   \eqn{R_2}{R2} both in \eqn{SO(3)}, the Euclidean distance
