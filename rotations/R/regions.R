@@ -155,9 +155,9 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 	
 }
 
-#' Prentice confidence region method
+#' Normal theory eigenvector based region method
 #'
-#' Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the projected mean.
+#' Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the projected mean based on eigenvector based result.
 #'
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
 #' estimator using the method due to \cite{prentice1986}.  For a rotation specific version see \cite{rancourt2000}. The variablity
@@ -225,9 +225,9 @@ prentice.SO3<-function(x,alp=NULL){
 	return(r)
 }
 
-#' Zhang and Nordman confidence region method
+#' M-estimator based boostrap confidence region method
 #'
-#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation.
+#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estiamtor theory.
 #' 
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
 #' estimator using the method due to Zhang & Nordman (2009) (unpublished MS thesis).  By construction each axis will have the same
@@ -341,9 +341,9 @@ cdfuns<-function(Qs,estimator){
 	return(list(c=cd[1],d=cd[2]))
 }
 
-#' Chang and Rivest confidence region method
+#' M-estimator based normal theory confidence region method
 #'
-#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation.
+#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estimator theory.
 #' 
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation centered at the projected mean
 #' or median based on a result due to \cite{chang2001} amongst others.  By construction each axis will have the same
@@ -404,9 +404,9 @@ chang.Q4<-function(x,estimator,alp=NULL){
 }
 
 
-#' Fisher confidence region method
+#' Bootstrap eigenvector based confidence region method
 #'
-#' Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation.
+#' Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on eigenvector theory.
 #'
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
 #' estimator using the method for the mean polar axis as proposed in \cite{fisher1996}.  To be able to reduce their method

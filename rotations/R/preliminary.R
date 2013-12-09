@@ -29,11 +29,11 @@ arsample.unif <- function(f, M, ...) {
 }
 
 
-#' Compute the rotational distance
+#' Rotational distance
 #'
-#' Calculate the Euclidean or Riemannian distance between two rotations.
+#' Calculate the extrinsic or intrinsic distance between two rotations.
 #'
-#' This function will calculate the intrinsic (Riemannian) or projected (Euclidean) distance between two rotations.
+#' This function will calculate the intrinsic (Riemannian) or extrinsic (Euclidean) distance between two rotations.
 #' \code{R2} and \code{Q2} are set to the identity rotations by default.  For rotations \eqn{R_1}{R1} and \eqn{R_2}{R2}
 #' both in \eqn{SO(3)}, the Euclidean distance between them is \deqn{||R_1-R_2||_F}{||R1-R2||} where \eqn{||\cdot||_F}{|| ||} is the Frobenius norm.
 #' The Riemannian distance is defined as \deqn{||Log(R_1^\top R_2)||_F}{||Log(R1'R2)||} where \eqn{Log} is the matrix logarithm, and it corresponds
@@ -42,7 +42,7 @@ arsample.unif <- function(f, M, ...) {
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
 #' @param R2,Q2 the second rotation in the same parameterization as x.
-#' @param method string indicating "projected" or "intrinsic" method of distance. 
+#' @param method string indicating "extrinsic" or "intrinsic" method of distance. 
 #' @param p the order of the distance.
 #' @param ... additional arguments.
 #' @return The rotational distance between each rotation in x and R2 or Q2.
@@ -57,11 +57,11 @@ dist<-function(x,...){
 #' @method dist SO3
 #' @S3method dist SO3
 
-dist.SO3 <- function(x, R2=id.SO3, method='projected' , p=1,...) {
+dist.SO3 <- function(x, R2=id.SO3, method='extrinsic' , p=1,...) {
   
   R1<-formatSO3(x)
   
-  if(method=='projected'){
+  if(method%in%c('projected','extrinsic')){
     
     n<-nrow(R1)
     R1<-matrix(R1,n,9)
@@ -78,7 +78,7 @@ dist.SO3 <- function(x, R2=id.SO3, method='projected' , p=1,...) {
     so3dist<-thetas^p
     
   }else{
-    stop("Incorrect usage of method argument.  Please choose intrinsic or projected.")
+    stop("Incorrect usage of method argument.  Please choose intrinsic or extrinsic")
   }
   
   return(so3dist)
@@ -90,7 +90,7 @@ dist.SO3 <- function(x, R2=id.SO3, method='projected' , p=1,...) {
 #' @method dist Q4
 #' @S3method dist Q4
 
-dist.Q4 <- function(x, Q2=id.Q4 ,method='projected', p=1,...) {
+dist.Q4 <- function(x, Q2=id.Q4 ,method='extrinsic', p=1,...) {
 
   Q1<-formatQ4(x)
   Q2<-formatQ4(Q2)
@@ -99,12 +99,12 @@ dist.Q4 <- function(x, Q2=id.Q4 ,method='projected', p=1,...) {
     
     q4dist<-c(RdistC(Q1,Q2))^p
     
-  }else if(method=='projected'){
+  }else if(method%in%c('projected','extrinsic')){
     
     q4dist<-c(EdistC(Q1,Q2))^p
     
   }else{
-    stop("Incorrect usage of method argument.  Please choose intrinsic or projected.")
+    stop("Incorrect usage of method argument.  Please choose intrinsic or extrinsic")
   }
   
   return(q4dist)
@@ -332,7 +332,7 @@ genR <- function(r, S = NULL, space='SO3') {
 #' Maps a matrix belonging to the lie algebra \eqn{so(3)} into the lie group \eqn{SO(3)}.
 #'
 #' @param H single \eqn{3\times 3}{3-by-3} skew-symmetric matrix or \eqn{n\times 9}{n-by-9} sample of skew-symmetric matrices.
-#' @return Matrix in \eqn{SO(3)} \eqn{e^{\bm A}}{e^A}.
+#' @return Matrix in \eqn{SO(3)} \eqn{e^{\bm H}}{e^H}.
 #' @cite moakher02
 #' @export
 
@@ -402,7 +402,7 @@ project.SO3 <- function(M) {
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
 #' @param S the individual matrix of interest, usually an estimate of the mean.
-#' @param method type of distance used method in "projected" or "intrinsic"
+#' @param method type of distance used method in "extrinsic" or "intrinsic"
 #' @param p the order of the distances to compute.
 #' @return The sum of the pth order distance between each sample in Rs and S.
 #' @seealso \code{\link{dist.SO3}}, \code{\link{dist.Q4}}
@@ -412,7 +412,7 @@ project.SO3 <- function(M) {
 #' Sp<-mean(Rs)
 #' sum_dist(Rs,S=Sp,p=2)
 
-sum_dist<-function(x, S = genR(0, space=class(x)), method='projected', p=1){
+sum_dist<-function(x, S = genR(0, space=class(x)), method='extrinsic', p=1){
   
   UseMethod( "sum_dist" )
 
@@ -422,7 +422,7 @@ sum_dist<-function(x, S = genR(0, space=class(x)), method='projected', p=1){
 #' @method sum_dist SO3
 #' @S3method sum_dist SO3
 
-sum_dist.SO3 <- function(x, S = id.SO3, method='projected', p=1) {
+sum_dist.SO3 <- function(x, S = id.SO3, method='extrinsic', p=1) {
 
   return(sum(dist(x,S, method=method, p=p)))
   
@@ -432,7 +432,7 @@ sum_dist.SO3 <- function(x, S = id.SO3, method='projected', p=1) {
 #' @method sum_dist Q4
 #' @S3method sum_dist Q4
 
-sum_dist.Q4 <- function(x, S = id.Q4, method='projected', p=1) {
+sum_dist.Q4 <- function(x, S = id.Q4, method='extrinsic', p=1) {
   
   return(sum(dist(x,S, method=method, p=p)))
   
@@ -441,8 +441,8 @@ sum_dist.Q4 <- function(x, S = id.Q4, method='projected', p=1) {
 #' Center rotation data
 #' 
 #' This function will take the sample Rs and return the sample Rs centered at
-#' S, i.e. the returned sample is \eqn{S^\top R}{S'R}.  If S is the true center then
-#' the projected mean should be close to the 3-by-3 identity matrix 
+#' S.  That is, if each row of Rs is R then the returned sample is \eqn{S^\top R}{S'R}.  
+#' If S is the true center then the projected mean should be close to the 3-by-3 identity matrix. 
 #' 
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (p=9) or quaternion (p=4) form.
 #' @param S the rotation about which to center x.
