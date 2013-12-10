@@ -1,6 +1,6 @@
 *rotations*
 ========================================================
-A stable version of the *rotations* package is available for download from CRAN.  For MAC users, the next version of *rotations* can be downloaded from GitHub.  Windows users will need to download the repo, compile the C++ code and install locally.
+A stable version (0.2) of the *rotations* package is available for download from CRAN.  For MAC users, the current version (0.2.1) of *rotations* can be downloaded from GitHub.  Windows users will need to download the repo, compile the C++ code and install locally.
 
 ### Installation instructions for Mac: 
 ```
@@ -10,9 +10,9 @@ library(rotations)
 ```
 
 ### Change log:
-The differences between the CRAN and GitHub versions of the *rotations* package are as follows:
+The differences between the CRAN (0.2) and GitHub (0.2.1) versions of the *rotations* package are as follows:
 
-* None: `rotations` version 0.2 has been submitted to CRAN.  See `NEWS` for updates.
+* Fixes in documentation for Bayes point estimate
 
 
 *intervals*

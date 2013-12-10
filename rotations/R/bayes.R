@@ -166,8 +166,8 @@ bayesCR.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
 #' @param tuneK concentration tuning parameter, standard deviation of proposal distribution
 #' @param burn_in number of draws to use as burn-in
 #' @param m number of draws to keep from posterior distribution
-#' @return  list of \item{Shat}{Draws from the posterior distribution for central orientation S}
-#'          \item{kappa}{Draws from the posterior distribution for concentration parameter kappa}
+#' @return  list of \item{Shat}{Mode of the posterior distribution for the central orientation S}
+#'          \item{kappa}{Mean of the posterior distribution for the concentration kappa}
 #' @seealso \code{\link{mean.SO3}}, \code{\link{median.SO3}}
 #' @cite bingham2009b bingham2010
 #' @export

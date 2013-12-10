@@ -9,6 +9,7 @@ Rcpp::sourceCpp("FisherMethod.cpp")
 library(rotations)
 library(reshape2)
 library(plyr)
+library(grid)
 source("IntervalFuns.R")
 
 
