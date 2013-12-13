@@ -56,7 +56,6 @@ for(j in 1:dimS){
   
   cdHat<-cdfunsC(Qs,Qhat) #compute c and d hat using consistent estimators
   chat<-cdHat[1];  dhat<-cdHat[2]
-  hsqMean<-CRcompare$MeanDist[j]^2
   
   #compute the volume of the mean-based normal theory CR and save it under 'MeanNTH'
   CRcompare$MeanNTH[j]<-sqrt(chat*critVal/(2*nj*dhat^2))
@@ -99,8 +98,8 @@ write.csv(CRcompare,"Results/MeanMedianContCompFisherPart2.csv")
 #CRcompare<-CRcompare[rowSums(CRcompare[,5:10])>0,]
 
 CRcompSum<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,Mean=mean(MeanDist),Median=mean(MedianDist),
-                 MeanNTH=mean(MeanNTH),MedianNTH=min(mean(MedianNTH),pi),
-                 MeanBoot=mean(MeanBoot),MedianBoot=min(mean(MedianBoot),pi))
+                 MeanNTH=mean((MeanNTH)),MedianNTH=mean((MedianNTH)),
+                 MeanBoot=mean((MeanBoot)),MedianBoot=mean((MedianBoot)))
 
 #Compare Estimator Bias
 CRcompM<-melt(CRcompSum,id=c("eps","kappa","n","Dist"))
@@ -195,8 +194,8 @@ xtable(dcast(CRcoverM,Dist+n+eps~variable),caption="Coverage rate comparison.",d
 #region size
 
 CRcompSum<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,Mean=mean(MeanDist),Median=mean(MedianDist),
-                 MeanNTH=mean(MeanNTH),MedianNTH=min(mean(MedianNTH),pi),
-                 MeanBoot=mean(MeanBoot),MedianBoot=min(mean(MedianBoot),pi))
+                 MeanNTH=mean((MeanNTH)),MedianNTH=(mean(MedianNTH)),
+                 MeanBoot=mean((MeanBoot)),MedianBoot=(mean(MedianBoot)))
 
 CRcompM<-melt(CRcompSum,id=c("eps","kappa","n","Dist"))
 CRcompM$variable<-factor(CRcompM$variable,levels=c("Mean","Median","MeanNTH","MedianNTH","MeanBoot","MedianBoot"),labels=labs)
