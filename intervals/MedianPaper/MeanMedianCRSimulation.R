@@ -168,3 +168,41 @@ CRcompare$RE<-(CRcompare$MeanNTH^2)/(CRcompare$MedianNTH^2)
 RelativeE<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,SSRE=mean(RE))
 RelativeE$n<-as.factor(RelativeE$n)
 qplot(eps,SSRE,data=RelativeE,colour=n,group=n,geom='line')
+
+
+#####
+#Tables
+#Coverage rate comparison
+library(xtable)
+CRcompare<-read.csv("intervals/MedianPaper/Results/MeanMedianContComp.csv")[,-1]
+CRFisher<-read.csv("intervals/MedianPaper/Results/MeanMedianContCompFisherPart1.csv")[,-1]
+CRFisher2<-read.csv("intervals/MedianPaper/Results/MeanMedianContCompFisherPart2.csv")[,-1]
+CRcompare<-rbind(CRcompare,CRFisher,CRFisher2)
+
+###
+#region coverage rate
+
+CRcoverage<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,MeanNTH=sum(MeanDist<MeanNTH)/length(eps),MedianNTH=sum(MedianDist<MedianNTH)/length(eps),
+                  MeanBoot=sum(MeanDist<MeanBoot)/length(eps),MedianBoot=sum(MedianDist<MedianBoot)/length(eps))
+CRcoverM<-melt(CRcoverage,id=c("eps","kappa","n","Dist"))
+labs<-c("Mean","Median", "Mean (NTH)","Median (NTH)","Mean (Boot)","Median (Boot)")
+CRcoverM$variable<-factor(CRcoverM$variable,levels=c("Mean","Median","MeanNTH","MedianNTH","MeanBoot","MedianBoot"),labels=labs)
+CRcoverM$eps<-as.factor(CRcoverM$eps)
+
+xtable(dcast(CRcoverM,Dist+n+eps~variable),caption="Coverage rate comparison.",digits=3)
+
+###
+#region size
+
+CRcompSum<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,Mean=mean(MeanDist),Median=mean(MedianDist),
+                 MeanNTH=mean(MeanNTH),MedianNTH=min(mean(MedianNTH),pi),
+                 MeanBoot=mean(MeanBoot),MedianBoot=min(mean(MedianBoot),pi))
+
+CRcompM<-melt(CRcompSum,id=c("eps","kappa","n","Dist"))
+CRcompM$variable<-factor(CRcompM$variable,levels=c("Mean","Median","MeanNTH","MedianNTH","MeanBoot","MedianBoot"),labels=labs)
+VolumeDF<-CRcompM[!CRcompM$variable%in%c("Mean","Median"),]
+VolumeDF$eps<-as.factor(VolumeDF$eps)
+
+xtable(dcast(VolumeDF,Dist+n+eps~variable),caption="Radius comparison.",digits=3)
+
+
