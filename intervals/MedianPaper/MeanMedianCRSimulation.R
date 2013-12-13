@@ -124,7 +124,7 @@ qplot(eps,value,data=VolumeDF,geom='line',size=I(1.25),colour=variable,group=var
 
 #Median Boot with n=10 is bad, remove it
 VolumeDFEdited<-VolumeDF[VolumeDF$value<pi,]
-qplot(eps,value,data=VolumeDFEdited,geom='line',size=I(1.25),colour=variable,group=variable,xlab=expression(epsilon),ylab="Radius (Radians)")+
+qplot(eps,value,data=VolumeDFEdited,geom='line',size=I(1.25),colour=variable,group=variable,xlab=expression(epsilon),ylab="Region Size")+
   facet_grid(n~.,scales="free_y",labeller = label_parsed)+theme_bw()+theme(legend.position="none")+theme(aspect.ratio=1/2)+
   scale_x_continuous(breaks=c(0,.1,.2))
 #ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/VolumeCompFisher.pdf",width=4,height=6,units="in")
