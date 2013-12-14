@@ -130,6 +130,15 @@ qplot(eps,value,data=VolumeDFEdited,geom='line',size=I(1.25),colour=variable,gro
 #ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/VolumeCompFisher.pdf",width=4,height=6,units="in")
 #ggsave("C:/Users/Brittney Ritchey/Dropbox/Thesis/Intervals - Median/Figures/VolumeComp.pdf",width=4,height=6,units="in")
 
+#Same thing, but BW
+qplot(eps,value,data=VolumeDFEdited,geom='line',size=I(1.25),linetype=variable,col=variable,group=variable,xlab=expression(epsilon),ylab="Region Size")+
+  facet_grid(n~.,scales="free_y",labeller = label_parsed)+theme_bw()+theme(legend.position="none")+theme(aspect.ratio=1/2)+
+  scale_x_continuous(breaks=c(0,.1,.2))+
+  scale_linetype_manual(values = rep(rev(c("dashed","solid")),2))+
+  scale_colour_manual(values = rep(rev(c("gray50","black")),each=2))
+#ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/VolumeCompBWFisher.pdf",width=4,height=6,units="in")
+#ggsave("C:/Users/Brittney Ritchey/Dropbox/Thesis/Intervals - Median/Figures/VolumeCompBWFisher.pdf",width=4,height=6,units="in")
+
 
 #Compare region coverage rates
 CRcoverage<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,MeanNTH=sum(MeanDist<MeanNTH)/length(eps),MedianNTH=sum(MedianDist<MedianNTH)/length(eps),
@@ -149,6 +158,21 @@ qplot(eps,100*value,data=CRcoverM,geom='line',colour=variable,group=variable,siz
 #ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/CoverageCompFisher.pdf",width=4,height=6,units="in")
 #ggsave("C:/Users/Brittney Ritchey/Dropbox/Thesis/Intervals - Median/Figures/CoverageCompFisher.pdf",width=4,height=6,units="in")
 
+p2<-qplot(eps,100*value,data=CRcoverM,geom='line',linetype=variable,colour=variable,group=variable,size=I(1.25),xlab=expression(epsilon),ylab="Coverage (%)")+
+  facet_grid(n~.,labeller = label_parsed)+geom_hline(yintercept=90)+theme_bw()+coord_fixed(.2/200)+
+  labs(colour="",linetype="")+  
+  theme(legend.key.width=unit(2,"line"),legend.position='top')+
+  scale_linetype_manual(values = rep(rev(c("dashed","solid")),2))+
+  scale_colour_manual(values = rep(rev(c("gray50","black")),each=2))
+
+qplot(eps,100*value,data=CRcoverM,geom='line',linetype=variable,colour=variable,group=variable,size=I(1.25),xlab=expression(epsilon),ylab="Coverage (%)")+
+  facet_grid(n~.,labeller = label_parsed)+geom_hline(yintercept=90)+theme_bw()+coord_fixed(.2/200)+theme(legend.position='none')+
+  scale_x_continuous(breaks=c(0,.1,.2))+
+  scale_linetype_manual(values = rep(rev(c("dashed","solid")),2))+
+  scale_colour_manual(values = rep(rev(c("gray50","black")),each=2))
+#ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/CoverageCompBWFisher.pdf",width=4,height=6,units="in")
+#ggsave("C:/Users/Brittney Ritchey/Dropbox/Thesis/Intervals - Median/Figures/CoverageCompBWFisher.pdf",width=4,height=6,units="in")
+
 
 g_legend<-function(a.gplot){
   tmp <- ggplot_gtable(ggplot_build(a.gplot))
@@ -161,6 +185,10 @@ legend<-g_legend(p1)
 grid.newpage()
 grid.draw(legend)
 
+legend<-g_legend(p2)
+#Need to use "Export" because it isn't a ggplot2 object
+grid.newpage()
+grid.draw(legend)
 
 #Small sample Relative efficiency
 CRcompare$RE<-(CRcompare$MeanNTH^2)/(CRcompare$MedianNTH^2)
