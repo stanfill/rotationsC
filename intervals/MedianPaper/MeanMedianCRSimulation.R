@@ -24,7 +24,7 @@ n<-c(10,50,100)
 
 #These kappa values give a circular variance of 1/7 (arbitrary)
 #kappa1<-20         #For Cayley kappa=20
-kappa1<-20    #For Fisher kappa=5.393154      
+kappa1<-5    #For Fisher kappa=5.393154      
 kappa2<-kappa1      #Contamination distribution kappa
 
 
@@ -39,7 +39,7 @@ CRcompare<-data.frame(expand.grid(eps=eps,kappa=kappa1,n=n,Dist=Dist),MeanDist=0
 CRcompare<-CRcompare[rep(seq_len(nrow(CRcompare)),each=B),]
 dimS<-nrow(CRcompare)
 
-Scont<-genR(pi/2)
+Scont<-genR(pi/4)
 
 for(j in 1:dimS){
   
@@ -82,12 +82,12 @@ for(j in 1:dimS){
   CRcompare$MedianBoot[j]<-sqrt(ctilde*critValBootMed/(2*nj*dtilde^2))  
  
   if(j%%1000==0){
-    write.csv(CRcompare,"Results/MeanMedianContCompFisherPart2.csv")
+    write.csv(CRcompare,"Results/MeanMedianContCompFisherPi_4.csv")
   }
   
 }
 
-write.csv(CRcompare,"Results/MeanMedianContCompFisherPart2.csv")
+write.csv(CRcompare,"Results/MeanMedianContCompFisherPi_4.csv")
 #CRcompare<-read.csv("intervals/MedianPaper/Results/MeanMedianContComp.csv")[,-1]
 
 #CRFisher<-read.csv("intervals/MedianPaper/Results/MeanMedianContCompFisherPart1.csv")[,-1]
@@ -191,45 +191,45 @@ grid.newpage()
 grid.draw(legend)
 
 #Small sample Relative efficiency
-CRcompare$RE<-(CRcompare$MeanNTH^2)/(CRcompare$MedianNTH^2)
-RelativeE<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,SSRE=mean(RE))
-RelativeE$n<-as.factor(RelativeE$n)
-qplot(eps,SSRE,data=RelativeE,colour=n,group=n,geom='line')
+#CRcompare$RE<-(CRcompare$MeanNTH^2)/(CRcompare$MedianNTH^2)
+#RelativeE<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,SSRE=mean(RE))
+#RelativeE$n<-as.factor(RelativeE$n)
+#qplot(eps,SSRE,data=RelativeE,colour=n,group=n,geom='line')
 
 
 #####
-#Tables
+#Create Tables
 #Coverage rate comparison
-library(xtable)
-CRcompare<-read.csv("intervals/MedianPaper/Results/MeanMedianContComp.csv")[,-1]
-CRFisher<-read.csv("intervals/MedianPaper/Results/MeanMedianContCompFisherPart1.csv")[,-1]
-CRFisher2<-read.csv("intervals/MedianPaper/Results/MeanMedianContCompFisherPart2.csv")[,-1]
-CRcompare<-rbind(CRcompare,CRFisher,CRFisher2)
-
-###
-#region coverage rate
-
-CRcoverage<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,MeanNTH=sum(MeanDist<MeanNTH)/length(eps),MedianNTH=sum(MedianDist<MedianNTH)/length(eps),
-                  MeanBoot=sum(MeanDist<MeanBoot)/length(eps),MedianBoot=sum(MedianDist<MedianBoot)/length(eps))
-CRcoverM<-melt(CRcoverage,id=c("eps","kappa","n","Dist"))
-labs<-c("Mean","Median", "Mean (NTH)","Median (NTH)","Mean (Boot)","Median (Boot)")
-CRcoverM$variable<-factor(CRcoverM$variable,levels=c("Mean","Median","MeanNTH","MedianNTH","MeanBoot","MedianBoot"),labels=labs)
-CRcoverM$eps<-as.factor(CRcoverM$eps)
-
-xtable(dcast(CRcoverM,Dist+n+eps~variable),caption="Coverage rate comparison.",digits=3)
-
-###
-#region size
-
-CRcompSum<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,Mean=mean(MeanDist),Median=mean(MedianDist),
-                 MeanNTH=mean((MeanNTH)),MedianNTH=(mean(MedianNTH)),
-                 MeanBoot=mean((MeanBoot)),MedianBoot=(mean(MedianBoot)))
-
-CRcompM<-melt(CRcompSum,id=c("eps","kappa","n","Dist"))
-CRcompM$variable<-factor(CRcompM$variable,levels=c("Mean","Median","MeanNTH","MedianNTH","MeanBoot","MedianBoot"),labels=labs)
-VolumeDF<-CRcompM[!CRcompM$variable%in%c("Mean","Median"),]
-VolumeDF$eps<-as.factor(VolumeDF$eps)
-
-xtable(dcast(VolumeDF,Dist+n+eps~variable),caption="Radius comparison.",digits=3)
+# library(xtable)
+# CRcompare<-read.csv("intervals/MedianPaper/Results/MeanMedianContComp.csv")[,-1]
+# CRFisher<-read.csv("intervals/MedianPaper/Results/MeanMedianContCompFisherPart1.csv")[,-1]
+# CRFisher2<-read.csv("intervals/MedianPaper/Results/MeanMedianContCompFisherPart2.csv")[,-1]
+# CRcompare<-rbind(CRcompare,CRFisher,CRFisher2)
+# 
+# ###
+# #region coverage rate
+# 
+# CRcoverage<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,MeanNTH=sum(MeanDist<MeanNTH)/length(eps),MedianNTH=sum(MedianDist<MedianNTH)/length(eps),
+#                   MeanBoot=sum(MeanDist<MeanBoot)/length(eps),MedianBoot=sum(MedianDist<MedianBoot)/length(eps))
+# CRcoverM<-melt(CRcoverage,id=c("eps","kappa","n","Dist"))
+# labs<-c("Mean","Median", "Mean (NTH)","Median (NTH)","Mean (Boot)","Median (Boot)")
+# CRcoverM$variable<-factor(CRcoverM$variable,levels=c("Mean","Median","MeanNTH","MedianNTH","MeanBoot","MedianBoot"),labels=labs)
+# CRcoverM$eps<-as.factor(CRcoverM$eps)
+# 
+# xtable(dcast(CRcoverM,Dist+n+eps~variable),caption="Coverage rate comparison.",digits=3)
+# 
+# ###
+# #region size
+# 
+# CRcompSum<-ddply(CRcompare,.(eps,kappa,n,Dist),summarize,Mean=mean(MeanDist),Median=mean(MedianDist),
+#                  MeanNTH=mean((MeanNTH)),MedianNTH=(mean(MedianNTH)),
+#                  MeanBoot=mean((MeanBoot)),MedianBoot=(mean(MedianBoot)))
+# 
+# CRcompM<-melt(CRcompSum,id=c("eps","kappa","n","Dist"))
+# CRcompM$variable<-factor(CRcompM$variable,levels=c("Mean","Median","MeanNTH","MedianNTH","MeanBoot","MedianBoot"),labels=labs)
+# VolumeDF<-CRcompM[!CRcompM$variable%in%c("Mean","Median"),]
+# VolumeDF$eps<-as.factor(VolumeDF$eps)
+# 
+# xtable(dcast(VolumeDF,Dist+n+eps~variable),caption="Radius comparison.",digits=3)
 
 

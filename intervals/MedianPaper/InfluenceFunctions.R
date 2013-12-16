@@ -97,7 +97,7 @@ GESMedian<-function(kap,Fisher=F,SIF=F,IF=F){
 #Compare IFs
 library(gsl)
 rs<-seq(-pi,pi,length=100)
-kap<-100
+kap<-20
 plot(rs,IFMedian(rs,kap,T),main='Fisher Distribution',type='l',xlab='r',ylab="IF")
 abline(v=0,h=0)
 lines(rs,IFMean(rs,kap,T),col=2)
