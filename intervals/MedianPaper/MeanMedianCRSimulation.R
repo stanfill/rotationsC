@@ -24,7 +24,7 @@ n<-c(10,50,100)
 
 #These kappa values give a circular variance of 1/7 (arbitrary)
 #kappa1<-20         #For Cayley kappa=20
-kappa1<-5    #For Fisher kappa=5.393154      
+kappa1<-20    #For Fisher kappa=5.393154      
 kappa2<-kappa1      #Contamination distribution kappa
 
 
@@ -39,7 +39,7 @@ CRcompare<-data.frame(expand.grid(eps=eps,kappa=kappa1,n=n,Dist=Dist),MeanDist=0
 CRcompare<-CRcompare[rep(seq_len(nrow(CRcompare)),each=B),]
 dimS<-nrow(CRcompare)
 
-Scont<-genR(pi/4)
+Scont<-genR(pi/2)
 
 for(j in 1:dimS){
   
@@ -88,7 +88,7 @@ for(j in 1:dimS){
 }
 
 write.csv(CRcompare,"Results/MeanMedianContCompFisherPi_4.csv")
-#CRcompare<-read.csv("intervals/MedianPaper/Results/MeanMedianContComp.csv")[,-1]
+#CRcompare<-read.csv("intervals/MedianPaper/Results/MeanMedianContCompCayleyPi_4.csv")[,-1]
 
 #CRFisher<-read.csv("intervals/MedianPaper/Results/MeanMedianContCompFisherPart1.csv")[,-1]
 #CRFisher2<-read.csv("intervals/MedianPaper/Results/MeanMedianContCompFisherPart2.csv")[,-1]
@@ -125,8 +125,8 @@ qplot(eps,value,data=VolumeDF,geom='line',size=I(1.25),colour=variable,group=var
 #Median Boot with n=10 is bad, remove it
 VolumeDFEdited<-VolumeDF[VolumeDF$value<pi,]
 qplot(eps,value,data=VolumeDFEdited,geom='line',size=I(1.25),colour=variable,group=variable,xlab=expression(epsilon),ylab="Region Size")+
-  facet_grid(n~.,scales="free_y",labeller = label_parsed)+theme_bw()+theme(legend.position="none")+theme(aspect.ratio=1/2)+
-  scale_x_continuous(breaks=c(0,.1,.2))
+  facet_grid(n~.,scales="free_y",labeller = label_parsed)+theme_bw()+theme(aspect.ratio=1/2)+
+  scale_x_continuous(breaks=c(0,.1,.2))#+theme(legend.position="none")
 #ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/VolumeCompFisher.pdf",width=4,height=6,units="in")
 #ggsave("C:/Users/Brittney Ritchey/Dropbox/Thesis/Intervals - Median/Figures/VolumeComp.pdf",width=4,height=6,units="in")
 

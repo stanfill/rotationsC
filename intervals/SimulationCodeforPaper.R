@@ -110,7 +110,7 @@ resultsDf
 resM<-melt(resultsDf,id=c('Dist','nu','n'))
 colnames(resM)[4]<-'Method'
 #levels(resM$Method)[3:4]<-c("Nordman Normal","Nordman Bootstrap")
-levels(resM$Method)<-c("Eigen(NTH)","Eigen(Boot.)","Moment(NTH)","Moment(Boot.)")
+levels(resM$Method)<-c("Old(LSA)","Old(Boot)","New(LSA)","New(Boot)")
 
 levels(resM$Dist)<-c("Cayley","matrix~~Fisher","circular-von~~Mises")
 resM$Dist<-factor(resM$Dist,levels=c("Cayley","circular-von~~Mises","matrix~~Fisher"))
@@ -128,10 +128,19 @@ qplot(n,value,data=resM,col=Method,linetype=Method,ylab='Coverage Rate (%)',xlab
   scale_linetype_manual(values = rep(c("dashed","solid"),each=2))+
   scale_colour_manual(values = rep(c("gray50","black"),2))+
   facet_grid(Dist~nu,labeller=label_parsed)+
-  geom_hline(yintercept=alp*100,colour='gray50')+geom_line(lwd=I(1.25),alpha=I(.8))+
+  geom_hline(yintercept=(alp+c(-.01,.01,0))*100,colour=c('gray75','gray75','gray50'))+geom_line(lwd=I(1.25),alpha=I(.8))+
   scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+
   theme(legend.key.width=unit(3,"line"),legend.position='top',panel.margin = unit(.75, "lines"))
 #ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Mean/Figures/CoverRatesB10000.pdf",width=7,height=6)
+
+qplot(n,value,data=resM[resM$nu!="nu == 0.50",],col=Method,linetype=Method,ylab='Coverage Rate (%)',xlab='Sample Size',ylim=c(80,100),geom='blank')+
+  scale_linetype_manual(values = rep(c("dashed","solid"),each=2))+
+  scale_colour_manual(values = rep(c("gray50","black"),2))+
+  facet_grid(Dist~nu,labeller=label_parsed)+
+  geom_hline(yintercept=(alp+c(-.01,.01,0))*100,colour=c('gray75','gray75','gray50'))+geom_line(lwd=I(1),alpha=I(.8))+geom_point(size=I(1))+
+  scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+coord_fixed(2.5)+
+  theme(legend.key.width=unit(3,"line"),legend.position='top',panel.margin = unit(.75, "lines"))
+#ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Mean/Figures/CoverRatesB10000No5.pdf",width=7,height=6)
 
 #############
 #Massage the plots to accentuate the differences as a function of n and nu
