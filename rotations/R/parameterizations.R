@@ -96,7 +96,7 @@ as.Q4.SO3 <- function(q,...) {
   R<-formatSO3(R)
   theta <- angle(R)
   u <- axis(R)
-  x <- Q4(u,theta)
+  x <- as.Q4.default(u,theta)
   
   return(x)
 }
