@@ -13,15 +13,16 @@
   Matrix \eqn{e^{\bm H}}{e^H} in \eqn{SO(3)} .
 }
 \description{
-  Compute the matrix exponential for skew-symmetric matrices
-  according to the usual Taylor expansion. The expansion is
-  significantly simplified for skew-symmetric matrices, see
-  \cite{Moakher (2002)}. Maps a matrix belonging to the lie
-  algebra \eqn{so(3)} into the lie group \eqn{SO(3)}.
+  Compute the matrix exponential for skew-symmetric
+  matrices according to the usual Taylor expansion. The
+  expansion is significantly simplified for skew-symmetric
+  matrices, see \cite{Moakher (2002)}. Maps a matrix
+  belonging to the lie algebra \eqn{so(3)} into the lie
+  group \eqn{SO(3)}.
 }
 \references{
   Moakher M (2002). "Means and averaging in the group of
-  rotations." SIAM Journal on Matrix Analysis and
-  Applications, 24(1), pp. 1-16.
+  rotations." _SIAM Journal on Matrix Analysis and
+  Applications_, *24*(1), pp. 1-16.
 }
 

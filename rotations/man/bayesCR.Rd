@@ -41,9 +41,9 @@
   \item{alp}{alpha level desired, e.g. 0.05 or 0.10.}
 }
 \value{
-  list of \item{Shat,Qhat}{the posterior mode} \item{Radius}{the
-  radius of the credible region centered at the posterior
-  mode}
+  list of \item{Shat,Qhat}{the posterior mode}
+  \item{Radius}{the radius of the credible region centered
+  at the posterior mode}
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)}\% credible
@@ -67,13 +67,13 @@ S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01)
   Bingham MA, Vardeman SB and Nordman DJ (2009). "Bayes
   one-sample and one-way random effects analyses for 3-D
   orientations with application to materials science."
-  Bayesian Analysis, 4(3), pp. 607-629.
+  _Bayesian Analysis_, *4*(3), pp. 607-629.
 
   Bingham MA, Nordman DJ and Vardeman SB (2010).
   "Finite-sample investigation of likelihood and Bayes
   inference for the symmetric von Mises-Fisher
-  distribution." Computational Statistics & Data
-  Analysis, 54(5), pp. 1317-1327.
+  distribution." _Computational Statistics \& Data
+  Analysis_, *54*(5), pp. 1317-1327.
 }
 \seealso{
   \code{\link{fisheretal}}, \code{\link{prentice}},

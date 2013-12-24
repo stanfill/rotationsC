@@ -30,6 +30,7 @@ setOldClass("Q4")
 #' return the quaternion equivalent.
 #'
 #' @export
+#' @rdname Q4
 #' @param q object to be coerced or tested.
 #' @param theta vector of rotation angles.
 #' @param ... additional arguments.
@@ -39,26 +40,26 @@ setOldClass("Q4")
 #' 					quaternion; namely it must be four-dimensional and of unit length.}
 #' 					\item{Q4.default}{returns an \eqn{n}-by-4 matrix where each row is a quaternion constructed from axis \eqn{U} and angle theta.}
 #' 					\item{Q4.SO3}{returns \eqn{n}-by-4 matrix where each row is a quaternion constructed from the corresponding rotation matrix.}
-#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4
+#' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4
 
-Q4<-function(q,...){
-  UseMethod("Q4")
+as.Q4<-function(q,...){
+  UseMethod("as.Q4")
 }
 
 #' @rdname Q4
-#' @method Q4 default
-#' @S3method Q4 default
-#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4
+#' @method as.Q4 default
+#' @S3method as.Q4 default
+#' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4
 #' @export
 
-Q4.default <- function(q,theta=NULL,...){  
+as.Q4.default <- function(q,theta=NULL,...){  
   
   U<-q
   
   n<-length(U)/3
   
-  if(n%%1!=0)
-    stop("Each axis must be in three-dimensions")	 
+  #if(n%%1!=0)
+  #  stop("Each axis must be in three-dimensions")	 
   
   U<-matrix(U,n,3)
   ulen<-sqrt(rowSums(U^2))
@@ -69,8 +70,8 @@ Q4.default <- function(q,theta=NULL,...){
   
   ntheta<-length(theta)
   
-  if(n!=ntheta)
-    stop("Number of angles must match number of axes")
+  #if(n!=ntheta)
+  #  stop("Number of angles must match number of axes")
   
   #if(any(ulen!=1))
   #  U<-U/ulen
@@ -84,12 +85,12 @@ Q4.default <- function(q,theta=NULL,...){
 }
 
 #' @rdname Q4
-#' @method Q4 SO3
-#' @S3method Q4 SO3
-#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4
+#' @method as.Q4 SO3
+#' @S3method as.Q4 SO3
+#' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4
 #' @export
 
-Q4.SO3 <- function(q,...) {
+as.Q4.SO3 <- function(q,...) {
   
   R<-q
   R<-formatSO3(R)
@@ -101,24 +102,16 @@ Q4.SO3 <- function(q,...) {
 }
 
 #' @rdname Q4
-#' @method Q4 Q4
-#' @S3method Q4 Q4
-#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4
+#' @method as.Q4 Q4
+#' @S3method as.Q4 Q4
+#' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4
 #' @export
 
-Q4.Q4 <- function(q,...) {
+as.Q4.Q4 <- function(q,...) {
   
   return(q)
 }
 
-#' @rdname Q4
-#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4
-#' @export
-
-as.Q4<-function(q){
-	class(q)<-"Q4"
-	return(q)
-}
 
 #' @rdname Q4
 #' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4

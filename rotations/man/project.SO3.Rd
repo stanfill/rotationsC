@@ -28,8 +28,8 @@ project.SO3(M)
 }
 \references{
   Moakher M (2002). "Means and averaging in the group of
-  rotations." SIAM Journal on Matrix Analysis and
-  Applications, 24(1), pp. 1-16.
+  rotations." _SIAM Journal on Matrix Analysis and
+  Applications_, *24*(1), pp. 1-16.
 }
 \seealso{
   \code{\link{mean.SO3}}, \code{\link{median.SO3}}

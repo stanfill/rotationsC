@@ -27,8 +27,8 @@
   for the Cayley distribution.
 }
 \references{
-  Mardia K and Jupp P (2000). Directional statistics.
-  John Wiley & Sons, Chichester, England.
+  Mardia K and Jupp P (2000). _Directional statistics._.
+  John Wiley \& Sons, Chichester, England.
 }
 \seealso{
   \code{\link{Cayley}}
