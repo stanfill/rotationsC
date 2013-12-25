@@ -150,7 +150,8 @@ str.Q4<-function(object,...){
 '[.Q4'<-function(x,i,...){
   x<-matrix(x,dim(x))
   x<-x[i,...]
-  return(as.Q4(x))
+  class(x)<-"Q4"
+  return(x)
 }
 
 #' @S3method == Q4

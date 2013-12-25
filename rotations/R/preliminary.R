@@ -150,13 +150,8 @@ angle.SO3 <- function(x){
 angle.Q4 <- function(x){
 	
   Qs<-formatQ4(x)
-	n<-nrow(Qs)
-	theta<-rep(0,n)
-	
-	for(i in 1:n){
-	  theta[i]<-2*acos(Qs[i,1])
-	}
-	 return(theta)
+	theta<-2*acos(Qs[,1])
+	return(theta)
 }
 
 
@@ -487,8 +482,8 @@ center.Q4<-function(x,S){
 	for(i in 1:nrow(Qs)){
 		Qs[i,]<-qMult(S,Qs[i,])
 	}
-
-	return(as.Q4(Qs))
+  class(Qs)<-"Q4"
+	return(Qs)
 }
 
 
@@ -526,7 +521,8 @@ formatQ4<-function(Qs){
   #if(length(Qs)==4)
   #  return(as.Q4(Qs))
   #else
-  return(as.Q4(Qs))
+  class(Qs)<-"Q4"
+  return(Qs)
 }
 
 pMat<-function(p){
