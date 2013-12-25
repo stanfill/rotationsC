@@ -16,6 +16,8 @@ The differences between the CRAN (0.2) and GitHub (1.0) versions of the *rotatio
 
 * The functions `SO3` and `Q4` no longer exist.  All of their functaionality has been moved to `as.SO3` and `as.Q4`
 
+* Create a `plot.Q4` function that uses `plot.SO3` after casting the object to class `SO3`
+
 *intervals*
 --------------------------------------------------------
 This folder contains the code necessary to run the simulations for the confidence region research
