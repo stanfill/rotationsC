@@ -11,11 +11,11 @@
 \usage{
   as.SO3(R, ...)
 
-  \method{SO3}{default} (R, theta = NULL, ...)
+  \method{as.SO3}{default} (R, theta = NULL, ...)
 
-  \method{SO3}{Q4} (R, ...)
+  \method{as.SO3}{Q4} (R, ...)
 
-  \method{SO3}{SO3} (R, ...)
+  \method{as.SO3}{SO3} (R, ...)
 
   is.SO3(R)
 
