@@ -137,8 +137,7 @@ angle<-function(x){
 angle.SO3 <- function(x){
 	
 	Rs<-formatSO3(x)
-	n<-nrow(Rs)
-	theta<-c(rdistSO3C(Rs,id.SO3))
+	theta<-c(rdistSO3C(Rs,diag(1,3,3)))
   return(theta)
 }
 

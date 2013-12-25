@@ -166,8 +166,8 @@ as.SO3 <- function(R,...){
 }
 
 #' @rdname SO3
-#' @method SO3 default
-#' @S3method SO3 default
+#' @method as.SO3 default
+#' @S3method as.SO3 default
 #' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3
 #' @export
 
@@ -237,8 +237,8 @@ as.SO3.default <- function(R, theta=NULL,...) {
 
 
 #' @rdname SO3
-#' @method SO3 Q4
-#' @S3method SO3 Q4
+#' @method as.SO3 Q4
+#' @S3method as.SO3 Q4
 #' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3
 #' @export
 
@@ -263,8 +263,8 @@ as.SO3.Q4<-function(R,...){
 }
 
 #' @rdname SO3
-#' @method SO3 SO3
-#' @S3method SO3 SO3
+#' @method as.SO3 SO3
+#' @S3method as.SO3 SO3
 #' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3
 #' @export
 
