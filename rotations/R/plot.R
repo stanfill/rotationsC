@@ -133,6 +133,7 @@ pointsXYZ <- function(data, center, column=1) {
 #' @param m number of bootstrap replicates to use in Zhang confidence region.
 #' @param ... parameters passed onto the points layer.
 #' @return  A \code{ggplot2} object with the data displayed on spherical grid.
+#' @aliases plot.Q4
 #' @S3method plot SO3
 #' @method plot SO3
 #' @cite wickham09
@@ -336,3 +337,16 @@ mplotSO3<-function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL
   }
 
 }
+
+#' @rdname plot.SO3
+#' @aliases plot.SO3
+#' @S3method plot Q4
+#' @method plot Q4
+#' @export
+
+plot.Q4 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300,  ...) {
+  Rs<-as.SO3(x)
+  center<-as.SO3(center)
+  plot(Rs, center=center, col=col, to_range=to_range, show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,  ...)
+}
+  

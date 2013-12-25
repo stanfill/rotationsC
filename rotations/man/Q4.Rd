@@ -1,6 +1,7 @@
 \docType{data}
 \name{as.Q4}
 \alias{as.Q4}
+\alias{as.Q4.data.frame}
 \alias{as.Q4.default}
 \alias{as.Q4.Q4}
 \alias{as.Q4.SO3}
@@ -20,6 +21,8 @@
   \method{as.Q4}{SO3} (q, ...)
 
   \method{as.Q4}{Q4} (q, ...)
+
+  \method{as.Q4}{data.frame} (q, ...)
 
   is.Q4(q)
 

@@ -40,7 +40,7 @@ setOldClass("Q4")
 #' 					quaternion; namely it must be four-dimensional and of unit length.}
 #' 					\item{Q4.default}{returns an \eqn{n}-by-4 matrix where each row is a quaternion constructed from axis \eqn{U} and angle theta.}
 #' 					\item{Q4.SO3}{returns \eqn{n}-by-4 matrix where each row is a quaternion constructed from the corresponding rotation matrix.}
-#' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4
+#' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 
 as.Q4<-function(q,...){
   UseMethod("as.Q4")
@@ -49,7 +49,7 @@ as.Q4<-function(q,...){
 #' @rdname Q4
 #' @method as.Q4 default
 #' @S3method as.Q4 default
-#' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4
+#' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @export
 
 as.Q4.default <- function(q,theta=NULL,...){  
@@ -95,7 +95,7 @@ as.Q4.default <- function(q,theta=NULL,...){
 #' @rdname Q4
 #' @method as.Q4 SO3
 #' @S3method as.Q4 SO3
-#' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4
+#' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @export
 
 as.Q4.SO3 <- function(q,...) {
@@ -112,7 +112,7 @@ as.Q4.SO3 <- function(q,...) {
 #' @rdname Q4
 #' @method as.Q4 Q4
 #' @S3method as.Q4 Q4
-#' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4
+#' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @export
 
 as.Q4.Q4 <- function(q,...) {
@@ -120,9 +120,21 @@ as.Q4.Q4 <- function(q,...) {
   return(q)
 }
 
+#' @rdname Q4
+#' @method as.Q4 data.frame
+#' @S3method as.Q4 data.frame
+#' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
+#' @export
+
+as.Q4.data.frame <- function(q,...) {
+  n<-nrow(q)
+  p<-ncol(q)
+  q<-as.matrix(q,n,p)
+  return(as.Q4.default(q))
+}
 
 #' @rdname Q4
-#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4
+#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4 as.Q4.data.frame
 #' @export
 
 is.Q4 <- function(q) {
@@ -132,9 +144,9 @@ is.Q4 <- function(q) {
 }
 
 #' @rdname Q4
-#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4
+#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4 as.Q4.data.frame
 #' @export
-#' 
+
 id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 
 
@@ -176,7 +188,7 @@ as.SO3.default <- function(R, theta=NULL,...) {
   U<-R
   n<-length(U)/3
   
-  if(n%%1!=0)
+  if(n%%3==0)
     stop("This functions only works in three dimensions.")	
   
   U<-matrix(U,n,3)
@@ -271,6 +283,7 @@ as.SO3.Q4<-function(R,...){
 as.SO3.SO3<-function(R,...){
   return(R)
 }
+
 
 
 #' @rdname SO3
