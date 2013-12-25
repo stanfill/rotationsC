@@ -27,9 +27,9 @@ Suggests:
 LinkingTo: Rcpp, RcppArmadillo
 Collate:
     'help.R'
-    'parameterizations.R'
     'estimators.R'
     'preliminary.R'
+    'parameterizations.R'
     'distributions.R'
     'kappa.R'
     'regions.R'

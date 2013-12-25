@@ -8,7 +8,9 @@ print.SO3<-function(x,...){
   #  stop("Input is not of the correct length.")
   
   if(len==9){
-    print.default(as.SO3(matrix(Rs,3,3)),...)
+    tr<-matrix(Rs,3,3)
+    class(tr)<-"SO3"
+    print.default(tr,...)
   }else{
     print.default(Rs,...)
   }
@@ -142,7 +144,8 @@ str.Q4<-function(object,...){
 '[.SO3'<-function(x,i,...){
   x<-matrix(x,dim(x))
   x<-x[i,...]
-  return(as.SO3(x))
+  class(x)<-"SO3"
+  return(x)
 }
 
 #' @S3method [ Q4
@@ -204,8 +207,10 @@ NULL
 #' @method - SO3
 
 '-.SO3'<-function(x,y=NULL){
-
-  if(is.null(y)) return(as.SO3(t(matrix(x,3,3))))
+  
+  xt<-t(matrix(x,3,3))
+  class(xt)<-"SO3"
+  if(is.null(y)) return(xt)
   
   return(center.SO3(x,y))
 }
@@ -217,7 +222,7 @@ NULL
 
 '+.Q4'<-function(x,y){
 
-  return(Q4(SO3(x)+SO3(y)))
+  return(as.Q4(as.SO3(x)+as.SO3(y)))
 }
 
 #' @rdname Arithmetic
@@ -232,5 +237,5 @@ NULL
     return(x)
   }
 
-  return(Q4(SO3(x)-SO3(y)))
+  return(as.Q4(as.SO3(x)-as.SO3(y)))
 }

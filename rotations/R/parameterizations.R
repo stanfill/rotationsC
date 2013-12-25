@@ -56,32 +56,40 @@ as.Q4.default <- function(q,theta=NULL,...){
   
   U<-q
   
-  n<-length(U)/3
+  n<-length(U)
   
-  #if(n%%1!=0)
-  #  stop("Each axis must be in three-dimensions")	 
+  if(n%%3==0){
+    #If input is length 3, data is assumed to be vectors in R^3
+    n<-n/3
+    U<-matrix(U,n,3)
+    ulen<-sqrt(rowSums(U^2))
   
-  U<-matrix(U,n,3)
-  ulen<-sqrt(rowSums(U^2))
+    if(is.null(theta)){ 
+      theta<-ulen%%pi
+    }
   
-  if(is.null(theta)){ 
-    theta<-ulen%%pi
+    ntheta<-length(theta)
+  
+    if(n!=ntheta)
+      stop("Number of angles must match number of axes")
+  
+    #if(any(ulen!=1))
+    #  U<-U/ulen
+  
+    #CPP version is causing seg faults, try just doing it in R
+    #x <- Q4defaultC(U,theta)
+  
+    q <- cbind(cos(theta/2), sin(theta/2) * U)
+  }else if(n%%4==0){
+    #If input has length divisible by 4, data are normalized and made into class "Q4"
+    n<-n/4
+    rowLens<-(rowSums(q^2))^0.5
+    q<-q/rowLens
+  }else{
+    stop("Unknown data type.")
   }
-  
-  ntheta<-length(theta)
-  
-  #if(n!=ntheta)
-  #  stop("Number of angles must match number of axes")
-  
-  #if(any(ulen!=1))
-  #  U<-U/ulen
-  
-  #CPP version is causing seg faults, try just doing it in R
-  #x <- Q4defaultC(U,theta)
-  
-  x <- cbind(cos(theta/2), sin(theta/2) * U)
-  class(x)<-"Q4"
-  return(x)
+  class(q)<-"Q4"
+  return(q)
 }
 
 #' @rdname Q4
@@ -141,6 +149,7 @@ id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 #' return the rotation matrix equivalent.
 #'
 #' @export
+#' @rdname SO3
 #' @param R object to be coerced or tested.
 #' @param theta vector of rotation angles.
 #' @param ... additional arguments.
@@ -150,20 +159,19 @@ id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 #' 					rotation matrix.  Namely, has determinant one and its transpose is its inverse.}
 #' 					\item{SO3.default}{returns an \eqn{n}-by-9 matrix where each row is a rotation matrix constructed from axis \eqn{U} and angle theta.}
 #' 					\item{SO3.Q4}{returns \eqn{n}-by-9 matrix where each row is a rotation matrix constructed from the corresponding quaternion.}
-#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4 SO3.SO3
+#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3
 
-SO3 <- function(R,...){
-  UseMethod("SO3")
+as.SO3 <- function(R,...){
+  UseMethod("as.SO3")
 }
 
 #' @rdname SO3
 #' @method SO3 default
 #' @S3method SO3 default
-#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4 SO3.SO3
+#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3
 #' @export
 
-
-SO3.default <- function(R, theta=NULL,...) {
+as.SO3.default <- function(R, theta=NULL,...) {
   
   U<-R
   n<-length(U)/3
@@ -183,8 +191,7 @@ SO3.default <- function(R, theta=NULL,...) {
   }
   
   R<-matrix(NA,n,9)
-  #print(U)
-  #print(ulen)
+
   for(i in 1:n){
     
     if(ulen[i]!=0)
@@ -232,10 +239,10 @@ SO3.default <- function(R, theta=NULL,...) {
 #' @rdname SO3
 #' @method SO3 Q4
 #' @S3method SO3 Q4
-#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4 SO3.SO3
+#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3
 #' @export
 
-SO3.Q4<-function(R,...){
+as.SO3.Q4<-function(R,...){
   
   q<-R
   q<-formatQ4(q)
@@ -245,37 +252,29 @@ SO3.Q4<-function(R,...){
     nonq<-which((rowSums(q^2)-1)>10e-10)
     q[nonq,]<-as.Q4(q[nonq,]/sqrt(rowSums(q[nonq,]^2)))
   }else{
-    q<-as.Q4(q)
+    class(q)<-"Q4"
   }
   
   theta<-angle(q)
   
   u<-axis(q)
   
-  return(SO3(u, theta)) 
+  return(as.SO3.default(u, theta)) 
 }
 
 #' @rdname SO3
 #' @method SO3 SO3
 #' @S3method SO3 SO3
-#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4 SO3.SO3
+#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3
 #' @export
 
-SO3.SO3<-function(R,...){
+as.SO3.SO3<-function(R,...){
   return(R)
 }
 
-#' @rdname SO3
-#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4 SO3.SO3
-#' @export
-
-as.SO3<-function(R){
-	class(R)<-"SO3"
-	return(R)
-}
 
 #' @rdname SO3
-#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4 SO3.SO3
+#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3
 #' @export
 
 is.SO3 <- function(R) {
@@ -288,7 +287,7 @@ is.SO3 <- function(R) {
 }
 
 #' @rdname SO3
-#' @aliases SO3 as.SO3 is.SO3 id.SO3 SO3.default SO3.Q4 SO3.SO3
+#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3
 #' @export
 
-id.SO3 <- as.SO3(diag(c(1,1,1)))
+id.SO3 <- genR(0)

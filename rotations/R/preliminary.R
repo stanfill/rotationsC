@@ -151,6 +151,7 @@ angle.Q4 <- function(x){
 	
   Qs<-formatQ4(x)
 	theta<-2*acos(Qs[,1])
+  class(theta)<-"numeric"
 	return(theta)
 }
 
@@ -215,8 +216,6 @@ axis.Q4 <- function(x,...){
   return(u)
 }
 
-
-
 eskew <- function(U) {
   
   ulen<-sqrt(sum(U^2))
@@ -260,7 +259,7 @@ genR <- function(r, S = NULL, space='SO3') {
     stop("Incorrect space argument.  Options are: SO3 and Q4. ")
   
   n<-length(r)
-  
+
   theta <- acos(runif(n, -1, 1))
   
   # Generate angles phi from a uniform distribution from -pi to pi
@@ -274,9 +273,9 @@ genR <- function(r, S = NULL, space='SO3') {
   	#S<-matrix(S,3,3)
   	#o<-SO3defaultC(u,r)
   	#o<-genrC(r,S,1,u)
-  	
-  	o<-SO3(u,r)
-  	
+
+  	o<-as.SO3.default(R=u,theta=r)
+    
   	if(is.null(S)){
   		
   		class(o) <- "SO3"
@@ -336,11 +335,14 @@ exp_skew <- function(H) {
   if(length(H)==9){
     
     H<-matrix(H,3,3)
-
-    return(as.SO3(expskewC(H)))
+    Hmat<-expskewC(H)
+    class(Hmat)<-"SO3"
+    return(Hmat)
     
   }else{
-    return(as.SO3(expskewCMulti(H)))
+    Hmat<-expskewCMulti(H)
+    class(Hmat)<-"SO3"
+    return(Hmat)
   }
 }
 
@@ -465,7 +467,8 @@ center.SO3<-function(x,S){
 	S<-matrix(formatSO3(S),3,3)
 	
   Rs<-centerCpp(Rs,S)
-	return(as.SO3(Rs))
+  class(Rs)<-"SO3"
+	return(Rs)
 }
 
 
@@ -501,8 +504,8 @@ formatSO3<-function(Rs){
 	if (!all(apply(Rs, 1, is.SO3))) 
 		warning("At least one of the given observations is not in SO(3).  Use result with caution.")
 	
-	
-	return(as.SO3(Rs))
+	class(Rs)<-"SO3"
+	return(Rs)
 
 }
 

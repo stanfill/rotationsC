@@ -1,24 +1,21 @@
 \docType{data}
-\name{SO3}
+\name{as.SO3}
 \alias{as.SO3}
+\alias{as.SO3.default}
+\alias{as.SO3.Q4}
+\alias{as.SO3.SO3}
 \alias{id.SO3}
 \alias{is.SO3}
-\alias{SO3}
-\alias{SO3.default}
-\alias{SO3.Q4}
-\alias{SO3.SO3}
 \title{Rotation matrices}
 \format{\code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix.}
 \usage{
-  SO3(R, ...)
+  as.SO3(R, ...)
 
   \method{SO3}{default} (R, theta = NULL, ...)
 
   \method{SO3}{Q4} (R, ...)
 
   \method{SO3}{SO3} (R, ...)
-
-  as.SO3(R)
 
   is.SO3(R)
 
