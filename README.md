@@ -10,10 +10,11 @@ library(rotations)
 ```
 
 ### Change log:
-The differences between the CRAN (0.2) and GitHub (0.2.1) versions of the *rotations* package are as follows:
+The differences between the CRAN (0.2) and GitHub (1.0) versions of the *rotations* package are as follows:
 
 * Fixes in documentation for Bayes point estimate
 
+* The functions `SO3` and `Q4` no longer exist.  All of their functaionality has been moved to `as.SO3` and `as.Q4`
 
 *intervals*
 --------------------------------------------------------
