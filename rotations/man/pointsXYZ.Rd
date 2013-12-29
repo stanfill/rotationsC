@@ -2,7 +2,7 @@
 \alias{pointsXYZ}
 \title{Project rotation data onto sphere}
 \usage{
-  pointsXYZ(data, center = mean(data), column = 1)
+  pointsXYZ(data, center = id.SO3, column = 1)
 }
 \arguments{
   \item{data}{data frame of rotation matrices in

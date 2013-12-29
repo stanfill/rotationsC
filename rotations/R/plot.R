@@ -71,7 +71,10 @@ roteye <- function(origin, center, column=1) {
 #' Rs<-ruars(20,rcayley)
 #' pointsXYZ(Rs)
 
-pointsXYZ <- function(data, center=mean(data), column=1) {
+pointsXYZ <- function(data, center=id.SO3, column=1) {
+  
+  data<-as.SO3(data)
+  center<-matrix(as.SO3(center),3,3)
   
 	rot <- roteye(origin, center, column)
 	idx <- list(1:3,4:6,7:9)[[column]]

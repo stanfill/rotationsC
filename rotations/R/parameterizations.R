@@ -171,7 +171,7 @@ id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 #' 					rotation matrix.  Namely, has determinant one and its transpose is its inverse.}
 #' 					\item{SO3.default}{returns an \eqn{n}-by-9 matrix where each row is a rotation matrix constructed from axis \eqn{U} and angle theta.}
 #' 					\item{SO3.Q4}{returns \eqn{n}-by-9 matrix where each row is a rotation matrix constructed from the corresponding quaternion.}
-#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3
+#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 
 as.SO3 <- function(R,...){
   UseMethod("as.SO3")
@@ -180,42 +180,62 @@ as.SO3 <- function(R,...){
 #' @rdname SO3
 #' @method as.SO3 default
 #' @S3method as.SO3 default
-#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3
+#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @export
 
 as.SO3.default <- function(R, theta=NULL,...) {
-  
-  U<-R
-  n<-length(U)/3
-  
-  #if(n%%3==0)
-  #  stop("This functions only works in three dimensions.")	
-  
-  U<-matrix(U,n,3)
-  
-  ulen<-sqrt(rowSums(U^2)) 
-  
-  if(is.null(theta)){ 
-    theta<-ulen%%(pi)
-    
-    #if(theta>pi)
-    #	theta<-2*pi-theta
-  }
-  
-  R<-matrix(NA,n,9)
 
-  for(i in 1:n){
+  p<-ncol(R)
+  n<-nrow(R)
+  
+  if(is.null(p)){
+    p<-length(R)
+    n<-1
+  }  
+  
+  if(p==4){
     
-    if(ulen[i]!=0)
-      U[i,]<-U[i,]/ulen[i]
+  #If there are 4 columns, it's assumed the input is an n-by-4 matrix with rows corresponding to quaternions 
+    R<-as.Q4(R)
+    return(as.SO3(R))
     
-    P <- U[i,] %*% t(U[i,])
+  }else if(p==3){
     
-    R[i,] <- P + (diag(3) - P) * cos(theta[i]) + eskew(U[i,]) * sin(theta[i])
+  #If there are 3 columns, it's assumed the input R is the matrix of unit axes of rotations and the theta vector are the angles,
+    #or the length of the axes is the angle of rotation
+    
+    U<-matrix(R,n,3)
+  
+    ulen<-sqrt(rowSums(U^2)) 
+  
+    if(is.null(theta)){ 
+      theta<-ulen%%(pi)
+    
+      #if(theta>pi)
+      #	theta<-2*pi-theta
+    }
+  
+    R<-matrix(NA,n,9)
+
+    for(i in 1:n){
+    
+      if(ulen[i]!=0)
+        U[i,]<-U[i,]/ulen[i]
+    
+      P <- U[i,] %*% t(U[i,])
+    
+      R[i,] <- P + (diag(3) - P) * cos(theta[i]) + eskew(U[i,]) * sin(theta[i])
+    }
+    class(R) <- "SO3"
+    return(R)
+  }else if(p==9){
+    #If there are 9 columns, it's assumed the data are already rotation matrices so the SO3 class is appeneded and object returned
+    class(R) <- "SO3"
+    return(R)
   }
   
-  class(R) <- "SO3"
-  return(R)
+  stop("Unknown data type.  Please see ?SO3 for more details.")
+
 }
 
 # C++ version still isn't working, comment out for now
@@ -251,7 +271,7 @@ as.SO3.default <- function(R, theta=NULL,...) {
 #' @rdname SO3
 #' @method as.SO3 Q4
 #' @S3method as.SO3 Q4
-#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3
+#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @export
 
 as.SO3.Q4<-function(R,...){
@@ -277,17 +297,28 @@ as.SO3.Q4<-function(R,...){
 #' @rdname SO3
 #' @method as.SO3 SO3
 #' @S3method as.SO3 SO3
-#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3
+#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @export
 
 as.SO3.SO3<-function(R,...){
   return(R)
 }
 
+#' @rdname SO3
+#' @method as.SO3 data.frame
+#' @S3method as.SO3 data.frame
+#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
+#' @export
 
+as.SO3.data.frame <- function(q,...) {
+  n<-nrow(q)
+  p<-ncol(q)
+  R<-as.matrix(q,n,p)
+  return(as.SO3.default(R))
+}
 
 #' @rdname SO3
-#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3
+#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @export
 
 is.SO3 <- function(R) {
@@ -300,7 +331,7 @@ is.SO3 <- function(R) {
 }
 
 #' @rdname SO3
-#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3
+#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @export
 
 id.SO3 <- genR(0)

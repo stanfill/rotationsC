@@ -1,6 +1,7 @@
 \docType{data}
 \name{as.SO3}
 \alias{as.SO3}
+\alias{as.SO3.data.frame}
 \alias{as.SO3.default}
 \alias{as.SO3.Q4}
 \alias{as.SO3.SO3}
@@ -16,6 +17,8 @@
   \method{as.SO3}{Q4} (R, ...)
 
   \method{as.SO3}{SO3} (R, ...)
+
+  \method{as.SO3}{data.frame} (q, ...)
 
   is.SO3(R)
 
