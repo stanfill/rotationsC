@@ -190,8 +190,11 @@ axis.SO3<-function(x,...){
   	u[i,] <- rev(X[upper.tri(X)])*c(-1,1,-1)
 		u[i,]<-u[i,]/sqrt(sum(u[i,]^2))
 	}
-  return(u) # will be trouble, if R is symmetric, i.e. id,  .... 
-
+  if(n==1){
+    return(c(u))
+  }else{
+    return(u) # will be trouble, if R is symmetric, i.e. id,  .... 
+  }
 }
 
 #' @rdname axis

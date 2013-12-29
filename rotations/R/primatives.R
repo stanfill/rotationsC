@@ -9,10 +9,15 @@ print.SO3<-function(x,...){
   
   if(len==9){
     tr<-matrix(Rs,3,3)
-    class(tr)<-"SO3"
+    #class(tr)<-"SO3"
     print.default(tr,...)
   }else{
-    print.default(Rs,...)
+    n<-nrow(Rs)
+    p<-ncol(Rs)
+    tRs<-matrix(Rs,nrow=n,ncol=p)
+    cnames<-c("R11","R21","R31","R12","R22","R32","R13","R23","R33")
+    colnames(tRs)<-cnames[1:p]
+    print.default(tRs,...)
   }
 }
 
