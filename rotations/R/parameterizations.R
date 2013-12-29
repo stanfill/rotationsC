@@ -188,8 +188,8 @@ as.SO3.default <- function(R, theta=NULL,...) {
   U<-R
   n<-length(U)/3
   
-  if(n%%3==0)
-    stop("This functions only works in three dimensions.")	
+  #if(n%%3==0)
+  #  stop("This functions only works in three dimensions.")	
   
   U<-matrix(U,n,3)
   

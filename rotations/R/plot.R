@@ -1,38 +1,5 @@
-#library(ggplot2)
-
-
-#this had to be added because the .Call version of SO3.default can't be called from insider the function...I think
-oldSO3 <- function(U, theta=NULL) {
-	n<-length(U)/3
-	if(n%%1!=0)
-			stop("This functions only works in three dimensions.")	
-	U<-matrix(U,n,3)
-	ulen<-sqrt(rowSums(U^2)) 
-	if(is.null(theta)){ 
-			theta<-ulen%%(pi)
-					
-					#if(theta>pi)
-					#	theta<-2*pi-theta
-			}
-	R<-matrix(NA,n,9)
- 	for(i in 1:n){
-					
-				if(ulen[i]!=0)
-						U[i,]<-U[i,]/ulen[i]
-					
-				P <- U[i,] %*% t(U[i,])
-					
-				R[i,] <- P + (diag(3) - P) * cos(theta[i]) + eskew(U[i,]) * sin(theta[i])
-	}
-	class(R) <- "SO3"
-	return(R)
-}
-
-#suppressMessages(library(ggplot2))
-#require(gridExtra)
-
 # set origin of concentric circles
-origin <- matrix(oldSO3(c(1,-1,0), pi/16),3,3)
+origin <- matrix(as.SO3(c(1,-1,0), pi/16),3,3)
 
 # construct helper grid lines for sphere
 
@@ -61,7 +28,7 @@ circles.2$ID <- as.numeric(factor(df$phi))+9
 circles <- rbind(circles, circles.2)
 
 
-setOrigin <- function(origin = matrix(oldSO3(c(1,-1,0), pi/8),3,3)) {
+setOrigin <- function(origin = matrix(as.SO3(c(1,-1,0), pi/8),3,3)) {
 	origin <<- origin
 	pcircles <- data.frame(as.matrix(circles[,1:3]) %*% origin)
 	pcircles
@@ -70,7 +37,7 @@ setOrigin <- function(origin = matrix(oldSO3(c(1,-1,0), pi/8),3,3)) {
 
 # this is the coordinate system and should be fixed, no matter what column of the rotation matrices is shown
 
-base <- ggplot(aes(x=X1, y=X2), data=setOrigin(matrix(oldSO3(c(1,-1,0), pi/16),3,3))) + 
+base <- ggplot(aes(x=X1, y=X2), data=setOrigin(matrix(as.SO3(c(1,-1,0), pi/16),3,3))) + 
 	coord_equal() + 
 	geom_point(aes(alpha=X3), size=0.6, colour="grey65") + 
 	scale_alpha(range=c(0,0.8),  guide="none") + 
@@ -86,7 +53,7 @@ base <- ggplot(aes(x=X1, y=X2), data=setOrigin(matrix(oldSO3(c(1,-1,0), pi/16),3
 
 
 roteye <- function(origin, center, column=1) {
-	R <- list(matrix(oldSO3(c(0,1,0), pi/2),3,3), matrix(oldSO3(c(1,0,0), -pi/2),3,3), diag(c(1,1,1)))[[column]]
+	R <- list(matrix(as.SO3(c(0,1,0), pi/2),3,3), matrix(as.SO3(c(1,0,0), -pi/2),3,3), diag(c(1,1,1)))[[column]]
 	rot <- center %*% R %*% origin 
 }
 
@@ -100,11 +67,14 @@ roteye <- function(origin, center, column=1) {
 #' @param column integer 1 to 3 indicating which column to display.
 #' @return  Data frame with columns X, Y, Z standing for the respective coordinates in 3D space.
 #' @export
-#' 
-pointsXYZ <- function(data, center, column=1) {
+#' @examples
+#' Rs<-ruars(20,rcayley)
+#' pointsXYZ(Rs)
+
+pointsXYZ <- function(data, center=mean(data), column=1) {
   
 	rot <- roteye(origin, center, column)
-	idx <- list(1:3,4:6, 7:9)[[column]]
+	idx <- list(1:3,4:6,7:9)[[column]]
 	data <- as.matrix(data[,idx])
 	
 	psample1 <- data.frame(data %*% rot)
@@ -221,13 +191,13 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
     
     for(i in 1:nrow(Regions)){
       if(col==1)
-        cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(0,runif(2,-1,1)), Regions$X1[i]),simplify="matrix")))
+        cisp.boot <- rbind(cisp.boot,t(replicate(500, as.SO3(c(0,runif(2,-1,1)), Regions$X1[i]),simplify="matrix")))
       
       if(col==2)
-        cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(runif(1,-1,1),0,runif(1,-1,1)), Regions$X1[i]),simplify="matrix")))
+        cisp.boot <- rbind(cisp.boot,t(replicate(500, as.SO3(c(runif(1,-1,1),0,runif(1,-1,1)), Regions$X1[i]),simplify="matrix")))
       
       if(col==3)
-	      cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(runif(2,-1,1),0), Regions$X1[i]),simplify="matrix")))
+	      cisp.boot <- rbind(cisp.boot,t(replicate(500, as.SO3(c(runif(2,-1,1),0), Regions$X1[i]),simplify="matrix")))
     }
 	  
 	  regs <- geom_point(aes(x=X, y=Y,colour=Regions), data=data.frame(pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col),Regions=rep(Regions$Meth,each=500)))
@@ -247,13 +217,13 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 		
 		for(i in 1:nrow(MedRegions)){
 			if(col==1)
-				cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(0,runif(2,-1,1)), MedRegions$X1[i]),simplify="matrix")))
+				cisp.boot <- rbind(cisp.boot,t(replicate(500, as.SO3(c(0,runif(2,-1,1)), MedRegions$X1[i]),simplify="matrix")))
 			
 			if(col==2)
-				cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(runif(1,-1,1),0,runif(1,-1,1)), MedRegions$X1[i]),simplify="matrix")))
+				cisp.boot <- rbind(cisp.boot,t(replicate(500, as.SO3(c(runif(1,-1,1),0,runif(1,-1,1)), MedRegions$X1[i]),simplify="matrix")))
 			
 			if(col==3)
-				cisp.boot <- rbind(cisp.boot,t(replicate(500, oldSO3(c(runif(2,-1,1),0), MedRegions$X1[i]),simplify="matrix")))
+				cisp.boot <- rbind(cisp.boot,t(replicate(500, as.SO3(c(runif(2,-1,1),0), MedRegions$X1[i]),simplify="matrix")))
 		}
 		
 		regsMed <- geom_point(aes(x=X, y=Y,colour=Regions), data=data.frame(pointsXYZ(cisp.boot, center=t(median(Rs))%*%center, column=col),Regions=rep(MedRegions$Meth,each=500)))

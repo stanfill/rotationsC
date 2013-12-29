@@ -2,7 +2,7 @@
 \alias{pointsXYZ}
 \title{Project rotation data onto sphere}
 \usage{
-  pointsXYZ(data, center, column = 1)
+  pointsXYZ(data, center = mean(data), column = 1)
 }
 \arguments{
   \item{data}{data frame of rotation matrices in
@@ -21,5 +21,9 @@
 \description{
   Projection of rotation matrices onto sphere with given
   center.
+}
+\examples{
+Rs<-ruars(20,rcayley)
+pointsXYZ(Rs)
 }
 
