@@ -110,7 +110,7 @@ resultsDf
 resM<-melt(resultsDf,id=c('Dist','nu','n'))
 colnames(resM)[4]<-'Method'
 #levels(resM$Method)[3:4]<-c("Nordman Normal","Nordman Bootstrap")
-levels(resM$Method)<-c("Indirect(LSA)","Indirect(Boot)","Direct(LSA)","Direct(Boot)")
+levels(resM$Method)<-c("Directional(LSA)","Directional(Boot)","Direct(LSA)","Direct(Boot)")
 
 levels(resM$Dist)<-c("Cayley","matrix~~Fisher","circular-von~~Mises")
 resM$Dist<-factor(resM$Dist,levels=c("Cayley","circular-von~~Mises","matrix~~Fisher"))
