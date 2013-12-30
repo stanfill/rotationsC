@@ -122,19 +122,19 @@ dist.Q4 <- function(x, Q2=id.Q4 ,method='extrinsic', p=1,...) {
 #'  
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @return Angle of rotation.
-#' @seealso \code{\link{misaxis}}
+#' @seealso \code{\link{mis.axis}}
 #' @export
 
-misangle<-function(x){
-  UseMethod("misangle")
+mis.angle<-function(x){
+  UseMethod("mis.angle")
 }
 
 
-#' @rdname misangle
-#' @method misangle SO3
-#' @S3method misangle SO3
+#' @rdname mis.angle
+#' @method mis.angle SO3
+#' @S3method mis.angle SO3
 
-misangle.SO3 <- function(x){
+mis.angle.SO3 <- function(x){
 	
 	Rs<-formatSO3(x)
 	theta<-c(rdistSO3C(Rs,diag(1,3,3)))
@@ -142,11 +142,11 @@ misangle.SO3 <- function(x){
 }
 
 
-#' @rdname misangle
-#' @method misangle Q4
-#' @S3method misangle Q4
+#' @rdname mis.angle
+#' @method mis.angle Q4
+#' @S3method mis.angle Q4
 
-misangle.Q4 <- function(x){
+mis.angle.Q4 <- function(x){
 	
   Qs<-formatQ4(x)
 	theta<-2*acos(Qs[,1])
@@ -167,18 +167,18 @@ misangle.Q4 <- function(x){
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param ... additional arguements.
 #' @return Axis in form of three dimensional vector of length one.
-#' @seealso \code{\link{misangle}}
+#' @seealso \code{\link{mis.angle}}
 #' @export
 
-misaxis<-function(x,...){
-  UseMethod("misaxis")
+mis.axis<-function(x,...){
+  UseMethod("mis.axis")
 }
 
-#' @rdname misaxis
-#' @method misaxis SO3
-#' @S3method misaxis SO3
+#' @rdname mis.axis
+#' @method mis.axis SO3
+#' @S3method mis.axis SO3
 
-misaxis.SO3<-function(x,...){
+mis.axis.SO3<-function(x,...){
   
 	R<-formatSO3(x)
   n<-nrow(R)
@@ -197,14 +197,14 @@ misaxis.SO3<-function(x,...){
   }
 }
 
-#' @rdname misaxis
-#' @method misaxis Q4
-#' @S3method misaxis Q4
+#' @rdname mis.axis
+#' @method mis.axis Q4
+#' @S3method mis.axis Q4
 
-misaxis.Q4<- function(x,...){
+mis.axis.Q4<- function(x,...){
   
   q<-formatQ4(x)
-  theta<-misangle(q)
+  theta<-mis.angle(q)
   
   u <- q[,2:4]/sin(theta/2)
 

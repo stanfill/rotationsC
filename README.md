@@ -24,7 +24,7 @@ The differences between the CRAN (0.2) and GitHub (1.0) versions of the *rotatio
 
 * Made `is.SO3` more rigorious in testing for conditions of `SO3`
 
-* `angle` and `axis` have been renamed `misangle` and `misaxis`, respectively
+* `angle` and `axis` have been renamed `mis.angle` and `mis.axis`, respectively
 
 *intervals*
 --------------------------------------------------------
