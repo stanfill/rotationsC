@@ -193,12 +193,16 @@ as.SO3.default <- function(R, theta=NULL,...) {
     n<-1
   }  
   
-  if(p==4){
+  if(n==3 && p==3 && is.SO3(R)){
     
-  #If there are 4 columns, it's assumed the input is an n-by-4 matrix with rows corresponding to quaternions 
-    R<-as.Q4(R)
-    return(as.SO3(R))
+    #If there are 3 rows and columns and the object is already a rotation matrix, the same rotation is returned
+    class(R) <- "SO3"
+    return(R)
     
+  }else if(p==9){
+    #If there are 9 columns, it's assumed the data are already rotation matrices so the SO3 class is appeneded and object returned
+    class(R) <- "SO3"
+    return(R)
   }else if(p==3){
     
   #If there are 3 columns, it's assumed the input R is the matrix of unit axes of rotations and the theta vector are the angles,
@@ -228,10 +232,12 @@ as.SO3.default <- function(R, theta=NULL,...) {
     }
     class(R) <- "SO3"
     return(R)
-  }else if(p==9){
-    #If there are 9 columns, it's assumed the data are already rotation matrices so the SO3 class is appeneded and object returned
-    class(R) <- "SO3"
-    return(R)
+  }else if(p==4){
+    
+    #If there are 4 columns, it's assumed the input is an n-by-4 matrix with rows corresponding to quaternions 
+    R<-as.Q4(R)
+    return(as.SO3(R))
+    
   }
   
   stop("Unknown data type.  Please see ?SO3 for more details.")
