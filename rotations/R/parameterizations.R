@@ -340,9 +340,9 @@ as.SO3.data.frame <- function(q,...) {
 is.SO3 <- function(R) {
 	
 	R <- matrix(R, 3, 3)
-	if (any(is.na(R))) return(FALSE)
-	
-	return(all(sum(t(R) %*% R - diag(1, 3))<10e-10)) 
+	if(any(is.na(R))) return(FALSE)
+	if(abs(det(R)-1)>10e-10) return(FALSE)
+	return(all(abs(t(R) %*% R - diag(1, 3))<10e-5)) 
 	
 }
 

@@ -1,6 +1,6 @@
 *rotations*
 ========================================================
-A stable version (0.2) of the *rotations* package is available for download from CRAN.  For MAC users, the current version (0.2.1) of *rotations* can be downloaded from GitHub.  Windows users will need to download the repo, compile the C++ code and install locally.
+A stable version (0.2) of the *rotations* package is available for download from CRAN.  For MAC users, the current version (1.0) of *rotations* can be downloaded from GitHub.  Windows users will need to download the repo, compile the C++ code and install locally.
 
 ### Installation instructions for Mac: 
 ```
@@ -17,6 +17,12 @@ The differences between the CRAN (0.2) and GitHub (1.0) versions of the *rotatio
 * The functions `SO3` and `Q4` no longer exist.  All of their functaionality has been moved to `as.SO3` and `as.Q4`
 
 * Create a `plot.Q4` function that uses `plot.SO3` after casting the object to class `SO3`
+
+* `print.Q4` and `print.SO3` no longer print the object class
+
+* `print.SO3` now names the columns `R11` through `R33` to signify which element in the matrix each row corresponds to
+
+* Made `is.SO3` more rigorious in testing for conditions of `SO3`
 
 *intervals*
 --------------------------------------------------------
