@@ -26,6 +26,8 @@ The differences between the CRAN (0.2) and GitHub (1.0) versions of the *rotatio
 
 * `angle` and `axis` have been renamed `mis.angle` and `mis.axis`, respectively
 
+* Adopt `period.sep` naming convention for all functions in package.  The affected functionas were formerly known as `sum_dist`, `exp_skew`, `cayley_kappa`, `fisher_kappa` and `vmises_kappa`.  New names are the same but with `.` in place of `_`.
+
 *intervals*
 --------------------------------------------------------
 This folder contains the code necessary to run the simulations for the confidence region research

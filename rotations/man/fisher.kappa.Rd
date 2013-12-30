@@ -1,8 +1,8 @@
-\name{fisher_kappa}
-\alias{fisher_kappa}
+\name{fisher.kappa}
+\alias{fisher.kappa}
 \title{Circular variance and concentration parameter}
 \usage{
-  fisher_kappa(nu)
+  fisher.kappa(nu)
 }
 \arguments{
   \item{nu}{circular variance}

@@ -15,11 +15,11 @@
 #'  @seealso \code{\link{Cayley}}
 #'  @export
 
-cayley_kappa<-function(nu){
+cayley.kappa<-function(nu){
   (3/nu)-2
 }
 
-fisher_nu_kappa<-function(kappa,nu){
+fisher.nu.kappa<-function(kappa,nu){
   (1-(besselI(2*kappa,1)-.5*besselI(2*kappa,2)-.5*besselI(2*kappa,0))/(besselI(2*kappa,0)-besselI(2*kappa,1))-nu)^2
 }
 
@@ -40,7 +40,7 @@ fisher_nu_kappa<-function(kappa,nu){
 #'  @cite mardia2000
 #'  @export
 
-fisher_kappa<-function(nu){
+fisher.kappa<-function(nu){
   
   kappa<-rep(0,length(nu))
   
@@ -51,7 +51,7 @@ fisher_kappa<-function(nu){
 }
 
 
-mises_nu_kappa<-function(kappa,nu){
+mises.nu.kappa<-function(kappa,nu){
   (1-besselI(kappa,1)/besselI(kappa,0)-nu)^2
 }
 
@@ -72,7 +72,7 @@ mises_nu_kappa<-function(kappa,nu){
 #'  @cite mardia2000
 #'  @export
 
-vmises_kappa<-function(nu){
+vmises.kappa<-function(nu){
   
   kappa<-rep(0,length(nu))
   

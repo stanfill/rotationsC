@@ -332,7 +332,7 @@ genR <- function(r, S = NULL, space='SO3') {
 #' @cite moakher02
 #' @export
 
-exp_skew <- function(H) {
+exp.skew <- function(H) {
 
   if(length(H)==9){
     
@@ -409,29 +409,29 @@ project.SO3 <- function(M) {
 #' @examples
 #' Rs<-ruars(20,rvmises,kappa=10)
 #' Sp<-mean(Rs)
-#' sum_dist(Rs,S=Sp,p=2)
+#' sum.dist(Rs,S=Sp,p=2)
 
-sum_dist<-function(x, S = genR(0, space=class(x)), method='extrinsic', p=1){
+sum.dist<-function(x, S = genR(0, space=class(x)), method='extrinsic', p=1){
   
-  UseMethod( "sum_dist" )
+  UseMethod( "sum.dist" )
 
 }
 
-#' @rdname sum_dist
-#' @method sum_dist SO3
-#' @S3method sum_dist SO3
+#' @rdname sum.dist
+#' @method sum.dist SO3
+#' @S3method sum.dist SO3
 
-sum_dist.SO3 <- function(x, S = id.SO3, method='extrinsic', p=1) {
+sum.dist.SO3 <- function(x, S = id.SO3, method='extrinsic', p=1) {
 
   return(sum(dist(x,S, method=method, p=p)))
   
 }
 
-#' @rdname sum_dist
-#' @method sum_dist Q4
-#' @S3method sum_dist Q4
+#' @rdname sum.dist
+#' @method sum.dist Q4
+#' @S3method sum.dist Q4
 
-sum_dist.Q4 <- function(x, S = id.Q4, method='extrinsic', p=1) {
+sum.dist.Q4 <- function(x, S = id.Q4, method='extrinsic', p=1) {
   
   return(sum(dist(x,S, method=method, p=p)))
   

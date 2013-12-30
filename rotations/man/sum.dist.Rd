@@ -1,16 +1,16 @@
-\name{sum_dist}
-\alias{sum_dist}
-\alias{sum_dist.Q4}
-\alias{sum_dist.SO3}
+\name{sum.dist}
+\alias{sum.dist}
+\alias{sum.dist.Q4}
+\alias{sum.dist.SO3}
 \title{Sample distance}
 \usage{
-  sum_dist(x, S = genR(0, space = class(x)),
+  sum.dist(x, S = genR(0, space = class(x)),
     method = "extrinsic", p = 1)
 
-  \method{sum_dist}{SO3} (x, S = id.SO3,
+  \method{sum.dist}{SO3} (x, S = id.SO3,
     method = "extrinsic", p = 1)
 
-  \method{sum_dist}{Q4} (x, S = id.Q4,
+  \method{sum.dist}{Q4} (x, S = id.Q4,
     method = "extrinsic", p = 1)
 }
 \arguments{
@@ -37,7 +37,7 @@
 \examples{
 Rs<-ruars(20,rvmises,kappa=10)
 Sp<-mean(Rs)
-sum_dist(Rs,S=Sp,p=2)
+sum.dist(Rs,S=Sp,p=2)
 }
 \seealso{
   \code{\link{dist.SO3}}, \code{\link{dist.Q4}}

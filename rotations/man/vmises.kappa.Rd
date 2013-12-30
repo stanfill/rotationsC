@@ -1,8 +1,8 @@
-\name{cayley_kappa}
-\alias{cayley_kappa}
+\name{vmises.kappa}
+\alias{vmises.kappa}
 \title{Circular variance and concentration parameter}
 \usage{
-  cayley_kappa(nu)
+  vmises.kappa(nu)
 }
 \arguments{
   \item{nu}{circular variance}
@@ -24,13 +24,13 @@
   See \cite{Mardia et al. (2000)} for more details.  This
   function translates the circular variance \eqn{\nu} into
   the corresponding concentration parameter \eqn{\kappa}
-  for the Cayley distribution.
+  for the circular-von Mises distribution.
 }
 \references{
   Mardia K and Jupp P (2000). _Directional statistics._.
   John Wiley \& Sons, Chichester, England.
 }
 \seealso{
-  \code{\link{Cayley}}
+  \code{\link{Mises}}
 }
 

@@ -1,8 +1,8 @@
-\name{exp_skew}
-\alias{exp_skew}
+\name{exp.skew}
+\alias{exp.skew}
 \title{Matrix exponential}
 \usage{
-  exp_skew(H)
+  exp.skew(H)
 }
 \arguments{
   \item{H}{single \eqn{3\times 3}{3-by-3} skew-symmetric
