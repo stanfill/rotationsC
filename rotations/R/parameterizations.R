@@ -54,14 +54,15 @@ as.Q4<-function(q,...){
 
 as.Q4.default <- function(q,theta=NULL,...){  
   
-  U<-q
+  p<-ncol(q)
+  n<-nrow(q)
   
-  n<-length(U)
-  
-  if(n%%3==0){
-    #If input is length 3, data is assumed to be vectors in R^3
-    n<-n/3
+  if(p==3){
+    
+    #If input is length 3, q is assumed to be vectors in R^3
+    U<-q
     U<-matrix(U,n,3)
+    
     ulen<-sqrt(rowSums(U^2))
   
     if(is.null(theta)){ 
@@ -75,18 +76,27 @@ as.Q4.default <- function(q,theta=NULL,...){
   
     #if(any(ulen!=1))
     #  U<-U/ulen
-  
     #CPP version is causing seg faults, try just doing it in R
     #x <- Q4defaultC(U,theta)
   
     q <- cbind(cos(theta/2), sin(theta/2) * U)
-  }else if(n%%4==0){
+    
+  }else if(p==4){
+    
     #If input has length divisible by 4, data are normalized and made into class "Q4"
     n<-n/4
     rowLens<-(rowSums(q^2))^0.5
     q<-q/rowLens
+    
+  }else if(p==9){
+    
+    #If input has 9 columns, q is assumed to be rotations
+    q<-as.Q4.SO3(q)
+    
   }else{
-    stop("Unknown data type.")
+    
+    stop("Unknown data type.  Pease see ?as.Q4 for more details.")
+    
   }
   class(q)<-"Q4"
   return(q)

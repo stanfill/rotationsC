@@ -95,18 +95,21 @@ print.Q4<-function(x,...){
     }
     
   }else{
-    if(is.null(ncol(Qs))) {
+    n<-nrow(Qs)
+    p<-ncol(Qs)
+    tQs<-matrix(Qs,n,p)
+    if(is.null(p)) {
       
-      print.default(Qs,...)
+      print.default(tQs,...)
       
-    }else if(ncol(Qs)==4){
+    }else if(p==4){
       
-      colnames(Qs)<-c("Real","i","j","k")
-      print.default(Qs,...)
+      colnames(tQs)<-c("Real","i","j","k")
+      print.default(tQs,...)
       
     }else{
       
-      print.default(Qs,...)
+      print.default(tQs,...)
       
     }
   }
