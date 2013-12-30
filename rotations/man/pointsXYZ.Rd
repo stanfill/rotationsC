@@ -8,7 +8,7 @@
   \item{data}{data frame of rotation matrices in
   \eqn{3\times 3}{3-by-3} matrix representation.}
 
-  \item{center}{point about which to center the
+  \item{center}{rotation matrix about which to center the
   observations.}
 
   \item{column}{integer 1 to 3 indicating which column to
@@ -24,6 +24,6 @@
 }
 \examples{
 Rs<-ruars(20,rcayley)
-pointsXYZ(Rs)
+pointsXYZ(Rs, center=id.SO3, col=1)
 }
 

@@ -112,8 +112,8 @@ as.Q4.SO3 <- function(q,...) {
   
   R<-q
   R<-formatSO3(R)
-  theta <- angle(R)
-  u <- axis(R)
+  theta <- misangle(R)
+  u <- misaxis(R)
   x <- as.Q4.default(u,theta)
   
   return(x)
@@ -303,9 +303,9 @@ as.SO3.Q4<-function(R,...){
     class(q)<-"Q4"
   }
   
-  theta<-angle(q)
+  theta<-misangle(q)
   
-  u<-axis(q)
+  u<-misaxis(q)
   
   return(as.SO3.default(u, theta)) 
 }

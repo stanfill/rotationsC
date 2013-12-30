@@ -122,19 +122,19 @@ dist.Q4 <- function(x, Q2=id.Q4 ,method='extrinsic', p=1,...) {
 #'  
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @return Angle of rotation.
-#' @seealso \code{\link{axis}}
+#' @seealso \code{\link{misaxis}}
 #' @export
 
-angle<-function(x){
-  UseMethod("angle")
+misangle<-function(x){
+  UseMethod("misangle")
 }
 
 
-#' @rdname angle
-#' @method angle SO3
-#' @S3method angle SO3
+#' @rdname misangle
+#' @method misangle SO3
+#' @S3method misangle SO3
 
-angle.SO3 <- function(x){
+misangle.SO3 <- function(x){
 	
 	Rs<-formatSO3(x)
 	theta<-c(rdistSO3C(Rs,diag(1,3,3)))
@@ -142,11 +142,11 @@ angle.SO3 <- function(x){
 }
 
 
-#' @rdname angle
-#' @method angle Q4
-#' @S3method angle Q4
+#' @rdname misangle
+#' @method misangle Q4
+#' @S3method misangle Q4
 
-angle.Q4 <- function(x){
+misangle.Q4 <- function(x){
 	
   Qs<-formatQ4(x)
 	theta<-2*acos(Qs[,1])
@@ -167,18 +167,18 @@ angle.Q4 <- function(x){
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param ... additional arguements.
 #' @return Axis in form of three dimensional vector of length one.
-#' @seealso \code{\link{angle}}
+#' @seealso \code{\link{misangle}}
 #' @export
 
-axis<-function(x,...){
-  UseMethod("axis")
+misaxis<-function(x,...){
+  UseMethod("misaxis")
 }
 
-#' @rdname axis
-#' @method axis SO3
-#' @S3method axis SO3
+#' @rdname misaxis
+#' @method misaxis SO3
+#' @S3method misaxis SO3
 
-axis.SO3<-function(x,...){
+misaxis.SO3<-function(x,...){
   
 	R<-formatSO3(x)
   n<-nrow(R)
@@ -197,14 +197,14 @@ axis.SO3<-function(x,...){
   }
 }
 
-#' @rdname axis
-#' @method axis Q4
-#' @S3method axis Q4
+#' @rdname misaxis
+#' @method misaxis Q4
+#' @S3method misaxis Q4
 
-axis.Q4 <- function(x,...){
+misaxis.Q4<- function(x,...){
   
   q<-formatQ4(x)
-  theta<-angle(q)
+  theta<-misangle(q)
   
   u <- q[,2:4]/sin(theta/2)
 

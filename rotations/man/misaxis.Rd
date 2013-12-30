@@ -1,36 +1,36 @@
-\name{angle}
-\alias{angle}
-\alias{angle.Q4}
-\alias{angle.SO3}
-\title{Misorientation angle}
+\name{misaxis}
+\alias{misaxis}
+\title{Misorientation axis}
 \usage{
-  angle(x)
+  misaxis(x, ...)
 
-  \method{angle}{SO3} (x)
+  \method{misaxis}{SO3} (x, ...)
 
-  \method{angle}{Q4} (x)
+  \method{misaxis}{Q4} (x, ...)
 }
 \arguments{
   \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
   corresponds to a random rotation in matrix (\eqn{p=9}) or
   quaternion (\eqn{p=4}) form.}
+
+  \item{...}{additional arguements.}
 }
 \value{
-  Angle of rotation.
+  Axis in form of three dimensional vector of length one.
 }
 \description{
-  Compute the misorientation angle of a rotation.
+  Determine the misorientation axis of a rotation.
 }
 \details{
-  Every rotation can be thought of as some reference
+  Every rotation can be interpreted as some reference
   coordinate system rotated about an axis through an angle.
   These quantites are referred to as the misorientation
   axis and misorientation angle, respectively, in the
   material sciences literature. This function returns the
-  misorentation angle associated with a rotation assuming
+  misorentation axis associated with a rotation assuming
   the reference coordinate system is the identity.
 }
 \seealso{
-  \code{\link{axis}}
+  \code{\link{misangle}}
 }
 
