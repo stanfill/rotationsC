@@ -52,7 +52,7 @@
 }
 \examples{
 Rs<-ruars(20,rvmises,kappa=0.01)
-wt<-abs(1/angle(Rs))
+wt<-abs(1/mis.angle(Rs))
 weighted.mean(Rs,wt)
 Qs<-Q4(Rs)
 weighted.mean(Qs,wt)

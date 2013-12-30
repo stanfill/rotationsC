@@ -130,7 +130,7 @@ bayesCR.SO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
   listRes<-both_MCMC_CPP(x,S0, kappa0,tuneS,tuneK,burn_in,m, lpangle)
   Sdraws<-as.SO3(listRes$S)
   Shat<-mean(Sdraws)
-  rs<-dist(Sdraws,Shat)
+  rs<-rot.dist(Sdraws,Shat)
   
   return(list(Shat=Shat,Radius=quantile(rs,1-alp)))
 }

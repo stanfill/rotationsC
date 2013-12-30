@@ -38,7 +38,6 @@ arsample.unif <- function(f, M, ...) {
 #' both in \eqn{SO(3)}, the Euclidean distance between them is \deqn{||R_1-R_2||_F}{||R1-R2||} where \eqn{||\cdot||_F}{|| ||} is the Frobenius norm.
 #' The Riemannian distance is defined as \deqn{||Log(R_1^\top R_2)||_F}{||Log(R1'R2)||} where \eqn{Log} is the matrix logarithm, and it corresponds
 #' to the misorientation angle of \eqn{R_1^\top R_2}{R1'R2}.
-#' To compute the distance matrix use \code{stats::dist()}.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param R2,Q2 the second rotation in the same parameterization as x.
@@ -48,16 +47,16 @@ arsample.unif <- function(f, M, ...) {
 #' @return The rotational distance between each rotation in x and R2 or Q2.
 #' @export
 
-dist<-function(x,...){
-  UseMethod("dist")
+rot.dist<-function(x,...){
+  UseMethod("rot.dist")
 }
 
 
-#' @rdname dist
-#' @method dist SO3
-#' @S3method dist SO3
+#' @rdname rot.dist
+#' @method rot.dist SO3
+#' @S3method rot.dist SO3
 
-dist.SO3 <- function(x, R2=id.SO3, method='extrinsic' , p=1,...) {
+rot.dist.SO3 <- function(x, R2=id.SO3, method='extrinsic' , p=1,...) {
   
   R1<-formatSO3(x)
   
@@ -86,11 +85,11 @@ dist.SO3 <- function(x, R2=id.SO3, method='extrinsic' , p=1,...) {
 }
 
 
-#' @rdname dist
-#' @method dist Q4
-#' @S3method dist Q4
+#' @rdname rot.dist
+#' @method rot.dist Q4
+#' @S3method rot.dist Q4
 
-dist.Q4 <- function(x, Q2=id.Q4 ,method='extrinsic', p=1,...) {
+rot.dist.Q4 <- function(x, Q2=id.Q4 ,method='extrinsic', p=1,...) {
 
   Q1<-formatQ4(x)
   Q2<-formatQ4(Q2)
@@ -423,7 +422,7 @@ sum.dist<-function(x, S = genR(0, space=class(x)), method='extrinsic', p=1){
 
 sum.dist.SO3 <- function(x, S = id.SO3, method='extrinsic', p=1) {
 
-  return(sum(dist(x,S, method=method, p=p)))
+  return(sum(rot.dist(x,S, method=method, p=p)))
   
 }
 
@@ -433,7 +432,7 @@ sum.dist.SO3 <- function(x, S = id.SO3, method='extrinsic', p=1) {
 
 sum.dist.Q4 <- function(x, S = id.Q4, method='extrinsic', p=1) {
   
-  return(sum(dist(x,S, method=method, p=p)))
+  return(sum(rot.dist(x,S, method=method, p=p)))
   
 }
 

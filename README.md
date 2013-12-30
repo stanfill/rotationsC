@@ -24,9 +24,11 @@ The differences between the CRAN (0.2) and GitHub (1.0) versions of the *rotatio
 
 * Made `is.SO3` more rigorious in testing for conditions of `SO3`
 
-* `angle` and `axis` have been renamed `mis.angle` and `mis.axis`, respectively
+* `angle` and `axis` have been renamed `mis.angle` and `mis.axis`, respectively, to avoid naming clases with the `graphics` package
 
 * Adopt `period.sep` naming convention for all functions in package.  The affected functionas were formerly known as `sum_dist`, `exp_skew`, `cayley_kappa`, `fisher_kappa` and `vmises_kappa`.  New names are the same but with `.` in place of `_`.
+
+* `dist` renamed to `rot.dist` to avoid clashes with `stats` package
 
 *intervals*
 --------------------------------------------------------

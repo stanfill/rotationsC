@@ -23,7 +23,7 @@ sphereA <- function(A, theta, sphere) {
 
 
 L2.error <- function(sample, Shat) {
-  sum(dist(sample, Shat, method="intrinsic", p=2))
+  sum(rot.dist(sample, Shat, method="intrinsic", p=2))
 }
 
 error.grid <- function(sample, Shat, theta=1, error, sphere) {
@@ -58,7 +58,7 @@ error.grid <- function(sample, Shat, theta=1, error, sphere) {
 #' @examples 
 #' # minimize L1 norm:
 #' L1.error <- function(sample, Shat) {
-#'   sum(dist(sample, Shat, method="intrinsic", p=1))
+#'   sum(rot.dist(sample, Shat, method="intrinsic", p=1))
 #' }
 #' 
 #' cayley.sample <- ruars(n = 10, rangle = rcayley, nu = 1, space = 'SO3')

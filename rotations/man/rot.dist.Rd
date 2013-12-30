@@ -1,16 +1,16 @@
-\name{dist}
-\alias{dist}
-\alias{dist.Q4}
-\alias{dist.SO3}
+\name{rot.dist}
+\alias{rot.dist}
+\alias{rot.dist.Q4}
+\alias{rot.dist.SO3}
 \title{Rotational distance}
 \usage{
-  dist(x, ...)
+  rot.dist(x, ...)
 
-  \method{dist}{SO3} (x, R2 = id.SO3, method = "extrinsic",
-    p = 1, ...)
+  \method{rot.dist}{SO3} (x, R2 = id.SO3,
+    method = "extrinsic", p = 1, ...)
 
-  \method{dist}{Q4} (x, Q2 = id.Q4, method = "extrinsic",
-    p = 1, ...)
+  \method{rot.dist}{Q4} (x, Q2 = id.Q4,
+    method = "extrinsic", p = 1, ...)
 }
 \arguments{
   \item{x}{\eqn{n\times p}{n-by-p} matrix where each row
@@ -46,7 +46,6 @@
   Riemannian distance is defined as \deqn{||Log(R_1^\top
   R_2)||_F}{||Log(R1'R2)||} where \eqn{Log} is the matrix
   logarithm, and it corresponds to the misorientation angle
-  of \eqn{R_1^\top R_2}{R1'R2}. To compute the distance
-  matrix use \code{stats::dist()}.
+  of \eqn{R_1^\top R_2}{R1'R2}.
 }
 

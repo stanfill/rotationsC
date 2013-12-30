@@ -176,7 +176,7 @@ median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...
 #' @method weighted.mean SO3
 #' @examples
 #' Rs<-ruars(20,rvmises,kappa=0.01)
-#' wt<-abs(1/angle(Rs))
+#' wt<-abs(1/mis.angle(Rs))
 #' weighted.mean(Rs,wt)
 #' Qs<-Q4(Rs)
 #' weighted.mean(Qs,wt)
