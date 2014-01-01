@@ -26,7 +26,7 @@ g_legend<-function(a.gplot){
   legend <- tmp$grobs[[leg]]
   return(legend)}
 
-load("/Users/stanfill/Dropbox/Rotation matrices/Melissa data/datasetnickel.RData")
+load("C:/Users/Brittney Ritchey/Dropbox/Rotation matrices/Melissa data/datasetnickel.RData")
 
 dat.out <- adply(data, .margins= c(1,3), function(x) {
   as.vector(x)
@@ -91,7 +91,7 @@ d2
 
 #Grain map based on observation at scan1
 d3 <- ggplot(loc.stats, aes(xpos, ypos, color=dR1))
-d4 <- d3 + geom_point(size=2.5) + scale_colour_gradient(expression(d[R](R[ij], I["3x3"])), low="grey99", high="grey10", limits=c(0, pi), breaks=c( pi/4, pi/2, 3*pi/4), labels=expression( pi/4, pi/2, 3*pi/4)) + 
+d4 <- d3 + geom_point(size=2.5) + scale_colour_gradient(expression(r[gi]), low="grey99", high="grey10", limits=c(0, pi), breaks=c( pi/4, pi/2, 3*pi/4), labels=expression( pi/4, pi/2, 3*pi/4)) + 
   theme_bw() + xlab("") + ylab("") + coord_equal() + scale_x_continuous(limits=c(0, 12.5), breaks=seq(0, 12.5, by=2.5), labels=expression(0*mu*m, 2.5*mu*m, 5*mu*m, 7.5*mu*m, 10*mu*m, 12.5*mu*m)) + 
   scale_y_continuous(limits=c(0, 10), breaks=seq(0, 10, by=2.5), labels=expression(0*mu*m, 2.5*mu*m, 5*mu*m, 7.5*mu*m, 10*mu*m)) + 
   #geom_point(shape="o", colour="yellow", size=5, data=loc.stats[idx,])  + 
@@ -102,7 +102,20 @@ d4
 #Add labels for the identified grains
 d4+annotate("text", x=c(3.5,7.5,.75,11,10,.75,7.5,.75),y=c(4,4.5,5,5,9,1,1,9),
             label=c(as.character(1:8)),colour='white',size=I(10))
-ggsave(file="/Users/stanfill/Dropbox/Thesis/Intervals/Figures/grain-map-first-scan-labels.png", width=5.75, height=4.25)
+#ggsave(file="C:/Users/Brittney Ritchey/Dropbox/Thesis/Intervals - Mean/Figures/grain-map-first-scan-labels.png", width=5.75, height=4.25)
+
+#Grain map based on observation at scan1, degrees
+d5 <- ggplot(loc.stats, aes(xpos, ypos, color=dR1*180/pi))
+d6 <- d5 + geom_point(size=2.5) + scale_colour_gradient(expression(r[gi]), low="grey99", high="grey10", limits=c(0, 180), breaks=c(45,90,135), labels=expression(45^o,90^o,135^o)) + 
+  theme_bw() + xlab("") + ylab("") + coord_equal() + scale_x_continuous(limits=c(0, 12.5), breaks=seq(0, 12.5, by=2.5), labels=expression(0*mu*m, 2.5*mu*m, 5*mu*m, 7.5*mu*m, 10*mu*m, 12.5*mu*m)) + 
+  scale_y_continuous(limits=c(0, 10), breaks=seq(0, 10, by=2.5), labels=expression(0*mu*m, 2.5*mu*m, 5*mu*m, 7.5*mu*m, 10*mu*m)) + 
+  #geom_point(shape="o", colour="yellow", size=5, data=loc.stats[idx,])  + 
+  theme(plot.margin=unit(rep(0,4), "lines"))+annotate("text", x=c(3.5,7.5,.75,11,10,.75,7.5,.75),y=c(4,4.5,5,5,9,1,1,9),
+            label=c(as.character(1:8)),colour='white',size=I(10))
+d6
+#ggsave(file="C:/Users/Brittney Ritchey/Dropbox/Thesis/Intervals - Mean/Figures/grain-map-first-scan-labels.png", width=5.75, height=4.25)
+
+
 
 ##
 #Identify grains based on their central direction dE1 or dE2
