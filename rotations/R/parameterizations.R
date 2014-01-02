@@ -38,9 +38,9 @@ setOldClass("Q4")
 #' @return 	\item{as.Q4}{coerces its object into an Q4 type.} 
 #' 					\item{is.Q4}{returns \code{TRUE} or \code{False} depending on whether its argument satifies the conditions to be an
 #' 					quaternion; namely it must be four-dimensional and of unit length.}
-#' 					\item{Q4.default}{returns an \eqn{n}-by-4 matrix where each row is a quaternion constructed from axis \eqn{U} and angle theta.}
-#' 					\item{Q4.SO3}{returns \eqn{n}-by-4 matrix where each row is a quaternion constructed from the corresponding rotation matrix.}
 #' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
+#' @examples
+#' rs<-rcayley(20,kappa=20) #Generate a
 
 as.Q4<-function(q,...){
   UseMethod("as.Q4")
@@ -148,8 +148,8 @@ as.Q4.data.frame <- function(q,...) {
 #' @export
 
 is.Q4 <- function(q) {
-	
-	return(sum(q^2)-1<10e-10 & length(q)==4)
+
+	apply(q,1,function(q){sum(q^2)-1<10e-10 & length(q)==4})
 	
 }
 
@@ -339,10 +339,11 @@ as.SO3.data.frame <- function(q,...) {
 
 is.SO3 <- function(R) {
 	
-	R <- matrix(R, 3, 3)
+  apply(R,1,
+	function(R){R <- matrix(R, 3, 3)
 	if(any(is.na(R))) return(FALSE)
 	if(abs(det(R)-1)>10e-10) return(FALSE)
-	return(all(abs(t(R) %*% R - diag(1, 3))<10e-5)) 
+	return(all(abs(t(R) %*% R - diag(1, 3))<10e-5))}) 
 	
 }
 
