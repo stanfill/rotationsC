@@ -45,7 +45,7 @@ fisher.kappa<-function(nu){
   kappa<-rep(0,length(nu))
   
   for(i in 1:length(nu))
-    kappa[i]<-optimize(fisher_nu_kappa,interval=c(0,10),tol=.00001,nu=nu[i])$minimum
+    kappa[i]<-optimize(fisher.nu.kappa,interval=c(0,10),tol=.00001,nu=nu[i])$minimum
   
   return(kappa)
 }
@@ -77,7 +77,7 @@ vmises.kappa<-function(nu){
   kappa<-rep(0,length(nu))
   
   for(i in 1:length(nu))
-    kappa[i]<-optimize(mises_nu_kappa,interval=c(0,10),tol=.00001,nu=nu[i])$minimum
+    kappa[i]<-optimize(mises.nu.kappa,interval=c(0,10),tol=.00001,nu=nu[i])$minimum
   
   return(kappa)
 }

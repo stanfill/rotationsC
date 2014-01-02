@@ -48,7 +48,8 @@ mean(Qs)
 #Plot Subject 1's wrist measurements using the connection to rotation matrices
 plot(Qs,col=c(1,2,3))
 
-#Translate the quaternion measurements into rotations and estiamte the central orientation in terms of rotations
+#Translate the quaternion measurements into rotations and estiamte 
+#the central orientation in terms of rotations
 Rs<-as.SO3(Qs)
 mean(Rs)
 }

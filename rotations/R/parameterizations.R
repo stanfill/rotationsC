@@ -45,8 +45,8 @@ setOldClass("Q4")
 #' 
 #' ## The measurements are in columns 5:8
 #' is.Q4(Qs[,5:8]) #TRUE, eventhough Qs is a data.frame, the rows satisfy the 
-#'                 #conditions necessary to be quaternions BUT, S3 methods 
-#'                 #(e.g. 'mean' or 'plot') for objects of class 'Q4' will not work until 'as.Q4' is used
+#'                 #conditions necessary to be quaternions BUT, S3 methods (e.g. 'mean' or
+#'                 #'plot') for objects of class 'Q4' will not work until 'as.Q4' is used
 #'                 
 #' Qs <- as.Q4(Qs[,5:8]) #Coerce measurements into 'Q4' type using as.Q4.data.frame
 #' all(is.Q4(Qs)) #TRUE  
@@ -191,7 +191,7 @@ id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 #' @return 	\item{as.SO3}{coerces provided data into an SO3 type.} 
 #' 					\item{is.SO3}{returns \code{TRUE} or \code{False} depending on whether its argument satifies the conditions to be an
 #' 					rotation matrix.  Namely, has determinant one and its transpose is its inverse.}
-#' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
+#' @aliases SO3 as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @examples
 #' data(nickel) #load included nickel dataset
 #' Rs <- subset(nickel, location == 698)  #Select one location to focus on

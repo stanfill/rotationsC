@@ -68,7 +68,7 @@ MCMCSO3.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
   Rs<-as.SO3(x)
   S0<-as.SO3(matrix(S0,3,3))
   SO3Res<-MCMCSO3(Rs,type,S0,kappa0,tuneS,tuneK,burn_in,m)
-  Q4Res<-list(Q=Q4(SO3Res$S),kappa=SO3Res$kappa,Qaccept=SO3Res$Saccept,Kaccept=SO3Res$Kaccept)
+  Q4Res<-list(Q=as.Q4(SO3Res$S),kappa=SO3Res$kappa,Qaccept=SO3Res$Saccept,Kaccept=SO3Res$Kaccept)
   return(Q4Res)
   
 }
@@ -145,7 +145,7 @@ bayesCR.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
   Rs<-as.SO3(x)
   S0<-as.SO3(matrix(S0,3,3))
   SO3Res<-bayesCR(Rs,type,S0,kappa0,tuneS,tuneK,burn_in,m,alp)
-  Q4Res<-list(Qhat=Q4(SO3Res$Shat),Radius=SO3Res$Radius)
+  Q4Res<-list(Qhat=as.Q4(SO3Res$Shat),Radius=SO3Res$Radius)
   return(Q4Res)
   
 }
@@ -218,7 +218,7 @@ bayes.mean.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
   Rs<-as.SO3(x)
   S0<-as.SO3(matrix(S0,3,3))
   SO3Res<-MCMCSO3(Rs,type,S0,kappa0,tuneS,tuneK,burn_in,m)
-  Q4Res<-list(Qhat=Q4(mean(SO3Res$S)),kappa=mean(SO3Res$kappa))
+  Q4Res<-list(Qhat=as.Q4(mean(SO3Res$S)),kappa=mean(SO3Res$kappa))
   return(Q4Res)
   
 }
