@@ -190,6 +190,15 @@ id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 #' 					\item{is.SO3}{returns \code{TRUE} or \code{False} depending on whether its argument satifies the conditions to be an
 #' 					rotation matrix.  Namely, has determinant one and its transpose is its inverse.}
 #' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
+#' @examples
+#' data(nickel) #load included nickel dataset
+#' Rs <- subset(nickel, location == 698)  #Select one location to focus on
+#' 
+#' Rs <- as.SO3(Rs[,5:13]) #Translate the Rs data.frame into an object of class 'SO3'
+#' Rs <- Rs[is.SO3(Rs),] #Some observations are not rotations, remove them
+#' mean(Rs) #Estimate the central orientation with the average
+#' plot(Rs, col = c(1, 2, 3)) #Visualize the location, there appears to be two groups
+#' median(Rs) #Resetimate central orientation robustly
 
 as.SO3 <- function(R,...){
   UseMethod("as.SO3")
