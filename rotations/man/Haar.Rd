@@ -38,7 +38,7 @@
 \examples{
 r<-seq(-pi, pi, length = 1000)
 #Visualize the matrix-Fisher density fucntion with respect to the Haar measure
-plot(rs, dhaar(rs), type = 'l', ylab = 'f(r)')
+plot(r, dhaar(r), type = 'l', ylab = 'f(r)')
 
 #Generate random observations from matrix-Fisher distribution
 rs<-rhaar(20)

@@ -189,11 +189,9 @@ mis.axis.SO3<-function(x,...){
   	u[i,] <- rev(X[upper.tri(X)])*c(-1,1,-1)
 		u[i,]<-u[i,]/sqrt(sum(u[i,]^2))
 	}
-  if(n==1){
-    return(c(u))
-  }else{
-    return(u) # will be trouble, if R is symmetric, i.e. id,  .... 
-  }
+
+  return(u) # will be trouble, if R is symmetric, i.e. id,  .... 
+  
 }
 
 #' @rdname mis.axis
@@ -326,6 +324,7 @@ genR <- function(r, S = NULL, space='SO3') {
 #' The expansion is significantly simplified for skew-symmetric matrices, see \cite{moakher02}.
 #' Maps a matrix belonging to the lie algebra \eqn{so(3)} into the lie group \eqn{SO(3)}.
 #'
+#' @name exp.skew
 #' @param x single \eqn{3\times 3}{3-by-3} skew-symmetric matrix or \eqn{n\times 9}{n-by-9} sample of skew-symmetric matrices.
 #' @return Matrix \eqn{e^{\bm H}}{e^H} in \eqn{SO(3)} .
 #' @cite moakher02
@@ -398,17 +397,19 @@ project.SO3 <- function(M) {
 #'
 #' Compute the sum of the \eqn{p^{th}}{pth} order distances between each row of x and S.
 #'
+#' @name sum.dist
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param S the individual matrix of interest, usually an estimate of the mean.
 #' @param method type of distance used method in "extrinsic" or "intrinsic"
 #' @param p the order of the distances to compute.
 #' @return The sum of the pth order distance between each row of x and S.
-#' @seealso \code{\link{dist.SO3}}, \code{\link{dist.Q4}}
+#' @seealso \code{\link{rot.dist}}
+#' @aliases sum.dist.SO3 sum.dist.Q4
 #' @export
 #' @examples
-#' Rs<-ruars(20,rvmises,kappa=10)
+#' Rs<-ruars(20, rvmises, kappa = 10)
 #' Sp<-mean(Rs)
-#' sum.dist(Rs,S=Sp,p=2)
+#' sum.dist(Rs, S = Sp, p = 2)
 
 sum.dist<-function(x, S = genR(0, space=class(x)), method='extrinsic', p=1){
   

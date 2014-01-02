@@ -18,7 +18,7 @@
 
   \method{as.SO3}{SO3} (R, ...)
 
-  \method{as.SO3}{data.frame} (q, ...)
+  \method{as.SO3}{data.frame} (R, ...)
 
   is.SO3(R)
 

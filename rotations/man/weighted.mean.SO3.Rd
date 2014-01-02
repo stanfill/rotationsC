@@ -51,11 +51,11 @@
   \cite{Manton (2004)}.
 }
 \examples{
-Rs<-ruars(20,rvmises,kappa=0.01)
-wt<-abs(1/mis.angle(Rs))
-weighted.mean(Rs,wt)
-Qs<-Q4(Rs)
-weighted.mean(Qs,wt)
+Rs <- ruars(20, rvmises, kappa = 0.01)
+wt <- abs(1/mis.angle(Rs))
+weighted.mean(Rs, wt)
+Qs <- as.Q4(Rs)
+weighted.mean(Qs, wt)
 }
 \references{
   Moakher M (2002). "Means and averaging in the group of

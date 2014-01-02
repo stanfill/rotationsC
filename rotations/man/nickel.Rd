@@ -15,15 +15,15 @@ Nickel electron backscatter diffraction data set
     \item{\code{ypos}}{location y position}
     \item{\code{location}}{Location number for easy reference}
     \item{\code{rep}}{Replicate scan identifier}
-    \item{\code{v1}}{First element of x-axis describing crystal orientation at corresponding location}
-    \item{\code{v2}}{Second element of x-axis describing crystal orientation at corresponding location}
-    \item{\code{v3}}{Third element of x-axis describing crystal orientation at corresponding location}
-    \item{\code{v4}}{First element of y-axis describing crystal orientation at corresponding location}
-    \item{\code{v5}}{Second element of y-axis describing crystal orientation at corresponding location}
-    \item{\code{v6}}{Third element of y-axis describing crystal orientation at corresponding location}
-    \item{\code{v7}}{First element of z-axis describing crystal orientation at corresponding location}
-    \item{\code{v8}}{Second element of z-axis describing crystal orientation at corresponding location}
-    \item{\code{v9}}{Third element of z-axis describing crystal orientation at corresponding location}
+    \item{\code{V1}}{First element of x-axis describing crystal orientation at corresponding location}
+    \item{\code{V2}}{Second element of x-axis describing crystal orientation at corresponding location}
+    \item{\code{V3}}{Third element of x-axis describing crystal orientation at corresponding location}
+    \item{\code{V4}}{First element of y-axis describing crystal orientation at corresponding location}
+    \item{\code{V5}}{Second element of y-axis describing crystal orientation at corresponding location}
+    \item{\code{V6}}{Third element of y-axis describing crystal orientation at corresponding location}
+    \item{\code{V7}}{First element of z-axis describing crystal orientation at corresponding location}
+    \item{\code{V8}}{Second element of z-axis describing crystal orientation at corresponding location}
+    \item{\code{V9}}{Third element of z-axis describing crystal orientation at corresponding location}
   }
 }
 \details{

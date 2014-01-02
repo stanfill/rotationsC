@@ -23,7 +23,7 @@
 #' @examples
 #' Rs<-ruars(20,rvmises,kappa=0.01)
 #' mean(Rs)
-#' Qs<-Q4(Rs)
+#' Qs<-as.Q4(Rs)
 #' mean(Qs)
 
 mean.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
@@ -65,7 +65,7 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 		
 	}else{
 		
-		Rs<-SO3.Q4(Qs)
+		Rs<-as.SO3.Q4(Qs)
   	R<-gmeanSO3C(Rs,maxIter,epsilon)
 		R<-as.Q4.SO3(R)
 	}
@@ -144,7 +144,7 @@ median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...
 	if(length(Qs)==4)
 		return(Qs)
 
-  Rs<-SO3.Q4(Qs)
+  Rs<-as.SO3.Q4(Qs)
   
   R<-median.SO3(Rs,type,epsilon,maxIter,...)
 
@@ -175,11 +175,11 @@ median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...
 #' @S3method weighted.mean SO3
 #' @method weighted.mean SO3
 #' @examples
-#' Rs<-ruars(20,rvmises,kappa=0.01)
-#' wt<-abs(1/mis.angle(Rs))
-#' weighted.mean(Rs,wt)
-#' Qs<-Q4(Rs)
-#' weighted.mean(Qs,wt)
+#' Rs <- ruars(20, rvmises, kappa = 0.01)
+#' wt <- abs(1/mis.angle(Rs))
+#' weighted.mean(Rs, wt)
+#' Qs <- as.Q4(Rs)
+#' weighted.mean(Qs, wt)
 
 weighted.mean.SO3 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
 	

@@ -50,7 +50,7 @@
 \examples{
 Rs<-ruars(20,rvmises,kappa=0.01)
 mean(Rs)
-Qs<-Q4(Rs)
+Qs<-as.Q4(Rs)
 mean(Qs)
 }
 \references{
