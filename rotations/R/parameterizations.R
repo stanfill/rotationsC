@@ -51,7 +51,7 @@ setOldClass("Q4")
 #' Qs <- as.Q4(Qs[,5:8]) #Coerce measurements into 'Q4' type using as.Q4.data.frame
 #' all(is.Q4(Qs)) #TRUE  
 #' mean(Qs) #Estimate central orientation for subject 1's wrist, see ?mean.Q4
-#' plot(Qs, col = c(1, 2, 3)) #Visualize the measuremenets, see ?plot.Q4 for more
+#' #plot(Qs, col = c(1, 2, 3)) #Visualize the measuremenets, see ?plot.Q4 for more
 #' Rs <- as.SO3(Qs) #Coerse a 'Q4' object into rotation matrix format, see ?as.SO3
 
 as.Q4<-function(q,...){
@@ -199,7 +199,7 @@ id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 #' Rs <- as.SO3(Rs[,5:13]) #Translate the Rs data.frame into an object of class 'SO3'
 #' Rs <- Rs[is.SO3(Rs),] #Some observations are not rotations, remove them
 #' mean(Rs) #Estimate the central orientation with the average
-#' plot(Rs, col = c(1, 2, 3)) #Visualize the location, there appears to be two groups
+#' #plot(Rs, col = c(1, 2, 3)) #Visualize the location, there appears to be two groups
 #' median(Rs) #Resetimate central orientation robustly
 
 as.SO3 <- function(R,...){

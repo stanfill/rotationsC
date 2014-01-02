@@ -99,7 +99,7 @@ MCMCSO3.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=4)
 #' region(Rs,type='Cayley',method='Bayes',estimator='mean',
-#' S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01)
+#' S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01,m=500)
 
 bayesCR<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
   UseMethod("bayesCR")

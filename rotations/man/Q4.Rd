@@ -69,7 +69,7 @@ is.Q4(Qs[,5:8]) #TRUE, eventhough Qs is a data.frame, the rows satisfy the
 Qs <- as.Q4(Qs[,5:8]) #Coerce measurements into 'Q4' type using as.Q4.data.frame
 all(is.Q4(Qs)) #TRUE
 mean(Qs) #Estimate central orientation for subject 1's wrist, see ?mean.Q4
-plot(Qs, col = c(1, 2, 3)) #Visualize the measuremenets, see ?plot.Q4 for more
+#plot(Qs, col = c(1, 2, 3)) #Visualize the measuremenets, see ?plot.Q4 for more
 Rs <- as.SO3(Qs) #Coerse a 'Q4' object into rotation matrix format, see ?as.SO3
 }
 \keyword{datasets}
