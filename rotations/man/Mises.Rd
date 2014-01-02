@@ -49,15 +49,17 @@
   is the modified bessel function of order 0.
 }
 \examples{
-r<-seq(-pi,pi,length=1000)
+r <- seq(-pi, pi, length = 500)
+
 #Visualize the von Mises density fucntion with respect to the Haar measure
-plot(r,dvmises(r,kappa=10),type='l',ylab='f(r)',ylim=c(0,100))
+plot(r, dvmises(r, kappa = 10), type = 'l', ylab = 'f(r)', ylim = c(0, 100))
+
 #Visualize the von Mises density fucntion with respect to the Lebesgue measure
-plot(r,dvmises(r,kappa=10,Haar=F),type='l',ylab='f(r)')
+plot(r, dvmises(r, kappa = 10, Haar = FALSE), type = 'l', ylab = 'f(r)')
 
 #Generate random observations from von Mises distribution
-rs<-rvmises(20,kappa=1)
-hist(rs,breaks=10)
+rs <- rvmises(20, kappa = 1)
+hist(rs, breaks = 10)
 }
 \seealso{
   \link{Angular-distributions} for other distributions in

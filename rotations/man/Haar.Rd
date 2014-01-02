@@ -36,13 +36,13 @@
   \deqn{C_U(r)=\frac{[1-cos(r)]}{2\pi}.}{C(r)=[1-cos(r)]/2\pi.}
 }
 \examples{
-r<-seq(-pi,pi,length=1000)
+r<-seq(-pi, pi, length = 1000)
 #Visualize the matrix-Fisher density fucntion with respect to the Haar measure
-plot(rs,dhaar(rs),type='l',ylab='f(r)')
+plot(rs, dhaar(rs), type = 'l', ylab = 'f(r)')
 
 #Generate random observations from matrix-Fisher distribution
 rs<-rhaar(20)
-hist(rs,breaks=10)
+hist(rs, breaks = 10)
 }
 \seealso{
   \link{Angular-distributions} for other distributions in

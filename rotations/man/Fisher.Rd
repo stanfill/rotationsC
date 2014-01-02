@@ -51,15 +51,17 @@
   r}dr}{Ip(\kappa)}.
 }
 \examples{
-r<-seq(-pi,pi,length=1000)
-#Visualize the matrix-Fisher density fucntion with respect to the Haar measure
-plot(r,dfisher(r,kappa=10),type='l',ylab='f(r)')
-#Visualize the matrix-Fisher density fucntion with respect to the Lebesgue measure
-plot(r,dfisher(r,kappa=10,Haar=F),type='l',ylab='f(r)')
+r <- seq(-pi, pi, length = 500)
 
-#Generate random observations from matrix-Fisher distribution
-rs<-rfisher(20,kappa=1)
-hist(rs,breaks=10)
+#Visualize the matrix Fisher density fucntion with respect to the Haar measure
+plot(r, dfisher(r, kappa = 10), type = 'l', ylab = 'f(r)')
+
+#Visualize the matrix Fisher density fucntion with respect to the Lebesgue measure
+plot(r, dfisher(r, kappa = 10, Haar = FALSE), type = 'l', ylab = 'f(r)')
+
+#Generate random observations from matrix Fisher distribution
+rs <- rfisher(20, kappa = 1)
+hist(rs, breaks = 10)
 }
 \seealso{
   \link{Angular-distributions} for other distributions in

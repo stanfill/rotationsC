@@ -45,15 +45,17 @@ rar <- function(n, f, M, ...) {
 #' @seealso \link{Angular-distributions} for other distributions in the rotations package.
 #' @cite Schaeben1997 leon2006
 #' @examples
-#' r<-seq(-pi,pi,length=1000)
+#' r <- seq(-pi, pi, length = 500)
+#' 
 #' #Visualize the Cayley density fucntion with respect to the Haar measure
-#' plot(r,dcayley(r,kappa=10),type='l',ylab='f(r)')
+#' plot(r, dcayley(r, kappa = 10), type = 'l', ylab = 'f(r)')
+#' 
 #' #Visualize the Cayley density fucntion with respect to the Lebesgue measure
-#' plot(r,dcayley(r,kappa=10,Haar=F),type='l',ylab='f(r)')
+#' plot(r, dcayley(r, kappa = 10, Haar = FALSE), type = 'l', ylab = 'f(r)')
 #' 
 #' #Generate random observations from Cayley distribution
-#' rs<-rcayley(20,kappa=1)
-#' hist(rs,breaks=10)
+#' rs <- rcayley(20, kappa = 1)
+#' hist(rs, breaks = 10)
 
 NULL
 
@@ -136,15 +138,17 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
 #'          \item{rfisher}{generates random deviates}
 #' @seealso \link{Angular-distributions} for other distributions in the rotations package.
 #' @examples
-#' r<-seq(-pi,pi,length=1000)
-#' #Visualize the matrix-Fisher density fucntion with respect to the Haar measure
-#' plot(r,dfisher(r,kappa=10),type='l',ylab='f(r)')
-#' #Visualize the matrix-Fisher density fucntion with respect to the Lebesgue measure
-#' plot(r,dfisher(r,kappa=10,Haar=F),type='l',ylab='f(r)')
+#' r <- seq(-pi, pi, length = 500)
 #' 
-#' #Generate random observations from matrix-Fisher distribution
-#' rs<-rfisher(20,kappa=1)
-#' hist(rs,breaks=10)
+#' #Visualize the matrix Fisher density fucntion with respect to the Haar measure
+#' plot(r, dfisher(r, kappa = 10), type = 'l', ylab = 'f(r)')
+#' 
+#' #Visualize the matrix Fisher density fucntion with respect to the Lebesgue measure
+#' plot(r, dfisher(r, kappa = 10, Haar = FALSE), type = 'l', ylab = 'f(r)')
+#' 
+#' #Generate random observations from matrix Fisher distribution
+#' rs <- rfisher(20, kappa = 1)
+#' hist(rs, breaks = 10)
 
 NULL
 
@@ -221,13 +225,13 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 #'          \item{rhaar}{generates random deviates}
 #' @seealso \link{Angular-distributions} for other distributions in the rotations package.
 #' @examples
-#' r<-seq(-pi,pi,length=1000)
+#' r<-seq(-pi, pi, length = 1000)
 #' #Visualize the matrix-Fisher density fucntion with respect to the Haar measure
-#' plot(rs,dhaar(rs),type='l',ylab='f(r)')
+#' plot(rs, dhaar(rs), type = 'l', ylab = 'f(r)')
 #' 
 #' #Generate random observations from matrix-Fisher distribution
 #' rs<-rhaar(20)
-#' hist(rs,breaks=10)
+#' hist(rs, breaks = 10)
 
 NULL
 
@@ -294,15 +298,17 @@ rhaar<-function(n){
 #'          \item{rvmises}{generates random deviates}
 #' @seealso \link{Angular-distributions} for other distributions in the rotations package.
 #' @examples
-#' r<-seq(-pi,pi,length=1000)
+#' r <- seq(-pi, pi, length = 500)
+#' 
 #' #Visualize the von Mises density fucntion with respect to the Haar measure
-#' plot(r,dvmises(r,kappa=10),type='l',ylab='f(r)',ylim=c(0,100))
+#' plot(r, dvmises(r, kappa = 10), type = 'l', ylab = 'f(r)', ylim = c(0, 100))
+#' 
 #' #Visualize the von Mises density fucntion with respect to the Lebesgue measure
-#' plot(r,dvmises(r,kappa=10,Haar=F),type='l',ylab='f(r)')
+#' plot(r, dvmises(r, kappa = 10, Haar = FALSE), type = 'l', ylab = 'f(r)')
 #' 
 #' #Generate random observations from von Mises distribution
-#' rs<-rvmises(20,kappa=1)
-#' hist(rs,breaks=10)
+#' rs <- rvmises(20, kappa = 1)
+#' hist(rs, breaks = 10)
 
 NULL
 
@@ -420,11 +426,11 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #' @examples
 #' #Generate random rotations from the Cayley-UARS distribution with central orientation 
 #' #rotated about the y-axis through pi/2 radians
-#' S<-as.SO3(c(0,1,0),pi/2)
-#' Rs<-ruars(20,rcayley,kappa=10,S=S)
-#' rs<-mis.angle(Rs) #Find the misorientation angle associated with each rotation
-#' ds<-duars(Rs,dcayley,kappa=10,S=S) #Compute UARS density evaluated at each rotations
-#' plot(rs,ds) 
+#' S <- as.SO3(c(0, 1, 0), pi/2)
+#' Rs <- ruars(20, rcayley, kappa = 10, S = S)
+#' rs <- mis.angle(Rs) #Find the misorientation angle associated with each rotation
+#' ds <- duars(Rs, dcayley, kappa = 10, S = S) #Compute UARS density evaluated at each rotations
+#' plot(rs, ds) 
 
 NULL
 
