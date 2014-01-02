@@ -40,7 +40,17 @@ setOldClass("Q4")
 #' 					quaternion; namely it must be four-dimensional and of unit length.}
 #' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @examples
-#' rs<-rcayley(20,kappa=20) #Generate a
+#' data(drill) #load the included drill data set
+#' Qs <- subset(drill, Subject == '1' & Joint == 'Wrist') #Pull off subject 1's wrist measurements
+#' 
+#' ## The measurements are in columns 5:8
+#' is.Q4(Qs[,5:8]) #TRUE, eventhough Qs is a data.frame, the rows satisfy the conditions necessary to be quaternions
+#'                 #BUT, S3 methods (e.g. 'mean' or 'plot') for objects of class 'Q4' will not work until 'as.Q4' is used
+#' Qs <- as.Q4(Qs[,5:8]) #Coerce measurements into 'Q4' type using as.Q4.data.frame
+#' all(is.Q4(Qs)) #TRUE  
+#' mean(Qs) #Estimate central orientation for subject 1's wrist, see ?mean.Q4
+#' plot(Qs, col = c(1, 2, 3)) #Visualize the measuremenets, see ?plot.Q4 for more
+#' Rs <- as.SO3(Qs) #Coerse a 'Q4' object into rotation matrix format, see ?as.SO3
 
 as.Q4<-function(q,...){
   UseMethod("as.Q4")
@@ -176,11 +186,9 @@ id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 #' @param theta vector of rotation angles.
 #' @param ... additional arguments.
 #' @format \code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix.
-#' @return 	\item{as.SO3}{coerces its object into an SO3 type.} 
+#' @return 	\item{as.SO3}{coerces provided data into an SO3 type.} 
 #' 					\item{is.SO3}{returns \code{TRUE} or \code{False} depending on whether its argument satifies the conditions to be an
 #' 					rotation matrix.  Namely, has determinant one and its transpose is its inverse.}
-#' 					\item{SO3.default}{returns an \eqn{n}-by-9 matrix where each row is a rotation matrix constructed from axis \eqn{U} and angle theta.}
-#' 					\item{SO3.Q4}{returns \eqn{n}-by-9 matrix where each row is a rotation matrix constructed from the corresponding quaternion.}
 #' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 
 as.SO3 <- function(R,...){
@@ -339,11 +347,19 @@ as.SO3.data.frame <- function(q,...) {
 
 is.SO3 <- function(R) {
 	
-  apply(R,1,
-	function(R){R <- matrix(R, 3, 3)
-	if(any(is.na(R))) return(FALSE)
-	if(abs(det(R)-1)>10e-10) return(FALSE)
-	return(all(abs(t(R) %*% R - diag(1, 3))<10e-5))}) 
+  if(length(R)==9){
+    R <- matrix(R, 3, 3)
+    if(any(is.na(R))) return(FALSE)
+    if(abs(det(R)-1)>10e-10) return(FALSE)
+    return(all(abs(t(R) %*% R - diag(1, 3))<10e-5))
+  }else{
+  
+    apply(R,1,
+	  function(R){R <- matrix(R, 3, 3)
+	  if(any(is.na(R))) return(FALSE)
+	  if(abs(det(R)-1)>10e-10) return(FALSE)
+	  return(all(abs(t(R) %*% R - diag(1, 3))<10e-5))}) 
+  }
 	
 }
 

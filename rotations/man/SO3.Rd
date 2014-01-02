@@ -32,16 +32,11 @@
   \item{...}{additional arguments.}
 }
 \value{
-  \item{as.SO3}{coerces its object into an SO3 type.}
+  \item{as.SO3}{coerces provided data into an SO3 type.}
   \item{is.SO3}{returns \code{TRUE} or \code{False}
   depending on whether its argument satifies the conditions
   to be an rotation matrix.  Namely, has determinant one
   and its transpose is its inverse.}
-  \item{SO3.default}{returns an \eqn{n}-by-9 matrix where
-  each row is a rotation matrix constructed from axis
-  \eqn{U} and angle theta.} \item{SO3.Q4}{returns
-  \eqn{n}-by-9 matrix where each row is a rotation matrix
-  constructed from the corresponding quaternion.}
 }
 \description{
   Creates or tests for objects of class "SO3."

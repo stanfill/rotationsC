@@ -502,7 +502,7 @@ formatSO3<-function(Rs){
 	
 	Rs<-matrix(Rs,len/9,9)
 	
-	if (!all(apply(Rs, 1, is.SO3))) 
+	if (!all(is.SO3(Rs))) 
 		warning("At least one of the given observations is not in SO(3).  Use result with caution.")
 	
 	class(Rs)<-"SO3"
@@ -518,7 +518,7 @@ formatQ4<-function(Qs){
   
   Qs<-matrix(Qs,length(Qs)/4,4)
   
-  if (!all(apply(Qs, 1, is.Q4))) 
+  if (!all(is.Q4(Qs))) 
   	warning("At least one of the given observations is not a unit quaternion.  Use result with caution.")
   
   

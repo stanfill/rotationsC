@@ -40,12 +40,7 @@
   \item{is.Q4}{returns \code{TRUE} or \code{False}
   depending on whether its argument satifies the conditions
   to be an quaternion; namely it must be four-dimensional
-  and of unit length.} \item{Q4.default}{returns an
-  \eqn{n}-by-4 matrix where each row is a quaternion
-  constructed from axis \eqn{U} and angle theta.}
-  \item{Q4.SO3}{returns \eqn{n}-by-4 matrix where each row
-  is a quaternion constructed from the corresponding
-  rotation matrix.}
+  and of unit length.}
 }
 \description{
   Creates or tests for objects of class "Q4."
@@ -61,6 +56,17 @@
   taken to be the angle of rotation theta.  If an
   \code{\link{SO3}} object is given then this function will
   return the quaternion equivalent.
+}
+\examples{
+data(drill) #load the included drill data set
+Qs <- subset(drill, Subject == '1', Joint == 'Wrist') #Pull of subject 1's wrist measurements
+
+## The measurements are in columns 5:8
+is.Q4(Qs[,5:8]) #False, still a data.frame
+Qs <- as.Q4(Qs[,5:8]) #Coerce measurements into 'Q4' type using as.Q4.data.frame
+mean(Qs) #Estimate central orientation for subject 1's wrist, see ?mean.Q4
+plot(Qs, col = c(1, 2, 3)) #Visualize the measuremenets, see ?plot.Q4 for more
+Rs <- as.SO3(Qs) #Coerse a 'Q4' object into rotation matrix format, see ?as.SO3
 }
 \keyword{datasets}
 
