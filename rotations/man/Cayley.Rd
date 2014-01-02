@@ -50,6 +50,17 @@
   distribution is equivalent to the de la Vallee Poussin
   distribution of \cite{Schaeben (1997)}.
 }
+\examples{
+r<-seq(-pi,pi,length=1000)
+#Visualize the Cayley density fucntion with respect to the Haar measure
+plot(r,dcayley(r,kappa=10),type='l',ylab='f(r)')
+#Visualize the Cayley density fucntion with respect to the Lebesgue measure
+plot(r,dcayley(r,kappa=10,Haar=F),type='l',ylab='f(r)')
+
+#Generate random observations from Cayley distribution
+rs<-rcayley(20,kappa=1)
+hist(rs,breaks=10)
+}
 \references{
   Schaeben H (1997). "A Simple Standard Orientation Density
   Function: The Hyperspherical de la Vallee Poussin
