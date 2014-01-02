@@ -44,8 +44,10 @@ setOldClass("Q4")
 #' Qs <- subset(drill, Subject == '1' & Joint == 'Wrist') #Pull off subject 1's wrist measurements
 #' 
 #' ## The measurements are in columns 5:8
-#' is.Q4(Qs[,5:8]) #TRUE, eventhough Qs is a data.frame, the rows satisfy the conditions necessary to be quaternions
-#'                 #BUT, S3 methods (e.g. 'mean' or 'plot') for objects of class 'Q4' will not work until 'as.Q4' is used
+#' is.Q4(Qs[,5:8]) #TRUE, eventhough Qs is a data.frame, the rows satisfy the 
+#'                 #conditions necessary to be quaternions BUT, S3 methods 
+#'                 #(e.g. 'mean' or 'plot') for objects of class 'Q4' will not work until 'as.Q4' is used
+#'                 
 #' Qs <- as.Q4(Qs[,5:8]) #Coerce measurements into 'Q4' type using as.Q4.data.frame
 #' all(is.Q4(Qs)) #TRUE  
 #' mean(Qs) #Estimate central orientation for subject 1's wrist, see ?mean.Q4

@@ -11,7 +11,7 @@ search.sphere <- function(k=9) {
 
 sphereA <- function(A, theta, sphere) {
   ## gives a grid of rotation matrices with the same distance from rotation A
-  R <- SO3(as.matrix(sphere), theta=rep(theta, length=nrow(sphere)))
+  R <- as.SO3(as.matrix(sphere), theta=rep(theta, length=nrow(sphere)))
   # multiplication isn't right
   X <- matrix(A, nrow=3)
   for (i in 1:nrow(R)) {

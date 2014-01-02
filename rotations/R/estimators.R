@@ -211,7 +211,7 @@ weighted.mean.SO3 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter
 		
 		while (d >= epsilon) {
 			
-			R <- R %*% exp.skew(s)
+			R <- R %*% skew.exp(s)
 			
 			s <- matrix(colSums(w*t(apply(Rs, 1, tLogMat, S = R))), 3, 3)
 			

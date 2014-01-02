@@ -171,10 +171,10 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 		
 		if(!is.null(mean_regions) || !is.null(median_regions)){
 			vals<-3:(2+nrow(Shats)) #Make the shapes noticable, 15:18
-			estimates <- list(geom_point(aes(x=X, y=Y, shape=Est),size=3.5, data=data.frame(pointsXYZ(Shats, center=center, column=col), Shats)),
+			estimates <- list(geom_point(aes(x=X, y=Y, shape=Est),size=3.5, data=data.frame(pointsXYZ(Shats[,1:9], center=center, column=col), Shats)),
 												scale_shape_manual(name="Estimates", labels=Estlabels,values=vals))
 		}else{
-			estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(pointsXYZ(Shats, center=center, column=col), Shats)),
+			estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(pointsXYZ(Shats[,1:9], center=center, column=col), Shats)),
 												scale_colour_brewer(name="Estimates", palette="Paired", labels=Estlabels))
 		}
 	}
