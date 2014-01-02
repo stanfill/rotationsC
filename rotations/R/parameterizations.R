@@ -343,10 +343,10 @@ as.SO3.SO3<-function(R,...){
 #' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @export
 
-as.SO3.data.frame <- function(q,...) {
-  n<-nrow(q)
-  p<-ncol(q)
-  R<-as.matrix(q,n,p)
+as.SO3.data.frame <- function(R,...) {
+  n<-nrow(R)
+  p<-ncol(R)
+  R<-as.matrix(R,n,p)
   return(as.SO3.default(R))
 }
 

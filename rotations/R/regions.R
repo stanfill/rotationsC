@@ -221,7 +221,7 @@ prentice.Q4<-function(x,alp=NULL){
 #' @S3method prentice SO3
 
 prentice.SO3<-function(x,alp=NULL){
-	Qs<-Q4(x)
+	Qs<-as.Q4(x)
 	r<-prentice.Q4(Qs,alp)
 	return(r)
 }
@@ -279,7 +279,7 @@ zhang.SO3<-function(x,estimator,alp=NULL,m=300){
   	
   }else if(estimator=='mean'){
   
-  	Qs<-Q4(Rs)
+  	Qs<-as.Q4(Rs)
   	rad<-zhang.Q4(Qs,estimator,alp,m)
   	
   }else{
@@ -312,7 +312,7 @@ zhang.Q4<-function(x,estimator,alp=NULL,m=300){
 		
 	}else if(estimator=='median'){
 		
-		Rs<-SO3(Qs)
+		Rs<-as.SO3(Qs)
 		rad<-zhang.SO3(Rs,estimator,alp,m)
 		
 	}else{
@@ -377,7 +377,7 @@ chang.SO3<-function(x,estimator,alp=NULL){
 	#pivot logical; should the pivotal (T) bootstrap be used or nonpivotal (F)
 	
 	Rs<-formatSO3(x)
-	Qs<-Q4(Rs)
+	Qs<-as.Q4(Rs)
 	rad<-chang.Q4(Qs,estimator,alp)
 	return(rad)
 }
@@ -465,7 +465,7 @@ fisheretal.Q4<-function(x,alp=NULL,boot=T,m=300,symm=TRUE){
 
 optimAxis<-function(r,Qs,cut,symm){
 	
-	Shat<-Q4(mis.axis(mean(Qs)),r)
+	Shat<-as.Q4(mis.axis(mean(Qs)),r)
 	if(symm){
 		Tm<-fisherAxisC(Qs,Shat)
 	}else{
@@ -481,7 +481,7 @@ optimAxis<-function(r,Qs,cut,symm){
 
 fisheretal.SO3<-function(x,alp=NULL,boot=T,m=300,symm=T){
 	
-	Qs<-Q4(x)
+	Qs<-as.Q4(x)
 	r<-fisheretal.Q4(Qs,alp,boot,m,symm)
 	
 	return(r)

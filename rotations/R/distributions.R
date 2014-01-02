@@ -67,7 +67,7 @@ NULL
 dcayley <- function(r, kappa = 1, nu = NULL, Haar = TRUE) {
   
   if(!is.null(nu))
-    kappa <- cayley_kappa(nu)
+    kappa <- cayley.kappa(nu)
   
  	den <- 0.5 * gamma(kappa + 2)/(sqrt(pi) * 2^kappa * gamma(kappa + 0.5)) * (1 + cos(r))^kappa * (1 - cos(r))
   
@@ -105,7 +105,7 @@ pcayley<-function(q,kappa=1,nu=NULL,lower.tail=TRUE){
 rcayley <- function(n, kappa = 1, nu = NULL) {
   
   if(!is.null(nu))
-    kappa <- cayley_kappa(nu)
+    kappa <- cayley.kappa(nu)
   
   lenn<-length(n)
   if(lenn>1)
@@ -159,7 +159,7 @@ NULL
 dfisher <- function(r, kappa = 1, nu = NULL, Haar = TRUE) {
   
   if(!is.null(nu))
-    kappa <- fisher_kappa(nu)
+    kappa <- fisher.kappa(nu)
   
   n<-length(r)
   den<-rep(0,n)
@@ -198,7 +198,7 @@ pfisher<-function(q,kappa=1, nu= NULL, lower.tail=TRUE){
 rfisher <- function(n, kappa = 1, nu = NULL) {
   
   if(!is.null(nu))
-    kappa <- fisher_kappa(nu)
+    kappa <- fisher.kappa(nu)
   
   lenn<-length(n)
   if(lenn>1)
@@ -227,7 +227,7 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 #' @examples
 #' r<-seq(-pi, pi, length = 1000)
 #' #Visualize the matrix-Fisher density fucntion with respect to the Haar measure
-#' plot(rs, dhaar(rs), type = 'l', ylab = 'f(r)')
+#' plot(r, dhaar(r), type = 'l', ylab = 'f(r)')
 #' 
 #' #Generate random observations from matrix-Fisher distribution
 #' rs<-rhaar(20)
@@ -319,7 +319,7 @@ NULL
 dvmises <- function(r, kappa = 1, nu = NULL, Haar = T) {
   
   if(!is.null(nu))
-    kappa <- vmises_kappa(nu)
+    kappa <- vmises.kappa(nu)
   
   den <- 1/(2 * pi * besselI(kappa, 0)) * exp(kappa * cos(r))
   
@@ -356,7 +356,7 @@ pvmises<-function(q,kappa=1,nu=NULL,lower.tail=TRUE){
 rvmises <- function(n, kappa = 1, nu = NULL) {
   
   if(!is.null(nu))
-    kappa <- vmises_kappa(nu)
+    kappa <- vmises.kappa(nu)
   
   lenn<-length(n)
   if(lenn>1)

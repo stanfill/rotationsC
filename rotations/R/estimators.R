@@ -67,7 +67,7 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 		
 		Rs<-SO3.Q4(Qs)
   	R<-gmeanSO3C(Rs,maxIter,epsilon)
-		R<-Q4.SO3(R)
+		R<-as.Q4.SO3(R)
 	}
 	
 	class(R)<-'Q4'
@@ -148,7 +148,7 @@ median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...
   
   R<-median.SO3(Rs,type,epsilon,maxIter,...)
 
-  return(Q4.SO3(R))
+  return(as.Q4.SO3(R))
 }
 
 
@@ -211,7 +211,7 @@ weighted.mean.SO3 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter
 		
 		while (d >= epsilon) {
 			
-			R <- R %*% exp_skew(s)
+			R <- R %*% exp.skew(s)
 			
 			s <- matrix(colSums(w*t(apply(Rs, 1, tLogMat, S = R))), 3, 3)
 			
@@ -221,10 +221,12 @@ weighted.mean.SO3 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter
 			
 			if (iter >= maxIter) {
 				warning(paste("No convergence in ", iter, " iterations."))
-				return(as.SO3(R))
+        class(R)<-"SO3"
+				return(R)
 			}
 		}
-		R<-as.SO3(R)	
+    class(R)<-"SO3"
+		#R<-as.SO3(R)	
 	}
 	
 	return(R)
@@ -243,7 +245,7 @@ weighted.mean.Q4 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter 
 	if(nrow(Qs)==1)
 		return(Qs)
 	
-	Rs<-SO3(Qs)
+	Rs<-as.SO3(Qs)
 	
 	R<-weighted.mean.SO3(Rs,w,type,epsilon,maxIter)
 	

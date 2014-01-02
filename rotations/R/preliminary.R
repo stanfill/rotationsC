@@ -326,22 +326,22 @@ genR <- function(r, S = NULL, space='SO3') {
 #' The expansion is significantly simplified for skew-symmetric matrices, see \cite{moakher02}.
 #' Maps a matrix belonging to the lie algebra \eqn{so(3)} into the lie group \eqn{SO(3)}.
 #'
-#' @param H single \eqn{3\times 3}{3-by-3} skew-symmetric matrix or \eqn{n\times 9}{n-by-9} sample of skew-symmetric matrices.
+#' @param x single \eqn{3\times 3}{3-by-3} skew-symmetric matrix or \eqn{n\times 9}{n-by-9} sample of skew-symmetric matrices.
 #' @return Matrix \eqn{e^{\bm H}}{e^H} in \eqn{SO(3)} .
 #' @cite moakher02
 #' @export
 
-exp.skew <- function(H) {
+exp.skew <- function(x) {
 
-  if(length(H)==9){
+  if(length(x)==9){
     
-    H<-matrix(H,3,3)
+    H<-matrix(x,3,3)
     Hmat<-expskewC(H)
     class(Hmat)<-"SO3"
     return(Hmat)
     
   }else{
-    Hmat<-expskewCMulti(H)
+    Hmat<-expskewCMulti(x)
     class(Hmat)<-"SO3"
     return(Hmat)
   }
