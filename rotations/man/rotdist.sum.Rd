@@ -1,16 +1,16 @@
-\name{sum.dist}
-\alias{sum.dist}
-\alias{sum.dist.Q4}
-\alias{sum.dist.SO3}
+\name{rotdist.sum}
+\alias{rotdist.sum}
+\alias{rotdist.sum.Q4}
+\alias{rotdist.sum.SO3}
 \title{Sample distance}
 \usage{
-  sum.dist(x, S = genR(0, space = class(x)),
+  rotdist.sum(x, S = genR(0, space = class(x)),
     method = "extrinsic", p = 1)
 
-  \method{sum.dist}{SO3} (x, S = id.SO3,
+  \method{rotdist.sum}{SO3} (x, S = id.SO3,
     method = "extrinsic", p = 1)
 
-  \method{sum.dist}{Q4} (x, S = id.Q4,
+  \method{rotdist.sum}{Q4} (x, S = id.Q4,
     method = "extrinsic", p = 1)
 }
 \arguments{
@@ -37,7 +37,7 @@
 \examples{
 Rs<-ruars(20, rvmises, kappa = 10)
 Sp<-mean(Rs)
-sum.dist(Rs, S = Sp, p = 2)
+rotdist.sum(Rs, S = Sp, p = 2)
 }
 \seealso{
   \code{\link{rot.dist}}
