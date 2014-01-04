@@ -48,10 +48,17 @@
   quaternion point of view see \cite{Tyler (1981)}.
 }
 \examples{
-Rs<-ruars(20,rvmises,kappa=0.01)
+Rs <- ruars(20, rvmises, kappa = 0.01)
 mean(Rs)
-Qs<-as.Q4(Rs)
+mean(Rs, type = 'geometric')
+rot.dist(mean(Rs))
+rot.dist(mean(Rs, type = 'geometric'))
+
+Qs <- as.Q4(Rs)
 mean(Qs)
+mean(Qs, type = 'geometric')
+rot.dist(mean(Qs))
+rot.dist(mean(Qs, type = 'geometric'))
 }
 \references{
   Moakher M (2002). "Means and averaging in the group of

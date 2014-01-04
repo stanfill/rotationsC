@@ -46,6 +46,19 @@
   (2011)} and the projected case is in \cite{Stanfill et
   al. (2013)}.
 }
+\examples{
+Rs <- ruars(20, rvmises, kappa = 0.01)
+median(Rs)
+median(Rs, type = 'geometric')
+rot.dist(median(Rs))
+rot.dist(median(Rs, type = 'geometric'))
+
+Qs <- as.Q4(Rs)
+median(Qs)
+median(Qs, type = 'geometric')
+rot.dist(median(Qs))
+rot.dist(median(Qs, type = 'geometric'))
+}
 \references{
   Hartley R, Aftab K and Trumpf J (2011). "L1 rotation
   averaging using the Weiszfeld algorithm." In _2011 IEEE

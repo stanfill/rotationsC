@@ -21,10 +21,17 @@
 #' @S3method mean SO3
 #' @method mean SO3
 #' @examples
-#' Rs<-ruars(20,rvmises,kappa=0.01)
+#' Rs <- ruars(20, rvmises, kappa = 0.01)
 #' mean(Rs)
-#' Qs<-as.Q4(Rs)
+#' mean(Rs, type = 'geometric')
+#' rot.dist(mean(Rs))
+#' rot.dist(mean(Rs, type = 'geometric'))
+#' 
+#' Qs <- as.Q4(Rs)
 #' mean(Qs)
+#' mean(Qs, type = 'geometric')
+#' rot.dist(mean(Qs))
+#' rot.dist(mean(Qs, type = 'geometric'))
 
 mean.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
 	
@@ -97,6 +104,18 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 #' @seealso \code{\link{mean.SO3}}, \code{\link{bayes.mean}}, \code{\link{weighted.mean.SO3}}
 #' @cite hartley11 stanfill2013
 #' @export
+#' @examples
+#' Rs <- ruars(20, rvmises, kappa = 0.01)
+#' median(Rs)
+#' median(Rs, type = 'geometric')
+#' rot.dist(median(Rs))
+#' rot.dist(median(Rs, type = 'geometric'))
+#' 
+#' Qs <- as.Q4(Rs)
+#' median(Qs)
+#' median(Qs, type = 'geometric')
+#' rot.dist(median(Qs))
+#' rot.dist(median(Qs, type = 'geometric'))
 
 median<-function(x,...){
   UseMethod("median")
@@ -176,10 +195,19 @@ median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...
 #' @method weighted.mean SO3
 #' @examples
 #' Rs <- ruars(20, rvmises, kappa = 0.01)
-#' wt <- abs(1/mis.angle(Rs))
-#' weighted.mean(Rs, wt)
+#' mean(Rs)                   #Find the equal-weight projected mean
+#' wt <- abs(1/mis.angle(Rs)) #Use the rotation misorientation angle as weight
+#' weighted.mean(Rs, wt)      #as weight
+#' rot.dist(mean(Rs))
+#' rot.dist(weighted.mean(Rs, wt)) #usually much smaller than unweighted mean
+#' 
+#' #Can do the same thing with quaternions
 #' Qs <- as.Q4(Rs)
-#' weighted.mean(Qs, wt)
+#' mean(Qs) 
+#' wt <- abs(1/mis.angle(Qs)) 
+#' weighted.mean(Qs, wt)      
+#' rot.dist(mean(Qs))
+#' rot.dist(weighted.mean(Qs, wt)) 
 
 weighted.mean.SO3 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
 	

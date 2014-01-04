@@ -61,7 +61,7 @@
 \examples{
 Rs<-ruars(20,rcayley,kappa=4)
 region(Rs,type='Cayley',method='Bayes',estimator='mean',
-S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01)
+S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01,m=500)
 }
 \references{
   Bingham MA, Vardeman SB and Nordman DJ (2009). "Bayes
