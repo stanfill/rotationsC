@@ -52,7 +52,7 @@
 }
 \examples{
 Rs <- ruars(20, rvmises, kappa = 0.01)
-mean(Rs) #Find the equal-weight projected mean
+mean(Rs)                   #Find the equal-weight projected mean
 wt <- abs(1/mis.angle(Rs)) #Use the rotation misorientation angle as weight
 weighted.mean(Rs, wt)      #as weight
 rot.dist(mean(Rs))
