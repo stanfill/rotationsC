@@ -46,6 +46,13 @@ arsample.unif <- function(f, M, ...) {
 #' @param ... additional arguments.
 #' @return The rotational distance between each rotation in x and R2 or Q2.
 #' @export
+#' @examples
+#' rs <- rcayley(20, kappa = 10)
+#' Rs <- genR(rs, S = id.SO3)
+#' dEs <- rot.dist(Rs,id.SO3)
+#' dRs <- rot.dist(Rs, id.SO3 , method = 'intrinsic')
+#' all.equal(dRs, abs(rs))              #TRUE
+#' all.equal(dEs, 2*sqrt(2)*sin(dRs/2)) #TRUE
 
 rot.dist<-function(x,...){
   UseMethod("rot.dist")
@@ -123,6 +130,17 @@ rot.dist.Q4 <- function(x, Q2=id.Q4 ,method='extrinsic', p=1,...) {
 #' @return Angle of rotation.
 #' @seealso \code{\link{mis.axis}}
 #' @export
+#' @examples
+#' rs <- rcayley(20, kappa = 20)
+#' Rs <- genR(rs, S=id.SO3)
+#' mis.angle(Rs)
+#' 
+#' #If the central orientation is id.SO3 then mis.angle(Rs) and abs(rs) are equal
+#' all.equal(mis.angle(Rs), abs(rs))  #TRUE
+#' 
+#' #If the central orientation is NOT id.SO3 then mis.angle(Rs) and abs(rs) are usual unequal
+#' Rs <- genR(rs, S=genR(pi/8))
+#' all.equal(mis.angle(Rs), abs(rs))  #Mean relative difference > 0
 
 mis.angle<-function(x){
   UseMethod("mis.angle")
@@ -168,6 +186,15 @@ mis.angle.Q4 <- function(x){
 #' @return Axis in form of three dimensional vector of length one.
 #' @seealso \code{\link{mis.angle}}
 #' @export
+#' @examples
+#' rs <- rcayley(20, kappa = 20)
+#' Rs <- genR(rs, S=id.SO3)
+#' mis.axis(Rs)
+#' all.equal(Rs, as.SO3(mis.axis(Rs), mis.angle(Rs)))
+#' 
+#' Qs <- genR(rs, S=id.Q4, space = "Q4")
+#' mis.axis(Qs)
+#' all.equal(Qs, as.Q4(mis.axis(Qs), mis.angle(Qs)))
 
 mis.axis<-function(x,...){
   UseMethod("mis.axis")
@@ -248,9 +275,9 @@ eskew <- function(U) {
 #' @return A \eqn{n\times p}{n-by-p}matrix where each row is a random rotation matrix (\eqn{p=9}) or quaternion (\eqn{p=4}).
 #' @export
 #' @examples
-#' r<-rvmises(20,0.01)
-#' Rs<-genR(r,space="SO3")
-#' Qs<-genR(r,space="Q4")
+#' r <- rvmises(20, kappa = 0.01)
+#' Rs <- genR(r, space = "SO3")
+#' Qs <- genR(r, space = "Q4")
 
 genR <- function(r, S = NULL, space='SO3') {
   
@@ -306,7 +333,9 @@ genR <- function(r, S = NULL, space='SO3') {
   	}else{
   	
   		S<-formatQ4(S)
+      S<-matrix(S,1,4)
   		S[2:4]<--S[2:4]
+      S<-as.Q4(S)
   		q<-center.Q4(q,S)
   	
   		class(q)<-"Q4"
@@ -447,8 +476,8 @@ rotdist.sum.Q4 <- function(x, S = id.Q4, method='extrinsic', p=1) {
 #' @return The centered sample.
 #' @export
 #' @examples
-#' Rs<-ruars(5,rcayley)
-#' cRs<-center(Rs,mean(Rs))
+#' Rs <- ruars(5,rcayley)
+#' cRs <- center(Rs, mean(Rs))
 #' mean(cRs) #Should be close to identity matrix
 
 center<-function(x,S){
@@ -481,6 +510,7 @@ center.Q4<-function(x,S){
 	#This takes a set of observations in Q4 and centers them around S
 	Qs<-formatQ4(x)
 	S<-formatQ4(S)
+  S<-matrix(S,1,4)
 	S[2:4]<--S[2:4]
 	
 	for(i in 1:nrow(Qs)){
