@@ -156,7 +156,7 @@ as.Q4.data.frame <- function(q,...) {
 }
 
 #' @rdname Q4
-#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4 as.Q4.data.frame
+#' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @export
 
 is.Q4 <- function(q) {
@@ -166,7 +166,7 @@ is.Q4 <- function(q) {
 }
 
 #' @rdname Q4
-#' @aliases Q4 as.Q4 is.Q4 id.Q4 Q4.default Q4.SO3 Q4.Q4 as.Q4.data.frame
+#' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @export
 
 id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))

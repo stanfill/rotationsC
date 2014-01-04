@@ -1,8 +1,8 @@
 \name{UARS}
+\alias{UARS}
 \alias{duars}
 \alias{puars}
 \alias{ruars}
-\alias{UARS}
 \title{Generic UARS Distribution}
 \usage{
   duars(R, dangle, S = id.SO3, kappa = 1, ...)

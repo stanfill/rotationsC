@@ -1,6 +1,6 @@
 \name{Haar}
-\alias{dhaar}
 \alias{Haar}
+\alias{dhaar}
 \alias{phaar}
 \alias{rhaar}
 \title{Uniform distribution on \eqn{SO(3)}}
