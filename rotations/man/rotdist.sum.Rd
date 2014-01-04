@@ -37,6 +37,7 @@
 \examples{
 Rs<-ruars(20, rvmises, kappa = 10)
 Sp<-mean(Rs)
+rot.dist(Rs, Sp, p = 2)
 rotdist.sum(Rs, S = Sp, p = 2)
 }
 \seealso{

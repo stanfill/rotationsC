@@ -30,6 +30,18 @@
   misorentation angle associated with a rotation assuming
   the reference coordinate system is the identity.
 }
+\examples{
+rs <- rcayley(20, kappa = 20)
+Rs <- genR(rs, S=id.SO3)
+mis.angle(Rs)
+
+#If the central orientation is id.SO3 then mis.angle(Rs) and abs(rs) are equal
+all.equal(mis.angle(Rs), abs(rs))  #TRUE
+
+#If the central orientation is NOT id.SO3 then mis.angle(Rs) and abs(rs) are usual unequal
+Rs <- genR(rs, S=genR(pi/8))
+all.equal(mis.angle(Rs), abs(rs))  #Mean relative difference > 0
+}
 \seealso{
   \code{\link{mis.axis}}
 }

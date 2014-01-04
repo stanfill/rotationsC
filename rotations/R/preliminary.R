@@ -333,9 +333,7 @@ genR <- function(r, S = NULL, space='SO3') {
   	}else{
   	
   		S<-formatQ4(S)
-      S<-matrix(S,1,4)
-  		S[2:4]<--S[2:4]
-      S<-as.Q4(S)
+      S<--S
   		q<-center.Q4(q,S)
   	
   		class(q)<-"Q4"
@@ -437,6 +435,7 @@ project.SO3 <- function(M) {
 #' @examples
 #' Rs<-ruars(20, rvmises, kappa = 10)
 #' Sp<-mean(Rs)
+#' rot.dist(Rs, Sp, p = 2)
 #' rotdist.sum(Rs, S = Sp, p = 2)
 
 rotdist.sum<-function(x, S = genR(0, space=class(x)), method='extrinsic', p=1){
@@ -479,6 +478,8 @@ rotdist.sum.Q4 <- function(x, S = id.Q4, method='extrinsic', p=1) {
 #' Rs <- ruars(5,rcayley)
 #' cRs <- center(Rs, mean(Rs))
 #' mean(cRs) #Should be close to identity matrix
+#' 
+#' all.equal(cRs, Rs - mean(Rs)) #TRUE, center and '-' have the same effect
 
 center<-function(x,S){
   
@@ -510,8 +511,7 @@ center.Q4<-function(x,S){
 	#This takes a set of observations in Q4 and centers them around S
 	Qs<-formatQ4(x)
 	S<-formatQ4(S)
-  S<-matrix(S,1,4)
-	S[2:4]<--S[2:4]
+  S<--S
 	
 	for(i in 1:nrow(Qs)){
 		Qs[i,]<-qMult(S,Qs[i,])

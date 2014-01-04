@@ -48,4 +48,12 @@
   logarithm, and it corresponds to the misorientation angle
   of \eqn{R_1^\top R_2}{R1'R2}.
 }
+\examples{
+rs <- rcayley(20, kappa = 10)
+Rs <- genR(rs, S = id.SO3)
+dEs <- rot.dist(Rs,id.SO3)
+dRs <- rot.dist(Rs, id.SO3 , method = 'intrinsic')
+all.equal(dRs, abs(rs))              #TRUE
+all.equal(dEs, 2*sqrt(2)*sin(dRs/2)) #TRUE
+}
 
