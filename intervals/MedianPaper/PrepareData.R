@@ -14,7 +14,8 @@ g_legend<-function(a.gplot){
   return(legend)
 }
 
-load("/Users/stanfill/Dropbox/Rotation matrices/Melissa data/datasetnickel.RData")
+#load("/Users/stanfill/Dropbox/Rotation matrices/Melissa data/datasetnickel.RData")
+load("C:/Users/Brittney Ritchey/Dropbox/Rotation matrices/Melissa data/datasetnickel.RData")
 
 dat.out <- adply(data, .margins= c(1,3), function(x) {
   as.vector(x)
@@ -57,8 +58,8 @@ loc.stats <- ldply(dat.ests, function(x) {
   location <- as.numeric(as.character(unique(x$location)))
   if (x$n > 0)
     data.frame(location=x$location, n=x$n, 
-               dE1=angle(x$SE1), dE2=angle(x$SE2),
-               dE=dist(x$SE1, x$SE2, method="intrinsic", p=1),dR1=angle(x$R1)
+               dE1=mis.angle(x$SE1), dE2=mis.angle(x$SE2),
+               dE=rot.dist(x$SE1, x$SE2, method="intrinsic", p=1),dR1=mis.angle(x$R1)
     )
 })
 loc.stats$xpos <- xpos[loc.stats$location]

@@ -27,6 +27,7 @@ exRots<-as.SO3(data.matrix(dat.out[dat.out$location==ex,3:11]))
 #exRots<-as.SO3(exRots[-4,]) #potentially remove the observation that isn't stricly a rotation
 
 #Use new plot function to show all columns at once
+plot(exRots,col=c(1,2,3),center=median(exRots),show_estimates=c('proj.mean','proj.median'))
 plot(exRots,col=c(1,2,3),center=median(exRots),show_estimates=c('proj.mean','proj.median'),median_regions='theory',mean_regions='moment theory',alp=.1)
 plot(exRots,col=c(1,2,3),center=median(exRots),show_estimates=c('proj.mean','proj.median'),median_regions='bootstrap',mean_regions='moment bootstrap',alp=.1,m=100)
 
@@ -44,7 +45,21 @@ grid.arrange(p1,p2,p3,p4,nrow=1,widths=c(2,2,2,2))
 grid.arrange(p1,p2,p3,p4,nrow=2,widths=c(2,2,2,1))
 #ggsave doesn't work, use "Export." I used "width=900" and "height=300"
 
+#Manually put the three axes on the same plot, no regions
+p1<-plot(exRots,col=2,center=median(exRots),show_estimates=c('proj.mean','proj.median'))+theme(legend.position='none')
+p2<-plot(exRots,col=2,center=median(exRots),show_estimates=c('proj.mean','proj.median'),to_range=T)+theme(legend.position='none')
+grid.arrange(p1,p2,nrow=1,widths=c(2,2))
+#ggsave doesn't work, use "Export." I used "width=600" and "height=300"
 
+#Just the data
+p1<-plot(exRots,col=2,center=median(exRots))+theme(legend.position='none')
+p2<-plot(exRots,col=2,center=median(exRots),to_range=T)+theme(legend.position='none')
+grid.arrange(p1,p2,nrow=1,widths=c(2,2))
+
+#With regions
+p1<-plot(exRots,col=2,center=median(exRots),show_estimates=c('proj.mean','proj.median'),median_regions='bootstrap',mean_regions='moment bootstrap',alp=.1,m=300)+theme(legend.position='none')
+p2<-plot(exRots,col=2,center=median(exRots),show_estimates=c('proj.mean','proj.median'),median_regions='bootstrap',mean_regions='moment bootstrap',alp=.1,m=300,to_range=T)+theme(legend.position='none')
+grid.arrange(p1,p2,nrow=1,widths=c(2,2))
 
 #####################
 #### Find all locations where mean/median differ substantially
