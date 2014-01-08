@@ -88,7 +88,7 @@ for(j in 1:dimS){
 }
 
 write.csv(CRcompare,"Results/MeanMedianContCompFisherPi_4.csv")
-#CRcompare<-read.csv("intervals/MedianPaper/Results/MeanMedianContCompCayleyPi_4.csv")[,-1]
+CRcompare<-read.csv("intervals/MedianPaper/Results/MeanMedianContCompCayleyPi_4.csv")[,-1]
 
 #CRFisher<-read.csv("intervals/MedianPaper/Results/MeanMedianContCompFisherPart1.csv")[,-1]
 #CRFisher2<-read.csv("intervals/MedianPaper/Results/MeanMedianContCompFisherPart2.csv")[,-1]
@@ -126,9 +126,9 @@ qplot(eps,value,data=VolumeDF,geom='line',size=I(1.25),colour=variable,group=var
 VolumeDFEdited<-VolumeDF[VolumeDF$value<pi,]
 qplot(eps,value,data=VolumeDFEdited,geom='line',size=I(1.25),colour=variable,group=variable,xlab=expression(epsilon),ylab="Region Size")+
   facet_grid(n~.,scales="free_y",labeller = label_parsed)+theme_bw()+theme(aspect.ratio=1/2)+
-  scale_x_continuous(breaks=c(0,.1,.2))#+theme(legend.position="none")
+  scale_x_continuous(breaks=c(0,.1,.2))+theme(legend.position="none")
 #ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/VolumeCompFisher.pdf",width=4,height=6,units="in")
-#ggsave("C:/Users/Brittney Ritchey/Dropbox/Thesis/Intervals - Median/Figures/VolumeComp.pdf",width=4,height=6,units="in")
+#ggsave("C:/Users/Brittney Ritchey/Dropbox/Thesis/Intervals - Median/Figures/VolumeCompFisherPi4.pdf",width=4,height=6,units="in")
 
 #Same thing, but BW
 qplot(eps,value,data=VolumeDFEdited,geom='line',size=I(1.25),linetype=variable,col=variable,group=variable,xlab=expression(epsilon),ylab="Region Size")+
@@ -156,7 +156,7 @@ qplot(eps,100*value,data=CRcoverM,geom='line',colour=variable,group=variable,siz
   facet_grid(n~.,labeller = label_parsed)+geom_hline(yintercept=90)+theme_bw()+coord_fixed(.2/200)+theme(legend.position='none')+
   scale_x_continuous(breaks=c(0,.1,.2))
 #ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/CoverageCompFisher.pdf",width=4,height=6,units="in")
-#ggsave("C:/Users/Brittney Ritchey/Dropbox/Thesis/Intervals - Median/Figures/CoverageCompFisher.pdf",width=4,height=6,units="in")
+#ggsave("C:/Users/Brittney Ritchey/Dropbox/Thesis/Intervals - Median/Figures/CoverageCompFisherPi4.pdf",width=4,height=6,units="in")
 
 p2<-qplot(eps,100*value,data=CRcoverM,geom='line',linetype=variable,colour=variable,group=variable,size=I(1.25),xlab=expression(epsilon),ylab="Coverage (%)")+
   facet_grid(n~.,labeller = label_parsed)+geom_hline(yintercept=90)+theme_bw()+coord_fixed(.2/200)+

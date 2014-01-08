@@ -241,3 +241,20 @@ qplot(kappa,ISGES,data=ISGESdfm[ISGESdfm$Estimator!='Ratio',],size=I(1.25),geom=
 
 qplot(kappa,ISGES,data=ISGESdfm[ISGESdfm$Estimator=='Ratio',],geom='line',facets=.~Dist)+theme_bw()
 
+#################
+#Unfair versus fair comparison
+
+### Same with Fisher
+kap<-c(20,5)
+IFDFFish<-data.frame(r=rep(rs,2),kappa=as.factor(rep(kap,each=100)),Mean=c(IFMean(rs,kap[1],F),IFMean(rs,kap[2],F)),
+                     Median=c(IFMedian(rs,kap[1],F),IFMedian(rs,kap[2],F)))
+
+IFDFFishm<-melt(IFDFFish,id=c("r","kappa"))
+colnames(IFDFFishm)[3:4]<-c("Estimator","IF")
+
+qplot(r,IF,data=IFDFFishm,geom='line',colour=Estimator,ylab='IF(r,Cayley)',size=I(1.25))+theme_bw()+geom_vline(xintercept=0,colour='gray50')+
+  geom_hline(yintercept=0,colour='gray50')+theme(aspect.ratio=1)+facet_grid(.~kappa, labeller = label_bquote(kappa==.(x)))+
+  scale_x_continuous(breaks=c(-pi,-pi/2,0,pi/2,pi),labels=c(expression(-pi,-frac(pi,2),0,frac(pi,2),pi)))
+#ggsave("C:/Users/Brittney Ritchey/Dropbox/Thesis/Defense/figure/CayleyIFComp.pdf",width=10,height=5,units="in")
+
+
