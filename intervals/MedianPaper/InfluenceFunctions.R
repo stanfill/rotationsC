@@ -137,8 +137,8 @@ qplot(r,IF,data=IFDFm,geom='line',colour=kappa,facets=.~Estimator)+theme_bw()+
 #Facet by concentration
 qplot(r,IF,data=IFDFm,geom='line',colour=Estimator,ylab='IF(r,Cayley)',size=I(1.25))+theme_bw()+geom_vline(xintercept=0,colour='gray50')+
   geom_hline(yintercept=0,colour='gray50')+theme(aspect.ratio=1)+facet_grid(.~kappa, labeller = label_bquote(kappa==.(x)))+
-  scale_x_continuous(breaks=c(-pi,-pi/2,0,pi/2,pi),labels=c(expression(-pi,-pi/2,0,pi/2,pi)))
-ggsave("C:/Users/Brittney Ritchey/Dropbox/Thesis/Intervals - Median/Figures/CayleyIF.pdf")
+  scale_x_continuous(breaks=c(-pi,-pi/2,0,pi/2,pi),labels=c(expression(-pi,-frac(pi,2),0,frac(pi,2),pi)))
+#ggsave("C:/Users/Brittney Ritchey/Dropbox/Thesis/Intervals - Median/Figures/CayleyIF.pdf")
 
 ### Same with Fisher
 kap<-c(1,2.5,5)

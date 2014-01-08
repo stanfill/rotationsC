@@ -113,7 +113,12 @@ colnames(resM)[4]<-'Method'
 levels(resM$Method)<-c("Directional(LSA)","Directional(Boot)","Direct(LSA)","Direct(Boot)")
 
 levels(resM$Dist)<-c("Cayley","matrix~~Fisher","circular-von~~Mises")
+#Order alphabetically
 resM$Dist<-factor(resM$Dist,levels=c("Cayley","circular-von~~Mises","matrix~~Fisher"))
+#Order by tail weight
+resM$Dist<-factor(resM$Dist,levels=c("Cayley","matrix~~Fisher","circular-von~~Mises"))
+
+
 resM2<-resM
 resM$nu<-factor(resM$nu,labels=c("nu == 0.25","nu == 0.50","nu == 0.75"))
 #resM$n<-as.factor(resM$n)
@@ -141,6 +146,15 @@ qplot(n,value,data=resM[resM$nu!="nu == 0.50",],col=Method,linetype=Method,ylab=
   scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+coord_fixed(2.5)+
   theme(legend.key.width=unit(1.5,"line"),legend.position='top',panel.margin = unit(.75, "lines"))
 #ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Mean/Figures/CoverRatesB10000No5.pdf",width=7,height=6)
+
+qplot(n,value,data=resM[resM$nu!="nu == 0.50",],col=Method,linetype=Method,ylab='Coverage Rate (%)',xlab='Sample Size',ylim=c(80,100),geom='blank')+
+  scale_linetype_manual(values = rep(c("dashed","solid"),2))+
+  scale_colour_manual(values = rep(c("red","black"),each=2))+
+  facet_grid(Dist~nu,labeller=label_parsed)+
+  geom_hline(yintercept=(alp+c(-.01,.01,0))*100,colour=c('gray75','gray75','gray50'))+geom_line(lwd=I(1),alpha=I(.8))+geom_point(size=I(1))+
+  scale_x_continuous(breaks=c(10,20,50,100))+theme_bw()+coord_fixed(2.5)+
+  theme(legend.key.width=unit(1.5,"line"),legend.position='top',panel.margin = unit(.75, "lines"))
+#ggsave("C:/Users/Brittney Ritchey/Dropbox/Thesis/Defense/figure/CoverRatesB10000No5Color.pdf",width=7,height=6)
 
 #############
 #Massage the plots to accentuate the differences as a function of n and nu
