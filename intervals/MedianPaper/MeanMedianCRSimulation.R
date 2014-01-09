@@ -152,11 +152,11 @@ CRcoverM$n<-factor(CRcoverM$n,levels=c("10","50","100"),labels=labsN)
 
 p1<-qplot(eps,100*value,data=CRcoverM,geom='line',colour=variable,group=variable,size=I(1.25),xlab=expression(epsilon),ylab="Coverage (%)")+
   facet_grid(n~.,scales='free_y',labeller = label_parsed)+geom_hline(yintercept=90)+theme_bw()+labs(colour="")+theme(legend.position='top')
-qplot(eps,100*value,data=CRcoverM,geom='line',colour=variable,group=variable,size=I(1.25),xlab=expression(epsilon),ylab="Coverage (%)")+
+qplot(eps,100*value,data=CRcoverM,geom='line',colour=variable,group=variable,size=I(1.25),xlab=expression(epsilon),ylab="Coverage (%)",ylim=c(0,100))+
   facet_grid(n~.,labeller = label_parsed)+geom_hline(yintercept=90)+theme_bw()+coord_fixed(.2/200)+theme(legend.position='none')+
   scale_x_continuous(breaks=c(0,.1,.2))
 #ggsave("/Users/stanfill/Dropbox/Thesis/Intervals - Median/Figures/CoverageCompFisher.pdf",width=4,height=6,units="in")
-#ggsave("C:/Users/Brittney Ritchey/Dropbox/Thesis/Intervals - Median/Figures/CoverageCompFisherPi4.pdf",width=4,height=6,units="in")
+3ggsave("C:/Users/Brittney Ritchey/Dropbox/Thesis/Intervals - Median/Figures/CoverageCompCayleyPi4.pdf",width=4,height=6,units="in")
 
 p2<-qplot(eps,100*value,data=CRcoverM,geom='line',linetype=variable,colour=variable,group=variable,size=I(1.25),xlab=expression(epsilon),ylab="Coverage (%)")+
   facet_grid(n~.,labeller = label_parsed)+geom_hline(yintercept=90)+theme_bw()+coord_fixed(.2/200)+
