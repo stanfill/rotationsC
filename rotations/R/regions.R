@@ -20,8 +20,8 @@
 #' region(Rs,method='eigen',type='bootstrap',estimator='mean',alp=0.1,symm=TRUE)
 #' region(Rs,method='moment',type='bootstrap',estimator='mean',alp=0.1,m=100)
 #' region(Rs,method='moment',type='theory',estimator='mean',alp=0.1)
-#' region(Rs,method='Bayes',type='Cayley',estimator='mean',
-#' S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01)
+#' #region(Rs,method='Bayes',type='Cayley',estimator='mean',
+#' #S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01)
 
 region<-function(x,method, type, estimator,alp,...){
 	UseMethod("region")

@@ -23,7 +23,7 @@
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=4)
-#' draws<-MCMCSO3(Rs,type='Cayley',S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,m=5000)
+#' #draws<-MCMCSO3(Rs,type='Cayley',S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,m=5000)
 
 MCMCSO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
   UseMethod("MCMCSO3")
@@ -98,8 +98,8 @@ MCMCSO3.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=4)
-#' region(Rs,type='Cayley',method='Bayes',estimator='mean',
-#' S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01,m=500)
+#' #region(Rs,type='Cayley',method='Bayes',estimator='mean',
+#' #S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01,m=500)
 
 bayesCR<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
   UseMethod("bayesCR")
@@ -174,7 +174,7 @@ bayesCR.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
 #' @export
 #' @examples
 #' Rs<-ruars(20,rcayley,kappa=4)
-#' ests<-bayes.mean(Rs,type='Cayley',S0=mean(Rs),kappa0=4,tuneS=39,tuneK=.8,burn_in=100,m=5000)
+#' #ests<-bayes.mean(Rs,type='Cayley',S0=mean(Rs),kappa0=4,tuneS=39,tuneK=.8,burn_in=100,m=5000)
 
 bayes.mean<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
   UseMethod("bayes.mean")
