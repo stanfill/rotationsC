@@ -55,19 +55,22 @@
   return the quaternion equivalent.
 }
 \examples{
-data(drill) #load the included drill data set
-Qs <- subset(drill, Subject == '1' & Joint == 'Wrist') #Pull off subject 1's wrist measurements
+data(drill)            #Pull off subject 1's wrist measurements
+Qs <- subset(drill, Subject == '1' & Joint == 'Wrist')
 
-## The measurements are in columns 5:8
-is.Q4(Qs[,5:8]) #TRUE, eventhough Qs is a data.frame, the rows satisfy the
-                #conditions necessary to be quaternions BUT, S3 methods (e.g. 'mean' or
-                #'plot') for objects of class 'Q4' will not work until 'as.Q4' is used
+                       ## The measurements are in columns 5:8
+is.Q4(Qs[,5:8])        #TRUE, even though Qs is a data.frame, the rows satisfy the
+                       #conditions necessary to be quaternions BUT, S3 methods (e.g. 'mean' or
+                       #'plot') for objects of class 'Q4' will not work until 'as.Q4' is used
 
-Qs <- as.Q4(Qs[,5:8]) #Coerce measurements into 'Q4' type using as.Q4.data.frame
-all(is.Q4(Qs)) #TRUE
-mean(Qs) #Estimate central orientation for subject 1's wrist, see ?mean.Q4
-#plot(Qs, col = c(1, 2, 3)) #Visualize the measuremenets, see ?plot.Q4 for more
-Rs <- as.SO3(Qs) #Coerse a 'Q4' object into rotation matrix format, see ?as.SO3
+Qs <- as.Q4(Qs[,5:8])  #Coerce measurements into 'Q4' type using as.Q4.data.frame
+all(is.Q4(Qs))         #TRUE
+mean(Qs)               #Estimate central orientation for subject 1's wrist, see ?mean.Q4
+Rs <- as.SO3(Qs)       #Coerse a 'Q4' object into rotation matrix format, see ?as.SO3
+
+#Visualize the measuremenets, see ?plot.Q4 for more
+\dontrun{
+plot(Qs, col = c(1, 2, 3))}
 }
 \keyword{datasets}
 

@@ -55,14 +55,17 @@
   return the rotation matrix equivalent.
 }
 \examples{
-data(nickel) #load included nickel dataset
-Rs <- subset(nickel, location == 698)  #Select one location to focus on
+data(nickel)                   #Select one location to focus on
+Rs <- subset(nickel, location == 698)
 
-Rs <- as.SO3(Rs[,5:13]) #Translate the Rs data.frame into an object of class 'SO3'
-Rs <- Rs[is.SO3(Rs),] #Some observations are not rotations, remove them
-mean(Rs) #Estimate the central orientation with the average
-#plot(Rs, col = c(1, 2, 3)) #Visualize the location, there appears to be two groups
-median(Rs) #Resetimate central orientation robustly
+Rs <- as.SO3(Rs[,5:13])        #Translate the Rs data.frame into an object of class 'SO3'
+Rs <- Rs[is.SO3(Rs),]          #Some observations are not rotations, remove them
+mean(Rs)                       #Estimate the central orientation with the average
+median(Rs)                     #Re-estimate central orientation robustly
+
+#Visualize the location, there appears to be two groups
+\dontrun{
+plot(Rs, col = c(1, 2, 3))}
 }
 \keyword{datasets}
 

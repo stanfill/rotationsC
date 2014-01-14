@@ -70,8 +70,7 @@ plot(Rs,center=mean(Rs),show_estimates=NULL,shape=4)
 # Z is computed internally and contains information on depth
 plot(Rs,center=mean(Rs),show_estimates=c("proj.mean", "geom.mean"),
  label_points=sample(LETTERS, 200, replace=TRUE)) + aes(size=Z, alpha=Z) +
- scale_size(limits=c(-1,1), range=c(0.5,2.5))
- }
+ scale_size(limits=c(-1,1), range=c(0.5,2.5))}
 }
 \references{
   Wickham H (2009). _ggplot2: elegant graphics for data
