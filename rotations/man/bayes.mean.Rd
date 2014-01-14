@@ -59,7 +59,8 @@
 }
 \examples{
 Rs<-ruars(20,rcayley,kappa=4)
-#ests<-bayes.mean(Rs,type='Cayley',S0=mean(Rs),kappa0=4,tuneS=39,tuneK=.8,burn_in=100,m=5000)
+\dontrun{
+ests<-bayes.mean(Rs,type='Cayley',S0=mean(Rs),kappa0=4,tuneS=39,tuneK=.8,burn_in=100,m=5000)}
 }
 \references{
   Bingham MA, Vardeman SB and Nordman DJ (2009). "Bayes
