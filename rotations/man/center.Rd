@@ -28,10 +28,11 @@
   to the 3-by-3 identity matrix.
 }
 \examples{
-Rs <- ruars(5,rcayley)
+Rs <- ruars(5, rcayley)
 cRs <- center(Rs, mean(Rs))
-mean(cRs) #Should be close to identity matrix
+mean(cRs)                      #Close to identity matrix
 
-all.equal(cRs, Rs - mean(Rs)) #TRUE, center and '-' have the same effect
+all.equal(cRs, Rs - mean(Rs))  #TRUE, center and '-' have the same effect
+                               #See ?"-.SO3" for more details
 }
 

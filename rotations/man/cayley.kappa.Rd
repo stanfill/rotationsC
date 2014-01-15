@@ -28,9 +28,9 @@
 }
 \examples{
 #Find the concentration parameter for circular variances 0.25, 0.5, 0.75
- cayley.kappa(.25)
+ cayley.kappa(0.25)
  cayley.kappa(0.5)
- cayley.kappa(.75)
+ cayley.kappa(0.75)
 }
 \references{
   Mardia K and Jupp P (2000). _Directional statistics._.

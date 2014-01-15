@@ -28,9 +28,9 @@
 }
 \examples{
 #Find the concentration parameter for circular variances 0.25, 0.5, 0.75
- vmises.kappa(.25)
+ vmises.kappa(0.25)
  vmises.kappa(0.5)
- vmises.kappa(.75)
+ vmises.kappa(0.75)
 }
 \references{
   Mardia K and Jupp P (2000). _Directional statistics._.

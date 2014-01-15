@@ -28,9 +28,9 @@
 }
 \examples{
 #Find the concentration parameter for circular variances 0.25, 0.5, 0.75
- fisher.kappa(.25)
+ fisher.kappa(0.25)
  fisher.kappa(0.5)
- fisher.kappa(.75)
+ fisher.kappa(0.75)
 }
 \references{
   Mardia K and Jupp P (2000). _Directional statistics._.

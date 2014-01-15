@@ -16,9 +16,9 @@
 #'  @export
 #'  @examples
 #'  #Find the concentration parameter for circular variances 0.25, 0.5, 0.75
-#'  cayley.kappa(.25)
+#'  cayley.kappa(0.25)
 #'  cayley.kappa(0.5)
-#'  cayley.kappa(.75)
+#'  cayley.kappa(0.75)
 
 cayley.kappa<-function(nu){
   (3/nu)-2
@@ -46,9 +46,9 @@ fisher.nu.kappa<-function(kappa,nu){
 #'  @export
 #'  @examples
 #'  #Find the concentration parameter for circular variances 0.25, 0.5, 0.75
-#'  fisher.kappa(.25)
+#'  fisher.kappa(0.25)
 #'  fisher.kappa(0.5)
-#'  fisher.kappa(.75)
+#'  fisher.kappa(0.75)
 
 fisher.kappa<-function(nu){
   
@@ -83,9 +83,9 @@ mises.nu.kappa<-function(kappa,nu){
 #'  @export
 #'  @examples
 #'  #Find the concentration parameter for circular variances 0.25, 0.5, 0.75
-#'  vmises.kappa(.25)
+#'  vmises.kappa(0.25)
 #'  vmises.kappa(0.5)
-#'  vmises.kappa(.75)
+#'  vmises.kappa(0.75)
 
 vmises.kappa<-function(nu){
   
