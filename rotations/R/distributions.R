@@ -225,13 +225,21 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 #'          \item{rhaar}{generates random deviates}
 #' @seealso \link{Angular-distributions} for other distributions in the rotations package.
 #' @examples
-#' r<-seq(-pi, pi, length = 1000)
-#' #Visualize the matrix-Fisher density fucntion with respect to the Haar measure
+#' r <- seq(-pi, pi, length = 1000)
+#' 
+#' #Visualize the uniform distribution on the circle with respect to Lebesgue measure
 #' plot(r, dhaar(r), type = 'l', ylab = 'f(r)')
 #' 
 #' #Generate random observations from matrix-Fisher distribution
-#' rs<-rhaar(20)
+#' rs <- rhaar(50)
+#' 
+#' #Visualize on the real line
 #' hist(rs, breaks = 10)
+#' 
+#' #Convert into vectors in R2 that can plotted as points on the unit circle
+#' coords <- data.frame(x = cos(rs), y = sin(rs))
+#' plot(coords$x, coords$y, asp = 1, xlim = c(-1, 1), ylim = c(-1, 1))
+
 
 NULL
 
@@ -428,8 +436,8 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #' #rotated about the y-axis through pi/2 radians
 #' S <- as.SO3(c(0, 1, 0), pi/2)
 #' Rs <- ruars(20, rcayley, kappa = 10, S = S)
-#' rs <- mis.angle(Rs) #Find the misorientation angle associated with each rotation
-#' ds <- duars(Rs, dcayley, kappa = 10, S = S) #Compute UARS density evaluated at each rotations
+#' rs <- mis.angle(Rs)                          #Find the misorientation angle associated with each rotation
+#' ds <- duars(Rs, dcayley, kappa = 10, S = S)  #Compute UARS density evaluated at each rotations
 #' plot(rs, ds) 
 
 NULL

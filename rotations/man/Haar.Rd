@@ -36,13 +36,20 @@
   \deqn{C_U(r)=\frac{[1-cos(r)]}{2\pi}.}{C(r)=[1-cos(r)]/2\pi.}
 }
 \examples{
-r<-seq(-pi, pi, length = 1000)
-#Visualize the matrix-Fisher density fucntion with respect to the Haar measure
+r <- seq(-pi, pi, length = 1000)
+
+#Visualize the uniform distribution on the circle with respect to Lebesgue measure
 plot(r, dhaar(r), type = 'l', ylab = 'f(r)')
 
 #Generate random observations from matrix-Fisher distribution
-rs<-rhaar(20)
+rs <- rhaar(50)
+
+#Visualize on the real line
 hist(rs, breaks = 10)
+
+#Convert into vectors in R2 that can plotted as points on the unit circle
+coords <- data.frame(x = cos(rs), y = sin(rs))
+plot(coords$x, coords$y, asp = 1, xlim = c(-1, 1), ylim = c(-1, 1))
 }
 \seealso{
   \link{Angular-distributions} for other distributions in
