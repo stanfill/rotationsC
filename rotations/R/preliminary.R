@@ -355,6 +355,11 @@ genR <- function(r, S = NULL, space='SO3') {
 #' @return Matrix \eqn{e^{\bm H}}{e^H} in \eqn{SO(3)} .
 #' @cite moakher02
 #' @export
+#' @examples
+#' Rs <- ruars(20, rcayley)
+#' lRs <- log(Rs)           #Take the matrix logarithm for rotation matrices
+#' Rs2 <- skew.exp(lRs)     #Go back to rotation matrices
+#' all.equal(Rs, Rs2)
 
 skew.exp <- function(x) {
 
@@ -422,8 +427,15 @@ log.SO3 <- function(x,...) {
 #' @seealso \code{\link{mean.SO3}}, \code{\link{median.SO3}}
 #' @export
 #' @examples
-#' M<-matrix(rnorm(9),3,3)
+#' #Project an arbitrary 3x3 matrix into SO(3)
+#' M<-matrix(rnorm(9), 3, 3)
 #' project.SO3(M)
+#' 
+#' #Project a sample arithmetic mean into SO(3), same as 'mean'
+#' Rs <- ruars(20, rcayley)
+#' Rbar <- colSums(Rs)/nrow(Rs)
+#' project.SO3(Rbar)              #The following is equivalent
+#' mean(Rs)         
 
 project.SO3 <- function(M) {
   

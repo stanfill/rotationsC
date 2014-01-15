@@ -20,6 +20,12 @@
   belonging to the lie algebra \eqn{so(3)} into the lie
   group \eqn{SO(3)}.
 }
+\examples{
+Rs <- ruars(20, rcayley)
+lRs <- log(Rs)           #Take the matrix logarithm for rotation matrices
+Rs2 <- skew.exp(lRs)     #Go back to rotation matrices
+all.equal(Rs, Rs2)
+}
 \references{
   Moakher M (2002). "Means and averaging in the group of
   rotations." _SIAM Journal on Matrix Analysis and

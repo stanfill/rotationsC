@@ -23,8 +23,15 @@
   matrix with determinant one to the provided matrix.
 }
 \examples{
-M<-matrix(rnorm(9),3,3)
+#Project an arbitrary 3x3 matrix into SO(3)
+M<-matrix(rnorm(9), 3, 3)
 project.SO3(M)
+
+#Project a sample arithmetic mean into SO(3), same as 'mean'
+Rs <- ruars(20, rcayley)
+Rbar <- colSums(Rs)/nrow(Rs)
+project.SO3(Rbar)              #The following is equivalent
+mean(Rs)
 }
 \references{
   Moakher M (2002). "Means and averaging in the group of
