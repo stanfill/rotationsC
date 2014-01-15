@@ -22,9 +22,10 @@
 #' @cite bingham2009b bingham2010
 #' @export
 #' @examples
-#' Rs<-ruars(20,rcayley,kappa=4)
+#' Rs <- ruars(20, rcayley, kappa = 4)
 #' \dontrun{
-#' draws<-MCMCSO3(Rs,type='Cayley',S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,m=5000)}
+#' draws <- MCMCSO3(Rs, type = 'Cayley', S0 = mean(Rs), kappa0 = 2, tuneS = 39, tuneK = .8,
+#' burn_in = 100, m = 5000)}
 
 MCMCSO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
   UseMethod("MCMCSO3")

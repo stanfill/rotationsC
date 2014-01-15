@@ -23,7 +23,9 @@
   center.
 }
 \examples{
-Rs<-ruars(20,rcayley)
-pointsXYZ(Rs, center=id.SO3, col=1)
+Rs<-ruars(20, rcayley)
+
+#Project the sample's x-axis onto the 3-shere centered at the identity rotation
+pointsXYZ(Rs, center = id.SO3, col = 1)
 }
 

@@ -34,11 +34,11 @@
 }
 \examples{
 rs <- rcayley(20, kappa = 20)
-Rs <- genR(rs, S=id.SO3)
+Rs <- genR(rs, S = id.SO3)
 mis.axis(Rs)
 all.equal(Rs, as.SO3(mis.axis(Rs), mis.angle(Rs)))
 
-Qs <- genR(rs, S=id.Q4, space = "Q4")
+Qs <- genR(rs, S = id.Q4, space = "Q4")
 mis.axis(Qs)
 all.equal(Qs, as.Q4(mis.axis(Qs), mis.angle(Qs)))
 }

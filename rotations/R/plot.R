@@ -68,8 +68,10 @@ roteye <- function(origin, center, column=1) {
 #' @return  Data frame with columns X, Y, Z standing for the respective coordinates in 3D space.
 #' @export
 #' @examples
-#' Rs<-ruars(20,rcayley)
-#' pointsXYZ(Rs, center=id.SO3, col=1)
+#' Rs<-ruars(20, rcayley)
+#' 
+#' #Project the sample's x-axis onto the 3-shere centered at the identity rotation
+#' pointsXYZ(Rs, center = id.SO3, col = 1)
 
 pointsXYZ <- function(data, center=id.SO3, column=1) {
   
@@ -112,14 +114,15 @@ pointsXYZ <- function(data, center=id.SO3, column=1) {
 #' @cite wickham09
 #' @export
 #' @examples
-#' r<-rvmises(200,1.0)
-#' Rs<-genR(r)
+#' r <- rvmises(200, kappa = 1.0)
+#' Rs <- genR(r)
 #' \dontrun{
-#' plot(Rs,center=mean(Rs),show_estimates=NULL,shape=4)
+#' plot(Rs, center = mean(Rs), show_estimates = NULL, shape = 4)
+#' 
 #' # Z is computed internally and contains information on depth
-#' plot(Rs,center=mean(Rs),show_estimates=c("proj.mean", "geom.mean"), 
-#'  label_points=sample(LETTERS, 200, replace=TRUE)) + aes(size=Z, alpha=Z) + 
-#'  scale_size(limits=c(-1,1), range=c(0.5,2.5))}
+#' plot(Rs, center = mean(Rs), show_estimates = c("proj.mean", "geom.mean"), 
+#'  label_points = sample(LETTERS, 200, replace = TRUE)) + aes(size = Z, alpha = Z) + 
+#'  scale_size(limits = c(-1, 1), range = c(0.5, 2.5))}
 
 plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300,  ...) {
 

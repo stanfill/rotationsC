@@ -132,14 +132,14 @@ rot.dist.Q4 <- function(x, Q2=id.Q4 ,method='extrinsic', p=1,...) {
 #' @export
 #' @examples
 #' rs <- rcayley(20, kappa = 20)
-#' Rs <- genR(rs, S=id.SO3)
+#' Rs <- genR(rs, S = id.SO3)
 #' mis.angle(Rs)
 #' 
 #' #If the central orientation is id.SO3 then mis.angle(Rs) and abs(rs) are equal
 #' all.equal(mis.angle(Rs), abs(rs))  #TRUE
 #' 
 #' #If the central orientation is NOT id.SO3 then mis.angle(Rs) and abs(rs) are usual unequal
-#' Rs <- genR(rs, S=genR(pi/8))
+#' Rs <- genR(rs, S = genR(pi/8))
 #' all.equal(mis.angle(Rs), abs(rs))  #Mean relative difference > 0
 
 mis.angle<-function(x){
@@ -188,11 +188,11 @@ mis.angle.Q4 <- function(x){
 #' @export
 #' @examples
 #' rs <- rcayley(20, kappa = 20)
-#' Rs <- genR(rs, S=id.SO3)
+#' Rs <- genR(rs, S = id.SO3)
 #' mis.axis(Rs)
 #' all.equal(Rs, as.SO3(mis.axis(Rs), mis.angle(Rs)))
 #' 
-#' Qs <- genR(rs, S=id.Q4, space = "Q4")
+#' Qs <- genR(rs, S = id.Q4, space = "Q4")
 #' mis.axis(Qs)
 #' all.equal(Qs, as.Q4(mis.axis(Qs), mis.angle(Qs)))
 
