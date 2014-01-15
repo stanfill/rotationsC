@@ -62,6 +62,7 @@ Rs <- as.SO3(Rs[,5:13])        #Translate the Rs data.frame into an object of cl
 Rs <- Rs[is.SO3(Rs),]          #Some observations are not rotations, remove them
 mean(Rs)                       #Estimate the central orientation with the average
 median(Rs)                     #Re-estimate central orientation robustly
+Qs <- as.Q4(Rs)                #Coerse into "SO3" format, see ?as.SO3 for more
 
 #Visualize the location, there appears to be two groups
 \dontrun{

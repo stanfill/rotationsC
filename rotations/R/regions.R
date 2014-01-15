@@ -15,14 +15,18 @@
 #' @seealso \code{\link{bayesCR}}, \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @export
 #' @examples
-#' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Rs,method='eigen',type='theory',estimator='mean',alp=0.1)
-#' region(Rs,method='eigen',type='bootstrap',estimator='mean',alp=0.1,symm=TRUE)
-#' region(Rs,method='moment',type='bootstrap',estimator='mean',alp=0.1,m=100)
-#' region(Rs,method='moment',type='theory',estimator='mean',alp=0.1)
+#' Rs <- ruars(20, rcayley, kappa = 100)
+#' 
+#' #Compare the region sizes that are currently available
+#' 
+#' region(Rs, method = 'eigen', type = 'theory', estimator = 'mean', alp = 0.1)
+#' region(Rs, method = 'eigen', type = 'bootstrap', estimator = 'mean', alp = 0.1, symm = TRUE)
+#' region(Rs, method = 'moment', type = 'bootstrap', estimator = 'mean', alp = 0.1, m = 100)
+#' region(Rs, method = 'moment', type = 'theory', estimator = 'mean', alp = 0.1)
+#' 
 #' \dontrun{
-#' region(Rs,method='Bayes',type='Cayley',estimator='mean',
-#' S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01)}
+#' region(Rs, method = 'Bayes', type = 'Cayley', estimator = 'mean',
+#'        S0 = mean(Rs), kappa0 = 2, tuneS = 39, tuneK = .8, burn_in = 100, alp = .01)}
 
 region<-function(x,method, type, estimator,alp,...){
 	UseMethod("region")
@@ -173,8 +177,11 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 #' @cite prentice1986, rancourt2000
 #' @export
 #' @examples
-#' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-#' region(Qs,method='eigen',type='theory',alp=0.1,estimator='mean')
+#' Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
+#' 
+#' #The prentice method can be accesed from the "region" function or the "prentice" function
+#' region(Qs, method = 'eigen', type = 'theory', alp = 0.1, estimator='mean')
+#' prentice(Qs, alp = 0.1)
 
 prentice<-function(x,alp){
 	UseMethod("prentice")
@@ -244,8 +251,12 @@ prentice.SO3<-function(x,alp=NULL){
 #' @seealso \code{\link{bayesCR}}, \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}}
 #' @export
 #' @examples
-#' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Rs,method='moment',type='bootstrap',alp=0.1,estimator='mean')
+#' Rs <- ruars(20, rcayley, kappa = 100)
+#' 
+#' #The zhang method can be accesed from the "region" function or the "zhang" function
+#' #They will be different because it is a bootstrap.
+#' region(Rs, method = 'moment', type = 'bootstrap', alp = 0.1, estimator = 'mean')
+#' zhang(Rs, estimator = 'mean', alp = 0.1)
 
 zhang<-function(x,estimator,alp,m){
 	UseMethod("zhang")
@@ -359,8 +370,11 @@ cdfuns<-function(Qs,estimator){
 #' @seealso \code{\link{bayesCR}}, \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{zhang}}
 #' @export
 #' @examples
-#' Rs<-ruars(20,rcayley,kappa=100)
-#' region(Rs,method='moment',type='theory',alp=0.1,estimator='mean')
+#' Rs <- ruars(20, rcayley, kappa = 100)
+#' 
+#' #The chang method can be accesed from the "region" function or the "chang" function
+#' region(Rs, method = 'moment', type = 'theory', alp = 0.1, estimator = 'mean')
+#' chang(Rs, estimator = 'mean', alp = 0.1)
 
 chang<-function(x,estimator,alp){
 	UseMethod("chang")
@@ -424,8 +438,11 @@ chang.Q4<-function(x,estimator,alp=NULL){
 #' @cite fisher1996
 #' @export
 #' @examples
-#' Qs<-ruars(20,rcayley,kappa=100,space='Q4')
-#' region(Qs,method='eigen',type='bootstrap',alp=0.1,symm=TRUE,estimator='mean')
+#' Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
+#' 
+#' #The Fisher et al. method can be accesed from the "region" function or the "fisheretal" function
+#' region(Qs, method = 'eigen', type = 'bootstrap', alp = 0.1, symm = TRUE, estimator = 'mean')
+#' fisheretal(Qs, alp = 0.1, boot=TRUE, symm = TRUE)
 
 fisheretal<-function(x,alp,boot,m,symm){
 	UseMethod("fisheretal")

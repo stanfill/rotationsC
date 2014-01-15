@@ -49,14 +49,18 @@
   \code{\link{zhang}} and \code{\link{bayesCR}}.
 }
 \examples{
-Rs<-ruars(20,rcayley,kappa=100)
-region(Rs,method='eigen',type='theory',estimator='mean',alp=0.1)
-region(Rs,method='eigen',type='bootstrap',estimator='mean',alp=0.1,symm=TRUE)
-region(Rs,method='moment',type='bootstrap',estimator='mean',alp=0.1,m=100)
-region(Rs,method='moment',type='theory',estimator='mean',alp=0.1)
+Rs <- ruars(20, rcayley, kappa = 100)
+
+#Compare the region sizes that are currently available
+
+region(Rs, method = 'eigen', type = 'theory', estimator = 'mean', alp = 0.1)
+region(Rs, method = 'eigen', type = 'bootstrap', estimator = 'mean', alp = 0.1, symm = TRUE)
+region(Rs, method = 'moment', type = 'bootstrap', estimator = 'mean', alp = 0.1, m = 100)
+region(Rs, method = 'moment', type = 'theory', estimator = 'mean', alp = 0.1)
+
 \dontrun{
-region(Rs,method='Bayes',type='Cayley',estimator='mean',
-S0=mean(Rs),kappa0=2,tuneS=39,tuneK=.8,burn_in=100,alp=.01)}
+region(Rs, method = 'Bayes', type = 'Cayley', estimator = 'mean',
+       S0 = mean(Rs), kappa0 = 2, tuneS = 39, tuneK = .8, burn_in = 100, alp = .01)}
 }
 \seealso{
   \code{\link{bayesCR}}, \code{\link{prentice}},

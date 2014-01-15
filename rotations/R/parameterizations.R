@@ -204,6 +204,7 @@ id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
 #' Rs <- Rs[is.SO3(Rs),]          #Some observations are not rotations, remove them
 #' mean(Rs)                       #Estimate the central orientation with the average
 #' median(Rs)                     #Re-estimate central orientation robustly
+#' Qs <- as.Q4(Rs)                #Coerse into "SO3" format, see ?as.SO3 for more
 #' 
 #' #Visualize the location, there appears to be two groups
 #' \dontrun{

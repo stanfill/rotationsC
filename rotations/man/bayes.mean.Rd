@@ -58,9 +58,20 @@
   used for the concentration parameter.
 }
 \examples{
-Rs<-ruars(20,rcayley,kappa=4)
+Rs <- ruars(20, rcayley, kappa = 4)
+
+Shat <- mean(Rs)               #Estimate the central orientation using the projected mean
+rotdist.sum(Rs, Shat, p = 2)   #The projected mean minimizes the sum of squared Euclidean
+rot.dist(Shat)                 #distances, compute the minimized sum and estimator bias
+
+#Estimate the central orientation using the posterior mode (it isn't run because it takes some time)
+#Compare it to the projected mean in terms of the squared Euclidean distance and bias
 \dontrun{
-ests<-bayes.mean(Rs,type='Cayley',S0=mean(Rs),kappa0=4,tuneS=39,tuneK=.8,burn_in=100,m=5000)}
+ests <- bayes.mean(Rs, type = 'Cayley', S0 = mean(Rs), kappa0 = 4, tuneS = 39,
+                   tuneK = .8, burn_in = 100, m = 5000)
+Shat2 <- ests$Shat             #The posterior mode is the 'Shat' object
+rotdist.sum(Rs, Shat2, p = 2)  #Compute sum of squared Euclidean distances
+rot.dist(Shat2)                #Estimator bias}
 }
 \references{
   Bingham MA, Vardeman SB and Nordman DJ (2009). "Bayes
