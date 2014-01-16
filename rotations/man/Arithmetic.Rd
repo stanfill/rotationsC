@@ -66,5 +66,15 @@ M3 <- M1 + M2
 M1 \%*\% M1                #Equivalent to R2
 t(M1) \%*\% M1             #Equivalent to R3
 t(M1)                    #Equivalent to R4 and R5
+
+#The same can be done with quaternions: the identity rotation is (1, 0, 0, 0)
+#and the inverse rotation of Q=(a, b, c, d) is -Q=(a, -b, -c, -d)
+
+Q1 <- as.Q4(R1)
+Q2 <- Q1 + Q1
+mis.axis(Q2)
+mis.angle(Q2)
+
+Q1 - Q1                  #id.Q4 = (1, 0, 0, 0)
 }
 

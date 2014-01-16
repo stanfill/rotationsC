@@ -38,7 +38,7 @@ arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2){
     arma::rowvec theta(1);
     tri = trace(Rs);
     
-    if(abs(tri-3)<10e-5){
+    if((3-tri)<10e-5){
       theta(0) = 0;
     }else{
       theta(0) = acos(0.5*tri-0.5);
@@ -62,7 +62,7 @@ arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2){
     
     tri = trace(Rsi);
     
-    if(abs(tri-3)<10e-5){
+    if((3-tri)<10e-5){
       theta(i) = 0;
     }else{
       theta(i) = acos(0.5*tri-0.5);
