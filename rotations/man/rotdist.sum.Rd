@@ -54,8 +54,10 @@ rotdist.sum(Rs, S = SE1, p = 1) < rotdist.sum(Rs, S = SE2, p = 1)
 rotdist.sum(Rs, S = SE1, p = 1) < rotdist.sum(Rs, S = SR2, p = 1)
 
 #The geometric mean minimizes the sum of squared Riemannian distances
-rotdist.sum(Rs, S = SR2, p = 2, method = 'intrinsic') < rotdist.sum(Rs, S = SE1, p = 2, method = 'intrinsic')
-rotdist.sum(Rs, S = SR2, p = 2, method = 'intrinsic') < rotdist.sum(Rs, S = SE2, p = 2, method = 'intrinsic')
+rotdist.sum(Rs, S = SR2, p = 2, method = 'intrinsic') <
+                 rotdist.sum(Rs, S = SE1, p = 2, method = 'intrinsic')
+rotdist.sum(Rs, S = SR2, p = 2, method = 'intrinsic') <
+                 rotdist.sum(Rs, S = SE2, p = 2, method = 'intrinsic')
 }
 \seealso{
   \code{\link{rot.dist}}

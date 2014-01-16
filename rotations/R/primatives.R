@@ -272,10 +272,11 @@ NULL
   
     class(xt)<-"SO3"
     return(xt)  
+  }else{
+  
+    return(center.SO3(x,y))
+  
   }
-  
-  
-  return(center.SO3(x,y))
 }
 
 #' @rdname Arithmetic
