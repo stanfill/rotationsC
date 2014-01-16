@@ -15,7 +15,9 @@
   corresponds to a random rotation in matrix (\eqn{p=9}) or
   quaternion (\eqn{p=4}) form.}
 
-  \item{S}{the rotation about which to center x.}
+  \item{S}{the rotation or a matrix of \eqn{n\times
+  p}{n-by-p} rotations about which to center each row of
+  x.}
 }
 \value{
   The centered sample.
@@ -34,5 +36,9 @@ mean(cRs)                      #Close to identity matrix
 
 all.equal(cRs, Rs - mean(Rs))  #TRUE, center and '-' have the same effect
                                #See ?"-.SO3" for more details
+
+center(Rs,Rs)                  #n-Identity matrices: If the second argument is of the same dimension
+                               #as Rs then each row is centered around the corresponding
+                               #row in the first arguement
 }
 

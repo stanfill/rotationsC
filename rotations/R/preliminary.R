@@ -515,7 +515,7 @@ rotdist.sum.Q4 <- function(x, S = id.Q4, method='extrinsic', p=1) {
 #' If S is the true center then the projected mean should be close to the 3-by-3 identity matrix. 
 #' 
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
-#' @param S the rotation about which to center x.
+#' @param S the rotation or a matrix of \eqn{n\times p}{n-by-p} rotations about which to center each row of x.
 #' @return The centered sample.
 #' @export
 #' @examples
@@ -525,6 +525,10 @@ rotdist.sum.Q4 <- function(x, S = id.Q4, method='extrinsic', p=1) {
 #' 
 #' all.equal(cRs, Rs - mean(Rs))  #TRUE, center and '-' have the same effect
 #'                                #See ?"-.SO3" for more details
+#'                                
+#' center(Rs,Rs)                  #n-Identity matrices: If the second argument is of the same dimension
+#'                                #as Rs then each row is centered around the corresponding
+#'                                #row in the first arguement
 
 center<-function(x,S){
   
@@ -540,9 +544,22 @@ center.SO3<-function(x,S){
 	#This takes a set of observations in SO3 and centers them around S
 	
 	Rs<-formatSO3(x)
-	S<-matrix(formatSO3(S),3,3)
-	
-  Rs<-centerCpp(Rs,S)
+  
+  if(length(S)==9){
+    
+	  S<-matrix(formatSO3(S),3,3)
+    Rs<-centerCpp(Rs,S)
+    
+  }else if(nrow(x)==nrow(S)){
+    
+    for(i in 1:nrow(x)){
+      Rs[i,]<-centerCpp(matrix(Rs[i,],1,9),matrix(S[i,],3,3))
+    }
+    
+  }else{
+    stop("S must either be a single rotation or have as many rows as x.")
+  }
+  
   class(Rs)<-"SO3"
 	return(Rs)
 }
@@ -556,11 +573,24 @@ center.Q4<-function(x,S){
 	#This takes a set of observations in Q4 and centers them around S
 	Qs<-formatQ4(x)
 	S<-formatQ4(S)
-  S<--S
+  
+  if(length(S)==4){
+    S<--S
 	
-	for(i in 1:nrow(Qs)){
-		Qs[i,]<-qMult(S,Qs[i,])
-	}
+	  for(i in 1:nrow(Qs)){
+	  	Qs[i,]<-qMult(S,Qs[i,])
+	  }
+    
+  }else if(nrow(x)==nrow(S)){
+    
+    for(i in 1:nrow(Qs)){
+      Si <- -S[i,]
+      Qs[i,]<-qMult(Si,Qs[i,])
+    }
+    
+  }else{
+    stop("S must either be a single rotation or have as many rows as x.")
+  }
   class(Qs)<-"Q4"
 	return(Qs)
 }

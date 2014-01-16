@@ -38,7 +38,6 @@ head.SO3<-function(x,n=6L,...){
 #' @S3method str SO3
 #' @method str SO3
 str.SO3<-function(object,...){
-  
   object<-matrix(object,length(object)/9,9)
   str(object)
 }
@@ -145,7 +144,7 @@ head.Q4<-function(x,n=6L,...){
 #' @method str Q4
 str.Q4<-function(object,...){
   
-  object<-matrix(object,dim(object))
+  object<-matrix(object,length(object)/4,4)
   str(object)
 }
 
@@ -161,7 +160,7 @@ str.Q4<-function(object,...){
 #' @S3method [ Q4
 #' @method [ Q4
 '[.Q4'<-function(x,i,...){
-  x<-matrix(x,dim(x))
+  x<-matrix(x,length(x)/4,4)
   x<-x[i,...]
   class(x)<-"Q4"
   return(x)
@@ -275,9 +274,11 @@ NULL
 #' @method - Q4
 
 '-.Q4'<-function(x,y=NULL){
-    
+  
+  x<-matrix(x,length(x)/4,4)
   if(is.null(y)){ 
-    x[2:4]<- -1*x[2:4]
+    x[,2:4]<- -1*x[,2:4]
+    class(x)<-'Q4'
     return(x)
   }
 
