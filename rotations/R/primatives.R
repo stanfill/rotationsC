@@ -234,9 +234,19 @@ NULL
 #' @method + SO3
 
 '+.SO3'<-function(x,y){
-
-  y<-t(matrix(y,3,3))
-  return(center(x,y))
+  
+  if(length(y)==9){
+    
+    y<-t(matrix(y,3,3))
+    return(center(x,y))
+    
+  }else if(all(dim(x)==dim(y))){
+    y<--y
+    return(center(x,y))
+    
+  }else{
+    stop("y can be a sinlge rotation or x and y must be of the same dimension")
+  }
 
 }
 
