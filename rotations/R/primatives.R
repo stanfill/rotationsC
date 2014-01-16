@@ -39,7 +39,7 @@ head.SO3<-function(x,n=6L,...){
 #' @method str SO3
 str.SO3<-function(object,...){
   
-  object<-matrix(object,dim(object))
+  object<-matrix(object,length(object)/9,9)
   str(object)
 }
 
@@ -238,9 +238,23 @@ NULL
 
 '-.SO3'<-function(x,y=NULL){
   
-  xt<-t(matrix(x,3,3))
-  class(xt)<-"SO3"
-  if(is.null(y)) return(xt)
+  #If y is left null, return the transpose of
+  #each rotation in x
+  if(is.null(y)){
+    
+      n<-length(x)/9
+      
+      if(n%%1!=0){
+        stop("x must be of dimension n-by-9")
+      }
+      
+      xt<-matrix(x,n,9)
+      xt<-xt[,c(1,4,7,2,5,8,3,6,9)]
+  
+    class(xt)<-"SO3"
+    return(xt)  
+  }
+  
   
   return(center.SO3(x,y))
 }
