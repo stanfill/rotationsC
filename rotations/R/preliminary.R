@@ -214,7 +214,12 @@ mis.axis.SO3<-function(x,...){
 		Ri<-matrix(R[i,],3,3)
   	X <- Ri - t(Ri)
   	u[i,] <- rev(X[upper.tri(X)])*c(-1,1,-1)
-		u[i,]<-u[i,]/sqrt(sum(u[i,]^2))
+    norm<-sqrt(sum(u[i,]^2))
+    
+    if(norm!=0){
+      u[i,]<-u[i,]/norm
+    }
+
 	}
 
   return(u) # will be trouble, if R is symmetric, i.e. id,  .... 
