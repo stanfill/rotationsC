@@ -1,4 +1,4 @@
-// [[Rcpp::depends(RcppArmadillo)]]
+
 #include <RcppArmadillo.h>  
 #include "../inst/include/rotations.h"
 

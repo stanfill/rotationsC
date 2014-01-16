@@ -3,7 +3,7 @@
 #include "../inst/include/rotations.h"
 using namespace Rcpp;
 
-// [[Rcpp::depends(RcppArmadillo)]] 
+
 // [[Rcpp::interfaces(r, cpp)]]
 
 
