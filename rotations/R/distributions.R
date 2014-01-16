@@ -436,7 +436,7 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #' #rotated about the y-axis through pi/2 radians
 #' S <- as.SO3(c(0, 1, 0), pi/2)
 #' Rs <- ruars(20, rcayley, kappa = 10, S = S)
-#' rs <- mis.angle(Rs)                          #Find the misorientation angle associated with each rotation
+#' rs <- mis.angle(Rs)                          #Find the associated misorientation angles
 #' ds <- duars(Rs, dcayley, kappa = 10, S = S)  #Compute UARS density evaluated at each rotations
 #' plot(rs, ds) 
 

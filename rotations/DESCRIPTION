@@ -15,8 +15,7 @@ License: MIT + file LICENSE
 Depends:
     R (>= 3.0),
     ggplot2,
-    Rcpp,
-    RcppArmadillo
+    Rcpp
 Imports:
     grid,
     stats,

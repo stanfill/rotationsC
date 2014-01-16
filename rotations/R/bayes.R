@@ -106,8 +106,9 @@ MCMCSO3.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 #' 
 #' region(Rs, method = 'moment', type = 'theory', estimator = 'mean', alp=0.1, m = 100)
 #' \dontrun{
-#' bayesCR <- region(Rs, type = 'Cayley', method = 'Bayes', estimator = 'mean', S0 = mean(Rs), kappa0 = 2, 
-#'                   tuneS = 39, tuneK = .8, burn_in = 100, alp = .01, m = 500)
+#' bayesCR <- region(Rs, type = 'Cayley', method = 'Bayes', estimator = 'mean', S0 = mean(Rs),
+#'                    kappa0 = 2, tuneS = 39, tuneK = .8, burn_in = 100, alp = .01, m = 500)
+#'                    
 #' bayesCR$Radius       #Region size is give by "Radius"
 #' bayesCR$Shat         #The Bayes region is centered around the posterior mode: "Shat"}
 
