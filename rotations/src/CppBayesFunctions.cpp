@@ -131,6 +131,11 @@ double lpcayley(arma::mat Rs, arma::mat S, double kappa){
   }
   return p1*p2*p4;*/
  
+  /*kappa >= 172.5 is out of range for gammafn*/
+  if(kappa>169.5){
+    kappa = 169.5;
+  }
+ 
   //Log-scale calculation
   double p1 = n*log(sqrt(PI)*R::gammafn(kappa+2)/R::gammafn(kappa+0.5));
   double p2 = 0.5*log(R::trigamma(kappa+0.5)-R::trigamma(kappa+2));

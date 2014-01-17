@@ -99,14 +99,14 @@ MCMCSO3.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 #' @cite bingham2009b bingham2010
 #' @export
 #' @examples
-#' Rs <- ruars(20, rcayley, kappa = 4)
+#' Rs <- ruars(20, rvmises, kappa = 4)
 #' 
 #' #Compare the region size of the moment based theory mean estimator to the 
 #' #Bayes region.
 #' 
 #' region(Rs, method = 'moment', type = 'theory', estimator = 'mean', alp=0.1, m = 100)
 #' \dontrun{
-#' bayesCR <- region(Rs, type = 'Cayley', method = 'Bayes', estimator = 'mean', S0 = mean(Rs),
+#' bayesCR <- region(Rs, type = 'Mises', method = 'Bayes', estimator = 'mean', S0 = mean(Rs),
 #'                    kappa0 = 2, tuneS = 39, tuneK = .8, burn_in = 100, alp = .01, m = 500)
 #'                    
 #' bayesCR$Radius       #Region size is give by "Radius"
