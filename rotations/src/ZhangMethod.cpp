@@ -33,7 +33,7 @@ arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2){
   if(m==3){
 
   	Rs = Rs * R2.t();
-    Rs.print("Rs2:");
+    //Rs.print("Rs2:");
     
     arma::rowvec theta(1);
     tri = trace(Rs);

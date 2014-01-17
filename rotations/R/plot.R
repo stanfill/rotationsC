@@ -71,16 +71,17 @@ roteye <- function(origin, center, column=1) {
 #' Rs<-ruars(20, rcayley)
 #' 
 #' #Project the sample's x-axis onto the 3-shere centered at the identity rotation
-#' pointsXYZ(Rs, center = id.SO3, col = 1)
+#' pointsXYZ(Rs, center = id.SO3, column = 1)
 
 pointsXYZ <- function(data, center=id.SO3, column=1) {
   
   data<-as.SO3(data)
+  data<-matrix(data,length(data)/9,9)
   center<-matrix(as.SO3(center),3,3)
   
 	rot <- roteye(origin, center, column)
 	idx <- list(1:3,4:6,7:9)[[column]]
-	data <- as.matrix(data[,idx])
+	data <- matrix(data[,idx],ncol=3)
 	
 	psample1 <- data.frame(data %*% rot)
 	names(psample1) <- c("X","Y","Z")
@@ -116,9 +117,10 @@ pointsXYZ <- function(data, center=id.SO3, column=1) {
 #' @examples
 #' r <- rvmises(200, kappa = 1.0)
 #' Rs <- genR(r)
-#' \dontrun{
-#' plot(Rs, center = mean(Rs), show_estimates = NULL, shape = 4)
 #' 
+#' plot(Rs, center = mean(Rs), show_estimates = "proj.mean", shape = 4)
+#' 
+#' \dontrun{
 #' # Z is computed internally and contains information on depth
 #' plot(Rs, center = mean(Rs), show_estimates = c("proj.mean", "geom.mean"), 
 #'  label_points = sample(LETTERS, 200, replace = TRUE)) + aes(size = Z, alpha = Z) + 
