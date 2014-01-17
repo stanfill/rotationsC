@@ -29,10 +29,11 @@ arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2){
   
   int n = Rs.n_rows, m=Rs.n_cols , i,j;
   double tri;
+  arma::mat R2t = R2.t();
   
   if(m==3){
 
-  	Rs = Rs * R2.t();
+  	Rs = Rs * R2t;
     //Rs.print("Rs2:");
     
     arma::rowvec theta(1);
@@ -58,7 +59,7 @@ arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2){
       Rsi(j)=Rs(i,j);
     }
     
-    Rsi = Rsi * R2.t();
+    Rsi = Rsi * R2t;
     
     tri = trace(Rsi);
     

@@ -6,6 +6,7 @@
 \usepackage{amsmath,amssymb,array, fullpage}
 \usepackage{booktabs}
 %\VignetteIndexEntry{rotations Overview}
+%\VignetteEngine{knitr::knitr}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%Added by me to replace \usepackage{RJournal}
