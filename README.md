@@ -2,7 +2,7 @@
 ========================================================
 A stable version (0.2) of the *rotations* package is available for download from CRAN.  For Windows users, the current version (1.0) of *rotations* can be downloaded from GitHub.  Mac users will need to download the repo, compile the C++ code and install locally.
 
-### Installation instructions for Mac: 
+### Installation instructions for Windows: 
 ```
 library(devtools)
 install_github('rotationsC','stanfill',subdir='rotations')
@@ -14,7 +14,7 @@ The differences between the CRAN (0.2) and GitHub (1.0) versions of the *rotatio
 
 * Fixes in documentation for Bayes point estimate
 
-* The functions `SO3` and `Q4` no longer exist.  All of their functaionality has been moved to `as.SO3` and `as.Q4`
+* The functions `SO3` and `Q4` no longer exist.  All of their functionality has been moved to `as.SO3` and `as.Q4`
 
 * Create a `plot.Q4` function that uses `plot.SO3` after casting the object to class `SO3`
 
@@ -22,11 +22,11 @@ The differences between the CRAN (0.2) and GitHub (1.0) versions of the *rotatio
 
 * `print.SO3` now names the columns `R11` through `R33` to signify which element in the matrix each row corresponds to
 
-* Made `is.SO3` more rigorious in testing for conditions of `SO3`
+* Made `is.SO3` more rigorous in testing for conditions of `SO3`
 
-* `angle` and `axis` have been renamed `mis.angle` and `mis.axis`, respectively, to avoid naming clases with the `graphics` package
+* `angle` and `axis` have been renamed `mis.angle` and `mis.axis`, respectively, to avoid naming clashes with the `graphics` package
 
-* Adopt `period.sep` naming convention for all functions in package.  The affected functionas were formerly known as `sum_dist`, `exp_skew`, `cayley_kappa`, `fisher_kappa` and `vmises_kappa`.  New names are the same but with `.` in place of `_`.
+* Adopt `period.sep` naming convention for all functions in package.  The affected functions were formerly known as `sum_dist`, `exp_skew`, `cayley_kappa`, `fisher_kappa` and `vmises_kappa`.  New names are the same but with `.` in place of `_`.
 
 * `dist` renamed to `rot.dist` to avoid clashes with `stats` package
 

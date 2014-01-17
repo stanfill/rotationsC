@@ -61,10 +61,9 @@
   used for the concentration parameter.
 }
 \examples{
-Rs <- ruars(20, rcayley, kappa = 4)
-\dontrun{
-draws <- MCMCSO3(Rs, type = 'Cayley', S0 = mean(Rs), kappa0 = 2, tuneS = 39, tuneK = .8,
-burn_in = 100, m = 5000)}
+Rs <- ruars(20, rvmises, kappa = 10)
+draws <- MCMCSO3(Rs, type = 'Mises', S0 = mean(Rs), kappa0 = 10, tuneS = 5000,
+                 tuneK = 1,burn_in = 100, m = 100)
 }
 \references{
   Bingham MA, Vardeman SB and Nordman DJ (2009). "Bayes
