@@ -174,21 +174,33 @@ arma::mat genrC(arma::mat S,double r) {
   NumericVector ta = runif(1,-1,1);
   double theta = ta[0];
   theta = acos(theta);
+  double cosr = cos(r);
+  double sinr = sin(r);
     
   NumericVector ph = runif(1, -M_PI, M_PI);
   double phi = ph[0];
   
   arma::rowvec u(3);
+  arma::colvec ut(3);
   
   u(0)=sin(theta) * cos(phi);
   u(1)=sin(theta) * sin(phi);
   u(2)=cos(theta);
-
-  arma::mat Ri, I(3,3), SS;
+  
+  ut = u.t();
+  
+  arma::mat Ri, I(3,3), SS, step(3,3);
   I.eye();
-  Ri = u.t() * u;
+  Ri = ut * u;
+  
+  step = (I - Ri);
+  step *= cosr;
+  Ri += step;
+  
   SS = rotations::eskewC(u);
-  Ri = Ri + (I - Ri) * cos(r) +  SS * sin(r);
+  
+  step = SS * sinr;
+  Ri +=  step;
   Ri = S * Ri;
   return Ri;
 

@@ -52,7 +52,6 @@ base <- ggplot(aes(x=X1, y=X2), data=setOrigin(matrix(as.SO3(c(1,-1,0), pi/16),3
 				plot.margin = unit(rep(0, 4), "lines"))
 
 
-
 roteye <- function(origin, center, column=1) {
 	R <- list(matrix(as.SO3(c(0,1,0), pi/2),3,3), matrix(as.SO3(c(1,0,0), -pi/2),3,3), diag(c(1,1,1)))[[column]]
 	rot <- center %*% R %*% origin 
