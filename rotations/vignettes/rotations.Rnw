@@ -1,4 +1,4 @@
-\documentclass[a4paper]{report}
+\documentclass[a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 %\usepackage{RJournal}
@@ -35,8 +35,8 @@
 
 
 %% load any required packages here
-\usepackage{bm,subcaption,amsfonts}
-
+\usepackage{bm,subcaption,amsfonts,natbib}
+\bibliographystyle{abbrvnat}
 
 \newcommand{\argmin}{\text{argmin}}
 \newcommand{\argmax}{\text{argmax}}
@@ -50,7 +50,11 @@
 \newcommand{\GeomMean}{\widehat{\bm S}_R}
 \newcommand{\GeomMedian}{\widetilde{\bm S}_R}
 \begin{document}
-
+<<setup,include=FALSE>>=
+library(rotations)
+options(digits=3)
+opts_chunk$set(fig.path='figure/', fig.width=5, fig.height=5, fig.show='hold')
+@
 
 
 
@@ -63,10 +67,8 @@
 
 %% replace RJtemplate with your article
 %\begin{article}
-\title{\pkg{rotations}: An R Package for $SO(3)$ Data}
-\author{by Bryan Stanfill, Heike Hofmann, Ulrike Genschel}
-
-\maketitle
+\begin{center}
+{\Large\pkg{rotations}: An R Package for $SO(3)$ Data}
 
 \abstract{
 In this article we introduce the \pkg{rotations} package which provides users with the ability to simulate, analyze and visualize three-dimensional rotation data.  More specifically it includes four commonly used distributions from which to simulate data, five estimators of the central orientation, seven confidence region estimation procedures and a novel approach to visualizing these data.  All of the above features are available to two different parameterizations of rotations: three-by-three matrices and quaternions.  In addition two datasets are included that illustrate the use of rotation data in practice.
@@ -124,27 +126,19 @@ The \pkg{rotations} package defines the \code{S3} class \code{"SO3"}, which inte
 
 The \code{as.SO3} function coerces the input into the class \code{"SO3"}.  Given an angle $r$ and axis $\bm U$, \code{as.SO3} will form a matrix according to \eqref{eqn:angleAxis}; given a three-dimensional vector $\bm W$ the length of that vector will be taken to be the angle of rotation $r=\|\bm W\|$ and the axis is taken to be the unit-vector in the direction of $\bm W$, $\bm U=\bm W/\|\bm W\|$.  Alternatively, one can also supply a rotation $\bm Q$ in the quaternion representation then the \code{as.SO3} function returns the matrix equivalent of $\bm Q$.  For all input types the function \code{as.SO3} returns an $n\times9$ matrix of class \code{"SO3"} where each row corresponds to a rotation matrix.    Below we illustrate the use of the \code{as.SO3} function by constructing first the $3\times3$ matrix associated with a $90^\circ$ rotation about the $y$-axis, i.e. $r=\pi/2$ and $\bm U=(0,1,0)$, rounded to three digits.
 
-\begin{example}
-> r <- pi/2
-> U <- c(0, 1 ,0)
-> W <- U*r
-> R <- as.SO3(W)
-> R
-     [,1] [,2] [,3]
-[1,]    0    0    1
-[2,]    0    1    0
-[3,]   -1    0    0
-> identical(R, as.SO3(U, r))
-[1] TRUE
-\end{example}
+<<ex1>>=
+r <- pi/2
+U <- c(0, 1 ,0)
+W <- U*r
+R <- as.SO3(W)
+identical(R, as.SO3(U, r))
+@
 
 Given a rotation matrix $\bm R$, the functions \code{mis.angle} and \code{mis.axis} will determine the misorientation angle and axis of an object with class \code{"SO3"} as illustrated in the next example. 
-\begin{example}
-> mis.angle(R)*2/pi
-1
-> mis.axis(R)
-[1] 0 1 0
-\end{example}
+<<ex2>>=
+mis.angle(R)*2/pi
+mis.axis(R)
+@
 
 \subsection{Quaternion form}
 
@@ -165,12 +159,10 @@ The \code{S3} class \code{"Q4"} is defined to manipulate rotations of this param
 
 The following code creates the same rotation from the previous section in the form of a quaternion with the \code{as.Q4} function.  This function works much the same way as the \code{as.SO3} function in terms of possible inputs but returns a vector of length four of the class \code{"Q4"}.   We round the output to three digits for compactness.
 
-\begin{example}
-> as.Q4(U, r)
-0.707 + 0 * i + 0.707 * j + 0 * k
-> as.Q4(as.SO3(U, r))
-0.707 + 0 * i + 0.707 * j + 0 * k
-\end{example}
+<<ex3>>=
+as.Q4(U, r)
+as.Q4(as.SO3(U, r))
+@
 
 \section{Data generation\label{section:generation}} 
 
@@ -210,17 +202,13 @@ $\frac{\mathrm{I_0}(\kappa)-\mathrm{I_1}(\kappa)}{\mathrm{I_0}(\kappa)}$& & \cod
 
 For a given concentration \code{d}, \code{p} and \code{r} take the same meaning as for the more familiar distributions such as \code{dnorm}.  To simulate a sample of $SO(3)$ data, the \code{ruars} function takes arguments \code{n}, \code{rangle}, and \code{kappa} to specify the sample size, angular distribution and concentration as shown below.  Alternatively, one can specify the circular variance $\nu$.  Note: circular variance takes precedence over  concentration in case both are provided.  The \code{space} argument determines the parameterization to form.   Note that if a single rotation is printed, then the rotation is printed as a $3\times3$ matrix as demonstrated in Section \ref{subsec:matrix}. If a sample of rotations is printed then the $n\times 9$ matrix is printed along with column titles that specify which element of the matrix each row corresponds to.  For example, the $\bm R_{\{1,1\}}$ element of a rotation matrix is printed under the column heading \code{R11} as illustrated below.   Note that we rounded the output to three digits for compactness.
 
-\begin{example}
-> Rs <- ruars(n = 20, rangle = rcayley, kappa = 1, space = 'SO3')
-> Qs <- ruars(n = 20, rangle = rcayley, kappa = 1, space = 'Q4')
-> Rs <- ruars(n = 20, rangle = rcayley, nu = 1, space = 'SO3')
-> Qs <- ruars(n = 20, rangle = rcayley, nu = 1, space = 'Q4')
-> head(Rs,3)
-         R11    R21   R31   R12    R22    R32    R13     R23   R33
-[1,] -0.4253 -0.850 0.310 0.475 -0.501 -0.723  0.770 -0.1602 0.617
-[2,] -0.5645 -0.733 0.379 0.745 -0.256  0.615 -0.354  0.6299 0.691
-[3,]  0.0874 -0.716 0.692 0.117  0.698  0.707 -0.989  0.0193 0.145
-\end{example}
+<<ex4>>=
+Rs <- ruars(n = 20, rangle = rcayley, kappa = 1, space = 'SO3')
+Qs <- ruars(n = 20, rangle = rcayley, kappa = 1, space = 'Q4')
+Rs <- ruars(n = 20, rangle = rcayley, nu = 1, space = 'SO3')
+Qs <- ruars(n = 20, rangle = rcayley, nu = 1, space = 'Q4')
+head(Rs,3)
+@
 
 \section{Data analysis\label{section:analysis}}
 
@@ -255,7 +243,7 @@ The estimators in Table~\ref{tab:ests.sum} find estimates  based on minimization
 
 We highlight this process  in the example below. The function \code{L1.error} is defined to minimize the intrinsic $L_1$-norm, the result from the optimization should therefore agree with the geometric median of the sample. In fact, the difference between the two results is at the same level as the minimal difference (\code{minerr}) used for convergence of the gradient search. What is gained in flexibility of the optimization is, of course, paid for in terms of speed: the built-in median function is faster by far than the gradient search. 
 
-\begin{verbatim}
+<<ex5>>=
 # error function definition
 L1.error <- function(sample, Shat) {
     sum(rot.dist(sample, Shat, method = "intrinsic", p = 1))
@@ -265,17 +253,12 @@ cayley.sample <- ruars(n = 50, rangle = rcayley, nu = 1, space = "SO3")
 
 # gradient based optimization
 system.time(SL1 <- gradient.search(cayley.sample, L1.error))
-   user  system elapsed 
-  2.594   0.005   2.599 
 
 # in-built function
 system.time(S <- median(cayley.sample, type = "geometric"))
-   user  system elapsed 
-  0.005   0.000   0.006 
   
 rot.dist(S, SL1$Shat)
-[1] 1.492e-05
-\end{verbatim}
+@
 
 
 \begin{table}[h]
@@ -308,17 +291,13 @@ These six methods are available through the wrapper function \code{region}.  The
 
 In the example code below a sample of $n=50$ rotations are drawn from the Cayley-UARS($\bm I_{3\times 3}, \kappa=10$) distribution then the four types of moment-based confidence regions are constructed.  For a graphical representation of this dataset along with an interpretation of the confidence regions see Figure \ref{fig:regs}.
 
-\begin{example}
-> Rs <- ruars(50, rcayley, kappa = 10)
-> region(Rs, method="moment", type="theory", estimator="mean", alp=0.05)
-[1] 0.1891591
-> region(Rs, method="moment", type="bootstrap", estimator="mean", alp=0.05, m=300)
-[1] 0.2010779
-> region(Rs, method="moment", type="theory", estimator="median", alp=0.05)
-[1] 0.2008109
-> region(Rs, method="moment", type="bootstrap", estimator="median", alp=0.05, m=300)
-[1] 0.2491973
-\end{example}
+<<ex6>>=
+Rs <- ruars(50, rcayley, kappa = 10)
+region(Rs, method="moment", type="theory", estimator="mean", alp=0.05)
+region(Rs, method="moment", type="bootstrap", estimator="mean", alp=0.05, m=300)
+region(Rs, method="moment", type="theory", estimator="median", alp=0.05)
+region(Rs, method="moment", type="bootstrap", estimator="median", alp=0.05, m=300)
+@
 
 \subsection{Bayesian Methods}
 
@@ -353,13 +332,13 @@ The \pkg{rotations} package offers a novel method to visualize $SO(3)$ data with
 
 Calling the \code{plot} function with a \code{"SO3"} object will result in a sphere that represents a column of the supplied data.  The \code{center} argument defines the center of the plot and is usually set to the identity rotation \code{id.SO3} or an estimate of the central orientation, e.g.~\code{mean(Rs, method="projected")}.  The user can specify which columns to visualize with the \code{col} argument with options $1$, $2$, and $3$ representing the $x$-, $y$- and $z$- axes, respectively.  If the data are concentrated in one part of the sphere then the \code{to$\_$range} argument can be set to \code{TRUE} and the range of the plot is set to the area of the sphere that contains the points. 
 
-All of the four estimates of the central orientation can be plotted along with a sample of rotations. Setting the argument \code{estimates$\_$show="all"} will display all four simultaneously.  If only a few estimates are of interest then any combination of \code{"proj.mean"}, \code{"proj.median"}, \code{"geom.mean"} or \code{"geom.median"} are valid inputs.  The estimators are indicated by color and a legend is provided, see Figure \ref{fig:ests}. Finally, the \code{mean$\_$regions} and \code{median$\_$regions} options allow the user to draw a circle on the surface of the sphere representing the confidence region for that axis, centered at $\ProjMean$ and $\ProjMedian$ respectively.  If estimators are plotted along with the different regions then shapes represent the estimators and colors represent the region methods, see Figure \ref{fig:regs}.  Given the sample of rotations generated in Section \ref{subsec:regions} the example code below illustrates the \code{plot} function for objects of class \code{"SO3"}.  Figure \ref{figure:eye1} illustrates the results of these commands.
+All of the four estimates of the central orientation can be plotted along with a sample of rotations. Setting the argument \code{estimates$\_$show="all"} will display all four simultaneously.  If only a few estimates are of interest then any combination of \code{"proj.mean"}, \code{"proj.median"}, \code{"geom.mean"} or \code{"geom.median"} are valid inputs.  The estimators are indicated by color and a legend is provided, see Figure \ref{fig:ests}. Finally, the \code{mean$\_$regions} and \code{median$\_$regions} options allow the user to draw a circle on the surface of the sphere representing the confidence region for that axis, centered at $\ProjMean$ and $\ProjMedian$ respectively.  If estimators are plotted along with the different regions then shapes represent the estimators and colors represent the region methods, see Figure \ref{fig:regs}.  Given the sample of rotations generated in Section \ref{subsec:regions} the example code below illustrates the \code{plot} function for objects of class \code{"SO3"}.  Figure \ref{figure:eye1ex7} illustrates the results of these commands.
 
-\begin{example}
-> plot(Rs, center = mean(Rs), show_estimates = "all")
-> plot(Rs, center = mean(Rs), show_estimates = "proj.mean", 
-+ mean_regions = "all",  alp = .05)
-\end{example}
+<<ex7,fig.cap="The $x$-axis of a random sample from the Cayley-UARS distribution with $\\kappa=1$, $n=50$.  All for point estimates are displayed in (a) and all three region methods along with the projected mean are in (b).",fig.lp="figure:eye1",out.width=".4\\textwidth">>=
+plot(Rs, center = mean(Rs), show_estimates = "all")
+plot(Rs, center = mean(Rs), show_estimates = "proj.mean", 
+ mean_regions = "all",  alp = .05)
+@
 
 
 \section{Datasets}
@@ -368,68 +347,37 @@ Datasets \code{drill} and \code{nickel} are included in the \pkg{rotations} pack
 
 In the \code{nickel} dataset rotation matrices are used to represent the orientation of cubic crystals on the surface of a nickel sample measured with Electron Backscatter Diffraction.  Each location on the surface of the nickel is identified by the \code{xpos} and \code{ypos} columns while the \code{rep} column identifies which of the fourteen replicate scans that measurement corresponds to.  The last nine columns, denoted \code{v1}-\code{v9}, represent the elements of the rotation matrix at that location in vector form.  See \cite{bingham2009, bingham2010b, stanfill2013} for more details. In the example code below we illustrate how to load the datasets into an R session and some basic analysis techniques.  For the \code{drill} dataset we estimate the central orientation of the readings for Subject 1's wrist.  For simplicity we round to three digits.
 
-\begin{example}
-> data(drill)
-> head(drill)
-  Subject Joint Position Replicate    Q1     Q2      Q3    Q4
-1       1 Wrist        1         1 0.944 -0.192 -0.156 0.217
-2       1 Wrist        1         2 0.974 -0.120 -0.111 0.158
-3       1 Wrist        1         3 0.965 -0.133 -0.141 0.177
-4       1 Wrist        1         4 0.956 -0.134 -0.115 0.233
-5       1 Wrist        1         5 0.953 -0.199 -0.061 0.222
-6       1 Wrist        2         1 0.963 -0.159 -0.127 0.177
-> Subj1Wrist<-subset(drill, Subject == '1' & Joint == 'Wrist')
-> data <- as.Q4(Subj1Wrist[,5:8])
-> mean(data)
-0.987 - 0.070 * i - 0.134 * j + 0.049 * k
->
-> data(nickel)
-> head(nickel[,1:6])
-  xpos  ypos rep     v1     v2      v3
-1  0.0 0.346   1 -0.648 -0.727 -0.879
-2  0.2 0.346   1  0.686 -0.647  0.371
-3  0.4 0.346   1 -0.330  0.685  0.716
-4  0.6 0.346   1 -0.289 -0.336 -0.052
-5  0.8 0.346   1 -0.623  0.708 -0.697
-6  1.0 0.346   1 -0.727  0.375  0.642
-\end{example}
+<<dataex>>=
+data(drill)
+head(drill)
+
+Subj1Wrist<-subset(drill, Subject == '1' & Joint == 'Wrist')
+data <- as.Q4(Subj1Wrist[,5:8])
+mean(data)
+
+data(nickel)
+head(nickel[,1:6])
+@
 
 \section{Summary}
 
 In this manuscript we introduced the \pkg{rotations} package and demonstrated how it can be used to generate, analyze and visualize rotation data.  The \pkg{rotations} package is compatible with the quaternion specific \pkg{onion} package by applying its \code{as.quaternion} function to a transposed \code{"Q4"} object.  This gives the user access to a wide range of algebraic functions unique to quaternions.  Also compatible with the \pkg{rotations} package is the \pkg{orientlib} package, which includes additional parameterizations of rotations.  To translate rotation matrices generated by the \pkg{rotations} package into a form usable by the \pkg{orientlib} package, first coerce a \code{"SO3"} object into a matrix of the same dimension, i.e.$n\times9$, then apply the \code{rotvector} function provided by the \pkg{orientlib} package.  Quaternions, however, in the \pkg{orientlib} package are of the form $\bm Q = x_1 i + x_2 j + x_3 k + x_4$, c.f.~\eqref{eqn:quat}, which may lead to confusion when translating quaternions between the \pkg{orintlib} package and either of the \pkg{onion} or \pkg{rotations} packages.  Below is a demonstration of how quaternions and rotation matrices generated by the \pkg{rotations} package can be translated into a form usable by the \pkg{onion} and \pkg{orientlib} packages, respectively.
 
-\begin{example}
-> Qs<-ruars(20, rcayley, space='Q4')
-> Rs<-as.SO3(Qs)
->
-> require(onion)
-> onionQs <- as.quaternion(t(Qs))
->
-> require(orientlib)
-> orientRs <- rotvector(matrix(Rs, 20, 9))
-\end{example}
+<<ex8>>=
+Qs<-ruars(20, rcayley, space='Q4')
+Rs<-as.SO3(Qs)
+
+suppressMessages(require(onion))
+onionQs <- as.quaternion(t(Qs))
+
+suppressMessages(require(orientlib))
+orientRs <- rotvector(matrix(Rs, ncol = 9))
+@
 
 Computational speed of the \pkg{rotations} package has been enhanced through use of the  \CRANpkg{Rcpp} and \CRANpkg{RcppArmadillo} packages \citep*{eddelbuettel2013,eddelbuettel2013b}.  In future version of the package we plan to extend the parameterization and estimator sections to include robust estimators currently being developed by the authors.  
 
 \bibliography{stanfill-hofmann-genschel}
 
-\address{Bryan Stanfill\\
-  Department of Statistics\\
-  Iowa State University\\
-  Ames, IA 50011}\\
-\email{stanfill@iastate.edu}
-
-\address{Heike Hofmann\\
-  Department of Statistics\\
-  Iowa State University\\
-  Ames, IA 50011}\\
-\email{hofmann@mail.iastate.edu}
-
-\address{Ulrike Genschel\\
-  Department of Statistics\\
-  Iowa State University\\
-  Ames, IA 50011}\\
-\email{ulrike@mail.iastate.edu}
 %\end{article}
 
 \end{document}

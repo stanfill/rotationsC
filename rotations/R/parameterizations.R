@@ -72,6 +72,11 @@ as.Q4.default <- function(q,theta=NULL,...){
   
   p<-ncol(q)
   n<-nrow(q)
+  if(is.null(p)){
+    q<-matrix(q,ncol=3)
+    p<-ncol(q)
+    n<-nrow(q)
+  }
   
   if(p==3){
     
