@@ -239,7 +239,7 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 #' #a horizontal line at 1/(2*pi) = 0.1591549
 #' plot(r, dhaar(r)/(1-cos(r)), type = 'l', ylab = 'f(r)')
 #' 
-#' #Generate random observations from matrix-Fisher distribution
+#' #Generate random observations from uniform circular distribution
 #' rs <- rhaar(50)
 #' 
 #' #Visualize on the real line
