@@ -7,7 +7,7 @@
 \usage{
   duars(R, dangle, S = id.SO3, kappa = 1, ...)
 
-  puars(R, pangle, S = id.SO3, kappa = 1, ...)
+  puars(R, pangle = NULL, S = id.SO3, kappa = 1, ...)
 
   ruars(n, rangle, S = NULL, kappa = 1, space = "SO3", ...)
 }
@@ -17,13 +17,13 @@
   \item{n}{number of observations. If \code{length(n)>1},
   the length is taken to be the number required.}
 
-  \item{dangle}{The function to evaulate the angles from
+  \item{dangle}{The function to evaulate the angles from,
   e.g. dcayley, dvmises, dfisher, dhaar.}
 
-  \item{pangle}{The form of the angular density e.g.
+  \item{pangle}{The form of the angular density, e.g.
   pcayley, pvmises, pfisher, phaar.}
 
-  \item{rangle}{The function from which to simulate angles
+  \item{rangle}{The function from which to simulate angles,
   e.g. rcayley, rvmises, rhaar, rfisher.}
 
   \item{S}{central orientation of the distribution.}
@@ -37,7 +37,8 @@
 }
 \value{
   \item{duars}{gives the density} \item{puars}{gives the
-  distribution function} \item{ruars}{generates random
+  distribution function.  If pangle is left empty, the
+  empirical CDF is returned.} \item{ruars}{generates random
   deviates}
 }
 \description{
@@ -60,9 +61,14 @@
 #rotated about the y-axis through pi/2 radians
 S <- as.SO3(c(0, 1, 0), pi/2)
 Rs <- ruars(20, rcayley, kappa = 10, S = S)
-rs <- mis.angle(Rs)                          #Find the associated misorientation angles
+rs <- mis.angle(Rs-S)                        #Find the associated misorientation angles
 ds <- duars(Rs, dcayley, kappa = 10, S = S)  #Compute UARS density evaluated at each rotations
 plot(rs, ds)
+cdf <- puars(Rs, pcayley, S = S)             #
+plot(rs, cdf)
+
+ecdf <- puars(Rs, S=S)
+plot(rs, ecdf)
 }
 \references{
   Bingham M, Nordman D and Vardeman S (2009). "Modeling and

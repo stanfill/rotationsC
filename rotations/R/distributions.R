@@ -425,15 +425,15 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #' @aliases UARS puars duars ruars
 #' @param R Value at which to evaluate the UARS density.
 #' @param n number of observations. If \code{length(n)>1}, the length is taken to be the number required.
-#' @param dangle The function to evaulate the angles from e.g. dcayley, dvmises, dfisher, dhaar.
-#' @param pangle The form of the angular density e.g. pcayley, pvmises, pfisher, phaar.
-#' @param rangle The function from which to simulate angles e.g. rcayley, rvmises, rhaar, rfisher.
+#' @param dangle The function to evaulate the angles from, e.g. dcayley, dvmises, dfisher, dhaar.
+#' @param pangle The form of the angular density, e.g. pcayley, pvmises, pfisher, phaar.
+#' @param rangle The function from which to simulate angles, e.g. rcayley, rvmises, rhaar, rfisher.
 #' @param S central orientation of the distribution.
 #' @param kappa concentration parameter.
 #' @param space indicates the desired representation: matrix ("SO3") or quaternion ("Q4").
 #' @param ... additional arguments.
 #' @return  \item{duars}{gives the density}
-#'          \item{puars}{gives the distribution function}
+#'          \item{puars}{gives the distribution function.  If pangle is left empty, the empirical CDF is returned.}
 #'          \item{ruars}{generates random deviates}
 #' @seealso For more on the angular distribution options see \link{Angular-distributions}.
 #' @cite bingham09
@@ -442,9 +442,14 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #' #rotated about the y-axis through pi/2 radians
 #' S <- as.SO3(c(0, 1, 0), pi/2)
 #' Rs <- ruars(20, rcayley, kappa = 10, S = S)
-#' rs <- mis.angle(Rs)                          #Find the associated misorientation angles
+#' rs <- mis.angle(Rs-S)                        #Find the associated misorientation angles
 #' ds <- duars(Rs, dcayley, kappa = 10, S = S)  #Compute UARS density evaluated at each rotations
 #' plot(rs, ds) 
+#' cdf <- puars(Rs, pcayley, S = S)             #
+#' plot(rs, cdf)
+#' 
+#' ecdf <- puars(Rs, S=S)
+#' plot(rs, ecdf)
 
 NULL
 
@@ -456,7 +461,7 @@ NULL
 duars<-function(R,dangle,S=id.SO3,kappa=1,...){
 	
 	R<-formatSO3(R)
-	rs<-mis.angle(R)
+	rs<-mis.angle(R-S)
 	cr<-dangle(rs,kappa,...)	
 	trStO<-2*cos(rs)+1
 	
@@ -469,11 +474,11 @@ duars<-function(R,dangle,S=id.SO3,kappa=1,...){
 #' @aliases UARS duars puars ruars
 #' @export
 
-puars<-function(R,pangle,S=id.SO3,kappa=1,...){
+puars<-function(R,pangle=NULL,S=id.SO3,kappa=1,...){
 	
 	#This is not a true CDF, but it will work for now
 	R<-formatSO3(R)
-	rs<-mis.angle(R)
+	rs<-mis.angle(R-S)
 	
 	if(is.null(pangle)){
 		
