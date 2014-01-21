@@ -208,12 +208,17 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
   return(rar(n, dfisher, M, kappa = kappa, Haar=F))
 }
 
-#' Uniform distribution on \eqn{SO(3)}
+#' Uniform distribution
 #'
-#' Density, distribution function and random generation for the uniform distribution on \eqn{SO(3)}.
+#' Density, distribution function and random generation for the uniform distribution on the interval circle.
 #'
-#' The uniform distribution on the space \eqn{SO(3)}  (also referred to as the Haar measure)
-#' has density \deqn{C_U(r)=\frac{[1-cos(r)]}{2\pi}.}{C(r)=[1-cos(r)]/2\pi.}
+#' The uniform distribution on the interval \eqn{[-\pi,\pi)}
+#' has density \deqn{C_U(r)=\frac{[1-cos(r)]}{2\pi}}{C(r)=[1-cos(r)]/2\pi} with respect to the Lebesgue
+#'  measure.  The Haar measure is a volume invariance measure for spaces such as SO(3) that plays the role
+#'  of the uniform measure on SO(3).  The uniform distribution with respect to the Haar measure is given
+#'  by \deqn{C_U(r)=\frac{1}{2\pi}}{C(r)=1/(2\pi)}.  Because the uniform distribution on the circle
+#'  with respect to the Haar measure is the uniform distribution on the interval \eqn{[-\pi,\pi)} 
+#'  with respect to the Lebesgue measure we called this distribution 'Haar.'
 #'
 #' @name Haar
 #' @aliases Haar dhaar phaar rhaar
@@ -230,15 +235,16 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 #' #Visualize the uniform distribution on the circle with respect to Lebesgue measure
 #' plot(r, dhaar(r), type = 'l', ylab = 'f(r)')
 #' 
+#' #Visualize the uniform distribution on the circle with respect to Haar measure, which is
+#' #a horizontal line at 1/(2*pi) = 0.1591549
+#' plot(r, dhaar(r)/(1-cos(r)), type = 'l', ylab = 'f(r)')
+#' 
 #' #Generate random observations from matrix-Fisher distribution
 #' rs <- rhaar(50)
 #' 
 #' #Visualize on the real line
 #' hist(rs, breaks = 10)
 #' 
-#' #Convert into vectors in R2 that can plotted as points on the unit circle
-#' coords <- data.frame(x = cos(rs), y = sin(rs))
-#' plot(coords$x, coords$y, asp = 1, xlim = c(-1, 1), ylim = c(-1, 1))
 
 
 NULL
