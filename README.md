@@ -1,8 +1,8 @@
 *rotations*
 ========================================================
-A stable version (0.2) of the *rotations* package is available for download from CRAN.  For Windows users, the current version (1.0) of *rotations* can be downloaded from GitHub.  Mac users will need to download the repo, compile the C++ code and install locally.
+A stable version (0.2) of the *rotations* package is available for download from CRAN.  For Mac users, the current version (1.0) of *rotations* can be downloaded from GitHub.  Windows users will need to download the repo, compile the C++ code and install locally.
 
-### Installation instructions for Windows: 
+### Installation instructions for Mac: 
 ```
 library(devtools)
 install_github('rotationsC','stanfill',subdir='rotations')
