@@ -210,15 +210,15 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 
 #' Uniform distribution
 #'
-#' Density, distribution function and random generation for the uniform distribution on the interval circle.
+#' Density, distribution function and random generation for the uniform distribution on the circle.
 #'
 #' The uniform distribution on the interval \eqn{[-\pi,\pi)}
 #' has density \deqn{C_U(r)=\frac{[1-cos(r)]}{2\pi}}{C(r)=[1-cos(r)]/2\pi} with respect to the Lebesgue
 #'  measure.  The Haar measure is a volume invariance measure for spaces such as SO(3) that plays the role
 #'  of the uniform measure on SO(3).  The uniform distribution with respect to the Haar measure is given
 #'  by \deqn{C_U(r)=\frac{1}{2\pi}}{C(r)=1/(2\pi)}.  Because the uniform distribution on the circle
-#'  with respect to the Haar measure is the uniform distribution on the interval \eqn{[-\pi,\pi)} 
-#'  with respect to the Lebesgue measure we called this distribution 'Haar.'
+#'  with respect to the Haar measure gives a horizontal line at 1 
+#'  with respect to the Lebesgue measure, we called this distribution 'Haar.'
 #'
 #' @name Haar
 #' @aliases Haar dhaar phaar rhaar
@@ -236,8 +236,8 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 #' plot(r, dhaar(r), type = 'l', ylab = 'f(r)')
 #' 
 #' #Visualize the uniform distribution on the circle with respect to Haar measure, which is
-#' #a horizontal line at 1/(2*pi) = 0.1591549
-#' plot(r, dhaar(r)/(1-cos(r)), type = 'l', ylab = 'f(r)')
+#' #a horizontal line at 1
+#' plot(r, 2*pi*dhaar(r)/(1-cos(r)), type = 'l', ylab = 'f(r)')
 #' 
 #' #Generate random observations from uniform circular distribution
 #' rs <- rhaar(50)

@@ -28,7 +28,7 @@
 }
 \description{
   Density, distribution function and random generation for
-  the uniform distribution on the interval circle.
+  the uniform distribution on the circle.
 }
 \details{
   The uniform distribution on the interval \eqn{[-\pi,\pi)}
@@ -40,9 +40,9 @@
   uniform distribution with respect to the Haar measure is
   given by \deqn{C_U(r)=\frac{1}{2\pi}}{C(r)=1/(2\pi)}.
   Because the uniform distribution on the circle with
-  respect to the Haar measure is the uniform distribution
-  on the interval \eqn{[-\pi,\pi)} with respect to the
-  Lebesgue measure we called this distribution 'Haar.'
+  respect to the Haar measure gives a horizontal line at 1
+  with respect to the Lebesgue measure, we called this
+  distribution 'Haar.'
 }
 \examples{
 r <- seq(-pi, pi, length = 1000)
@@ -51,8 +51,8 @@ r <- seq(-pi, pi, length = 1000)
 plot(r, dhaar(r), type = 'l', ylab = 'f(r)')
 
 #Visualize the uniform distribution on the circle with respect to Haar measure, which is
-#a horizontal line at 1/(2*pi) = 0.1591549
-plot(r, dhaar(r)/(1-cos(r)), type = 'l', ylab = 'f(r)')
+#a horizontal line at 1
+plot(r, 2*pi*dhaar(r)/(1-cos(r)), type = 'l', ylab = 'f(r)')
 
 #Generate random observations from uniform circular distribution
 rs <- rhaar(50)
