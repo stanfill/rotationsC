@@ -5,6 +5,7 @@
 \usepackage{amsmath,amssymb,array}
 \usepackage{booktabs}
 %\VignetteIndexEntry{Introduction to rotations}
+%\VignetteDepends{knitr,onion,orientlib}
 %\VignetteEngine{knitr::knitr}
 
 %% load any required packages here
