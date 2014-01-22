@@ -1,43 +1,15 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper]{report}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{RJournal}
-\usepackage[pdftex,hypertexnames=false,linktocpage=true]{hyperref}
-\usepackage{amsmath,amssymb,array, fullpage}
+\usepackage{RJournal_edited}
+\usepackage{amsmath,amssymb,array}
 \usepackage{booktabs}
-%\VignetteIndexEntry{rotations Overview}
+%\VignetteIndexEntry{Introduction to rotations}
 %\VignetteEngine{knitr::knitr}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%Added by me to replace \usepackage{RJournal}
-%%R Journal commands
-%\newcommand{\toprule}{\hline}
-%\newcommand{\midrule}{\hline}
-%\newcommand{\bottomrule}{\hline}
-
-\newcommand{\code}{\texttt}
-\newcommand{\dfn}[1]{{\normalfont\textsl{#1}}}
-% \acronym is effectively disabled since not used consistently
-\newcommand{\acronym}[1]{#1}
-\newcommand{\strong}[1]{\texorpdfstring%
-{{\normalfont\fontseries{b}\selectfont #1}}%
-{#1}}
-\let\pkg=\strong
-\newcommand{\CRANpkg}[1]{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}%
-\let\cpkg=\CRANpkg
-\newcommand{\ctv}[1]{\href{http://CRAN.R-project.org/view=#1}{\emph{#1}}}
-
-\RequirePackage{fancyvrb}
-\RequirePackage{alltt}
-
-\DefineVerbatimEnvironment{example}{Verbatim}{}
-\renewenvironment{example*}{\begin{alltt}}{\end{alltt}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-
-
 %% load any required packages here
-\usepackage{bm,subcaption,amsfonts,natbib}
-\bibliographystyle{abbrvnat}
+\usepackage{bm,subcaption,amsfonts}
+
 
 \newcommand{\argmin}{\text{argmin}}
 \newcommand{\argmax}{\text{argmax}}
@@ -51,26 +23,28 @@
 \newcommand{\GeomMean}{\widehat{\bm S}_R}
 \newcommand{\GeomMedian}{\widetilde{\bm S}_R}
 \begin{document}
+
 <<setup,include=FALSE>>=
 library(rotations)
 options(digits=3)
+library(knitr)
 opts_chunk$set(fig.path='figure/', fig.width=5, fig.height=5, fig.show='hold',fig.align='center')
 @
 
 
 
 %% do not edit, for illustration only
-%\sectionhead{Contributed research article}
-%\volume{XX}
-%\volnumber{YY}
-%\year{20ZZ}
-%\month{AAAA}
-
+\sectionhead{}
+\volume{}
+\volnumber{}
+\year{}
+\month{}
+\begin{article}
 %% replace RJtemplate with your article
-%\begin{article}
-\begin{center}
-{\Large\pkg{rotations}: An R Package for $SO(3)$ Data}
-\end{center}
+\title{\pkg{rotations}: An R Package for $SO(3)$ Data}
+\author{by Bryan Stanfill, Heike Hofmann, Ulrike Genschel}
+
+\maketitle
 \abstract{
 In this article we introduce the \pkg{rotations} package which provides users with the ability to simulate, analyze and visualize three-dimensional rotation data.  More specifically it includes four commonly used distributions from which to simulate data, five estimators of the central orientation, seven confidence region estimation procedures and a novel approach to visualizing these data.  All of the above features are available to two different parameterizations of rotations: three-by-three matrices and quaternions.  In addition two datasets are included that illustrate the use of rotation data in practice.
 }
@@ -379,6 +353,24 @@ Computational speed of the \pkg{rotations} package has been enhanced through use
 
 \bibliography{stanfill-hofmann-genschel}
 
-%\end{article}
+\address{Bryan Stanfill\\
+  Department of Statistics\\
+  Iowa State University\\
+  Ames, IA 50011}\\
+\email{stanfill@iastate.edu}
+
+\address{Heike Hofmann\\
+  Department of Statistics\\
+  Iowa State University\\
+  Ames, IA 50011}\\
+\email{hofmann@mail.iastate.edu}
+
+\address{Ulrike Genschel\\
+  Department of Statistics\\
+  Iowa State University\\
+  Ames, IA 50011}\\
+\email{ulrike@mail.iastate.edu}
+
+\end{article}
 
 \end{document}
