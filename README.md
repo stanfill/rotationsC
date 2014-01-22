@@ -10,25 +10,35 @@ library(rotations)
 ```
 
 ### Change log:
-The differences between the CRAN (0.2) and GitHub (1.0) versions of the *rotations* package are as follows:
+#### New Features - 
 
-* Fixes in documentation for Bayes point estimate
-
-* The functions `SO3` and `Q4` no longer exist.  All of their functionality has been moved to `as.SO3` and `as.Q4`
+* Vignette added that introduces the package
 
 * Create a `plot.Q4` function that uses `plot.SO3` after casting the object to class `SO3`
 
-* `print.Q4` and `print.SO3` no longer print the object class
+#### Bug Fixes -
 
-* `print.SO3` now names the columns `R11` through `R33` to signify which element in the matrix each row corresponds to
+* Updated Bayes sampling method to avoid seg faults
 
-* Made `is.SO3` more rigorous in testing for conditions of `SO3`
+#### Major Changes -
+
+* The functions `SO3` and `Q4` no longer exist.  All of their functionality has been moved to `as.SO3` and `as.Q4`
 
 * `angle` and `axis` have been renamed `mis.angle` and `mis.axis`, respectively, to avoid naming clashes with the `graphics` package
 
 * Adopt `period.sep` naming convention for all functions in package.  The affected functions were formerly known as `sum_dist`, `exp_skew`, `cayley_kappa`, `fisher_kappa` and `vmises_kappa`.  New names are the same but with `.` in place of `_`.
 
 * `dist` renamed to `rot.dist` to avoid clashes with `stats` package
+
+#### Minor Changes -
+
+* Fixes in documentation for Bayes point estimate
+
+* `print.Q4` and `print.SO3` no longer print the object class
+
+* `print.SO3` now names the columns `R11` through `R33` to signify which element in the matrix each row corresponds to
+
+* `is.SO3` more rigorously tests for conditions of `SO3`
 
 * Arithmetic for `SO3` objects now is possible for samples of rotations
 
