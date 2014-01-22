@@ -72,6 +72,7 @@ as.Q4.default <- function(q,theta=NULL,...){
   
   p<-ncol(q)
   n<-nrow(q)
+  
   if(is.null(p)){
     q<-matrix(q,ncol=3)
     p<-ncol(q)
@@ -94,9 +95,10 @@ as.Q4.default <- function(q,theta=NULL,...){
   
     if(n!=ntheta)
       stop("Number of angles must match number of axes")
-  
-    #if(any(ulen!=1))
-    #  U<-U/ulen
+    
+    nonZ<-which(ulen!=0)
+    
+    U[nonZ,]<-U[nonZ,]/ulen[nonZ]
     #CPP version is causing seg faults, try just doing it in R
     #x <- Q4defaultC(U,theta)
   

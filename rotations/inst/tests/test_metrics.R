@@ -2,5 +2,5 @@ rs<-rcayley(20)
 Rs<-genR(rs)
 
 context("distance metrics")
-expect_equal(dist(Rs,method='intrinsic'),abs(rs))
-expect_equal(dist(Rs,method='projected'),sqrt(8)*sin(abs(rs)/2))
+expect_equal(rot.dist(Rs,method='intrinsic'),abs(rs))
+expect_equal(rot.dist(Rs,method='projected'),sqrt(8)*sin(abs(rs)/2))

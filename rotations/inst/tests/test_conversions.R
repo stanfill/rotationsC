@@ -4,5 +4,5 @@ u<- c(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta))
 r<-rvmises(1)
 
 context("Conversions")
-expect_equal(Q4(SO3(u,r)),Q4(u,r))
-expect_equal(SO3(Q4(u,r)),SO3(u,r))
+expect_equal(as.Q4(as.SO3(u,r)),as.Q4(u,r))
+expect_equal(as.SO3(as.Q4(u,r)),as.SO3(u,r))
