@@ -53,6 +53,9 @@ rar <- function(n, f, M, ...) {
 #' #Visualize the Cayley density fucntion with respect to the Lebesgue measure
 #' plot(r, dcayley(r, kappa = 10, Haar = FALSE), type = 'l', ylab = 'f(r)')
 #' 
+#' #Plot the Cayley CDF
+#' plot(r,pcayley(r,kappa = 10), type = 'l', ylab = 'F(r)')
+#' 
 #' #Generate random observations from Cayley distribution
 #' rs <- rcayley(20, kappa = 1)
 #' hist(rs, breaks = 10)
@@ -70,9 +73,6 @@ dcayley <- function(r, kappa = 1, nu = NULL, Haar = TRUE) {
     kappa <- cayley.kappa(nu)
   
  	den <- 0.5 * gamma(kappa + 2)/(sqrt(pi) * 2^kappa * gamma(kappa + 0.5)) * (1 + cos(r))^kappa * (1 - cos(r))
-  
-  #if(!lower.tail)
-  #	den<-1-den
   
   if (Haar) 
     return(den/(1 - cos(r))) else return(den)
@@ -146,6 +146,9 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
 #' #Visualize the matrix Fisher density fucntion with respect to the Lebesgue measure
 #' plot(r, dfisher(r, kappa = 10, Haar = FALSE), type = 'l', ylab = 'f(r)')
 #' 
+#' #Plot the matrix Fisher CDF
+#' plot(r,pfisher(r,kappa = 10), type = 'l', ylab = 'F(r)')
+#' 
 #' #Generate random observations from matrix Fisher distribution
 #' rs <- rfisher(20, kappa = 1)
 #' hist(rs, breaks = 10)
@@ -166,9 +169,6 @@ dfisher <- function(r, kappa = 1, nu = NULL, Haar = TRUE) {
   
  	den <- exp(2 * kappa * cos(r)) * (1 - cos(r))/(2 * pi * (besselI(2 * kappa, 0) - besselI(2 * kappa, 1)))
   
-  #if(!lower.tail)
-  #	den<-1-den
-  
   if (Haar) 
     return(den/(1 - cos(r))) else return(den)
   
@@ -178,7 +178,7 @@ dfisher <- function(r, kappa = 1, nu = NULL, Haar = TRUE) {
 #' @aliases Fisher dfisher pfisher rfisher
 #' @export
 
-pfisher<-function(q,kappa=1, nu= NULL, lower.tail=TRUE){
+pfisher<-function(q,kappa=1, nu=NULL, lower.tail=TRUE){
   
   n<-length(q)
   cdf<-rep(NA,n)
@@ -238,6 +238,9 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 #' #Visualize the uniform distribution on the circle with respect to Haar measure, which is
 #' #a horizontal line at 1
 #' plot(r, 2*pi*dhaar(r)/(1-cos(r)), type = 'l', ylab = 'f(r)')
+#' 
+#' #Plot the uniform CDF
+#' plot(r,phaar(r), type = 'l', ylab = 'F(r)')
 #' 
 #' #Generate random observations from uniform circular distribution
 #' rs <- rhaar(50)
@@ -319,7 +322,10 @@ rhaar<-function(n){
 #' 
 #' #Visualize the von Mises density fucntion with respect to the Lebesgue measure
 #' plot(r, dvmises(r, kappa = 10, Haar = FALSE), type = 'l', ylab = 'f(r)')
-#' 
+#'
+#' #Plot the von Mises CDF
+#' plot(r,pvmises(r,kappa = 10), type = 'l', ylab = 'F(r)')
+#'   
 #' #Generate random observations from von Mises distribution
 #' rs <- rvmises(20, kappa = 1)
 #' hist(rs, breaks = 10)
@@ -442,14 +448,16 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #' #rotated about the y-axis through pi/2 radians
 #' S <- as.SO3(c(0, 1, 0), pi/2)
 #' Rs <- ruars(20, rcayley, kappa = 10, S = S)
-#' rs <- mis.angle(Rs-S)                        #Find the associated misorientation angles
-#' ds <- duars(Rs, dcayley, kappa = 10, S = S)  #Compute UARS density evaluated at each rotations
-#' plot(rs, ds) 
-#' cdf <- puars(Rs, pcayley, S = S)             #
-#' plot(rs, cdf)
 #' 
-#' ecdf <- puars(Rs, S=S)
-#' plot(rs, ecdf)
+#' rs <- mis.angle(Rs-S)                          #Find the associated misorientation angles
+#' frs <- duars(Rs, dcayley, kappa = 10, S = S)   #Compute UARS density evaluated at each rotations
+#' plot(rs, frs) 
+#' 
+#' cdf <- puars(Rs, pcayley, S = S)               #By supplying 'pcayley', it is used to compute the
+#' plot(rs, cdf)                                  #the CDF
+#' 
+#' ecdf <- puars(Rs, S=S)                         #No 'puars' arguement is supplied so the empirical
+#' plot(rs, ecdf)                                 #cdf is returned
 
 NULL
 
@@ -479,7 +487,9 @@ puars<-function(R,pangle=NULL,S=id.SO3,kappa=1,...){
 	#This is not a true CDF, but it will work for now
 	R<-formatSO3(R)
 	rs<-mis.angle(R-S)
-	
+	us<-mis.axis(R-S)
+  rs<-rs*sign(us[,1])
+  
 	if(is.null(pangle)){
 		
 		n<-length(rs)
@@ -492,9 +502,7 @@ puars<-function(R,pangle=NULL,S=id.SO3,kappa=1,...){
 		cr<-pangle(rs,kappa,...)
 	}
 	
-	#trStO<-2*cos(rs)+1
-	
-	#den<-4*pi*cr/(3-trStO)
+  
 	
 	return(cr)
 	

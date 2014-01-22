@@ -54,6 +54,9 @@ plot(r, dhaar(r), type = 'l', ylab = 'f(r)')
 #a horizontal line at 1
 plot(r, 2*pi*dhaar(r)/(1-cos(r)), type = 'l', ylab = 'f(r)')
 
+#Plot the uniform CDF
+plot(r,phaar(r), type = 'l', ylab = 'F(r)')
+
 #Generate random observations from uniform circular distribution
 rs <- rhaar(50)
 
