@@ -1,7 +1,7 @@
 \documentclass[a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-%\usepackage{RJournal}
+\usepackage{RJournal}
 \usepackage[pdftex,hypertexnames=false,linktocpage=true]{hyperref}
 \usepackage{amsmath,amssymb,array, fullpage}
 \usepackage{booktabs}
@@ -54,7 +54,7 @@
 <<setup,include=FALSE>>=
 library(rotations)
 options(digits=3)
-opts_chunk$set(fig.path='figure/', fig.width=5, fig.height=5, fig.show='hold')
+opts_chunk$set(fig.path='figure/', fig.width=5, fig.height=5, fig.show='hold',fig.align='center')
 @
 
 
@@ -70,7 +70,7 @@ opts_chunk$set(fig.path='figure/', fig.width=5, fig.height=5, fig.show='hold')
 %\begin{article}
 \begin{center}
 {\Large\pkg{rotations}: An R Package for $SO(3)$ Data}
-
+\end{center}
 \abstract{
 In this article we introduce the \pkg{rotations} package which provides users with the ability to simulate, analyze and visualize three-dimensional rotation data.  More specifically it includes four commonly used distributions from which to simulate data, five estimators of the central orientation, seven confidence region estimation procedures and a novel approach to visualizing these data.  All of the above features are available to two different parameterizations of rotations: three-by-three matrices and quaternions.  In addition two datasets are included that illustrate the use of rotation data in practice.
 }
@@ -290,7 +290,7 @@ It has also been shown that both estimators $\ProjMean$ and $\ProjMedian$ are M-
 
 These six methods are available through the wrapper function \code{region}.  They are differentiated based on the \code{method}, \code{type} and \code{estimator} arguments.  Set \code{estimator="mean"} or  \code{estimator="median"} to estimate a region based on $\ProjMean$ or $\ProjMedian$, respectively.  For $\ProjMean$ one can choose \code{method="eigen"} for the eigenvector-based methods or \code{method="moment"} for the moment-based approach.  Since the eigenvector-based methods cannot be applied to $\ProjMedian$ an error is returned if \code{method="eigen"} and \code{estimator="median"} are combined.  A bootstrap version of the specified method is implemented if \code{type="bootstrap"} or the normal limiting distribution can be chosen with \code{type="theory"}.  If a bootstrap type region is specified one can additionally specify the bootstrap sample size with the \code{m} argument, which is set to 300 by default.  Regardless of the method and type chosen a single value is returned on the interval $(0,\pi]$.  This value corresponds to the radius of the confidence region centered at each of the axes of the respective estimators.  
 
-In the example code below a sample of $n=50$ rotations are drawn from the Cayley-UARS($\bm I_{3\times 3}, \kappa=10$) distribution then the four types of moment-based confidence regions are constructed.  For a graphical representation of this dataset along with an interpretation of the confidence regions see Figure \ref{fig:regs}.
+In the example code below a sample of $n=50$ rotations are drawn from the Cayley-UARS($\bm I_{3\times 3}, \kappa=10$) distribution then the four types of moment-based confidence regions are constructed.  For a graphical representation of this dataset along with an interpretation of the confidence regions see Figure \ref{figure:eye1ex7}.
 
 <<ex6>>=
 Rs <- ruars(50, rcayley, kappa = 10)
@@ -333,9 +333,9 @@ The \pkg{rotations} package offers a novel method to visualize $SO(3)$ data with
 
 Calling the \code{plot} function with a \code{"SO3"} object will result in a sphere that represents a column of the supplied data.  The \code{center} argument defines the center of the plot and is usually set to the identity rotation \code{id.SO3} or an estimate of the central orientation, e.g.~\code{mean(Rs, method="projected")}.  The user can specify which columns to visualize with the \code{col} argument with options $1$, $2$, and $3$ representing the $x$-, $y$- and $z$- axes, respectively.  If the data are concentrated in one part of the sphere then the \code{to$\_$range} argument can be set to \code{TRUE} and the range of the plot is set to the area of the sphere that contains the points. 
 
-All of the four estimates of the central orientation can be plotted along with a sample of rotations. Setting the argument \code{estimates$\_$show="all"} will display all four simultaneously.  If only a few estimates are of interest then any combination of \code{"proj.mean"}, \code{"proj.median"}, \code{"geom.mean"} or \code{"geom.median"} are valid inputs.  The estimators are indicated by color and a legend is provided, see Figure \ref{fig:ests}. Finally, the \code{mean$\_$regions} and \code{median$\_$regions} options allow the user to draw a circle on the surface of the sphere representing the confidence region for that axis, centered at $\ProjMean$ and $\ProjMedian$ respectively.  If estimators are plotted along with the different regions then shapes represent the estimators and colors represent the region methods, see Figure \ref{fig:regs}.  Given the sample of rotations generated in Section \ref{subsec:regions} the example code below illustrates the \code{plot} function for objects of class \code{"SO3"}.  Figure \ref{figure:eye1ex7} illustrates the results of these commands.
+All of the four estimates of the central orientation can be plotted along with a sample of rotations. Setting the argument \code{estimates$\_$show="all"} will display all four simultaneously.  If only a few estimates are of interest then any combination of \code{"proj.mean"}, \code{"proj.median"}, \code{"geom.mean"} or \code{"geom.median"} are valid inputs.  The estimators are indicated by color and a legend is provided, see Figure \ref{figure:eye1ex7}. Finally, the \code{mean$\_$regions} and \code{median$\_$regions} options allow the user to draw a circle on the surface of the sphere representing the confidence region for that axis, centered at $\ProjMean$ and $\ProjMedian$ respectively.  If estimators are plotted along with the different regions then shapes represent the estimators and colors represent the region methods, see Figure \ref{figure:eye1ex7}.  Given the sample of rotations generated in Section \ref{subsec:regions} the example code below illustrates the \code{plot} function for objects of class \code{"SO3"}.  Figure \ref{figure:eye1ex7} illustrates the results of these commands.
 
-<<ex7,fig.cap="The $x$-axis of a random sample from the Cayley-UARS distribution with $\\kappa=1$, $n=50$.  All for point estimates are displayed in (a) and all three region methods along with the projected mean are in (b).",fig.lp="figure:eye1",out.width=".4\\textwidth">>=
+<<ex7,fig.cap="The $x$-axis of a random sample from the Cayley-UARS distribution with $\\kappa=1$, $n=50$.  All for point estimates are displayed in the left sub-figure and all three region methods along with the projected mean are on the right.",fig.lp="figure:eye1",out.width=".4\\textwidth",fig.pos="h",dev='png'>>=
 plot(Rs, center = mean(Rs), show_estimates = "all")
 plot(Rs, center = mean(Rs), show_estimates = "proj.mean", 
  mean_regions = "all",  alp = .05)
