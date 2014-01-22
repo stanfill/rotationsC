@@ -236,16 +236,34 @@ as.SO3.default <- function(R, theta=NULL,...) {
     n<-1
   }  
   
-  if(n==3 && p==3 && is.SO3(R)){
+  if(n==3 && p==3 && is.SO3(R) && is.null(theta)){
     
     #If there are 3 rows and columns and the object is already a rotation matrix, the same rotation is returned
     class(R) <- "SO3"
     return(R)
     
   }else if(p==9){
-    #If there are 9 columns, it's assumed the data are already rotation matrices so the SO3 class is appeneded and object returned
-    class(R) <- "SO3"
-    return(R)
+    
+    rots<-is.SO3(R)
+    
+    if(all(rots)){
+      #If there are 9 columns and the data are already rotation matrices then the SO3 class is appeneded and object returned
+      
+      class(R) <- "SO3"
+      return(R)
+      
+    }else{
+      #If there are 9 columns and some are not rotations,
+      #those that aren't rotations are projected to SO(3) and the others are left alone
+
+      for(i in which(!rots)){
+        R[i,]<-project.SO3(R[i,])
+      }
+      
+      class(R)<-"SO3"
+      return(R)
+      
+    }
   }else if(p==3){
     
   #If there are 3 columns, it's assumed the input R is the matrix of unit axes of rotations and the theta vector are the angles,
@@ -275,6 +293,7 @@ as.SO3.default <- function(R, theta=NULL,...) {
     }
     class(R) <- "SO3"
     return(R)
+    
   }else if(p==4){
     
     #If there are 4 columns, it's assumed the input is an n-by-4 matrix with rows corresponding to quaternions 

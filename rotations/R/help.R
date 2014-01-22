@@ -6,5 +6,5 @@
 #' for those estimates and it includes a novel visualization technique for rotation data. 
 #' 
 #' @docType package
-#' @name package-rotations
+#' @name rotations
 NULL

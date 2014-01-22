@@ -1,7 +1,7 @@
 \docType{package}
-\name{package-rotations}
-\alias{package-rotations}
-\alias{package-rotations-package}
+\name{rotations}
+\alias{rotations}
+\alias{rotations-package}
 \title{A package for working with rotaional data.}
 \description{
   This package implements tools for working with rotational
