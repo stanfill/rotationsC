@@ -88,7 +88,7 @@ data(drill)                    #Pull off subject 1's wrist measurements
 Subj1Wrist <- subset(drill, Subject == '1' & Joint == 'Wrist')
 
                                ## The measurements are in columns 5:8
-is.Q4(Subj1Wrist[,5:8])        #TRUE, even though Qs is a data.frame, the rows satisfy the
+all(is.Q4(Subj1Wrist[,5:8]))   #TRUE, even though Qs is a data.frame, the rows satisfy the
                                #conditions necessary to be quaternions BUT, S3 methods (e.g. 'mean' or
                                #'plot') for objects of class 'Q4' will not work until 'as.Q4' is used
 
