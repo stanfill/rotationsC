@@ -80,12 +80,12 @@
 
   For \code{x} a \code{"data.frame"} it is translated into
   a matrix of the same dimension and the dimensionality of
-  \code{x} is used to determine what type of data
-  (angle-axis, quaternion, rotation) should be returned. As
-  demonstrated below, \code{is.SO3} may return \code{TRUE}
-  for a data frame, but the functions defined for objects
-  of class \code{'SO3'} will not be called until
-  \code{as.SO3} has been used.
+  \code{x} is used to determine what the data type:
+  angle-axis, quaternion or rotation. As demonstrated
+  below, \code{is.SO3} may return \code{TRUE} for a data
+  frame, but the functions defined for objects of class
+  \code{'SO3'} will not be called until \code{as.SO3} has
+  been used.
 }
 \examples{
 data(nickel)                   #Select one location to focus on

@@ -76,12 +76,11 @@
 
   For \code{x} a \code{"data.frame"} it is translated into
   a matrix of the same dimension and the dimensionality of
-  \code{x} is used to determine what type of data
-  (angle-axis, quaternion, rotation) should be returned. As
-  demonstrated below, \code{is.Q4} may return \code{TRUE}
-  for a data frame, but the functions defined for objects
-  of class \code{'Q4'} will not be called until
-  \code{as.Q4} has been used.
+  \code{x} is used to determine the data type: angle-axis,
+  quaternion or rotation. As demonstrated below,
+  \code{is.Q4} may return \code{TRUE} for a data frame, but
+  the functions defined for objects of class \code{'Q4'}
+  will not be called until \code{as.Q4} has been used.
 }
 \examples{
 data(drill)                    #Pull off subject 1's wrist measurements
