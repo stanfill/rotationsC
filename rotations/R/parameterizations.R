@@ -74,9 +74,10 @@ as.Q4.default <- function(q,theta=NULL,...){
   n<-nrow(q)
   
   if(is.null(p)){
-    q<-matrix(q,ncol=3)
-    p<-ncol(q)
-    n<-nrow(q)
+    p<-length(q)
+    #q<-matrix(q,ncol=3)
+    #p<-ncol(q)
+    #n<-nrow(q)
   }
   
   if(p==3){
@@ -93,9 +94,13 @@ as.Q4.default <- function(q,theta=NULL,...){
   
     ntheta<-length(theta)
   
-    if(n!=ntheta)
-      stop("Number of angles must match number of axes")
-    
+    if(n!=ntheta){
+      if(ntheta==1){
+        theta<-rep(theta,n)
+      }else{
+        stop("Number of angles must match number of axes")
+      }
+    }
     nonZ<-which(ulen!=0)
     
     U[nonZ,]<-U[nonZ,]/ulen[nonZ]
@@ -107,7 +112,7 @@ as.Q4.default <- function(q,theta=NULL,...){
   }else if(p==4){
     
     #If input has length divisible by 4, data are normalized and made into class "Q4"
-    n<-n/4
+    q<-matrix(q,ncol=4)
     rowLens<-(rowSums(q^2))^0.5
     q<-q/rowLens
     
@@ -180,7 +185,7 @@ is.Q4 <- function(q) {
 #' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @export
 
-id.Q4 <- as.Q4(matrix(c(1,0,0,0),1,4))
+id.Q4 <- as.Q4(c(1,0,0,0))
 
 
 #' Rotation matrices
@@ -274,12 +279,24 @@ as.SO3.default <- function(R, theta=NULL,...) {
     U<-matrix(R,n,3)
   
     ulen<-sqrt(rowSums(U^2)) 
-  
-    if(is.null(theta)){ 
-      theta<-ulen%%(pi)
+    ntheta<-length(theta)
     
-      #if(theta>pi)
-      #	theta<-2*pi-theta
+    if(is.null(theta)){
+      
+      theta<-ulen%%(pi)
+      
+    }else if(ntheta!=n){
+      
+      if(ntheta==1){
+        
+        theta<-rep(theta,n)
+        
+      }else{
+        
+        stop("Number of angles must match number of axes")
+        
+      }
+      
     }
   
     R<-matrix(NA,n,9)

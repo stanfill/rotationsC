@@ -20,7 +20,7 @@ Major Changes -
 
 * `angle` and `axis` have been renamed `mis.angle` and `mis.axis`, respectively, to avoid naming clashes with the `graphics` package
 
-* Adopt `period.sep` naming convention for all functions in package.  The affected functions were formerly known as `sum_dist`, `exp_skew`, `cayley_kappa`, `fisher_kappa` and `vmises_kappa`.  New names are the same but with `.` in place of `_`.
+* The `period.sep` naming convention has been adopted for all functions in package.  The functions formerly known as `sum_dist`, `exp_skew`, `cayley_kappa`, `fisher_kappa` and `vmises_kappa` are now called `rotdist.sum`, `skew.exp`, `cayley.kappa`, `fisher.kappa` and `vmises.kappa`, respectively.
 
 * `dist` renamed to `rot.dist` to avoid clashes with `stats` package
 
