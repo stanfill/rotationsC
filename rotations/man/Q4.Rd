@@ -28,7 +28,9 @@
 \arguments{
   \item{q}{object to be coerced or tested.}
 
-  \item{theta}{vector of rotation angles.}
+  \item{theta}{vector or single rotation angle; if
+  \code{length(theta)==1}, the same theta is used for all
+  axes}
 
   \item{...}{additional arguments.}
 }

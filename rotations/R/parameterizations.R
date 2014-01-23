@@ -32,7 +32,7 @@ setOldClass("Q4")
 #' @export
 #' @rdname Q4
 #' @param q object to be coerced or tested.
-#' @param theta vector of rotation angles.
+#' @param theta vector or single rotation angle; if \code{length(theta)==1}, the same theta is used for all axes
 #' @param ... additional arguments.
 #' @format \code{id.Q4} is the identity rotation given by the matrix \eqn{[1,0,0,0]^\top}{[1,0,0,0]'}.
 #' @return 	\item{as.Q4}{coerces its object into an Q4 type.} 
@@ -201,7 +201,7 @@ id.Q4 <- as.Q4(c(1,0,0,0))
 #' @export
 #' @rdname SO3
 #' @param R object to be coerced or tested.
-#' @param theta vector of rotation angles.
+#' @param theta vector or single rotation angle; if \code{length(theta)==1} the same theta is used for all axes
 #' @param ... additional arguments.
 #' @format \code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix.
 #' @return 	\item{as.SO3}{coerces provided data into an SO3 type.} 
