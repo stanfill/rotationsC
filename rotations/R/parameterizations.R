@@ -23,15 +23,28 @@ setOldClass("Q4")
 #' 
 #' Creates or tests for objects of class "Q4."
 #' 
-#' Construct a unit quaternion to represent a rotation.  Each quaternion can be interpreted as a rotation of some reference frame 
-#' about the axis \eqn{U} (of unit length) through the angle \eqn{\theta}.  For each axis and angle the quaternion is formed through
-#' \deqn{q=[cos(\theta/2),sin(\theta/2)U]^\top.}{q=[cos(theta/2),sin(theta/2)U]'.}  If no angle is supplied then the 
-#' length of each axis is taken to be the angle of rotation theta.  If an \code{\link{SO3}} object is given then this function will
-#' return the quaternion equivalent.  If a \code{data.frame} is supplied with n rows and 4 columns where each row is a quaternion, 
-#' then an object of class \code{'Q4'} is returned where each row represents a quaternion.  As demonstrated below, \code{is.Q4} may return
-#' \code{TRUE} for a data frame, but the functions defined for objects of class \code{'Q4'} will not be called until \code{as.Q4}
-#' has been used.  If an n-by-4 matrix is  supplied then rows are treated as vectors in \eqn{R^4}; rows that aren't unit vectors (quaternions)
-#' are normalized to have length one and those that are already of unit length are returned untouched.
+#' Construct a single or sample of rotations in 3-dimensions in quaternion form.  Several possible inputs for \code{x}
+#' are possible and they are differentiated based on their class or dimension.
+#' 
+#' For \code{x} an n-by-3 matrix or vector of length 3, the angle-axis representation of rotations is utilized.  More specifically,
+#' each quaternion can be interpreted as a rotation of some reference frame about the axis 
+#' \eqn{U} (of unit length) through the angle \eqn{\theta}.  For each axis and angle the quaternion is formed through
+#' \deqn{q=[cos(\theta/2),sin(\theta/2)U]^\top.}{q=[cos(theta/2),sin(theta/2)U]'.}  The object \code{x} is treated as 
+#' if it had rows \eqn{U} and \code{theta} is a vector or angles. If no angle is supplied then the 
+#' length of each axis is taken to be the angle of rotation theta.
+#' 
+#' For \code{x} an n-by-9 matrix of rotation matrices or an object of class \code{"SO3"}, this function will
+#' return the quaternion equivalent of \code{x}.  See \code{\link{SO3}} or the vignette "rotations-intro"
+#' for more details on rotation matrices  
+#' 
+#' For \code{x} an n-by-4 matrix, rows are treated as quaternionss; rows that aren't of unit length
+#' are made unit length while the rest are returned untouched.  A message is printed if any of the rows are not quaternions.
+#' 
+#' For \code{x} a \code{"data.frame"} it is translated into a matrix of the same dimension and
+#' the dimensionality of \code{x} is used to determine what type of data (angle-axis, quaternion, rotation) should be returned.
+#' As demonstrated below, \code{is.Q4} may return \code{TRUE} for a data frame, but the functions defined for objects of class 
+#' \code{'Q4'} will not be called until \code{as.Q4} has been used.
+#' 
 #'
 #' @export
 #' @rdname Q4
@@ -44,18 +57,18 @@ setOldClass("Q4")
 #' 					quaternion; namely it must be four-dimensional and of unit length.}
 #' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @examples
-#' data(drill)            #Pull off subject 1's wrist measurements
-#' Qs <- subset(drill, Subject == '1' & Joint == 'Wrist') 
+#' data(drill)                    #Pull off subject 1's wrist measurements
+#' Subj1Wrist <- subset(drill, Subject == '1' & Joint == 'Wrist') 
 #' 
-#'                        ## The measurements are in columns 5:8
-#' is.Q4(Qs[,5:8])        #TRUE, even though Qs is a data.frame, the rows satisfy the 
-#'                        #conditions necessary to be quaternions BUT, S3 methods (e.g. 'mean' or
-#'                        #'plot') for objects of class 'Q4' will not work until 'as.Q4' is used
+#'                                ## The measurements are in columns 5:8
+#' all(is.Q4(Subj1Wrist[,5:8]))   #TRUE, even though Qs is a data.frame, the rows satisfy the 
+#'                                #conditions necessary to be quaternions BUT, S3 methods (e.g. 'mean' or
+#'                                #'plot') for objects of class 'Q4' will not work until 'as.Q4' is used
 #'                 
-#' Qs <- as.Q4(Qs[,5:8])  #Coerce measurements into 'Q4' type using as.Q4.data.frame
-#' all(is.Q4(Qs))         #TRUE  
-#' mean(Qs)               #Estimate central orientation for subject 1's wrist, see ?mean.Q4
-#' Rs <- as.SO3(Qs)       #Coerse a 'Q4' object into rotation matrix format, see ?as.SO3
+#' Qs <- as.Q4(Subj1Wrist[,5:8])  #Coerce measurements into 'Q4' type using as.Q4.data.frame
+#' all(is.Q4(Qs))                 #TRUE  
+#' mean(Qs)                       #Estimate central orientation for subject 1's wrist, see ?mean.Q4
+#' Rs <- as.SO3(Qs)               #Coerse a 'Q4' object into rotation matrix format, see ?as.SO3
 #' 
 #' #Visualize the measuremenets, see ?plot.Q4 for more
 #' \dontrun{
@@ -118,6 +131,18 @@ as.Q4.default <- function(x,theta=NULL,...){
     #If input has length divisible by 4, data are normalized and made into class "Q4"
     q<-matrix(x,ncol=4)
     rowLens<-(rowSums(q^2))^0.5
+    
+    notRots<-which(abs(rowLens-1)>10e-8)
+    
+    if(length(notRots)>0){
+      txt<-"Row(s)"
+      for(i in notRots){
+        txt<-paste(txt,i)
+      }
+      txt<-paste(txt,"was(were) not quaternions.")
+      message(txt)
+    }
+    
     q<-q/rowLens
     
   }else if(p==9){
@@ -169,9 +194,10 @@ as.Q4.Q4 <- function(x,...) {
 #' @export
 
 as.Q4.data.frame <- function(x,...) {
-  n<-nrow(x)
-  p<-ncol(x)
-  q<-as.matrix(x,n,p)
+  #n<-nrow(x)
+  #p<-ncol(x)
+  q<-data.matrix(x)
+  q<-matrix(q,ncol=4)
   return(as.Q4.default(q))
 }
 
@@ -196,23 +222,29 @@ id.Q4 <- as.Q4(c(1,0,0,0))
 #' 
 #' Creates or tests for objects of class "SO3."
 #' 
-#' Construct a single or sample of rotations in 3-dimensions in 3-by-3 matrix form.  
-#' Each rotation matrix can be interpreted as a rotation of some reference frame about the axis \eqn{U} (of unit length)
-#' through the angle \eqn{\theta}.  If a single axis or matrix of axes are provided for \code{x}, 
+#' Construct a single or sample of rotations in 3-dimensions in 3-by-3 matrix form.  Several possible inputs for \code{x}
+#' are possible and they are differentiated based on their class or dimension.
+#' 
+#' For \code{x} an n-by-3 matrix or vector of length 3, the angle-axis representation of rotations is utilized.  More specifically,
+#' each rotation matrix can be interpreted as a rotation of some reference frame about the axis \eqn{U} (of unit length)
+#' through the angle \eqn{\theta}.  If a single axis (in matrix or vector format) or matrix of axes are provided for \code{x}, 
 #' then for each axis and angle the matrix is formed through
-#' \deqn{R=\exp[\Phi(U\theta)]}{R=exp[\Phi(U\theta)].}  If axes are provided by \code{theta} is not provided then the 
-#' length of each axis is taken to be the angle of rotation theta.  
+#' \deqn{R=\exp[\Phi(U\theta)]}{R=exp[\Phi(U\theta)]} where \eqn{U} is replace by \code{x}.  If axes are provided but \code{theta}
+#'  is not provided then the length of each axis is taken to be the angle of rotation, theta.  
 #' 
-#' If a sample of quaternions or an object of class \code{"\link{Q4}"} is provided for \code{x} then this function will
-#' return the rotation matrix equivalent.  
+#' For \code{x} an n-by-4 matrix of quaternions or an object of class \code{"Q4"}, this function will
+#' return the rotation matrix equivalent of \code{x}.  See \code{\link{Q4}} or the vignette "rotations-intro"
+#' for more details on quaternions.  
 #' 
-#' If a sample of rotations of class \code{"data.frame"} is supplied, then an object of class \code{'SO3'} 
-#' is returned where each row represents a 3-by-3 rotation matrix.  As demonstrated below, \code{is.SO3}
-#' may return \code{TRUE} for a data frame, but the functions defined for objects of class \code{'SO3'} will not be called until \code{as.SO3}
-#' has been used. 
+#' For \code{x} an n-by-9 matrix, rows are treated as 3-by-3 matrices; rows that don't form matrices in SO(3)
+#' are projected into SO(3) and those that are already in SO(3) are returned untouched.  See \code{\link{project.SO3}} for
+#' more on projecting arbitrary matrices into SO(3).  A message is printed if any of the rows are not rotation matrices.
 #' 
-#' If an n-by-9 matrix is  supplied then rows are treated as 3-by-3 matrices; rows that don't form matrices in SO(3)
-#' are projected into SO(3) and those that are already in SO(3) are returned untouched.
+#' For \code{x} a \code{"data.frame"} it is translated into a matrix of the same dimension and
+#' the dimensionality of \code{x} is used to determine what type of data (angle-axis, quaternion, rotation) should be returned.
+#' As demonstrated below, \code{is.SO3} may return \code{TRUE} for a data frame, but the functions defined for objects of class 
+#' \code{'SO3'} will not be called until \code{as.SO3} has been used. 
+#' 
 #'
 #' @export
 #' @rdname SO3
@@ -226,11 +258,14 @@ id.Q4 <- as.Q4(c(1,0,0,0))
 #' @aliases SO3 as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @examples
 #' data(nickel)                   #Select one location to focus on
-#' Rs <- subset(nickel, location == 698)
-#' is.SO3(Rs[,5:13])              #Some of the rows are not rotations due to rounding or entry errors  
+#' Loc698 <- subset(nickel, location == 698)
+#' 
+#' is.SO3(Loc698[,5:13])          #Some of the rows are not rotations due to rounding or entry errors  
 #'                                #as.SO3 will project matrices not in SO(3) to the closest rotation in it
 #' 
-#' Rs <- as.SO3(Rs[,5:13])        #Translate the Rs data.frame into an object of class 'SO3'
+#' Rs <- as.SO3(Loc698[,5:13])        #Translate the Rs data.frame into an object of class 'SO3'
+#'                                #Rows 4, 6 and 13 are not proper rotations so they are projected to be in SO(3)
+#'                                
 #' mean(Rs)                       #Estimate the central orientation with the average
 #' median(Rs)                     #Re-estimate central orientation robustly
 #' Qs <- as.Q4(Rs)                #Coerse into "SO3" format, see ?as.SO3 for more
@@ -269,6 +304,7 @@ as.SO3.default <- function(x, theta=NULL,...) {
   }else if(p==9){
     
     rots<-is.SO3(x)
+    notRots<-which(!rots)
     
     if(all(rots)){
       #If there are 9 columns and the data are already rotation matrices then the SO3 class is appeneded and object returned
@@ -280,10 +316,16 @@ as.SO3.default <- function(x, theta=NULL,...) {
       #If there are 9 columns and some are not rotations,
       #those that aren't rotations are projected to SO(3) and the others are left alone
 
-      for(i in which(!rots)){
+      for(i in notRots){
         x[i,]<-project.SO3(x[i,])
       }
       
+      txt<-"Row(s)"
+      for(i in notRots){
+        txt<-paste(txt,i)
+      }
+      txt<-paste(txt,"was(were) not in SO(3).")
+      message(txt)
       class(x)<-"SO3"
       return(x)
       

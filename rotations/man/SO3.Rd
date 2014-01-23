@@ -47,41 +47,56 @@
 }
 \details{
   Construct a single or sample of rotations in 3-dimensions
-  in 3-by-3 matrix form. Each rotation matrix can be
-  interpreted as a rotation of some reference frame about
-  the axis \eqn{U} (of unit length) through the angle
-  \eqn{\theta}.  If a single axis or matrix of axes are
-  provided for \code{x}, then for each axis and angle the
-  matrix is formed through
-  \deqn{R=\exp[\Phi(U\theta)]}{R=exp[\Phi(U\theta)].} If
-  axes are provided by \code{theta} is not provided then
-  the length of each axis is taken to be the angle of
-  rotation theta.
+  in 3-by-3 matrix form.  Several possible inputs for
+  \code{x} are possible and they are differentiated based
+  on their class or dimension.
 
-  If a sample of quaternions or an object of class
-  \code{"\link{Q4}"} is provided for \code{x} then this
-  function will return the rotation matrix equivalent.
+  For \code{x} an n-by-3 matrix or vector of length 3, the
+  angle-axis representation of rotations is utilized.  More
+  specifically, each rotation matrix can be interpreted as
+  a rotation of some reference frame about the axis \eqn{U}
+  (of unit length) through the angle \eqn{\theta}.  If a
+  single axis (in matrix or vector format) or matrix of
+  axes are provided for \code{x}, then for each axis and
+  angle the matrix is formed through
+  \deqn{R=\exp[\Phi(U\theta)]}{R=exp[\Phi(U\theta)]} where
+  \eqn{U} is replace by \code{x}.  If axes are provided but
+  \code{theta} is not provided then the length of each axis
+  is taken to be the angle of rotation, theta.
 
-  If a sample of rotations of class \code{"data.frame"} is
-  supplied, then an object of class \code{'SO3'} is
-  returned where each row represents a 3-by-3 rotation
-  matrix.  As demonstrated below, \code{is.SO3} may return
-  \code{TRUE} for a data frame, but the functions defined
-  for objects of class \code{'SO3'} will not be called
-  until \code{as.SO3} has been used.
+  For \code{x} an n-by-4 matrix of quaternions or an object
+  of class \code{"Q4"}, this function will return the
+  rotation matrix equivalent of \code{x}.  See
+  \code{\link{Q4}} or the vignette "rotations-intro" for
+  more details on quaternions.
 
-  If an n-by-9 matrix is supplied then rows are treated as
-  3-by-3 matrices; rows that don't form matrices in SO(3)
-  are projected into SO(3) and those that are already in
-  SO(3) are returned untouched.
+  For \code{x} an n-by-9 matrix, rows are treated as 3-by-3
+  matrices; rows that don't form matrices in SO(3) are
+  projected into SO(3) and those that are already in SO(3)
+  are returned untouched.  See \code{\link{project.SO3}}
+  for more on projecting arbitrary matrices into SO(3).  A
+  message is printed if any of the rows are not rotation
+  matrices.
+
+  For \code{x} a \code{"data.frame"} it is translated into
+  a matrix of the same dimension and the dimensionality of
+  \code{x} is used to determine what type of data
+  (angle-axis, quaternion, rotation) should be returned. As
+  demonstrated below, \code{is.SO3} may return \code{TRUE}
+  for a data frame, but the functions defined for objects
+  of class \code{'SO3'} will not be called until
+  \code{as.SO3} has been used.
 }
 \examples{
 data(nickel)                   #Select one location to focus on
-Rs <- subset(nickel, location == 698)
-is.SO3(Rs[,5:13])              #Some of the rows are not rotations due to rounding or entry errors
+Loc698 <- subset(nickel, location == 698)
+
+is.SO3(Loc698[,5:13])          #Some of the rows are not rotations due to rounding or entry errors
                                #as.SO3 will project matrices not in SO(3) to the closest rotation in it
 
-Rs <- as.SO3(Rs[,5:13])        #Translate the Rs data.frame into an object of class 'SO3'
+Rs <- as.SO3(Loc698[,5:13])        #Translate the Rs data.frame into an object of class 'SO3'
+                               #Rows 4, 6 and 13 are not proper rotations so they are projected to be in SO(3)
+
 mean(Rs)                       #Estimate the central orientation with the average
 median(Rs)                     #Re-estimate central orientation robustly
 Qs <- as.Q4(Rs)                #Coerse into "SO3" format, see ?as.SO3 for more
