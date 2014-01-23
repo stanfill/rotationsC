@@ -305,7 +305,7 @@ genR <- function(r, S = NULL, space='SO3') {
   	#o<-SO3defaultC(u,r)
   	#o<-genrC(r,S,1,u)
 
-  	o<-as.SO3.default(R=u,theta=r)
+  	o<-as.SO3.default(x=u,theta=r)
     
   	if(is.null(S)){
   		

@@ -13,20 +13,20 @@
 \usage{
   as.Q4(q, ...)
 
-  \method{as.Q4}{default} (q, theta = NULL, ...)
+  \method{as.Q4}{default} (x, theta = NULL, ...)
 
-  \method{as.Q4}{SO3} (q, ...)
+  \method{as.Q4}{SO3} (x, ...)
 
-  \method{as.Q4}{Q4} (q, ...)
+  \method{as.Q4}{Q4} (x, ...)
 
-  \method{as.Q4}{data.frame} (q, ...)
+  \method{as.Q4}{data.frame} (x, ...)
 
-  is.Q4(q)
+  is.Q4(x)
 
   id.Q4
 }
 \arguments{
-  \item{q}{object to be coerced or tested.}
+  \item{x}{object to be coerced or tested.}
 
   \item{theta}{vector or single rotation angle; if
   \code{length(theta)==1}, the same theta is used for all

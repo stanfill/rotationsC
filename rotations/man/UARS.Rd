@@ -60,7 +60,7 @@
 #Generate random rotations from the Cayley-UARS distribution with central orientation
 #rotated about the y-axis through pi/2 radians
 S <- as.SO3(c(0, 1, 0), pi/2)
-Rs <- ruars(20, rcayley, kappa = 1, S = S)
+Rs <- ruars(20, rangle = rcayley, kappa = 1, S = S)
 
 rs <- mis.angle(Rs-S)                          #Find the associated misorientation angles
 frs <- duars(Rs, dcayley, kappa = 10, S = S)   #Compute UARS density evaluated at each rotations

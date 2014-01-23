@@ -35,7 +35,7 @@ setOldClass("Q4")
 #'
 #' @export
 #' @rdname Q4
-#' @param q object to be coerced or tested.
+#' @param x object to be coerced or tested.
 #' @param theta vector or single rotation angle; if \code{length(theta)==1}, the same theta is used for all axes
 #' @param ... additional arguments.
 #' @format \code{id.Q4} is the identity rotation given by the matrix \eqn{[1,0,0,0]^\top}{[1,0,0,0]'}.
@@ -72,13 +72,13 @@ as.Q4<-function(q,...){
 #' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @export
 
-as.Q4.default <- function(q,theta=NULL,...){  
+as.Q4.default <- function(x,theta=NULL,...){  
   
-  p<-ncol(q)
-  n<-nrow(q)
+  p<-ncol(x)
+  n<-nrow(x)
   
   if(is.null(p)){
-    p<-length(q)
+    p<-length(x)
     #q<-matrix(q,ncol=3)
     #p<-ncol(q)
     #n<-nrow(q)
@@ -86,8 +86,8 @@ as.Q4.default <- function(q,theta=NULL,...){
   
   if(p==3){
     
-    #If input is length 3, q is assumed to be vectors in R^3
-    U<-q
+    #If input is length 3, x is assumed to be vectors in R^3
+    U<-x
     U<-matrix(U,ncol=3)
 
     ulen<-sqrt(rowSums(U^2))
@@ -116,14 +116,14 @@ as.Q4.default <- function(q,theta=NULL,...){
   }else if(p==4){
     
     #If input has length divisible by 4, data are normalized and made into class "Q4"
-    q<-matrix(q,ncol=4)
+    q<-matrix(x,ncol=4)
     rowLens<-(rowSums(q^2))^0.5
     q<-q/rowLens
     
   }else if(p==9){
     
     #If input has 9 columns, q is assumed to be rotations
-    q<-as.Q4.SO3(q)
+    q<-as.Q4.SO3(x)
     
   }else{
     
@@ -140,9 +140,9 @@ as.Q4.default <- function(q,theta=NULL,...){
 #' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @export
 
-as.Q4.SO3 <- function(q,...) {
+as.Q4.SO3 <- function(x,...) {
   
-  R<-q
+  R<-x
   R<-formatSO3(R)
   theta <- mis.angle(R)
   u <- mis.axis(R)
@@ -157,9 +157,9 @@ as.Q4.SO3 <- function(q,...) {
 #' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @export
 
-as.Q4.Q4 <- function(q,...) {
+as.Q4.Q4 <- function(x,...) {
   
-  return(q)
+  return(x)
 }
 
 #' @rdname Q4
@@ -168,10 +168,10 @@ as.Q4.Q4 <- function(q,...) {
 #' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @export
 
-as.Q4.data.frame <- function(q,...) {
-  n<-nrow(q)
-  p<-ncol(q)
-  q<-as.matrix(q,n,p)
+as.Q4.data.frame <- function(x,...) {
+  n<-nrow(x)
+  p<-ncol(x)
+  q<-as.matrix(x,n,p)
   return(as.Q4.default(q))
 }
 
@@ -179,9 +179,9 @@ as.Q4.data.frame <- function(q,...) {
 #' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @export
 
-is.Q4 <- function(q) {
+is.Q4 <- function(x) {
 
-	apply(q,1,function(q){sum(q^2)-1<10e-10 & length(q)==4})
+	apply(x,1,function(q){sum(q^2)-1<10e-10 & length(q)==4})
 	
 }
 
@@ -196,19 +196,27 @@ id.Q4 <- as.Q4(c(1,0,0,0))
 #' 
 #' Creates or tests for objects of class "SO3."
 #' 
-#' Construct a 3-by-3 matrix to represent a rotation.  Each rotation matrix can be interpreted as a rotation of some reference frame 
-#' about the axis \eqn{U} (of unit length) through the angle \eqn{\theta}.  For each axis and angle the matrix is formed through
-#' \deqn{R=\exp[\Phi(U\theta)]}{R=exp[\Phi(U\theta)].}  If no angle of rotation are supplied then the 
-#' length of each axis is taken to be the angle of rotation theta.  If a \code{\link{Q4}} object is given then this function will
-#' return the rotation matrix equivalent.  If a \code{data.frame} is supplied with n rows and 9 columns where each row is a quaternion, 
-#' then an object of class \code{'SO3'} is returned where each row represents a 3-by-3 rotation matrix.  As demonstrated below, \code{is.SO3}
+#' Construct a single or sample of rotations in 3-dimensions in 3-by-3 matrix form.  
+#' Each rotation matrix can be interpreted as a rotation of some reference frame about the axis \eqn{U} (of unit length)
+#' through the angle \eqn{\theta}.  If a single axis or matrix of axes are provided for \code{x}, 
+#' then for each axis and angle the matrix is formed through
+#' \deqn{R=\exp[\Phi(U\theta)]}{R=exp[\Phi(U\theta)].}  If axes are provided by \code{theta} is not provided then the 
+#' length of each axis is taken to be the angle of rotation theta.  
+#' 
+#' If a sample of quaternions or an object of class \code{"\link{Q4}"} is provided for \code{x} then this function will
+#' return the rotation matrix equivalent.  
+#' 
+#' If a sample of rotations of class \code{"data.frame"} is supplied, then an object of class \code{'SO3'} 
+#' is returned where each row represents a 3-by-3 rotation matrix.  As demonstrated below, \code{is.SO3}
 #' may return \code{TRUE} for a data frame, but the functions defined for objects of class \code{'SO3'} will not be called until \code{as.SO3}
-#' has been used. If an n-by-9 matrix is  supplied then rows are treated as 3-by-3 matrices; rows that don't form matrices in SO(3)
+#' has been used. 
+#' 
+#' If an n-by-9 matrix is  supplied then rows are treated as 3-by-3 matrices; rows that don't form matrices in SO(3)
 #' are projected into SO(3) and those that are already in SO(3) are returned untouched.
 #'
 #' @export
 #' @rdname SO3
-#' @param R object to be coerced or tested.
+#' @param x object to be coerced or tested; see details for possible forms
 #' @param theta vector or single rotation angle; if \code{length(theta)==1} the same theta is used for all axes
 #' @param ... additional arguments.
 #' @format \code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix.
@@ -232,7 +240,7 @@ id.Q4 <- as.Q4(c(1,0,0,0))
 #' plot(Rs, col = c(1, 2, 3))}   
 
 
-as.SO3 <- function(R,...){
+as.SO3 <- function(x,...){
   UseMethod("as.SO3")
 }
 
@@ -242,42 +250,42 @@ as.SO3 <- function(R,...){
 #' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @export
 
-as.SO3.default <- function(R, theta=NULL,...) {
+as.SO3.default <- function(x, theta=NULL,...) {
 
-  p<-ncol(R)
-  n<-nrow(R)
+  p<-ncol(x)
+  n<-nrow(x)
   
   if(is.null(p)){
-    p<-length(R)
+    p<-length(x)
     n<-1
   }  
   
-  if(n==3 && p==3 && is.SO3(R) && is.null(theta)){
+  if(n==3 && p==3 && is.SO3(x) && is.null(theta)){
     
     #If there are 3 rows and columns and the object is already a rotation matrix, the same rotation is returned
-    class(R) <- "SO3"
-    return(R)
+    class(x) <- "SO3"
+    return(x)
     
   }else if(p==9){
     
-    rots<-is.SO3(R)
+    rots<-is.SO3(x)
     
     if(all(rots)){
       #If there are 9 columns and the data are already rotation matrices then the SO3 class is appeneded and object returned
       
-      class(R) <- "SO3"
-      return(R)
+      class(x) <- "SO3"
+      return(x)
       
     }else{
       #If there are 9 columns and some are not rotations,
       #those that aren't rotations are projected to SO(3) and the others are left alone
 
       for(i in which(!rots)){
-        R[i,]<-project.SO3(R[i,])
+        x[i,]<-project.SO3(x[i,])
       }
       
-      class(R)<-"SO3"
-      return(R)
+      class(x)<-"SO3"
+      return(x)
       
     }
   }else if(p==3){
@@ -285,7 +293,7 @@ as.SO3.default <- function(R, theta=NULL,...) {
   #If there are 3 columns, it's assumed the input R is the matrix of unit axes of rotations and the theta vector are the angles,
     #or the length of the axes is the angle of rotation
     
-    U<-matrix(R,n,3)
+    U<-matrix(x,n,3)
   
     ulen<-sqrt(rowSums(U^2)) 
     ntheta<-length(theta)
@@ -325,7 +333,7 @@ as.SO3.default <- function(R, theta=NULL,...) {
   }else if(p==4){
     
     #If there are 4 columns, it's assumed the input is an n-by-4 matrix with rows corresponding to quaternions 
-    R<-as.Q4(R)
+    R<-as.Q4(x)
     return(as.SO3(R))
     
   }
@@ -370,10 +378,9 @@ as.SO3.default <- function(R, theta=NULL,...) {
 #' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @export
 
-as.SO3.Q4<-function(R,...){
+as.SO3.Q4<-function(x,...){
   
-  q<-R
-  q<-formatQ4(q)
+  q<-formatQ4(x)
   
   if(any((rowSums(q^2)-1)>10e-10)){
     warning("Unit quaternions required.  Input was normalized.")
@@ -396,8 +403,8 @@ as.SO3.Q4<-function(R,...){
 #' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @export
 
-as.SO3.SO3<-function(R,...){
-  return(R)
+as.SO3.SO3<-function(x,...){
+  return(x)
 }
 
 #' @rdname SO3
@@ -406,10 +413,10 @@ as.SO3.SO3<-function(R,...){
 #' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @export
 
-as.SO3.data.frame <- function(R,...) {
-  n<-nrow(R)
-  p<-ncol(R)
-  R<-as.matrix(R,n,p)
+as.SO3.data.frame <- function(x,...) {
+  n<-nrow(x)
+  p<-ncol(x)
+  R<-as.matrix(x,n,p)
   return(as.SO3.default(R))
 }
 
@@ -417,17 +424,17 @@ as.SO3.data.frame <- function(R,...) {
 #' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @export
 
-is.SO3 <- function(R) {
+is.SO3 <- function(x) {
 	
-  Rlen<-length(R)
+  Rlen<-length(x)
   
   if(Rlen%%9!=0){
     
     return(FALSE)
     
   }
-    
-  if(class(R)=='data.frame')
+  R<-x  
+  if(class(x)=='data.frame')
     R<-data.matrix(R)
     
   R<-matrix(R,ncol=9)
@@ -446,4 +453,4 @@ is.SO3 <- function(R) {
 #' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @export
 
-id.SO3 <- genR(0)
+id.SO3 <- as.SO3(c(1,0,0),0)
