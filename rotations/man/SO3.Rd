@@ -92,10 +92,10 @@ data(nickel)                   #Select one location to focus on
 Loc698 <- subset(nickel, location == 698)
 
 is.SO3(Loc698[,5:13])          #Some of the rows are not rotations due to rounding or entry errors
-                               #as.SO3 will project matrices not in SO(3) to the closest rotation in it
+                               #as.SO3 will project matrices not in SO(3) to SO(3)
 
-Rs <- as.SO3(Loc698[,5:13])        #Translate the Rs data.frame into an object of class 'SO3'
-                               #Rows 4, 6 and 13 are not proper rotations so they are projected to be in SO(3)
+Rs <- as.SO3(Loc698[,5:13])    #Translate the Rs data.frame into an object of class 'SO3'
+                               #Rows 4, 6 and 13 are not in SO(3) so they are projected to SO(3)
 
 mean(Rs)                       #Estimate the central orientation with the average
 median(Rs)                     #Re-estimate central orientation robustly

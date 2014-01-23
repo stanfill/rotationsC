@@ -11,7 +11,7 @@
 \title{Quaternions}
 \format{\code{id.Q4} is the identity rotation given by the matrix \eqn{[1,0,0,0]^\top}{[1,0,0,0]'}.}
 \usage{
-  as.Q4(q, ...)
+  as.Q4(x, ...)
 
   \method{as.Q4}{default} (x, theta = NULL, ...)
 
@@ -89,8 +89,9 @@ Subj1Wrist <- subset(drill, Subject == '1' & Joint == 'Wrist')
 
                                ## The measurements are in columns 5:8
 all(is.Q4(Subj1Wrist[,5:8]))   #TRUE, even though Qs is a data.frame, the rows satisfy the
-                               #conditions necessary to be quaternions BUT, S3 methods (e.g. 'mean' or
-                               #'plot') for objects of class 'Q4' will not work until 'as.Q4' is used
+                               #conditions necessary to be quaternions BUT,
+                               #S3 methods (e.g. 'mean' or 'plot') for objects of class
+                               #'Q4' will not work until 'as.Q4' is used
 
 Qs <- as.Q4(Subj1Wrist[,5:8])  #Coerce measurements into 'Q4' type using as.Q4.data.frame
 all(is.Q4(Qs))                 #TRUE

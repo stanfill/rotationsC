@@ -62,8 +62,9 @@ setOldClass("Q4")
 #' 
 #'                                ## The measurements are in columns 5:8
 #' all(is.Q4(Subj1Wrist[,5:8]))   #TRUE, even though Qs is a data.frame, the rows satisfy the 
-#'                                #conditions necessary to be quaternions BUT, S3 methods (e.g. 'mean' or
-#'                                #'plot') for objects of class 'Q4' will not work until 'as.Q4' is used
+#'                                #conditions necessary to be quaternions BUT, 
+#'                                #S3 methods (e.g. 'mean' or 'plot') for objects of class 
+#'                                #'Q4' will not work until 'as.Q4' is used
 #'                 
 #' Qs <- as.Q4(Subj1Wrist[,5:8])  #Coerce measurements into 'Q4' type using as.Q4.data.frame
 #' all(is.Q4(Qs))                 #TRUE  
@@ -75,7 +76,7 @@ setOldClass("Q4")
 #' plot(Qs, col = c(1, 2, 3))} 
 
 
-as.Q4<-function(q,...){
+as.Q4<-function(x,...){
   UseMethod("as.Q4")
 }
 
@@ -261,10 +262,10 @@ id.Q4 <- as.Q4(c(1,0,0,0))
 #' Loc698 <- subset(nickel, location == 698)
 #' 
 #' is.SO3(Loc698[,5:13])          #Some of the rows are not rotations due to rounding or entry errors  
-#'                                #as.SO3 will project matrices not in SO(3) to the closest rotation in it
+#'                                #as.SO3 will project matrices not in SO(3) to SO(3)
 #' 
-#' Rs <- as.SO3(Loc698[,5:13])        #Translate the Rs data.frame into an object of class 'SO3'
-#'                                #Rows 4, 6 and 13 are not proper rotations so they are projected to be in SO(3)
+#' Rs <- as.SO3(Loc698[,5:13])    #Translate the Rs data.frame into an object of class 'SO3'
+#'                                #Rows 4, 6 and 13 are not in SO(3) so they are projected to SO(3)
 #'                                
 #' mean(Rs)                       #Estimate the central orientation with the average
 #' median(Rs)                     #Re-estimate central orientation robustly
