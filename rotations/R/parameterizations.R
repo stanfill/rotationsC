@@ -88,8 +88,8 @@ as.Q4.default <- function(q,theta=NULL,...){
     
     #If input is length 3, q is assumed to be vectors in R^3
     U<-q
-    U<-matrix(U,n,3)
-    
+    U<-matrix(U,ncol=3)
+
     ulen<-sqrt(rowSums(U^2))
   
     if(is.null(theta)){ 
@@ -98,7 +98,7 @@ as.Q4.default <- function(q,theta=NULL,...){
   
     ntheta<-length(theta)
   
-    if(n!=ntheta){
+    if(nrow(U)!=ntheta){
       if(ntheta==1){
         theta<-rep(theta,n)
       }else{
