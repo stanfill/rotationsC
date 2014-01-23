@@ -27,7 +27,11 @@ setOldClass("Q4")
 #' about the axis \eqn{U} (of unit length) through the angle \eqn{\theta}.  For each axis and angle the quaternion is formed through
 #' \deqn{q=[cos(\theta/2),sin(\theta/2)U]^\top.}{q=[cos(theta/2),sin(theta/2)U]'.}  If no angle is supplied then the 
 #' length of each axis is taken to be the angle of rotation theta.  If an \code{\link{SO3}} object is given then this function will
-#' return the quaternion equivalent.
+#' return the quaternion equivalent.  If a \code{data.frame} is supplied with n rows and 4 columns where each row is a quaternion, 
+#' then an object of class \code{'Q4'} is returned where each row represents a quaternion.  As demonstrated below, \code{is.Q4} may return
+#' \code{TRUE} for a data frame, but the functions defined for objects of class \code{'Q4'} will not be called until \code{as.Q4}
+#' has been used.  If an n-by-4 matrix is  supplied then rows are treated as vectors in \eqn{R^4}; rows that aren't unit vectors (quaternions)
+#' are normalized to have length one and those that are already of unit length are returned untouched.
 #'
 #' @export
 #' @rdname Q4
@@ -196,7 +200,11 @@ id.Q4 <- as.Q4(c(1,0,0,0))
 #' about the axis \eqn{U} (of unit length) through the angle \eqn{\theta}.  For each axis and angle the matrix is formed through
 #' \deqn{R=\exp[\Phi(U\theta)]}{R=exp[\Phi(U\theta)].}  If no angle of rotation are supplied then the 
 #' length of each axis is taken to be the angle of rotation theta.  If a \code{\link{Q4}} object is given then this function will
-#' return the rotation matrix equivalent.
+#' return the rotation matrix equivalent.  If a \code{data.frame} is supplied with n rows and 9 columns where each row is a quaternion, 
+#' then an object of class \code{'SO3'} is returned where each row represents a 3-by-3 rotation matrix.  As demonstrated below, \code{is.SO3}
+#' may return \code{TRUE} for a data frame, but the functions defined for objects of class \code{'SO3'} will not be called until \code{as.SO3}
+#' has been used. If an n-by-9 matrix is  supplied then rows are treated as 3-by-3 matrices; rows that don't form matrices in SO(3)
+#' are projected into SO(3) and those that are already in SO(3) are returned untouched.
 #'
 #' @export
 #' @rdname SO3
@@ -210,10 +218,11 @@ id.Q4 <- as.Q4(c(1,0,0,0))
 #' @aliases SO3 as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @examples
 #' data(nickel)                   #Select one location to focus on
-#' Rs <- subset(nickel, location == 698)  
+#' Rs <- subset(nickel, location == 698)
+#' is.SO3(Rs[,5:13])              #Some of the rows are not rotations due to rounding or entry errors  
+#'                                #as.SO3 will project matrices not in SO(3) to the closest rotation in it
 #' 
 #' Rs <- as.SO3(Rs[,5:13])        #Translate the Rs data.frame into an object of class 'SO3'
-#' Rs <- Rs[is.SO3(Rs),]          #Some observations are not rotations, remove them
 #' mean(Rs)                       #Estimate the central orientation with the average
 #' median(Rs)                     #Re-estimate central orientation robustly
 #' Qs <- as.Q4(Rs)                #Coerse into "SO3" format, see ?as.SO3 for more
@@ -410,19 +419,26 @@ as.SO3.data.frame <- function(R,...) {
 
 is.SO3 <- function(R) {
 	
-  if(length(R)==9){
-    R <- matrix(R, 3, 3)
-    if(any(is.na(R))) return(FALSE)
-    if(abs(det(R)-1)>10e-10) return(FALSE)
-    return(all(abs(t(R) %*% R - diag(1, 3))<10e-5))
-  }else{
+  Rlen<-length(R)
   
-    apply(R,1,
+  if(Rlen%%9!=0){
+    
+    return(FALSE)
+    
+  }
+    
+  if(class(R)=='data.frame')
+    R<-data.matrix(R)
+    
+  R<-matrix(R,ncol=9)
+
+    
+  apply(R,1,
 	  function(R){R <- matrix(R, 3, 3)
 	  if(any(is.na(R))) return(FALSE)
 	  if(abs(det(R)-1)>10e-10) return(FALSE)
 	  return(all(abs(t(R) %*% R - diag(1, 3))<10e-5))}) 
-  }
+    
 	
 }
 

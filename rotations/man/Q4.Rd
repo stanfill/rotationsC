@@ -54,7 +54,18 @@
   If no angle is supplied then the length of each axis is
   taken to be the angle of rotation theta.  If an
   \code{\link{SO3}} object is given then this function will
-  return the quaternion equivalent.
+  return the quaternion equivalent.  If a \code{data.frame}
+  is supplied with n rows and 4 columns where each row is a
+  quaternion, then an object of class \code{'Q4'} is
+  returned where each row represents a quaternion.  As
+  demonstrated below, \code{is.Q4} may return \code{TRUE}
+  for a data frame, but the functions defined for objects
+  of class \code{'Q4'} will not be called until
+  \code{as.Q4} has been used.  If an n-by-4 matrix is
+  supplied then rows are treated as vectors in \eqn{R^4};
+  rows that aren't unit vectors (quaternions) are
+  normalized to have length one and those that are already
+  of unit length are returned untouched.
 }
 \examples{
 data(drill)            #Pull off subject 1's wrist measurements

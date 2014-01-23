@@ -54,14 +54,26 @@
   angle of rotation are supplied then the length of each
   axis is taken to be the angle of rotation theta.  If a
   \code{\link{Q4}} object is given then this function will
-  return the rotation matrix equivalent.
+  return the rotation matrix equivalent.  If a
+  \code{data.frame} is supplied with n rows and 9 columns
+  where each row is a quaternion, then an object of class
+  \code{'SO3'} is returned where each row represents a
+  3-by-3 rotation matrix.  As demonstrated below,
+  \code{is.SO3} may return \code{TRUE} for a data frame,
+  but the functions defined for objects of class
+  \code{'SO3'} will not be called until \code{as.SO3} has
+  been used. If an n-by-9 matrix is supplied then rows are
+  treated as 3-by-3 matrices; rows that don't form matrices
+  in SO(3) are projected into SO(3) and those that are
+  already in SO(3) are returned untouched.
 }
 \examples{
 data(nickel)                   #Select one location to focus on
 Rs <- subset(nickel, location == 698)
+is.SO3(Rs[,5:13])              #Some of the rows are not rotations due to rounding or entry errors
+                               #as.SO3 will project matrices not in SO(3) to the closest rotation in it
 
 Rs <- as.SO3(Rs[,5:13])        #Translate the Rs data.frame into an object of class 'SO3'
-Rs <- Rs[is.SO3(Rs),]          #Some observations are not rotations, remove them
 mean(Rs)                       #Estimate the central orientation with the average
 median(Rs)                     #Re-estimate central orientation robustly
 Qs <- as.Q4(Rs)                #Coerse into "SO3" format, see ?as.SO3 for more
