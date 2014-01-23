@@ -49,16 +49,18 @@
 }
 \examples{
 Rs <- ruars(20, rvmises, kappa = 0.01)
-mean(Rs)
-mean(Rs, type = 'geometric')
-rot.dist(mean(Rs))
-rot.dist(mean(Rs, type = 'geometric'))
+mean(Rs)                               #Projected mean
+project.SO3(colMeans(Rs))              #Same as mean(Rs)
+
+mean(Rs, type = 'geometric')           #Geometric mean
+rot.dist(mean(Rs))                     #Bias of the projected mean
+rot.dist(mean(Rs, type = 'geometric')) #Bias of the geometric mean
 
 Qs <- as.Q4(Rs)
-mean(Qs)
-mean(Qs, type = 'geometric')
-rot.dist(mean(Qs))
-rot.dist(mean(Qs, type = 'geometric'))
+mean(Qs)                               #Projected mean
+mean(Qs, type = 'geometric')           #Geometric mean
+rot.dist(mean(Qs))                     #Bias of the projected mean
+rot.dist(mean(Qs, type = 'geometric')) #Bias of the geometric mean
 }
 \references{
   Moakher M (2002). "Means and averaging in the group of

@@ -154,7 +154,7 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 	  
 	}else{
 		
-	  stop("Please choose a correct combination of method, type and estimator.  See help file.")
+	  stop("Please choose a correct combination of method, type and estimator.  See ?region for more details.")
 		
 	}
 	
