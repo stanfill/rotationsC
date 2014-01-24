@@ -17,7 +17,7 @@
   \item{n}{number of observations.  If \code{length(n)>1},
   the length is taken to be the number required.}
 
-  \item{kappa}{concentration paramter.}
+  \item{kappa}{concentration parameter.}
 
   \item{nu}{circular variance, can be used in place of
   \code{kappa}.}
@@ -69,11 +69,11 @@ hist(rs, breaks = 10)
 \references{
   Schaeben H (1997). "A Simple Standard Orientation Density
   Function: The Hyperspherical de la Vallee Poussin
-  Kernel." _Phys. Stat. Sol. (B)_, *200*, pp. 367-376.
+  Kernel." Phys. Stat. Sol. (B), 200, pp. 367-376.
 
   Leon C, e JM and Rivest L (2006). "A statistical model
-  for random rotations." _Journal of Multivariate
-  Analysis_, *97*(2), pp. 412-430.
+  for random rotations." Journal of Multivariate
+  Analysis, 97(2), pp. 412-430.
 }
 \seealso{
   \link{Angular-distributions} for other distributions in

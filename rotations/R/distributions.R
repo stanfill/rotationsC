@@ -35,7 +35,7 @@ rar <- function(n, f, M, ...) {
 #' @aliases Cayley rcayley dcayley
 #' @param r,q vector of quantiles.
 #' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required.
-#' @param kappa concentration paramter.
+#' @param kappa concentration parameter.
 #' @param nu circular variance, can be used in place of \code{kappa}.
 #' @param Haar logical; if TRUE density is evaluated with respect to the Haar measure.
 #' @param lower.tail logical; if TRUE (default) probabilities are \eqn{P(X\leq x)}{P(X\le x)} otherwise, \eqn{P(X>x)}.
@@ -129,7 +129,7 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
 #' @aliases Fisher dfisher rfisher pfisher
 #' @param r,q vector of quantiles.
 #' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required.
-#' @param kappa concentration paramter.
+#' @param kappa concentration parameter.
 #' @param nu circular variance, can be used in place of \code{kappa}.
 #' @param Haar logical; if TRUE density is evaluated with respect to the Haar measure.
 #' @param lower.tail  logical; if TRUE (default), probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X > x)}.
@@ -306,7 +306,7 @@ rhaar<-function(n){
 #' @aliases Mises dvmises rvmises pvmises
 #' @param r,q vector of quantiles
 #' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required.
-#' @param kappa concentration paramter.
+#' @param kappa concentration parameter.
 #' @param nu circular variance, can be used in place of \code{kappa}.
 #' @param Haar logical; if TRUE density is evaluated with respect to the Haar measure.
 #' @param lower.tail  logical; if TRUE (default), probabilities are \eqn{P(X \le x)} otherwise, \eqn{P(X > x)}.

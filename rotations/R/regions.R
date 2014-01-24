@@ -357,7 +357,7 @@ cdfuns<-function(Qs,estimator){
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estimator theory.
 #' 
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation centered at the projected mean
-#' or median based on a result due to \cite{chang2001} amongst others.  By construction each axis will have the same
+#' or median based on a result due to \cite{chang2001} among others.  By construction each axis will have the same
 #' radius so the radius reported is for all three axes.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
@@ -424,7 +424,7 @@ chang.Q4<-function(x,estimator,alp=NULL){
 #'
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
 #' estimator using the method for the mean polar axis as proposed in \cite{fisher1996}.  To be able to reduce their method
-#' to a radius requires the additonal assumption of rotational symmetry, equation (10) in \cite{fisher1996}. 
+#' to a radius requires the additional assumption of rotational symmetry, equation (10) in \cite{fisher1996}. 
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.

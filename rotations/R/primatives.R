@@ -183,17 +183,17 @@ str.Q4<-function(object,...){
 #' 
 #' The rotation group SO(3) is a multiplicative group so ``adding" rotations \eqn{R_1}{R1} and \eqn{R_2}{R2}
 #' results in \eqn{R_1+R_2=R_2R_1}{R1+R2=R2R1}.  Similarly, the difference between rotations \eqn{R_1}{R1} and \eqn{R_2}{R2} is
-#' \eqn{R_1-R_2=R_2^\top R_1}{R1-R2=R2'R1}.  With this definiton it is clear that 
+#' \eqn{R_1-R_2=R_2^\top R_1}{R1-R2=R2'R1}.  With this definition it is clear that 
 #' \eqn{R_1+R_2-R_2=R_2^\top R_2R_1=R_1}{R1+R2-R2=R2'R2R1=R1}.  
 #' If only one rotation is provided to subtraction then the inverse (transpose) it returned, 
 #' e.g. \eqn{-R_2=R_2^\top}{-R2=R2'}.
 #' 
 #' @name Arithmetic
 #' @aliases "+.SO3" "-.SO3" "+.Q4" "-.Q4"
-#' @param x first arguement
-#' @param y second arguement (optional for subtraction)
+#' @param x first argument
+#' @param y second argument (optional for subtraction)
 #' @return  \item{+}{the result of rotating the identity frame through x then y}
-#'          \item{-}{the difference of the rotations, or the inverse rotation of only one arguement is provided}
+#'          \item{-}{the difference of the rotations, or the inverse rotation of only one argument is provided}
 #' @examples
 #' U <- c(1, 0, 0)          #Rotate about the x-axis
 #' R1 <- as.SO3(U, pi/8)    #Rotate pi/8 radians about the x-axis

@@ -49,7 +49,7 @@ mean(Qs)
 \dontrun{
 plot(Qs, col = c(1, 2, 3))}
 
-#Translate the quaternion measurements into rotations and estiamte 
+#Translate the quaternion measurements into rotations and estimate 
 #the central orientation in terms of rotations
 Rs <- as.SO3(Qs)
 mean(Rs)

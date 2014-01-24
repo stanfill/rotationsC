@@ -19,14 +19,14 @@
   \method{-}{Q4} (x, y = NULL)
 }
 \arguments{
-  \item{x}{first arguement}
+  \item{x}{first argument}
 
-  \item{y}{second arguement (optional for subtraction)}
+  \item{y}{second argument (optional for subtraction)}
 }
 \value{
   \item{+}{the result of rotating the identity frame
   through x then y} \item{-}{the difference of the
-  rotations, or the inverse rotation of only one arguement
+  rotations, or the inverse rotation of only one argument
   is provided}
 }
 \description{
@@ -40,7 +40,7 @@
   results in \eqn{R_1+R_2=R_2R_1}{R1+R2=R2R1}.  Similarly,
   the difference between rotations \eqn{R_1}{R1} and
   \eqn{R_2}{R2} is \eqn{R_1-R_2=R_2^\top R_1}{R1-R2=R2'R1}.
-  With this definiton it is clear that
+  With this definition it is clear that
   \eqn{R_1+R_2-R_2=R_2^\top
   R_2R_1=R_1}{R1+R2-R2=R2'R2R1=R1}. If only one rotation is
   provided to subtraction then the inverse (transpose) it
