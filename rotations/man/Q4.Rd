@@ -37,9 +37,9 @@
 \value{
   \item{as.Q4}{coerces its object into an Q4 type.}
   \item{is.Q4}{returns \code{TRUE} or \code{False}
-  depending on whether its argument satisfies the conditions
-  to be an quaternion; namely it must be four-dimensional
-  and of unit length.}
+  depending on whether its argument satisfies the
+  conditions to be an quaternion; namely it must be
+  four-dimensional and of unit length.}
 }
 \description{
   Creates or tests for objects of class "Q4."

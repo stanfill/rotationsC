@@ -53,7 +53,7 @@ setOldClass("Q4")
 #' @param ... additional arguments.
 #' @format \code{id.Q4} is the identity rotation given by the matrix \eqn{[1,0,0,0]^\top}{[1,0,0,0]'}.
 #' @return 	\item{as.Q4}{coerces its object into an Q4 type.} 
-#' 					\item{is.Q4}{returns \code{TRUE} or \code{False} depending on whether its argument satifies the conditions to be an
+#' 					\item{is.Q4}{returns \code{TRUE} or \code{False} depending on whether its argument satisfies the conditions to be an
 #' 					quaternion; namely it must be four-dimensional and of unit length.}
 #' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @examples

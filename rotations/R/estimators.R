@@ -185,7 +185,7 @@ median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix form (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param w vector of weights the same length as the number of rows in x giving the weights to use for elements of x.
-#' @param type string indicating "projectced" or "geometric" type mean estimator.
+#' @param type string indicating "projected" or "geometric" type mean estimator.
 #' @param epsilon stopping rule for the geometric method.
 #' @param maxIter maximum number of iterations allowed before returning most recent estimate.
 #' @param ... only used for consistency with mean.default.

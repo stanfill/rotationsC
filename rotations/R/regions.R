@@ -6,7 +6,7 @@
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param method character string specifying which type of interval to report, "bayes", "eigen" or "moment" based theory.
-#' @param type characted string, "bootstrap" or "theory" are available.  For Bayes regions, give the type of likelihood: "Cayley","Mises" or "Fisher."
+#' @param type character string, "bootstrap" or "theory" are available.  For Bayes regions, give the type of likelihood: "Cayley","Mises" or "Fisher."
 #' @param estimator character string either "mean" or "median."  Note that not all method/type combinations are available for both estimators.
 #' @param alp the alpha level desired, e.g. 0.05 or 0.10.
 #' @param ... additional arguments that are method specific.
@@ -232,7 +232,7 @@ prentice.SO3<-function(x,alp=NULL){
 	return(r)
 }
 
-#' M-estimator theory pivotal boostrap confidence region
+#' M-estimator theory pivotal bootstrap confidence region
 #'
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estimator theory.
 #' 

@@ -39,6 +39,6 @@ all.equal(cRs, Rs - mean(Rs))  #TRUE, center and '-' have the same effect
 
 center(Rs,Rs)                  #n-Identity matrices: If the second argument is of the same dimension
                                #as Rs then each row is centered around the corresponding
-                               #row in the first arguement
+                               #row in the first argument
 }
 
