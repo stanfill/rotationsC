@@ -1,4 +1,4 @@
-#' Confidence and creible regions for the central orientation
+#' Confidence and credible regions for the central orientation
 #'
 #' Find the radius of a \eqn{100(1-\alpha)}\% confidence or credible region for the central orientation based on the projected mean or median.
 #' For more on the currently available methods see \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}},
@@ -165,7 +165,7 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 #' Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the projected mean based on eigenvector based result.
 #'
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
-#' estimator using the method due to \cite{prentice1986}.  For a rotation specific version see \cite{rancourt2000}. The variablity
+#' estimator using the method due to \cite{prentice1986}.  For a rotation specific version see \cite{rancourt2000}. The variability
 #' in each axis is different so each axis will have its own radius. 
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
@@ -234,7 +234,7 @@ prentice.SO3<-function(x,alp=NULL){
 
 #' M-estimator theory pivotal boostrap confidence region
 #'
-#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estiamtor theory.
+#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estimator theory.
 #' 
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
 #' estimator using the method due to Zhang & Nordman (2009) (unpublished MS thesis).  By construction each axis will have the same
@@ -244,7 +244,7 @@ prentice.SO3<-function(x,alp=NULL){
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param estimator character string either "mean" or "median."
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
-#' @param m number of replicates to use to estiamte the critical value.
+#' @param m number of replicates to use to estimate the critical value.
 #' @return Radius of the confidence region centered at the specified estimator.
 #' @seealso \code{\link{bayesCR}}, \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{chang}}
 #' @export

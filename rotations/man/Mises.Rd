@@ -17,7 +17,7 @@
   \item{n}{number of observations.  If \code{length(n)>1},
   the length is taken to be the number required.}
 
-  \item{kappa}{concentration paramter.}
+  \item{kappa}{concentration parameter.}
 
   \item{nu}{circular variance, can be used in place of
   \code{kappa}.}
@@ -46,7 +46,7 @@
   \mathrm{I_0}(\kappa)}e^{\kappa
   cos(r)}.}{C(r|\kappa)=exp[\kappa cos(r)]/[2\pi
   I(\kappa)]} where \eqn{\mathrm{I_0}(\kappa)}{I(\kappa)}
-  is the modified bessel function of order 0.
+  is the modified Bessel function of order 0.
 }
 \examples{
 r <- seq(-pi, pi, length = 500)

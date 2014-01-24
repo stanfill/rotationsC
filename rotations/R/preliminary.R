@@ -121,7 +121,7 @@ rot.dist.Q4 <- function(x, Q2=id.Q4 ,method='extrinsic', p=1,...) {
 #' 
 #' Compute the misorientation angle of a rotation.
 #' 
-#' Every rotation can be thought of as some reference coordinate system rotated about an axis through an angle.  These quantites
+#' Every rotation can be thought of as some reference coordinate system rotated about an axis through an angle.  These quantities
 #' are referred to as the misorientation axis and misorientation angle, respectively, in the material sciences literature.
 #' This function returns the misorentation angle associated with a rotation assuming the reference coordinate system
 #' is the identity.
@@ -176,7 +176,7 @@ mis.angle.Q4 <- function(x){
 #' 
 #' Determine the misorientation axis of a rotation.
 #' 
-#' Every rotation can be interpreted as some reference coordinate system rotated about an axis through an angle.  These quantites
+#' Every rotation can be interpreted as some reference coordinate system rotated about an axis through an angle.  These quantities
 #' are referred to as the misorientation axis and misorientation angle, respectively, in the material sciences literature.
 #' This function returns the misorentation axis associated with a rotation assuming the reference coordinate system
 #' is the identity.

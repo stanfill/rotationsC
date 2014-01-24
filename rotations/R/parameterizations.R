@@ -37,7 +37,7 @@ setOldClass("Q4")
 #' return the quaternion equivalent of \code{x}.  See \code{\link{SO3}} or the vignette "rotations-intro"
 #' for more details on rotation matrices  
 #' 
-#' For \code{x} an n-by-4 matrix, rows are treated as quaternionss; rows that aren't of unit length
+#' For \code{x} an n-by-4 matrix, rows are treated as quaternions; rows that aren't of unit length
 #' are made unit length while the rest are returned untouched.  A message is printed if any of the rows are not quaternions.
 #' 
 #' For \code{x} a \code{"data.frame"} it is translated into a matrix of the same dimension and

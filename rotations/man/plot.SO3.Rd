@@ -24,7 +24,7 @@
   eyeball is labelled with the corresponding axis.}
 
   \item{to_range}{logical; if \code{TRUE} only part of the
-  globe relavent to the data is displayed}
+  globe relevant to the data is displayed}
 
   \item{show_estimates}{character vector to specify which
   of the four estimates of the principal direction to show.
@@ -75,8 +75,8 @@ plot(Rs, center = mean(Rs), show_estimates = c("proj.mean", "geom.mean"),
  scale_size(limits = c(-1, 1), range = c(0.5, 2.5))}
 }
 \references{
-  Wickham H (2009). _ggplot2: elegant graphics for data
-  analysis_. Springer New York. ISBN 978-0-387-98140-6,
-  <URL: http://had.co.nz/ggplot2/book>.
+  Wickham H (2009). ggplot2: elegant graphics for data
+  analysis. Springer New York. ISBN 978-0-387-98140-6,
+  URL: http://had.co.nz/ggplot2/book.
 }
 

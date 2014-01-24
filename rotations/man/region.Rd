@@ -2,7 +2,7 @@
 \alias{region}
 \alias{region.Q4}
 \alias{region.SO3}
-\title{Confidence and creible regions for the central orientation}
+\title{Confidence and credible regions for the central orientation}
 \usage{
   region(x, method, type, estimator, alp, ...)
 
@@ -21,7 +21,7 @@
   interval to report, "bayes", "eigen" or "moment" based
   theory.}
 
-  \item{type}{characted string, "bootstrap" or "theory" are
+  \item{type}{character string, "bootstrap" or "theory" are
   available.  For Bayes regions, give the type of
   likelihood: "Cayley","Mises" or "Fisher."}
 

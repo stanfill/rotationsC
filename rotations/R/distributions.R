@@ -300,7 +300,7 @@ rhaar<-function(n){
 #' 
 #' The circular von Mises distribution with concentration \eqn{\kappa} has density
 #' \deqn{C_\mathrm{M}(r|\kappa)=\frac{1}{2\pi \mathrm{I_0}(\kappa)}e^{\kappa cos(r)}.}{C(r|\kappa)=exp[\kappa cos(r)]/[2\pi I(\kappa)]}
-#' where \eqn{\mathrm{I_0}(\kappa)}{I(\kappa)} is the modified bessel function of order 0.
+#' where \eqn{\mathrm{I_0}(\kappa)}{I(\kappa)} is the modified Bessel function of order 0.
 #'
 #' @name Mises
 #' @aliases Mises dvmises rvmises pvmises
@@ -431,7 +431,7 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #' @aliases UARS puars duars ruars
 #' @param R Value at which to evaluate the UARS density.
 #' @param n number of observations. If \code{length(n)>1}, the length is taken to be the number required.
-#' @param dangle The function to evaulate the angles from, e.g. dcayley, dvmises, dfisher, dhaar.
+#' @param dangle The function to evaluate the angles from, e.g. dcayley, dvmises, dfisher, dhaar.
 #' @param pangle The form of the angular density, e.g. pcayley, pvmises, pfisher, phaar.
 #' @param rangle The function from which to simulate angles, e.g. rcayley, rvmises, rhaar, rfisher.
 #' @param S central orientation of the distribution.

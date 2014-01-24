@@ -37,7 +37,7 @@
 \value{
   \item{as.Q4}{coerces its object into an Q4 type.}
   \item{is.Q4}{returns \code{TRUE} or \code{False}
-  depending on whether its argument satifies the conditions
+  depending on whether its argument satisfies the conditions
   to be an quaternion; namely it must be four-dimensional
   and of unit length.}
 }
@@ -69,7 +69,7 @@
   more details on rotation matrices
 
   For \code{x} an n-by-4 matrix, rows are treated as
-  quaternionss; rows that aren't of unit length are made
+  quaternions; rows that aren't of unit length are made
   unit length while the rest are returned untouched.  A
   message is printed if any of the rows are not
   quaternions.

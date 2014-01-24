@@ -31,7 +31,7 @@
   region for the central orientation based on the projected
   mean estimator using the method due to \cite{Prentice
   (1986)}.  For a rotation specific version see
-  \cite{Rancourt et al. (2000)}. The variablity in each
+  \cite{Rancourt et al. (2000)}. The variability in each
   axis is different so each axis will have its own radius.
 }
 \examples{
@@ -49,8 +49,8 @@ prentice(Qs, alp = 0.1)
 
   Rancourt D, Rivest L and Asselin J (2000). "Using
   orientation statistics to investigate variations in human
-  kinematics." _Journal of the Royal Statistical Society:
-  Series C (Applied Statistics)_, *49*(1), pp. 81-94.
+  kinematics." Journal of the Royal Statistical Society:
+  Series C (Applied Statistics), 49(1), pp. 81-94.
 }
 \seealso{
   \code{\link{bayesCR}}, \code{\link{fisheretal}},
