@@ -182,7 +182,7 @@ mis.angle.Q4 <- function(x){
 #' is the identity.
 #' 
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
-#' @param ... additional arguements.
+#' @param ... additional arguments.
 #' @return Axis in form of three dimensional vector of length one.
 #' @seealso \code{\link{mis.angle}}
 #' @export
@@ -387,10 +387,10 @@ skew.exp <- function(x) {
 #'
 #' Compute the logarithm of a rotation matrix, which results in a \eqn{3\times 3}{3-by-3} skew-symmetric matrix.  This function maps
 #' the lie group \eqn{SO(3)} into its tangent space, which is the space of all \eqn{3\times 3}{3-by-3} skew symmetric matrices,
-#' the lie algerbra \eqn{so(3)}.  For details see e.g. \cite{moakher02}.
+#' the lie algebra \eqn{so(3)}.  For details see e.g. \cite{moakher02}.
 #'
 #' @param x \eqn{n\times 9}{n-by-9} matrix where each row corresponds to a random rotation matrix.
-#' @param ... additional arguements.
+#' @param ... additional arguments.
 #' @return Skew symmetric matrix \eqn{\log(R)}{log(R)}.
 #' @cite moakher02
 #' @S3method log SO3
@@ -535,7 +535,7 @@ rotdist.sum.Q4 <- function(x, S = id.Q4, method='extrinsic', p=1) {
 #'                                
 #' center(Rs,Rs)                  #n-Identity matrices: If the second argument is of the same dimension
 #'                                #as Rs then each row is centered around the corresponding
-#'                                #row in the first arguement
+#'                                #row in the first argument
 
 center<-function(x,S){
   

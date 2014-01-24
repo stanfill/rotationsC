@@ -8,7 +8,7 @@
   \item{x}{\eqn{n\times 9}{n-by-9} matrix where each row
   corresponds to a random rotation matrix.}
 
-  \item{...}{additional arguements.}
+  \item{...}{additional arguments.}
 }
 \value{
   Skew symmetric matrix \eqn{\log(R)}{log(R)}.
@@ -18,7 +18,7 @@
   in a \eqn{3\times 3}{3-by-3} skew-symmetric matrix.  This
   function maps the lie group \eqn{SO(3)} into its tangent
   space, which is the space of all \eqn{3\times 3}{3-by-3}
-  skew symmetric matrices, the lie algerbra \eqn{so(3)}.
+  skew symmetric matrices, the lie algebra \eqn{so(3)}.
   For details see e.g. \cite{Moakher (2002)}.
 }
 \examples{
@@ -37,7 +37,7 @@ all.equal(angs, lens)
 }
 \references{
   Moakher M (2002). "Means and averaging in the group of
-  rotations." _SIAM Journal on Matrix Analysis and
-  Applications_, *24*(1), pp. 1-16.
+  rotations." SIAM Journal on Matrix Analysis and
+  Applications, 24(1), pp. 1-16.
 }
 
