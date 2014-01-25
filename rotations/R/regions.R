@@ -23,8 +23,9 @@
 #' region(Rs, method = 'eigen', type = 'bootstrap', estimator = 'mean', alp = 0.1, symm = TRUE)
 #' region(Rs, method = 'moment', type = 'bootstrap', estimator = 'mean', alp = 0.1, m = 100)
 #' region(Rs, method = 'moment', type = 'theory', estimator = 'mean', alp = 0.1)
+#' \dontrun{
 #' region(Rs, method = 'Bayes', type = 'Mises', estimator = 'mean',
-#'        S0 = mean(Rs), kappa0 = 10, tuneS = 5000, tuneK = 1, burn_in = 100, alp = .01, m = 100)
+#'        S0 = mean(Rs), kappa0 = 10, tuneS = 5000, tuneK = 1, burn_in = 1000, alp = .01, m = 5000)}
 
 region<-function(x,method, type, estimator,alp,...){
 	UseMethod("region")
