@@ -22,7 +22,7 @@ Imports:
     utils,
     methods
 Suggests:
-    gridExtra, knitr, onion, orientlib, testthat
+    gridExtra, knitr, onion, orientlib
 LinkingTo: Rcpp, RcppArmadillo
 VignetteBuilder: knitr
 Collate:
