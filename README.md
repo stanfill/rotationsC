@@ -42,7 +42,3 @@ library(rotations)
 
 * Arithmetic for `SO3` objects now is possible for samples of rotations
 
-*intervals*
---------------------------------------------------------
-This folder contains the code necessary to run the simulations for the confidence region research
-
