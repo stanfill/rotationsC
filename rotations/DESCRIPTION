@@ -24,7 +24,7 @@ Imports:
     methods,
     sphereplot
 Suggests:
-    gridExtra, knitr, onion, orientlib, rgl, sphereplot
+    gridExtra, knitr, onion, orientlib
 LinkingTo: Rcpp, RcppArmadillo
 VignetteBuilder: knitr
 Collate:
