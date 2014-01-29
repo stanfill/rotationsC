@@ -110,6 +110,7 @@ pointsXYZ <- function(data, center=id.SO3, column=1) {
 #' @param median_regions character vector to specify which of the three confidence regions to show for the projected median.  Possibilities are "all", "theory", "bootstrap."
 #' @param alp alpha level to be used for confidence regions.
 #' @param m number of bootstrap replicates to use in Zhang confidence region.
+#' @param interactive logical; if \code{TRUE} \code{sphereplot} is used to create interactive 3D plot
 #' @param ... parameters passed onto the points layer.
 #' @return  A \code{ggplot2} object with the data displayed on spherical grid.
 #' @aliases plot.Q4
@@ -127,12 +128,14 @@ pointsXYZ <- function(data, center=id.SO3, column=1) {
 #' # Z is computed internally and contains information on depth
 #' plot(Rs, center = mean(Rs), show_estimates = c("proj.mean", "geom.mean"), 
 #'  label_points = sample(LETTERS, 200, replace = TRUE)) + aes(size = Z, alpha = Z) + 
-#'  scale_size(limits = c(-1, 1), range = c(0.5, 2.5))}
+#'  scale_size(limits = c(-1, 1), range = c(0.5, 2.5))
+#'  
+#' plot(Rs,center=mean(Rs),interactive=T)}
 
-plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300,  ...) {
+plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300, interactive=FALSE,  ...) {
 
   if(length(col)>1){
-    mplotSO3(x, center=center, col=col, to_range=to_range, show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,...)
+    mplotSO3(x, center=center, col=col, to_range=to_range, show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,interactive=FALSE,...)
   }else{
   
   Rs <- as.SO3(x)
@@ -154,7 +157,8 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 	estimates <- NULL
   regs<-NULL
 	regsMed<-NULL
-	
+	estDF<-NULL
+  
 	if (!is.null(show_estimates)) {
 		ShatP <- StildeP <- ShatG <- StildeG <- NA
 		if(any(show_estimates%in%c('all','All'))) show_estimates<-c("proj.mean","proj.median","geom.mean","geom.median")
@@ -180,10 +184,12 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 		
 		if(!is.null(mean_regions) || !is.null(median_regions)){
 			vals<-3:(2+nrow(Shats)) #Make the shapes noticable, 15:18
-			estimates <- list(geom_point(aes(x=X, y=Y, shape=Est),size=3.5, data=data.frame(pointsXYZ(Shats[,1:9], center=center, column=col), Shats)),
+			estDF<-pointsXYZ(Shats[,1:9], center=center, column=col)
+			estimates <- list(geom_point(aes(x=X, y=Y, shape=Est),size=3.5, data=data.frame(estDF, Shats)),
 												scale_shape_manual(name="Estimates", labels=Estlabels,values=vals))
 		}else{
-			estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(pointsXYZ(Shats[,1:9], center=center, column=col), Shats)),
+		  estDF<-pointsXYZ(Shats[,1:9], center=center, column=col)
+			estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(estDF, Shats)),
 												scale_colour_brewer(name="Estimates", palette="Paired", labels=Estlabels))
 		}
 	}
@@ -242,17 +248,34 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 		
 	}
 	
-	labels <- NULL
-	if (!is.null(label_points)) {
-		proj2d$labels <- label_points
-		labels <- geom_text(aes(x=X+0.05, y=Y, label=labels), size=3.25, data=proj2d, ...) 
-	}
-	base + geom_point(aes(x=X, y=Y), data=proj2d, ...) + 
-		labels + 
-		estimates +
-    regs+
-		regsMed+
-		xlim(xlimits) + ylim(ylimits)
+  if(interactive){
+    
+    rgl.sphgrid()
+    pts <- car2sph(proj2d)
+    rgl.sphpoints(pts,deg=T)
+    
+    if(!is.null(estDF)){
+      estpts <- car2sph(estDF)
+      rgl.sphpoints(estpts,deg=T,col=c(2:(nrow(estDF)+1)))
+    }
+    
+    if(!is.null(label_points))
+      rgl.sphtext(pts,text=label_points)
+    
+  }else{
+    labels <- NULL
+    if (!is.null(label_points)) {
+      proj2d$labels <- label_points
+      labels <- geom_text(aes(x=X+0.05, y=Y, label=labels), size=3.25, data=proj2d, ...) 
+    }
+    
+	  base + geom_point(aes(x=X, y=Y), data=proj2d, ...) + 
+		  labels + 
+		  estimates +
+      regs+
+		  regsMed+
+	    xlim(xlimits) + ylim(ylimits)
+    }
   }
 }
 
@@ -270,7 +293,7 @@ g_legend<-function(a.gplot){
 
 #If more then one column is called in plot.SO3 then this is called to independencly create an eyeball for each column
 #and print them in a single row with the legend at the end, if applicable.
-mplotSO3<-function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300,  ...){
+mplotSO3<-function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300,interactive=FALSE,  ...){
   
   p4<-NULL
   if(1 %in% col){
@@ -326,7 +349,7 @@ mplotSO3<-function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL
 #' @method plot Q4
 #' @export
 
-plot.Q4 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300,  ...) {
+plot.Q4 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300, interactive=FALSE,  ...) {
   Rs<-as.SO3(x)
   center<-as.SO3(center)
   plot(Rs, center=center, col=col, to_range=to_range, show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,  ...)
