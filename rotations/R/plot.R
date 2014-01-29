@@ -353,15 +353,17 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
       label_points<-c(label_points,rep("",nrow(pts)-length(label_points)))
       rgl.sphtext(pts,text=label_points)
     }
-    
+    numRegs<-0
     if(!is.null(meanregDF)){
       meanregpts <- car2sph(meanregDF)
-      rgl.sphpoints(meanregpts,deg=T,col=2)
+      numRegs<-nrow(Regions)
+      rgl.sphpoints(meanregpts,deg=T,col=rep((1:numRegs)+1,each=500))
     }
     
     if(!is.null(medianregDF)){
       medregpts <- car2sph(medianregDF)
-      rgl.sphpoints(medregpts,deg=T,col=3)
+      numRegs2<-nrow(MedRegions)
+      rgl.sphpoints(medregpts,deg=T,col=rep((1:numRegs2)+1+numRegs,each=500))
     }
     
   }else{
