@@ -259,8 +259,10 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
       rgl.sphpoints(estpts,deg=T,col=c(2:(nrow(estDF)+1)))
     }
     
-    if(!is.null(label_points))
+    if(!is.null(label_points)){
+      label_points<-c(label_points,rep("",nrow(pts)-length(label_points)))
       rgl.sphtext(pts,text=label_points)
+    }
     
   }else{
     labels <- NULL
