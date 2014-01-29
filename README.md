@@ -15,7 +15,7 @@ library(rotations)
 
 * The `plot.SO3` function now has an `interactive` option that renders 3D plots of the supplied data using the `rgl` and `sphereplot` packages.  Currently, all options available for the static `ggplot2` plots are availble for the interactive plots, but only one column can be displayed at a time.  As an example see
 
-```{r}
+```
 library(rotations)
 Rs<-ruars(20,rcayley,kappa=10)
 plot(Rs,show_estimates='proj.mean', mean_region='moment theory',alp=.1,intractive=FALSE)
