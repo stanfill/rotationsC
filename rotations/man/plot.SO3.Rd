@@ -6,12 +6,14 @@
   \method{plot}{SO3} (x, center = mean(x), col = 1,
     to_range = FALSE, show_estimates = NULL,
     label_points = NULL, mean_regions = NULL,
-    median_regions = NULL, alp = NULL, m = 300, ...)
+    median_regions = NULL, alp = NULL, m = 300,
+    interactive = FALSE, ...)
 
   \method{plot}{Q4} (x, center = mean(x), col = 1,
     to_range = FALSE, show_estimates = NULL,
     label_points = NULL, mean_regions = NULL,
-    median_regions = NULL, alp = NULL, m = 300, ...)
+    median_regions = NULL, alp = NULL, m = 300,
+    interactive = FALSE, ...)
 }
 \arguments{
   \item{x}{n rotations in \code{SO3} format.}
@@ -48,6 +50,9 @@
   \item{m}{number of bootstrap replicates to use in Zhang
   confidence region.}
 
+  \item{interactive}{logical; if \code{TRUE}
+  \code{sphereplot} is used to create interactive 3D plot}
+
   \item{...}{parameters passed onto the points layer.}
 }
 \value{
@@ -72,11 +77,13 @@ plot(Rs, center = mean(Rs), show_estimates = "proj.mean", shape = 4)
 # Z is computed internally and contains information on depth
 plot(Rs, center = mean(Rs), show_estimates = c("proj.mean", "geom.mean"),
  label_points = sample(LETTERS, 200, replace = TRUE)) + aes(size = Z, alpha = Z) +
- scale_size(limits = c(-1, 1), range = c(0.5, 2.5))}
+ scale_size(limits = c(-1, 1), range = c(0.5, 2.5))
+
+plot(Rs,center=mean(Rs),interactive=T)}
 }
 \references{
-  Wickham H (2009). ggplot2: elegant graphics for data
-  analysis. Springer New York. ISBN 978-0-387-98140-6,
-  URL: http://had.co.nz/ggplot2/book.
+  Wickham H (2009). _ggplot2: elegant graphics for data
+  analysis_. Springer New York. ISBN 978-0-387-98140-6,
+  <URL: http://had.co.nz/ggplot2/book>.
 }
 

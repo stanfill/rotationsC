@@ -1,7 +1,7 @@
 Package: rotations
 Type: Package
 Title: Tools for Working with Rotation Data
-Version: 1.0
+Version: 1.1
 Author: Bryan Stanfill <stanfill@iastate.edu>, Heike Hofmann
     <hofmann@iastate.edu>, Ulrike Genschel <ulrike@iastate.edu>
 Maintainer: Bryan Stanfill <stanfill@iastate.edu>
