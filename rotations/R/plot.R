@@ -248,7 +248,6 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 		
 		levels(Shats$Est) <- Estlabels
 		
-		
 		rmNA<-which(!is.na(Shats$X1))
 		NAs<-c(1:4)[-rmNA]
 		Shats<-na.omit(Shats)
@@ -261,6 +260,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
       
       if(interactive){
         estDF<-pointsXYZ(Shats[,1:9],center=center,column=col)
+        estDF$lab<-c("P-Mean","P-Median","G-Mean","G-Median")[rmNA]
       }else{
         estDF<-pointsXYZ_plot(Shats[,1:9], center=center, column=col)
 			  estimates <- list(geom_point(aes(x=X, y=Y, shape=Est),size=3.5, data=data.frame(estDF, Shats)),
@@ -269,6 +269,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 		}else{
       if(interactive){
         estDF<-pointsXYZ(Shats[,1:9],center=center,column=col)
+        estDF$lab<-c("P-Mean","P-Median","G-Mean","G-Median")[rmNA]
       }else{
 		    estDF<-pointsXYZ_plot(Shats[,1:9], center=center, column=col)
 			  estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(estDF, Shats)),
@@ -345,8 +346,11 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
     rgl.sphpoints(pts,deg=T)
     
     if(!is.null(estDF)){
-      estpts <- car2sph(estDF)
+      estpts <- car2sph(estDF[,-4])
       rgl.sphpoints(estpts,deg=T,col=c(2:(nrow(estDF)+1)))
+      
+      #Legend
+      text3d(x=1, y=c(.8,1,1.2,1.4)[rmNA], z=1, estDF$lab ,col=c(2:(nrow(estDF)+1)))
     }
     
     if(!is.null(label_points)){
