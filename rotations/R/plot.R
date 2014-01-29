@@ -79,6 +79,25 @@ roteye <- function(origin, center, column=1) {
 pointsXYZ <- function(data, center=id.SO3, column=1) {
   
   data<-as.SO3(data)
+  #data<-matrix(data,ncol=9)
+  center<-as.SO3(center)
+  data<-data-center
+  data<-matrix(data,ncol=9)
+  
+  idx <- list(1:3,4:6,7:9)[[column]]
+  data <- matrix(data[,idx],ncol=3)
+  
+  psample1 <- data.frame(data)
+  names(psample1) <- c("X","Y","Z")
+  
+  #  psample1 <- data.frame(psample1, data)
+  #  psample1 <- psample1[order(psample1$Z, decreasing=FALSE),]
+  psample1  
+}
+
+pointsXYZ_plot <- function(data, center=id.SO3, column=1) {
+  
+  data<-as.SO3(data)
   data<-matrix(data,length(data)/9,9)
   center<-matrix(as.SO3(center),3,3)
   
@@ -94,6 +113,47 @@ pointsXYZ <- function(data, center=id.SO3, column=1) {
 	psample1  
 }
 
+#This is a modified rgl.sphgrid that I use to create interactive plots
+rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap = 15, 
+                        longtype = "H", add = FALSE) {
+  if (add == F) {
+    open3d()
+  }
+  for (lat in seq(-90, 90, by = deggap)) {
+    if (lat == 0) {
+      col.grid = "grey50"
+    }
+    else {
+      col.grid = "grey"
+    }
+    plot3d(sph2car(long = seq(0, 360, len = 100), lat = lat, 
+                   radius = radius, deg = T), col = col.grid, add = T, 
+           type = "l")
+  }
+  for (long in seq(0, 360 - deggap, by = deggap)) {
+    if (long == 0) {
+      col.grid = "grey50"
+    }
+    else {
+      col.grid = "grey"
+    }
+    plot3d(sph2car(long = long, lat = seq(-90, 90, len = 100), 
+                   radius = radius, deg = T), col = col.grid, add = T, 
+           type = "l")
+  }
+  if (longtype == "H") {
+    scale = 15
+  }
+  if (longtype == "D") {
+    scale = 1
+  }
+  #Remove logitude and latitude signifiers
+  #rgl.sphtext(long = 0, lat = seq(-90, 90, by = deggap), radius = radius, 
+  #            text = seq(-90, 90, by = deggap), deg = TRUE, col = col.lat)
+  #rgl.sphtext(long = seq(0, 360 - deggap, by = deggap), lat = 0, 
+  #            radius = radius, text = seq(0, 360 - deggap, by = deggap)/scale, 
+  #            deg = TRUE, col = col.long)
+}
 
 #' Visualizing random rotations.
 #'
@@ -147,7 +207,13 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 	
 	X <- Y <- Est <- NULL
   center<-matrix(center,3,3)
-	proj2d <- pointsXYZ(Rs, center=center, column=col)
+  
+  if(interactive){
+    proj2d <- pointsXYZ(Rs, center=center, column=col)
+  }else{
+	  proj2d <- pointsXYZ_plot(Rs, center=center, column=col)
+  }
+  
 	if(to_range) {
 		xlimits <- range(proj2d$X)
 		ylimits <- range(proj2d$Y)
@@ -192,13 +258,22 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 		
 		if(!is.null(mean_regions) || !is.null(median_regions)){
 			vals<-3:(2+nrow(Shats)) #Make the shapes noticable, 15:18
-			estDF<-pointsXYZ(Shats[,1:9], center=center, column=col)
-			estimates <- list(geom_point(aes(x=X, y=Y, shape=Est),size=3.5, data=data.frame(estDF, Shats)),
+      
+      if(interactive){
+        estDF<-pointsXYZ(Shats[,1:9],center=center,column=col)
+      }else{
+        estDF<-pointsXYZ_plot(Shats[,1:9], center=center, column=col)
+			  estimates <- list(geom_point(aes(x=X, y=Y, shape=Est),size=3.5, data=data.frame(estDF, Shats)),
 												scale_shape_manual(name="Estimates", labels=Estlabels,values=vals))
+      }
 		}else{
-		  estDF<-pointsXYZ(Shats[,1:9], center=center, column=col)
-			estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(estDF, Shats)),
+      if(interactive){
+        estDF<-pointsXYZ(Shats[,1:9],center=center,column=col)
+      }else{
+		    estDF<-pointsXYZ_plot(Shats[,1:9], center=center, column=col)
+			  estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(estDF, Shats)),
 												scale_colour_brewer(name="Estimates", palette="Paired", labels=Estlabels))
+      }
 		}
 	}
   
@@ -225,9 +300,12 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
       if(col==3)
 	      cisp.boot <- rbind(cisp.boot,t(replicate(500, as.SO3(c(runif(2,-1,1),0), Regions$X1[i]),simplify="matrix")))
     }
-	  meanregDF<-pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col)
-	  regs <- geom_point(aes(x=X, y=Y,colour=Regions), data=data.frame(meanregDF,Regions=rep(Regions$Meth,each=500)))
-
+    if(interactive){
+      meanregDF<-pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col)
+    }else{
+	    meanregDF<-pointsXYZ_plot(cisp.boot, center=t(mean(Rs))%*%center, column=col)
+	    regs <- geom_point(aes(x=X, y=Y,colour=Regions), data=data.frame(meanregDF,Regions=rep(Regions$Meth,each=500)))
+    }
 	}
   
 	if (!is.null(median_regions)) {
@@ -251,15 +329,18 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 			if(col==3)
 				cisp.boot <- rbind(cisp.boot,t(replicate(500, as.SO3(c(runif(2,-1,1),0), MedRegions$X1[i]),simplify="matrix")))
 		}
-		medianregDF<-pointsXYZ(cisp.boot, center=t(median(Rs))%*%center, column=col)
-		regsMed <- geom_point(aes(x=X, y=Y,colour=Regions), data=data.frame(medianregDF,Regions=rep(MedRegions$Meth,each=500)))
-		
+    if(interactive){
+      medianregDF<-pointsXYZ(cisp.boot, center=t(median(Rs))%*%center, column=col)
+    }else{
+		  medianregDF<-pointsXYZ_plot(cisp.boot, center=t(median(Rs))%*%center, column=col)
+		  regsMed <- geom_point(aes(x=X, y=Y,colour=Regions), data=data.frame(medianregDF,Regions=rep(MedRegions$Meth,each=500)))
+    }
 	}
 	
   if(interactive){
     require(rgl)
     require(sphereplot)
-    rgl.sphgrid()
+    rgl.sphgrid2(deggap=22.5)
     pts <- car2sph(proj2d)
     rgl.sphpoints(pts,deg=T)
     

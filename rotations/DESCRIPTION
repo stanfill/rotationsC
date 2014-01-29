@@ -22,7 +22,7 @@ Imports:
     utils,
     methods
 Suggests:
-    gridExtra, knitr, onion, orientlib, rgl, sphereplot,testthat
+    gridExtra, knitr, onion, orientlib, rgl, sphereplot, testthat
 LinkingTo: Rcpp, RcppArmadillo
 VignetteBuilder: knitr
 Collate:
