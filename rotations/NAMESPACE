@@ -1,11 +1,7 @@
 useDynLib(rotations)
 importFrom(utils,head)
 importFrom(stats,weighted.mean)
-importFrom(sphereplot,rgl.sphgrid)
-importFrom(sphereplot,rgl.sphpoints)
-importFrom(sphereplot,car2sph)
-importFrom(sphereplot,rgl.sphtext)
-import(methods,Rcpp,ggplot2,grid,rgl)
+import(methods,Rcpp,ggplot2,grid)
 
 S3method("+",Q4)
 S3method("+",SO3)

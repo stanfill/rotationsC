@@ -15,16 +15,14 @@ License: MIT + file LICENSE
 Depends:
     R (>= 3.0),
     ggplot2,
-    Rcpp,
-    rgl
+    Rcpp
 Imports:
     grid,
     stats,
     utils,
-    methods,
-    sphereplot
+    methods
 Suggests:
-    gridExtra, knitr, onion, orientlib
+    gridExtra, knitr, onion, orientlib, rgl, sphereplot,testthat
 LinkingTo: Rcpp, RcppArmadillo
 VignetteBuilder: knitr
 Collate:

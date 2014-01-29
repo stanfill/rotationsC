@@ -257,7 +257,8 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 	}
 	
   if(interactive){
-    
+    require(rgl)
+    require(sphereplot)
     rgl.sphgrid()
     pts <- car2sph(proj2d)
     rgl.sphpoints(pts,deg=T)
