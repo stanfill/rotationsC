@@ -133,7 +133,10 @@ pointsXYZ <- function(data, center=id.SO3, column=1) {
 #' plot(Rs,center=mean(Rs),interactive=T)}
 
 plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300, interactive=FALSE,  ...) {
-
+  
+  if(interactive)
+    col<-col[1]   #For interactive plots only one column can be displayed at a time
+  
   if(length(col)>1){
     mplotSO3(x, center=center, col=col, to_range=to_range, show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,interactive=FALSE,...)
   }else{
@@ -154,10 +157,15 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 		ylimits <- ybar + 1.1*(ylimits-ybar)
 	}
 	
+  #Static plot objects
 	estimates <- NULL
   regs<-NULL
 	regsMed<-NULL
-	estDF<-NULL
+  
+  #Interactive plot objects
+  estDF<-NULL
+  meanregDF<-NULL
+  medianregDF<-NULL
   
 	if (!is.null(show_estimates)) {
 		ShatP <- StildeP <- ShatG <- StildeG <- NA
@@ -217,8 +225,8 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
       if(col==3)
 	      cisp.boot <- rbind(cisp.boot,t(replicate(500, as.SO3(c(runif(2,-1,1),0), Regions$X1[i]),simplify="matrix")))
     }
-	  
-	  regs <- geom_point(aes(x=X, y=Y,colour=Regions), data=data.frame(pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col),Regions=rep(Regions$Meth,each=500)))
+	  meanregDF<-pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col)
+	  regs <- geom_point(aes(x=X, y=Y,colour=Regions), data=data.frame(meanregDF,Regions=rep(Regions$Meth,each=500)))
 
 	}
   
@@ -243,8 +251,8 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 			if(col==3)
 				cisp.boot <- rbind(cisp.boot,t(replicate(500, as.SO3(c(runif(2,-1,1),0), MedRegions$X1[i]),simplify="matrix")))
 		}
-		
-		regsMed <- geom_point(aes(x=X, y=Y,colour=Regions), data=data.frame(pointsXYZ(cisp.boot, center=t(median(Rs))%*%center, column=col),Regions=rep(MedRegions$Meth,each=500)))
+		medianregDF<-pointsXYZ(cisp.boot, center=t(median(Rs))%*%center, column=col)
+		regsMed <- geom_point(aes(x=X, y=Y,colour=Regions), data=data.frame(medianregDF,Regions=rep(MedRegions$Meth,each=500)))
 		
 	}
 	
@@ -262,6 +270,16 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
     if(!is.null(label_points)){
       label_points<-c(label_points,rep("",nrow(pts)-length(label_points)))
       rgl.sphtext(pts,text=label_points)
+    }
+    
+    if(!is.null(meanregDF)){
+      meanregpts <- car2sph(meanregDF)
+      rgl.sphpoints(meanregpts,deg=T,col=2)
+    }
+    
+    if(!is.null(medianregDF)){
+      medregpts <- car2sph(medianregDF)
+      rgl.sphpoints(medregpts,deg=T,col=3)
     }
     
   }else{
