@@ -232,6 +232,8 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
   estDF<-NULL
   meanregDF<-NULL
   medianregDF<-NULL
+  MedRegions<-NULL
+  Regions<-NULL
   
 	if (!is.null(show_estimates)) {
 		ShatP <- StildeP <- ShatG <- StildeG <- NA
@@ -260,7 +262,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
       
       if(interactive){
         estDF<-pointsXYZ(Shats[,1:9],center=center,column=col)
-        estDF$lab<-c("P-Mean","P-Median","G-Mean","G-Median")[rmNA]
+        estDF$lab<-c("Projected\nMean","Projected\nMedian","Geometric\nMean","Geometric\nMedian")[rmNA]
       }else{
         estDF<-pointsXYZ_plot(Shats[,1:9], center=center, column=col)
 			  estimates <- list(geom_point(aes(x=X, y=Y, shape=Est),size=3.5, data=data.frame(estDF, Shats)),
@@ -269,7 +271,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 		}else{
       if(interactive){
         estDF<-pointsXYZ(Shats[,1:9],center=center,column=col)
-        estDF$lab<-c("P-Mean","P-Median","G-Mean","G-Median")[rmNA]
+        estDF$lab<-c("Projected\nMean","Projected\nMedian","Geometric\nMean","Geometric\nMedian")[rmNA]
       }else{
 		    estDF<-pointsXYZ_plot(Shats[,1:9], center=center, column=col)
 			  estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(estDF, Shats)),
@@ -345,30 +347,46 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
     pts <- car2sph(proj2d)
     rgl.sphpoints(pts,deg=T)
     
+    if(!is.null(estDF)||!is.null(meanregDF)||!is.null(medianregDF))
+      plot.new()
+    
     if(!is.null(estDF)){
       estpts <- car2sph(estDF[,-4])
       rgl.sphpoints(estpts,deg=T,col=c(2:(nrow(estDF)+1)))
       
       #Legend
-      text3d(x=1, y=c(.8,1,1.2,1.4)[rmNA], z=1, estDF$lab ,col=c(2:(nrow(estDF)+1)))
+      #text3d(x=1, y=c(.8,1,1.2,1.4)[rmNA], z=1, estDF$lab ,col=c(2:(nrow(estDF)+1)))
+      legend('topleft',estDF$lab,col=c(2:(nrow(estDF)+1)),pch=19,title='Estimators')
     }
     
     if(!is.null(label_points)){
       label_points<-c(label_points,rep("",nrow(pts)-length(label_points)))
       rgl.sphtext(pts,text=label_points)
     }
+    
     numRegs<-0
-    if(!is.null(meanregDF)){
-      meanregpts <- car2sph(meanregDF)
-      numRegs<-nrow(Regions)
-      rgl.sphpoints(meanregpts,deg=T,col=rep((1:numRegs)+1,each=500))
+    
+    if(!is.null(meanregDF)||!is.null(medianregDF)){
+      regDF<-rbind(meanregDF,medianregDF)
+      
+      regpts <- car2sph(regDF)
+      numRegs<-nrow(regpts)/500
+      rgl.sphpoints(regpts,deg=T,col=rep((1:numRegs)+1,each=500))
+      
+      #Confidence region legend
+      legend('topright',c(as.character(Regions$Meth),as.character(MedRegions$Meth)),
+             col=c((1:numRegs)+1),lty=19,title='Confidence Regions',lwd=2)
+      
     }
     
-    if(!is.null(medianregDF)){
-      medregpts <- car2sph(medianregDF)
-      numRegs2<-nrow(MedRegions)
-      rgl.sphpoints(medregpts,deg=T,col=rep((1:numRegs2)+1+numRegs,each=500))
-    }
+    #if(!is.null(medianregDF)){
+    #  medregpts <- car2sph(medianregDF)
+    #  numRegs2<-nrow(MedRegions)
+    #  rgl.sphpoints(medregpts,deg=T,col=rep((1:numRegs2)+1+numRegs,each=500))
+      
+    #  legend(.66,1,MedRegions$Meth,col=c((1:numRegs2)+1+numRegs),lty=19,title='Median Regions')
+      
+    #}
     
   }else{
     labels <- NULL
