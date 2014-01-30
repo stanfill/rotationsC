@@ -262,7 +262,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
       
       if(interactive){
         estDF<-pointsXYZ(Shats[,1:9],center=center,column=col)
-        estDF$lab<-c("Projected\nMean","Projected\nMedian","Geometric\nMean","Geometric\nMedian")[rmNA]
+        estDF$lab<-c("Proj. Mean","Proj. Median","Geom. Mean","Geom. Median")[rmNA]
       }else{
         estDF<-pointsXYZ_plot(Shats[,1:9], center=center, column=col)
 			  estimates <- list(geom_point(aes(x=X, y=Y, shape=Est),size=3.5, data=data.frame(estDF, Shats)),
@@ -271,7 +271,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 		}else{
       if(interactive){
         estDF<-pointsXYZ(Shats[,1:9],center=center,column=col)
-        estDF$lab<-c("Projected\nMean","Projected\nMedian","Geometric\nMean","Geometric\nMedian")[rmNA]
+        estDF$lab<-c("Proj. Mean","Proj. Median","Geom. Mean","Geom. Median")[rmNA]
       }else{
 		    estDF<-pointsXYZ_plot(Shats[,1:9], center=center, column=col)
 			  estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(estDF, Shats)),
