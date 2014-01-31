@@ -344,7 +344,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
     require(sphereplot)
     rgl.sphgrid2(deggap=22.5)
     pts <- car2sph(proj2d)
-    rgl.sphpoints(pts,deg=T)
+    rgl.sphpoints(pts,deg=T,size=4)
     
     if(!is.null(estDF)||!is.null(meanregDF)||!is.null(medianregDF))
       plot.new()
@@ -352,22 +352,11 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
     if(!is.null(estDF)){
       estpts <- car2sph(estDF[,-4])
       
-      if(!is.null(meanregDF)||!is.null(medianregDF)){
-        
-        rgl.sphpoints(estpts,deg=T,pch=c(2:(nrow(estDF)+1)),col=1)
-        
-        #Legend
-        #text3d(x=1, y=c(.8,1,1.2,1.4)[rmNA], z=1, estDF$lab ,col=c(2:(nrow(estDF)+1)))
-        legend('topleft',estDF$lab,pch=c(2:(nrow(estDF)+1)),col=1,title='Estimators')
-        
-      }else{
+      rgl.sphpoints(estpts,deg=T,col=c(2:(nrow(estDF)+1)),size=5)
       
-        rgl.sphpoints(estpts,deg=T,col=c(2:(nrow(estDF)+1)))
-      
-        #Legend
-        #text3d(x=1, y=c(.8,1,1.2,1.4)[rmNA], z=1, estDF$lab ,col=c(2:(nrow(estDF)+1)))
-        legend('topleft',estDF$lab,col=c(2:(nrow(estDF)+1)),pch=19,title='Estimators')
-      }
+      #Legend
+      #text3d(x=1, y=c(.8,1,1.2,1.4)[rmNA], z=1, estDF$lab ,col=c(2:(nrow(estDF)+1)))
+      legend('topleft',estDF$lab,col=c(2:(nrow(estDF)+1)),pch=19,title='Estimators')
     }
     
     if(!is.null(label_points)){
