@@ -155,28 +155,28 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
   #            deg = TRUE, col = col.long)
 }
 
-#' Visualizing random rotations.
+#' Visualizing random rotations
 #'
-#' This function produces a three-dimensional globe onto which  one of the  columns of the provided sample of rotations is drawn.  The data are centered around a provided
-#' matrix and the user can choose to display this center or not.  Based on \code{ggplot2} package by \cite{wickham09}.
+#' This function produces an interactive or static three-dimensional globe onto which  one of the  columns of the provided sample of rotations is plotted.  The data are centered around a user-specified
+#' rotation matrix.  The interactive plot is based on the \code{\link{sphereplot}} package and the static plot uses \code{\link{ggplot2}}.
 #'
-#' @param x n rotations in \code{SO3} format.
+#' @param x n rotations in \code{SO3} or \code{Q4} format.
 #' @param center rotation about which to center the observations.
-#' @param col integer or vector 1 to 3 indicating which column(s) to display.  If \code{length(col)>1} then each eyeball is labelled with the corresponding axis.
+#' @param col integer or vector comprised of 1, 2, 3 indicating which column(s) to display.  If \code{length(col)>1} then each eyeball is labelled with the corresponding axis.
 #' @param to_range logical; if \code{TRUE} only part of the globe relevant to the data is displayed
-#' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "geom.mean", "geom.median."
+#' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "geom.mean", "geom.median".
 #' @param label_points  vector of labels.
-#' @param mean_regions character vector to specify which of the three confidence regions to show for the projected mean.  Possibilities are "all", "eigen theory","eigen bootstrap, "moment theory", "moment bootstrap."
+#' @param mean_regions character vector to specify which of the three confidence regions to show for the projected mean.  Possibilities are "all", "eigen theory","eigen bootstrap, "moment theory", "moment bootstrap".
 #' @param median_regions character vector to specify which of the three confidence regions to show for the projected median.  Possibilities are "all", "theory", "bootstrap."
-#' @param alp alpha level to be used for confidence regions.
-#' @param m number of bootstrap replicates to use in Zhang confidence region.
-#' @param interactive logical; if \code{TRUE} \code{sphereplot} is used to create interactive 3D plot
+#' @param alp alpha level to be used for confidence regions.  See \code{\link{region}} for more details.
+#' @param m number of bootstrap replicates to use in bootstrap confidence regions.
+#' @param interactive logical; if \code{TRUE} \code{\link{sphereplot}} is used to create an interactive 3D plot
 #' @param ... parameters passed onto the points layer.
+#' @note The option \code{interactive=TRUE} requires the \code{\link{sphereplot}} package
 #' @return  A \code{ggplot2} object with the data displayed on spherical grid.
 #' @aliases plot.Q4
 #' @S3method plot SO3
 #' @method plot SO3
-#' @cite wickham09
 #' @export
 #' @examples
 #' r <- rvmises(200, kappa = 1.0)
@@ -341,7 +341,6 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 	}
 	
   if(interactive){
-    require(rgl)
     require(sphereplot)
     rgl.sphgrid2(deggap=22.5)
     pts <- car2sph(proj2d)
@@ -352,11 +351,23 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
     
     if(!is.null(estDF)){
       estpts <- car2sph(estDF[,-4])
-      rgl.sphpoints(estpts,deg=T,col=c(2:(nrow(estDF)+1)))
       
-      #Legend
-      #text3d(x=1, y=c(.8,1,1.2,1.4)[rmNA], z=1, estDF$lab ,col=c(2:(nrow(estDF)+1)))
-      legend('topleft',estDF$lab,col=c(2:(nrow(estDF)+1)),pch=19,title='Estimators')
+      if(!is.null(meanregDF)||!is.null(medianregDF)){
+        
+        rgl.sphpoints(estpts,deg=T,pch=c(2:(nrow(estDF)+1)),col=1)
+        
+        #Legend
+        #text3d(x=1, y=c(.8,1,1.2,1.4)[rmNA], z=1, estDF$lab ,col=c(2:(nrow(estDF)+1)))
+        legend('topleft',estDF$lab,pch=c(2:(nrow(estDF)+1)),col=1,title='Estimators')
+        
+      }else{
+      
+        rgl.sphpoints(estpts,deg=T,col=c(2:(nrow(estDF)+1)))
+      
+        #Legend
+        #text3d(x=1, y=c(.8,1,1.2,1.4)[rmNA], z=1, estDF$lab ,col=c(2:(nrow(estDF)+1)))
+        legend('topleft',estDF$lab,col=c(2:(nrow(estDF)+1)),pch=19,title='Estimators')
+      }
     }
     
     if(!is.null(label_points)){
