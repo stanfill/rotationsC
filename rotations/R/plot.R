@@ -266,7 +266,12 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 		rmNA<-which(!is.na(Shats$X1))
 		NAs<-c(1:4)[-rmNA]
 		Shats<-na.omit(Shats)
-		
+    
+		if(nrow(Shats)==0){
+      warning("Incorrect input to show_estimates")
+      show_estimates<-NULL
+		}
+    
 		#Shats <- Shats[rmNA,]
 		Estlabels<-Estlabels[c(rmNA,NAs)]
 		
@@ -305,6 +310,11 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
                         Meth2=c('Mean Trans. Theory','Mean Trans. Boot.','Mean Direct Theory','Mean Direct Boot.'))
 	  Regions <- na.omit(Regions)
 	  
+	  if(nrow(Regions)==0){
+	    warning("Incorrect input to mean_regions")
+	    mean_regions<-NULL
+	  }
+    
     cisp.boot<-NULL
     
     for(i in 1:nrow(Regions)){
@@ -333,7 +343,12 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 		
 		MedRegions<-data.frame(X1=c(changr,zhangr),Meth=c('Median Theory','Median Bootstrap'))
 		MedRegions <- na.omit(MedRegions)
-		
+    
+		if(nrow(MedRegions)==0){
+		  warning("Incorrect input to median_regions")
+		  median_regions<-NULL
+		}
+    
 		cisp.boot<-NULL
 		
 		for(i in 1:nrow(MedRegions)){
