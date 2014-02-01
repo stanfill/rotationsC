@@ -301,7 +301,8 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
     if (length(grep("moment theory", mean_regions)) >0)    changr<-region(Rs,estimator='mean',method='moment',type='theory',alp=alp)
 	  if (length(grep("moment bootstrap", mean_regions)) > 0)    zhangr<-region(Rs,estimator='mean',method='moment',type='bootstrap',alp=alp,m=m)
 
-	  Regions<-data.frame(X1=c(prentr,fishr,changr,zhangr),Meth=c('Mean\nEigen Theory','Mean\nEigen Bootstrap','Mean\nMoment Theory','Mean\nMoment Bootstrap'))
+	  Regions<-data.frame(X1=c(prentr,fishr,changr,zhangr),Meth=c('Mean\nEigen Theory','Mean\nEigen Bootstrap','Mean\nMoment Theory','Mean\nMoment Bootstrap'),
+                        Meth2=c('Mean E. Theory','Mean E. Boot.','Mean MOM Theory','Mean MOM Boot.'))
 	  Regions <- na.omit(Regions)
 	  
     cisp.boot<-NULL
@@ -330,7 +331,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 		if (length(grep("heory", median_regions)) >0)    changr<-region(Rs,method='moment',type='theory',estimator='median',alp=alp)
 		if (length(grep("ootstrap", median_regions)) > 0)    zhangr<-region(Rs,method='moment',type='bootstrap',estimator='median',alp=alp,m=m)
 		
-		MedRegions<-data.frame(X1=c(changr,zhangr),Meth=c('Median\nMoment Theory','Median\nMoment Bootstrap'))
+		MedRegions<-data.frame(X1=c(changr,zhangr),Meth=c('Median\nMoment Theory','Median\nMoment Bootstrap'),Meth2=c('Med. Theory','Med. Bootstrap'))
 		MedRegions <- na.omit(MedRegions)
 		
 		cisp.boot<-NULL
@@ -387,7 +388,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
       rgl.sphpoints(regpts,deg=T,col=rep((1:numRegs)+1,each=500))
       
       #Confidence region legend
-      legend('topright',c(as.character(Regions$Meth),as.character(MedRegions$Meth)),
+      legend('topright',c(as.character(Regions$Meth2),as.character(MedRegions$Meth2)),
              col=c((1:numRegs)+1),lty=19,title='Confidence Regions',lwd=2)
       
     }
