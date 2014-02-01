@@ -166,7 +166,7 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
 #' @param to_range logical; if \code{TRUE} only part of the globe relevant to the data is displayed
 #' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "geom.mean", "geom.median".
 #' @param label_points  vector of labels.
-#' @param mean_regions character vector to specify which of the three confidence regions to show for the projected mean.  Possibilities are "all", "eigen theory","eigen bootstrap, "moment theory", "moment bootstrap".
+#' @param mean_regions character vector to specify which of the three confidence regions to show for the projected mean.  Possibilities are "all", "trans.theory","trans.bootstrap, "direct.theory", "direct.bootstrap".
 #' @param median_regions character vector to specify which of the three confidence regions to show for the projected median.  Possibilities are "all", "theory", "bootstrap."
 #' @param alp alpha level to be used for confidence regions.  See \code{\link{region}} for more details.
 #' @param m number of bootstrap replicates to use in bootstrap confidence regions.
@@ -295,14 +295,14 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
   
 	if (!is.null(mean_regions)) {
 	  prentr <- fishr <- changr <- zhangr  <- NA
-	  if(any(mean_regions%in%c('all','All'))) mean_regions<-c("eigen theory","eigen bootstrap","moment theory","moment bootstrap")
-	  if (length(grep("eigen theory", mean_regions)) > 0) prentr<-region(Rs,estimator='mean',method='eigen',type='theory',alp=alp)[col]
-	  if (length(grep("eigen bootstrap", mean_regions)) > 0) fishr<-region(Rs,estimator='mean',method='eigen',type='bootstrap',alp=alp,m=m)
-    if (length(grep("moment theory", mean_regions)) >0)    changr<-region(Rs,estimator='mean',method='moment',type='theory',alp=alp)
-	  if (length(grep("moment bootstrap", mean_regions)) > 0)    zhangr<-region(Rs,estimator='mean',method='moment',type='bootstrap',alp=alp,m=m)
+	  if(any(mean_regions%in%c('all','All'))) mean_regions<-c("trans.theory","trans.bootstrap","direct.theory","direct.bootstrap")
+	  if (length(grep("trans.theory", mean_regions)) > 0) prentr<-region(Rs,estimator='mean',method='trans',type='theory',alp=alp)[col]
+	  if (length(grep("trans.bootstrap", mean_regions)) > 0) fishr<-region(Rs,estimator='mean',method='trans',type='bootstrap',alp=alp,m=m)
+    if (length(grep("direct.theory", mean_regions)) >0)    changr<-region(Rs,estimator='mean',method='direct',type='theory',alp=alp)
+	  if (length(grep("direct.bootstrap", mean_regions)) > 0)    zhangr<-region(Rs,estimator='mean',method='direct',type='bootstrap',alp=alp,m=m)
 
-	  Regions<-data.frame(X1=c(prentr,fishr,changr,zhangr),Meth=c('Mean\nEigen Theory','Mean\nEigen Bootstrap','Mean\nMoment Theory','Mean\nMoment Bootstrap'),
-                        Meth2=c('Mean E. Theory','Mean E. Boot.','Mean MOM Theory','Mean MOM Boot.'))
+	  Regions<-data.frame(X1=c(prentr,fishr,changr,zhangr),Meth=c('Mean\nTrans. Theory','Mean\nTrans. Bootstrap','Mean\nDirect Theory','Mean\nDirect Bootstrap'),
+                        Meth2=c('Mean Trans. Theory','Mean Trans. Boot.','Mean Direct Theory','Mean Direct Boot.'))
 	  Regions <- na.omit(Regions)
 	  
     cisp.boot<-NULL
@@ -328,10 +328,10 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 	if (!is.null(median_regions)) {
 		changr <- zhangr  <- NA
 		if(any(median_regions%in%c('all','All'))) median_regions<-c("bootstrap","theory")
-		if (length(grep("heory", median_regions)) >0)    changr<-region(Rs,method='moment',type='theory',estimator='median',alp=alp)
-		if (length(grep("ootstrap", median_regions)) > 0)    zhangr<-region(Rs,method='moment',type='bootstrap',estimator='median',alp=alp,m=m)
+		if (length(grep("heory", median_regions)) >0)    changr<-region(Rs,method='direct',type='theory',estimator='median',alp=alp)
+		if (length(grep("ootstrap", median_regions)) > 0)    zhangr<-region(Rs,method='direct',type='bootstrap',estimator='median',alp=alp,m=m)
 		
-		MedRegions<-data.frame(X1=c(changr,zhangr),Meth=c('Median\nMoment Theory','Median\nMoment Bootstrap'),Meth2=c('Med. Theory','Med. Bootstrap'))
+		MedRegions<-data.frame(X1=c(changr,zhangr),Meth=c('Median Theory','Median Bootstrap'))
 		MedRegions <- na.omit(MedRegions)
 		
 		cisp.boot<-NULL
@@ -388,7 +388,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
       rgl.sphpoints(regpts,deg=T,col=rep((1:numRegs)+1,each=500))
       
       #Confidence region legend
-      legend('topright',c(as.character(Regions$Meth2),as.character(MedRegions$Meth2)),
+      legend('topright',c(as.character(Regions$Meth2),as.character(MedRegions$Meth)),
              col=c((1:numRegs)+1),lty=19,title='Confidence Regions',lwd=2)
       
     }
