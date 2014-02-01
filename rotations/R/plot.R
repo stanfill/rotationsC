@@ -194,8 +194,21 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
 
 plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300, interactive=FALSE,  ...) {
   
-  if(interactive)
-    col<-col[1]   #For interactive plots only one column can be displayed at a time
+  if(interactive){
+    
+    reqSph<-suppressWarnings(require(sphereplot))
+    
+    if(reqSph){
+      
+      col<-col[1]   #For interactive plots only one column can be displayed at a time
+      
+    }else{
+      
+      warning("The package sphereplot is required for interactive plots, a static plot will be returned.")
+      interactive<-FALSE
+      
+    }
+  }
   
   if(length(col)>1){
     mplotSO3(x, center=center, col=col, to_range=to_range, show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,interactive=FALSE,...)
@@ -341,7 +354,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 	}
 	
   if(interactive){
-    require(sphereplot)
+    #require(sphereplot)
     rgl.sphgrid2(deggap=22.5)
     pts <- car2sph(proj2d)
     rgl.sphpoints(pts,deg=T,size=4)
