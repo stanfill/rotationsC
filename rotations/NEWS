@@ -1,3 +1,19 @@
+rotations version 1.1
+===================================================================
+
+
+New Features - 
+-------------------------------------------------------------------
+
+* The argument `interactive' has been added to `plot.SO3' and `plot.Q4' which, when set to `TRUE', creates a sphere in 3D using `rgl' that can be manipulated by the user
+
+
+Minor Changes -
+-------------------------------------------------------------------
+
+* The options for the `method` argument of the `region` functions have been changed to `"trans"` and `"direct"` to align with the current names in my dissertation.  `"trans"` is short for "transformation," which is used to access the methods based on a transformation of a directional statistics result while `"direct"`  is used for the methods that rely on theory for SO(3) directly.
+
+
 rotations version 1.0
 ===================================================================
 
