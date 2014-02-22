@@ -491,7 +491,7 @@ project.SO3 <- function(M) {
 #' 
 #' SE1 <- median(Rs)                      #Projected median
 #' SE2 <- mean(Rs)                        #Projected mean
-#' SR2 <- mean(Rs, type = 'geometric')    #Geometric mean
+#' SR2 <- mean(Rs, type = "geometric")    #Geometric mean
 #' 
 #' #I will use "rotdist.sum" to verify these three estimators minimize the
 #' #loss function they are designed to minimize relative to the other esimators.
@@ -506,10 +506,10 @@ project.SO3 <- function(M) {
 #' rotdist.sum(Rs, S = SE1, p = 1) < rotdist.sum(Rs, S = SR2, p = 1)
 #' 
 #' #The geometric mean minimizes the sum of squared Riemannian distances 
-#' rotdist.sum(Rs, S = SR2, p = 2, method = 'intrinsic') < 
-#'                  rotdist.sum(Rs, S = SE1, p = 2, method = 'intrinsic')
-#' rotdist.sum(Rs, S = SR2, p = 2, method = 'intrinsic') < 
-#'                  rotdist.sum(Rs, S = SE2, p = 2, method = 'intrinsic')
+#' rotdist.sum(Rs, S = SR2, p = 2, method = "intrinsic") < 
+#'                  rotdist.sum(Rs, S = SE1, p = 2, method = "intrinsic")
+#' rotdist.sum(Rs, S = SR2, p = 2, method = "intrinsic") < 
+#'                  rotdist.sum(Rs, S = SE2, p = 2, method = "intrinsic")
 
 
 rotdist.sum<-function(x, S = genR(0, space=class(x)), method='extrinsic', p=1){

@@ -48,13 +48,13 @@ rar <- function(n, f, M, ...) {
 #' r <- seq(-pi, pi, length = 500)
 #' 
 #' #Visualize the Cayley density fucntion with respect to the Haar measure
-#' plot(r, dcayley(r, kappa = 10), type = 'l', ylab = 'f(r)')
+#' plot(r, dcayley(r, kappa = 10), type = "l", ylab = "f(r)")
 #' 
 #' #Visualize the Cayley density fucntion with respect to the Lebesgue measure
-#' plot(r, dcayley(r, kappa = 10, Haar = FALSE), type = 'l', ylab = 'f(r)')
+#' plot(r, dcayley(r, kappa = 10, Haar = FALSE), type = "l", ylab = "f(r)")
 #' 
 #' #Plot the Cayley CDF
-#' plot(r,pcayley(r,kappa = 10), type = 'l', ylab = 'F(r)')
+#' plot(r,pcayley(r,kappa = 10), type = "l", ylab = "F(r)")
 #' 
 #' #Generate random observations from Cayley distribution
 #' rs <- rcayley(20, kappa = 1)
@@ -141,13 +141,13 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
 #' r <- seq(-pi, pi, length = 500)
 #' 
 #' #Visualize the matrix Fisher density fucntion with respect to the Haar measure
-#' plot(r, dfisher(r, kappa = 10), type = 'l', ylab = 'f(r)')
+#' plot(r, dfisher(r, kappa = 10), type = "l", ylab = "f(r)")
 #' 
 #' #Visualize the matrix Fisher density fucntion with respect to the Lebesgue measure
-#' plot(r, dfisher(r, kappa = 10, Haar = FALSE), type = 'l', ylab = 'f(r)')
+#' plot(r, dfisher(r, kappa = 10, Haar = FALSE), type = "l", ylab = "f(r)")
 #' 
 #' #Plot the matrix Fisher CDF
-#' plot(r,pfisher(r,kappa = 10), type = 'l', ylab = 'F(r)')
+#' plot(r,pfisher(r,kappa = 10), type = "l", ylab = "F(r)")
 #' 
 #' #Generate random observations from matrix Fisher distribution
 #' rs <- rfisher(20, kappa = 1)
@@ -234,14 +234,14 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 #' r <- seq(-pi, pi, length = 1000)
 #' 
 #' #Visualize the uniform distribution with respect to Lebesgue measure
-#' plot(r, dhaar(r), type = 'l', ylab = 'f(r)')
+#' plot(r, dhaar(r), type = "l", ylab = "f(r)")
 #' 
 #' #Visualize the uniform distribution with respect to Haar measure, which is
 #' #a horizontal line at 1
-#' plot(r, 2*pi*dhaar(r)/(1-cos(r)), type = 'l', ylab = 'f(r)')
+#' plot(r, 2*pi*dhaar(r)/(1-cos(r)), type = "l", ylab = "f(r)")
 #' 
 #' #Plot the uniform CDF
-#' plot(r,phaar(r), type = 'l', ylab = 'F(r)')
+#' plot(r,phaar(r), type = "l", ylab = "F(r)")
 #' 
 #' #Generate random observations from uniform distribution
 #' rs <- rhaar(50)
@@ -319,13 +319,13 @@ rhaar<-function(n){
 #' r <- seq(-pi, pi, length = 500)
 #' 
 #' #Visualize the von Mises density fucntion with respect to the Haar measure
-#' plot(r, dvmises(r, kappa = 10), type = 'l', ylab = 'f(r)', ylim = c(0, 100))
+#' plot(r, dvmises(r, kappa = 10), type = "l", ylab = "f(r)", ylim = c(0, 100))
 #' 
 #' #Visualize the von Mises density fucntion with respect to the Lebesgue measure
-#' plot(r, dvmises(r, kappa = 10, Haar = FALSE), type = 'l', ylab = 'f(r)')
+#' plot(r, dvmises(r, kappa = 10, Haar = FALSE), type = "l", ylab = "f(r)")
 #'
 #' #Plot the von Mises CDF
-#' plot(r,pvmises(r,kappa = 10), type = 'l', ylab = 'F(r)')
+#' plot(r,pvmises(r,kappa = 10), type = "l", ylab = "F(r)")
 #'   
 #' #Generate random observations from von Mises distribution
 #' rs <- rvmises(20, kappa = 1)
@@ -457,7 +457,7 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #' cdf <- puars(Rs, pcayley, S = S)               #By supplying 'pcayley', it is used to compute the
 #' plot(rs, cdf)                                  #the CDF
 #' 
-#' ecdf <- puars(Rs, S=S)                         #No 'puars' arguement is supplied so the empirical
+#' ecdf <- puars(Rs, S = S)                       #No 'puars' arguement is supplied so the empirical
 #' plot(rs, ecdf)                                 #cdf is returned
 
 NULL
