@@ -39,13 +39,12 @@
   distribution}
 }
 \value{
-  list of \itemize{ \item \code{S}{Draws from the posterior
-  distribution for central orientation S} \item
-  \code{kappa}{Draws from the posterior distribution for
-  concentration parameter kappa} \item
-  \code{Saccept}{Acceptance rate for central orientation
-  draws} \item \code{Kaccept}{Acceptance rate for
-  concentration draws} }
+  list of \itemize{ \item \code{S} Draws from the posterior
+  distribution for central orientation S \item \code{kappa}
+  Draws from the posterior distribution for concentration
+  parameter kappa \item \code{Saccept} Acceptance rate for
+  central orientation draws \item \code{Kaccept} Acceptance
+  rate for concentration draws }
 }
 \description{
   Use non-informative Bayes to infer about the central

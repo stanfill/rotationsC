@@ -17,10 +17,10 @@
 #' @param m number of draws to keep from posterior distribution
 #' @return  list of 
 #' \itemize{
-#'          \item \code{S}{Draws from the posterior distribution for central orientation S}
-#'          \item \code{kappa}{Draws from the posterior distribution for concentration parameter kappa}
-#'          \item \code{Saccept}{Acceptance rate for central orientation draws}
-#'          \item \code{Kaccept}{Acceptance rate for concentration draws}
+#'          \item \code{S} Draws from the posterior distribution for central orientation S
+#'          \item \code{kappa} Draws from the posterior distribution for concentration parameter kappa
+#'          \item \code{Saccept} Acceptance rate for central orientation draws
+#'          \item \code{Kaccept} Acceptance rate for concentration draws
 #'          }
 #' @cite bingham2009b bingham2010
 #' @export
@@ -96,8 +96,11 @@ MCMCSO3.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 #' @param burn_in number of draws to use as burn-in
 #' @param m number of draws to keep from posterior distribution
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
-#' @return  list of \item{Shat,Qhat}{the posterior mode}
-#'          \item{Radius}{the radius of the credible region centered at the posterior mode}
+#' @return  list of 
+#'          \itemize{
+#'          \item \code{Shat,Qhat} the posterior mode
+#'          \item \code{Radius} the radius of the credible region centered at the posterior mode
+#'          }
 #' @seealso \code{\link{fisheretal}}, \code{\link{prentice}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite bingham2009b bingham2010
 #' @export
@@ -182,8 +185,11 @@ bayesCR.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
 #' @param tuneK concentration tuning parameter, standard deviation of proposal distribution
 #' @param burn_in number of draws to use as burn-in
 #' @param m number of draws to keep from posterior distribution
-#' @return  list of \item{Shat}{Mode of the posterior distribution for the central orientation S}
-#'          \item{kappa}{Mean of the posterior distribution for the concentration kappa}
+#' @return  list of 
+#'          \itemize{
+#'          \item \code{Shat} Mode of the posterior distribution for the central orientation S
+#'          \item \code{kappa} Mean of the posterior distribution for the concentration kappa
+#'          }
 #' @seealso \code{\link{mean.SO3}}, \code{\link{median.SO3}}
 #' @cite bingham2009b bingham2010
 #' @export

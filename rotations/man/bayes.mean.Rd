@@ -39,9 +39,10 @@
   distribution}
 }
 \value{
-  list of \item{Shat}{Mode of the posterior distribution
-  for the central orientation S} \item{kappa}{Mean of the
-  posterior distribution for the concentration kappa}
+  list of \itemize{ \item \code{Shat} Mode of the posterior
+  distribution for the central orientation S \item
+  \code{kappa} Mean of the posterior distribution for the
+  concentration kappa }
 }
 \description{
   Use non-informative Bayes to estimate the central
@@ -78,13 +79,13 @@ rot.dist(Shat2)                #Bayes estimator bias}
   Bingham MA, Vardeman SB and Nordman DJ (2009). "Bayes
   one-sample and one-way random effects analyses for 3-D
   orientations with application to materials science."
-  Bayesian Analysis, 4(3), pp. 607-629.
+  _Bayesian Analysis_, *4*(3), pp. 607-629.
 
   Bingham MA, Nordman DJ and Vardeman SB (2010).
   "Finite-sample investigation of likelihood and Bayes
   inference for the symmetric von Mises-Fisher
-  distribution." Computational Statistics & Data
-  Analysis, 54(5), pp. 1317-1327.
+  distribution." _Computational Statistics \& Data
+  Analysis_, *54*(5), pp. 1317-1327.
 }
 \seealso{
   \code{\link{mean.SO3}}, \code{\link{median.SO3}}
