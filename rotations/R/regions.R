@@ -367,8 +367,9 @@ cdfuns<-function(Qs,estimator){
 #' 
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation centered at the projected mean
 #' or median based on a result due to \cite{chang2001} among others.  By construction each axis will have the same
-#' radius so the radius reported is for all three axes.  This method is called "direct" because it used
-#' M-estimation theory for SO(3) directly instead of relying on the transformation of a result from directional statistics.
+#' radius so the radius reported is for all three axes.  This method is called "direct" because it uses
+#' M-estimation theory for SO(3) directly instead of relying on the transformation of a result from directional statistics
+#' like \code{\link{prentice}} and \code{\link{fisheretal}} do.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param estimator character string either "mean" or "median."

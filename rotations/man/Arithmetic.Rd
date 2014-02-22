@@ -26,7 +26,7 @@
 \value{
   \item{+}{the result of rotating the identity frame
   through x then y} \item{-}{the difference of the
-  rotations, or the inverse rotation of only one argument
+  rotations, or the inverse rotation if only one argument
   is provided}
 }
 \description{
