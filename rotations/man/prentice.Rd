@@ -43,14 +43,14 @@ prentice(Qs, alp = 0.1)
 }
 \references{
   Prentice MJ (1986). "Orientation statistics without
-  parametric assumptions." _Journal of the Royal
-  Statistical Society. Series B (Methodological)_, pp.
+  parametric assumptions." Journal of the Royal
+  Statistical Society. Series B (Methodological), pp.
   214-222.
 
   Rancourt D, Rivest L and Asselin J (2000). "Using
   orientation statistics to investigate variations in human
-  kinematics." _Journal of the Royal Statistical Society:
-  Series C (Applied Statistics)_, *49*(1), pp. 81-94.
+  kinematics." Journal of the Royal Statistical Society:
+  Series C (Applied Statistics), 49(1), pp. 81-94.
 }
 \seealso{
   \code{\link{bayesCR}}, \code{\link{fisheretal}},

@@ -37,7 +37,8 @@ arsample.unif <- function(f, M, ...) {
 #' \code{R2} and \code{Q2} are set to the identity rotations by default.  For rotations \eqn{R_1}{R1} and \eqn{R_2}{R2}
 #' both in \eqn{SO(3)}, the Euclidean distance between them is \deqn{||R_1-R_2||_F}{||R1-R2||} where \eqn{||\cdot||_F}{|| ||} is the Frobenius norm.
 #' The Riemannian distance is defined as \deqn{||Log(R_1^\top R_2)||_F}{||Log(R1'R2)||} where \eqn{Log} is the matrix logarithm, and it corresponds
-#' to the misorientation angle of \eqn{R_1^\top R_2}{R1'R2}.
+#' to the misorientation angle of \eqn{R_1^\top R_2}{R1'R2}.  See the vignette `rotations-intro' for a comparison of these 
+#' two distance measures.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param R2,Q2 the second rotation in the same parameterization as x.
@@ -51,7 +52,12 @@ arsample.unif <- function(f, M, ...) {
 #' Rs <- genR(rs, S = id.SO3)
 #' dEs <- rot.dist(Rs,id.SO3)
 #' dRs <- rot.dist(Rs, id.SO3 , method = 'intrinsic')
+#' 
+#' #The intrinsic distance between the true central orientation and each observation
+#' #is the same as the absolute value of observations' respective misorientation angles
 #' all.equal(dRs, abs(rs))              #TRUE
+#' 
+#' #The extrinsic distance is related to the intrinsic distance
 #' all.equal(dEs, 2*sqrt(2)*sin(dRs/2)) #TRUE
 
 rot.dist<-function(x,...){
