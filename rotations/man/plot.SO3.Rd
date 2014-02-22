@@ -53,8 +53,8 @@
   bootstrap confidence regions.}
 
   \item{interactive}{logical; if \code{TRUE}
-  \code{sphereplot} is used to create an interactive
-  3D plot}
+  \code{sphereplot} is used to create an interactive 3D
+  plot}
 
   \item{...}{parameters passed onto the points layer.}
 }
@@ -67,9 +67,8 @@
   three-dimensional globe onto which one of the columns of
   the provided sample of rotations is plotted.  The data
   are centered around a user-specified rotation matrix.
-  The interactive plot is based on the
-  \code{sphereplot} package and the static plot uses
-  \code{\link{ggplot2}}.
+  The interactive plot is based on the \code{sphereplot}
+  package and the static plot uses \code{\link{ggplot2}}.
 }
 \note{
   The option \code{interactive=TRUE} requires the

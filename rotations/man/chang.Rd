@@ -37,8 +37,8 @@
   each axis will have the same radius so the radius
   reported is for all three axes.  This method is called
   "direct" because it used M-estimation theory for SO(3)
-  directly instead of instead of relying on the transformation 
-  of a result from directional statistics.
+  directly instead of relying on the transformation of a
+  result from directional statistics.
 }
 \examples{
 Rs <- ruars(20, rcayley, kappa = 100)
@@ -50,7 +50,7 @@ chang(Rs, estimator = 'mean', alp = 0.1)
 \references{
   Chang T and Rivest L (2001). "M-estimation for location
   and regression parameters in group models: A case study
-  using Stiefel manifolds." Annals of statistics, pp.
+  using Stiefel manifolds." _Annals of statistics_, pp.
   784-814.
 }
 \seealso{

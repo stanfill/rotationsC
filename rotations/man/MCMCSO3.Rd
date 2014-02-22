@@ -39,12 +39,13 @@
   distribution}
 }
 \value{
-  list of \item{S}{Draws from the posterior distribution
-  for central orientation S} \item{kappa}{Draws from the
-  posterior distribution for concentration parameter kappa}
-  \item{Saccept}{Acceptance rate for central orientation
-  draws} \item{Kaccept}{Acceptance rate for concentration
-  draws}
+  list of \itemize{ \item \code{S}{Draws from the posterior
+  distribution for central orientation S} \item
+  \code{kappa}{Draws from the posterior distribution for
+  concentration parameter kappa} \item
+  \code{Saccept}{Acceptance rate for central orientation
+  draws} \item \code{Kaccept}{Acceptance rate for
+  concentration draws} }
 }
 \description{
   Use non-informative Bayes to infer about the central
@@ -70,12 +71,12 @@ draws <- MCMCSO3(Rs, type = 'Mises', S0 = mean(Rs), kappa0 = 10, tuneS = 5000,
   Bingham MA, Vardeman SB and Nordman DJ (2009). "Bayes
   one-sample and one-way random effects analyses for 3-D
   orientations with application to materials science."
-  Bayesian Analysis, 4(3), pp. 607-629.
+  _Bayesian Analysis_, *4*(3), pp. 607-629.
 
   Bingham MA, Nordman DJ and Vardeman SB (2010).
   "Finite-sample investigation of likelihood and Bayes
   inference for the symmetric von Mises-Fisher
-  distribution." Computational Statistics & Data
-  Analysis, 54(5), pp. 1317-1327.
+  distribution." _Computational Statistics \& Data
+  Analysis_, *54*(5), pp. 1317-1327.
 }
 

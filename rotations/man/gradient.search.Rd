@@ -20,11 +20,12 @@
   \item{theta}{size of the grid considered.}
 }
 \value{
-  list of \itemize{ \item Shat estimate of the main
-  direction \item iter number of iterations necessary for
-  convergence \item theta final size of the grid \item
-  minerr error used for convergence \item error numeric
-  value of total sample's distance from main direction }
+  list of \itemize{ \item \code{Shat} estimate of the main
+  direction \item \code{iter} number of iterations
+  necessary for convergence \item \code{theta} final size
+  of the grid \item \code{minerr} error used for
+  convergence \item \code{error} numeric value of total
+  sample's distance from main direction }
 }
 \description{
   Gradient based optimization for user defined central

@@ -20,14 +20,14 @@
   x.}
 }
 \value{
-  The centered sample.
+  The sample centered about S
 }
 \description{
   This function will take the sample Rs and return the
-  sample Rs centered at S.  That is, if each row of Rs is R
-  then the returned sample is \eqn{S^\top R}{S'R}. If S is
-  the true center then the projected mean should be close
-  to the 3-by-3 identity matrix.
+  sample Rs centered at S.  That is, the ith observation of
+  Rs denoted \eqn{R_i}{Ri} is returned as \eqn{S^\top
+  R_i}{S'Ri}. If S is the true center then the projected
+  mean should be close to the 3-by-3 identity matrix.
 }
 \examples{
 Rs <- ruars(5, rcayley)
