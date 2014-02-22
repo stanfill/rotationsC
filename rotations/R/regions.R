@@ -242,13 +242,14 @@ prentice.SO3<-function(x,alp=NULL){
 
 #' M-estimator theory pivotal bootstrap confidence region
 #'
-#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estimator theory.
+#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estimation theory.
 #' 
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
 #' estimator using the method due to Zhang & Nordman (2009) (unpublished MS thesis).  By construction each axis will have the same
 #' radius so the radius reported is for all three axis.  A normal theory version of this procedure uses the theoretical
 #' chi-square limiting distribution and is given by the \code{\link{chang}} option.  This method is called "direct" because it used
-#' M-estimation theory for SO(3) directly instead of relying on transforming a result from directional statistics.
+#' M-estimation theory for SO(3) directly instead of relying on transforming a result from directional statistics as \code{\link{prentice}}
+#' or \code{\link{fisheretal}} do.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param estimator character string either "mean" or "median."

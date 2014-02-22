@@ -144,6 +144,12 @@ rot.dist.Q4 <- function(x, Q2=id.Q4 ,method='extrinsic', p=1,...) {
 #' #If the central orientation is id.SO3 then mis.angle(Rs) and abs(rs) are equal
 #' all.equal(mis.angle(Rs), abs(rs))  #TRUE
 #' 
+#' #' #For other reference frames, the data must be centered first
+#' S <- genR(pi/2)
+#' RsS <- genR(rs, S = S)
+#' mis.axis(RsS-S)
+#' all.equal(mis.angle(RsS-S),abs(rs)) #TRUE
+#' 
 #' #If the central orientation is NOT id.SO3 then mis.angle(Rs) and abs(rs) are usual unequal
 #' Rs <- genR(rs, S = genR(pi/8))
 #' all.equal(mis.angle(Rs), abs(rs))  #Mean relative difference > 0
@@ -185,7 +191,7 @@ mis.angle.Q4 <- function(x){
 #' Every rotation can be interpreted as some reference coordinate system rotated about an axis through an angle.  These quantities
 #' are referred to as the misorientation axis and misorientation angle, respectively, in the material sciences literature.
 #' This function returns the misorentation axis associated with a rotation assuming the reference coordinate system
-#' is the identity.
+#' is the identity.  The data must be centered before calling \code{mis.axis} if a different coordinate system is required.
 #' 
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param ... additional arguments.
@@ -194,9 +200,17 @@ mis.angle.Q4 <- function(x){
 #' @export
 #' @examples
 #' rs <- rcayley(20, kappa = 20)
+#' 
+#' #If the reference frame is set to id.SO3 then no centering is required
 #' Rs <- genR(rs, S = id.SO3)
 #' mis.axis(Rs)
 #' all.equal(Rs, as.SO3(mis.axis(Rs), mis.angle(Rs)))
+#' 
+#' #For other reference frames, the data must be centered first
+#' S <- genR(pi/2)
+#' RsS <- genR(rs, S = S)
+#' mis.axis(RsS-S)
+#' all.equal(mis.angle(RsS-S),abs(rs)) #TRUE
 #' 
 #' Qs <- genR(rs, S = id.Q4, space = "Q4")
 #' mis.axis(Qs)
