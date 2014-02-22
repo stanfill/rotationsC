@@ -54,25 +54,25 @@
 
   \item{interactive}{logical; if \code{TRUE}
   \code{sphereplot} is used to create an interactive 3D
-  plot}
+  plot, otherwise \code{\link{ggplot2}} is used}
 
   \item{...}{parameters passed onto the points layer.}
 }
 \value{
-  A \code{ggplot2} object with the data displayed on
-  spherical grid.
+  A visualization of rotation data.
 }
 \description{
   This function produces an interactive or static
   three-dimensional globe onto which one of the columns of
-  the provided sample of rotations is plotted.  The data
+  the provided sample of rotations is projected.  The data
   are centered around a user-specified rotation matrix.
   The interactive plot is based on the \code{sphereplot}
   package and the static plot uses \code{\link{ggplot2}}.
 }
 \note{
   The option \code{interactive=TRUE} requires the
-  \code{sphereplot} package
+  \code{sphereplot} package.  If \code{sphereplot} is not
+  available then the static plot is created.
 }
 \examples{
 r <- rvmises(200, kappa = 1.0)

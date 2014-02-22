@@ -36,9 +36,10 @@
   \cite{Chang et al. (2001)} among others.  By construction
   each axis will have the same radius so the radius
   reported is for all three axes.  This method is called
-  "direct" because it used M-estimation theory for SO(3)
+  "direct" because it uses M-estimation theory for SO(3)
   directly instead of relying on the transformation of a
-  result from directional statistics.
+  result from directional statistics like
+  \code{\link{prentice}} and \code{\link{fisheretal}} do.
 }
 \examples{
 Rs <- ruars(20, rcayley, kappa = 100)

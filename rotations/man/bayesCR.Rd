@@ -41,14 +41,15 @@
   \item{alp}{alpha level desired, e.g. 0.05 or 0.10.}
 }
 \value{
-  list of \itemize{ \item \code{Shat,Qhat} the posterior
-  mode \item \code{Radius} the radius of the credible
-  region centered at the posterior mode }
+  list of \itemize{ \item \code{Shat,Qhat} Mode of the
+  posterior distribution for the central orientation S
+  \item \code{Radius} Radius of the credible region
+  centered at the posterior mode }
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)}\% credible
   region for the central orientation and concentration
-  parameter using non-informative Bayes.
+  parameter using non-informative Bayesian methods.
 }
 \details{
   Compute the radius of a \eqn{100(1-\alpha)}\% credible
@@ -59,6 +60,7 @@
   centered at the posterior mode.
 }
 \examples{
+#Not run due to time constraints
 \dontrun{
 Rs <- ruars(20, rvmises, kappa = 10)
 

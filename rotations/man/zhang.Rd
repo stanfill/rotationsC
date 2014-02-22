@@ -29,7 +29,7 @@
 }
 \description{
   Compute the radius of a \eqn{100(1-\alpha)}\% confidence
-  region for the central orientation based on M-estimator
+  region for the central orientation based on M-estimation
   theory.
 }
 \details{
@@ -43,7 +43,8 @@
   distribution and is given by the \code{\link{chang}}
   option.  This method is called "direct" because it used
   M-estimation theory for SO(3) directly instead of relying
-  on transforming a result from directional statistics.
+  on transforming a result from directional statistics as
+  \code{\link{prentice}} or \code{\link{fisheretal}} do.
 }
 \examples{
 Rs <- ruars(20, rcayley, kappa = 100)

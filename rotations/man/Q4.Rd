@@ -26,7 +26,7 @@
   id.Q4
 }
 \arguments{
-  \item{x}{object to be coerced or tested.}
+  \item{x}{object to be coerced or tested}
 
   \item{theta}{vector or single rotation angle; if
   \code{length(theta)==1}, the same theta is used for all
@@ -35,29 +35,29 @@
   \item{...}{additional arguments.}
 }
 \value{
-  \item{as.Q4}{coerces its object into an Q4 type.}
+  \item{as.Q4}{coerces its object into a Q4 type}
   \item{is.Q4}{returns \code{TRUE} or \code{False}
   depending on whether its argument satisfies the
   conditions to be an quaternion; namely it must be
-  four-dimensional and of unit length.}
+  four-dimensional and of unit length}
 }
 \description{
-  Creates or tests for objects of class "Q4."
+  Creates or tests for objects of class "Q4".
 }
 \details{
   Construct a single or sample of rotations in 3-dimensions
   in quaternion form.  Several possible inputs for \code{x}
   are possible and they are differentiated based on their
-  class or dimension.
+  class and dimension.
 
-  For \code{x} an n-by-3 matrix or vector of length 3, the
-  angle-axis representation of rotations is utilized.  More
-  specifically, each quaternion can be interpreted as a
-  rotation of some reference frame about the axis \eqn{U}
+  For \code{x} an n-by-3 matrix or a vector of length 3,
+  the angle-axis representation of rotations is utilized.
+  More specifically, each quaternion can be interpreted as
+  a rotation of some reference frame about the axis \eqn{U}
   (of unit length) through the angle \eqn{\theta}.  For
   each axis and angle the quaternion is formed through
   \deqn{q=[cos(\theta/2),sin(\theta/2)U]^\top.}{q=[cos(theta/2),sin(theta/2)U]'.}
-  The object \code{x} is treated as if it had rows \eqn{U}
+  The object \code{x} is treated as if it has rows \eqn{U}
   and \code{theta} is a vector or angles. If no angle is
   supplied then the length of each axis is taken to be the
   angle of rotation theta.
@@ -66,7 +66,7 @@
   object of class \code{"SO3"}, this function will return
   the quaternion equivalent of \code{x}.  See
   \code{\link{SO3}} or the vignette "rotations-intro" for
-  more details on rotation matrices
+  more details on rotation matrices.
 
   For \code{x} an n-by-4 matrix, rows are treated as
   quaternions; rows that aren't of unit length are made
@@ -74,13 +74,14 @@
   message is printed if any of the rows are not
   quaternions.
 
-  For \code{x} a \code{"data.frame"} it is translated into
-  a matrix of the same dimension and the dimensionality of
+  \code{x} a \code{"data.frame"} it is translated into a
+  matrix of the same dimension and the dimensionality of
   \code{x} is used to determine the data type: angle-axis,
-  quaternion or rotation. As demonstrated below,
-  \code{is.Q4} may return \code{TRUE} for a data frame, but
-  the functions defined for objects of class \code{'Q4'}
-  will not be called until \code{as.Q4} has been used.
+  quaternion or rotation (see above). As demonstrated
+  below, \code{is.Q4} may return \code{TRUE} for a data
+  frame, but the functions defined for objects of class
+  \code{'Q4'} will not be called until \code{as.Q4} has
+  been used.
 }
 \examples{
 data(drill)                    #Pull off subject 1's wrist measurements

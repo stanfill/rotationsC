@@ -13,7 +13,7 @@
   \code{\link{Cayley}} for the Cayley distribution.  \item
   See \code{\link{Fisher}} for the matrix Fisher
   distribution.  \item See \code{\link{Haar}} for the
-  uniform distribution.  \item See
+  uniform distribution on the circle.  \item See
   \code{\link{Mises}} for the von Mises-Fisher
   distribution. }
 }
