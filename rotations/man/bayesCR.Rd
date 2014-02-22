@@ -67,8 +67,8 @@ Rs <- ruars(20, rvmises, kappa = 10)
 #Compare the region size of the moment based theory mean estimator to the
 #Bayes region.
 
-region(Rs, method = 'moment', type = 'theory', estimator = 'mean', alp=0.1, m = 100)
-bayesCR <- region(Rs, type = 'Mises', method = 'Bayes', estimator = 'mean', S0 = mean(Rs),
+region(Rs, method = "moment", type = "theory", estimator = "mean", alp=0.1, m = 100)
+bayesCR <- region(Rs, type = "Mises", method = "Bayes", estimator = "mean", S0 = mean(Rs),
                    kappa0 = 10, tuneS = 5000, tuneK = 1, burn_in = 1000, alp = .01, m = 5000)
 
 bayesCR$Radius       #Region size is give by "Radius"
@@ -78,13 +78,13 @@ bayesCR$Shat         #The Bayes region is centered around the posterior mode: "S
   Bingham MA, Vardeman SB and Nordman DJ (2009). "Bayes
   one-sample and one-way random effects analyses for 3-D
   orientations with application to materials science."
-  Bayesian Analysis, 4(3), pp. 607-629.
+  _Bayesian Analysis_, *4*(3), pp. 607-629.
 
   Bingham MA, Nordman DJ and Vardeman SB (2010).
   "Finite-sample investigation of likelihood and Bayes
   inference for the symmetric von Mises-Fisher
-  distribution." Computational Statistics & Data
-  Analysis, 54(5), pp. 1317-1327.
+  distribution." _Computational Statistics \& Data
+  Analysis_, *54*(5), pp. 1317-1327.
 }
 \seealso{
   \code{\link{fisheretal}}, \code{\link{prentice}},

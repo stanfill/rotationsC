@@ -38,19 +38,19 @@
 Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
 
 #The prentice method can be accesed from the "region" function or the "prentice" function
-region(Qs, method = 'trans', type = 'theory', alp = 0.1, estimator='mean')
+region(Qs, method = "trans", type = "theory", alp = 0.1, estimator="mean")
 prentice(Qs, alp = 0.1)
 }
 \references{
   Prentice MJ (1986). "Orientation statistics without
-  parametric assumptions." Journal of the Royal
-  Statistical Society. Series B (Methodological), pp.
+  parametric assumptions." _Journal of the Royal
+  Statistical Society. Series B (Methodological)_, pp.
   214-222.
 
   Rancourt D, Rivest L and Asselin J (2000). "Using
   orientation statistics to investigate variations in human
-  kinematics." Journal of the Royal Statistical Society:
-  Series C (Applied Statistics), 49(1), pp. 81-94.
+  kinematics." _Journal of the Royal Statistical Society:
+  Series C (Applied Statistics)_, *49*(1), pp. 81-94.
 }
 \seealso{
   \code{\link{bayesCR}}, \code{\link{fisheretal}},

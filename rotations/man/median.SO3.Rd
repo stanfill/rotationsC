@@ -49,25 +49,25 @@
 \examples{
 Rs <- ruars(20, rvmises, kappa = 0.01)
 median(Rs)                               #Projected median
-median(Rs, type = 'geometric')           #Geometric median
+median(Rs, type = "geometric")           #Geometric median
 rot.dist(median(Rs))                     #Bias of the projected median
-rot.dist(median(Rs, type = 'geometric')) #Bias of the geometric median
+rot.dist(median(Rs, type = "geometric")) #Bias of the geometric median
 
 Qs <- as.Q4(Rs)
 median(Qs)                               #Projected median
-median(Qs, type = 'geometric')           #Geometric median
+median(Qs, type = "geometric")           #Geometric median
 rot.dist(median(Qs))                     #Bias of the projected median
-rot.dist(median(Qs, type = 'geometric')) #Bias of the geometric median
+rot.dist(median(Qs, type = "geometric")) #Bias of the geometric median
 }
 \references{
   Hartley R, Aftab K and Trumpf J (2011). "L1 rotation
-  averaging using the Weiszfeld algorithm." In 2011 IEEE
+  averaging using the Weiszfeld algorithm." In _2011 IEEE
   Conference on Computer Vision and Pattern Recognition
-  (CVPR), pp. 3041-3048. IEEE.
+  (CVPR)_, pp. 3041-3048. IEEE.
 
   Stanfill B, Genschel U and Hofmann H (2013). "Point
   Estimation of the Central Orientation of Random
-  Rotations." Technometrics, 55(4), pp. 524-535.
+  Rotations." _Technometrics_, *55*(4), pp. 524-535.
 }
 \seealso{
   \code{\link{mean.SO3}}, \code{\link{bayes.mean}},

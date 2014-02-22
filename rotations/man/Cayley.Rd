@@ -54,13 +54,13 @@
 r <- seq(-pi, pi, length = 500)
 
 #Visualize the Cayley density fucntion with respect to the Haar measure
-plot(r, dcayley(r, kappa = 10), type = 'l', ylab = 'f(r)')
+plot(r, dcayley(r, kappa = 10), type = "l", ylab = "f(r)")
 
 #Visualize the Cayley density fucntion with respect to the Lebesgue measure
-plot(r, dcayley(r, kappa = 10, Haar = FALSE), type = 'l', ylab = 'f(r)')
+plot(r, dcayley(r, kappa = 10, Haar = FALSE), type = "l", ylab = "f(r)")
 
 #Plot the Cayley CDF
-plot(r,pcayley(r,kappa = 10), type = 'l', ylab = 'F(r)')
+plot(r,pcayley(r,kappa = 10), type = "l", ylab = "F(r)")
 
 #Generate random observations from Cayley distribution
 rs <- rcayley(20, kappa = 1)
@@ -69,11 +69,11 @@ hist(rs, breaks = 10)
 \references{
   Schaeben H (1997). "A Simple Standard Orientation Density
   Function: The Hyperspherical de la Vallee Poussin
-  Kernel." Phys. Stat. Sol. (B), 200, pp. 367-376.
+  Kernel." _Phys. Stat. Sol. (B)_, *200*, pp. 367-376.
 
   Leon C, e JM and Rivest L (2006). "A statistical model
-  for random rotations." Journal of Multivariate
-  Analysis, 97(2), pp. 412-430.
+  for random rotations." _Journal of Multivariate
+  Analysis_, *97*(2), pp. 412-430.
 }
 \seealso{
   \link{Angular-distributions} for other distributions in
