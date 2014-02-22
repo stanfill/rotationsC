@@ -172,7 +172,7 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
 #' @param m number of bootstrap replicates to use in bootstrap confidence regions.
 #' @param interactive logical; if \code{TRUE} \code{\link{sphereplot}} is used to create an interactive 3D plot
 #' @param ... parameters passed onto the points layer.
-#' @note The option \code{interactive=TRUE} requires the \code{\link{sphereplot}} package
+#' @note The option \code{interactive=TRUE} requires the \code{sphereplot} package
 #' @return  A \code{ggplot2} object with the data displayed on spherical grid.
 #' @aliases plot.Q4
 #' @S3method plot SO3

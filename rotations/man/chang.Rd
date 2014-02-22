@@ -35,13 +35,16 @@
   projected mean or median based on a result due to
   \cite{Chang et al. (2001)} among others.  By construction
   each axis will have the same radius so the radius
-  reported is for all three axes.
+  reported is for all three axes.  This method is called
+  "direct" because it used M-estimation theory for SO(3)
+  directly instead of relying on transforming a result from
+  directional statistics.
 }
 \examples{
 Rs <- ruars(20, rcayley, kappa = 100)
 
 #The chang method can be accesed from the "region" function or the "chang" function
-region(Rs, method = 'moment', type = 'theory', alp = 0.1, estimator = 'mean')
+region(Rs, method = 'direct', type = 'theory', alp = 0.1, estimator = 'mean')
 chang(Rs, estimator = 'mean', alp = 0.1)
 }
 \references{

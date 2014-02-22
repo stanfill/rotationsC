@@ -38,8 +38,9 @@
 
   \item{mean_regions}{character vector to specify which of
   the three confidence regions to show for the projected
-  mean.  Possibilities are "all", "eigen theory","eigen
-  bootstrap, "moment theory", "moment bootstrap".}
+  mean.  Possibilities are "all",
+  "trans.theory","trans.bootstrap, "direct.theory",
+  "direct.bootstrap".}
 
   \item{median_regions}{character vector to specify which
   of the three confidence regions to show for the projected
@@ -72,7 +73,7 @@
 }
 \note{
   The option \code{interactive=TRUE} requires the
-  \code{\link{sphereplot}} package
+  \code{sphereplot} package
 }
 \examples{
 r <- rvmises(200, kappa = 1.0)
