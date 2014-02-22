@@ -38,7 +38,7 @@ mis.angle(Rs)
 #If the central orientation is id.SO3 then mis.angle(Rs) and abs(rs) are equal
 all.equal(mis.angle(Rs), abs(rs))  #TRUE
 
-#' #For other reference frames, the data must be centered first
+#For other reference frames, the data must be centered first
 S <- genR(pi/2)
 RsS <- genR(rs, S = S)
 mis.axis(RsS-S)

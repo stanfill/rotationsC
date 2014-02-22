@@ -51,13 +51,13 @@ Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
 
 #The Fisher et al. method can be accesed from the "region" function or the "fisheretal" function
 region(Qs, method = "trans", type = "bootstrap", alp = 0.1, symm = TRUE, estimator = "mean")
-fisheretal(Qs, alp = 0.1, boot=TRUE, symm = TRUE)
+fisheretal(Qs, alp = 0.1, boot = TRUE, symm = TRUE)
 }
 \references{
   Fisher N, Hall P, Jing B and Wood A (1996). "Improved
   pivotal methods for constructing confidence regions with
-  directional data." _Journal of the American Statistical
-  Association_, *91*(435), pp. 1062-1070.
+  directional data." Journal of the American Statistical
+  Association, 91(435), pp. 1062-1070.
 }
 \seealso{
   \code{\link{bayesCR}}, \code{\link{prentice}},

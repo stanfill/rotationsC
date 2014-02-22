@@ -186,7 +186,7 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 #' Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
 #' 
 #' #The prentice method can be accesed from the "region" function or the "prentice" function
-#' region(Qs, method = "trans", type = "theory", alp = 0.1, estimator="mean")
+#' region(Qs, method = "trans", type = "theory", alp = 0.1, estimator = "mean")
 #' prentice(Qs, alp = 0.1)
 
 prentice<-function(x,alp){
@@ -452,7 +452,7 @@ chang.Q4<-function(x,estimator,alp=NULL){
 #' 
 #' #The Fisher et al. method can be accesed from the "region" function or the "fisheretal" function
 #' region(Qs, method = "trans", type = "bootstrap", alp = 0.1, symm = TRUE, estimator = "mean")
-#' fisheretal(Qs, alp = 0.1, boot=TRUE, symm = TRUE)
+#' fisheretal(Qs, alp = 0.1, boot = TRUE, symm = TRUE)
 
 fisheretal<-function(x,alp,boot,m,symm){
 	UseMethod("fisheretal")

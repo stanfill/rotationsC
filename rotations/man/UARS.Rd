@@ -76,8 +76,8 @@ plot(rs, ecdf)                                 #cdf is returned
   Bingham M, Nordman D and Vardeman S (2009). "Modeling and
   Inference for Measured Crystal Orientations and a
   Tractable Class of Symmetric Distributions for Rotations
-  in three Dimensions." _Journal of the American
-  Statistical Association_, *104*(488), pp. 1385-1397.
+  in three Dimensions." Journal of the American
+  Statistical Association, 104(488), pp. 1385-1397.
 }
 \seealso{
   For more on the angular distribution options see

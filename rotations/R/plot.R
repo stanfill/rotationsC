@@ -190,7 +190,7 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
 #'  label_points = sample(LETTERS, 200, replace = TRUE)) + aes(size = Z, alpha = Z) + 
 #'  scale_size(limits = c(-1, 1), range = c(0.5, 2.5))
 #'  
-#' plot(Rs,center=mean(Rs),interactive=T)}
+#' plot(Rs, center = mean(Rs), interactive = TRUE)}
 
 plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300, interactive=FALSE,  ...) {
   

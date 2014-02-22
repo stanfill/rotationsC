@@ -51,7 +51,7 @@ arsample.unif <- function(f, M, ...) {
 #' rs <- rcayley(20, kappa = 10)
 #' Rs <- genR(rs, S = id.SO3)
 #' dEs <- rot.dist(Rs,id.SO3)
-#' dRs <- rot.dist(Rs, id.SO3 , method = 'intrinsic')
+#' dRs <- rot.dist(Rs, id.SO3 , method = "intrinsic")
 #' 
 #' #The intrinsic distance between the true central orientation and each observation
 #' #is the same as the absolute value of observations' respective misorientation angles
@@ -144,7 +144,7 @@ rot.dist.Q4 <- function(x, Q2=id.Q4 ,method='extrinsic', p=1,...) {
 #' #If the central orientation is id.SO3 then mis.angle(Rs) and abs(rs) are equal
 #' all.equal(mis.angle(Rs), abs(rs))  #TRUE
 #' 
-#' #' #For other reference frames, the data must be centered first
+#' #For other reference frames, the data must be centered first
 #' S <- genR(pi/2)
 #' RsS <- genR(rs, S = S)
 #' mis.axis(RsS-S)
