@@ -15,10 +15,13 @@
 #' @param tuneK concentration tuning parameter, standard deviation of proposal distribution
 #' @param burn_in number of draws to use as burn-in
 #' @param m number of draws to keep from posterior distribution
-#' @return  list of \item{S}{Draws from the posterior distribution for central orientation S}
-#'          \item{kappa}{Draws from the posterior distribution for concentration parameter kappa}
-#'          \item{Saccept}{Acceptance rate for central orientation draws}
-#'          \item{Kaccept}{Acceptance rate for concentration draws}
+#' @return  list of 
+#' \itemize{
+#'          \item \code{S}{Draws from the posterior distribution for central orientation S}
+#'          \item \code{kappa}{Draws from the posterior distribution for concentration parameter kappa}
+#'          \item \code{Saccept}{Acceptance rate for central orientation draws}
+#'          \item \code{Kaccept}{Acceptance rate for concentration draws}
+#'          }
 #' @cite bingham2009b bingham2010
 #' @export
 #' @examples

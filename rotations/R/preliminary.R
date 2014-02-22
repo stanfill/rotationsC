@@ -283,7 +283,7 @@ eskew <- function(U) {
 #' @param r vector of angles.
 #' @param S central orientation.
 #' @param space indicates the desired representation: rotation matrix "SO3" or quaternions "Q4." 
-#' @return A \eqn{n\times p}{n-by-p}matrix where each row is a random rotation matrix (\eqn{p=9}) or quaternion (\eqn{p=4}).
+#' @return A \eqn{n\times p}{n-by-p} matrix where each row is a random rotation matrix (\eqn{p=9}) or quaternion (\eqn{p=4}).
 #' @export
 #' @examples
 #' r <- rvmises(20, kappa = 0.01)
@@ -524,12 +524,12 @@ rotdist.sum.Q4 <- function(x, S = id.Q4, method='extrinsic', p=1) {
 #' Center rotation data
 #' 
 #' This function will take the sample Rs and return the sample Rs centered at
-#' S.  That is, if each row of Rs is R then the returned sample is \eqn{S^\top R}{S'R}.  
+#' S.  That is, the ith observation of Rs denoted \eqn{R_i}{Ri} is returned as \eqn{S^\top R_i}{S'Ri}.  
 #' If S is the true center then the projected mean should be close to the 3-by-3 identity matrix. 
 #' 
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param S the rotation or a matrix of \eqn{n\times p}{n-by-p} rotations about which to center each row of x.
-#' @return The centered sample.
+#' @return The sample centered about S
 #' @export
 #' @examples
 #' Rs <- ruars(5, rcayley)

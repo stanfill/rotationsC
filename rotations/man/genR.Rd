@@ -13,7 +13,7 @@
   rotation matrix "SO3" or quaternions "Q4."}
 }
 \value{
-  A \eqn{n\times p}{n-by-p}matrix where each row is a
+  A \eqn{n\times p}{n-by-p} matrix where each row is a
   random rotation matrix (\eqn{p=9}) or quaternion
   (\eqn{p=4}).
 }

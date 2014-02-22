@@ -38,6 +38,13 @@ region<-function(x,method, type, estimator,alp,...){
 
 region.Q4<-function(x,method, type, estimator,alp=NULL,...){
 	
+  #Change the previous method names to the new method names
+  if(method=='moment' || method=='Moment'){
+    method='direct'
+  }else if(method=='eigen' || method=='Eigen'){
+    method='trans'
+  }
+  
 	Qs<-formatQ4(x)
 	
 	if(is.null(alp)){
@@ -356,12 +363,12 @@ cdfuns<-function(Qs,estimator){
 
 #' M-estimator theory confidence region
 #'
-#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estimator theory.
+#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estimation theory.
 #' 
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation centered at the projected mean
 #' or median based on a result due to \cite{chang2001} among others.  By construction each axis will have the same
 #' radius so the radius reported is for all three axes.  This method is called "direct" because it used
-#' M-estimation theory for SO(3) directly instead of relying on transforming a result from directional statistics.
+#' M-estimation theory for SO(3) directly instead of relying on the transformation of a result from directional statistics.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param estimator character string either "mean" or "median."

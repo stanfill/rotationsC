@@ -26,7 +26,7 @@
 }
 \description{
   Compute the radius of a \eqn{100(1-\alpha)}\% confidence
-  region for the central orientation based on M-estimator
+  region for the central orientation based on M-estimation
   theory.
 }
 \details{
@@ -37,8 +37,8 @@
   each axis will have the same radius so the radius
   reported is for all three axes.  This method is called
   "direct" because it used M-estimation theory for SO(3)
-  directly instead of relying on transforming a result from
-  directional statistics.
+  directly instead of instead of relying on the transformation 
+  of a result from directional statistics.
 }
 \examples{
 Rs <- ruars(20, rcayley, kappa = 100)
