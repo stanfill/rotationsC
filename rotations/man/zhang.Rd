@@ -44,7 +44,7 @@
   option.  This method is called "direct" because it used
   M-estimation theory for SO(3) directly instead of relying
   on transforming a result from directional statistics as
-  \code{\link{prentice}} or \code{\link{fisheretal}} do.
+  \code{\link{prentice}} and \code{\link{fisheretal}} do.
 }
 \examples{
 Rs <- ruars(20, rcayley, kappa = 100)

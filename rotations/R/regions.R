@@ -249,7 +249,7 @@ prentice.SO3<-function(x,alp=NULL){
 #' radius so the radius reported is for all three axis.  A normal theory version of this procedure uses the theoretical
 #' chi-square limiting distribution and is given by the \code{\link{chang}} option.  This method is called "direct" because it used
 #' M-estimation theory for SO(3) directly instead of relying on transforming a result from directional statistics as \code{\link{prentice}}
-#' or \code{\link{fisheretal}} do.
+#' and \code{\link{fisheretal}} do.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param estimator character string either "mean" or "median."
