@@ -43,7 +43,7 @@
   \deqn{C_U(r)=\frac{1}{2\pi}.}{C(r)=1/(2\pi).} Because the
   uniform distribution with respect to the Haar measure
   gives a horizontal line at 1 with respect to the Lebesgue
-  measure, we called this distribution 'Haar'.
+  measure, we called this distribution 'Haar.'
 }
 \examples{
 r <- seq(-pi, pi, length = 1000)

@@ -19,12 +19,12 @@
 #' 
 #' #Compare the region sizes that are currently available
 #' 
-#' region(Rs, method = 'trans', type = 'theory', estimator = 'mean', alp = 0.1)
-#' region(Rs, method = 'trans', type = 'bootstrap', estimator = 'mean', alp = 0.1, symm = TRUE)
-#' region(Rs, method = 'direct', type = 'bootstrap', estimator = 'mean', alp = 0.1, m = 100)
-#' region(Rs, method = 'direct', type = 'theory', estimator = 'mean', alp = 0.1)
+#' region(Rs, method = "trans", type = "theory", estimator = "mean", alp = 0.1)
+#' region(Rs, method = "trans", type = "bootstrap", estimator = "mean", alp = 0.1, symm = TRUE)
+#' region(Rs, method = "direct", type = "bootstrap", estimator = "mean", alp = 0.1, m = 100)
+#' region(Rs, method = "direct", type = "theory", estimator = "mean", alp = 0.1)
 #' \dontrun{
-#' region(Rs, method = 'Bayes', type = 'Mises', estimator = 'mean',
+#' region(Rs, method = "Bayes", type = "Mises", estimator = "mean",
 #'        S0 = mean(Rs), kappa0 = 10, tuneS = 5000, tuneK = 1, burn_in = 1000, alp = .01, m = 5000)}
 
 region<-function(x,method, type, estimator,alp,...){
@@ -186,7 +186,7 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 #' Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
 #' 
 #' #The prentice method can be accesed from the "region" function or the "prentice" function
-#' region(Qs, method = 'trans', type = 'theory', alp = 0.1, estimator='mean')
+#' region(Qs, method = "trans", type = "theory", alp = 0.1, estimator="mean")
 #' prentice(Qs, alp = 0.1)
 
 prentice<-function(x,alp){
@@ -263,8 +263,8 @@ prentice.SO3<-function(x,alp=NULL){
 #' 
 #' #The zhang method can be accesed from the "region" function or the "zhang" function
 #' #They will be different because it is a bootstrap.
-#' region(Rs, method = 'direct', type = 'bootstrap', alp = 0.1, estimator = 'mean')
-#' zhang(Rs, estimator = 'mean', alp = 0.1)
+#' region(Rs, method = "direct", type = "bootstrap", alp = 0.1, estimator = "mean")
+#' zhang(Rs, estimator = "mean", alp = 0.1)
 
 zhang<-function(x,estimator,alp,m){
 	UseMethod("zhang")
@@ -383,8 +383,8 @@ cdfuns<-function(Qs,estimator){
 #' Rs <- ruars(20, rcayley, kappa = 100)
 #' 
 #' #The chang method can be accesed from the "region" function or the "chang" function
-#' region(Rs, method = 'direct', type = 'theory', alp = 0.1, estimator = 'mean')
-#' chang(Rs, estimator = 'mean', alp = 0.1)
+#' region(Rs, method = "direct", type = "theory", alp = 0.1, estimator = "mean")
+#' chang(Rs, estimator = "mean", alp = 0.1)
 
 chang<-function(x,estimator,alp){
 	UseMethod("chang")
@@ -451,7 +451,7 @@ chang.Q4<-function(x,estimator,alp=NULL){
 #' Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
 #' 
 #' #The Fisher et al. method can be accesed from the "region" function or the "fisheretal" function
-#' region(Qs, method = 'trans', type = 'bootstrap', alp = 0.1, symm = TRUE, estimator = 'mean')
+#' region(Qs, method = "trans", type = "bootstrap", alp = 0.1, symm = TRUE, estimator = "mean")
 #' fisheretal(Qs, alp = 0.1, boot=TRUE, symm = TRUE)
 
 fisheretal<-function(x,alp,boot,m,symm){

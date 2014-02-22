@@ -51,7 +51,7 @@ chang(Rs, estimator = 'mean', alp = 0.1)
 \references{
   Chang T and Rivest L (2001). "M-estimation for location
   and regression parameters in group models: A case study
-  using Stiefel manifolds." _Annals of statistics_, pp.
+  using Stiefel manifolds." Annals of statistics, pp.
   784-814.
 }
 \seealso{

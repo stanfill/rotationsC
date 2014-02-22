@@ -219,7 +219,7 @@ rfisher <- function(n, kappa = 1, nu = NULL) {
 #' to the uniform distribution on SO(3), see \code{\link{UARS}}.  The uniform distribution with respect to the Haar measure is given
 #' by \deqn{C_U(r)=\frac{1}{2\pi}.}{C(r)=1/(2\pi).}  Because the uniform distribution
 #' with respect to the Haar measure gives a horizontal line at 1 
-#' with respect to the Lebesgue measure, we called this distribution 'Haar'.
+#' with respect to the Lebesgue measure, we called this distribution 'Haar.'
 #'
 #' @name Haar
 #' @aliases Haar dhaar phaar rhaar
