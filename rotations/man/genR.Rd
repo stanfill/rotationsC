@@ -28,7 +28,7 @@
   3}+\sin(r)\Phi(U)+(1-\cos(r))UU^\top}{cos(r)I+sin(r)\Phi(U)+(1-cos(r))UU'}
   where \eqn{I_{3\times 3}}{I} is the \eqn{3\times
   3}{3-by-3} identity matrix, \eqn{\Phi(U)} is a
-  \eqn{3\times 3}{3-by-3} skew-symmetric matirix with upper
+  \eqn{3\times 3}{3-by-3} skew-symmetric matrix with upper
   triangular elements \eqn{-u_3}{-u3}, \eqn{u_2}{u2} and
   \eqn{-u_1}{-u1} in that order.
 }

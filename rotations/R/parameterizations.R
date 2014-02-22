@@ -254,7 +254,7 @@ id.Q4 <- as.Q4(c(1,0,0,0))
 #' @param ... additional arguments.
 #' @format \code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix.
 #' @return 	\item{as.SO3}{coerces provided data into an SO3 type.} 
-#' 					\item{is.SO3}{returns \code{TRUE} or \code{False} depending on whether its argument satifies the conditions to be an
+#' 					\item{is.SO3}{returns \code{TRUE} or \code{False} depending on whether its argument satisfies the conditions to be an
 #' 					rotation matrix.  Namely, has determinant one and its transpose is its inverse.}
 #' @aliases SO3 as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @examples

@@ -277,7 +277,7 @@ eskew <- function(U) {
 #'
 #' Given a vector \eqn{U=(u_1,u_2,u_3)^\top\in R^3}{U=(u1,u2,u3)' in R^3} of length one and angle of rotation \eqn{r}, a rotation can be formed using Rodrigues' formula
 #' \deqn{\cos(r)I_{3\times 3}+\sin(r)\Phi(U)+(1-\cos(r))UU^\top}{cos(r)I+sin(r)\Phi(U)+(1-cos(r))UU'} 
-#' where \eqn{I_{3\times 3}}{I} is the \eqn{3\times 3}{3-by-3} identity matrix, \eqn{\Phi(U)} is a \eqn{3\times 3}{3-by-3} skew-symmetric matirix
+#' where \eqn{I_{3\times 3}}{I} is the \eqn{3\times 3}{3-by-3} identity matrix, \eqn{\Phi(U)} is a \eqn{3\times 3}{3-by-3} skew-symmetric matrix
 #' with upper triangular elements \eqn{-u_3}{-u3}, \eqn{u_2}{u2} and \eqn{-u_1}{-u1} in that order.
 #'
 #' @param r vector of angles.

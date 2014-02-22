@@ -38,7 +38,7 @@
 \value{
   \item{as.SO3}{coerces provided data into an SO3 type.}
   \item{is.SO3}{returns \code{TRUE} or \code{False}
-  depending on whether its argument satifies the conditions
+  depending on whether its argument satisfies the conditions
   to be an rotation matrix.  Namely, has determinant one
   and its transpose is its inverse.}
 }

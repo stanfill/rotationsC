@@ -98,8 +98,8 @@ MCMCSO3.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
 #' @return  list of 
 #'          \itemize{
-#'          \item \code{Shat,Qhat} the posterior mode
-#'          \item \code{Radius} the radius of the credible region centered at the posterior mode
+#'          \item \code{Shat,Qhat} Mode of the posterior distribution for the central orientation S
+#'          \item \code{Radius} Radius of the credible region centered at the posterior mode
 #'          }
 #' @seealso \code{\link{fisheretal}}, \code{\link{prentice}}, \code{\link{chang}}, \code{\link{zhang}}
 #' @cite bingham2009b bingham2010
