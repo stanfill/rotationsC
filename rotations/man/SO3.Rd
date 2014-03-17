@@ -38,27 +38,27 @@
 \value{
   \item{as.SO3}{coerces provided data into an SO3 type.}
   \item{is.SO3}{returns \code{TRUE} or \code{False}
-  depending on whether its argument satifies the conditions
-  to be an rotation matrix.  Namely, has determinant one
-  and its transpose is its inverse.}
+  depending on whether its argument satisfies the
+  conditions to be an rotation matrix.  Namely, has
+  determinant one and its transpose is its inverse.}
 }
 \description{
-  Creates or tests for objects of class "SO3."
+  Creates or tests for objects of class "SO3".
 }
 \details{
   Construct a single or sample of rotations in 3-dimensions
   in 3-by-3 matrix form.  Several possible inputs for
   \code{x} are possible and they are differentiated based
-  on their class or dimension.
+  on their class and dimension.
 
-  For \code{x} an n-by-3 matrix or vector of length 3, the
-  angle-axis representation of rotations is utilized.  More
-  specifically, each rotation matrix can be interpreted as
-  a rotation of some reference frame about the axis \eqn{U}
-  (of unit length) through the angle \eqn{\theta}.  If a
-  single axis (in matrix or vector format) or matrix of
-  axes are provided for \code{x}, then for each axis and
-  angle the matrix is formed through
+  For \code{x} an n-by-3 matrix or a vector of length 3,
+  the angle-axis representation of rotations is utilized.
+  More specifically, each rotation matrix can be
+  interpreted as a rotation of some reference frame about
+  the axis \eqn{U} (of unit length) through the angle
+  \eqn{\theta}.  If a single axis (in matrix or vector
+  format) or matrix of axes are provided for \code{x}, then
+  for each axis and angle the matrix is formed through
   \deqn{R=\exp[\Phi(U\theta)]}{R=exp[\Phi(U\theta)]} where
   \eqn{U} is replace by \code{x}.  If axes are provided but
   \code{theta} is not provided then the length of each axis
@@ -75,16 +75,16 @@
   projected into SO(3) and those that are already in SO(3)
   are returned untouched.  See \code{\link{project.SO3}}
   for more on projecting arbitrary matrices into SO(3).  A
-  message is printed if any of the rows are not rotation
-  matrices.
+  message is printed if any of the rows are not proper
+  rotations.
 
-  For \code{x} a \code{"data.frame"} it is translated into
-  a matrix of the same dimension and the dimensionality of
-  \code{x} is used to determine what the data type:
-  angle-axis, quaternion or rotation. As demonstrated
-  below, \code{is.SO3} may return \code{TRUE} for a data
-  frame, but the functions defined for objects of class
-  \code{'SO3'} will not be called until \code{as.SO3} has
+  \code{x} a \code{"data.frame"} is translated into a
+  matrix of the same dimension and the dimensionality of
+  \code{x} is used to determine the data type: angle-axis,
+  quaternion or rotation. As demonstrated below,
+  \code{is.SO3} may return \code{TRUE} for a data frame,
+  but the functions defined for objects of class
+  \code{"SO3"} will not be called until \code{as.SO3} has
   been used.
 }
 \examples{

@@ -26,7 +26,7 @@
 }
 \description{
   Compute the radius of a \eqn{100(1-\alpha)}\% confidence
-  region for the central orientation based on M-estimator
+  region for the central orientation based on M-estimation
   theory.
 }
 \details{
@@ -35,19 +35,23 @@
   projected mean or median based on a result due to
   \cite{Chang et al. (2001)} among others.  By construction
   each axis will have the same radius so the radius
-  reported is for all three axes.
+  reported is for all three axes.  This method is called
+  "direct" because it uses M-estimation theory for SO(3)
+  directly instead of relying on the transformation of a
+  result from directional statistics like
+  \code{\link{prentice}} and \code{\link{fisheretal}} do.
 }
 \examples{
 Rs <- ruars(20, rcayley, kappa = 100)
 
 #The chang method can be accesed from the "region" function or the "chang" function
-region(Rs, method = 'moment', type = 'theory', alp = 0.1, estimator = 'mean')
-chang(Rs, estimator = 'mean', alp = 0.1)
+region(Rs, method = "direct", type = "theory", alp = 0.1, estimator = "mean")
+chang(Rs, estimator = "mean", alp = 0.1)
 }
 \references{
   Chang T and Rivest L (2001). "M-estimation for location
   and regression parameters in group models: A case study
-  using Stiefel manifolds." _Annals of statistics_, pp.
+  using Stiefel manifolds." Annals of statistics, pp.
   784-814.
 }
 \seealso{

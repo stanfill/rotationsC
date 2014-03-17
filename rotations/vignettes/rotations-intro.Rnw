@@ -269,10 +269,10 @@ In the example code below a sample of $n=50$ rotations are drawn from the Cayley
 
 <<ex6>>=
 Rs <- ruars(50, rcayley, kappa = 10)
-region(Rs, method="moment", type="theory", estimator="mean", alp=0.05)
-region(Rs, method="moment", type="bootstrap", estimator="mean", alp=0.05, m=300)
-region(Rs, method="moment", type="theory", estimator="median", alp=0.05)
-region(Rs, method="moment", type="bootstrap", estimator="median", alp=0.05, m=300)
+region(Rs, method="direct", type="theory", estimator="mean", alp=0.05)
+region(Rs, method="direct", type="bootstrap", estimator="mean", alp=0.05, m=300)
+region(Rs, method="direct", type="theory", estimator="median", alp=0.05)
+region(Rs, method="direct", type="bootstrap", estimator="median", alp=0.05, m=300)
 @
 
 \section{Visualizations}

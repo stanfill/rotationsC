@@ -28,36 +28,37 @@
 }
 \description{
   Density, distribution function and random generation for
-  the uniform distribution on the circle.
+  the uniform distribution.
 }
 \details{
-  The uniform distribution on the interval \eqn{[-\pi,\pi)}
-  has density
+  The uniform distribution has density
   \deqn{C_U(r)=\frac{[1-cos(r)]}{2\pi}}{C(r)=[1-cos(r)]/2\pi}
   with respect to the Lebesgue measure.  The Haar measure
-  is a volume invariance measure for spaces such as SO(3)
-  that plays the role of the uniform measure on SO(3).  The
-  uniform distribution with respect to the Haar measure is
-  given by \deqn{C_U(r)=\frac{1}{2\pi}}{C(r)=1/(2\pi)}.
-  Because the uniform distribution on the circle with
-  respect to the Haar measure gives a horizontal line at 1
-  with respect to the Lebesgue measure, we called this
-  distribution 'Haar.'
+  is the volume invariant measure for SO(3) that plays the
+  role of the uniform measure on SO(3) and
+  \eqn{C_U(r)}{C(r)} is the angular distribution that
+  corresponds to the uniform distribution on SO(3), see
+  \code{\link{UARS}}.  The uniform distribution with
+  respect to the Haar measure is given by
+  \deqn{C_U(r)=\frac{1}{2\pi}.}{C(r)=1/(2\pi).} Because the
+  uniform distribution with respect to the Haar measure
+  gives a horizontal line at 1 with respect to the Lebesgue
+  measure, we called this distribution 'Haar.'
 }
 \examples{
 r <- seq(-pi, pi, length = 1000)
 
-#Visualize the uniform distribution on the circle with respect to Lebesgue measure
-plot(r, dhaar(r), type = 'l', ylab = 'f(r)')
+#Visualize the uniform distribution with respect to Lebesgue measure
+plot(r, dhaar(r), type = "l", ylab = "f(r)")
 
-#Visualize the uniform distribution on the circle with respect to Haar measure, which is
+#Visualize the uniform distribution with respect to Haar measure, which is
 #a horizontal line at 1
-plot(r, 2*pi*dhaar(r)/(1-cos(r)), type = 'l', ylab = 'f(r)')
+plot(r, 2*pi*dhaar(r)/(1-cos(r)), type = "l", ylab = "f(r)")
 
 #Plot the uniform CDF
-plot(r,phaar(r), type = 'l', ylab = 'F(r)')
+plot(r,phaar(r), type = "l", ylab = "F(r)")
 
-#Generate random observations from uniform circular distribution
+#Generate random observations from uniform distribution
 rs <- rhaar(50)
 
 #Visualize on the real line

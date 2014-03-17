@@ -38,8 +38,9 @@
 
   \item{mean_regions}{character vector to specify which of
   the three confidence regions to show for the projected
-  mean.  Possibilities are "all", "eigen theory","eigen
-  bootstrap, "moment theory", "moment bootstrap".}
+  mean.  Possibilities are "all",
+  "trans.theory","trans.bootstrap, "direct.theory",
+  "direct.bootstrap".}
 
   \item{median_regions}{character vector to specify which
   of the three confidence regions to show for the projected
@@ -52,27 +53,26 @@
   bootstrap confidence regions.}
 
   \item{interactive}{logical; if \code{TRUE}
-  \code{\link{sphereplot}} is used to create an interactive
-  3D plot}
+  \code{sphereplot} is used to create an interactive 3D
+  plot, otherwise \code{\link{ggplot2}} is used}
 
   \item{...}{parameters passed onto the points layer.}
 }
 \value{
-  A \code{ggplot2} object with the data displayed on
-  spherical grid.
+  A visualization of rotation data.
 }
 \description{
   This function produces an interactive or static
   three-dimensional globe onto which one of the columns of
-  the provided sample of rotations is plotted.  The data
+  the provided sample of rotations is projected.  The data
   are centered around a user-specified rotation matrix.
-  The interactive plot is based on the
-  \code{\link{sphereplot}} package and the static plot uses
-  \code{\link{ggplot2}}.
+  The interactive plot is based on the \code{sphereplot}
+  package and the static plot uses \code{\link{ggplot2}}.
 }
 \note{
   The option \code{interactive=TRUE} requires the
-  \code{\link{sphereplot}} package
+  \code{sphereplot} package.  If \code{sphereplot} is not
+  available then the static plot is created.
 }
 \examples{
 r <- rvmises(200, kappa = 1.0)
@@ -86,6 +86,6 @@ plot(Rs, center = mean(Rs), show_estimates = c("proj.mean", "geom.mean"),
  label_points = sample(LETTERS, 200, replace = TRUE)) + aes(size = Z, alpha = Z) +
  scale_size(limits = c(-1, 1), range = c(0.5, 2.5))
 
-plot(Rs,center=mean(Rs),interactive=T)}
+plot(Rs, center = mean(Rs), interactive = TRUE)}
 }
 

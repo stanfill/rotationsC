@@ -69,15 +69,15 @@ plot(rs, frs)
 cdf <- puars(Rs, pcayley, S = S)               #By supplying 'pcayley', it is used to compute the
 plot(rs, cdf)                                  #the CDF
 
-ecdf <- puars(Rs, S=S)                         #No 'puars' arguement is supplied so the empirical
+ecdf <- puars(Rs, S = S)                       #No 'puars' arguement is supplied so the empirical
 plot(rs, ecdf)                                 #cdf is returned
 }
 \references{
   Bingham M, Nordman D and Vardeman S (2009). "Modeling and
   Inference for Measured Crystal Orientations and a
   Tractable Class of Symmetric Distributions for Rotations
-  in three Dimensions." _Journal of the American
-  Statistical Association_, *104*(488), pp. 1385-1397.
+  in three Dimensions." Journal of the American
+  Statistical Association, 104(488), pp. 1385-1397.
 }
 \seealso{
   For more on the angular distribution options see

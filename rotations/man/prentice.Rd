@@ -2,7 +2,7 @@
 \alias{prentice}
 \alias{prentice.Q4}
 \alias{prentice.SO3}
-\title{Eigenvector theory confidence region}
+\title{Transformation based theory confidence region}
 \usage{
   prentice(x, alp)
 
@@ -23,8 +23,8 @@
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)}\% confidence
-  region for the projected mean based on eigenvector based
-  result.
+  region for the projected mean based on a result from
+  directional statistics.
 }
 \details{
   Compute the radius of a \eqn{100(1-\alpha)}\% confidence
@@ -38,13 +38,13 @@
 Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
 
 #The prentice method can be accesed from the "region" function or the "prentice" function
-region(Qs, method = 'eigen', type = 'theory', alp = 0.1, estimator='mean')
+region(Qs, method = "trans", type = "theory", alp = 0.1, estimator = "mean")
 prentice(Qs, alp = 0.1)
 }
 \references{
   Prentice MJ (1986). "Orientation statistics without
-  parametric assumptions." _Journal of the Royal
-  Statistical Society. Series B (Methodological)_, pp.
+  parametric assumptions." Journal of the Royal
+  Statistical Society. Series B (Methodological), pp.
   214-222.
 
   Rancourt D, Rivest L and Asselin J (2000). "Using

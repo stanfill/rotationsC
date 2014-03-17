@@ -19,12 +19,12 @@
 #' 
 #' #Compare the region sizes that are currently available
 #' 
-#' region(Rs, method = 'trans', type = 'theory', estimator = 'mean', alp = 0.1)
-#' region(Rs, method = 'trans', type = 'bootstrap', estimator = 'mean', alp = 0.1, symm = TRUE)
-#' region(Rs, method = 'direct', type = 'bootstrap', estimator = 'mean', alp = 0.1, m = 100)
-#' region(Rs, method = 'direct', type = 'theory', estimator = 'mean', alp = 0.1)
+#' region(Rs, method = "trans", type = "theory", estimator = "mean", alp = 0.1)
+#' region(Rs, method = "trans", type = "bootstrap", estimator = "mean", alp = 0.1, symm = TRUE)
+#' region(Rs, method = "direct", type = "bootstrap", estimator = "mean", alp = 0.1, m = 100)
+#' region(Rs, method = "direct", type = "theory", estimator = "mean", alp = 0.1)
 #' \dontrun{
-#' region(Rs, method = 'Bayes', type = 'Mises', estimator = 'mean',
+#' region(Rs, method = "Bayes", type = "Mises", estimator = "mean",
 #'        S0 = mean(Rs), kappa0 = 10, tuneS = 5000, tuneK = 1, burn_in = 1000, alp = .01, m = 5000)}
 
 region<-function(x,method, type, estimator,alp,...){
@@ -38,6 +38,13 @@ region<-function(x,method, type, estimator,alp,...){
 
 region.Q4<-function(x,method, type, estimator,alp=NULL,...){
 	
+  #Change the previous method names to the new method names
+  if(method=='moment' || method=='Moment'){
+    method='direct'
+  }else if(method=='eigen' || method=='Eigen'){
+    method='trans'
+  }
+  
 	Qs<-formatQ4(x)
 	
 	if(is.null(alp)){
@@ -179,7 +186,7 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 #' Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
 #' 
 #' #The prentice method can be accesed from the "region" function or the "prentice" function
-#' region(Qs, method = 'trans', type = 'theory', alp = 0.1, estimator='mean')
+#' region(Qs, method = "trans", type = "theory", alp = 0.1, estimator = "mean")
 #' prentice(Qs, alp = 0.1)
 
 prentice<-function(x,alp){
@@ -235,13 +242,14 @@ prentice.SO3<-function(x,alp=NULL){
 
 #' M-estimator theory pivotal bootstrap confidence region
 #'
-#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estimator theory.
+#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estimation theory.
 #' 
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
 #' estimator using the method due to Zhang & Nordman (2009) (unpublished MS thesis).  By construction each axis will have the same
 #' radius so the radius reported is for all three axis.  A normal theory version of this procedure uses the theoretical
 #' chi-square limiting distribution and is given by the \code{\link{chang}} option.  This method is called "direct" because it used
-#' M-estimation theory for SO(3) directly instead of relying on transforming a result from directional statistics.
+#' M-estimation theory for SO(3) directly instead of relying on transforming a result from directional statistics as \code{\link{prentice}}
+#' and \code{\link{fisheretal}} do.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param estimator character string either "mean" or "median."
@@ -255,8 +263,8 @@ prentice.SO3<-function(x,alp=NULL){
 #' 
 #' #The zhang method can be accesed from the "region" function or the "zhang" function
 #' #They will be different because it is a bootstrap.
-#' region(Rs, method = 'direct', type = 'bootstrap', alp = 0.1, estimator = 'mean')
-#' zhang(Rs, estimator = 'mean', alp = 0.1)
+#' region(Rs, method = "direct", type = "bootstrap", alp = 0.1, estimator = "mean")
+#' zhang(Rs, estimator = "mean", alp = 0.1)
 
 zhang<-function(x,estimator,alp,m){
 	UseMethod("zhang")
@@ -356,12 +364,13 @@ cdfuns<-function(Qs,estimator){
 
 #' M-estimator theory confidence region
 #'
-#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estimator theory.
+#' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estimation theory.
 #' 
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation centered at the projected mean
 #' or median based on a result due to \cite{chang2001} among others.  By construction each axis will have the same
-#' radius so the radius reported is for all three axes.  This method is called "direct" because it used
-#' M-estimation theory for SO(3) directly instead of relying on transforming a result from directional statistics.
+#' radius so the radius reported is for all three axes.  This method is called "direct" because it uses
+#' M-estimation theory for SO(3) directly instead of relying on the transformation of a result from directional statistics
+#' like \code{\link{prentice}} and \code{\link{fisheretal}} do.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param estimator character string either "mean" or "median."
@@ -374,8 +383,8 @@ cdfuns<-function(Qs,estimator){
 #' Rs <- ruars(20, rcayley, kappa = 100)
 #' 
 #' #The chang method can be accesed from the "region" function or the "chang" function
-#' region(Rs, method = 'direct', type = 'theory', alp = 0.1, estimator = 'mean')
-#' chang(Rs, estimator = 'mean', alp = 0.1)
+#' region(Rs, method = "direct", type = "theory", alp = 0.1, estimator = "mean")
+#' chang(Rs, estimator = "mean", alp = 0.1)
 
 chang<-function(x,estimator,alp){
 	UseMethod("chang")
@@ -442,8 +451,8 @@ chang.Q4<-function(x,estimator,alp=NULL){
 #' Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
 #' 
 #' #The Fisher et al. method can be accesed from the "region" function or the "fisheretal" function
-#' region(Qs, method = 'trans', type = 'bootstrap', alp = 0.1, symm = TRUE, estimator = 'mean')
-#' fisheretal(Qs, alp = 0.1, boot=TRUE, symm = TRUE)
+#' region(Qs, method = "trans", type = "bootstrap", alp = 0.1, symm = TRUE, estimator = "mean")
+#' fisheretal(Qs, alp = 0.1, boot = TRUE, symm = TRUE)
 
 fisheretal<-function(x,alp,boot,m,symm){
 	UseMethod("fisheretal")

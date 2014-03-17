@@ -37,7 +37,8 @@ arsample.unif <- function(f, M, ...) {
 #' \code{R2} and \code{Q2} are set to the identity rotations by default.  For rotations \eqn{R_1}{R1} and \eqn{R_2}{R2}
 #' both in \eqn{SO(3)}, the Euclidean distance between them is \deqn{||R_1-R_2||_F}{||R1-R2||} where \eqn{||\cdot||_F}{|| ||} is the Frobenius norm.
 #' The Riemannian distance is defined as \deqn{||Log(R_1^\top R_2)||_F}{||Log(R1'R2)||} where \eqn{Log} is the matrix logarithm, and it corresponds
-#' to the misorientation angle of \eqn{R_1^\top R_2}{R1'R2}.
+#' to the misorientation angle of \eqn{R_1^\top R_2}{R1'R2}.  See the vignette `rotations-intro' for a comparison of these 
+#' two distance measures.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param R2,Q2 the second rotation in the same parameterization as x.
@@ -50,8 +51,13 @@ arsample.unif <- function(f, M, ...) {
 #' rs <- rcayley(20, kappa = 10)
 #' Rs <- genR(rs, S = id.SO3)
 #' dEs <- rot.dist(Rs,id.SO3)
-#' dRs <- rot.dist(Rs, id.SO3 , method = 'intrinsic')
+#' dRs <- rot.dist(Rs, id.SO3 , method = "intrinsic")
+#' 
+#' #The intrinsic distance between the true central orientation and each observation
+#' #is the same as the absolute value of observations' respective misorientation angles
 #' all.equal(dRs, abs(rs))              #TRUE
+#' 
+#' #The extrinsic distance is related to the intrinsic distance
 #' all.equal(dEs, 2*sqrt(2)*sin(dRs/2)) #TRUE
 
 rot.dist<-function(x,...){
@@ -138,6 +144,12 @@ rot.dist.Q4 <- function(x, Q2=id.Q4 ,method='extrinsic', p=1,...) {
 #' #If the central orientation is id.SO3 then mis.angle(Rs) and abs(rs) are equal
 #' all.equal(mis.angle(Rs), abs(rs))  #TRUE
 #' 
+#' #For other reference frames, the data must be centered first
+#' S <- genR(pi/2)
+#' RsS <- genR(rs, S = S)
+#' mis.axis(RsS-S)
+#' all.equal(mis.angle(RsS-S),abs(rs)) #TRUE
+#' 
 #' #If the central orientation is NOT id.SO3 then mis.angle(Rs) and abs(rs) are usual unequal
 #' Rs <- genR(rs, S = genR(pi/8))
 #' all.equal(mis.angle(Rs), abs(rs))  #Mean relative difference > 0
@@ -179,7 +191,7 @@ mis.angle.Q4 <- function(x){
 #' Every rotation can be interpreted as some reference coordinate system rotated about an axis through an angle.  These quantities
 #' are referred to as the misorientation axis and misorientation angle, respectively, in the material sciences literature.
 #' This function returns the misorentation axis associated with a rotation assuming the reference coordinate system
-#' is the identity.
+#' is the identity.  The data must be centered before calling \code{mis.axis} if a different coordinate system is required.
 #' 
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param ... additional arguments.
@@ -188,9 +200,17 @@ mis.angle.Q4 <- function(x){
 #' @export
 #' @examples
 #' rs <- rcayley(20, kappa = 20)
+#' 
+#' #If the reference frame is set to id.SO3 then no centering is required
 #' Rs <- genR(rs, S = id.SO3)
 #' mis.axis(Rs)
 #' all.equal(Rs, as.SO3(mis.axis(Rs), mis.angle(Rs)))
+#' 
+#' #For other reference frames, the data must be centered first
+#' S <- genR(pi/2)
+#' RsS <- genR(rs, S = S)
+#' mis.axis(RsS-S)
+#' all.equal(mis.angle(RsS-S),abs(rs)) #TRUE
 #' 
 #' Qs <- genR(rs, S = id.Q4, space = "Q4")
 #' mis.axis(Qs)
@@ -267,17 +287,20 @@ eskew <- function(U) {
 
 #' Generate rotations
 #'
-#' Generate rotations according to Rodrigues' formula.
+#' Generate rotations in matrix format using Rodrigues' formula or quaternions.
 #'
-#' Given a vector \eqn{U=(u_1,u_2,u_3)^\top\in R^3}{U=(u1,u2,u3)' in R^3} of length one and angle of rotation \eqn{r}, a rotation can be formed using Rodrigues' formula
+#' Given a vector \eqn{U=(u_1,u_2,u_3)^\top\in R^3}{U=(u1,u2,u3)' in R^3} of length one and angle of rotation \eqn{r}, a \eqn{3\times 3}{3-by-3} rotation 
+#' matrix is formed using Rodrigues' formula
 #' \deqn{\cos(r)I_{3\times 3}+\sin(r)\Phi(U)+(1-\cos(r))UU^\top}{cos(r)I+sin(r)\Phi(U)+(1-cos(r))UU'} 
-#' where \eqn{I_{3\times 3}}{I} is the \eqn{3\times 3}{3-by-3} identity matrix, \eqn{\Phi(U)} is a \eqn{3\times 3}{3-by-3} skew-symmetric matirix
+#' where \eqn{I_{3\times 3}}{I} is the \eqn{3\times 3}{3-by-3} identity matrix, \eqn{\Phi(U)} is a \eqn{3\times 3}{3-by-3} skew-symmetric matrix
 #' with upper triangular elements \eqn{-u_3}{-u3}, \eqn{u_2}{u2} and \eqn{-u_1}{-u1} in that order.
+#' 
+#' For the same vector and angle a quaternion is formed according to \deqn{q=[cos(\theta/2),sin(\theta/2)U]^\top.}{q=[cos(theta/2),sin(theta/2)U]'.}
 #'
 #' @param r vector of angles.
 #' @param S central orientation.
 #' @param space indicates the desired representation: rotation matrix "SO3" or quaternions "Q4." 
-#' @return A \eqn{n\times p}{n-by-p}matrix where each row is a random rotation matrix (\eqn{p=9}) or quaternion (\eqn{p=4}).
+#' @return A \eqn{n\times p}{n-by-p} matrix where each row is a random rotation matrix (\eqn{p=9}) or quaternion (\eqn{p=4}).
 #' @export
 #' @examples
 #' r <- rvmises(20, kappa = 0.01)
@@ -468,7 +491,7 @@ project.SO3 <- function(M) {
 #' 
 #' SE1 <- median(Rs)                      #Projected median
 #' SE2 <- mean(Rs)                        #Projected mean
-#' SR2 <- mean(Rs, type = 'geometric')    #Geometric mean
+#' SR2 <- mean(Rs, type = "geometric")    #Geometric mean
 #' 
 #' #I will use "rotdist.sum" to verify these three estimators minimize the
 #' #loss function they are designed to minimize relative to the other esimators.
@@ -483,10 +506,10 @@ project.SO3 <- function(M) {
 #' rotdist.sum(Rs, S = SE1, p = 1) < rotdist.sum(Rs, S = SR2, p = 1)
 #' 
 #' #The geometric mean minimizes the sum of squared Riemannian distances 
-#' rotdist.sum(Rs, S = SR2, p = 2, method = 'intrinsic') < 
-#'                  rotdist.sum(Rs, S = SE1, p = 2, method = 'intrinsic')
-#' rotdist.sum(Rs, S = SR2, p = 2, method = 'intrinsic') < 
-#'                  rotdist.sum(Rs, S = SE2, p = 2, method = 'intrinsic')
+#' rotdist.sum(Rs, S = SR2, p = 2, method = "intrinsic") < 
+#'                  rotdist.sum(Rs, S = SE1, p = 2, method = "intrinsic")
+#' rotdist.sum(Rs, S = SR2, p = 2, method = "intrinsic") < 
+#'                  rotdist.sum(Rs, S = SE2, p = 2, method = "intrinsic")
 
 
 rotdist.sum<-function(x, S = genR(0, space=class(x)), method='extrinsic', p=1){
@@ -518,12 +541,12 @@ rotdist.sum.Q4 <- function(x, S = id.Q4, method='extrinsic', p=1) {
 #' Center rotation data
 #' 
 #' This function will take the sample Rs and return the sample Rs centered at
-#' S.  That is, if each row of Rs is R then the returned sample is \eqn{S^\top R}{S'R}.  
+#' S.  That is, the ith observation of Rs denoted \eqn{R_i}{Ri} is returned as \eqn{S^\top R_i}{S'Ri}.  
 #' If S is the true center then the projected mean should be close to the 3-by-3 identity matrix. 
 #' 
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param S the rotation or a matrix of \eqn{n\times p}{n-by-p} rotations about which to center each row of x.
-#' @return The centered sample.
+#' @return The sample centered about S
 #' @export
 #' @examples
 #' Rs <- ruars(5, rcayley)

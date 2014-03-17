@@ -39,31 +39,33 @@
   distribution}
 }
 \value{
-  list of \item{S}{Draws from the posterior distribution
-  for central orientation S} \item{kappa}{Draws from the
-  posterior distribution for concentration parameter kappa}
-  \item{Saccept}{Acceptance rate for central orientation
-  draws} \item{Kaccept}{Acceptance rate for concentration
-  draws}
+  list of \itemize{ \item \code{S} Draws from the posterior
+  distribution for central orientation S \item \code{kappa}
+  Draws from the posterior distribution for concentration
+  parameter kappa \item \code{Saccept} Acceptance rate for
+  central orientation draws \item \code{Kaccept} Acceptance
+  rate for concentration draws }
 }
 \description{
-  Use non-informative Bayes to infer about the central
-  orientation and concentration parameter for a sample of
-  rotations.
+  Use non-informative Bayesian methods to infer about the
+  central orientation and concentration parameter for a
+  sample of rotations.
 }
 \details{
   The procedures detailed in \cite{Bingham et al. (2009)}
-  and \cite{Bingham et al. (2010)} are implemented to get
-  draws from the posterior distribution for the central
-  orientation and concentration parameters for a sample of
-  3D rotations.  A uniform prior on SO(3) is used for the
-  central orientation and the appropriate Jeffreys prior is
-  used for the concentration parameter.
+  and \cite{Bingham et al. (2010)} are implemented to
+  obtain draws from the posterior distribution for the
+  central orientation and concentration parameters for a
+  sample of 3D rotations.  A uniform prior on SO(3) is used
+  for the central orientation and the Jeffreys prior
+  determined by \code{type} is used for the concentration
+  parameter.
 }
 \examples{
+#Not run due to time constraints
 \dontrun{
 Rs <- ruars(20, rvmises, kappa = 10)
-draws <- MCMCSO3(Rs, type = 'Mises', S0 = mean(Rs), kappa0 = 10, tuneS = 5000,
+draws <- MCMCSO3(Rs, type = "Mises", S0 = mean(Rs), kappa0 = 10, tuneS = 5000,
                  tuneK = 1,burn_in = 1000, m = 5000)}
 }
 \references{

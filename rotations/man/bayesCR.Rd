@@ -41,14 +41,15 @@
   \item{alp}{alpha level desired, e.g. 0.05 or 0.10.}
 }
 \value{
-  list of \item{Shat,Qhat}{the posterior mode}
-  \item{Radius}{the radius of the credible region centered
-  at the posterior mode}
+  list of \itemize{ \item \code{Shat,Qhat} Mode of the
+  posterior distribution for the central orientation S
+  \item \code{Radius} Radius of the credible region
+  centered at the posterior mode }
 }
 \description{
   Find the radius of a \eqn{100(1-\alpha)}\% credible
   region for the central orientation and concentration
-  parameter using non-informative Bayes.
+  parameter using non-informative Bayesian methods.
 }
 \details{
   Compute the radius of a \eqn{100(1-\alpha)}\% credible
@@ -59,14 +60,15 @@
   centered at the posterior mode.
 }
 \examples{
+#Not run due to time constraints
 \dontrun{
 Rs <- ruars(20, rvmises, kappa = 10)
 
 #Compare the region size of the moment based theory mean estimator to the
 #Bayes region.
 
-region(Rs, method = 'moment', type = 'theory', estimator = 'mean', alp=0.1, m = 100)
-bayesCR <- region(Rs, type = 'Mises', method = 'Bayes', estimator = 'mean', S0 = mean(Rs),
+region(Rs, method = "moment", type = "theory", estimator = "mean", alp=0.1, m = 100)
+bayesCR <- region(Rs, type = "Mises", method = "Bayes", estimator = "mean", S0 = mean(Rs),
                    kappa0 = 10, tuneS = 5000, tuneK = 1, burn_in = 1000, alp = .01, m = 5000)
 
 bayesCR$Radius       #Region size is give by "Radius"

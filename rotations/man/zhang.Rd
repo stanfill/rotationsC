@@ -29,7 +29,7 @@
 }
 \description{
   Compute the radius of a \eqn{100(1-\alpha)}\% confidence
-  region for the central orientation based on M-estimator
+  region for the central orientation based on M-estimation
   theory.
 }
 \details{
@@ -41,15 +41,18 @@
   for all three axis.  A normal theory version of this
   procedure uses the theoretical chi-square limiting
   distribution and is given by the \code{\link{chang}}
-  option.
+  option.  This method is called "direct" because it used
+  M-estimation theory for SO(3) directly instead of relying
+  on transforming a result from directional statistics as
+  \code{\link{prentice}} and \code{\link{fisheretal}} do.
 }
 \examples{
 Rs <- ruars(20, rcayley, kappa = 100)
 
 #The zhang method can be accesed from the "region" function or the "zhang" function
 #They will be different because it is a bootstrap.
-region(Rs, method = 'moment', type = 'bootstrap', alp = 0.1, estimator = 'mean')
-zhang(Rs, estimator = 'mean', alp = 0.1)
+region(Rs, method = "direct", type = "bootstrap", alp = 0.1, estimator = "mean")
+zhang(Rs, estimator = "mean", alp = 0.1)
 }
 \seealso{
   \code{\link{bayesCR}}, \code{\link{prentice}},

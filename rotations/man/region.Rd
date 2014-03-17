@@ -18,7 +18,7 @@
   quaternion (\eqn{p=4}) form.}
 
   \item{method}{character string specifying which type of
-  interval to report, "bayes", "eigen" or "moment" based
+  interval to report, "bayes", "trans" or "direct" based
   theory.}
 
   \item{type}{character string, "bootstrap" or "theory" are
@@ -53,12 +53,12 @@ Rs <- ruars(20, rvmises, kappa = 10)
 
 #Compare the region sizes that are currently available
 
-region(Rs, method = 'eigen', type = 'theory', estimator = 'mean', alp = 0.1)
-region(Rs, method = 'eigen', type = 'bootstrap', estimator = 'mean', alp = 0.1, symm = TRUE)
-region(Rs, method = 'moment', type = 'bootstrap', estimator = 'mean', alp = 0.1, m = 100)
-region(Rs, method = 'moment', type = 'theory', estimator = 'mean', alp = 0.1)
+region(Rs, method = "trans", type = "theory", estimator = "mean", alp = 0.1)
+region(Rs, method = "trans", type = "bootstrap", estimator = "mean", alp = 0.1, symm = TRUE)
+region(Rs, method = "direct", type = "bootstrap", estimator = "mean", alp = 0.1, m = 100)
+region(Rs, method = "direct", type = "theory", estimator = "mean", alp = 0.1)
 \dontrun{
-region(Rs, method = 'Bayes', type = 'Mises', estimator = 'mean',
+region(Rs, method = "Bayes", type = "Mises", estimator = "mean",
        S0 = mean(Rs), kappa0 = 10, tuneS = 5000, tuneK = 1, burn_in = 1000, alp = .01, m = 5000)}
 }
 \seealso{

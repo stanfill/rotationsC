@@ -21,40 +21,40 @@ setOldClass("Q4")
 
 #' Quaternions
 #' 
-#' Creates or tests for objects of class "Q4."
+#' Creates or tests for objects of class "Q4".
 #' 
 #' Construct a single or sample of rotations in 3-dimensions in quaternion form.  Several possible inputs for \code{x}
-#' are possible and they are differentiated based on their class or dimension.
+#' are possible and they are differentiated based on their class and dimension.
 #' 
-#' For \code{x} an n-by-3 matrix or vector of length 3, the angle-axis representation of rotations is utilized.  More specifically,
+#' For \code{x} an n-by-3 matrix or a vector of length 3, the angle-axis representation of rotations is utilized.  More specifically,
 #' each quaternion can be interpreted as a rotation of some reference frame about the axis 
 #' \eqn{U} (of unit length) through the angle \eqn{\theta}.  For each axis and angle the quaternion is formed through
 #' \deqn{q=[cos(\theta/2),sin(\theta/2)U]^\top.}{q=[cos(theta/2),sin(theta/2)U]'.}  The object \code{x} is treated as 
-#' if it had rows \eqn{U} and \code{theta} is a vector or angles. If no angle is supplied then the 
+#' if it has rows \eqn{U} and \code{theta} is a vector or angles. If no angle is supplied then the 
 #' length of each axis is taken to be the angle of rotation theta.
 #' 
 #' For \code{x} an n-by-9 matrix of rotation matrices or an object of class \code{"SO3"}, this function will
 #' return the quaternion equivalent of \code{x}.  See \code{\link{SO3}} or the vignette "rotations-intro"
-#' for more details on rotation matrices  
+#' for more details on rotation matrices.  
 #' 
 #' For \code{x} an n-by-4 matrix, rows are treated as quaternions; rows that aren't of unit length
 #' are made unit length while the rest are returned untouched.  A message is printed if any of the rows are not quaternions.
 #' 
-#' For \code{x} a \code{"data.frame"} it is translated into a matrix of the same dimension and
-#' the dimensionality of \code{x} is used to determine the data type: angle-axis, quaternion or rotation.
+#' \code{x} a \code{"data.frame"} it is translated into a matrix of the same dimension and
+#' the dimensionality of \code{x} is used to determine the data type: angle-axis, quaternion or rotation (see above).
 #' As demonstrated below, \code{is.Q4} may return \code{TRUE} for a data frame, but the functions defined for objects of class 
 #' \code{'Q4'} will not be called until \code{as.Q4} has been used.
 #' 
 #'
 #' @export
 #' @rdname Q4
-#' @param x object to be coerced or tested.
+#' @param x object to be coerced or tested
 #' @param theta vector or single rotation angle; if \code{length(theta)==1}, the same theta is used for all axes
 #' @param ... additional arguments.
 #' @format \code{id.Q4} is the identity rotation given by the matrix \eqn{[1,0,0,0]^\top}{[1,0,0,0]'}.
-#' @return 	\item{as.Q4}{coerces its object into an Q4 type.} 
+#' @return 	\item{as.Q4}{coerces its object into a Q4 type} 
 #' 					\item{is.Q4}{returns \code{TRUE} or \code{False} depending on whether its argument satisfies the conditions to be an
-#' 					quaternion; namely it must be four-dimensional and of unit length.}
+#' 					quaternion; namely it must be four-dimensional and of unit length}
 #' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @examples
 #' data(drill)                    #Pull off subject 1's wrist measurements
@@ -221,12 +221,12 @@ id.Q4 <- as.Q4(c(1,0,0,0))
 
 #' Rotation matrices
 #' 
-#' Creates or tests for objects of class "SO3."
+#' Creates or tests for objects of class "SO3".
 #' 
 #' Construct a single or sample of rotations in 3-dimensions in 3-by-3 matrix form.  Several possible inputs for \code{x}
-#' are possible and they are differentiated based on their class or dimension.
+#' are possible and they are differentiated based on their class and dimension.
 #' 
-#' For \code{x} an n-by-3 matrix or vector of length 3, the angle-axis representation of rotations is utilized.  More specifically,
+#' For \code{x} an n-by-3 matrix or a vector of length 3, the angle-axis representation of rotations is utilized.  More specifically,
 #' each rotation matrix can be interpreted as a rotation of some reference frame about the axis \eqn{U} (of unit length)
 #' through the angle \eqn{\theta}.  If a single axis (in matrix or vector format) or matrix of axes are provided for \code{x}, 
 #' then for each axis and angle the matrix is formed through
@@ -239,12 +239,12 @@ id.Q4 <- as.Q4(c(1,0,0,0))
 #' 
 #' For \code{x} an n-by-9 matrix, rows are treated as 3-by-3 matrices; rows that don't form matrices in SO(3)
 #' are projected into SO(3) and those that are already in SO(3) are returned untouched.  See \code{\link{project.SO3}} for
-#' more on projecting arbitrary matrices into SO(3).  A message is printed if any of the rows are not rotation matrices.
+#' more on projecting arbitrary matrices into SO(3).  A message is printed if any of the rows are not proper rotations.
 #' 
-#' For \code{x} a \code{"data.frame"} it is translated into a matrix of the same dimension and
-#' the dimensionality of \code{x} is used to determine what the data type: angle-axis, quaternion or rotation.
+#' \code{x} a \code{"data.frame"} is translated into a matrix of the same dimension and
+#' the dimensionality of \code{x} is used to determine the data type: angle-axis, quaternion or rotation.
 #' As demonstrated below, \code{is.SO3} may return \code{TRUE} for a data frame, but the functions defined for objects of class 
-#' \code{'SO3'} will not be called until \code{as.SO3} has been used. 
+#' \code{"SO3"} will not be called until \code{as.SO3} has been used. 
 #' 
 #'
 #' @export
@@ -254,7 +254,7 @@ id.Q4 <- as.Q4(c(1,0,0,0))
 #' @param ... additional arguments.
 #' @format \code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix.
 #' @return 	\item{as.SO3}{coerces provided data into an SO3 type.} 
-#' 					\item{is.SO3}{returns \code{TRUE} or \code{False} depending on whether its argument satifies the conditions to be an
+#' 					\item{is.SO3}{returns \code{TRUE} or \code{False} depending on whether its argument satisfies the conditions to be an
 #' 					rotation matrix.  Namely, has determinant one and its transpose is its inverse.}
 #' @aliases SO3 as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @examples

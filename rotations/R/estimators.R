@@ -25,15 +25,15 @@
 #' mean(Rs)                               #Projected mean
 #' project.SO3(colMeans(Rs))              #Same as mean(Rs)
 #' 
-#' mean(Rs, type = 'geometric')           #Geometric mean
+#' mean(Rs, type = "geometric")           #Geometric mean
 #' rot.dist(mean(Rs))                     #Bias of the projected mean
-#' rot.dist(mean(Rs, type = 'geometric')) #Bias of the geometric mean
+#' rot.dist(mean(Rs, type = "geometric")) #Bias of the geometric mean
 #' 
 #' Qs <- as.Q4(Rs)
 #' mean(Qs)                               #Projected mean
-#' mean(Qs, type = 'geometric')           #Geometric mean
+#' mean(Qs, type = "geometric")           #Geometric mean
 #' rot.dist(mean(Qs))                     #Bias of the projected mean
-#' rot.dist(mean(Qs, type = 'geometric')) #Bias of the geometric mean
+#' rot.dist(mean(Qs, type = "geometric")) #Bias of the geometric mean
 
 mean.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
 	
@@ -109,15 +109,15 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 #' @examples
 #' Rs <- ruars(20, rvmises, kappa = 0.01)
 #' median(Rs)                               #Projected median
-#' median(Rs, type = 'geometric')           #Geometric median
+#' median(Rs, type = "geometric")           #Geometric median
 #' rot.dist(median(Rs))                     #Bias of the projected median
-#' rot.dist(median(Rs, type = 'geometric')) #Bias of the geometric median
+#' rot.dist(median(Rs, type = "geometric")) #Bias of the geometric median
 #' 
 #' Qs <- as.Q4(Rs)
 #' median(Qs)                               #Projected median
-#' median(Qs, type = 'geometric')           #Geometric median
+#' median(Qs, type = "geometric")           #Geometric median
 #' rot.dist(median(Qs))                     #Bias of the projected median
-#' rot.dist(median(Qs, type = 'geometric')) #Bias of the geometric median
+#' rot.dist(median(Qs, type = "geometric")) #Bias of the geometric median
 
 median<-function(x,...){
   UseMethod("median")
