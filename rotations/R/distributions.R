@@ -111,6 +111,8 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
   if(lenn>1)
   	n<-lenn
   
+  #This has also been coded in C++ but the gains aren't worth the pains so
+  #I will keep it in R for now
   bet <- rbeta(n, kappa + 0.5, 3/2)
   theta <- acos(2 * bet - 1) * (1 - 2 * rbinom(n, 1, 0.5))
   return(theta)
