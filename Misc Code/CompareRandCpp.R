@@ -34,3 +34,11 @@ rvmises2 <- function(n, kappa = 1, nu = NULL) {
   theta<-rvmisesCPP(n,kappa)
   return(theta)
 }
+
+rs<-rvmises(20,1)
+rs2<-rvmises2(20,1)
+
+hist(rs)
+hist(rs2)
+
+microbenchmark(rvmises(2000,1),rvmises2(2000,1))

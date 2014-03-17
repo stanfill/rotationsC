@@ -384,38 +384,7 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
   if(lenn>1)
   	n<-lenn
   
-  u <- runif(3, 0, 1)
-  a <- 1 + sqrt(1 + 4 * kappa^2)
-  b <- (a - sqrt(2 * a))/(2 * kappa)
-  r <- (1 + b^2)/(2 * b)
-  theta <- rep(10, n)
-  
-  for (i in 1:n) {
-    
-    while (theta[i] == 10) {
-      # Step 1
-      u <- runif(3, 0, 1)
-      z <- cos(pi * u[1])
-      f <- (1 + r * z)/(r + z)
-      c <- kappa * (r - f)
-      
-      # Step 2
-      u <- runif(3, 0, 1)
-      if ((c * (2 - c) - u[2]) > 0) {
-        
-        theta[i] = sign(u[3] - 0.5) * acos(f)
-        
-      } else {
-        
-        if (log(c/u[2]) + 1 - c < 0) {
-          u <- runif(3, 0, 1)
-        } else {
-          u <- runif(3, 0, 1)
-          theta[i] = sign(u[3] - 0.5) * acos(f)
-        }
-      }
-    }
-  }
+  theta<-rvmisesCPP(n,kappa)
   return(theta)
 }
 

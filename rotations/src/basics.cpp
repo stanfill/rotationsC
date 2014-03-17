@@ -184,3 +184,44 @@ arma::mat genrC(arma::vec r, arma::mat S , int SO3, arma::mat u) {
   }
 
 }
+
+// [[Rcpp::export]]
+NumericVector rvmisesCPP(int n, double kappa){
+  RNGScope scope;
+  NumericVector u(3), theta(n, 10.0);
+    
+  u = runif(3, 0, 1);
+  double a = 1 + sqrt(1 + 4 * pow(kappa,2));
+  double b = (a - sqrt(2 * a))/(2 * kappa);
+  double r = (1 + pow(b,2))/(2 * b);
+  double z = 0, f = 0, c = 0;
+  
+  for (int i = 0; i<n; i++) {
+    
+    while (theta[i] > 4) {
+      // Step 1
+      u = runif(3, 0, 1);
+      z = cos(PI * u[0]);
+      f = (1 + r * z)/(r + z);
+      c = kappa * (r - f);
+      
+      // Step 2
+      u = runif(3, 0, 1);
+      if ((c * (2 - c) - u[1]) > 0) {
+        
+        theta[i] = (sign(u[2] - 0.5)) * acos(f);
+        
+      } else {
+        
+        if ((log(c/u[1]) + 1 - c) < 0) {
+          u = runif(3, 0, 1);
+        } else {
+          u = runif(3, 0, 1);
+          theta[i] = (sign(u[2] - 0.5)) * acos(f);
+        }
+      }
+    }
+  }
+  
+  return theta;
+}

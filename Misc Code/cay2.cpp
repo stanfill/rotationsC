@@ -55,15 +55,15 @@ NumericVector rvmisesCPP(int n, double kappa){
       u = runif(3, 0, 1);
       if ((c * (2 - c) - u[1]) > 0) {
         
-        theta[i] = sign(u[2] - 0.5) * acos(f);
+        theta[i] = (sign(u[2] - 0.5)) * acos(f);
         
       } else {
         
-        if (log(c/u[1]) + 1 - c < 0) {
+        if ((log(c/u[1]) + 1 - c) < 0) {
           u = runif(3, 0, 1);
         } else {
           u = runif(3, 0, 1);
-          theta[i] = sign(u[2] - 0.5) * acos(f);
+          theta[i] = (sign(u[2] - 0.5)) * acos(f);
         }
       }
     }
