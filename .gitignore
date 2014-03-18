@@ -9,6 +9,4 @@ rotationsC.Rproj
 *.pdf
 *.bbl
 *.blg
-.o
-.dll
 rotations.Rcheck
