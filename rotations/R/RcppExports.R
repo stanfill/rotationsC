@@ -21,6 +21,10 @@ genrC <- function(r, S, SO3, u) {
     .Call('rotations_genrC', PACKAGE = 'rotations', r, S, SO3, u)
 }
 
+rvmisesCPP <- function(n, kappa) {
+    .Call('rotations_rvmisesCPP', PACKAGE = 'rotations', n, kappa)
+}
+
 centerCpp <- function(Rs, S) {
     .Call('rotations_centerCpp', PACKAGE = 'rotations', Rs, S)
 }

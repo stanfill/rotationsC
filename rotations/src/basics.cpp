@@ -185,6 +185,14 @@ arma::mat genrC(arma::vec r, arma::mat S , int SO3, arma::mat u) {
 
 }
 
+int sign(double x){
+  if(x < 0){
+    return(-1);
+  }else{
+    return(1);
+  }
+}
+
 // [[Rcpp::export]]
 NumericVector rvmisesCPP(int n, double kappa){
   RNGScope scope;
