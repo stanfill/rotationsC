@@ -15,3 +15,6 @@ library(rotations)
 
 * Samling from the von Mises Fisher distribution is now done in C++ to increase speed
 
+#### Bug Fixes -
+
+* A typo in the (not run) Bayes credible region example has been fixed
