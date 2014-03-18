@@ -5,6 +5,55 @@
 // [[Rcpp::interfaces(r, cpp)]]
 using namespace Rcpp;
 
+int sign(double x){
+  if(x < 0){
+    return(-1);
+  }else{
+    return(1);
+  }
+}
+
+// [[Rcpp::export]]
+NumericVector rvmisesCPP(int n, double kappa){
+  RNGScope scope;
+  NumericVector u(3), theta(n, 10.0);
+    
+  u = runif(3, 0, 1);
+  double a = 1 + sqrt(1 + 4 * pow(kappa,2));
+  double b = (a - sqrt(2 * a))/(2 * kappa);
+  double r = (1 + pow(b,2))/(2 * b);
+  double z = 0, f = 0, c = 0;
+  
+  for (int i = 0; i<n; i++) {
+    
+    while (theta[i] > 4) {
+      // Step 1
+      u = runif(3, 0, 1);
+      z = cos(PI * u[0]);
+      f = (1 + r * z)/(r + z);
+      c = kappa * (r - f);
+      
+      // Step 2
+      u = runif(3, 0, 1);
+      if ((c * (2 - c) - u[1]) > 0) {
+        
+        theta[i] = (sign(u[2] - 0.5)) * acos(f);
+        
+      } else {
+        
+        if ((log(c/u[1]) + 1 - c) < 0) {
+          u = runif(3, 0, 1);
+        } else {
+          u = runif(3, 0, 1);
+          theta[i] = (sign(u[2] - 0.5)) * acos(f);
+        }
+      }
+    }
+  }
+  
+  return theta;
+}
+
 // [[Rcpp::export]]
 arma::mat centerCpp(arma::mat Rs, arma::mat S){
   
@@ -206,33 +255,80 @@ arma::mat genrC(arma::mat S,double r) {
 
 }
 
-double rcayleyCpp(double kappa){
+NumericVector rcayleyCpp(int n, double kappa){
   RNGScope scope;
-  NumericVector bet(1), alp(1);
+  NumericVector bet(n), alp(n), theta(n);
   
-  bet = rbeta(1,kappa+0.5,1.5);
-  alp = rbinom(1,1,0.5);
- 
-  double theta = acos(2*bet[0]-1)*(1-2*alp[0]);
+  bet = rbeta(n,kappa+0.5,1.5);
+  alp = rbinom(n,1,0.5);
+  
+  for(int i = 0; i<n; i++){
+    
+    theta[i] = acos(2*bet[i]-1)*(1-2*alp[i]);
+  
+  }
   return theta;
 }
 
 // [[Rcpp::export]]
-arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, Function f){
+arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, int Dist){
   RNGScope scope;
   
   double r, rj1;
   NumericVector W1(1);
+  arma::mat Sstar;
+  //Function f, rfun;
+
+  //For now use 'Dist' to identify the form of the likelihood and 
+  //proposal distribution for S: Cayley is 1, Fisher is 2, von Mises is 3
+  //This is ultra inefficient but should work for now
   
-  //Generate proposal S~Cayley(oldS,rho) distribution
-  r = rcayleyCpp(rho);
-  arma::mat Sstar = genrC(oldS,r);
+  if(Dist==1){
+    
+    //f = lpcayley;
+    //rfun = rcayleyCpp;
+    
+    //Generate proposal S~Cayley(oldS,rho) distribution
+    r = as<double>(rcayleyCpp(1, rho));
+    Sstar = genrC(oldS,r);
   
   
-  //Compute transition probability: g(Sstar,kappa)/g(oldS,kappa)
-  rj1 = as<double>(f(Rs,Sstar,kappa));
-  rj1 -= as<double>(f(Rs,oldS,kappa));
-  rj1 = exp(rj1);  
+    //Compute transition probability: g(Sstar,kappa)/g(oldS,kappa)
+    rj1 = lpcayley(Rs,Sstar,kappa);
+    rj1 -= lpcayley(Rs,oldS,kappa);
+    rj1 = exp(rj1); 
+    
+  }else if(Dist==2){
+    //f = lpfisher;
+    //rfun = rcayleyCpp;
+    
+    //Generate proposal S~Cayley(oldS,rho) distribution
+    r = as<double>(rcayleyCpp(1, rho));
+    Sstar = genrC(oldS,r);
+  
+  
+    //Compute transition probability: g(Sstar,kappa)/g(oldS,kappa)
+    rj1 = lpfisher(Rs,Sstar,kappa);
+    rj1 -= lpfisher(Rs,oldS,kappa);
+    rj1 = exp(rj1); 
+  
+  }else{
+    //f = lpvmises;
+    //rfun = rvmisesCPP;
+    
+    //Generate proposal S~Cayley(oldS,rho) distribution
+    r = as<double>(rvmisesCPP(1, rho));
+    Sstar = genrC(oldS,r);
+  
+  
+    //Compute transition probability: g(Sstar,kappa)/g(oldS,kappa)
+    rj1 = lpvmises(Rs,Sstar,kappa);
+    rj1 -= lpvmises(Rs,oldS,kappa);
+    rj1 = exp(rj1); 
+  }
+  
+  
+ 
   
   if(!std::isfinite(rj1)){
     rj1 = 0;
@@ -255,20 +351,50 @@ arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, Fun
 }
 
 // [[Rcpp::export]]
-double kap_MCMC_CPP(arma::mat Rs, double oldKappa, double sigma, arma::mat S, Function f){
+double kap_MCMC_CPP(arma::mat Rs, double oldKappa, double sigma, arma::mat S, int Dist){
   RNGScope scope;
   
   double  rj2, kappaStar;
   NumericVector kappaS(1), W2(1);
-  
+  //Function f;
+
   //Generate proposal log(kappa)~N(log(oldKappa),sigma^2)
   kappaS = rnorm(1,log(oldKappa),sigma);
   kappaStar = exp(kappaS[0]);
+
+  //For now use 'Dist' to identify the form of the likelihood and 
+  //proposal distribution for S: Cayley is 1, Fisher is 2, von Mises is 3
+  //This is ultra inefficient but should work for now
   
-  //Compute transition probability
-  rj2 = as<double>(f(Rs,S,kappaStar));
-  rj2 -= as<double>(f(Rs,S,oldKappa));
-  rj2 = (kappaStar/oldKappa)*exp(rj2);
+  if(Dist==1){
+    
+    //f = lpcayley;
+    //rfun = rcayleyCpp;
+  
+    //Compute transition probability: 
+    rj2 = lpcayley(Rs,S,kappaStar);
+    rj2 -= lpcayley(Rs,S,oldKappa); 
+    
+  }else if(Dist==2){
+    //f = lpfisher;
+    //rfun = rcayleyCpp;
+  
+  
+    //Compute transition probability: 
+    rj2 = lpfisher(Rs,S,kappaStar);
+    rj2 -= lpfisher(Rs,S,oldKappa);
+  
+  }else{
+    //f = lpvmises;
+    //rfun = rvmisesCPP;  
+  
+    //Compute transition probability
+    rj2 = lpvmises(Rs,S,kappaStar);
+    rj2 -= lpvmises(Rs,S,oldKappa);
+
+  }
+  
+  rj2 = exp(rj2); 
   
   if(!std::isfinite(rj2)){
     rj2 = 0;
@@ -319,7 +445,7 @@ arma::rowvec afun_CPP(arma::mat R1, arma::mat R2){
 
 
 // [[Rcpp::export]]
-List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double sigma, int burnin, int B, Function f){
+List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double sigma, int burnin, int B, int Dist){
   
   // Rs - the sample
   // S0 - initial central orientation
@@ -341,8 +467,8 @@ List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double
   List out;
   
   for(i=0;i<burnin;i++){
-    Snew = S_MCMC_CPP(Rs,Snew,rho,Knew,f);
-    Knew = kap_MCMC_CPP(Rs,Knew,sigma,Snew,f);
+    Snew = S_MCMC_CPP(Rs,Snew,rho,Knew,Dist);
+    Knew = kap_MCMC_CPP(Rs,Knew,sigma,Snew,Dist);
   }
   
   Kdraws[0] = Knew;
@@ -353,7 +479,7 @@ List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double
   
   for(i=1;i<B;i++){
     S0 = Snew;
-    Snew = S_MCMC_CPP(Rs,S0,rho,Kdraws[(i-1)],f);
+    Snew = S_MCMC_CPP(Rs,S0,rho,Kdraws[(i-1)],Dist);
     
     if(accu(abs(S0-Snew))<10e-5){
       Sdraws.row(i)=Sdraws.row((i-1));
@@ -365,7 +491,7 @@ List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double
         }
     }
     
-    Kdraws[i] = kap_MCMC_CPP(Rs,Kdraws[(i-1)],sigma,Snew,f);
+    Kdraws[i] = kap_MCMC_CPP(Rs,Kdraws[(i-1)],sigma,Snew,Dist);
     Ksame = Kdraws[i]-Kdraws[(i-1)];
     
     if(Ksame<0){

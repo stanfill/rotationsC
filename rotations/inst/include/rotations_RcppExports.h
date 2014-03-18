@@ -215,17 +215,17 @@ namespace rotations {
         return Rcpp::as<double >(__result);
     }
 
-    inline arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, Function f) {
+    inline arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, int Dist) {
         typedef SEXP(*Ptr_S_MCMC_CPP)(SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_S_MCMC_CPP p_S_MCMC_CPP = NULL;
         if (p_S_MCMC_CPP == NULL) {
-            validateSignature("arma::mat(*S_MCMC_CPP)(arma::mat,arma::mat,double,double,Function)");
+            validateSignature("arma::mat(*S_MCMC_CPP)(arma::mat,arma::mat,double,double,int)");
             p_S_MCMC_CPP = (Ptr_S_MCMC_CPP)R_GetCCallable("rotations", "rotations_S_MCMC_CPP");
         }
         RObject __result;
         {
             RNGScope __rngScope;
-            __result = p_S_MCMC_CPP(Rcpp::wrap(Rs), Rcpp::wrap(oldS), Rcpp::wrap(rho), Rcpp::wrap(kappa), Rcpp::wrap(f));
+            __result = p_S_MCMC_CPP(Rcpp::wrap(Rs), Rcpp::wrap(oldS), Rcpp::wrap(rho), Rcpp::wrap(kappa), Rcpp::wrap(Dist));
         }
         if (__result.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -234,17 +234,17 @@ namespace rotations {
         return Rcpp::as<arma::mat >(__result);
     }
 
-    inline double kap_MCMC_CPP(arma::mat Rs, double oldKappa, double sigma, arma::mat S, Function f) {
+    inline double kap_MCMC_CPP(arma::mat Rs, double oldKappa, double sigma, arma::mat S, int Dist) {
         typedef SEXP(*Ptr_kap_MCMC_CPP)(SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_kap_MCMC_CPP p_kap_MCMC_CPP = NULL;
         if (p_kap_MCMC_CPP == NULL) {
-            validateSignature("double(*kap_MCMC_CPP)(arma::mat,double,double,arma::mat,Function)");
+            validateSignature("double(*kap_MCMC_CPP)(arma::mat,double,double,arma::mat,int)");
             p_kap_MCMC_CPP = (Ptr_kap_MCMC_CPP)R_GetCCallable("rotations", "rotations_kap_MCMC_CPP");
         }
         RObject __result;
         {
             RNGScope __rngScope;
-            __result = p_kap_MCMC_CPP(Rcpp::wrap(Rs), Rcpp::wrap(oldKappa), Rcpp::wrap(sigma), Rcpp::wrap(S), Rcpp::wrap(f));
+            __result = p_kap_MCMC_CPP(Rcpp::wrap(Rs), Rcpp::wrap(oldKappa), Rcpp::wrap(sigma), Rcpp::wrap(S), Rcpp::wrap(Dist));
         }
         if (__result.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -272,17 +272,17 @@ namespace rotations {
         return Rcpp::as<arma::rowvec >(__result);
     }
 
-    inline List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double sigma, int burnin, int B, Function f) {
+    inline List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double sigma, int burnin, int B, int Dist) {
         typedef SEXP(*Ptr_both_MCMC_CPP)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_both_MCMC_CPP p_both_MCMC_CPP = NULL;
         if (p_both_MCMC_CPP == NULL) {
-            validateSignature("List(*both_MCMC_CPP)(arma::mat,arma::mat,double,double,double,int,int,Function)");
+            validateSignature("List(*both_MCMC_CPP)(arma::mat,arma::mat,double,double,double,int,int,int)");
             p_both_MCMC_CPP = (Ptr_both_MCMC_CPP)R_GetCCallable("rotations", "rotations_both_MCMC_CPP");
         }
         RObject __result;
         {
             RNGScope __rngScope;
-            __result = p_both_MCMC_CPP(Rcpp::wrap(Rs), Rcpp::wrap(S0), Rcpp::wrap(kappa0), Rcpp::wrap(rho), Rcpp::wrap(sigma), Rcpp::wrap(burnin), Rcpp::wrap(B), Rcpp::wrap(f));
+            __result = p_both_MCMC_CPP(Rcpp::wrap(Rs), Rcpp::wrap(S0), Rcpp::wrap(kappa0), Rcpp::wrap(rho), Rcpp::wrap(sigma), Rcpp::wrap(burnin), Rcpp::wrap(B), Rcpp::wrap(Dist));
         }
         if (__result.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();

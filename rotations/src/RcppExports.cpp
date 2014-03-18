@@ -363,8 +363,8 @@ RcppExport SEXP rotations_lpcayley(SEXP RsSEXP, SEXP SSEXP, SEXP kappaSEXP) {
     return __result;
 }
 // S_MCMC_CPP
-arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, Function f);
-static SEXP rotations_S_MCMC_CPP_try(SEXP RsSEXP, SEXP oldSSEXP, SEXP rhoSEXP, SEXP kappaSEXP, SEXP fSEXP) {
+arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, int Dist);
+static SEXP rotations_S_MCMC_CPP_try(SEXP RsSEXP, SEXP oldSSEXP, SEXP rhoSEXP, SEXP kappaSEXP, SEXP DistSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
@@ -372,19 +372,19 @@ BEGIN_RCPP
         Rcpp::traits::input_parameter< arma::mat >::type oldS(oldSSEXP );
         Rcpp::traits::input_parameter< double >::type rho(rhoSEXP );
         Rcpp::traits::input_parameter< double >::type kappa(kappaSEXP );
-        Rcpp::traits::input_parameter< Function >::type f(fSEXP );
-        arma::mat __result = S_MCMC_CPP(Rs, oldS, rho, kappa, f);
+        Rcpp::traits::input_parameter< int >::type Dist(DistSEXP );
+        arma::mat __result = S_MCMC_CPP(Rs, oldS, rho, kappa, Dist);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);
     return __sexp_result;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP rotations_S_MCMC_CPP(SEXP RsSEXP, SEXP oldSSEXP, SEXP rhoSEXP, SEXP kappaSEXP, SEXP fSEXP) {
+RcppExport SEXP rotations_S_MCMC_CPP(SEXP RsSEXP, SEXP oldSSEXP, SEXP rhoSEXP, SEXP kappaSEXP, SEXP DistSEXP) {
     SEXP __result;
     {
         Rcpp::RNGScope __rngScope;
-        __result = PROTECT(rotations_S_MCMC_CPP_try(RsSEXP, oldSSEXP, rhoSEXP, kappaSEXP, fSEXP));
+        __result = PROTECT(rotations_S_MCMC_CPP_try(RsSEXP, oldSSEXP, rhoSEXP, kappaSEXP, DistSEXP));
     }
     Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
     if (__isInterrupt) {
@@ -401,8 +401,8 @@ RcppExport SEXP rotations_S_MCMC_CPP(SEXP RsSEXP, SEXP oldSSEXP, SEXP rhoSEXP, S
     return __result;
 }
 // kap_MCMC_CPP
-double kap_MCMC_CPP(arma::mat Rs, double oldKappa, double sigma, arma::mat S, Function f);
-static SEXP rotations_kap_MCMC_CPP_try(SEXP RsSEXP, SEXP oldKappaSEXP, SEXP sigmaSEXP, SEXP SSEXP, SEXP fSEXP) {
+double kap_MCMC_CPP(arma::mat Rs, double oldKappa, double sigma, arma::mat S, int Dist);
+static SEXP rotations_kap_MCMC_CPP_try(SEXP RsSEXP, SEXP oldKappaSEXP, SEXP sigmaSEXP, SEXP SSEXP, SEXP DistSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
@@ -410,19 +410,19 @@ BEGIN_RCPP
         Rcpp::traits::input_parameter< double >::type oldKappa(oldKappaSEXP );
         Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP );
         Rcpp::traits::input_parameter< arma::mat >::type S(SSEXP );
-        Rcpp::traits::input_parameter< Function >::type f(fSEXP );
-        double __result = kap_MCMC_CPP(Rs, oldKappa, sigma, S, f);
+        Rcpp::traits::input_parameter< int >::type Dist(DistSEXP );
+        double __result = kap_MCMC_CPP(Rs, oldKappa, sigma, S, Dist);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);
     return __sexp_result;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP rotations_kap_MCMC_CPP(SEXP RsSEXP, SEXP oldKappaSEXP, SEXP sigmaSEXP, SEXP SSEXP, SEXP fSEXP) {
+RcppExport SEXP rotations_kap_MCMC_CPP(SEXP RsSEXP, SEXP oldKappaSEXP, SEXP sigmaSEXP, SEXP SSEXP, SEXP DistSEXP) {
     SEXP __result;
     {
         Rcpp::RNGScope __rngScope;
-        __result = PROTECT(rotations_kap_MCMC_CPP_try(RsSEXP, oldKappaSEXP, sigmaSEXP, SSEXP, fSEXP));
+        __result = PROTECT(rotations_kap_MCMC_CPP_try(RsSEXP, oldKappaSEXP, sigmaSEXP, SSEXP, DistSEXP));
     }
     Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
     if (__isInterrupt) {
@@ -474,8 +474,8 @@ RcppExport SEXP rotations_afun_CPP(SEXP R1SEXP, SEXP R2SEXP) {
     return __result;
 }
 // both_MCMC_CPP
-List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double sigma, int burnin, int B, Function f);
-static SEXP rotations_both_MCMC_CPP_try(SEXP RsSEXP, SEXP S0SEXP, SEXP kappa0SEXP, SEXP rhoSEXP, SEXP sigmaSEXP, SEXP burninSEXP, SEXP BSEXP, SEXP fSEXP) {
+List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double sigma, int burnin, int B, int Dist);
+static SEXP rotations_both_MCMC_CPP_try(SEXP RsSEXP, SEXP S0SEXP, SEXP kappa0SEXP, SEXP rhoSEXP, SEXP sigmaSEXP, SEXP burninSEXP, SEXP BSEXP, SEXP DistSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
@@ -486,19 +486,19 @@ BEGIN_RCPP
         Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP );
         Rcpp::traits::input_parameter< int >::type burnin(burninSEXP );
         Rcpp::traits::input_parameter< int >::type B(BSEXP );
-        Rcpp::traits::input_parameter< Function >::type f(fSEXP );
-        List __result = both_MCMC_CPP(Rs, S0, kappa0, rho, sigma, burnin, B, f);
+        Rcpp::traits::input_parameter< int >::type Dist(DistSEXP );
+        List __result = both_MCMC_CPP(Rs, S0, kappa0, rho, sigma, burnin, B, Dist);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);
     return __sexp_result;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP rotations_both_MCMC_CPP(SEXP RsSEXP, SEXP S0SEXP, SEXP kappa0SEXP, SEXP rhoSEXP, SEXP sigmaSEXP, SEXP burninSEXP, SEXP BSEXP, SEXP fSEXP) {
+RcppExport SEXP rotations_both_MCMC_CPP(SEXP RsSEXP, SEXP S0SEXP, SEXP kappa0SEXP, SEXP rhoSEXP, SEXP sigmaSEXP, SEXP burninSEXP, SEXP BSEXP, SEXP DistSEXP) {
     SEXP __result;
     {
         Rcpp::RNGScope __rngScope;
-        __result = PROTECT(rotations_both_MCMC_CPP_try(RsSEXP, S0SEXP, kappa0SEXP, rhoSEXP, sigmaSEXP, burninSEXP, BSEXP, fSEXP));
+        __result = PROTECT(rotations_both_MCMC_CPP_try(RsSEXP, S0SEXP, kappa0SEXP, rhoSEXP, sigmaSEXP, burninSEXP, BSEXP, DistSEXP));
     }
     Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
     if (__isInterrupt) {
@@ -1364,10 +1364,10 @@ static int rotations_RcppExport_validate(const char* sig) {
         signatures.insert("double(*lpvmises)(arma::mat,arma::mat,double)");
         signatures.insert("double(*lpfisher)(arma::mat,arma::mat,double)");
         signatures.insert("double(*lpcayley)(arma::mat,arma::mat,double)");
-        signatures.insert("arma::mat(*S_MCMC_CPP)(arma::mat,arma::mat,double,double,Function)");
-        signatures.insert("double(*kap_MCMC_CPP)(arma::mat,double,double,arma::mat,Function)");
+        signatures.insert("arma::mat(*S_MCMC_CPP)(arma::mat,arma::mat,double,double,int)");
+        signatures.insert("double(*kap_MCMC_CPP)(arma::mat,double,double,arma::mat,int)");
         signatures.insert("arma::rowvec(*afun_CPP)(arma::mat,arma::mat)");
-        signatures.insert("List(*both_MCMC_CPP)(arma::mat,arma::mat,double,double,double,int,int,Function)");
+        signatures.insert("List(*both_MCMC_CPP)(arma::mat,arma::mat,double,double,double,int,int,int)");
         signatures.insert("int(*checkQ4)(NumericMatrix)");
         signatures.insert("int(*checkSO3)(arma::mat)");
         signatures.insert("arma::mat(*expskewC)(arma::mat)");

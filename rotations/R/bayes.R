@@ -45,15 +45,15 @@ MCMCSO3.SO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
   
   if(type %in% c("Cayley","cayley")){
     
-    lpangle <- lpcayley
+    lpangle <- 1
     
   }else if(type %in% c("Fisher","fisher")){
     
-    lpangle <- lpfisher
+    lpangle <- 2
     
   }else if(type %in% c("Mises","mises")){
     
-    lpangle <- lpvmises
+    lpangle <- 3
     
   }else{
     stop("Invalid choise of type: please choose Cayley, Fisher or Mises.")
@@ -135,15 +135,18 @@ bayesCR.SO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
   
   if(type %in% c("Cayley","cayley")){
     
-    lpangle <- lpcayley
+    #lpangle <- lpcayley
+    lpangle <- 1
     
   }else if(type %in% c("Fisher","fisher")){
     
-    lpangle <- lpfisher
+    #lpangle <- lpfisher
+    lpangle <- 2
     
   }else if(type %in% c("Mises","mises")){
     
-    lpangle <- lpvmises
+    #lpangle <- lpvmises
+    lpangle <- 3
     
   }else{
     stop("Invalid choise of type: please choose Cayley, Fisher or Mises.")
@@ -226,15 +229,18 @@ bayes.mean.SO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
   
   if(type %in% c("Cayley","cayley")){
     
-    lpangle <- lpcayley
+    #lpangle <- lpcayley
+    lpangle <- 1
     
   }else if(type %in% c("Fisher","fisher")){
     
-    lpangle <- lpfisher
+    #lpangle <- lpfisher
+    lpangle <- 2
     
   }else if(type %in% c("Mises","mises")){
     
-    lpangle <- lpvmises
+    #lpangle <- lpvmises
+    lpangle <- 3
     
   }else{
     stop("Invalid choise of type: please choose Cayley, Fisher or Mises.")

@@ -41,20 +41,20 @@ lpcayley <- function(Rs, S, kappa) {
     .Call('rotations_lpcayley', PACKAGE = 'rotations', Rs, S, kappa)
 }
 
-S_MCMC_CPP <- function(Rs, oldS, rho, kappa, f) {
-    .Call('rotations_S_MCMC_CPP', PACKAGE = 'rotations', Rs, oldS, rho, kappa, f)
+S_MCMC_CPP <- function(Rs, oldS, rho, kappa, Dist) {
+    .Call('rotations_S_MCMC_CPP', PACKAGE = 'rotations', Rs, oldS, rho, kappa, Dist)
 }
 
-kap_MCMC_CPP <- function(Rs, oldKappa, sigma, S, f) {
-    .Call('rotations_kap_MCMC_CPP', PACKAGE = 'rotations', Rs, oldKappa, sigma, S, f)
+kap_MCMC_CPP <- function(Rs, oldKappa, sigma, S, Dist) {
+    .Call('rotations_kap_MCMC_CPP', PACKAGE = 'rotations', Rs, oldKappa, sigma, S, Dist)
 }
 
 afun_CPP <- function(R1, R2) {
     .Call('rotations_afun_CPP', PACKAGE = 'rotations', R1, R2)
 }
 
-both_MCMC_CPP <- function(Rs, S0, kappa0, rho, sigma, burnin, B, f) {
-    .Call('rotations_both_MCMC_CPP', PACKAGE = 'rotations', Rs, S0, kappa0, rho, sigma, burnin, B, f)
+both_MCMC_CPP <- function(Rs, S0, kappa0, rho, sigma, burnin, B, Dist) {
+    .Call('rotations_both_MCMC_CPP', PACKAGE = 'rotations', Rs, S0, kappa0, rho, sigma, burnin, B, Dist)
 }
 
 checkQ4 <- function(Q) {
