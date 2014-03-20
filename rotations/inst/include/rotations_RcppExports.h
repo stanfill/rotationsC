@@ -120,6 +120,25 @@ namespace rotations {
         return Rcpp::as<arma::mat >(__result);
     }
 
+    inline NumericVector rfisherCpp(int n, double kappa) {
+        typedef SEXP(*Ptr_rfisherCpp)(SEXP,SEXP);
+        static Ptr_rfisherCpp p_rfisherCpp = NULL;
+        if (p_rfisherCpp == NULL) {
+            validateSignature("NumericVector(*rfisherCpp)(int,double)");
+            p_rfisherCpp = (Ptr_rfisherCpp)R_GetCCallable("rotations", "rotations_rfisherCpp");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_rfisherCpp(Rcpp::wrap(n), Rcpp::wrap(kappa));
+        }
+        if (__result.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<NumericVector >(__result);
+    }
+
     inline NumericVector rvmisesCPP(int n, double kappa) {
         typedef SEXP(*Ptr_rvmisesCPP)(SEXP,SEXP);
         static Ptr_rvmisesCPP p_rvmisesCPP = NULL;

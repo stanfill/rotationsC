@@ -184,6 +184,41 @@ RcppExport SEXP rotations_genrC(SEXP rSEXP, SEXP SSEXP, SEXP SO3SEXP, SEXP uSEXP
     UNPROTECT(1);
     return __result;
 }
+// rfisherCpp
+NumericVector rfisherCpp(int n, double kappa);
+static SEXP rotations_rfisherCpp_try(SEXP nSEXP, SEXP kappaSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::traits::input_parameter< int >::type n(nSEXP );
+        Rcpp::traits::input_parameter< double >::type kappa(kappaSEXP );
+        NumericVector __result = rfisherCpp(n, kappa);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations_rfisherCpp(SEXP nSEXP, SEXP kappaSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(rotations_rfisherCpp_try(nSEXP, kappaSEXP));
+    }
+    Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
+    if (__isInterrupt) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
 // rvmisesCPP
 NumericVector rvmisesCPP(int n, double kappa);
 static SEXP rotations_rvmisesCPP_try(SEXP nSEXP, SEXP kappaSEXP) {
@@ -1359,6 +1394,7 @@ static int rotations_RcppExport_validate(const char* sig) {
         signatures.insert("arma::mat(*Q4defaultC)(arma::mat,arma::vec)");
         signatures.insert("arma::mat(*pMatC)(arma::mat)");
         signatures.insert("arma::mat(*genrC)(arma::vec,arma::mat,int,arma::mat)");
+        signatures.insert("NumericVector(*rfisherCpp)(int,double)");
         signatures.insert("NumericVector(*rvmisesCPP)(int,double)");
         signatures.insert("arma::mat(*centerCpp)(arma::mat,arma::mat)");
         signatures.insert("double(*lpvmises)(arma::mat,arma::mat,double)");
@@ -1403,6 +1439,7 @@ RcppExport SEXP rotations_RcppExport_registerCCallable() {
     R_RegisterCCallable("rotations", "rotations_Q4defaultC", (DL_FUNC)rotations_Q4defaultC_try);
     R_RegisterCCallable("rotations", "rotations_pMatC", (DL_FUNC)rotations_pMatC_try);
     R_RegisterCCallable("rotations", "rotations_genrC", (DL_FUNC)rotations_genrC_try);
+    R_RegisterCCallable("rotations", "rotations_rfisherCpp", (DL_FUNC)rotations_rfisherCpp_try);
     R_RegisterCCallable("rotations", "rotations_rvmisesCPP", (DL_FUNC)rotations_rvmisesCPP_try);
     R_RegisterCCallable("rotations", "rotations_centerCpp", (DL_FUNC)rotations_centerCpp_try);
     R_RegisterCCallable("rotations", "rotations_lpvmises", (DL_FUNC)rotations_lpvmises_try);

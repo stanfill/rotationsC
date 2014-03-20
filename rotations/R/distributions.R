@@ -200,14 +200,14 @@ pfisher<-function(q,kappa=1, nu=NULL, lower.tail=TRUE){
 rfisher <- function(n, kappa = 1, nu = NULL) {
   
   if(!is.null(nu))
-    kappa <- fisher.kappa(nu)
+    kappa <- vmises.kappa(nu)
   
   lenn<-length(n)
   if(lenn>1)
-  	n<-lenn
+    n<-lenn
   
-  M <- max(dfisher(seq(-pi, pi, length = 1000), kappa,Haar=F))
-  return(rar(n, dfisher, M, kappa = kappa, Haar=F))
+  theta<-rfisherCpp(n,kappa)
+  return(theta)
 }
 
 #' Uniform distribution

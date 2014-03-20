@@ -5,6 +5,78 @@
 // [[Rcpp::interfaces(r, cpp)]]
 using namespace Rcpp;
 
+/////////////////////////////////////////////////////////////
+// Generate matrix Fisher random deviates using C++
+/////////////////////////////////////////////////////////////
+
+
+double dfisherCpp(double r, double kappa) {
+    
+  double den;
+  double I02k = R::bessel_i(2*kappa,0,1);
+  double I12k = R::bessel_i(2*kappa,1,1);
+  
+  den = exp(2 * kappa * cos(r)); 
+  den *= (1 - cos(r));
+  
+  den /= (2 * PI * (I02k - I12k));
+  
+  return den;
+}
+
+
+double arsample_unifCpp(double M, double kappa) {
+  RNGScope scope;
+  //generate a random observation from target density f assuming g is uniform
+  int found = 0; //FALSE
+  NumericVector y(1);
+  double x, evalF = 0.0;
+  
+  while (!found) {
+    x = as<double>(runif(1, -PI, PI));
+    y = runif(1, 0, M);
+    
+    evalF = dfisherCpp(x,kappa);
+    
+    if (y[0] < evalF) 
+      found = 1;
+  }
+  return x;
+
+}
+
+
+NumericVector rarCpp(int n, double kappa, double M) {
+  
+  NumericVector res(n);
+  for (int i=0;i<n;i++){
+    res[i] = arsample_unifCpp(M,kappa);
+  } 
+  return res;
+}
+
+// [[Rcpp::export]]
+NumericVector rfisherCpp(int n, double kappa) {
+  double step = 0.0075, prog = -PI;
+  double M = 0.0, Mi=0.0;
+  NumericVector res(n);
+  
+  while(prog < 0){
+    Mi = dfisherCpp(prog,kappa);
+    if(M<Mi){
+      M = Mi;
+    }
+    prog += step;
+  }
+  
+  res = rarCpp(n, kappa ,M);
+  return res;  
+}
+
+/////////////////////////////////////////////////////////////
+// Generate von Mises random deviates using C++
+/////////////////////////////////////////////////////////////
+
 int sign(double x){
   if(x < 0){
     return(-1);
@@ -77,6 +149,10 @@ arma::mat centerCpp(arma::mat Rs, arma::mat S){
   }
   return cRs;
 }
+
+/////////////////////////////////////////////////////////////
+// log likelihood functions
+/////////////////////////////////////////////////////////////
 
 // [[Rcpp::export]]
 double lpvmises(arma::mat Rs, arma::mat S, double kappa){
@@ -270,6 +346,10 @@ NumericVector rcayleyCpp(int n, double kappa){
   return theta;
 }
 
+/////////////////////////////////////////////////////////////
+// Actual Bayes functions
+/////////////////////////////////////////////////////////////
+
 // [[Rcpp::export]]
 arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, int Dist){
   RNGScope scope;
@@ -300,10 +380,10 @@ arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, int
     
   }else if(Dist==2){
     //f = lpfisher;
-    //rfun = rcayleyCpp;
+    //rfun = rfisherCpp;
     
     //Generate proposal S~Cayley(oldS,rho) distribution
-    r = as<double>(rcayleyCpp(1, rho));
+    r = as<double>(rfisherCpp(1, rho));
     Sstar = genrC(oldS,r);
   
   
@@ -377,7 +457,7 @@ double kap_MCMC_CPP(arma::mat Rs, double oldKappa, double sigma, arma::mat S, in
     
   }else if(Dist==2){
     //f = lpfisher;
-    //rfun = rcayleyCpp;
+    //rfun = rfisherCpp;
   
   
     //Compute transition probability: 
