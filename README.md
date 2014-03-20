@@ -13,7 +13,7 @@ library(rotations)
 
 #### Minor Changes -
 
-* Samling from the von Mises Fisher distribution is now done in C++ to increase speed
+* Samling from the von Mises Fisher and matrix Fisher distributions is now done in C++ 
 
 #### Bug Fixes -
 

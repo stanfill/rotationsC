@@ -48,7 +48,11 @@
   \eqn{\mathrm{I}_p(\cdot)}{Ip()} denotes the Bessel
   function of order \eqn{p} defined as
   \eqn{\mathrm{I}_p(\kappa)=\frac{1}{2\pi}\int_{-\pi}^{\pi}\cos(pr)e^{\kappa\cos
-  r}dr}{Ip(\kappa)}.
+  r}dr}{Ip(\kappa)}.  If \code{kappa>354} then random
+  deviates are generated from the \code{\linl{Cayley}}
+  distribution because they agree closely for large
+  \code{kappa} and generation is more stable from the
+  Cayley distribution.
 }
 \examples{
 r <- seq(-pi, pi, length = 500)
