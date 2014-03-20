@@ -1,12 +1,9 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-// Below is a simple example of exporting a C++ function to R. You can
-// source this function into an R session using the Rcpp::sourceCpp 
-// function (or via the Source button on the editor toolbar)
-
-// For more on using Rcpp click the Help button on the editor toolbar
-
+/////////////////////////////////////////////////////////////
+// Generate Cayley random deviates using C++
+/////////////////////////////////////////////////////////////
 // [[Rcpp::export]]
 NumericVector rcayleyCpp(int n, double kappa){
   RNGScope scope;
@@ -21,6 +18,10 @@ NumericVector rcayleyCpp(int n, double kappa){
   
   return theta;
 }
+
+/////////////////////////////////////////////////////////////
+// Generate von Mises random deviates using C++
+/////////////////////////////////////////////////////////////
 
 // [[Rcpp::export]]
 int sign(double x){
@@ -70,4 +71,73 @@ NumericVector rvmisesCPP(int n, double kappa){
   }
   
   return theta;
+}
+
+/////////////////////////////////////////////////////////////
+// Generate matrix Fisher random deviates using C++
+/////////////////////////////////////////////////////////////
+
+// [[Rcpp::export]]
+double dfisherCpp(double r, double kappa) {
+    
+  double den;
+  double I02k = R::bessel_i(2*kappa,0,1);
+  double I12k = R::bessel_i(2*kappa,1,1);
+  
+  den = exp(2 * kappa * cos(r)); 
+  den *= (1 - cos(r));
+  
+  den /= (2 * PI * (I02k - I12k));
+  
+  return den;
+}
+
+// [[Rcpp::export]]
+double arsample_unifCpp(double M, double kappa) {
+  RNGScope scope;
+  //generate a random observation from target density f assuming g is uniform
+  int found = 0; //FALSE
+  NumericVector y(1);
+  double x, evalF = 0.0;
+  
+  while (!found) {
+    x = as<double>(runif(1, -PI, PI));
+    y = runif(1, 0, M);
+    
+    evalF = dfisherCpp(x,kappa);
+    
+    if (y[0] < evalF) 
+      found = 1;
+  }
+  return x;
+
+}
+
+// [[Rcpp::export]]
+NumericVector rarCpp(int n, double kappa, double M) {
+  
+  NumericVector res(n);
+  for (int i=0;i<n;i++){
+    res[i] = arsample_unifCpp(M,kappa);
+  } 
+  return res;
+}
+
+// [[Rcpp::export]]
+
+NumericVector rfisherCpp(int n, double kappa) {
+  double step = 0.01, prog = -PI;
+  double M = 0.0, Mi=0.0;
+  NumericVector res(n);
+  
+  while(prog < 0){
+    Mi = dfisherCpp(prog,kappa);
+    if(M<Mi){
+      M = Mi;
+    }
+    prog += step;
+  }
+  
+  res = rarCpp(n, kappa ,M);
+  return res;  
 }
