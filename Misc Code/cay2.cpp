@@ -108,6 +108,7 @@ double arsample_unifCpp(double M, double kappa) {
     
     if (y[0] < evalF) 
       found = 1;
+      
   }
   return x;
 
@@ -126,18 +127,25 @@ NumericVector rarCpp(int n, double kappa, double M) {
 // [[Rcpp::export]]
 
 NumericVector rfisherCpp(int n, double kappa) {
-  double step = 0.01, prog = -PI;
+  double step = 0.0075, prog = -PI;
   double M = 0.0, Mi=0.0;
   NumericVector res(n);
   
-  while(prog < 0){
-    Mi = dfisherCpp(prog,kappa);
-    if(M<Mi){
-      M = Mi;
-    }
-    prog += step;
-  }
+  if(kappa>354){
+    
+    res = rcayleyCpp(n,kappa);
+    
+  }else{
   
-  res = rarCpp(n, kappa ,M);
+    while(prog < .5){
+      Mi = dfisherCpp(prog,kappa);
+      if(M<Mi){
+        M = Mi;
+      }
+      prog += step;
+    }
+    //Rprintf("M: %lf\n",M);
+    res = rarCpp(n, kappa ,M);
+  }
   return res;  
 }

@@ -9,6 +9,25 @@ using namespace Rcpp;
 // Generate matrix Fisher random deviates using C++
 /////////////////////////////////////////////////////////////
 
+NumericVector rcayleyCpp(int n, double kappa){
+  RNGScope scope;
+  NumericVector bet(n), alp(n), theta(n);
+  
+  bet = rbeta(n,kappa+0.5,1.5);
+  alp = rbinom(n,1,0.5);
+  
+  for(int i = 0; i<n; i++){
+    
+    theta[i] = acos(2*bet[i]-1)*(1-2*alp[i]);
+  
+  }
+  return theta;
+}
+
+/////////////////////////////////////////////////////////////
+// Generate matrix Fisher random deviates using C++
+/////////////////////////////////////////////////////////////
+
 
 double dfisherCpp(double r, double kappa) {
     
@@ -40,11 +59,11 @@ double arsample_unifCpp(double M, double kappa) {
     
     if (y[0] < evalF) 
       found = 1;
+      
   }
   return x;
 
 }
-
 
 NumericVector rarCpp(int n, double kappa, double M) {
   
@@ -61,15 +80,22 @@ NumericVector rfisherCpp(int n, double kappa) {
   double M = 0.0, Mi=0.0;
   NumericVector res(n);
   
-  while(prog < 0){
-    Mi = dfisherCpp(prog,kappa);
-    if(M<Mi){
-      M = Mi;
-    }
-    prog += step;
-  }
+  if(kappa>354){
+    
+    res = rcayleyCpp(n,kappa);
+    
+  }else{
   
-  res = rarCpp(n, kappa ,M);
+    while(prog < .5){
+      Mi = dfisherCpp(prog,kappa);
+      if(M<Mi){
+        M = Mi;
+      }
+      prog += step;
+    }
+    //Rprintf("M: %lf\n",M);
+    res = rarCpp(n, kappa ,M);
+  }
   return res;  
 }
 
@@ -331,20 +357,6 @@ arma::mat genrC(arma::mat S,double r) {
 
 }
 
-NumericVector rcayleyCpp(int n, double kappa){
-  RNGScope scope;
-  NumericVector bet(n), alp(n), theta(n);
-  
-  bet = rbeta(n,kappa+0.5,1.5);
-  alp = rbinom(n,1,0.5);
-  
-  for(int i = 0; i<n; i++){
-    
-    theta[i] = acos(2*bet[i]-1)*(1-2*alp[i]);
-  
-  }
-  return theta;
-}
 
 /////////////////////////////////////////////////////////////
 // Actual Bayes functions
