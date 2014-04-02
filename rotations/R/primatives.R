@@ -45,6 +45,8 @@ str.SO3<-function(object,...){
 #' @S3method print Q4
 #' @method print Q4
 print.Q4<-function(x,...){
+  digs<-.Options$digits
+  x<-round(x,digs)
   Qs<-x
   len<-length(Qs)
   
