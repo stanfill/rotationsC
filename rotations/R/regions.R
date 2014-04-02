@@ -5,8 +5,8 @@
 #' \code{\link{zhang}} and \code{\link{bayesCR}}.
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
-#' @param method character string specifying which type of interval to report, "bayes", "trans" or "direct" based theory.
-#' @param type character string, "bootstrap" or "theory" are available.  For Bayes regions, give the type of likelihood: "Cayley","Mises" or "Fisher."
+#' @param method character string specifying which type of interval to report, "bayes", "transformation" or "direct" based theory.
+#' @param type character string, "bootstrap" or "asymptotic" are available.  For Bayes regions, give the type of likelihood: "Cayley","Mises" or "Fisher."
 #' @param estimator character string either "mean" or "median."  Note that not all method/type combinations are available for both estimators.
 #' @param alp the alpha level desired, e.g. 0.05 or 0.10.
 #' @param ... additional arguments that are method specific.
@@ -19,10 +19,10 @@
 #' 
 #' #Compare the region sizes that are currently available
 #' 
-#' region(Rs, method = "trans", type = "theory", estimator = "mean", alp = 0.1)
-#' region(Rs, method = "trans", type = "bootstrap", estimator = "mean", alp = 0.1, symm = TRUE)
+#' region(Rs, method = "transformation", type = "asymptotic", estimator = "mean", alp = 0.1)
+#' region(Rs, method = "transformation", type = "bootstrap", estimator = "mean", alp = 0.1, symm = TRUE)
 #' region(Rs, method = "direct", type = "bootstrap", estimator = "mean", alp = 0.1, m = 100)
-#' region(Rs, method = "direct", type = "theory", estimator = "mean", alp = 0.1)
+#' region(Rs, method = "direct", type = "asymptotic", estimator = "mean", alp = 0.1)
 #' \dontrun{
 #' region(Rs, method = "Bayes", type = "Mises", estimator = "mean",
 #'        S0 = mean(Rs), kappa0 = 10, tuneS = 5000, tuneK = 1, burn_in = 1000, alp = .01, m = 5000)}
@@ -38,13 +38,19 @@ region<-function(x,method, type, estimator,alp,...){
 
 region.Q4<-function(x,method, type, estimator,alp=NULL,...){
 	
-  #Change the previous method names to the new method names
-  if(method=='moment' || method=='Moment'){
-    method='direct'
-  }else if(method=='eigen' || method=='Eigen'){
-    method='trans'
-  }
+  #Allow for upper case arguments
+  method <- tolower(method)
+  type <- tolower(type)
   
+  #Change the previous method names to the new method names
+  if(method=='moment'){ method='direct'
+  }else if(method=='eigen') method='transformation'
+  
+  if(type=='theory') type <- "asymptotic"
+  
+  #Allow for abbreviations
+  method <- match.arg(method,c("direct","transformation","bayes"))
+  type <- match.arg(type,c("asymptotic","bootstrap","mises","cayley","fisher","mises"))
 	Qs<-formatQ4(x)
 	
 	if(is.null(alp)){
@@ -53,7 +59,7 @@ region.Q4<-function(x,method, type, estimator,alp=NULL,...){
 		warning("No alpha-level specified, 0.1 used by default.")
 	}
 	
-	if(method%in%c('Trans','trans') & type%in%c("Theory","theory")){
+	if(method=="transformation" & type=="asymptotic"){
 		
 		if(estimator!='mean'){
 			stop("The method due to Prentice is only available for the mean estimator.")
@@ -63,13 +69,13 @@ region.Q4<-function(x,method, type, estimator,alp=NULL,...){
 		
 		return(r)
 		
-	}else	if(method%in%c('Direct','direct') & type%in%c("Bootstrap","bootstrap")){
+	}else	if(method=='direct' & type=="bootstrap"){
 		
 		r<-zhang.Q4(x=Qs,estimator=estimator,alp=alp,...)
 		
 		return(r)
 		
-	}else	if(method%in%c('Trans','trans') & type%in%c("Bootstrap","bootstrap")){
+	}else	if(method=='transformation' & type=="bootstrap"){
 		
 		if(estimator!='mean'){
 			stop("The method due to Fisher et al. is only available for the mean estimator.")
@@ -79,13 +85,13 @@ region.Q4<-function(x,method, type, estimator,alp=NULL,...){
 		
 		return(r)
 		
-	}else	if(method%in%c('Direct','direct') & type%in%c("Theory","theory")){
+	}else	if(method=='direct' & type=='asymptotic'){
 		
 		r<-chang.Q4(x=Qs,estimator=estimator,alp=alp)
 		
 		return(r)
 		
-	}else if(method%in%c('Bayes','bayes')){
+	}else if(method=='bayes'){
 	  
 	  if(estimator!='mean'){
 	    stop("Bayes confidence regions are only available for the mean estimator.")
@@ -109,16 +115,30 @@ region.Q4<-function(x,method, type, estimator,alp=NULL,...){
 #' @S3method region SO3
 
 region.SO3<-function(x,method,type,estimator,alp=NULL,...){
-	
+  
+  #Allow for upper case arguments
+  method <- tolower(method)
+  type <- tolower(type)
+  
+  #Change the previous method names to the new method names
+  if(method=='moment'){ method <- 'direct'
+  }else if(method=='eigen') method <-'transformation'
+  
+  if(type=='theory') type <- "asymptotic"
+  
 	Rs<-formatSO3(x)
 	
+  #Allow for abbreviations
+  method <- match.arg(method,c("direct","transformation","bayes"))
+  type <- match.arg(type,c("asymptotic","bootstrap","mises","cayley","fisher","mises"))
+  
 	if(is.null(alp)){
 		#Take a default alpha=0.1 if no level is specified
 		alp<-.1
 		warning("No alpha-level specified, 0.1 used by default.")
 	}
 	
-	if(method%in%c('Trans','trans') & type%in%c("Theory","theory")){
+	if(method=='transformation' & type=='asymptotic'){
 		
 		if(estimator!='mean'){
 			stop("The method due to Prentice is only available for the mean estimator.")
@@ -128,13 +148,13 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 		
 		return(r)
 		
-	}else if(method%in%c('Direct','direct') & type%in%c("Bootstrap","bootstrap")){
+	}else if(method=='direct' & type=="bootstrap"){
 		
 		r<-zhang.SO3(x=Rs,estimator=estimator,alp=alp,...)
 		
 		return(r)
 		
-	}else if(method%in%c('Trans','trans') & type%in%c("Bootstrap","bootstrap")){
+	}else if(method=='transformation' & type=="bootstrap"){
 		
 		if(estimator!='mean'){
 			stop("The method due to Fisher et al. is only available for the mean estimator.")
@@ -144,13 +164,13 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 		
 		return(r)
 		
-	}else if(method%in%c('Direct','direct') & type%in%c("Theory","theory")){
+	}else if(method=='direct' & type=="asymptotic"){
 		
 		r<-chang.SO3(x=Rs,estimator=estimator,alp=alp)
 		
 		return(r)
 		
-	}else if(method%in%c('Bayes','bayes')){
+	}else if(method=='bayes'){
 	  
 	  if(estimator!='mean'){
 	    stop("Bayes confidence regions are only available for the mean estimator.")
@@ -168,7 +188,7 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 	
 }
 
-#' Transformation based theory confidence region
+#' Transformation based asymptotic confidence region
 #'
 #' Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the projected mean based on a result from directional statistics.
 #'
@@ -186,7 +206,7 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 #' Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
 #' 
 #' #The prentice method can be accesed from the "region" function or the "prentice" function
-#' region(Qs, method = "trans", type = "theory", alp = 0.1, estimator = "mean")
+#' region(Qs, method = "transformation", type = "asymptotic", alp = 0.1, estimator = "mean")
 #' prentice(Qs, alp = 0.1)
 
 prentice<-function(x,alp){
@@ -362,7 +382,7 @@ cdfuns<-function(Qs,estimator){
 	return(list(c=cd[1],d=cd[2]))
 }
 
-#' M-estimator theory confidence region
+#' M-estimator asymptotic confidence region
 #'
 #' Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on M-estimation theory.
 #' 
@@ -383,7 +403,7 @@ cdfuns<-function(Qs,estimator){
 #' Rs <- ruars(20, rcayley, kappa = 100)
 #' 
 #' #The chang method can be accesed from the "region" function or the "chang" function
-#' region(Rs, method = "direct", type = "theory", alp = 0.1, estimator = "mean")
+#' region(Rs, method = "direct", type = "asymptotic", alp = 0.1, estimator = "mean")
 #' chang(Rs, estimator = "mean", alp = 0.1)
 
 chang<-function(x,estimator,alp){
@@ -430,7 +450,7 @@ chang.Q4<-function(x,estimator,alp=NULL){
 }
 
 
-#' Transformation based theory pivotal bootstrap confidence region
+#' Transformation based pivotal bootstrap confidence region
 #'
 #' Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on  transforming a result from directional statistics.
 #'
@@ -451,7 +471,7 @@ chang.Q4<-function(x,estimator,alp=NULL){
 #' Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
 #' 
 #' #The Fisher et al. method can be accesed from the "region" function or the "fisheretal" function
-#' region(Qs, method = "trans", type = "bootstrap", alp = 0.1, symm = TRUE, estimator = "mean")
+#' region(Qs, method = "transformation", type = "bootstrap", alp = 0.1, symm = TRUE, estimator = "mean")
 #' fisheretal(Qs, alp = 0.1, boot = TRUE, symm = TRUE)
 
 fisheretal<-function(x,alp,boot,m,symm){
