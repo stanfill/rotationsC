@@ -2,7 +2,7 @@
 \alias{fisheretal}
 \alias{fisheretal.Q4}
 \alias{fisheretal.SO3}
-\title{Transformation based theory pivotal bootstrap confidence region}
+\title{Transformation based pivotal bootstrap confidence region}
 \usage{
   fisheretal(x, alp, boot, m, symm)
 
@@ -50,7 +50,7 @@
 Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
 
 #The Fisher et al. method can be accesed from the "region" function or the "fisheretal" function
-region(Qs, method = "trans", type = "bootstrap", alp = 0.1, symm = TRUE, estimator = "mean")
+region(Qs, method = "transformation", type = "bootstrap", alp = 0.1, symm = TRUE, estimator = "mean")
 fisheretal(Qs, alp = 0.1, boot = TRUE, symm = TRUE)
 }
 \references{

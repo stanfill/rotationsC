@@ -2,7 +2,7 @@
 \alias{prentice}
 \alias{prentice.Q4}
 \alias{prentice.SO3}
-\title{Transformation based theory confidence region}
+\title{Transformation based asymptotic confidence region}
 \usage{
   prentice(x, alp)
 
@@ -38,14 +38,14 @@
 Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
 
 #The prentice method can be accesed from the "region" function or the "prentice" function
-region(Qs, method = "trans", type = "theory", alp = 0.1, estimator = "mean")
+region(Qs, method = "transformation", type = "asymptotic", alp = 0.1, estimator = "mean")
 prentice(Qs, alp = 0.1)
 }
 \references{
-  Prentice MJ (1986). "Orientation statistics without
+  Prentice M (1986). "Orientation statistics without
   parametric assumptions." Journal of the Royal
-  Statistical Society. Series B (Methodological), pp.
-  214-222.
+  Statistical Society. Series B (Methodological), 48(2),
+  pp. 214-222.
 
   Rancourt D, Rivest L and Asselin J (2000). "Using
   orientation statistics to investigate variations in human

@@ -2,7 +2,7 @@
 \alias{chang}
 \alias{chang.Q4}
 \alias{chang.SO3}
-\title{M-estimator theory confidence region}
+\title{M-estimator asymptotic confidence region}
 \usage{
   chang(x, estimator, alp)
 
@@ -45,14 +45,14 @@
 Rs <- ruars(20, rcayley, kappa = 100)
 
 #The chang method can be accesed from the "region" function or the "chang" function
-region(Rs, method = "direct", type = "theory", alp = 0.1, estimator = "mean")
+region(Rs, method = "direct", type = "asymptotic", alp = 0.1, estimator = "mean")
 chang(Rs, estimator = "mean", alp = 0.1)
 }
 \references{
   Chang T and Rivest L (2001). "M-estimation for location
   and regression parameters in group models: A case study
-  using Stiefel manifolds." Annals of statistics, pp.
-  784-814.
+  using Stiefel manifolds." Annals of statistics,
+  29(3), pp. 784-814.
 }
 \seealso{
   \code{\link{bayesCR}}, \code{\link{prentice}},

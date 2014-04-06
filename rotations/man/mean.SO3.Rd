@@ -74,7 +74,7 @@ rot.dist(mean(Qs, type = "geometric")) #Bias of the geometric mean
   2211-2216. IEEE.
 
   Tyler DE (1981). "Asymptotic inference for eigenvectors."
-  The Annals of Statistics, pp. 725-736.
+  The Annals of Statistics, 9(4), pp. 725-736.
 }
 \seealso{
   \code{\link{median.SO3}}, \code{\link{bayes.mean}},
