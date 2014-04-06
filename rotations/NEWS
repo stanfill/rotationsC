@@ -4,7 +4,7 @@ rotations version 1.2
 New Features - 
 -------------------------------------------------------------------
 
-* Proposal central orientation parameters are now drawn from the distribution specified by the `type` argument in all of the Bayesian functions
+* Proposal central orientation parameter values are now drawn from the distribution specified by the `type` argument in all of the Bayesian functions
 
 Minor Changes -
 -------------------------------------------------------------------
