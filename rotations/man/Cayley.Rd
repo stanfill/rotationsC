@@ -69,7 +69,7 @@ hist(rs, breaks = 10)
 \references{
   Schaeben H (1997). "A Simple Standard Orientation Density
   Function: The Hyperspherical de la Vallee Poussin
-  Kernel." Phys. Stat. Sol. (B), 200, pp. 367-376.
+  Kernel." Physica Status Solidi (B), 200, pp. 367-376.
 
   Leon C, e JM and Rivest L (2006). "A statistical model
   for random rotations." Journal of Multivariate
