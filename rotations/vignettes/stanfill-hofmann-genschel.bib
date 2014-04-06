@@ -1,10 +1,17 @@
-  @manual{agostinelli2011,
-    title = {{R} package \texttt{circular}: Circular Statistics (version 0.4-3)},
-    author = {Agostinelli, C. and Lund, U.},
-    address = {CA: Department of Environmental Sciences, Informatics
-and Statistics, Ca' Foscari University, Venice, Italy. UL: Department of Statistics, California Polytechnic State University, San Luis Obispo, California, USA},
-    year = {2011},
-    url = {https://r-forge.r-project.org/projects/circular/},
+  @Manual{adler2013,
+    title = {rgl: 3D visualization device system (OpenGL)},
+    author = {Daniel Adler and Duncan Murdoch and {others}},
+    year = {2013},
+    note = {R package version 0.93.963},
+    url = {http://CRAN.R-project.org/package=rgl},
+  }
+
+  @Manual{agostinelli2011,
+    title = {circular: Circular Statistics},
+    author = {C. Agostinelli and U. Lund},
+    year = {2013},
+    note = {R package version 0.4-7},
+    url = {http://CRAN.R-project.org/package=circular},
   }
 
 
@@ -67,9 +74,11 @@ and Statistics, Ca' Foscari University, Venice, Italy. UL: Department of Statist
   title={M-estimation for location and regression parameters in group models: A case study using Stiefel manifolds},
   author={Chang, Ted and Rivest, Louis-Paul},
   journal={Annals of statistics},
+  volume={29},
+  number={3},
   pages={784--814},
   year={2001},
-  publisher={JSTOR}
+  publisher={Institute of Mathematical Statistics}
 }
 
 %Downs is credited with coming up the the Matrix Fisher distribution, but it was first proposed by Langevin 1905.  Not terrible readable.
@@ -93,14 +102,16 @@ and Statistics, Ca' Foscari University, Venice, Italy. UL: Department of Statist
   note = {ISBN 978-1-4614-6867-7},
 }
 
-@Article{eddelbuettel2013b,
-  title = {{RcppArmadillo}: Accelerating {R} with high-performance {C++} linear algebra},
-  author = {Dirk Eddelbuettel and Conrad Sanderson},
-  journal = {Computational Statistics and Data Analysis},
-  year = {2013},
-  volume = {in press},
-  url = {http://dx.doi.org/10.1016/j.csda.2013.02.005},
-}
+  @Article{eddelbuettel2013b,
+    title = {RcppArmadillo: Accelerating {R} with high-performance {C++} linear algebra},
+    author = {Dirk Eddelbuettel and Conrad Sanderson},
+    journal = {Computational	Statistics and Data Analysis},
+    year = {2014},
+    volume = {71},
+    month = {March},
+    pages = {1054--1063},
+    url = {http://dx.doi.org/10.1016/j.csda.2013.02.005},
+  }
 
 %Good development of the circular von Mises distribution and where I got the simulation method from.
 @book{fisher1996book,
@@ -152,7 +163,7 @@ and Statistics, Ca' Foscari University, Venice, Italy. UL: Department of Statist
 @article{humbert1996,
   title={Determination of a mean orientation from a cloud of orientations. Application to electron back-scattering pattern measurements},
   author={Humbert, M. and Gey, N. and Muller, J. and Esling, C.},
-  journal={Journal of applied crystallography},
+  journal={Journal of Applied Crystallography},
   volume={29},
   number={6},
   pages={662--666},
@@ -162,15 +173,14 @@ and Statistics, Ca' Foscari University, Venice, Italy. UL: Department of Statist
 
 %Proves that the MLE for the Fisher Distribution exists and is unique for all but small sample sizes.  Very technical.  Proves the conjecture posed by khatri77
 @article{jupp1979,
-  title={{Maximum likelihood estimators for the matrix von {M}ises-{F}isher and {B}ingham distributions}},
-  author={Jupp, P.E. and Mardia, K.V.},
+  title={Maximum Likelihood Estimators for the Matrix Von Mises-Fisher and Bingham Distributions},
+  author={Jupp, PE and Mardia, KV},
   journal={The Annals of Statistics},
   volume={7},
   number={3},
   pages={599--606},
-  issn={0090-5364},
   year={1979},
-  publisher={JSTOR}
+  publisher={Institute of Mathematical Statistics}
 }
 
 %They develop various key properties of the Fisher distribution including the normalizing constant, the first moment and the MLE.
@@ -181,7 +191,6 @@ and Statistics, Ca' Foscari University, Venice, Italy. UL: Department of Statist
   volume={39},
   number={1},
   pages={95--106},
-  issn={0035-9246},
   year={1977},
   publisher={JSTOR}
 }
@@ -215,6 +224,7 @@ and Statistics, Ca' Foscari University, Venice, Italy. UL: Department of Statist
   journal={Journal of Statistical Software},
   volume={8},
   number={19},
+  pages = {1-11},
   year={2003},
   publisher={American Statistical Association}
 }
@@ -228,18 +238,27 @@ and Statistics, Ca' Foscari University, Venice, Italy. UL: Department of Statist
     url = {http://CRAN.R-project.org/package=SpherWave},
   }
 
+@article{prentice1984,
+  title={A distribution-free method of interval estimation for unsigned directional data},
+  author={Prentice, M.J.},
+  journal={Biometrika},
+  volume={71},
+  number={1},
+  pages={147--154},
+  year={1984},
+  publisher={Biometrika Trust}
+}
 
 %Simplifies Jupp 1979 to the special cases of 3x2 and 3x3 orientatins and uses quaternions mostly
 @article{prentice1986,
-  title={{Orientation statistics without parametric assumptions}},
+  title={Orientation statistics without parametric assumptions},
   author={Prentice, M.J.},
   journal={Journal of the Royal Statistical Society. Series B (Methodological)},
   volume={48},
   number={2},
   pages={214--222},
-  issn={0035-9246},
   year={1986},
-  publisher={JSTOR}
+  publisher={Royal Statistical Society}
 }
 
 @phdthesis{qu2013,
@@ -251,8 +270,8 @@ and Statistics, Ca' Foscari University, Venice, Italy. UL: Department of Statist
 
 
 @phdthesis{rancourt1995,
-  type = {dissertation},
-  title = {{Arm Posture and Hand Mechanical Impedance in the Control of a Hand-held Power Drill,}},
+  type = {Dissertation},
+  title = {{Arm Posture and Hand Mechanical Impedance in the Control of a Hand-held Power Drill}},
   author = {Denis Rancourt},
   school = {MIT},
   year = {1995},
@@ -260,45 +279,70 @@ and Statistics, Ca' Foscari University, Venice, Italy. UL: Department of Statist
 
 %Applications paper.  Rivest uses von Mises Fisher to model posture in drilling to find optimal drilling position
 @article{rancourt2000,
-  title={{Using orientation statistics to investigate variations in human kinematics}},
-  author={Rancourt, D. and Rivest, L.P. and Asselin, J.},
-  journal={Journal of the Royal Statistical Society: Series C (Applied Statistics)},
+  title={Using orientation statistics to investigate variations in human kinematics},
+  author={Rancourt, D and Rivest, L-P and Asselin, J},
+  journal={Journal of the Royal Statistical Society. Series C (Applied Statistics)},
   volume={49},
   number={1},
   pages={81--94},
-  issn={1467-9876},
   year={2000},
-  publisher={Wiley Online Library}
+  publisher={Royal Statistical Society}
 }
 
-
+  @Manual{robotham2013,
+    title = {sphereplot: Spherical plotting},
+    author = {Aaron Robotham},
+    year = {2013},
+    note = {R package version 1.5},
+    url = {http://CRAN.R-project.org/package=sphereplot},
+  }
 
 @article{Schaeben1997,
   title={A Simple Standard Orientation Density Function: The Hyperspherical de la {V}all\'{e}e {P}oussin Kernel},
   author={Schaeben, H.},
-  journal={Phys. Stat. Sol. (B)},
+  journal={Physica Status Solidi (B)},
   volume={200},
+  number = {2},
   pages={367--376},
   year={1997}
 }
 
 
 @article{stanfill2013,
-author = {Stanfill, Bryan and Genschel, Ulrike and Hofmann, Heike},
-title = {Point Estimation of the Central Orientation of Random Rotations},
-journal = {Technometrics},
-year = {2013},
-doi = {10.1080/00401706.2013.826145},
-
+  title={Point estimation of the central orientation of random rotations},
+  author={Stanfill, Bryan and Genschel, Ulrike and Hofmann, Heike},
+  journal={Technometrics},
+  volume={55},
+  number={4},
+  pages={524--535},
+  year={2013},
+  publisher={Taylor \& Francis Group}
 }
+
+ @Manual{stanfill2014,
+    title = {rotations: Tools for Working with Rotation Data},
+    author = {Bryan Stanfill and Heike Hofmann and Ulrike Genschel},
+    year = {2014},
+    note = {R package version 1.2},
+    url = {http://CRAN.R-project.org/package=rotations},
+  }
+
+@article{stanfill2014b,
+	title={Nonparametric Confidence Regions for the Central Orientation of Random Rotations},
+	author = {Bryan Stanfill and Dan Nordman and Heike Hofmann and Ulrike Genschel and Jian Zhang},
+	year = {2014},
+	journal={Unpublished manuscript},
+	}
 
 @article{tyler1981,
   title={Asymptotic inference for eigenvectors},
-  author={Tyler, David E},
+  author={Tyler, David E and others},
   journal={The Annals of Statistics},
+  volume={9},
+  number={4},
   pages={725--736},
   year={1981},
-  publisher={JSTOR}
+  publisher={Institute of Mathematical Statistics}
 }
 
 @book{wickham2009,

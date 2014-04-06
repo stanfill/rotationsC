@@ -13,7 +13,7 @@ library(rotations)
 
 #### Minor Changes -
 
-* Samling from the von Mises Fisher and matrix Fisher distributions is now done in C++ 
+* Sampling from the von Mises Fisher and matrix Fisher distributions is now done in C++ 
 * `method` argument in `regions` function was changed from `trans` to `transformation`, a call to `match.arg()` still allows for `trans`
 * `type` argument in `regions` function has been changed from `theory` to `asymptotic`
 
