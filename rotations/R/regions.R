@@ -20,7 +20,8 @@
 #' #Compare the region sizes that are currently available
 #' 
 #' region(Rs, method = "transformation", type = "asymptotic", estimator = "mean", alp = 0.1)
-#' region(Rs, method = "transformation", type = "bootstrap", estimator = "mean", alp = 0.1, symm = TRUE)
+#' region(Rs, method = "transformation", type = "bootstrap", estimator = "mean", 
+#' alp = 0.1, symm = TRUE)
 #' region(Rs, method = "direct", type = "bootstrap", estimator = "mean", alp = 0.1, m = 100)
 #' region(Rs, method = "direct", type = "asymptotic", estimator = "mean", alp = 0.1)
 #' \dontrun{
@@ -471,7 +472,8 @@ chang.Q4<-function(x,estimator,alp=NULL){
 #' Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
 #' 
 #' #The Fisher et al. method can be accesed from the "region" function or the "fisheretal" function
-#' region(Qs, method = "transformation", type = "bootstrap", alp = 0.1, symm = TRUE, estimator = "mean")
+#' region(Qs, method = "transformation", type = "bootstrap", alp = 0.1, 
+#' symm = TRUE, estimator = "mean")
 #' fisheretal(Qs, alp = 0.1, boot = TRUE, symm = TRUE)
 
 fisheretal<-function(x,alp,boot,m,symm){
