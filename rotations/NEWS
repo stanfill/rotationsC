@@ -1,3 +1,24 @@
+rotations version 1.2
+===================================================================
+
+New Features - 
+-------------------------------------------------------------------
+
+* Proposal central orientaion parameters are now drawn from the distribution specified by the `type` argument in all of the Bayesian funcions
+
+Minor Changes -
+-------------------------------------------------------------------
+
+* Sampling from the von Mises Fisher and matrix Fisher distributions is now done in C++ resulting in a significant speed up
+* `method` argument in `regions` function was changed from `trans` to `transformation`, a call to `match.arg()` still allows for `trans`
+* `type` argument in `regions` function has been changed from `theory` to `asymptotic`
+
+Bug Fixes -
+-------------------------------------------------------------------
+* A typo in the (not run) Bayes credible region example has been fixed
+* `print` method for `Q4` objects now respects the `digits` option
+
+
 rotations version 1.1
 ===================================================================
 
