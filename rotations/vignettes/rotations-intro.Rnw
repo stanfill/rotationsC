@@ -271,9 +271,9 @@ In the example code below a sample of $n=50$ rotations are drawn from the Cayley
 
 <<ex6>>=
 Rs <- ruars(50, rcayley, kappa = 10)
-region(Rs, method="direct", type="theory", estimator="mean", alp=0.05)
+region(Rs, method="direct", type="asymptotic", estimator="mean", alp=0.05)
 region(Rs, method="direct", type="bootstrap", estimator="mean", alp=0.05, m=300)
-region(Rs, method="direct", type="theory", estimator="median", alp=0.05)
+region(Rs, method="direct", type="asymptotic", estimator="median", alp=0.05)
 region(Rs, method="direct", type="bootstrap", estimator="median", alp=0.05, m=300)
 @
 
@@ -315,7 +315,7 @@ In the \code{nickel} dataset, rotation matrices are used to represent the orient
 <<ex21>>=
 data(nickel)
 head(nickel[,1:6])
-Location1<-subset(nickel,location==1)
+Location1<-subset(nickel, location==1)
 Loc1data<-as.SO3(Location1[,5:13])
 mean(Loc1data)
 @
