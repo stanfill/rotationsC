@@ -188,7 +188,7 @@ pfisher<-function(q,kappa=1, nu=NULL, lower.tail=TRUE){
   cdf<-rep(NA,n)
   
   for(i in 1:n)
-    cdf[i]<-max(min(integrate(dfisher,-pi,q[i],kappa,nu,Haar=F)$value,1),0)
+    cdf[i]<-max(min(integrate(dfisher,-pi,q[i],kappa,nu,Haar=FALSE)$value,1),0)
   
   if(lower.tail)
     return(cdf) else return((1-cdf))
@@ -341,7 +341,7 @@ NULL
 #' @aliases Mises dvmises pvmises rvmises
 #' @export
 
-dvmises <- function(r, kappa = 1, nu = NULL, Haar = T) {
+dvmises <- function(r, kappa = 1, nu = NULL, Haar = TRUE) {
   
   if(!is.null(nu))
     kappa <- vmises.kappa(nu)
@@ -368,7 +368,7 @@ pvmises<-function(q,kappa=1,nu=NULL,lower.tail=TRUE){
   cdf<-rep(NA,n)
   
   for(i in 1:n)
-    cdf[i]<-max(min(integrate(dvmises,-pi,q[i],kappa,nu,Haar=F)$value,1),0)
+    cdf[i]<-max(min(integrate(dvmises,-pi,q[i],kappa,nu,Haar=FALSE)$value,1),0)
   
   if(lower.tail) 
     return(cdf) else return((1-cdf))

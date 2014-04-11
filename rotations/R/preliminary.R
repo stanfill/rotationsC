@@ -77,7 +77,7 @@ rot.dist.SO3 <- function(x, R2=id.SO3, method='extrinsic' , p=1,...) {
     
     n<-nrow(R1)
     R1<-matrix(R1,n,9)
-    R2<-matrix(R2,n,9,byrow=T)
+    R2<-matrix(R2,n,9,byrow=TRUE)
     
     so3dist<-sqrt(rowSums((R1-R2)^2))^p
     

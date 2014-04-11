@@ -316,7 +316,7 @@ zhang.SO3<-function(x,estimator,alp=NULL,m=300){
   	n<-nrow(Rs)
   	stats<-zhangMedianC(Rs,m)
   	cdtilde<-cdfunsCSO3(Rs,median(Rs))
-  	rad<-sqrt(as.numeric(quantile(stats,1-alp,na.rm=T))*cdtilde[1]/(2*n*cdtilde[2]^2))
+  	rad<-sqrt(as.numeric(quantile(stats,1-alp,na.rm=TRUE))*cdtilde[1]/(2*n*cdtilde[2]^2))
   	
   }else if(estimator=='mean'){
   
@@ -349,7 +349,7 @@ zhang.Q4<-function(x,estimator,alp=NULL,m=300){
   	stats<-zhangQ4(Qs,m)
 		#Shat<-mean(Qs)
   	cdhat<-cdfuns(Qs,estimator)
-		rad<-sqrt(as.numeric(quantile(stats,1-alp,na.rm=T))*cdhat$c/(2*n*cdhat$d^2))
+		rad<-sqrt(as.numeric(quantile(stats,1-alp,na.rm=TRUE))*cdhat$c/(2*n*cdhat$d^2))
 		
 	}else if(estimator=='median'){
 		
@@ -485,7 +485,7 @@ fisheretal<-function(x,alp,boot,m,symm){
 #' @method fisheretal Q4
 #' @S3method fisheretal Q4
 
-fisheretal.Q4<-function(x,alp=NULL,boot=T,m=300,symm=TRUE){
+fisheretal.Q4<-function(x,alp=NULL,boot=TRUE,m=300,symm=TRUE){
 	
 	if(is.null(alp)){
 		#Take a default alpha=0.1 if no level is specified
@@ -499,7 +499,7 @@ fisheretal.Q4<-function(x,alp=NULL,boot=T,m=300,symm=TRUE){
     
 	  Tstats <- fisherBootC(Qs,m,symm)
     
-		qhat<-as.numeric(quantile(Tstats,1-alp,na.rm=T))
+		qhat<-as.numeric(quantile(Tstats,1-alp,na.rm=TRUE))
 		
 	}else{
 		
@@ -507,7 +507,7 @@ fisheretal.Q4<-function(x,alp=NULL,boot=T,m=300,symm=TRUE){
 		
 	}
 	
-	rsym<-optim(.05,optimAxis,Qs=Qs,cut=qhat,symm=T,method='Brent',lower=0,upper=pi)$par
+	rsym<-optim(.05,optimAxis,Qs=Qs,cut=qhat,symm=TRUE,method='Brent',lower=0,upper=pi)$par
 	
 	return(min(rsym,pi))
 }
@@ -529,7 +529,7 @@ optimAxis<-function(r,Qs,cut,symm){
 #' @method fisheretal SO3
 #' @S3method fisheretal SO3
 
-fisheretal.SO3<-function(x,alp=NULL,boot=T,m=300,symm=T){
+fisheretal.SO3<-function(x,alp=NULL,boot=TRUE,m=300,symm=TRUE){
 	
 	Qs<-as.Q4(x)
 	r<-fisheretal.Q4(Qs,alp,boot,m,symm)

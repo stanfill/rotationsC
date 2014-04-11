@@ -116,7 +116,7 @@ pointsXYZ_plot <- function(data, center=id.SO3, column=1) {
 #This is a modified rgl.sphgrid that I use to create interactive plots
 rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap = 15, 
                         longtype = "H", add = FALSE) {
-  if (add == F) {
+  if (add == FALSE) {
     open3d()
   }
   for (lat in seq(-90, 90, by = deggap)) {
@@ -127,7 +127,7 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
       col.grid = "grey"
     }
     plot3d(sph2car(long = seq(0, 360, len = 100), lat = lat, 
-                   radius = radius, deg = T), col = col.grid, add = T, 
+                   radius = radius, deg = TRUE), col = col.grid, add = TRUE, 
            type = "l")
   }
   for (long in seq(0, 360 - deggap, by = deggap)) {
@@ -138,7 +138,7 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
       col.grid = "grey"
     }
     plot3d(sph2car(long = long, lat = seq(-90, 90, len = 100), 
-                   radius = radius, deg = T), col = col.grid, add = T, 
+                   radius = radius, deg = TRUE), col = col.grid, add = TRUE, 
            type = "l")
   }
   if (longtype == "H") {
@@ -373,7 +373,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
     #require(sphereplot)
     rgl.sphgrid2(deggap=22.5)
     pts <- car2sph(proj2d)
-    rgl.sphpoints(pts,deg=T,size=4)
+    rgl.sphpoints(pts,deg=TRUE,size=4)
     
     if(!is.null(estDF)||!is.null(meanregDF)||!is.null(medianregDF))
       plot.new()
@@ -381,7 +381,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
     if(!is.null(estDF)){
       estpts <- car2sph(estDF[,-4])
       
-      rgl.sphpoints(estpts,deg=T,col=c(2:(nrow(estDF)+1)),size=5)
+      rgl.sphpoints(estpts,deg=TRUE,col=c(2:(nrow(estDF)+1)),size=5)
       
       #Legend
       #text3d(x=1, y=c(.8,1,1.2,1.4)[rmNA], z=1, estDF$lab ,col=c(2:(nrow(estDF)+1)))
@@ -400,7 +400,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
       
       regpts <- car2sph(regDF)
       numRegs<-nrow(regpts)/500
-      rgl.sphpoints(regpts,deg=T,col=rep((1:numRegs)+1,each=500))
+      rgl.sphpoints(regpts,deg=TRUE,col=rep((1:numRegs)+1,each=500))
       
       #Confidence region legend
       legend('topright',c(as.character(Regions$Meth2),as.character(MedRegions$Meth)),
@@ -411,7 +411,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
     #if(!is.null(medianregDF)){
     #  medregpts <- car2sph(medianregDF)
     #  numRegs2<-nrow(MedRegions)
-    #  rgl.sphpoints(medregpts,deg=T,col=rep((1:numRegs2)+1+numRegs,each=500))
+    #  rgl.sphpoints(medregpts,deg=TRUE,col=rep((1:numRegs2)+1+numRegs,each=500))
       
     #  legend(.66,1,MedRegions$Meth,col=c((1:numRegs2)+1+numRegs),lty=19,title='Median Regions')
       
@@ -476,21 +476,21 @@ mplotSO3<-function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL
   
   ps<-list(p1,p2,p3,p4)
   ps<-!sapply(ps, is.null)
-  if(all(ps==c(T,T,T,T))){
+  if(all(ps==c(TRUE,TRUE,TRUE,TRUE))){
     gridExtra::grid.arrange(p1,p2,p3,p4,nrow=2,widths=c(2,2,2,1))
-  }else if(all(ps==c(T,T,F,T))){
+  }else if(all(ps==c(TRUE,TRUE,FALSE,TRUE))){
     gridExtra::grid.arrange(p1,p2,p4,nrow=1,widths=c(2,2,1))
-  }else if(all(ps==c(T,F,T,T))){
+  }else if(all(ps==c(TRUE,FALSE,TRUE,TRUE))){
     gridExtra::grid.arrange(p1,p3,p4,nrow=1,widths=c(2,2,1))
-  }else if(all(ps==c(F,T,T,T))){
+  }else if(all(ps==c(FALSE,TRUE,TRUE,TRUE))){
     gridExtra::grid.arrange(p2,p3,p4,nrow=1,widths=c(2,2,1))
-  }else if(all(ps==c(T,T,T,F))){
+  }else if(all(ps==c(TRUE,TRUE,TRUE,FALSE))){
     gridExtra::grid.arrange(p1,p2,p3,nrow=1)
-  }else if(all(ps==c(T,T,F,F))){
+  }else if(all(ps==c(TRUE,TRUE,FALSE,FALSE))){
     gridExtra::grid.arrange(p1,p2,nrow=1)
-  }else if(all(ps==c(T,F,T,F))){
+  }else if(all(ps==c(TRUE,FALSE,TRUE,FALSE))){
     gridExtra::grid.arrange(p1,p3,nrow=1)
-  } else if(all(ps==c(F,T,T,F))){
+  } else if(all(ps==c(FALSE,TRUE,TRUE,FALSE))){
     gridExtra::grid.arrange(p2,p3,nrow=1)
   }else{
     stop("Specify the columns correctly.")
