@@ -1,0 +1,17 @@
+citEntry(entry="Article",
+          title = "rotations: An R package for SO(3) Data",
+          author=personList(as.person("Bryan Stanfill"), as.person("Heike Hofmann"),
+                  as.person("Ulrike Genschel")),
+          journal = "The R Journal",
+          year = "2014",
+          volume = "6",
+          issue = "1",
+          pages = "x-(x+10)",
+          url = "http://journal.r-project.org/archive/accepted/",
+
+  textVersion = 
+    paste("Bryan Stafill, Heike Hofmann, Ulrike Genschel (2014).",
+          "rotations: An R package for SO(3) data.",
+          "The R Journal, 6(1):x-(x+10).",
+          "URL http://journal.r-project.org/archive/accepted/.")
+)
