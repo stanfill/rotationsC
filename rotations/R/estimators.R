@@ -42,7 +42,9 @@ mean.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000, ...
 	if(nrow(Rs)==1)
 		return(Rs)
 	
-  if (!(type %in% c("projected", "geometric")))
+  type <- try(match.arg(type,c("projected", "geometric")),silent=T)
+  
+  if (class(type)=="try-error")
     stop("type needs to be one of 'projected' or 'geometric'.")
 
 	
@@ -68,6 +70,11 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 	if(nrow(Qs)==1)
 		return(Qs)
 	
+	type <- try(match.arg(type,c("projected", "geometric")),silent=T)
+	
+	if (class(type)=="try-error")
+	  stop("type needs to be one of 'projected' or 'geometric'.")
+  
 	if(type=='projected'){
 		
 		R<-meanQ4C(Qs)
@@ -136,7 +143,10 @@ median.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,..
 	if(nrow(Rs)==1)
 		return(Rs)
 	
-  stopifnot(type %in% c("projected", "geometric"))
+	type <- try(match.arg(type,c("projected", "geometric")),silent=T)
+	
+	if (class(type)=="try-error")
+	  stop("type needs to be one of 'projected' or 'geometric'.")
   
   if (type == "projected") {
 		
@@ -221,8 +231,10 @@ weighted.mean.SO3 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter
 	if(length(w)!=nrow(Rs))
 		stop("'Rs' and 'w' must have same length")
 	
-	if (!(type %in% c("projected", "geometric")))
-		stop("type needs to be one of 'projected' or 'geometric'.")
+	type <- try(match.arg(type,c("projected", "geometric")),silent=T)
+	
+	if (class(type)=="try-error")
+	  stop("type needs to be one of 'projected' or 'geometric'.")
 	
 	if(any(w<0))
 		warning("Negative weights were given.  Their absolute value is used.")
