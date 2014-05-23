@@ -11,8 +11,10 @@ IFMean<-function(Rs,Ri){
   Shatj<-mean(RR)
   
   empIF<-rot.dist(Shatj,Shat,method='i')*nrow(Rs)
-  rs <- mis.angle(Rs-Shat)
-  ri <- mis.angle(Ri-Shat)
+  #rs <- mis.angle(Rs-Shat)
+  #ri <- mis.angle(Ri-Shat)
+  rs <- mis.angle(Rs)
+  ri<-mis.angle(Ri)
   theIF<-sin(ri)/a2(rs)
   
   return(list(emp=empIF,theo=theIF))
@@ -58,8 +60,11 @@ IFMedian<-function(Rs,Ri){
   Shatj<-median(RR)
   
   empIF<-rot.dist(Shatj,Shat,method='i')*nrow(Rs)
-  rs <- mis.angle(Rs-Shat)
-  ri <- mis.angle(Ri-Shat)
+  #rs <- mis.angle(Rs-Shat)
+  #ri <- mis.angle(Ri-Shat)
+  rs<-mis.angle(Rs)
+  ri<-mis.angle(Ri)
+  
   theIF<-sin(ri)/(2*a2med(rs)*sqrt(1-cos(ri)))
   
   return(list(emp=empIF,theo=theIF))
@@ -131,8 +136,11 @@ IFGeoMean<-function(Rs,Ri){
   Shatj<-mean(RR,type='g')
   
   empIF<-rot.dist(Shatj,Shat,method='i')*nrow(Rs)
-  rs <- mis.angle(Rs-Shat)
-  ri <- mis.angle(Ri-Shat)
+  #rs <- mis.angle(Rs-Shat)
+  #ri <- mis.angle(Ri-Shat)
+  rs <- mis.angle(Rs)
+  ri <- mis.angle(Ri)
+  
   theIF<-2*ri/(a4(rs,terms=3))
   
   return(list(emp=empIF,theo=theIF))
@@ -149,7 +157,7 @@ GeoIFs$theo/GeoIFs$emp
 
 #Plot the IFs
 ris<-seq(0.1,pi,length=100)
-Rs<-ruars(25,rvmises,kappa=25)
+Rs<-ruars(250,rvmises,kappa=500)
 ifDF<-data.frame(Emp=rep(0,length(ris)),Theory=0)
 
 for(i in 1:length(ris)){
