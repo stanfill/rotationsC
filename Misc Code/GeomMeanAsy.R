@@ -92,7 +92,7 @@ for(j in 1:numN){
     
     ShatMedian<-rot.dist(Shat,S,method='intrinsic',p=2)
     
-    tstats[i,j]<-n[j]*(a4i^2)*ShatMedian/(a3i)
+    tstats[i,j]<-n[j]*((a4i)^2)*ShatMedian/(a3i)
     
   } 
 
@@ -104,6 +104,6 @@ seqChi<-seq(0,max(tstats2),length=100)
 
 plot(ecdf(tstats2[,1]),main=paste("kappa=",kap))
 lines(ecdf(tstats2[,2]),col=2)
-lines(seqChi,pchisq(seqChi,3),lty=2,col=3,lwd=3)
+lines(seqChi,pchisq(seqChi,2),lty=2,col=3,lwd=3)
 legend("bottomright",c(paste("n=",n[1]),paste("n=",n[2])),col=c(1,2),lwd=1)
 

@@ -133,15 +133,15 @@ IFGeoMean<-function(Rs,Ri){
   empIF<-rot.dist(Shatj,Shat,method='i')*nrow(Rs)
   rs <- mis.angle(Rs-Shat)
   ri <- mis.angle(Ri-Shat)
-  theIF<-ri/(2*a4(rs,terms=3))
+  theIF<-2*ri/(a4(rs,terms=3))
   
   return(list(emp=empIF,theo=theIF))
 }
 
 
-Rs<-ruars(50,rcayley,kappa=10)
+Rs<-ruars(50,rcayley,kappa=100)
 rs<-mis.angle(Rs-mean(Rs))
-Ri<-genR(pi/8)
+Ri<-genR(pi/2)
 GeoIFs<-IFGeoMean(Rs,Ri)
 
 GeoIFs$theo/GeoIFs$emp
@@ -149,7 +149,7 @@ GeoIFs$theo/GeoIFs$emp
 
 #Plot the IFs
 ris<-seq(0.1,pi,length=100)
-Rs<-ruars(10,rcayley,kappa=100)
+Rs<-ruars(25,rvmises,kappa=25)
 ifDF<-data.frame(Emp=rep(0,length(ris)),Theory=0)
 
 for(i in 1:length(ris)){
@@ -161,4 +161,4 @@ for(i in 1:length(ris)){
 
 plot(ris,ifDF$Emp,type='l')
 lines(ris,ifDF$Theory,col=2)
-legend("topright",c("Empirical","Theory"),col=c(1,2),lty=1)
+legend("topleft",c("Empirical","Theory"),col=c(1,2),lty=1)
