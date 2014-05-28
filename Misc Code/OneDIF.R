@@ -141,7 +141,7 @@ IFGeoMean<-function(Rs,Ri){
   rs <- mis.angle(Rs)
   ri <- mis.angle(Ri)
   
-  theIF<-2*ri/(a4(rs,terms=3))
+  theIF<-2*ri/(a4(rs,terms=3)) #The IF was derived using a different f(h), the factor of 4 corrects this
   
   return(list(emp=empIF,theo=theIF))
 }
@@ -170,3 +170,30 @@ for(i in 1:length(ris)){
 plot(ris,ifDF$Emp,type='l')
 lines(ris,ifDF$Theory,col=2)
 legend("topleft",c("Empirical","Theory"),col=c(1,2),lty=1)
+
+
+################
+#Geometric median
+
+IFGeoMedian<-function(Rs,Ri){
+  Shat<-median(Rs,type='g')
+  
+  RR <- as.SO3(rbind(Rs,Ri))
+  Shatj<-median(RR,type='g')
+  
+  empIF<-rot.dist(Shatj,Shat,method='i')*nrow(Rs)
+
+  return(empIF)
+}
+
+#Plot the IFs
+ris<-seq(0.1,pi,length=100)
+Rs<-ruars(100,rcayley,kappa=5)
+ifi<-rep(0,length(ris))
+
+for(i in 1:length(ris)){
+  Ri<-genR(ris[i])
+  ifi[i]<-IFGeoMedian(Rs,Ri)
+}
+
+plot(ris,ifi,type='l')
