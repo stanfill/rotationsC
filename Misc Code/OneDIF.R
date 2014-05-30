@@ -175,6 +175,11 @@ legend("topleft",c("Empirical","Theory"),col=c(1,2),lty=1)
 ################
 #Geometric median
 
+a5 <- function(r){
+  sinr<-sin(r)^2
+  return(16*mean(sinr)/(3))
+}
+
 IFGeoMedian<-function(Rs,Ri){
   Shat<-median(Rs,type='g')
   
@@ -182,18 +187,28 @@ IFGeoMedian<-function(Rs,Ri){
   Shatj<-median(RR,type='g')
   
   empIF<-rot.dist(Shatj,Shat,method='i')*nrow(Rs)
+  
+  rs <- mis.angle(Rs)
 
-  return(empIF)
+  theIF <- a5(rs)
+  
+  return(list(emp=empIF,theo=theIF))
 }
 
 #Plot the IFs
 ris<-seq(0.1,pi,length=100)
-Rs<-ruars(100,rcayley,kappa=5)
-ifi<-rep(0,length(ris))
+ifDF<-data.frame(Emp=rep(0,length(ris)),Theory=0)
+
+Rs<-ruars(250,rcayley,kappa=50)
 
 for(i in 1:length(ris)){
   Ri<-genR(ris[i])
-  ifi[i]<-IFGeoMedian(Rs,Ri)
+  ifi<-IFGeoMedian(Rs,Ri)
+  ifDF$Emp[i]<-ifi$emp
+  ifDF$Theory[i]<-ifi$theo
 }
 
-plot(ris,ifi,type='l')
+sc<-(2)
+
+plot(ris,ifDF$Emp*sc,type='l',ylim=c(0,max(c(ifDF$Theory,sc*ifDF$Emp))))
+lines(ris,ifDF$Theory)
