@@ -43,6 +43,38 @@ plot(ris,ifDF$Emp,type='l')
 lines(ris,ifDF$Theory,col=2)
 legend("topright",c("Empirical","Theory"),col=c(1,2),lty=1)
 
+#Quaternion derivation
+
+IFQuat<-function(Qs,Q){
+  Shat<-mean(Qs)
+  ShatM<-matrix(Shat,ncol=1)
+  QM<-matrix(Q,ncol=1)
+  the<-sqrt(sum((ShatM-QM)^2))
+  
+  aQs<-as.Q4(rbind(Qs,Q))
+  Shat2<-mean(aQs)
+  emp<-rot.dist(Shat,Shat2,method='intrinsic')*nrow(Qs)
+  
+  return(list(emp=emp,the=the))
+}
+
+#Plot the IFs
+ris<-seq(0.1,pi,length=100)
+Rs<-ruars(50,rcayley,kappa=50,space='Q4')
+ifDF<-data.frame(Emp=rep(0,length(ris)),The=0)
+
+for(i in 1:length(ris)){
+  Ri<-genR(ris[i],space='Q4')
+  ifi<-IFQuat(Rs,Ri)
+
+  ifDF$The[i]<-ifi$the
+  ifDF$Emp[i]<-ifi$emp
+}
+
+plot(ris,ifDF$The,pch=19)
+lines(ris,ifDF$Emp,col=2)
+
+plot(ris,ifDF$Emp)
 ################
 #Projected median
 a2med<-function(rs){
