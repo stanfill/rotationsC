@@ -244,3 +244,14 @@ sc<-(2)
 
 plot(ris,ifDF$Emp*sc,type='l',ylim=c(0,max(c(ifDF$Theory,sc*ifDF$Emp))))
 lines(ris,ifDF$Theory)
+
+
+messya5<-function(r){
+  p1 <- 2*sin(r)/sqrt(3)
+  p2 <- 7/8+1/48+1/64+17/3456
+  p3 <- (1/24+4/64+102/3456)*cos(r)
+  p4 <- (4/64+204/3456)*cos(r)^2
+  p5 <- 136*cos(r)^3/3456
+  all <- p2+p3+p4+p5
+  return(mean((p1*all)^2)/3)
+}
