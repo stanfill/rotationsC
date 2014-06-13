@@ -29,25 +29,16 @@ QuatIF<-function(Qs,y){
   Shat2<-mean(as.Q4(rbind(Qs,y)))
 
   emp <- rot.dist(Shat,Shat2,method='i')*nrow(Qs)
-  rsHat <- rot.dist(Qs,Shat,method='i')
 
   cQs<-Qs-Shat
-  d1<-d2<-eigen((t(cQs)%*%cQs)/nrow(cQs))$values[1]
+
+  denom<-eigen((t(cQs)%*%cQs)/nrow(cQs))$values[1]
+
   m<-matrix(Shat)
-  #d1<-mean(cos(rsHat/2)^2)
-  #d2<-mean(sin(rsHat/2)^2)/3
-  
-  if(rot.dist(y,Shat,method='i')>2){
-    denom<-d1
-    m<-matrix(c(Shat[1],0,0,0))
-  }else{
-    denom<-d2
-    m<-matrix(c(0,Shat[2],0,0))
-  }
   
   
   num<-2*t(y)%*%y%*%m
-  theory<-num/denom
+  theory<-num/(denom)
   #theory<-sqrt(sum(theory^2))
   
   return(list(Emp=emp,The=theory))
@@ -56,7 +47,7 @@ QuatIF<-function(Qs,y){
 QuatIF(Qs,y)
 
 ########
-Qs<-ruars(20,rcayley,kappa=50,space='Q4')
+Qs<-ruars(20,rcayley,kappa=100,space='Q4')
 emp<-rep(0,50)
 the<-matrix(0,50,4)
 rs<-seq(0,pi,length=50)
@@ -71,17 +62,10 @@ for(i in 1:length(rs)){
 
 plot(rs,sqrt(rowSums(the^2)))
 lines(rs,emp)
+abline(v=2*asin(sqrt(3/4)))
 
-plot(rs,the[,1])
-lines(rs,emp)
-
-plot(rs,the[,2])
-lines(rs,emp)
-
-plot(rs,the[,3])
-lines(rs,emp)
-
-plot(rs,the[,4])
-lines(rs,emp)
+plot(rs,cos(rs/2)^2,type='l',col=2)
+lines(rs,sin(rs/2)^2/3)
+abline(v=2*asin(sqrt(3/4)))
 
 
