@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[    616508,      13610]
-NotebookOptionsPosition[    613511,      13504]
-NotebookOutlinePosition[    613854,      13519]
-CellTagsIndexPosition[    613811,      13516]
+NotebookDataLength[    614740,      13554]
+NotebookOptionsPosition[    611864,      13452]
+NotebookOutlinePosition[    612207,      13467]
+CellTagsIndexPosition[    612164,      13464]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -13447,58 +13447,6 @@ Cell[BoxData[
  CellChangeTimes->{{3.611516216822884*^9, 3.6115162320124025`*^9}}]
 }, Open  ]],
 
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"MatrixForm", "[", "%", "]"}]], "Input",
- CellChangeTimes->{{3.611515667706978*^9, 3.611515671497357*^9}}],
-
-Cell[BoxData[
- TagBox[
-  RowBox[{"Derivative", "[", 
-   RowBox[{
-    RowBox[{"{", 
-     RowBox[{"{", 
-      RowBox[{
-       RowBox[{"t1", " ", "X1", " ", 
-        RowBox[{"(", 
-         RowBox[{
-          RowBox[{"t1", " ", "X1"}], "+", 
-          RowBox[{"t2", " ", "X2"}], "+", 
-          RowBox[{"t3", " ", "X3"}], "+", 
-          RowBox[{"t4", " ", "X4"}]}], ")"}]}], "+", 
-       RowBox[{"t2", " ", "X2", " ", 
-        RowBox[{"(", 
-         RowBox[{
-          RowBox[{"t1", " ", "X1"}], "+", 
-          RowBox[{"t2", " ", "X2"}], "+", 
-          RowBox[{"t3", " ", "X3"}], "+", 
-          RowBox[{"t4", " ", "X4"}]}], ")"}]}], "+", 
-       RowBox[{"t3", " ", "X3", " ", 
-        RowBox[{"(", 
-         RowBox[{
-          RowBox[{"t1", " ", "X1"}], "+", 
-          RowBox[{"t2", " ", "X2"}], "+", 
-          RowBox[{"t3", " ", "X3"}], "+", 
-          RowBox[{"t4", " ", "X4"}]}], ")"}]}], "+", 
-       RowBox[{"t4", " ", "X4", " ", 
-        RowBox[{"(", 
-         RowBox[{
-          RowBox[{"t1", " ", "X1"}], "+", 
-          RowBox[{"t2", " ", "X2"}], "+", 
-          RowBox[{"t3", " ", "X3"}], "+", 
-          RowBox[{"t4", " ", "X4"}]}], ")"}]}]}], "}"}], "}"}], ",", 
-    RowBox[{"{", 
-     RowBox[{
-      RowBox[{"{", "t1", "}"}], ",", 
-      RowBox[{"{", "t2", "}"}], ",", 
-      RowBox[{"{", "t3", "}"}], ",", 
-      RowBox[{"{", "t4", "}"}]}], "}"}]}], "]"}],
-  Function[BoxForm`e$, 
-   MatrixForm[BoxForm`e$]]]], "Output",
- CellChangeTimes->{3.611515671909398*^9}]
-}, Open  ]],
-
 Cell[BoxData[""], "Input",
  CellChangeTimes->{{3.611515622029411*^9, 3.611515623454553*^9}}]
 },
@@ -13605,13 +13553,9 @@ Cell[605747, 13286, 3420, 87, 98, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[609204, 13378, 168, 3, 31, "Input"],
-Cell[609375, 13383, 2378, 63, 118, "Output"]
+Cell[609375, 13383, 2378, 63, 86, "Output"]
 }, Open  ]],
-Cell[CellGroupData[{
-Cell[611790, 13451, 129, 2, 31, "Input"],
-Cell[611922, 13455, 1478, 43, 86, "Output"]
-}, Open  ]],
-Cell[613415, 13501, 92, 1, 31, "Input"]
+Cell[611768, 13449, 92, 1, 31, "Input"]
 }
 ]
 *)
