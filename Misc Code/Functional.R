@@ -31,15 +31,18 @@ QuatIF<-function(Qs,y){
   emp <- rot.dist(Shat,Shat2,method='i')*nrow(Qs)
   rsHat <- rot.dist(Qs,Shat,method='i')
 
-  d1<-mean(cos(rsHat/2)^2)
-  d2<-mean(sin(rsHat/2)^2)/3
+  cQs<-Qs-Shat
+  d1<-d2<-eigen((t(cQs)%*%cQs)/nrow(cQs))$values[1]
+  m<-matrix(Shat)
+  #d1<-mean(cos(rsHat/2)^2)
+  #d2<-mean(sin(rsHat/2)^2)/3
   
   if(rot.dist(y,Shat,method='i')>2){
     denom<-d1
-    m<-matrix(c(1,0,0,0))
+    m<-matrix(c(Shat[1],0,0,0))
   }else{
     denom<-d2
-    m<-matrix(c(0,1,0,0))
+    m<-matrix(c(0,Shat[2],0,0))
   }
   
   
