@@ -12,10 +12,10 @@ print.SO3<-function(x,...){
     #class(tr)<-"SO3"
     print.default(tr,...)
   }else{
-    n<-nrow(Rs)
-    p<-ncol(Rs)
-    tRs<-matrix(Rs,nrow=n,ncol=p)
-    if(p==9){
+
+    tRs<-matrix(Rs,dim(Rs))
+    
+    if(ncol(tRs)==9){
       cnames<-c("R11","R21","R31","R12","R22","R32","R13","R23","R33")
       colnames(tRs)<-cnames
     }
@@ -47,10 +47,13 @@ tail.SO3<-function(x, n = 6L, addrownums = TRUE,...){
   else min(n, nrx)
   sel <- seq.int(to = nrx, length.out = n)
   ans <- x[sel, , drop = FALSE]
-  if (addrownums && is.null(rownames(x))) 
+  ans <- matrix(ans,dim(ans))
+  if (addrownums && is.null(rownames(x))){ 
     rownames(ans) <- paste0("[", sel, ",]")
-  ans
-  
+    if(ncol(ans)==9)
+      colnames(ans) <- c("R11","R21","R31","R12","R22","R32","R13","R23","R33")
+  }
+  ans  
 }
 
 #' @S3method str SO3
@@ -172,8 +175,12 @@ tail.Q4<-function(x, n = 6L, addrownums = TRUE,...){
   else min(n, nrx)
   sel <- seq.int(to = nrx, length.out = n)
   ans <- x[sel, , drop = FALSE]
-  if (addrownums && is.null(rownames(x))) 
+  ans <- matrix(ans, dim(ans))
+  if (addrownums && is.null(rownames(x))){ 
     rownames(ans) <- paste0("[", sel, ",]")
+    if(ncol(ans)==4)
+      colnames(ans) <- c("Real","i","j","k")
+  }
   ans
   
 }

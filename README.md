@@ -14,3 +14,4 @@ library(rotations)
 #### Minor Changes -
 
 * Vignette has been updated
+* `tail.Q4` and `tail.SO3` have been added
