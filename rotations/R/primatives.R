@@ -25,13 +25,31 @@ print.SO3<-function(x,...){
 
 #' @S3method head SO3
 #' @method head SO3
-head.SO3<-function(x,n=6L,...){
+head.SO3<-function(x, n = 6L,...){
   
   #The following two lines are from 'head.matrix'
   stopifnot(length(n) == 1L)
   n <- if(n < 0L)  max(nrow(x) + n, 0L)  else min(n, nrow(x))
   
   x[seq_len(n) ,]
+  
+}
+
+#' @S3method tail SO3
+#' @method tail SO3
+tail.SO3<-function(x, n = 6L, addrownums = TRUE,...){
+  
+  #The following two lines are from 'tail.matrix'
+  stopifnot(length(n) == 1L)
+  nrx <- nrow(x)
+  n <- if (n < 0L) 
+    max(nrx + n, 0L)
+  else min(n, nrx)
+  sel <- seq.int(to = nrx, length.out = n)
+  ans <- x[sel, , drop = FALSE]
+  if (addrownums && is.null(rownames(x))) 
+    rownames(ans) <- paste0("[", sel, ",]")
+  ans
   
 }
 
@@ -140,6 +158,24 @@ head.Q4<-function(x,n=6L,...){
   n <- if (n < 0L)  max(nrow(x) + n, 0L)  else min(n, nrow(x))
   
   x[seq_len(n), ]
+}
+
+#' @S3method tail Q4
+#' @method tail Q4
+tail.Q4<-function(x, n = 6L, addrownums = TRUE,...){
+  
+  #The following two lines are from 'tail.matrix'
+  stopifnot(length(n) == 1L)
+  nrx <- nrow(x)
+  n <- if (n < 0L) 
+    max(nrx + n, 0L)
+  else min(n, nrx)
+  sel <- seq.int(to = nrx, length.out = n)
+  ans <- x[sel, , drop = FALSE]
+  if (addrownums && is.null(rownames(x))) 
+    rownames(ans) <- paste0("[", sel, ",]")
+  ans
+  
 }
 
 #' @S3method str Q4
