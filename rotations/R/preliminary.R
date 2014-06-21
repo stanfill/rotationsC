@@ -346,7 +346,11 @@ genR <- function(r, S = NULL, space='SO3') {
   		return(o)
   		
   	}else{
-
+      
+      if(is.Q4(S)){
+        S <- as.SO3(S)
+      }
+      
   	  S<-formatSO3(S)
       St<-t(matrix(S,3,3))
   	  o<-center.SO3(o,St)
@@ -370,6 +374,10 @@ genR <- function(r, S = NULL, space='SO3') {
   		
   	}else{
   	
+      if(is.SO3(S)){
+        S <- as.Q4(S)
+      }
+      
   		S<-formatQ4(S)
       S<--S
   		q<-center.Q4(q,S)
