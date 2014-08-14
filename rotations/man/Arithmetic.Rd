@@ -1,12 +1,12 @@
 \name{Arithmetic}
-\alias{"+.Q4"}
-\alias{"+.SO3"}
-\alias{"-.Q4"}
-\alias{"-.SO3"}
-\alias{+.Q4}
-\alias{+.SO3}
 \alias{-.Q4}
 \alias{-.SO3}
+\alias{"-.Q4"}
+\alias{"-.SO3"}
+\alias{"+.Q4"}
+\alias{"+.SO3"}
+\alias{+.Q4}
+\alias{+.SO3}
 \alias{Arithmetic}
 \title{Arithmetic operators on SO(3)}
 \usage{

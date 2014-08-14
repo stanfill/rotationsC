@@ -1,13 +1,13 @@
 \docType{data}
 \name{as.Q4}
-\alias{Q4}
 \alias{as.Q4}
-\alias{as.Q4.Q4}
-\alias{as.Q4.SO3}
 \alias{as.Q4.data.frame}
 \alias{as.Q4.default}
+\alias{as.Q4.Q4}
+\alias{as.Q4.SO3}
 \alias{id.Q4}
 \alias{is.Q4}
+\alias{Q4}
 \title{Quaternions}
 \format{\code{id.Q4} is the identity rotation given by the matrix \eqn{[1,0,0,0]^\top}{[1,0,0,0]'}.}
 \usage{

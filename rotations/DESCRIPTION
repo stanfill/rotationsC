@@ -7,10 +7,10 @@ Author: Bryan Stanfill <bryan.stanfill@csiro.au>, Heike Hofmann
 Maintainer: Bryan Stanfill <bryan.stanfill@csiro.au>
 Description: This package implements tools for working with rotational data: it
     allows simulation from the most commonly used distributions on SO(3), it
-    includes methods for different Bayes, mean and median type estimators for the
-    central orientation of a sample, it provides confidence and credible regions
-    for the central orientation based on those estimators and it includes a novel 
-    visualization technique for rotation data.
+    includes methods for different Bayes, mean and median type estimators for
+    the central orientation of a sample, it provides confidence and credible
+    regions for the central orientation based on those estimators and it
+    includes a novel visualization technique for rotation data.
 License: MIT + file LICENSE
 Depends:
     R (>= 3.0),
@@ -22,7 +22,13 @@ Imports:
     utils,
     methods
 Suggests:
-    gridExtra, knitr, onion, orientlib, rgl, sphereplot, testthat
+    gridExtra,
+    knitr,
+    onion,
+    orientlib,
+    rgl,
+    sphereplot,
+    testthat
 LinkingTo: Rcpp, RcppArmadillo
 VignetteBuilder: knitr
 Collate:

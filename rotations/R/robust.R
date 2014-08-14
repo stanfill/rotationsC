@@ -11,8 +11,7 @@
 #' @param t If test blocs then the bloc size
 #' @return The list of Hi statistics
 #' @export
-#' @example
-#' 
+#' @examples
 #' #Compute the measures of discord for a sample from the Cayley distribution
 #' Rs <- ruars(20,rcayley,kappa=50)
 #' Hi <- discord(Rs)
@@ -21,7 +20,7 @@
 #' OrdHi <- sort(Hi)
 #' 
 #' plot(ecdf(OrdHi))
-#' lines(OrdHi,qf(OrdHi,3,3*(length(OrdHi)-2)))
+#' lines(OrdHi,pf(OrdHi,3,3*(length(OrdHi)-2)))
 
 discord<-function(x,t,...){
   UseMethod("discord")
@@ -46,7 +45,7 @@ discord.Q4 <- function(x, t=NULL,...){
 #' @method discord SO3
 #' @S3method discord SO3
  
-discord.Q4 <- function(x, t=NULL,...){
+discord.SO3 <- function(x, t=NULL,...){
   Qs<-as.Q4(x)
   Hn<- as.vector(HnCpp(Qs))
 

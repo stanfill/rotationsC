@@ -1,11 +1,11 @@
 \name{Mises}
-\alias{Mises}
 \alias{dvmises}
+\alias{Mises}
 \alias{pvmises}
 \alias{rvmises}
 \title{The circular-von Mises distribution}
 \usage{
-  dvmises(r, kappa = 1, nu = NULL, Haar = T)
+  dvmises(r, kappa = 1, nu = NULL, Haar = TRUE)
 
   pvmises(q, kappa = 1, nu = NULL, lower.tail = TRUE)
 
