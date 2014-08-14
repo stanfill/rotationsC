@@ -36,6 +36,11 @@ QuatIF<-function(Qs,y){
 
   m<-matrix(Shat)
   
+  #if(rot.dist(Shat,y,method='i')<2){
+  #  m<-matrix(c(0,m[2],0,0))
+  #}else{
+  #  m<-matrix(c(m[1],0,0,0))
+  #}
   
   num<-2*t(y)%*%y%*%m
   theory<-num/(denom)
