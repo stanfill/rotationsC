@@ -30,22 +30,23 @@ arma::rowvec HnCpp(arma::mat Qs){
   return Hn;
 }
 
+
 arma::rowvec RdistCArma(arma::mat Q1, arma::rowvec Q2){
   /*Compute the geodesic distance between quaternions Q1 and Q2*/
-  /* Q1 must be an n-by-4 matrix with quaternion rows and Q2 a single quaternion*/
+  /* Q1 must be an n-by-4 matrix with quaternion rows and Q2 a single (1x4) quaternion*/
 	
-	/*int n = Q1.nrow(), i=0; 
+	int n = Q1.n_rows, i=0; 
 	double cp;
-	NumericVector rs(n);
+	arma::rowvec rs(n);
 	
 	for(i=0;i<n;i++){
 		
-		cp = sum(Q1(i,_)*Q2);
-		rs[i] = acos(2*cp*cp-1);
+		cp = sum(Q1.row(i)*Q2.t());
+		rs(i) = acos(2*cp*cp-1);
 		
 	}
 	
-	return rs;*/
+	return rs;
 }
 
 
@@ -54,53 +55,50 @@ arma::rowvec HnCppIntrinsic(arma::mat Qs){
   
   //Compute the intrinsic Hn tests statistics
   
-  int n = Qs.n_rows, i=0, SSEJ = 0.0;
+  int n = Qs.n_rows, i=0, j=0;
 
   //Get T matrix of whole sample to make it easier later on
-  arma::mat T = Qsarma.t()*Qsarma;
-  arma::rowvec Qhatarma = rotations::meanQ4C(Qsarma);
-  arma::rowvec Qhat = Qs;
-  
-  //Sum of squared geometric distances between proj. mean and each obs
-  /*double SSE = 0.0;
-  SSE = arma::sum(arma::pow(rotations::RdistC(Qs,Qhat),2));
+  arma::mat T = Qs.t()*Qs;
+  arma::rowvec Qhat = rotations::meanQ4C(Qs);
+  arma::rowvec dists(n);
 
-  NumericVector Hn(n);
-  NumericVector Qhatj;
-  NumericMatrix QsJ;
+  //Sum of squared geometric distances between proj. mean and each obs
+  double SSE = 0.0, SSEJ=0.0;
+  dists = square(RdistCArma(Qs,Qhat));
+  SSE = sum(dists);
+
+  arma::rowvec Hn(n);
+  arma::rowvec Qhatj;
+  arma::mat QsJ(n,4);
   
-  //Variables for arma implementation
-  arma::rowvec Qj;
+  //Variables for reduced sample mean
+  arma::rowvec Qj, distsJ(n-1);
   arma::mat Tj(4,4), eigvecJ(4,4);
-  arma::vec eigvalJ, shatJ;
 
   for(i = 0;i<n; i++){
     
-    QsJ = Qs;
+    QsJ.resize(n,4);
+    
+    for(j = 0; j<n; j++){
+      if(j!=i){
+        QsJ.row(j) = Qs.row(j);
+      }
+    }
+    
+    QsJ.shed_row(i);
     
     //Compute projected mean when jth row is cut out
-    Qj = Qsarma.row(i);
-    Tj = T-Qj.t()*Qj;
-    arma::eig_sym(eigvalJ,eigvecJ,Tj);
-    shatJ = eigvecJ.col(3);
-    if(shatJ[0]<0){
-      shatJ = -shatJ;
-    }
-    //shatJ.print("ShatJ: ");
-    Qhatj = Rcpp::as<NumericVector>(wrap(shatJ));
-    
-    //Replace the jth row of QsJ with the reduced sample mean
-    //That way it won't contributed to reduced sample SSE called SSEJ
-    QsJ(i,_) = Qhatj;
-    SSEJ = sum(pow(rotations::RdistC(QsJ,Qhatj),2));
+    Qhatj = rotations::meanQ4C(QsJ);
+    distsJ = square(RdistCArma(QsJ,Qhatj));
+    SSEJ = sum(distsJ);
     
     //Rcpp::Rcout << "SSEJ: " << SSEJ << std::endl;
     
-    Hn[i]=(n-2)*(SSE-SSEJ)/(SSEJ);
+    Hn(i)=(n-2)*(SSE-SSEJ)/(SSEJ);
     
   }
 
-  return Hn;*/
+  return Hn;
   
 }
 
