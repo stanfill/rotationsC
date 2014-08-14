@@ -1,19 +1,16 @@
 \name{discord}
 \alias{discord}
-\alias{discord.Q4}
-\alias{discord.SO3}
 \title{Measure of Discord}
 \usage{
-  discord(x, t, ...)
-
-  \method{discord}{Q4} (x, t = NULL, ...)
-
-  \method{discord}{SO3} (x, t = NULL, ...)
+  discord(x, type, t, ...)
 }
 \arguments{
   \item{x}{The sample of random rotations}
 
   \item{t}{If test blocs then the bloc size}
+
+  \item{type}{To specify if "intrinsic" or "extrinsic"
+  approach should be used to compute the statistic}
 }
 \value{
   The list of Hi statistics
