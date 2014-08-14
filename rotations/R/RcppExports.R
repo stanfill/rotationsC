@@ -121,6 +121,14 @@ fisherBootC <- function(Qs, m, symm) {
     .Call('rotations_fisherBootC', PACKAGE = 'rotations', Qs, m, symm)
 }
 
+HnCpp <- function(Qs) {
+    .Call('rotations_HnCpp', PACKAGE = 'rotations', Qs)
+}
+
+HnCppBloc <- function(Qs, Cs) {
+    .Call('rotations_HnCppBloc', PACKAGE = 'rotations', Qs, Cs)
+}
+
 RdistC <- function(Q1, Q2) {
     .Call('rotations_RdistC', PACKAGE = 'rotations', Q1, Q2)
 }

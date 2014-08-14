@@ -38,5 +38,6 @@ Collate:
     'grid-search.R'
     'bayes.R'
     'primatives.R'
+    'robust.R'
 URL: https://github.com/stanfill/rotationsC/tree/master/rotations
 BugReports: https://github.com/stanfill/rotationsC/issues
