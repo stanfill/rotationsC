@@ -193,7 +193,6 @@ NumericVector zhangQ4(NumericMatrix Q, int m){
 	NumericMatrix QstarRcpp;
 	
 	NumericVector Qhat = as<NumericVector>(wrap(rotations::meanQ4C(QSamp)));
-	//NumericVector Qhat = as<NumericVector>(wrap(meanQ4C(QSamp)));
 	
 	for(j=0;j<m;j++){
 		

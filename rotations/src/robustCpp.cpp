@@ -1,5 +1,6 @@
 
 #include <RcppArmadillo.h>   
+#include "../inst/include/rotations.h"
 
 using namespace Rcpp;
 
@@ -27,6 +28,64 @@ arma::rowvec HnCpp(arma::mat Qs){
     
   }
   return Hn;
+}
+
+// [[Rcpp::export]]
+NumericVector HnCppIntrinsic(NumericMatrix Qs){
+  
+  //Compute the intrinsic Hn tests statistics
+  
+  int n = Qs.nrow(), i=0, SSEJ = 0.0;
+  NumericMatrix QsCopy;
+  QsCopy = Qs;
+  //Projected mean of the whole sample
+  arma::mat Qsarma = Rcpp::as<arma::mat>(wrap(QsCopy));
+  Rcpp::Rcout << "Qs: " << Qs << std::endl;
+  arma::mat T = Qsarma.t()*Qsarma;
+  arma::rowvec Qhatarma = rotations::meanQ4C(Qsarma);
+  NumericVector Qhat = Rcpp::as<NumericVector>(wrap(Qhatarma));
+  
+  //Sum of squared geometric distances between proj. mean and each obs
+  double SSE = 0.0;
+  SSE = sum(pow(rotations::RdistC(Qs,Qhat),2));
+
+  NumericVector Hn(n);
+  NumericVector Qhatj;
+  NumericMatrix QsJ;
+  
+  //Variables for arma implementation
+  arma::rowvec Qj;
+  arma::mat Tj(4,4), eigvecJ(4,4);
+  arma::vec eigvalJ, shatJ;
+
+  for(i = 0;i<n; i++){
+    
+    QsJ = Qs;
+    
+    //Compute projected mean when jth row is cut out
+    Qj = Qsarma.row(i);
+    Tj = T-Qj.t()*Qj;
+    arma::eig_sym(eigvalJ,eigvecJ,Tj);
+    shatJ = eigvecJ.col(3);
+    if(shatJ[0]<0){
+      shatJ = -shatJ;
+    }
+    //shatJ.print("ShatJ: ");
+    Qhatj = Rcpp::as<NumericVector>(wrap(shatJ));
+    
+    //Replace the jth row of QsJ with the reduced sample mean
+    //That way it won't contributed to reduced sample SSE called SSEJ
+    QsJ(i,_) = Qhatj;
+    SSEJ = sum(pow(rotations::RdistC(QsJ,Qhatj),2));
+    
+    //Rcpp::Rcout << "SSEJ: " << SSEJ << std::endl;
+    
+    Hn[i]=(n-2)*(SSE-SSEJ)/(SSEJ);
+    
+  }
+
+  return Hn;
+  
 }
 
 // [[Rcpp::export]]
