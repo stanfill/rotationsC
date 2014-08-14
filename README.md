@@ -11,6 +11,10 @@ library(rotations)
 
 ### Change log:
 
+
+#### Major Changes -
+* The function `discord` has been added, which computes a measure of discord for random rotations
+
 #### Minor Changes -
 
 * Vignette has been updated
