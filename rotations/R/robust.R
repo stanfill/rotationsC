@@ -28,7 +28,14 @@ discord<-function(x,type,t,...){
   #when observation i was removed
   #Written for quaternions, so if SO3 is given, make them quaternions
   Qs<-as.Q4(x)
-  Hn<- as.vector(HnCpp(Qs))
+  type <- try(match.arg(type,c("intrinsic", "extrinsic")),silent=T)
   
+  if(type=='extrinsic'){
+    Hn <- as.vector(HnCpp(Qs))
+  }else if(type=='intrinsic'){
+    Hn <- as.vector(HnCppIntrinsic(Qs))
+  }else{
+    stop("Please choose extrinsic or intrinsic type.")
+  }
   return(Hn)
 }
