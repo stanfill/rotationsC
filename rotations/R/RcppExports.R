@@ -125,6 +125,10 @@ HnCpp <- function(Qs) {
     .Call('rotations_HnCpp', PACKAGE = 'rotations', Qs)
 }
 
+HnCppIntrinsic <- function(Qs) {
+    .Call('rotations_HnCppIntrinsic', PACKAGE = 'rotations', Qs)
+}
+
 HnCppBloc <- function(Qs, Cs) {
     .Call('rotations_HnCppBloc', PACKAGE = 'rotations', Qs, Cs)
 }

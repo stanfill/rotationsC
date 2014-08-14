@@ -28,13 +28,19 @@
 }
 \examples{
 #Compute the measures of discord for a sample from the Cayley distribution
-Rs <- ruars(20,rcayley,kappa=50)
-Hi <- discord(Rs)
+Rs <- ruars(20,rcayley,kappa=1)
+Hi <- discord(Rs, type='intrinsic')
+He <- discord(Rs, type='extrinsic')
 
 #Compare to the theoretical F distribution
 OrdHi <- sort(Hi)
+OrdHe <- sort(He)
 
-plot(ecdf(OrdHi))
+par(mfrow=c(1,2))
+plot(ecdf(OrdHi),main='Intrinsic')
 lines(OrdHi,pf(OrdHi,3,3*(length(OrdHi)-2)))
+
+plot(ecdf(OrdHe),main='Extrinsic')
+lines(OrdHe,pf(OrdHe,3,3*(length(OrdHi)-2)))
 }
 

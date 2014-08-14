@@ -1084,6 +1084,21 @@ BEGIN_RCPP
     return __sexp_result;
 END_RCPP
 }
+// HnCppIntrinsic
+arma::rowvec HnCppIntrinsic(arma::mat Qs);
+RcppExport SEXP rotations_HnCppIntrinsic(SEXP QsSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< arma::mat >::type Qs(QsSEXP );
+        arma::rowvec __result = HnCppIntrinsic(Qs);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
 // HnCppBloc
 arma::rowvec HnCppBloc(arma::mat Qs, arma::mat Cs);
 RcppExport SEXP rotations_HnCppBloc(SEXP QsSEXP, SEXP CsSEXP) {
