@@ -9,6 +9,7 @@
 #' 
 #' @param x The sample of random rotations
 #' @param t If test blocs then the bloc size
+#' @param type To specify if "intrinsic" or "extrinsic" approach should be used to compute the statistic
 #' @return The list of Hi statistics
 #' @export
 #' @examples
@@ -22,32 +23,12 @@
 #' plot(ecdf(OrdHi))
 #' lines(OrdHi,pf(OrdHi,3,3*(length(OrdHi)-2)))
 
-discord<-function(x,t,...){
-  UseMethod("discord")
-}
-
-
-#' @rdname discord
-#' @method discord Q4
-#' @S3method discord Q4
-
-discord.Q4 <- function(x, t=NULL,...){
+discord<-function(x,type,t,...){
   #Compute the statistic proposed by FLW(?) that is a function of the largest eigenvalue
   #when observation i was removed
   #Written for quaternions, so if SO3 is given, make them quaternions
   Qs<-as.Q4(x)
   Hn<- as.vector(HnCpp(Qs))
-
-  return(Hn)
-}
-
-#' @rdname discord
-#' @method discord SO3
-#' @S3method discord SO3
- 
-discord.SO3 <- function(x, t=NULL,...){
-  Qs<-as.Q4(x)
-  Hn<- as.vector(HnCpp(Qs))
-
+  
   return(Hn)
 }
