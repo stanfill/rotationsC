@@ -24,14 +24,14 @@
 #' OrdHe <- sort(He)
 #' 
 #' par(mfrow=c(1,2))
-#' plot(ecdf(OrdHi),main='Intrinsic')
+#' plot(ecdf(OrdHi),main='Intrinsic',xlim=range(c(OrdHi,OrdHe)))
 #' lines(OrdHi,pf(OrdHi,3,3*(length(OrdHi)-2)))
 #' 
-#' plot(ecdf(OrdHe),main='Extrinsic')
-#' lines(OrdHe,pf(OrdHe,3,3*(length(OrdHi)-2)))
+#' plot(ecdf(OrdHe),main='Extrinsic',xlim=range(c(OrdHi,OrdHe)))
+#' lines(OrdHi,pf(OrdHi,3,3*(length(OrdHe)-2)))
 
 discord<-function(x,type,t=1L,...){
-  #Compute the statistic proposed by FLW(?) that is a function of the largest eigenvalue
+  #Compute the statistic proposed by Best and Fisher (1986) that is a function of the largest eigenvalue
   #when observation i was removed
   #Written for quaternions, so if SO3 is given, make them quaternions
   
