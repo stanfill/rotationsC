@@ -43,5 +43,13 @@ discord<-function(x,type,t,...){
   }else{
     stop("Please choose extrinsic or intrinsic type.")
   }
+  
+  if(any(Hn<0)){
+    HnSub<-as.vector(HnCpp(Qs))
+    ToReplace<-which(Hn<=0)
+    Hn[ToReplace]<-HnSub[ToReplace]
+    warning(paste(length(ToReplace)," Hn values were negative.  They were replaced by the extrinsic approximations."))
+  }
+  
   return(Hn)
 }
