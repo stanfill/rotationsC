@@ -10,7 +10,8 @@
 #' @param x The sample of random rotations
 #' @param type To specify if "intrinsic" or "extrinsic" approach should be used to compute the statistic
 #' @param t If test blocs then the bloc size, set to 1 by default
-#' @return The list of Hi statistics
+#' @return The Hi statistic for each group of size t is returned.  If \code{t>1} then which observations 
+#' that define each group of size \code{t} is returned as well.
 #' @export
 #' @examples
 #' #Compute the measures of discord for a sample from the Cayley distribution
@@ -85,6 +86,6 @@ HnBlocCpp<-function(Qs,t){
   
   Hnia <- HnCppBloc(Qs,groups)
   
-  return(list(groups=groups,Hn=Hnia))
+  return(list(Groups=groups,Hi=Hnia))
   
 }

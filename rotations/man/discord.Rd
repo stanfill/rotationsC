@@ -2,18 +2,21 @@
 \alias{discord}
 \title{Measure of Discord}
 \usage{
-  discord(x, type, t, ...)
+  discord(x, type, t = 1L, ...)
 }
 \arguments{
   \item{x}{The sample of random rotations}
 
-  \item{t}{If test blocs then the bloc size}
-
   \item{type}{To specify if "intrinsic" or "extrinsic"
   approach should be used to compute the statistic}
+
+  \item{t}{If test blocs then the bloc size, set to 1 by
+  default}
 }
 \value{
-  The list of Hi statistics
+  The Hi statistic for each group of size t is returned.
+  If \code{t>1} then which observations that define each
+  group of size \code{t} is returned as well.
 }
 \description{
   This function computes a measure of discord for a sample
