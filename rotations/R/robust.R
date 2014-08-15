@@ -8,8 +8,8 @@
 #' distribution with 1,n-2 df for the von Mises Fisher distribution.
 #' 
 #' @param x The sample of random rotations
-#' @param t If test blocs then the bloc size
 #' @param type To specify if "intrinsic" or "extrinsic" approach should be used to compute the statistic
+#' @param t If test blocs then the bloc size, set to 1 by default
 #' @return The list of Hi statistics
 #' @export
 #' @examples
@@ -29,19 +29,42 @@
 #' plot(ecdf(OrdHe),main='Extrinsic')
 #' lines(OrdHe,pf(OrdHe,3,3*(length(OrdHi)-2)))
 
-discord<-function(x,type,t,...){
+discord<-function(x,type,t=1L,...){
   #Compute the statistic proposed by FLW(?) that is a function of the largest eigenvalue
   #when observation i was removed
   #Written for quaternions, so if SO3 is given, make them quaternions
+  
   Qs<-as.Q4(x)
   type <- try(match.arg(type,c("intrinsic", "extrinsic")),silent=T)
+  if (class(type)=="try-error")
+    stop("type needs to be one of 'intrinsic' or 'extrinsic'.")
   
+  
+  if(t>1){
+    if(type=='intrinsic'){
+      warning("intrinsic en bloc testing isn't available yet")
+    }
+    return(HnBlocCpp(Qs,t))
+    
+  }else if(t<1){
+    
+    stop("t must be an at least 1")
+    
+  }
+  
+  #If t==1 then an Hi statistic is computed for each observation
   if(type=='extrinsic'){
+    
     Hn <- as.vector(HnCpp(Qs))
+    
   }else if(type=='intrinsic'){
+    
     Hn <- as.vector(HnCppIntrinsic(Qs))
+    
   }else{
+    
     stop("Please choose extrinsic or intrinsic type.")
+    
   }
   
   if(any(Hn<0)){
@@ -52,4 +75,16 @@ discord<-function(x,type,t,...){
   }
   
   return(Hn)
+}
+
+HnBlocCpp<-function(Qs,t){
+  #Compute the Hn statistic when each possible set of t observations is deleted
+  Qs<-as.Q4(Qs)
+  n<-nrow(Qs)
+  groups <- combn(n,t)
+  
+  Hnia <- HnCppBloc(Qs,groups)
+  
+  return(list(groups=groups,Hn=Hnia))
+  
 }

@@ -14,6 +14,7 @@ library(rotations)
 
 #### Major Changes -
 * The function `discord` has been added, which computes a measure of discord for random rotations
+* The previously proposed extrinsic measure of discord is included as well as the novel intrinsic measure
 
 #### Minor Changes -
 
