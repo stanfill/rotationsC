@@ -10,6 +10,7 @@
 #' @param x The sample of random rotations
 #' @param type To specify if "intrinsic" or "extrinsic" approach should be used to compute the statistic
 #' @param t If test blocs then the bloc size, set to 1 by default
+#' @param obs integer vector specifying which observation(s) to compute the measure of discord for
 #' @return The Hi statistic for each group of size t is returned.  If \code{t>1} then which observations 
 #' that define each group of size \code{t} is returned as well.
 #' @export
@@ -30,7 +31,7 @@
 #' plot(ecdf(OrdHe),main='Extrinsic',xlim=range(c(OrdHi,OrdHe)))
 #' lines(OrdHi,pf(OrdHi,3,3*(length(OrdHe)-2)))
 
-discord<-function(x,type,t=1L,...){
+discord<-function(x, type, t=1L, obs=1:nrow(x),...){
   #Compute the statistic proposed by Best and Fisher (1986) that is a function of the largest eigenvalue
   #when observation i was removed
   #Written for quaternions, so if SO3 is given, make them quaternions
@@ -40,6 +41,8 @@ discord<-function(x,type,t=1L,...){
   if (class(type)=="try-error")
     stop("type needs to be one of 'intrinsic' or 'extrinsic'.")
   
+  if(any(obs>nrow(x)||obs<0))
+    stop("obs must be between 1 and nrow(x)")
   
   if(t>1){
     if(type=='intrinsic'){
@@ -56,11 +59,11 @@ discord<-function(x,type,t=1L,...){
   #If t==1 then an Hi statistic is computed for each observation
   if(type=='extrinsic'){
     
-    Hn <- as.vector(HnCpp(Qs))
+    Hn <- as.vector(HnCpp(Qs))[obs]
     
   }else if(type=='intrinsic'){
     
-    Hn <- as.vector(HnCppIntrinsic(Qs))
+    Hn <- as.vector(HnCppIntrinsic(Qs))[obs]
     
   }else{
     
