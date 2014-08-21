@@ -2,7 +2,7 @@
 \alias{discord}
 \title{Measure of Discord}
 \usage{
-  discord(x, type, t = 1L, ...)
+  discord(x, type, t = 1L, obs = 1:nrow(x), ...)
 }
 \arguments{
   \item{x}{The sample of random rotations}
@@ -12,6 +12,9 @@
 
   \item{t}{If test blocs then the bloc size, set to 1 by
   default}
+
+  \item{obs}{integer vector specifying which observation(s)
+  to compute the measure of discord for}
 }
 \value{
   The Hi statistic for each group of size t is returned.
