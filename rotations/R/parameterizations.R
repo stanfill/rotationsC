@@ -207,9 +207,15 @@ as.Q4.data.frame <- function(x,...) {
 #' @export
 
 is.Q4 <- function(x) {
-
-	apply(x,1,function(q){sum(q^2)-1<10e-10 & length(q)==4})
+  
+  if(length(x)==9){
+    FALSE
+  }else{
+  
+	  apply(x,1,function(q){sum(q^2)-1<10e-10 & length(q)==4})
 	
+  }
+    
 }
 
 #' @rdname Q4
