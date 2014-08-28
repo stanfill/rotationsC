@@ -1,10 +1,10 @@
 
 #include <RcppArmadillo.h>   
-#include "../inst/include/rotations.h"
+#include "../inst/include/rotations.h"  
 
 using namespace Rcpp;
 
-// [[Rcpp::depends(RcppArmadillo)]] 
+// [[Rcpp::interfaces(r, cpp)]]
 
 // [[Rcpp::export]]
 arma::rowvec HnCpp(arma::mat Qs){

@@ -120,6 +120,25 @@ namespace rotations {
         return Rcpp::as<arma::mat >(__result);
     }
 
+    inline NumericVector rcayleyCpp(int n, double kappa) {
+        typedef SEXP(*Ptr_rcayleyCpp)(SEXP,SEXP);
+        static Ptr_rcayleyCpp p_rcayleyCpp = NULL;
+        if (p_rcayleyCpp == NULL) {
+            validateSignature("NumericVector(*rcayleyCpp)(int,double)");
+            p_rcayleyCpp = (Ptr_rcayleyCpp)R_GetCCallable("rotations", "rotations_rcayleyCpp");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_rcayleyCpp(Rcpp::wrap(n), Rcpp::wrap(kappa));
+        }
+        if (__result.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<NumericVector >(__result);
+    }
+
     inline NumericVector rfisherCpp(int n, double kappa) {
         typedef SEXP(*Ptr_rfisherCpp)(SEXP,SEXP);
         static Ptr_rfisherCpp p_rfisherCpp = NULL;
@@ -593,6 +612,63 @@ namespace rotations {
         if (__result.inherits("try-error"))
             throw Rcpp::exception(as<std::string>(__result).c_str());
         return Rcpp::as<arma::vec >(__result);
+    }
+
+    inline arma::rowvec HnCpp(arma::mat Qs) {
+        typedef SEXP(*Ptr_HnCpp)(SEXP);
+        static Ptr_HnCpp p_HnCpp = NULL;
+        if (p_HnCpp == NULL) {
+            validateSignature("arma::rowvec(*HnCpp)(arma::mat)");
+            p_HnCpp = (Ptr_HnCpp)R_GetCCallable("rotations", "rotations_HnCpp");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_HnCpp(Rcpp::wrap(Qs));
+        }
+        if (__result.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<arma::rowvec >(__result);
+    }
+
+    inline arma::rowvec HnCppIntrinsic(arma::mat Qs) {
+        typedef SEXP(*Ptr_HnCppIntrinsic)(SEXP);
+        static Ptr_HnCppIntrinsic p_HnCppIntrinsic = NULL;
+        if (p_HnCppIntrinsic == NULL) {
+            validateSignature("arma::rowvec(*HnCppIntrinsic)(arma::mat)");
+            p_HnCppIntrinsic = (Ptr_HnCppIntrinsic)R_GetCCallable("rotations", "rotations_HnCppIntrinsic");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_HnCppIntrinsic(Rcpp::wrap(Qs));
+        }
+        if (__result.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<arma::rowvec >(__result);
+    }
+
+    inline arma::rowvec HnCppBloc(arma::mat Qs, arma::mat Cs) {
+        typedef SEXP(*Ptr_HnCppBloc)(SEXP,SEXP);
+        static Ptr_HnCppBloc p_HnCppBloc = NULL;
+        if (p_HnCppBloc == NULL) {
+            validateSignature("arma::rowvec(*HnCppBloc)(arma::mat,arma::mat)");
+            p_HnCppBloc = (Ptr_HnCppBloc)R_GetCCallable("rotations", "rotations_HnCppBloc");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_HnCppBloc(Rcpp::wrap(Qs), Rcpp::wrap(Cs));
+        }
+        if (__result.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<arma::rowvec >(__result);
     }
 
     inline NumericVector RdistC(NumericMatrix Q1, NumericVector Q2) {

@@ -9,6 +9,7 @@ using namespace Rcpp;
 // Generate matrix Fisher random deviates using C++
 /////////////////////////////////////////////////////////////
 
+// [[Rcpp::export]]
 NumericVector rcayleyCpp(int n, double kappa){
   RNGScope scope;
   NumericVector bet(n), alp(n), theta(n);

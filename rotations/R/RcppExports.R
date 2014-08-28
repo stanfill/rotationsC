@@ -21,6 +21,10 @@ genrC <- function(r, S, SO3, u) {
     .Call('rotations_genrC', PACKAGE = 'rotations', r, S, SO3, u)
 }
 
+rcayleyCpp <- function(n, kappa) {
+    .Call('rotations_rcayleyCpp', PACKAGE = 'rotations', n, kappa)
+}
+
 rfisherCpp <- function(n, kappa) {
     .Call('rotations_rfisherCpp', PACKAGE = 'rotations', n, kappa)
 }

@@ -184,6 +184,41 @@ RcppExport SEXP rotations_genrC(SEXP rSEXP, SEXP SSEXP, SEXP SO3SEXP, SEXP uSEXP
     UNPROTECT(1);
     return __result;
 }
+// rcayleyCpp
+NumericVector rcayleyCpp(int n, double kappa);
+static SEXP rotations_rcayleyCpp_try(SEXP nSEXP, SEXP kappaSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::traits::input_parameter< int >::type n(nSEXP );
+        Rcpp::traits::input_parameter< double >::type kappa(kappaSEXP );
+        NumericVector __result = rcayleyCpp(n, kappa);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations_rcayleyCpp(SEXP nSEXP, SEXP kappaSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(rotations_rcayleyCpp_try(nSEXP, kappaSEXP));
+    }
+    Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
+    if (__isInterrupt) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
 // rfisherCpp
 NumericVector rfisherCpp(int n, double kappa);
 static SEXP rotations_rfisherCpp_try(SEXP nSEXP, SEXP kappaSEXP) {
@@ -1071,41 +1106,78 @@ RcppExport SEXP rotations_fisherBootC(SEXP QsSEXP, SEXP mSEXP, SEXP symmSEXP) {
 }
 // HnCpp
 arma::rowvec HnCpp(arma::mat Qs);
-RcppExport SEXP rotations_HnCpp(SEXP QsSEXP) {
+static SEXP rotations_HnCpp_try(SEXP QsSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
-        Rcpp::RNGScope __rngScope;
         Rcpp::traits::input_parameter< arma::mat >::type Qs(QsSEXP );
         arma::rowvec __result = HnCpp(Qs);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);
     return __sexp_result;
-END_RCPP
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations_HnCpp(SEXP QsSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(rotations_HnCpp_try(QsSEXP));
+    }
+    Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
+    if (__isInterrupt) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
 }
 // HnCppIntrinsic
 arma::rowvec HnCppIntrinsic(arma::mat Qs);
-RcppExport SEXP rotations_HnCppIntrinsic(SEXP QsSEXP) {
+static SEXP rotations_HnCppIntrinsic_try(SEXP QsSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
-        Rcpp::RNGScope __rngScope;
         Rcpp::traits::input_parameter< arma::mat >::type Qs(QsSEXP );
         arma::rowvec __result = HnCppIntrinsic(Qs);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);
     return __sexp_result;
-END_RCPP
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations_HnCppIntrinsic(SEXP QsSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(rotations_HnCppIntrinsic_try(QsSEXP));
+    }
+    Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
+    if (__isInterrupt) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
 }
 // HnCppBloc
 arma::rowvec HnCppBloc(arma::mat Qs, arma::mat Cs);
-RcppExport SEXP rotations_HnCppBloc(SEXP QsSEXP, SEXP CsSEXP) {
+static SEXP rotations_HnCppBloc_try(SEXP QsSEXP, SEXP CsSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
-        Rcpp::RNGScope __rngScope;
         Rcpp::traits::input_parameter< arma::mat >::type Qs(QsSEXP );
         Rcpp::traits::input_parameter< arma::mat >::type Cs(CsSEXP );
         arma::rowvec __result = HnCppBloc(Qs, Cs);
@@ -1113,7 +1185,27 @@ BEGIN_RCPP
     }
     UNPROTECT(1);
     return __sexp_result;
-END_RCPP
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP rotations_HnCppBloc(SEXP QsSEXP, SEXP CsSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(rotations_HnCppBloc_try(QsSEXP, CsSEXP));
+    }
+    Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
+    if (__isInterrupt) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
 }
 // RdistC
 NumericVector RdistC(NumericMatrix Q1, NumericVector Q2);
@@ -1440,6 +1532,7 @@ static int rotations_RcppExport_validate(const char* sig) {
         signatures.insert("arma::mat(*Q4defaultC)(arma::mat,arma::vec)");
         signatures.insert("arma::mat(*pMatC)(arma::mat)");
         signatures.insert("arma::mat(*genrC)(arma::vec,arma::mat,int,arma::mat)");
+        signatures.insert("NumericVector(*rcayleyCpp)(int,double)");
         signatures.insert("NumericVector(*rfisherCpp)(int,double)");
         signatures.insert("NumericVector(*rvmisesCPP)(int,double)");
         signatures.insert("arma::mat(*centerCpp)(arma::mat,arma::mat)");
@@ -1465,6 +1558,9 @@ static int rotations_RcppExport_validate(const char* sig) {
         signatures.insert("double(*fisherAxisC)(arma::mat,arma::rowvec)");
         signatures.insert("double(*fisherAxisCSymmetric)(arma::mat,arma::rowvec)");
         signatures.insert("arma::vec(*fisherBootC)(arma::mat,int,bool)");
+        signatures.insert("arma::rowvec(*HnCpp)(arma::mat)");
+        signatures.insert("arma::rowvec(*HnCppIntrinsic)(arma::mat)");
+        signatures.insert("arma::rowvec(*HnCppBloc)(arma::mat,arma::mat)");
         signatures.insert("NumericVector(*RdistC)(NumericMatrix,NumericVector)");
         signatures.insert("arma::rowvec(*rdistSO3C)(arma::mat,arma::mat)");
         signatures.insert("NumericVector(*EdistC)(NumericMatrix,NumericVector)");
@@ -1485,6 +1581,7 @@ RcppExport SEXP rotations_RcppExport_registerCCallable() {
     R_RegisterCCallable("rotations", "rotations_Q4defaultC", (DL_FUNC)rotations_Q4defaultC_try);
     R_RegisterCCallable("rotations", "rotations_pMatC", (DL_FUNC)rotations_pMatC_try);
     R_RegisterCCallable("rotations", "rotations_genrC", (DL_FUNC)rotations_genrC_try);
+    R_RegisterCCallable("rotations", "rotations_rcayleyCpp", (DL_FUNC)rotations_rcayleyCpp_try);
     R_RegisterCCallable("rotations", "rotations_rfisherCpp", (DL_FUNC)rotations_rfisherCpp_try);
     R_RegisterCCallable("rotations", "rotations_rvmisesCPP", (DL_FUNC)rotations_rvmisesCPP_try);
     R_RegisterCCallable("rotations", "rotations_centerCpp", (DL_FUNC)rotations_centerCpp_try);
@@ -1510,6 +1607,9 @@ RcppExport SEXP rotations_RcppExport_registerCCallable() {
     R_RegisterCCallable("rotations", "rotations_fisherAxisC", (DL_FUNC)rotations_fisherAxisC_try);
     R_RegisterCCallable("rotations", "rotations_fisherAxisCSymmetric", (DL_FUNC)rotations_fisherAxisCSymmetric_try);
     R_RegisterCCallable("rotations", "rotations_fisherBootC", (DL_FUNC)rotations_fisherBootC_try);
+    R_RegisterCCallable("rotations", "rotations_HnCpp", (DL_FUNC)rotations_HnCpp_try);
+    R_RegisterCCallable("rotations", "rotations_HnCppIntrinsic", (DL_FUNC)rotations_HnCppIntrinsic_try);
+    R_RegisterCCallable("rotations", "rotations_HnCppBloc", (DL_FUNC)rotations_HnCppBloc_try);
     R_RegisterCCallable("rotations", "rotations_RdistC", (DL_FUNC)rotations_RdistC_try);
     R_RegisterCCallable("rotations", "rotations_rdistSO3C", (DL_FUNC)rotations_rdistSO3C_try);
     R_RegisterCCallable("rotations", "rotations_EdistC", (DL_FUNC)rotations_EdistC_try);
