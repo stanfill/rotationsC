@@ -72,7 +72,7 @@ arma::mat expskewC(arma::mat M){
   
   double MMt = sum(sum(M-M.t()));
   
-  if(abs(MMt)>0.01){
+  if(fabs(MMt)>0.01){
     throw Rcpp::exception("The exp.skew function is expecting a 3-by-3 skew symmetric matrix");
   }
   
