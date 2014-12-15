@@ -65,7 +65,7 @@
 #Not run due to time constraints
 \dontrun{
 Rs <- ruars(20, rvmises, kappa = 10)
-draws <- MCMCSO3(Rs, type = "Mises", S0 = mean(Rs), kappa0 = 10, tuneS = 5000,
+draws <- MCMCSO3(Rs, type = "Fisher", S0 = mean(Rs), kappa0 = 10, tuneS = 5000,
                  tuneK = 1,burn_in = 1000, m = 5000)}
 }
 \references{
