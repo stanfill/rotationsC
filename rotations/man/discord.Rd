@@ -2,7 +2,7 @@
 \alias{discord}
 \title{Measure of Discord}
 \usage{
-  discord(x, type, t = 1L, obs = 1:nrow(x), ...)
+  discord(x, type, t = 1L, obs = 1:nrow(x))
 }
 \arguments{
   \item{x}{The sample of random rotations}

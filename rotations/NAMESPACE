@@ -1,5 +1,5 @@
 useDynLib(rotations)
-importFrom(utils,head)
+importFrom(utils,head,tail)
 importFrom(stats,weighted.mean)
 import(methods,Rcpp,ggplot2,grid)
 

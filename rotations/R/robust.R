@@ -31,7 +31,7 @@
 #' plot(ecdf(OrdHe),main='Extrinsic',xlim=range(c(OrdHi,OrdHe)))
 #' lines(OrdHi,pf(OrdHi,3,3*(length(OrdHe)-2)))
 
-discord<-function(x, type, t=1L, obs=1:nrow(x),...){
+discord<-function(x, type, t=1L, obs=1:nrow(x)){
   #Compute the statistic proposed by Best and Fisher (1986) that is a function of the largest eigenvalue
   #when observation i was removed
   #Written for quaternions, so if SO3 is given, make them quaternions
