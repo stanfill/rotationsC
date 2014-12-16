@@ -22,14 +22,14 @@ Imports:
     grid,
     stats,
     utils,
-    methods
+    methods,
+    rgl,
+    sphereplot
 Suggests:
     gridExtra,
     knitr,
     onion,
     orientlib,
-    rgl,
-    sphereplot,
     testthat
 LinkingTo: Rcpp, RcppArmadillo
 VignetteBuilder: knitr

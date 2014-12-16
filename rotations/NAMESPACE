@@ -1,7 +1,7 @@
 useDynLib(rotations)
 importFrom(utils,head,tail)
 importFrom(stats,weighted.mean)
-import(methods,Rcpp,ggplot2,grid)
+import(methods,Rcpp,ggplot2,grid,rgl,sphereplot)
 
 S3method("+",Q4)
 S3method("+",SO3)

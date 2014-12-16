@@ -126,7 +126,7 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
     else {
       col.grid = "grey"
     }
-    plot3d(sph2car(long = seq(0, 360, len = 100), lat = lat, 
+    plot3d(sphereplot::sph2car(long = seq(0, 360, len = 100), lat = lat, 
                    radius = radius, deg = TRUE), col = col.grid, add = TRUE, 
            type = "l")
   }
@@ -137,7 +137,7 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
     else {
       col.grid = "grey"
     }
-    plot3d(sph2car(long = long, lat = seq(-90, 90, len = 100), 
+    rgl::plot3d(sphereplot::sph2car(long = long, lat = seq(-90, 90, len = 100), 
                    radius = radius, deg = TRUE), col = col.grid, add = TRUE, 
            type = "l")
   }
