@@ -137,7 +137,7 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
     else {
       col.grid = "grey"
     }
-    rgl::plot3d(sphereplot::sph2car(long = long, lat = seq(-90, 90, len = 100), 
+    plot3d(sphereplot::sph2car(long = long, lat = seq(-90, 90, len = 100), 
                    radius = radius, deg = TRUE), col = col.grid, add = TRUE, 
            type = "l")
   }
@@ -172,7 +172,6 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
 #' @param m number of bootstrap replicates to use in bootstrap confidence regions.
 #' @param interactive logical; if \code{TRUE} \code{sphereplot} is used to create an interactive 3D plot, otherwise \code{\link{ggplot2}} is used
 #' @param ... parameters passed onto the points layer.
-#' @note The option \code{interactive=TRUE} requires the \code{sphereplot} package.  If \code{sphereplot} is not available then the static plot is created.
 #' @return  A visualization of rotation data.
 #' @aliases plot.Q4
 #' @S3method plot SO3
@@ -195,19 +194,9 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
 plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300, interactive=FALSE,  ...) {
   
   if(interactive){
-    
-    reqSph<-suppressWarnings(require(sphereplot))
-    
-    if(reqSph){
       
-      col<-col[1]   #For interactive plots only one column can be displayed at a time
+    col<-col[1]   #For interactive plots only one column can be displayed at a time
       
-    }else{
-      
-      warning("The package sphereplot is required for interactive plots, a static plot will be returned.")
-      interactive<-FALSE
-      
-    }
   }
   
   if(length(col)>1){
@@ -372,16 +361,16 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
   if(interactive){
     #require(sphereplot)
     rgl.sphgrid2(deggap=22.5)
-    pts <- car2sph(proj2d)
-    rgl.sphpoints(pts,deg=TRUE,size=4)
+    pts <- sphereplot::car2sph(proj2d)
+    sphereplot::rgl.sphpoints(pts,deg=TRUE,size=4)
     
     if(!is.null(estDF)||!is.null(meanregDF)||!is.null(medianregDF))
       plot.new()
     
     if(!is.null(estDF)){
-      estpts <- car2sph(estDF[,-4])
+      estpts <- sphereplot::car2sph(estDF[,-4])
       
-      rgl.sphpoints(estpts,deg=TRUE,col=c(2:(nrow(estDF)+1)),size=5)
+      sphereplot::rgl.sphpoints(estpts,deg=TRUE,col=c(2:(nrow(estDF)+1)),size=5)
       
       #Legend
       #text3d(x=1, y=c(.8,1,1.2,1.4)[rmNA], z=1, estDF$lab ,col=c(2:(nrow(estDF)+1)))
@@ -390,7 +379,7 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
     
     if(!is.null(label_points)){
       label_points<-c(label_points,rep("",nrow(pts)-length(label_points)))
-      rgl.sphtext(pts,text=label_points)
+      sphereplot::rgl.sphtext(pts,text=label_points)
     }
     
     numRegs<-0
@@ -398,9 +387,9 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
     if(!is.null(meanregDF)||!is.null(medianregDF)){
       regDF<-rbind(meanregDF,medianregDF)
       
-      regpts <- car2sph(regDF)
+      regpts <- sphereplot::car2sph(regDF)
       numRegs<-nrow(regpts)/500
-      rgl.sphpoints(regpts,deg=TRUE,col=rep((1:numRegs)+1,each=500))
+      sphereplot::rgl.sphpoints(regpts,deg=TRUE,col=rep((1:numRegs)+1,each=500))
       
       #Confidence region legend
       legend('topright',c(as.character(Regions$Meth2),as.character(MedRegions$Meth)),

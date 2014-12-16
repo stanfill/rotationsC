@@ -17,13 +17,13 @@ License: MIT + file LICENSE
 Depends:
     R (>= 3.1),
     ggplot2,
-    Rcpp
+    Rcpp,
+    rgl
 Imports:
     grid,
     stats,
     utils,
     methods,
-    rgl,
     sphereplot
 Suggests:
     gridExtra,
