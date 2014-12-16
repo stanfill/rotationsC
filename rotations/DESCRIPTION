@@ -5,13 +5,13 @@ Version: 1.3
 Author: Bryan Stanfill <bryan.stanfill@csiro.au>, Heike Hofmann
     <hofmann@iastate.edu>, Ulrike Genschel <ulrike@iastate.edu>
 Maintainer: Bryan Stanfill <bryan.stanfill@csiro.au>
-Description: Tools for working with rotational data: including
+Description: Tools for working with rotational data, including
     simulation from the most commonly used distributions on SO(3),
     methods for different Bayes, mean and median type estimators for
     the central orientation of a sample, confidence/credible
     regions for the central orientation based on those estimators and
-    a novel visualization technique for rotation data.  Most recently
-    functions for identifying potential discordant (outlying) values
+    a novel visualization technique for rotation data.  Most recently,
+    functions to identify potentially discordant (outlying) values
     have been added.
 License: MIT + file LICENSE
 Depends:
