@@ -155,6 +155,43 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
   #            deg = TRUE, col = col.long)
 }
 
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+  
+  numPlots = length(plots)
+  
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                     ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+  
+
+  # Set up the page
+  grid.newpage()
+  pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+    
+  # Make each plot, in the correct location
+  for (i in 1:numPlots) {
+    # Get the i,j matrix positions of the regions that contain this subplot
+    matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+    
+    if("gtable"%in%class(plots[[i]])){
+      print(grid.draw(plots[[i]]), vp = viewport(layout.pos.row = matchidx$row,
+                                    layout.pos.col = matchidx$col))
+    }else{
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+
+}
+
 #' Visualizing random rotations
 #'
 #' This function produces an interactive or static three-dimensional globe onto which  one of the  columns of the provided sample of rotations is projected.  The data are centered around a user-specified
@@ -466,21 +503,45 @@ mplotSO3<-function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL
   ps<-list(p1,p2,p3,p4)
   ps<-!sapply(ps, is.null)
   if(all(ps==c(TRUE,TRUE,TRUE,TRUE))){
-    gridExtra::grid.arrange(p1,p2,p3,p4,nrow=2,widths=c(2,2,2,1))
+    
+    #gridExtra::grid.arrange(p1,p2,p3,p4,nrow=2,widths=c(2,2,2,1))
+    multiplot(p1,p2,p3,p4,cols=2)
+    
   }else if(all(ps==c(TRUE,TRUE,FALSE,TRUE))){
-    gridExtra::grid.arrange(p1,p2,p4,nrow=1,widths=c(2,2,1))
+    
+    #gridExtra::grid.arrange(p1,p2,p4,nrow=1,widths=c(2,2,1))
+    multiplot(p1,p2,p4,cols=3)
+    
   }else if(all(ps==c(TRUE,FALSE,TRUE,TRUE))){
-    gridExtra::grid.arrange(p1,p3,p4,nrow=1,widths=c(2,2,1))
+    
+    #gridExtra::grid.arrange(p1,p3,p4,nrow=1,widths=c(2,2,1))
+    multiplot(p1,p3,p4,cols=3)
+    
   }else if(all(ps==c(FALSE,TRUE,TRUE,TRUE))){
-    gridExtra::grid.arrange(p2,p3,p4,nrow=1,widths=c(2,2,1))
+    
+    #gridExtra::grid.arrange(p2,p3,p4,nrow=1,widths=c(2,2,1))
+    multiplot(p2,p3,p4,cols=3)
+  
   }else if(all(ps==c(TRUE,TRUE,TRUE,FALSE))){
-    gridExtra::grid.arrange(p1,p2,p3,nrow=1)
+    
+    #gridExtra::grid.arrange(p1,p2,p3,nrow=1)
+    multiplot(p1,p2,p3,cols=3)    
+    
   }else if(all(ps==c(TRUE,TRUE,FALSE,FALSE))){
-    gridExtra::grid.arrange(p1,p2,nrow=1)
+    
+    #gridExtra::grid.arrange(p1,p2,nrow=1)
+    multiplot(p1,p2,cols=2)
+    
   }else if(all(ps==c(TRUE,FALSE,TRUE,FALSE))){
-    gridExtra::grid.arrange(p1,p3,nrow=1)
+    
+    #gridExtra::grid.arrange(p1,p3,nrow=1)
+    multiplot(p1,p3,cols=2)
+    
   } else if(all(ps==c(FALSE,TRUE,TRUE,FALSE))){
-    gridExtra::grid.arrange(p2,p3,nrow=1)
+    
+    #gridExtra::grid.arrange(p2,p3,nrow=1)
+    multiplot(p2,p3,cols=2)
+    
   }else{
     stop("Specify the columns correctly.")
   }
