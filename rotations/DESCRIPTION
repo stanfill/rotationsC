@@ -2,9 +2,9 @@ Package: rotations
 Type: Package
 Title: Tools for Working with Rotation Data
 Version: 1.4
-Author: Bryan Stanfill <bryan.stanfill@csiro.au>, Heike Hofmann
+Author: Bryan Stanfill <bstanfill2003@gmail.com>, Heike Hofmann
     <hofmann@iastate.edu>, Ulrike Genschel <ulrike@iastate.edu>
-Maintainer: Bryan Stanfill <bryan.stanfill@csiro.au>
+Maintainer: Bryan Stanfill <bstanfill2003@gmail.com>
 Description: Tools for working with rotational data, including
     simulation from the most commonly used distributions on SO(3),
     methods for different Bayes, mean and median type estimators for
