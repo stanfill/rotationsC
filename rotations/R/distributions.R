@@ -128,6 +128,9 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
 #' \eqn{\mathrm{I}_p(\kappa)=\frac{1}{2\pi}\int_{-\pi}^{\pi}\cos(pr)e^{\kappa\cos r}dr}{Ip(\kappa)}.  If \code{kappa>354} then random deviates
 #' are generated from the \code{\link{Cayley}} distribution because they agree closely for large \code{kappa} and generation is 
 #' more stable from the Cayley distribution.
+#' 
+#' For large \eqn{\kappa}, the Bessel functon gives errors so a large \eqn{\kappa} approximation to the matrix-Fisher
+#' distribution is used instead, which is the Maxwell-Boltzmann density.
 #'
 #' @name Fisher
 #' @aliases Fisher dfisher rfisher pfisher

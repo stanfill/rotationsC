@@ -1,3 +1,22 @@
+rotations version 1.4
+===================================================================
+
+New Features - 
+-------------------------------------------------------------------
+
+*The Maxwell-Boltzmann distribution function has been added
+
+Minor Changes -
+-------------------------------------------------------------------
+
+* Vignette has been updated
+
+Bug Fixes -
+-------------------------------------------------------------------
+
+* The Maxwell-Boltzmann function is now used generate sample from the matrix-Fisher
+distribution instead of the Cayley distribution.
+
 rotations version 1.3
 ===================================================================
 
