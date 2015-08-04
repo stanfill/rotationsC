@@ -312,6 +312,10 @@ rhaar<-function(n){
 #' Density, distribution function and random generation for the Maxwell Boltzmann distribution with 
 #' concentration \code{kappa} \eqn{\kappa}.
 #'
+#' The Maxwell Boltzmann distribution with concentration \eqn{\kappa} has density
+#' \deqn{C_\mathrm{{M}}(r|\kappa)=2\kappa\sqrt{\frac{\kappa}{\pi}}r^2e^{-\kappa r^2}}{C(r|\kappa)=2\kappa(\kappa/\pi)^(1/2)r^2exp(-\kappa r^2)}
+#' with respect to Lebesgue measure 
+#'
 #' @name Maxwell
 #' @aliases Maxwell rmaxwell dmaxwell pmaxwell
 #' @param r,q vector of quantiles.
@@ -324,20 +328,20 @@ rhaar<-function(n){
 #'          \item{pmaxwell}{gives the distribution function}
 #'          \item{rmaxwell}{generates a vector of random deviates}
 #' @seealso \link{Angular-distributions} for other distributions in the rotations package.
-#' @cite Schaeben1997 leon2006
+#' @cite bingham2010
 #' @examples
 #' r <- seq(-pi, pi, length = 500)
 #' 
-#' #Visualize the Cayley density fucntion with respect to the Haar measure
+#' #Visualize the Maxwell-Boltzmann density fucntion with respect to the Haar measure
 #' plot(r, dmaxwell(r, kappa = 10), type = "l", ylab = "f(r)")
 #' 
-#' #Visualize the Cayley density fucntion with respect to the Lebesgue measure
+#' #Visualize the Maxwell-Boltzmann density fucntion with respect to the Lebesgue measure
 #' plot(r, dmaxwell(r, kappa = 10, Haar = FALSE), type = "l", ylab = "f(r)")
 #' 
-#' #Plot the Cayley CDF
+#' #Plot the Maxwell-Boltzmann CDF
 #' plot(r,pmaxwell(r,kappa = 10), type = "l", ylab = "F(r)")
 #' 
-#' #Generate random observations from Cayley distribution
+#' #Generate random observations from Maxwell-Boltzmann distribution
 #' rs <- rmaxwell(20, kappa = 1)
 #' hist(rs, breaks = 10)
 
@@ -374,7 +378,6 @@ pmaxwell<-function(q,kappa=1,nu=NULL,lower.tail=TRUE){
   if(lower.tail)
     return(cdf) else return((1-cdf))
 }
-
 
 #' @name Maxwell
 #' @aliases Maxwell rmaxwell dmaxwell pmaxwell

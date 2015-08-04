@@ -4,12 +4,10 @@ A stable version (1.3) of the *rotations* package is available for download from
 
 ### Installation instructions for Mac: 
 ```
-library(devtools)
-install_github('rotationsC','stanfill',subdir='rotations')
-library(rotations)
+devtools::install_github('stanfill/rotationsC',subdir='rotations')
 ```
 
 ### Change log:
 
 * The Maxwell-Boltzmann distribution has been added: `dmaxwell`, `pmaxwell` and `rmaxwell`
-* Due to issue with the bessel functions, the Cayley distribution was previously used to approximate the matrix-Fisher distribution for large kappa.  Now, the Maxwell-Boltzmann distribution is used for $\kappa>200$ and the approximation is far superior.
+* Due to issue with the bessel functions, the Cayley distribution was previously used to approximate the matrix-Fisher distribution for large kappa.  Now the Maxwell-Boltzmann distribution is used for `kappa>200` and the approximation is far superior.
