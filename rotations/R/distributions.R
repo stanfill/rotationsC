@@ -170,9 +170,14 @@ dfisher <- function(r, kappa = 1, nu = NULL, Haar = TRUE) {
   
   n<-length(r)
   den<-rep(0,n)
-  
- 	den <- exp(2 * kappa * cos(r)) * (1 - cos(r))/(2 * pi * (besselI(2 * kappa, 0) - besselI(2 * kappa, 1)))
-  
+  if(kappa<200){
+    #For small kappa use the matrix Fisher density directly
+ 	  den <- exp(2 * kappa * cos(r)) * (1 - cos(r))/(2 * pi * (besselI(2 * kappa, 0) - besselI(2 * kappa, 1)))
+  }
+  else{
+    #besselI function exhibits bad behavior for large kappa so use the Maxwell-Boltzman approx then
+    den <- 2*kappa*sqrt(kappa/pi)*rs^2*exp(-kappa*rs^2)
+  }
   if (Haar) 
     return(den/(1 - cos(r))) else return(den)
   

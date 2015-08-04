@@ -33,14 +33,23 @@ NumericVector rcayleyCpp(int n, double kappa){
 double dfisherCpp(double r, double kappa) {
     
   double den;
-  double I02k = R::bessel_i(2*kappa,0,1);
-  double I12k = R::bessel_i(2*kappa,1,1);
   
-  den = exp(2 * kappa * cos(r)); 
-  den *= (1 - cos(r));
+  if(kappa<200){
+    //Use the matrix Fisher density for kappa<100
+    double I02k = R::bessel_i(2*kappa,0,1);
+    double I12k = R::bessel_i(2*kappa,1,1);
   
-  den /= (2 * PI * (I02k - I12k));
+    den = exp(2 * kappa * cos(r)); 
+    den *= (1 - cos(r));
   
+    den /= (2 * PI * (I02k - I12k));
+  }else{
+    //Use the more efficientMaxwell Boltzman density otherwise
+
+    den = 2*kappa*sqrt(kappa/PI);
+    den *= pow(r,2)*exp(-kappa*pow(r,2));
+
+  }
   return den;
 }
 
@@ -81,22 +90,16 @@ NumericVector rfisherCpp(int n, double kappa) {
   double M = 0.0, Mi=0.0;
   NumericVector res(n);
   
-  if(kappa>354){
-    
-    res = rcayleyCpp(n,kappa);
-    
-  }else{
-  
-    while(prog < .5){
-      Mi = dfisherCpp(prog,kappa);
-      if(M<Mi){
-        M = Mi;
-      }
-      prog += step;
+  while(prog < .5){
+    Mi = dfisherCpp(prog,kappa);
+    if(M<Mi){
+      M = Mi;
     }
-    //Rprintf("M: %lf\n",M);
-    res = rarCpp(n, kappa ,M);
+    prog += step;
   }
+  //Rprintf("M: %lf\n",M);
+  res = rarCpp(n, kappa ,M);
+  
   return res;  
 }
 
