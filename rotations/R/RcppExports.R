@@ -25,6 +25,10 @@ rcayleyCpp <- function(n, kappa) {
     .Call('rotations_rcayleyCpp', PACKAGE = 'rotations', n, kappa)
 }
 
+rmbCpp <- function(n, kappa) {
+    .Call('rotations_rmbCpp', PACKAGE = 'rotations', n, kappa)
+}
+
 rfisherCpp <- function(n, kappa) {
     .Call('rotations_rfisherCpp', PACKAGE = 'rotations', n, kappa)
 }

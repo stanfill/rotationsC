@@ -139,6 +139,25 @@ namespace rotations {
         return Rcpp::as<NumericVector >(__result);
     }
 
+    inline NumericVector rmbCpp(int n, double kappa) {
+        typedef SEXP(*Ptr_rmbCpp)(SEXP,SEXP);
+        static Ptr_rmbCpp p_rmbCpp = NULL;
+        if (p_rmbCpp == NULL) {
+            validateSignature("NumericVector(*rmbCpp)(int,double)");
+            p_rmbCpp = (Ptr_rmbCpp)R_GetCCallable("rotations", "rotations_rmbCpp");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_rmbCpp(Rcpp::wrap(n), Rcpp::wrap(kappa));
+        }
+        if (__result.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<NumericVector >(__result);
+    }
+
     inline NumericVector rfisherCpp(int n, double kappa) {
         typedef SEXP(*Ptr_rfisherCpp)(SEXP,SEXP);
         static Ptr_rfisherCpp p_rfisherCpp = NULL;

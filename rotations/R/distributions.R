@@ -307,6 +307,92 @@ rhaar<-function(n){
   return(rar(n, dhaar, 1/pi))
 }
 
+#' The Maxwell Boltzmann distribution
+#'
+#' Density, distribution function and random generation for the Maxwell Boltzmann distribution with 
+#' concentration \code{kappa} \eqn{\kappa}.
+#'
+#' @name Maxwell
+#' @aliases Maxwell rmaxwell dmaxwell pmaxwell
+#' @param r,q vector of quantiles.
+#' @param n number of observations.  If \code{length(n)>1}, the length is taken to be the number required.
+#' @param kappa concentration parameter.
+#' @param nu circular variance, can be used in place of \code{kappa}.
+#' @param Haar logical; if TRUE density is evaluated with respect to the Haar measure.
+#' @param lower.tail logical; if TRUE (default) probabilities are \eqn{P(X\leq x)}{P(X\le x)} otherwise, \eqn{P(X>x)}.
+#' @return  \item{dmaxwell}{gives the density}
+#'          \item{pmaxwell}{gives the distribution function}
+#'          \item{rmaxwell}{generates a vector of random deviates}
+#' @seealso \link{Angular-distributions} for other distributions in the rotations package.
+#' @cite Schaeben1997 leon2006
+#' @examples
+#' r <- seq(-pi, pi, length = 500)
+#' 
+#' #Visualize the Cayley density fucntion with respect to the Haar measure
+#' plot(r, dmaxwell(r, kappa = 10), type = "l", ylab = "f(r)")
+#' 
+#' #Visualize the Cayley density fucntion with respect to the Lebesgue measure
+#' plot(r, dmaxwell(r, kappa = 10, Haar = FALSE), type = "l", ylab = "f(r)")
+#' 
+#' #Plot the Cayley CDF
+#' plot(r,pmaxwell(r,kappa = 10), type = "l", ylab = "F(r)")
+#' 
+#' #Generate random observations from Cayley distribution
+#' rs <- rmaxwell(20, kappa = 1)
+#' hist(rs, breaks = 10)
+
+NULL
+
+
+#' @name Maxwell
+#' @aliases Maxwell rmaxwell dmaxwell pmaxwell
+#' @export
+
+dmaxwell <- function(r, kappa = 1, nu = NULL, Haar = TRUE) {
+  
+  if(!is.null(nu))
+    stop("nu is not available for the Maxwell-Boltzmann distribution yet")
+  
+  den <- 2*kappa*sqrt(kappa/pi)*(r^2)*exp(-kappa*(r^2))
+  
+  if (Haar) 
+    return(den/(1 - cos(r))) else return(den)
+}
+
+#' @name Maxwell
+#' @aliases Maxwell rmaxwell dmaxwell pmaxwell
+#' @export
+
+pmaxwell<-function(q,kappa=1,nu=NULL,lower.tail=TRUE){
+  
+  n<-length(q)
+  cdf<-rep(NA,n)
+  
+  for(i in 1:n)
+    cdf[i]<-max(min(integrate(dmaxwell,-pi,q[i],kappa,nu,Haar=FALSE)$value,1),0)
+  
+  if(lower.tail)
+    return(cdf) else return((1-cdf))
+}
+
+
+#' @name Maxwell
+#' @aliases Maxwell rmaxwell dmaxwell pmaxwell
+#' @export
+
+rmaxwell <- function(n, kappa = 1, nu = NULL) {
+  
+  if(!is.null(nu))
+    stop("nu is not available for the Maxwell-Boltzmann distribution yet")
+  
+  lenn<-length(n)
+  if(lenn>1)
+    n<-lenn
+  
+  theta<-rmbCpp(n,kappa)
+  return(theta)
+}
+
 #' The circular-von Mises distribution
 #'
 #' Density, distribution function and random generation for the circular-von Mises distribution with concentration \code{kappa} \eqn{\kappa}.

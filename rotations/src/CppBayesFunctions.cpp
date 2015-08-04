@@ -26,6 +26,71 @@ NumericVector rcayleyCpp(int n, double kappa){
 }
 
 /////////////////////////////////////////////////////////////
+// Generate Maxwell Boltzmann random deviates using C++
+/////////////////////////////////////////////////////////////
+
+
+double dmbCpp(double r, double kappa) {
+  
+  double den;
+  
+  den = 2*kappa*sqrt(kappa/PI);
+  den *= pow(r,2)*exp(-kappa*pow(r,2));
+  
+  return den;
+}
+
+
+double arsample_mb_unifCpp(double M, double kappa) {
+  RNGScope scope;
+  //generate a random observation from target density f assuming g is uniform
+  int found = 0; //FALSE
+  NumericVector y(1);
+  double x, evalF = 0.0;
+  
+  while (!found) {
+    x = as<double>(runif(1, -PI, PI));
+    y = runif(1, 0, M);
+    
+    evalF = dmbCpp(x,kappa);
+    
+    if (y[0] < evalF) 
+      found = 1;
+    
+  }
+  return x;
+  
+}
+
+NumericVector rar_mb_Cpp(int n, double kappa, double M) {
+  
+  NumericVector res(n);
+  for (int i=0;i<n;i++){
+    res[i] = arsample_mb_unifCpp(M,kappa);
+  } 
+  return res;
+}
+
+// [[Rcpp::export]]
+NumericVector rmbCpp(int n, double kappa) {
+  double step = 0.0075, prog = -PI;
+  double M = 0.0, Mi=0.0;
+  NumericVector res(n);
+  
+  while(prog < .5){
+    Mi = dmbCpp(prog,kappa);
+    if(M<Mi){
+      M = Mi;
+    }
+    prog += step;
+  }
+  //Rprintf("M: %lf\n",M);
+  res = rar_mb_Cpp(n, kappa ,M);
+  
+  return res;  
+}
+
+/////////////////////////////////////////////////////////////
 // Generate matrix Fisher random deviates using C++
 /////////////////////////////////////////////////////////////
 
@@ -46,8 +111,7 @@ double dfisherCpp(double r, double kappa) {
   }else{
     //Use the more efficientMaxwell Boltzman density otherwise
 
-    den = 2*kappa*sqrt(kappa/PI);
-    den *= pow(r,2)*exp(-kappa*pow(r,2));
+    den = dmbCpp(r,kappa);
 
   }
   return den;
@@ -102,6 +166,7 @@ NumericVector rfisherCpp(int n, double kappa) {
   
   return res;  
 }
+
 
 /////////////////////////////////////////////////////////////
 // Generate von Mises random deviates using C++
