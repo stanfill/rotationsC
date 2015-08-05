@@ -73,7 +73,7 @@ rar <- function(n, f, M, ...) {
 #'          \item{pcayley}{gives the distribution function}
 #'          \item{rcayley}{generates a vector of random deviates}
 #' @seealso \link{Angular-distributions} for other distributions in the rotations package.
-#' @cite Schaeben1997 leon2006
+#' @@cite Schaeben1997 leon2006
 #' @examples
 #' r <- seq(-pi, pi, length = 500)
 #' 
@@ -358,7 +358,7 @@ rhaar<-function(n){
 #'          \item{pmaxwell}{gives the distribution function}
 #'          \item{rmaxwell}{generates a vector of random deviates}
 #' @seealso \link{Angular-distributions} for other distributions in the rotations package.
-#' @cite bingham2010
+#' @@cite bingham2010
 #' @examples
 #' r <- seq(-pi, pi, length = 500)
 #' 
@@ -543,7 +543,7 @@ rvmises <- function(n, kappa = 1, nu = NULL) {
 #'          \item{puars}{gives the distribution function.  If pangle is left empty, the empirical CDF is returned.}
 #'          \item{ruars}{generates random deviates}
 #' @seealso For more on the angular distribution options see \link{Angular-distributions}.
-#' @cite bingham09
+#' @@cite bingham09
 #' @examples
 #' #Generate random rotations from the Cayley-UARS distribution with central orientation 
 #' #rotated about the y-axis through pi/2 radians

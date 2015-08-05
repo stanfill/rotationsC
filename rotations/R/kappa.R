@@ -11,7 +11,7 @@
 #'  
 #'  @param nu circular variance
 #'  @return Concentration parameter corresponding to nu.
-#'  @cite mardia2000
+#'  @@cite mardia2000
 #'  @seealso \code{\link{Cayley}}
 #'  @export
 #'  @examples
@@ -42,7 +42,7 @@ fisher.nu.kappa<-function(kappa,nu){
 #'  @param nu circular variance
 #'  @return Concentration parameter corresponding to nu.
 #'  @seealso \code{\link{Fisher}}
-#'  @cite mardia2000
+#'  @@cite mardia2000
 #'  @export
 #'  @examples
 #'  #Find the concentration parameter for circular variances 0.25, 0.5, 0.75
@@ -79,7 +79,7 @@ mises.nu.kappa<-function(kappa,nu){
 #'  @param nu circular variance
 #'  @return Concentration parameter corresponding to nu.
 #'  @seealso \code{\link{Mises}}
-#'  @cite mardia2000
+#'  @@cite mardia2000
 #'  @export
 #'  @examples
 #'  #Find the concentration parameter for circular variances 0.25, 0.5, 0.75

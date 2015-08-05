@@ -368,7 +368,7 @@ genR <- function(r, S = NULL, space='SO3') {
 #'
 #' @param x single \eqn{3\times 3}{3-by-3} skew-symmetric matrix or \eqn{n\times 9}{n-by-9} sample of skew-symmetric matrices.
 #' @return Matrix \eqn{e^{\bm H}}{e^H} in \eqn{SO(3)} .
-#' @cite moakher02
+#' @@cite moakher02
 #' @export
 #' @examples
 #' Rs <- ruars(20, rcayley)
@@ -402,7 +402,7 @@ skew.exp <- function(x) {
 #' @param x \eqn{n\times 9}{n-by-9} matrix where each row corresponds to a random rotation matrix.
 #' @param ... additional arguments.
 #' @return Skew symmetric matrix \eqn{\log(R)}{log(R)}.
-#' @cite moakher02
+#' @@cite moakher02
 #' @S3method log SO3
 #' @method log SO3
 #' @examples

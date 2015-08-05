@@ -17,7 +17,7 @@
 #' @return Estimate of the projected or geometric mean of the sample in the same parameterization.
 #' @aliases mean.Q4
 #' @seealso \code{\link{median.SO3}}, \code{\link{bayes.mean}}, \code{\link{weighted.mean.SO3}}
-#' @cite tyler1981, moakher02, manton04
+#' @@cite tyler1981, moakher02, manton04
 #' @S3method mean SO3
 #' @method mean SO3
 #' @examples
@@ -111,7 +111,7 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 #' @return Estimate of the projected or geometric median in the same parameterization.
 #' @aliases median.Q4 median.SO3
 #' @seealso \code{\link{mean.SO3}}, \code{\link{bayes.mean}}, \code{\link{weighted.mean.SO3}}
-#' @cite hartley11 stanfill2013
+#' @@cite hartley11 stanfill2013
 #' @export
 #' @examples
 #' Rs <- ruars(20, rvmises, kappa = 0.01)
@@ -202,7 +202,7 @@ median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...
 #' @return Weighted mean of the sample in the same parameterization.
 #' @seealso \code{\link{median.SO3}}, \code{\link{mean.SO3}}, \code{\link{bayes.mean}}
 #' @aliases weighted.mean.Q4
-#' @cite moakher02
+#' @@cite moakher02
 #' @S3method weighted.mean SO3
 #' @method weighted.mean SO3
 #' @examples

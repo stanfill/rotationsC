@@ -201,7 +201,7 @@ region.SO3<-function(x,method,type,estimator,alp=NULL,...){
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
 #' @return Radius of the confidence region centered at the projected mean for each of the x-, y- and z-axes.
 #' @seealso \code{\link{bayesCR}}, \code{\link{fisheretal}}, \code{\link{chang}}, \code{\link{zhang}}
-#' @cite prentice1986, rancourt2000
+#' @@cite prentice1986, rancourt2000
 #' @export
 #' @examples
 #' Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
@@ -397,7 +397,7 @@ cdfuns<-function(Qs,estimator){
 #' @param estimator character string either "mean" or "median."
 #' @param alp alpha level desired, e.g. 0.05 or 0.10.
 #' @return Radius of the confidence region centered at the specified estimator.
-#' @cite chang2001
+#' @@cite chang2001
 #' @seealso \code{\link{bayesCR}}, \code{\link{prentice}}, \code{\link{fisheretal}}, \code{\link{zhang}}
 #' @export
 #' @examples
@@ -466,7 +466,7 @@ chang.Q4<-function(x,estimator,alp=NULL){
 #' @param symm logical; if TRUE (default), a symmetric region is constructed.
 #' @return Radius of the confidence region centered at the projected mean.
 #' @seealso \code{\link{bayesCR}}, \code{\link{prentice}}, \code{\link{chang}}, \code{\link{zhang}}
-#' @cite fisher1996
+#' @@cite fisher1996
 #' @export
 #' @examples
 #' Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')

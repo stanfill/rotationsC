@@ -23,7 +23,7 @@
 #'          \item \code{Saccept} Acceptance rate for central orientation draws
 #'          \item \code{Kaccept} Acceptance rate for concentration draws
 #'          }
-#' @cite bingham2009b bingham2010
+#' @@cite bingham2009b bingham2010
 #' @export
 #' @examples
 #' #Not run due to time constraints
@@ -104,7 +104,7 @@ MCMCSO3.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 #'          \item \code{Radius} Radius of the credible region centered at the posterior mode
 #'          }
 #' @seealso \code{\link{fisheretal}}, \code{\link{prentice}}, \code{\link{chang}}, \code{\link{zhang}}
-#' @cite bingham2009b bingham2010
+#' @@cite bingham2009b bingham2010
 #' @export
 #' @examples
 #' #Not run due to time constraints
@@ -197,7 +197,7 @@ bayesCR.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
 #'          \item \code{kappa} Mean of the posterior distribution for the concentration kappa
 #'          }
 #' @seealso \code{\link{mean.SO3}}, \code{\link{median.SO3}}
-#' @cite bingham2009b bingham2010
+#' @@cite bingham2009b bingham2010
 #' @export
 #' @examples
 #' Rs <- ruars(20, rvmises, kappa = 10)
