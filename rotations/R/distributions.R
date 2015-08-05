@@ -16,6 +16,36 @@
 NULL
 
 
+
+arsample <- function(f, g, M, kappa, Haar, ...) {
+  #generate a random observation from target density f
+  found = FALSE
+  while (!found) {
+    x <- g(1, ...)
+    y <- runif(1, min = 0, max = M)
+    if (y < f(x, kappa, Haar)) 
+      found = TRUE
+  }
+  return(x)
+  # arsample(f, g, M, kappa, ...)
+}
+
+
+
+arsample.unif <- function(f, M, ...) {
+  #generate a random observation from target density f assuming g is uniform
+  found = FALSE
+  while (!found) {
+    x <- runif(1, -pi, pi)
+    y <- runif(1, min = 0, max = M)
+    if (y < f(x, ...)) 
+      found = TRUE
+  }
+  return(x)
+  # arsample.unif(f, M, ...)
+}
+
+
 rar <- function(n, f, M, ...) {
   res <- vector("numeric", length = n)
   for (i in 1:n) res[i] <- arsample.unif(f, M, ...)
