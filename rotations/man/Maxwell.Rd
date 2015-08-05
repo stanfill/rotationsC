@@ -5,7 +5,7 @@
 \alias{dmaxwell}
 \alias{pmaxwell}
 \alias{rmaxwell}
-\title{The Maxwell Boltzmann distribution}
+\title{The Maxwell-Boltzmann distribution}
 \usage{
 dmaxwell(r, kappa = 1, nu = NULL, Haar = TRUE)
 
@@ -32,11 +32,11 @@ rmaxwell(n, kappa = 1, nu = NULL)
          \item{rmaxwell}{generates a vector of random deviates}
 }
 \description{
-Density, distribution function and random generation for the Maxwell Boltzmann distribution with
+Density, distribution function and random generation for the Maxwell-Boltzmann distribution with
 concentration \code{kappa} \eqn{\kappa}.
 }
 \details{
-The Maxwell Boltzmann distribution with concentration \eqn{\kappa} has density
+The Maxwell-Boltzmann distribution with concentration \eqn{\kappa} has density
 \deqn{C_\mathrm{{M}}(r|\kappa)=2\kappa\sqrt{\frac{\kappa}{\pi}}r^2e^{-\kappa r^2}}{C(r|\kappa)=2\kappa(\kappa/\pi)^(1/2)r^2exp(-\kappa r^2)}
 with respect to Lebesgue measure
 }

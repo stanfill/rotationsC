@@ -8,7 +8,7 @@
 #' 	\item See \code{\link{Cayley}} for the Cayley distribution.
 #' 	\item See \code{\link{Fisher}} for the matrix Fisher distribution.
 #' 	\item See \code{\link{Haar}} for the uniform distribution on the circle.
-#' 	\item See \code{\link{Maxwell}} for the Maxwell Boltzmann distribution on the circle.
+#' 	\item See \code{\link{Maxwell}} for the Maxwell-Boltzmann distribution on the circle.
 #' 	\item See \code{\link{Mises}} for the von Mises-Fisher distribution.
 #' }
 #' 
@@ -338,12 +338,12 @@ rhaar<-function(n){
   return(rar(n, dhaar, 1/pi))
 }
 
-#' The Maxwell Boltzmann distribution
+#' The Maxwell-Boltzmann distribution
 #'
-#' Density, distribution function and random generation for the Maxwell Boltzmann distribution with 
+#' Density, distribution function and random generation for the Maxwell-Boltzmann distribution with 
 #' concentration \code{kappa} \eqn{\kappa}.
 #'
-#' The Maxwell Boltzmann distribution with concentration \eqn{\kappa} has density
+#' The Maxwell-Boltzmann distribution with concentration \eqn{\kappa} has density
 #' \deqn{C_\mathrm{{M}}(r|\kappa)=2\kappa\sqrt{\frac{\kappa}{\pi}}r^2e^{-\kappa r^2}}{C(r|\kappa)=2\kappa(\kappa/\pi)^(1/2)r^2exp(-\kappa r^2)}
 #' with respect to Lebesgue measure 
 #'
