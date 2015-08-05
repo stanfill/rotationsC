@@ -210,7 +210,7 @@ dfisher <- function(r, kappa = 1, nu = NULL, Haar = TRUE) {
   }
   else{
     #besselI function exhibits bad behavior for large kappa so use the Maxwell-Boltzman approx then
-    den <- 2*kappa*sqrt(kappa/pi)*rs^2*exp(-kappa*rs^2)
+    den <- 2*kappa*sqrt(kappa/pi)*r^2*exp(-kappa*r^2)
   }
   if (Haar) 
     return(den/(1 - cos(r))) else return(den)
