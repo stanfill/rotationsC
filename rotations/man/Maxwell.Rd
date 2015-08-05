@@ -58,6 +58,6 @@ hist(rs, breaks = 10)
 }
 \seealso{
 \link{Angular-distributions} for other distributions in the rotations package.
-#cite bingham2010
+@cite bingham2010
 }
 
