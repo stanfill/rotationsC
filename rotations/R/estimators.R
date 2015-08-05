@@ -18,7 +18,7 @@
 #' @aliases mean.Q4
 #' @seealso \code{\link{median.SO3}}, \code{\link{bayes.mean}}, \code{\link{weighted.mean.SO3}}
 #' @@cite tyler1981, moakher02, manton04
-#' @S3method mean SO3
+#' @export 
 #' @method mean SO3
 #' @examples
 #' Rs <- ruars(20, rvmises, kappa = 0.01)
@@ -60,7 +60,7 @@ mean.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000, ...
 
 #' @rdname mean.SO3
 #' @aliases mean.SO3
-#' @S3method mean Q4
+#' @export 
 #' @method mean Q4
 
 mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) {
@@ -133,7 +133,7 @@ median<-function(x,...){
 #' @rdname median.SO3
 #' @aliases median.Q4 median
 #' @method median SO3
-#' @S3method median SO3
+#' @export 
 
 median.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) {
   
@@ -166,7 +166,7 @@ median.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,..
 #' @rdname median.SO3
 #' @aliases median.SO3 median
 #' @method median Q4
-#' @S3method median Q4
+#' @export 
 
 median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) {
 	
@@ -203,7 +203,7 @@ median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...
 #' @seealso \code{\link{median.SO3}}, \code{\link{mean.SO3}}, \code{\link{bayes.mean}}
 #' @aliases weighted.mean.Q4
 #' @@cite moakher02
-#' @S3method weighted.mean SO3
+#' @export 
 #' @method weighted.mean SO3
 #' @examples
 #' Rs <- ruars(20, rvmises, kappa = 0.01)
@@ -276,7 +276,7 @@ weighted.mean.SO3 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter
 
 #' @rdname weighted.mean.SO3
 #' @aliases weighted.mean.SO3
-#' @S3method weighted.mean Q4
+#' @export 
 #' @method weighted.mean Q4
 
 

@@ -82,7 +82,6 @@ as.Q4<-function(x,...){
 
 #' @rdname Q4
 #' @method as.Q4 default
-#' @S3method as.Q4 default
 #' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @export
 
@@ -162,7 +161,6 @@ as.Q4.default <- function(x,theta=NULL,...){
 
 #' @rdname Q4
 #' @method as.Q4 SO3
-#' @S3method as.Q4 SO3
 #' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @export
 
@@ -179,7 +177,6 @@ as.Q4.SO3 <- function(x,...) {
 
 #' @rdname Q4
 #' @method as.Q4 Q4
-#' @S3method as.Q4 Q4
 #' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @export
 
@@ -190,7 +187,6 @@ as.Q4.Q4 <- function(x,...) {
 
 #' @rdname Q4
 #' @method as.Q4 data.frame
-#' @S3method as.Q4 data.frame
 #' @aliases Q4 is.Q4 id.Q4 as.Q4.default as.Q4.SO3 as.Q4.Q4 as.Q4.data.frame
 #' @export
 
@@ -288,7 +284,6 @@ as.SO3 <- function(x,...){
 
 #' @rdname SO3
 #' @method as.SO3 default
-#' @S3method as.SO3 default
 #' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @export
 
@@ -423,7 +418,6 @@ as.SO3.default <- function(x, theta=NULL,...) {
 
 #' @rdname SO3
 #' @method as.SO3 Q4
-#' @S3method as.SO3 Q4
 #' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @export
 
@@ -448,7 +442,6 @@ as.SO3.Q4<-function(x,...){
 
 #' @rdname SO3
 #' @method as.SO3 SO3
-#' @S3method as.SO3 SO3
 #' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @export
 
@@ -458,7 +451,6 @@ as.SO3.SO3<-function(x,...){
 
 #' @rdname SO3
 #' @method as.SO3 data.frame
-#' @S3method as.SO3 data.frame
 #' @aliases as.SO3 is.SO3 id.SO3 as.SO3.default as.SO3.Q4 as.SO3.SO3 as.SO3.data.frame
 #' @export
 

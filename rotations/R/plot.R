@@ -175,7 +175,6 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
 #' @param ... parameters passed onto the points layer.
 #' @return  A visualization of rotation data.
 #' @aliases plot.Q4
-#' @S3method plot SO3
 #' @method plot SO3
 #' @export
 #' @examples
@@ -551,7 +550,6 @@ mplotSO3<-function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL
 
 #' @rdname plot.SO3
 #' @aliases plot.SO3
-#' @S3method plot Q4
 #' @method plot Q4
 #' @export
 

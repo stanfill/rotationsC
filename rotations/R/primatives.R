@@ -1,4 +1,4 @@
-#' @S3method print SO3
+#' @export 
 #' @method print SO3
 print.SO3<-function(x,...){
   Rs<-x
@@ -23,7 +23,7 @@ print.SO3<-function(x,...){
   }
 }
 
-#' @S3method head SO3
+#' @export 
 #' @method head SO3
 head.SO3<-function(x, n = 6L,...){
   
@@ -35,7 +35,7 @@ head.SO3<-function(x, n = 6L,...){
   
 }
 
-#' @S3method tail SO3
+#' @export 
 #' @method tail SO3
 tail.SO3<-function(x, n = 6L, addrownums = TRUE,...){
   
@@ -50,14 +50,14 @@ tail.SO3<-function(x, n = 6L, addrownums = TRUE,...){
 
 }
 
-#' @S3method str SO3
+#' @export 
 #' @method str SO3
 str.SO3<-function(object,...){
   object<-matrix(object,length(object)/9,9)
   str(object)
 }
 
-#' @S3method print Q4
+#' @export 
 #' @method print Q4
 print.Q4<-function(x,...){
   digs<-.Options$digits
@@ -146,7 +146,7 @@ print.Q4<-function(x,...){
 #  }
 #}
 
-#' @S3method head Q4
+#' @export 
 #' @method head Q4
 head.Q4<-function(x,n=6L,...){
   
@@ -157,7 +157,7 @@ head.Q4<-function(x,n=6L,...){
   x[seq_len(n), ]
 }
 
-#' @S3method tail Q4
+#' @export 
 #' @method tail Q4
 tail.Q4<-function(x, n = 6L, addrownums = TRUE,...){
   
@@ -168,7 +168,7 @@ tail.Q4<-function(x, n = 6L, addrownums = TRUE,...){
   tail.matrix(x, n, addrownums,...)
 }
 
-#' @S3method str Q4
+#' @export 
 #' @method str Q4
 str.Q4<-function(object,...){
   
@@ -176,7 +176,7 @@ str.Q4<-function(object,...){
   str(object)
 }
 
-#' @S3method [ SO3
+#' @export 
 #' @method [ SO3
 '[.SO3'<-function(x,i,...){
   x<-matrix(x,dim(x))
@@ -185,7 +185,7 @@ str.Q4<-function(object,...){
   return(x)
 }
 
-#' @S3method [ Q4
+#' @export 
 #' @method [ Q4
 '[.Q4'<-function(x,i,...){
   x<-matrix(x,length(x)/4,4)
@@ -194,7 +194,7 @@ str.Q4<-function(object,...){
   return(x)
 }
 
-#' @S3method == Q4
+#' @export 
 #' @method == Q4
 '==.Q4'<-function(e1,e2){
 
@@ -258,7 +258,7 @@ NULL
 
 #' @rdname Arithmetic
 #' @aliases "-.SO3" "+.Q4" "-.Q4"
-#' @S3method + SO3
+#' @export 
 #' @method + SO3
 
 '+.SO3'<-function(x,y){
@@ -280,7 +280,7 @@ NULL
 
 #' @rdname Arithmetic
 #' @aliases "+.SO3" "+.Q4" "-.Q4"
-#' @S3method - SO3
+#' @export 
 #' @method - SO3
 
 '-.SO3'<-function(x,y=NULL){
@@ -309,7 +309,7 @@ NULL
 
 #' @rdname Arithmetic
 #' @aliases "+.SO3" "-.SO3" "-.Q4"
-#' @S3method + Q4
+#' @export 
 #' @method + Q4
 
 '+.Q4'<-function(x,y){
@@ -319,7 +319,7 @@ NULL
 
 #' @rdname Arithmetic
 #' @aliases "+.SO3" "-.SO3" "+.Q4"
-#' @S3method - Q4
+#' @export 
 #' @method - Q4
 
 '-.Q4'<-function(x,y=NULL){

@@ -35,7 +35,7 @@ region<-function(x,method, type, estimator,alp,...){
 
 #' @rdname region
 #' @method region Q4
-#' @S3method region Q4
+#' @export 
 
 region.Q4<-function(x,method, type, estimator,alp=NULL,...){
 	
@@ -113,7 +113,7 @@ region.Q4<-function(x,method, type, estimator,alp=NULL,...){
 
 #' @rdname region
 #' @method region SO3
-#' @S3method region SO3
+#' @export 
 
 region.SO3<-function(x,method,type,estimator,alp=NULL,...){
   
@@ -217,7 +217,7 @@ prentice<-function(x,alp){
 
 #' @rdname prentice
 #' @method prentice Q4
-#' @S3method prentice Q4
+#' @export 
 
 prentice.Q4<-function(x,alp=NULL){
 	#This takes a sample qs and returns the radius of the confidence region
@@ -253,7 +253,7 @@ prentice.Q4<-function(x,alp=NULL){
 
 #' @rdname prentice
 #' @method prentice SO3
-#' @S3method prentice SO3
+#' @export 
 
 prentice.SO3<-function(x,alp=NULL){
 	Qs<-as.Q4(x)
@@ -294,7 +294,7 @@ zhang<-function(x,estimator,alp,m){
 
 #' @rdname zhang
 #' @method zhang SO3
-#' @S3method zhang SO3
+#' @export 
 
 zhang.SO3<-function(x,estimator,alp=NULL,m=300){
 	
@@ -332,7 +332,7 @@ zhang.SO3<-function(x,estimator,alp=NULL,m=300){
 
 #' @rdname zhang
 #' @method zhang Q4
-#' @S3method zhang Q4
+#' @export 
 
 zhang.Q4<-function(x,estimator,alp=NULL,m=300){
 
@@ -414,7 +414,7 @@ chang<-function(x,estimator,alp){
 
 #' @rdname chang
 #' @method chang SO3
-#' @S3method chang SO3
+#' @export 
 
 chang.SO3<-function(x,estimator,alp=NULL){
 	
@@ -430,7 +430,7 @@ chang.SO3<-function(x,estimator,alp=NULL){
 
 #' @rdname chang
 #' @method chang Q4
-#' @S3method chang Q4
+#' @export 
 
 chang.Q4<-function(x,estimator,alp=NULL){
 	
@@ -483,7 +483,7 @@ fisheretal<-function(x,alp,boot,m,symm){
 
 #' @rdname fisheretal
 #' @method fisheretal Q4
-#' @S3method fisheretal Q4
+#' @export 
 
 fisheretal.Q4<-function(x,alp=NULL,boot=TRUE,m=300,symm=TRUE){
 	
@@ -527,7 +527,7 @@ optimAxis<-function(r,Qs,cut,symm){
 
 #' @rdname fisheretal
 #' @method fisheretal SO3
-#' @S3method fisheretal SO3
+#' @export 
 
 fisheretal.SO3<-function(x,alp=NULL,boot=TRUE,m=300,symm=TRUE){
 	
