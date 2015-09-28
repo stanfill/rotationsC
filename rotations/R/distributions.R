@@ -338,14 +338,15 @@ rhaar<-function(n){
   return(rar(n, dhaar, 1/pi))
 }
 
-#' The Maxwell-Boltzmann distribution
+#' The modified Maxwell-Boltzmann distribution
 #'
 #' Density, distribution function and random generation for the Maxwell-Boltzmann distribution with 
-#' concentration \code{kappa} \eqn{\kappa}.
+#' concentration \code{kappa} \eqn{\kappa} restricted to the range \eqn{[-\pi,\pi)}.
 #'
 #' The Maxwell-Boltzmann distribution with concentration \eqn{\kappa} has density
 #' \deqn{C_\mathrm{{M}}(r|\kappa)=2\kappa\sqrt{\frac{\kappa}{\pi}}r^2e^{-\kappa r^2}}{C(r|\kappa)=2\kappa(\kappa/\pi)^(1/2)r^2exp(-\kappa r^2)}
-#' with respect to Lebesgue measure 
+#' with respect to Lebesgue measure.  The usual expression for the Maxwell-Boltzmann distribution can be recovered by
+#' setting \eqn{a=(2\kappa)^0.5}.
 #'
 #' @name Maxwell
 #' @aliases Maxwell rmaxwell dmaxwell pmaxwell
@@ -383,16 +384,29 @@ NULL
 #' @aliases Maxwell rmaxwell dmaxwell pmaxwell
 #' @export
 
+dmkern <- function(r,kappa){
+  return(2*kappa*sqrt(kappa/pi)*(r^2)*exp(-kappa*(r^2)))
+}
+
 dmaxwell <- function(r, kappa = 1, nu = NULL, Haar = TRUE) {
   
   if(!is.null(nu))
     stop("nu is not available for the Maxwell-Boltzmann distribution yet")
   
-  den <- 2*kappa*sqrt(kappa/pi)*(r^2)*exp(-kappa*(r^2))
+  den <- dmkern(r = r, kappa = kappa)
+  
+  if(kappa<1.9){
+    den <- den/(1-2*integrate(dmkern,lower = pi, upper = Inf,kappa = kappa)$value)
+  }
+  
+  zeros <- which(abs(r)>pi)
+  if(length(zeros)>0)
+    den[zeros] <- 0
   
   if (Haar) 
     return(den/(1 - cos(r))) else return(den)
 }
+
 
 #' @name Maxwell
 #' @aliases Maxwell rmaxwell dmaxwell pmaxwell
@@ -417,7 +431,7 @@ pmaxwell<-function(q,kappa=1,nu=NULL,lower.tail=TRUE){
 rmaxwell <- function(n, kappa = 1, nu = NULL) {
   
   if(!is.null(nu))
-    stop("nu is not available for the Maxwell-Boltzmann distribution yet")
+    stop("Circular variance (nu) is not available for the Maxwell-Boltzmann distribution yet")
   
   lenn<-length(n)
   if(lenn>1)
