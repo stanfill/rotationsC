@@ -1,3 +1,7 @@
+dmkern <- function(r,kappa){
+  return(2*kappa*sqrt(kappa/pi)*(r^2)*exp(-kappa*(r^2)))
+}
+
 #' Angular distributions
 #' 
 #' Density, distribution function and random variate generation for symmetric probability distributions in the rotations package.
@@ -383,10 +387,6 @@ NULL
 #' @name Maxwell
 #' @aliases Maxwell rmaxwell dmaxwell pmaxwell
 #' @export
-
-dmkern <- function(r,kappa){
-  return(2*kappa*sqrt(kappa/pi)*(r^2)*exp(-kappa*(r^2)))
-}
 
 dmaxwell <- function(r, kappa = 1, nu = NULL, Haar = TRUE) {
   
