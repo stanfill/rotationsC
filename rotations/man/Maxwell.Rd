@@ -56,6 +56,13 @@ plot(r,pmaxwell(r,kappa = 10), type = "l", ylab = "F(r)")
 rs <- rmaxwell(20, kappa = 1)
 hist(rs, breaks = 10)
 }
+\references{
+  Bingham MA, Nordman DJ and Vardeman SB (2010).
+  "Finite-sample investigation of likelihood and Bayes
+  inference for the symmetric von Mises-Fisher
+  distribution." Computational Statistics & Data
+  Analysis, 54(5), pp. 1317-1327.
+}
 \seealso{
 \link{Angular-distributions} for other distributions in the rotations package.
 @cite bingham2010
