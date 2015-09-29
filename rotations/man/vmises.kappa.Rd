@@ -24,7 +24,8 @@
   See \cite{Mardia et al. (2000)} for more details.  This
   function translates the circular variance \eqn{\nu} into
   the corresponding concentration parameter \eqn{\kappa}
-  for the circular-von Mises distribution.
+  for the circular-von Mises distribution. For numerical stability, 
+  a maximum \eqn{\kappa} of 500 is returned.
 }
 \examples{
 #Find the concentration parameter for circular variances 0.25, 0.5, 0.75

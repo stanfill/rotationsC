@@ -21,7 +21,7 @@ The concentration parameter \eqn{\kappa} does not translate across circular dist
  is the circular variance defined as \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]}
  is the mean resultant length.  See \cite{mardia2000} for more details.
  This function translates the circular variance \eqn{\nu} into the corresponding concentration parameter \eqn{\kappa}
- for the modified Maxwell-Boltzmann distribution.
+ for the modified Maxwell-Boltzmann distribution.  For numerical stability, a maximum \eqn{\kappa} of 1000 is returned.
 }
 \examples{
 #Find the concentration parameter for circular variances 0.25, 0.5, 0.75

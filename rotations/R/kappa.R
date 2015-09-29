@@ -25,7 +25,7 @@ cayley.kappa<-function(nu){
 }
 
 fisher.nu.kappa<-function(kappa,nu){
-  (1-(besselI(2*kappa,1)-.5*besselI(2*kappa,2)-.5*besselI(2*kappa,0))/(besselI(2*kappa,0)-besselI(2*kappa,1))-nu)^2
+  ((1-(besselI(2*kappa,1)-.5*besselI(2*kappa,2)-.5*besselI(2*kappa,0))/(besselI(2*kappa,0)-besselI(2*kappa,1)))-nu)^2
 }
 
 #'  Circular variance and concentration parameter 
@@ -37,7 +37,7 @@ fisher.nu.kappa<-function(kappa,nu){
 #'  is the circular variance defined as \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]} 
 #'  is the mean resultant length.  See \cite{mardia2000} for more details.
 #'  This function translates the circular variance \eqn{\nu} into the corresponding concentration parameter \eqn{\kappa}
-#'  for the matrix-Fisher distribution.
+#'  for the matrix-Fisher distribution.  For numerical stability, a maximum \eqn{\kappa} of 350 is returned.
 #'  
 #'  @param nu circular variance
 #'  @return Concentration parameter corresponding to nu.
@@ -55,7 +55,7 @@ fisher.kappa<-function(nu){
   kappa<-rep(0,length(nu))
   
   for(i in 1:length(nu))
-    kappa[i]<-optimize(fisher.nu.kappa,interval=c(0,10),tol=.00001,nu=nu[i])$minimum
+    kappa[i]<-optimize(fisher.nu.kappa,interval=c(0,350),tol=.00001,nu=nu[i])$minimum
   
   return(kappa)
 }
@@ -74,7 +74,7 @@ mises.nu.kappa<-function(kappa,nu){
 #'  is the circular variance defined as \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]} 
 #'  is the mean resultant length.  See \cite{mardia2000} for more details.
 #'  This function translates the circular variance \eqn{\nu} into the corresponding concentration parameter \eqn{\kappa}
-#'  for the circular-von Mises distribution.
+#'  for the circular-von Mises distribution.  For numerical stability, a maximum \eqn{\kappa} of 500 is returned.
 #'  
 #'  @param nu circular variance
 #'  @return Concentration parameter corresponding to nu.
@@ -92,13 +92,12 @@ vmises.kappa<-function(nu){
   kappa<-rep(0,length(nu))
   
   for(i in 1:length(nu))
-    kappa[i]<-optimize(mises.nu.kappa,interval=c(0,10),tol=.00001,nu=nu[i])$minimum
+    kappa[i]<-optimize(mises.nu.kappa,interval=c(0,500),tol=.00001,nu=nu[i])$minimum
   
   return(kappa)
 }
 
 
-#This goes from kappa to nu, need to incorporate nu
 maxwell.nu.kappa <- function(kappa,nu){
   ((1-(2*sqrt(kappa*pi)*exp(-kappa*pi*pi)+(2*kappa-1)*exp(-1/(4*kappa))/(2*kappa)))-nu)^2
 }
@@ -113,7 +112,7 @@ maxwell.nu.kappa <- function(kappa,nu){
 #'  is the circular variance defined as \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]} 
 #'  is the mean resultant length.  See \cite{mardia2000} for more details.
 #'  This function translates the circular variance \eqn{\nu} into the corresponding concentration parameter \eqn{\kappa}
-#'  for the modified Maxwell-Boltzmann distribution.
+#'  for the modified Maxwell-Boltzmann distribution.  For numerical stability, a maximum \eqn{\kappa} of 1000 is returned.
 #'  
 #'  @param nu circular variance
 #'  @return Concentration parameter corresponding to nu.
@@ -130,7 +129,7 @@ maxwell.kappa<-function(nu){
   kappa<-rep(0,length(nu))
   
   for(i in 1:length(nu))
-    kappa[i]<-optimize(maxwell.nu.kappa,interval=c(0,10),tol=.00001,nu=nu[i])$minimum
+    kappa[i]<-optimize(maxwell.nu.kappa,interval=c(0,1000),tol=.00001,nu=nu[i])$minimum
   
   return(kappa)
 }
