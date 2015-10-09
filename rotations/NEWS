@@ -4,7 +4,7 @@ rotations version 1.4
 New Features - 
 -------------------------------------------------------------------
 
-*The Maxwell-Boltzmann distribution function has been added
+*The Maxwell-Boltzmann distribution function has been added.
 
 Minor Changes -
 -------------------------------------------------------------------
@@ -14,8 +14,11 @@ Minor Changes -
 Bug Fixes -
 -------------------------------------------------------------------
 
-* The Maxwell-Boltzmann function is now used generate sample from the matrix-Fisher
-distribution instead of the Cayley distribution.
+* For kappa>200, the matrix-Fisher distribution is extremely difficult to sample from.
+In previous versions of this package, the matrix-Fisher distribution was replaced by the 
+Cayley distribution for large kappa.  Now the Maxwell-Boltzmann distribution is used 
+because it agrees much more closely with the matrix-Fisher distribution than with the
+Cayley distribution for large kappa.
 
 rotations version 1.3
 ===================================================================

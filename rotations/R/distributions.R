@@ -119,6 +119,9 @@ dcayley <- function(r, kappa = 1, nu = NULL, Haar = TRUE) {
 
 pcayley<-function(q,kappa=1,nu=NULL,lower.tail=TRUE){
   
+  if(!is.null(nu))
+    kappa <- cayley.kappa(nu)
+  
   n<-length(q)
   cdf<-rep(NA,n)
   a<-(2*kappa+1)*(1-cos(q))/(3*(1+cos(q)))
@@ -391,7 +394,7 @@ NULL
 dmaxwell <- function(r, kappa = 1, nu = NULL, Haar = TRUE) {
   
   if(!is.null(nu))
-    stop("nu is not available for the Maxwell-Boltzmann distribution yet")
+    kappa <- maxwell.kappa(nu)
   
   den <- dmkern(r = r, kappa = kappa)
   
@@ -431,7 +434,7 @@ pmaxwell<-function(q,kappa=1,nu=NULL,lower.tail=TRUE){
 rmaxwell <- function(n, kappa = 1, nu = NULL) {
   
   if(!is.null(nu))
-    stop("Circular variance (nu) is not available for the Maxwell-Boltzmann distribution yet")
+    kappa <- maxwell.kappa(nu)
   
   lenn<-length(n)
   if(lenn>1)
