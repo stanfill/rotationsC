@@ -15,7 +15,7 @@ Description: Tools for working with rotational data, including
     have been added.
 License: MIT + file LICENSE
 Depends:
-    R (>= 3.1),
+    R (>= 3.2),
     ggplot2,
     Rcpp,
     rgl
