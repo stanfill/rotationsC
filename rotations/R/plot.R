@@ -174,6 +174,7 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
 #' @param interactive logical; if \code{TRUE} \code{sphereplot} is used to create an interactive 3D plot, otherwise \code{\link{ggplot2}} is used
 #' @param ... parameters passed onto the points layer.
 #' @return  A visualization of rotation data.
+#' @seealso \code{\link{ggplot2}}
 #' @aliases plot.Q4
 #' @method plot SO3
 #' @export
