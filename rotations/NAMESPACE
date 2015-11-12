@@ -5,11 +5,12 @@ importFrom(sphereplot,rgl.sphpoints)
 importFrom(sphereplot,rgl.sphtext)
 importFrom(sphereplot,sph2car)
 importFrom(sphereplot,car2sph)
-import(methods,Rcpp,ggplot2,grid,rgl)
+import(methods,Rcpp,ggplot2,rgl)
 importFrom("graphics", "legend", "plot", "plot.new")
 importFrom("stats", "integrate", "na.omit", "optim", "optimize", "pf",
            "qchisq", "quantile", "rbeta", "rbinom", "runif")
 importFrom("utils", "combn", "str", "tail.matrix")
+
 
 S3method("+",Q4)
 S3method("+",SO3)

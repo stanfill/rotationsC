@@ -20,7 +20,6 @@ Depends:
     Rcpp,
     rgl
 Imports:
-    grid,
     stats,
     utils,
     methods,

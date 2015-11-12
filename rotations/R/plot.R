@@ -159,7 +159,7 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
 #' Visualizing random rotations
 #'
 #' This function produces an interactive or static three-dimensional globe onto which  one of the  columns of the provided sample of rotations is projected.  The data are centered around a user-specified
-#' rotation matrix.  The interactive plot is based on the \code{sphereplot} package and the static plot uses \code{\link{ggplot2}}.
+#' rotation matrix.  The interactive plot is based on the \code{sphereplot} package and the static plot uses \code{ggplot2}.
 #'
 #' @param x n rotations in \code{SO3} or \code{Q4} format.
 #' @param center rotation about which to center the observations.
@@ -171,10 +171,9 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
 #' @param median_regions character vector to specify which of the three confidence regions to show for the projected median.  Possibilities are "all", "theory", "bootstrap."
 #' @param alp alpha level to be used for confidence regions.  See \code{\link{region}} for more details.
 #' @param m number of bootstrap replicates to use in bootstrap confidence regions.
-#' @param interactive logical; if \code{TRUE} \code{sphereplot} is used to create an interactive 3D plot, otherwise \code{\link{ggplot2}} is used
+#' @param interactive logical; if \code{TRUE} \code{sphereplot} is used to create an interactive 3D plot, otherwise \code{ggplot2} is used
 #' @param ... parameters passed onto the points layer.
 #' @return  A visualization of rotation data.
-#' @seealso \code{\link{ggplot2}}
 #' @aliases plot.Q4
 #' @method plot SO3
 #' @export

@@ -54,7 +54,7 @@
 
   \item{interactive}{logical; if \code{TRUE}
   \code{sphereplot} is used to create an interactive 3D
-  plot, otherwise \code{\link{ggplot2}} is used}
+  plot, otherwise \code{ggplot2} is used}
 
   \item{...}{parameters passed onto the points layer.}
 }
@@ -67,7 +67,7 @@
   the provided sample of rotations is projected.  The data
   are centered around a user-specified rotation matrix.
   The interactive plot is based on the \code{sphereplot}
-  package and the static plot uses \code{\link{ggplot2}}.
+  package and the static plot uses \code{ggplot2}.
 }
 \note{
   The option \code{interactive=TRUE} requires the
@@ -88,4 +88,3 @@ plot(Rs, center = mean(Rs), show_estimates = c("proj.mean", "geom.mean"),
 
 plot(Rs, center = mean(Rs), interactive = TRUE)}
 }
-
