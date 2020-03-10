@@ -14,37 +14,26 @@ Description: Tools for working with rotational data, including
     functions to identify potentially discordant (outlying) values
     have been added.
 License: MIT + file LICENSE
-Depends:
-    R (>= 3.2),
-    ggplot2,
-    Rcpp,
-    rgl
 Imports:
+    Rcpp,
     stats,
     utils,
     methods,
-    sphereplot
+    sphereplot,
+    ggplot2,
+    rgl
 Suggests:
     gridExtra,
     knitr,
     onion,
     orientlib,
     testthat
-LinkingTo: Rcpp, RcppArmadillo
+LinkingTo: 
+    Rcpp, 
+    RcppArmadillo
 VignetteBuilder: knitr
-Collate:
-    'help.R'
-    'estimators.R'
-    'preliminary.R'
-    'parameterizations.R'
-    'distributions.R'
-    'kappa.R'
-    'regions.R'
-    'RcppExports.R'
-    'plot.R'
-    'grid-search.R'
-    'bayes.R'
-    'primatives.R'
-    'robust.R'
 URL: https://github.com/stanfill/rotationsC/tree/master/rotations
 BugReports: https://github.com/stanfill/rotationsC/issues
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.2
