@@ -13,30 +13,36 @@ prentice(x, alp)
 \method{prentice}{SO3}(x, alp = NULL)
 }
 \arguments{
-\item{x}{\eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.}
+\item{x}{\eqn{n\times p}{n-by-p} matrix where each row corresponds to a
+random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.}
 
 \item{alp}{alpha level desired, e.g. 0.05 or 0.10.}
 }
 \value{
-Radius of the confidence region centered at the projected mean for each of the x-, y- and z-axes.
+Radius of the confidence region centered at the projected mean for
+  each of the x-, y- and z-axes.
 }
 \description{
-Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the projected mean based on a result from directional statistics.
+Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the
+projected mean based on a result from directional statistics.
 }
 \details{
-Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
-estimator using the method due to \cite{prentice1986}.  For a rotation specific version see \cite{rancourt2000}. The variability
-in each axis is different so each axis will have its own radius.
+Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the
+central orientation based on the projected mean estimator using the method
+due to \cite{prentice1986}.  For a rotation specific version see
+\cite{rancourt2000}. The variability in each axis is different so each axis
+will have its own radius.
 
 prentice1986, rancourt2000
 }
 \examples{
 Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
 
-#The prentice method can be accesed from the "region" function or the "prentice" function
+# The prentice method can be accesed from the "region" function or the "prentice" function
 region(Qs, method = "transformation", type = "asymptotic", alp = 0.1, estimator = "mean")
 prentice(Qs, alp = 0.1)
 }
 \seealso{
-\code{\link{bayesCR}}, \code{\link{fisheretal}}, \code{\link{chang}}, \code{\link{zhang}}
+\code{\link{bayesCR}}, \code{\link{fisheretal}},
+  \code{\link{chang}}, \code{\link{zhang}}
 }

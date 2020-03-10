@@ -2,26 +2,38 @@
 % Please edit documentation in R/estimators.R
 \name{median.SO3}
 \alias{median.SO3}
-\alias{median}
 \alias{median.Q4}
+\alias{median}
 \title{Median rotation}
 \usage{
-median(x, ...)
+\method{median}{SO3}(
+  x,
+  na.rm = FALSE,
+  type = "projected",
+  epsilon = 1e-05,
+  maxIter = 2000,
+  ...
+)
 
-\method{median}{SO3}(x, type = "projected", epsilon = 1e-05, maxIter = 2000, ...)
-
-\method{median}{Q4}(x, type = "projected", epsilon = 1e-05, maxIter = 2000, ...)
+\method{median}{Q4}(
+  x,
+  na.rm = FALSE,
+  type = "projected",
+  epsilon = 1e-05,
+  maxIter = 2000,
+  ...
+)
 }
 \arguments{
 \item{x}{\eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix form (\eqn{p=9}) or quaternion (\eqn{p=4}) form.}
-
-\item{...}{additional arguments.}
 
 \item{type}{string indicating "projected" or "geometric" type mean estimator.}
 
 \item{epsilon}{stopping rule.}
 
 \item{maxIter}{maximum number of iterations allowed before returning most recent estimate.}
+
+\item{...}{additional arguments.}
 }
 \value{
 Estimate of the projected or geometric median in the same parameterization.
