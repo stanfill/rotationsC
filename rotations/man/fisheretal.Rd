@@ -6,7 +6,7 @@
 \alias{fisheretal.SO3}
 \title{Transformation based pivotal bootstrap confidence region}
 \usage{
-fisheretal(x, alp, boot, m, symm)
+fisheretal(x, alp = NULL, boot = TRUE, m = 300, symm = TRUE)
 
 \method{fisheretal}{Q4}(x, alp = NULL, boot = TRUE, m = 300, symm = TRUE)
 

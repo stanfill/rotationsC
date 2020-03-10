@@ -634,11 +634,11 @@ namespace rotations {
         return Rcpp::as<arma::mat >(rcpp_result_gen);
     }
 
-    inline int checkQ4(NumericMatrix Q) {
+    inline int checkQ4(Rcpp::NumericMatrix Q) {
         typedef SEXP(*Ptr_checkQ4)(SEXP);
         static Ptr_checkQ4 p_checkQ4 = NULL;
         if (p_checkQ4 == NULL) {
-            validateSignature("int(*checkQ4)(NumericMatrix)");
+            validateSignature("int(*checkQ4)(Rcpp::NumericMatrix)");
             p_checkQ4 = (Ptr_checkQ4)R_GetCCallable("rotations", "_rotations_checkQ4");
         }
         RObject rcpp_result_gen;

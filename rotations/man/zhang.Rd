@@ -6,7 +6,7 @@
 \alias{zhang.Q4}
 \title{M-estimator theory pivotal bootstrap confidence region}
 \usage{
-zhang(x, estimator, alp, m)
+zhang(x, estimator, alp = NULL, m = 300)
 
 \method{zhang}{SO3}(x, estimator, alp = NULL, m = 300)
 

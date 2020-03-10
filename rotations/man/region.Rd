@@ -45,7 +45,7 @@ the currently available methods see \code{\link{prentice}},
 \examples{
 Rs <- ruars(20, rvmises, kappa = 10)
 
-#Compare the region sizes that are currently available
+# Compare the region sizes that are currently available
 
 region(Rs, method = "transformation", type = "asymptotic", estimator = "mean", alp = 0.1)
 region(Rs, method = "transformation", type = "bootstrap", estimator = "mean",

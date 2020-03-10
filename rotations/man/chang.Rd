@@ -6,7 +6,7 @@
 \alias{chang.Q4}
 \title{M-estimator asymptotic confidence region}
 \usage{
-chang(x, estimator, alp)
+chang(x, estimator, alp = NULL)
 
 \method{chang}{SO3}(x, estimator, alp = NULL)
 

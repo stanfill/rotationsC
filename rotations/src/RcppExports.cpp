@@ -1041,11 +1041,11 @@ RcppExport SEXP _rotations_genrC(SEXP rSEXP, SEXP SSEXP, SEXP SO3SEXP, SEXP uSEX
     return rcpp_result_gen;
 }
 // checkQ4
-int checkQ4(NumericMatrix Q);
+int checkQ4(Rcpp::NumericMatrix Q);
 static SEXP _rotations_checkQ4_try(SEXP QSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type Q(QSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type Q(QSEXP);
     rcpp_result_gen = Rcpp::wrap(checkQ4(Q));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -1591,7 +1591,7 @@ static int _rotations_RcppExport_validate(const char* sig) {
         signatures.insert("arma::mat(*Q4defaultC)(arma::mat,arma::vec)");
         signatures.insert("arma::mat(*pMatC)(arma::mat)");
         signatures.insert("arma::mat(*genrC)(arma::vec,arma::mat,int,arma::mat)");
-        signatures.insert("int(*checkQ4)(NumericMatrix)");
+        signatures.insert("int(*checkQ4)(Rcpp::NumericMatrix)");
         signatures.insert("int(*checkSO3)(arma::mat)");
         signatures.insert("arma::mat(*expskewC)(arma::mat)");
         signatures.insert("arma::mat(*expskewCMulti)(arma::mat)");

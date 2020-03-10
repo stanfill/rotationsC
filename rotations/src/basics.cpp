@@ -1,12 +1,5 @@
-//[[Rcpp::depends("RcppArmadillo")]]
-#include <RcppArmadillo.h>
-#include <Rcpp.h>
+#include "basics.h"
 
-using namespace Rcpp;
-
-// [[Rcpp::interfaces(r, cpp)]]
-
-// [[Rcpp::export]]
 arma::mat eskewC(arma::rowvec U) {
 
   double ulen=norm(U,2);
@@ -29,7 +22,6 @@ arma::mat eskewC(arma::rowvec U) {
   return res;
 }
 
-// [[Rcpp::export]]
 arma::mat SO3defaultC(arma::mat U, arma::vec theta) {
 
   //U is an n-by-3 matrix, each row is a misorentation axis
@@ -44,14 +36,12 @@ arma::mat SO3defaultC(arma::mat U, arma::vec theta) {
  		Ri = U.row(i).t() * U.row(i);
     SS = eskewC(U.row(i));
   	Ri = Ri + (I - Ri) * cos(theta[i]) +  SS * sin(theta[i]);
-    Rs.row(i) = as<arma::rowvec>(wrap(Ri));
+    Rs.row(i) = Rcpp::as<arma::rowvec>(Rcpp::wrap(Ri));
   }
 
   return Rs;
 }
 
-
-// [[Rcpp::export]]
 arma::mat Q4defaultC(arma::mat U, arma::vec theta){
 
 	int n1 = U.n_rows, n = theta.size();
@@ -59,7 +49,6 @@ arma::mat Q4defaultC(arma::mat U, arma::vec theta){
 	q.zeros();
 
 	if(n1 != n){
-		//printf("Error, u and theta different length");
 		return q;
 	}
 
@@ -74,18 +63,12 @@ arma::mat Q4defaultC(arma::mat U, arma::vec theta){
 
 }
 
-
-// [[Rcpp::export]]
 arma::mat pMatC(arma::mat p){
 
 	arma::mat Pmat(4,4);
 	Pmat.zeros();
 	arma::mat revI(4,4);
 	revI.zeros();
-
-	//int n1=p.n_rows, n2=p.n_cols;
-
-	//if(n1!=4 && n2!=4){}
 
 	p.reshape(4,1);
 	Pmat.col(0)=p;
@@ -105,37 +88,18 @@ arma::mat pMatC(arma::mat p){
 	return Pmat;
 }
 
-// [[Rcpp::export]]
 arma::mat genrC(arma::vec r, arma::mat S , int SO3, arma::mat u) {
-	RNGScope scope;
+  Rcpp::RNGScope scope;
 	// r is a vector of angles
 	// S is the central direction
 	// SO3 is an integer, 1 means SO3, anything else gives
   int n=r.size(), i=0,n1 = u.n_rows, n2 = u.n_cols;
 
-  //GetRNGstate();PutRNGstate();
-
-  //NumericVector theta = runif(n,-1,1);
-  //theta = acos(theta);
-
-  //NumericVector phi = runif(n, -M_PI, M_PI);
-
-  //int n1 = phi.size(), n2 = theta.size();
-
   if(n1 != n || n2!=3){
-    //printf("u is wrong size");
     arma::mat q(n,4);
     q.zeros();
     return q;
   }
-
-  /*arma::mat u(n,3);
-
-  for(i=0;i<n;i++){
-    u(i,0)=sin(theta[i]) * cos(phi[i]);
-    u(i,1)=sin(theta[i]) * sin(phi[i]);
-    u(i,2)=cos(theta[i]);
-  }  */
 
   if(SO3==1){
 
@@ -153,36 +117,16 @@ arma::mat genrC(arma::vec r, arma::mat S , int SO3, arma::mat u) {
       }
 
       Rsi = S * Rsi;
-      Rs.row(i) = as<arma::rowvec>(wrap(Rsi));
+      Rs.row(i) = Rcpp::as<arma::rowvec>(Rcpp::wrap(Rsi));
 
     }
 
     return Rs;
 
   }else{
-
   	arma::mat q;
   	q.zeros(n,4);
-  	//arma::mat Smat;
-
-    /*int ssize = S.n_rows;
-    int ssize2 = S.n_cols;
-
-    if(ssize!=4 && ssize2!=4){
-      printf("S isn't big enough");
-      q.zeros(n,4);
-      return q;
-    }*/
-
-  	//Smat = pMatC(S);
-
   	q = Q4defaultC(u,r);
-
- 		//q = q*Smat.t();
-
     return q;
-
   }
-
 }
-
