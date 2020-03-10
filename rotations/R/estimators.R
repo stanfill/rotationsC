@@ -126,16 +126,11 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 #' rot.dist(median(Qs))                     #Bias of the projected median
 #' rot.dist(median(Qs, type = "geometric")) #Bias of the geometric median
 
-median<-function(x,...){
-  UseMethod("median")
-}
-
 #' @rdname median.SO3
 #' @aliases median.Q4 median
 #' @method median SO3
 #' @export
-
-median.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) {
+median.SO3 <- function(x, na.rm = FALSE, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
 
 	Rs<-formatSO3(x)
 	n<-nrow(Rs)
@@ -162,26 +157,18 @@ median.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,..
   return(S)
 }
 
-
 #' @rdname median.SO3
 #' @aliases median.SO3 median
 #' @method median Q4
 #' @export
-
-median.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) {
-
-	Qs<-formatQ4(x)
-
-	if(length(Qs)==4)
+median.Q4 <- function(x, na.rm = FALSE, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
+	Qs <- formatQ4(x)
+	if (length(Qs) == 4)
 		return(Qs)
-
-  Rs<-as.SO3.Q4(Qs)
-
-  R<-median.SO3(Rs,type,epsilon,maxIter,...)
-
-  return(as.Q4.SO3(R))
+  Rs <- as.SO3.Q4(Qs)
+  R <- median(Rs, na.rm, type, epsilon, maxIter, ...)
+  as.Q4.SO3(R)
 }
-
 
 #' Weighted mean rotation
 #'
