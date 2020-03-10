@@ -1,21 +1,18 @@
+#include "ZhangMethod.h"
 #include "estimators.h"
 
-#include <RcppArmadillo.h>
-using namespace Rcpp;
-// [[Rcpp::interfaces(r, cpp)]]
-
-// [[Rcpp::export]]
-NumericVector RdistC(NumericMatrix Q1, NumericVector Q2){
+Rcpp::NumericVector RdistC(Rcpp::NumericMatrix Q1, Rcpp::NumericVector Q2)
+{
 	/*Compute the geodesic distance between quaternions Q1 and Q2*/
 	/* Q1 must be an n-by-4 matrix with quaternion rows and Q2 a single quaternion*/
 
 	int n = Q1.nrow(), i=0;
 	double cp;
-	NumericVector rs(n);
+	Rcpp::NumericVector rs(n);
 
 	for(i=0;i<n;i++){
 
-		cp = sum(Q1(i,_)*Q2);
+		cp = sum(Q1(i, Rcpp::_)*Q2);
 		rs[i] = acos(2*cp*cp-1);
 
 	}
@@ -23,9 +20,8 @@ NumericVector RdistC(NumericMatrix Q1, NumericVector Q2){
 	return rs;
 }
 
-// [[Rcpp::export]]
-arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2){
-
+arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2)
+{
   int n = Rs.n_rows, m=Rs.n_cols , i,j;
   double tri;
   arma::mat R2t = R2.t();
@@ -46,7 +42,6 @@ arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2){
 
     return theta;
   }
-
 
   arma::rowvec theta(n);
   theta.zeros();
@@ -72,18 +67,18 @@ arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2){
   return theta;
 }
 
-// [[Rcpp::export]]
-NumericVector EdistC(NumericMatrix Q1, NumericVector Q2){
+Rcpp::NumericVector EdistC(Rcpp::NumericMatrix Q1, Rcpp::NumericVector Q2)
+{
 	/*Compute the Euclidean distance between quaternions Q1 and Q2*/
 	/* Q1 must be an n-by-4 matrix with quaternion rows and Q2 a single quaternion*/
 
 	int n = Q1.nrow(), i=0;
 	double cp, rsi;
-	NumericVector rs(n);
+	Rcpp::NumericVector rs(n);
 
 	for(i=0;i<n;i++){
 
-		cp = sum(Q1(i,_)*Q2);
+		cp = sum(Q1(i, Rcpp::_)*Q2);
 		rsi = 8*(1-(cp*cp));
 		rs[i] = pow(rsi,0.5);
 
@@ -92,8 +87,8 @@ NumericVector EdistC(NumericMatrix Q1, NumericVector Q2){
 	return rs;
 }
 
-// [[Rcpp::export]]
-double oneRdistC(NumericMatrix Q1, NumericVector Q2){
+double oneRdistC(Rcpp::NumericMatrix Q1, Rcpp::NumericVector Q2)
+{
 	/*Compute the geodesic distance between quaternions Q1 and Q2*/
 	/* Q1 must be an n-by-4 matrix with quaternion rows and Q2 a single quaternion*/
 
@@ -105,20 +100,18 @@ double oneRdistC(NumericMatrix Q1, NumericVector Q2){
 	return rs;
 }
 
-
-// [[Rcpp::export]]
-NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
-
+Rcpp::NumericVector cdfunsC(Rcpp::NumericMatrix Qs, Rcpp::NumericVector Qhat)
+{
 	//Compute the projected mean values of c and d to form the pivotal test statistic
 	//This estimates c=2E(1-cos(r^2))/3 and d=E(1+2cos(r))/3 from a sample
 	int n = Qs.nrow(), i;
 	double crs;
 
-	NumericVector cds(2);
+	Rcpp::NumericVector cds(2);
 	cds[0]=0.0;
 	cds[1]=0.0;
 
-	NumericVector rs(n);
+	Rcpp::NumericVector rs(n);
 
 	rs = RdistC(Qs,Qhat);
 
@@ -136,19 +129,18 @@ NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat){
 	return cds;
 }
 
-// [[Rcpp::export]]
-NumericVector cdfunsCMedian(NumericMatrix Qs, NumericVector Qhat){
-
+Rcpp::NumericVector cdfunsCMedian(Rcpp::NumericMatrix Qs, Rcpp::NumericVector Qhat)
+{
 	//Compute the values c and d to form the pivotal test statistic for the median using quaternions
 
 	int n = Qs.nrow(), i;
 	double crs, OnemCrs;
 
-	NumericVector cds(2);
+	Rcpp::NumericVector cds(2);
 	cds[0]=0.0;
 	cds[1]=0.0;
 
-	NumericVector rs(n);
+	Rcpp::NumericVector rs(n);
 
 	rs = RdistC(Qs,Qhat);
 
@@ -171,37 +163,35 @@ NumericVector cdfunsCMedian(NumericMatrix Qs, NumericVector Qhat){
 	return cds;
 }
 
-// [[Rcpp::export]]
-NumericVector zhangQ4(NumericMatrix Q, int m){
-
-
+Rcpp::NumericVector zhangQ4(Rcpp::NumericMatrix Q, int m)
+{
 	int n=Q.nrow(), i=0, j=0;
-	NumericVector cdstar;
-	IntegerVector samp(n);
-	NumericVector unSamp;
+  Rcpp::NumericVector cdstar;
+  Rcpp::IntegerVector samp(n);
+  Rcpp::NumericVector unSamp;
 	int numUn=0, maxSamp=0;
 
-	NumericVector testStat(m);
+	Rcpp::NumericVector testStat(m);
 	double sqrth=0.0;
 	arma::mat Qstar(n,4);
-	NumericVector QhatStar;
-  NumericMatrix QhatStarMat(1,4);
+	Rcpp::NumericVector QhatStar;
+	Rcpp::NumericMatrix QhatStarMat(1,4);
 
-	arma::mat QSamp = as<arma::mat>(Q); //Convert the sample into armadillo mode
+	arma::mat QSamp = Rcpp::as<arma::mat>(Q); //Convert the sample into armadillo mode
 
-	NumericMatrix QstarRcpp;
+	Rcpp::NumericMatrix QstarRcpp;
 
-	NumericVector Qhat = as<NumericVector>(wrap(meanQ4C(QSamp)));
+	Rcpp::NumericVector Qhat = Rcpp::as<Rcpp::NumericVector>(Rcpp::wrap(meanQ4C(QSamp)));
 
 	for(j=0;j<m;j++){
 
-		samp = floor(runif(n,0,n));			//Bootstrap sample of size n, with replacement
+		samp = floor(Rcpp::runif(n,0,n));			//Bootstrap sample of size n, with replacement
 	  unSamp = unique(samp);
     numUn = unSamp.size();
     maxSamp = max(samp);
 
     while(numUn<4 || maxSamp>n-1){
-      samp = floor(runif(n,0,n));	 //If bootstrap samp is less than 4 obs then
+      samp = floor(Rcpp::runif(n,0,n));	 //If bootstrap samp is less than 4 obs then
 	    unSamp = unique(samp);       //draw a new sample
       numUn = unSamp.size();
       maxSamp = max(samp);
@@ -212,13 +202,12 @@ NumericVector zhangQ4(NumericMatrix Q, int m){
 			Qstar.row(i) = QSamp.row(samp[i]);		//Copying a matrix row by row produces a bunch of junk messages
 		}																				//so I do it with arma instead of standard Rcpp
 
-		QhatStar = as<NumericVector>(wrap(meanQ4C(Qstar))); //Both of these functinos return arma variables so
-		//QhatStar = as<NumericVector>(wrap(meanQ4C(Qstar)));
-		QstarRcpp = as<NumericMatrix>(wrap(Qstar));					//They need to be converted to Rcpp type
+		QhatStar = Rcpp::as<Rcpp::NumericVector>(Rcpp::wrap(meanQ4C(Qstar))); //Both of these functinos return arma variables so
+		QstarRcpp = Rcpp::as<Rcpp::NumericMatrix>(Rcpp::wrap(Qstar));					//They need to be converted to Rcpp type
 
 		cdstar = cdfunsC(QstarRcpp,QhatStar);
 
-		QhatStarMat = as<NumericMatrix>(wrap(QhatStar)); /*QhatStar needs to be a matrix to be used in RdistC*/
+		QhatStarMat = Rcpp::as<Rcpp::NumericMatrix>(Rcpp::wrap(QhatStar)); /*QhatStar needs to be a matrix to be used in RdistC*/
 		sqrth = oneRdistC(QhatStarMat,Qhat);
 
 		if(cdstar[0]<0.0000001){
@@ -231,24 +220,21 @@ NumericVector zhangQ4(NumericMatrix Q, int m){
 	}
 
 	return testStat;
-
 }
 
-
-// [[Rcpp::export]]
-NumericVector cdfunsCSO3(arma::mat Rs, arma::mat Rhat){
-
+Rcpp::NumericVector cdfunsCSO3(arma::mat Rs, arma::mat Rhat)
+{
 	//Compute the projected median values of c and d to form the pivotal test statistic
   //for SO3 data, used by the zhangMedianC function
 
 	int n = Rs.n_rows, i;
 	double crs, OnemCrs;
 
-	NumericVector cds(2);
+	Rcpp::NumericVector cds(2);
 	cds[0]=0.0;
 	cds[1]=0.0;
 
-	NumericVector rs(n);
+	Rcpp::NumericVector rs(n);
 
 	rs = rdistSO3C(Rs,Rhat);
 
@@ -271,13 +257,12 @@ NumericVector cdfunsCSO3(arma::mat Rs, arma::mat Rhat){
 	return cds;
 }
 
-// [[Rcpp::export]]
-NumericVector zhangMedianC(arma::mat Rs, int m){
-
+Rcpp::NumericVector zhangMedianC(arma::mat Rs, int m)
+{
 	//Compute the bootstrap version of the chang regions for SO3 data because that is what the
 	//median function is written for
 
-  RNGScope scope; // using runif requires this to be set...I think.
+	Rcpp::RNGScope scope; // using runif requires this to be set...I think.
   								// This has been shown to cause problems in the past so consider using the next line in its place
 
   //GetRNGstate();PutRNGstate();
@@ -286,23 +271,23 @@ NumericVector zhangMedianC(arma::mat Rs, int m){
   arma::mat Shat = medianSO3C(Rs,2000,1e-5);
   arma::mat Rstar(n,9);
   arma::mat Sstar(3,3);
-  NumericVector cdstar(2);
-	IntegerVector samp(n);
-	NumericVector unSamp;
+  Rcpp::NumericVector cdstar(2);
+  Rcpp::IntegerVector samp(n);
+  Rcpp::NumericVector unSamp;
 	int numUn=0, maxSamp=0;
-  NumericVector hsqrtMedian;
-  NumericVector hstar(m);
+	Rcpp::NumericVector hsqrtMedian;
+	Rcpp::NumericVector hstar(m);
   double hsq=0.0;
 
   for(j=0;j<m;j++){
 
-		samp = floor(runif(n,0,n));			//Bootstrap sample of size n, with replacement
+		samp = floor(Rcpp::runif(n,0,n));			//Bootstrap sample of size n, with replacement
 	  unSamp = unique(samp);
     numUn = unSamp.size();
     maxSamp = max(samp);
 
     while(numUn<4 || maxSamp>n-1){
-      samp = floor(runif(n,0,n));	 //If bootstrap samp is less than 4 obs then
+      samp = floor(Rcpp::runif(n,0,n));	 //If bootstrap samp is less than 4 obs then
 	    unSamp = unique(samp);       //draw a new sample
       numUn = unSamp.size();
       maxSamp = max(samp);

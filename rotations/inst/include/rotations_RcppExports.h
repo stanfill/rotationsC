@@ -340,11 +340,11 @@ namespace rotations {
         return Rcpp::as<arma::vec >(rcpp_result_gen);
     }
 
-    inline NumericVector RdistC(NumericMatrix Q1, NumericVector Q2) {
+    inline Rcpp::NumericVector RdistC(Rcpp::NumericMatrix Q1, Rcpp::NumericVector Q2) {
         typedef SEXP(*Ptr_RdistC)(SEXP,SEXP);
         static Ptr_RdistC p_RdistC = NULL;
         if (p_RdistC == NULL) {
-            validateSignature("NumericVector(*RdistC)(NumericMatrix,NumericVector)");
+            validateSignature("Rcpp::NumericVector(*RdistC)(Rcpp::NumericMatrix,Rcpp::NumericVector)");
             p_RdistC = (Ptr_RdistC)R_GetCCallable("rotations", "_rotations_RdistC");
         }
         RObject rcpp_result_gen;
@@ -358,7 +358,7 @@ namespace rotations {
             throw Rcpp::LongjumpException(rcpp_result_gen);
         if (rcpp_result_gen.inherits("try-error"))
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-        return Rcpp::as<NumericVector >(rcpp_result_gen);
+        return Rcpp::as<Rcpp::NumericVector >(rcpp_result_gen);
     }
 
     inline arma::rowvec rdistSO3C(arma::mat Rs, arma::mat R2) {
@@ -382,11 +382,11 @@ namespace rotations {
         return Rcpp::as<arma::rowvec >(rcpp_result_gen);
     }
 
-    inline NumericVector EdistC(NumericMatrix Q1, NumericVector Q2) {
+    inline Rcpp::NumericVector EdistC(Rcpp::NumericMatrix Q1, Rcpp::NumericVector Q2) {
         typedef SEXP(*Ptr_EdistC)(SEXP,SEXP);
         static Ptr_EdistC p_EdistC = NULL;
         if (p_EdistC == NULL) {
-            validateSignature("NumericVector(*EdistC)(NumericMatrix,NumericVector)");
+            validateSignature("Rcpp::NumericVector(*EdistC)(Rcpp::NumericMatrix,Rcpp::NumericVector)");
             p_EdistC = (Ptr_EdistC)R_GetCCallable("rotations", "_rotations_EdistC");
         }
         RObject rcpp_result_gen;
@@ -400,14 +400,14 @@ namespace rotations {
             throw Rcpp::LongjumpException(rcpp_result_gen);
         if (rcpp_result_gen.inherits("try-error"))
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-        return Rcpp::as<NumericVector >(rcpp_result_gen);
+        return Rcpp::as<Rcpp::NumericVector >(rcpp_result_gen);
     }
 
-    inline double oneRdistC(NumericMatrix Q1, NumericVector Q2) {
+    inline double oneRdistC(Rcpp::NumericMatrix Q1, Rcpp::NumericVector Q2) {
         typedef SEXP(*Ptr_oneRdistC)(SEXP,SEXP);
         static Ptr_oneRdistC p_oneRdistC = NULL;
         if (p_oneRdistC == NULL) {
-            validateSignature("double(*oneRdistC)(NumericMatrix,NumericVector)");
+            validateSignature("double(*oneRdistC)(Rcpp::NumericMatrix,Rcpp::NumericVector)");
             p_oneRdistC = (Ptr_oneRdistC)R_GetCCallable("rotations", "_rotations_oneRdistC");
         }
         RObject rcpp_result_gen;
@@ -424,11 +424,11 @@ namespace rotations {
         return Rcpp::as<double >(rcpp_result_gen);
     }
 
-    inline NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat) {
+    inline Rcpp::NumericVector cdfunsC(Rcpp::NumericMatrix Qs, Rcpp::NumericVector Qhat) {
         typedef SEXP(*Ptr_cdfunsC)(SEXP,SEXP);
         static Ptr_cdfunsC p_cdfunsC = NULL;
         if (p_cdfunsC == NULL) {
-            validateSignature("NumericVector(*cdfunsC)(NumericMatrix,NumericVector)");
+            validateSignature("Rcpp::NumericVector(*cdfunsC)(Rcpp::NumericMatrix,Rcpp::NumericVector)");
             p_cdfunsC = (Ptr_cdfunsC)R_GetCCallable("rotations", "_rotations_cdfunsC");
         }
         RObject rcpp_result_gen;
@@ -442,14 +442,14 @@ namespace rotations {
             throw Rcpp::LongjumpException(rcpp_result_gen);
         if (rcpp_result_gen.inherits("try-error"))
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-        return Rcpp::as<NumericVector >(rcpp_result_gen);
+        return Rcpp::as<Rcpp::NumericVector >(rcpp_result_gen);
     }
 
-    inline NumericVector cdfunsCMedian(NumericMatrix Qs, NumericVector Qhat) {
+    inline Rcpp::NumericVector cdfunsCMedian(Rcpp::NumericMatrix Qs, Rcpp::NumericVector Qhat) {
         typedef SEXP(*Ptr_cdfunsCMedian)(SEXP,SEXP);
         static Ptr_cdfunsCMedian p_cdfunsCMedian = NULL;
         if (p_cdfunsCMedian == NULL) {
-            validateSignature("NumericVector(*cdfunsCMedian)(NumericMatrix,NumericVector)");
+            validateSignature("Rcpp::NumericVector(*cdfunsCMedian)(Rcpp::NumericMatrix,Rcpp::NumericVector)");
             p_cdfunsCMedian = (Ptr_cdfunsCMedian)R_GetCCallable("rotations", "_rotations_cdfunsCMedian");
         }
         RObject rcpp_result_gen;
@@ -463,14 +463,14 @@ namespace rotations {
             throw Rcpp::LongjumpException(rcpp_result_gen);
         if (rcpp_result_gen.inherits("try-error"))
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-        return Rcpp::as<NumericVector >(rcpp_result_gen);
+        return Rcpp::as<Rcpp::NumericVector >(rcpp_result_gen);
     }
 
-    inline NumericVector zhangQ4(NumericMatrix Q, int m) {
+    inline Rcpp::NumericVector zhangQ4(Rcpp::NumericMatrix Q, int m) {
         typedef SEXP(*Ptr_zhangQ4)(SEXP,SEXP);
         static Ptr_zhangQ4 p_zhangQ4 = NULL;
         if (p_zhangQ4 == NULL) {
-            validateSignature("NumericVector(*zhangQ4)(NumericMatrix,int)");
+            validateSignature("Rcpp::NumericVector(*zhangQ4)(Rcpp::NumericMatrix,int)");
             p_zhangQ4 = (Ptr_zhangQ4)R_GetCCallable("rotations", "_rotations_zhangQ4");
         }
         RObject rcpp_result_gen;
@@ -484,14 +484,14 @@ namespace rotations {
             throw Rcpp::LongjumpException(rcpp_result_gen);
         if (rcpp_result_gen.inherits("try-error"))
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-        return Rcpp::as<NumericVector >(rcpp_result_gen);
+        return Rcpp::as<Rcpp::NumericVector >(rcpp_result_gen);
     }
 
-    inline NumericVector cdfunsCSO3(arma::mat Rs, arma::mat Rhat) {
+    inline Rcpp::NumericVector cdfunsCSO3(arma::mat Rs, arma::mat Rhat) {
         typedef SEXP(*Ptr_cdfunsCSO3)(SEXP,SEXP);
         static Ptr_cdfunsCSO3 p_cdfunsCSO3 = NULL;
         if (p_cdfunsCSO3 == NULL) {
-            validateSignature("NumericVector(*cdfunsCSO3)(arma::mat,arma::mat)");
+            validateSignature("Rcpp::NumericVector(*cdfunsCSO3)(arma::mat,arma::mat)");
             p_cdfunsCSO3 = (Ptr_cdfunsCSO3)R_GetCCallable("rotations", "_rotations_cdfunsCSO3");
         }
         RObject rcpp_result_gen;
@@ -505,14 +505,14 @@ namespace rotations {
             throw Rcpp::LongjumpException(rcpp_result_gen);
         if (rcpp_result_gen.inherits("try-error"))
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-        return Rcpp::as<NumericVector >(rcpp_result_gen);
+        return Rcpp::as<Rcpp::NumericVector >(rcpp_result_gen);
     }
 
-    inline NumericVector zhangMedianC(arma::mat Rs, int m) {
+    inline Rcpp::NumericVector zhangMedianC(arma::mat Rs, int m) {
         typedef SEXP(*Ptr_zhangMedianC)(SEXP,SEXP);
         static Ptr_zhangMedianC p_zhangMedianC = NULL;
         if (p_zhangMedianC == NULL) {
-            validateSignature("NumericVector(*zhangMedianC)(arma::mat,int)");
+            validateSignature("Rcpp::NumericVector(*zhangMedianC)(arma::mat,int)");
             p_zhangMedianC = (Ptr_zhangMedianC)R_GetCCallable("rotations", "_rotations_zhangMedianC");
         }
         RObject rcpp_result_gen;
@@ -526,7 +526,7 @@ namespace rotations {
             throw Rcpp::LongjumpException(rcpp_result_gen);
         if (rcpp_result_gen.inherits("try-error"))
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-        return Rcpp::as<NumericVector >(rcpp_result_gen);
+        return Rcpp::as<Rcpp::NumericVector >(rcpp_result_gen);
     }
 
     inline arma::mat eskewC(arma::rowvec U) {

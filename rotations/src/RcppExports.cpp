@@ -551,12 +551,12 @@ RcppExport SEXP _rotations_fisherBootC(SEXP QsSEXP, SEXP mSEXP, SEXP symmSEXP) {
     return rcpp_result_gen;
 }
 // RdistC
-NumericVector RdistC(NumericMatrix Q1, NumericVector Q2);
+Rcpp::NumericVector RdistC(Rcpp::NumericMatrix Q1, Rcpp::NumericVector Q2);
 static SEXP _rotations_RdistC_try(SEXP Q1SEXP, SEXP Q2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type Q1(Q1SEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type Q2(Q2SEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type Q1(Q1SEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type Q2(Q2SEXP);
     rcpp_result_gen = Rcpp::wrap(RdistC(Q1, Q2));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -621,12 +621,12 @@ RcppExport SEXP _rotations_rdistSO3C(SEXP RsSEXP, SEXP R2SEXP) {
     return rcpp_result_gen;
 }
 // EdistC
-NumericVector EdistC(NumericMatrix Q1, NumericVector Q2);
+Rcpp::NumericVector EdistC(Rcpp::NumericMatrix Q1, Rcpp::NumericVector Q2);
 static SEXP _rotations_EdistC_try(SEXP Q1SEXP, SEXP Q2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type Q1(Q1SEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type Q2(Q2SEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type Q1(Q1SEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type Q2(Q2SEXP);
     rcpp_result_gen = Rcpp::wrap(EdistC(Q1, Q2));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -656,12 +656,12 @@ RcppExport SEXP _rotations_EdistC(SEXP Q1SEXP, SEXP Q2SEXP) {
     return rcpp_result_gen;
 }
 // oneRdistC
-double oneRdistC(NumericMatrix Q1, NumericVector Q2);
+double oneRdistC(Rcpp::NumericMatrix Q1, Rcpp::NumericVector Q2);
 static SEXP _rotations_oneRdistC_try(SEXP Q1SEXP, SEXP Q2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type Q1(Q1SEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type Q2(Q2SEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type Q1(Q1SEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type Q2(Q2SEXP);
     rcpp_result_gen = Rcpp::wrap(oneRdistC(Q1, Q2));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -691,12 +691,12 @@ RcppExport SEXP _rotations_oneRdistC(SEXP Q1SEXP, SEXP Q2SEXP) {
     return rcpp_result_gen;
 }
 // cdfunsC
-NumericVector cdfunsC(NumericMatrix Qs, NumericVector Qhat);
+Rcpp::NumericVector cdfunsC(Rcpp::NumericMatrix Qs, Rcpp::NumericVector Qhat);
 static SEXP _rotations_cdfunsC_try(SEXP QsSEXP, SEXP QhatSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type Qs(QsSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type Qhat(QhatSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type Qs(QsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type Qhat(QhatSEXP);
     rcpp_result_gen = Rcpp::wrap(cdfunsC(Qs, Qhat));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -726,12 +726,12 @@ RcppExport SEXP _rotations_cdfunsC(SEXP QsSEXP, SEXP QhatSEXP) {
     return rcpp_result_gen;
 }
 // cdfunsCMedian
-NumericVector cdfunsCMedian(NumericMatrix Qs, NumericVector Qhat);
+Rcpp::NumericVector cdfunsCMedian(Rcpp::NumericMatrix Qs, Rcpp::NumericVector Qhat);
 static SEXP _rotations_cdfunsCMedian_try(SEXP QsSEXP, SEXP QhatSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type Qs(QsSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type Qhat(QhatSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type Qs(QsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type Qhat(QhatSEXP);
     rcpp_result_gen = Rcpp::wrap(cdfunsCMedian(Qs, Qhat));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -761,11 +761,11 @@ RcppExport SEXP _rotations_cdfunsCMedian(SEXP QsSEXP, SEXP QhatSEXP) {
     return rcpp_result_gen;
 }
 // zhangQ4
-NumericVector zhangQ4(NumericMatrix Q, int m);
+Rcpp::NumericVector zhangQ4(Rcpp::NumericMatrix Q, int m);
 static SEXP _rotations_zhangQ4_try(SEXP QSEXP, SEXP mSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type Q(QSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type Q(QSEXP);
     Rcpp::traits::input_parameter< int >::type m(mSEXP);
     rcpp_result_gen = Rcpp::wrap(zhangQ4(Q, m));
     return rcpp_result_gen;
@@ -796,7 +796,7 @@ RcppExport SEXP _rotations_zhangQ4(SEXP QSEXP, SEXP mSEXP) {
     return rcpp_result_gen;
 }
 // cdfunsCSO3
-NumericVector cdfunsCSO3(arma::mat Rs, arma::mat Rhat);
+Rcpp::NumericVector cdfunsCSO3(arma::mat Rs, arma::mat Rhat);
 static SEXP _rotations_cdfunsCSO3_try(SEXP RsSEXP, SEXP RhatSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -831,7 +831,7 @@ RcppExport SEXP _rotations_cdfunsCSO3(SEXP RsSEXP, SEXP RhatSEXP) {
     return rcpp_result_gen;
 }
 // zhangMedianC
-NumericVector zhangMedianC(arma::mat Rs, int m);
+Rcpp::NumericVector zhangMedianC(arma::mat Rs, int m);
 static SEXP _rotations_zhangMedianC_try(SEXP RsSEXP, SEXP mSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1577,15 +1577,15 @@ static int _rotations_RcppExport_validate(const char* sig) {
         signatures.insert("double(*fisherAxisC)(arma::mat,arma::rowvec)");
         signatures.insert("double(*fisherAxisCSymmetric)(arma::mat,arma::rowvec)");
         signatures.insert("arma::vec(*fisherBootC)(arma::mat,int,bool)");
-        signatures.insert("NumericVector(*RdistC)(NumericMatrix,NumericVector)");
+        signatures.insert("Rcpp::NumericVector(*RdistC)(Rcpp::NumericMatrix,Rcpp::NumericVector)");
         signatures.insert("arma::rowvec(*rdistSO3C)(arma::mat,arma::mat)");
-        signatures.insert("NumericVector(*EdistC)(NumericMatrix,NumericVector)");
-        signatures.insert("double(*oneRdistC)(NumericMatrix,NumericVector)");
-        signatures.insert("NumericVector(*cdfunsC)(NumericMatrix,NumericVector)");
-        signatures.insert("NumericVector(*cdfunsCMedian)(NumericMatrix,NumericVector)");
-        signatures.insert("NumericVector(*zhangQ4)(NumericMatrix,int)");
-        signatures.insert("NumericVector(*cdfunsCSO3)(arma::mat,arma::mat)");
-        signatures.insert("NumericVector(*zhangMedianC)(arma::mat,int)");
+        signatures.insert("Rcpp::NumericVector(*EdistC)(Rcpp::NumericMatrix,Rcpp::NumericVector)");
+        signatures.insert("double(*oneRdistC)(Rcpp::NumericMatrix,Rcpp::NumericVector)");
+        signatures.insert("Rcpp::NumericVector(*cdfunsC)(Rcpp::NumericMatrix,Rcpp::NumericVector)");
+        signatures.insert("Rcpp::NumericVector(*cdfunsCMedian)(Rcpp::NumericMatrix,Rcpp::NumericVector)");
+        signatures.insert("Rcpp::NumericVector(*zhangQ4)(Rcpp::NumericMatrix,int)");
+        signatures.insert("Rcpp::NumericVector(*cdfunsCSO3)(arma::mat,arma::mat)");
+        signatures.insert("Rcpp::NumericVector(*zhangMedianC)(arma::mat,int)");
         signatures.insert("arma::mat(*eskewC)(arma::rowvec)");
         signatures.insert("arma::mat(*SO3defaultC)(arma::mat,arma::vec)");
         signatures.insert("arma::mat(*Q4defaultC)(arma::mat,arma::vec)");
