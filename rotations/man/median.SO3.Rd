@@ -30,11 +30,13 @@ Estimate of the projected or geometric median in the same parameterization.
 Compute the sample projected or geometric median.
 }
 \details{
-The median-type estimators are defined as \deqn{\widetilde{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd(\bm{R}_i,\bm{S}).}{argmin\sum d(Ri,S).}  
-If the choice of distance metric \eqn{d} is Riemannian then the estimator is called the geometric median, 
+The median-type estimators are defined as \deqn{\widetilde{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd(\bm{R}_i,\bm{S}).}{argmin\sum d(Ri,S).}
+If the choice of distance metric \eqn{d} is Riemannian then the estimator is called the geometric median,
 and if the distance metric in Euclidean then it is called the projected median.
-The algorithm used in the geometric case is discussed in \cite{hartley11} 
+The algorithm used in the geometric case is discussed in \cite{hartley11}
 and the projected case is in \cite{stanfill2013}.
+
+hartley11 stanfill2013
 }
 \examples{
 Rs <- ruars(20, rvmises, kappa = 0.01)

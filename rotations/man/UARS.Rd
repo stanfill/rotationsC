@@ -41,19 +41,21 @@ ruars(n, rangle, S = NULL, kappa = 1, space = "SO3", ...)
 Density, distribution function and random generation for the the generic uniform axis-random spin (UARS) class of distributions.
 }
 \details{
-For the rotation R with central orientation S and concentration \eqn{\kappa} the UARS density is given by 
+For the rotation R with central orientation S and concentration \eqn{\kappa} the UARS density is given by
 \deqn{f(R|S,\kappa)=\frac{4\pi}{3-tr(S^\top R)}C(\cos^{-1}[tr(S^\top R)-1]/2|\kappa)}{f(R|S,\kappa)=4\pi C(acos[tr(S'R)-1]/2|\kappa)/[3-tr(S'R)]}
 where \eqn{C(r|\kappa)} is one of the \link{Angular-distributions}.
+
+bingham09
 }
 \examples{
-#Generate random rotations from the Cayley-UARS distribution with central orientation 
+#Generate random rotations from the Cayley-UARS distribution with central orientation
 #rotated about the y-axis through pi/2 radians
 S <- as.SO3(c(0, 1, 0), pi/2)
 Rs <- ruars(20, rangle = rcayley, kappa = 1, S = S)
 
 rs <- mis.angle(Rs-S)                          #Find the associated misorientation angles
 frs <- duars(Rs, dcayley, kappa = 10, S = S)   #Compute UARS density evaluated at each rotations
-plot(rs, frs) 
+plot(rs, frs)
 
 cdf <- puars(Rs, pcayley, S = S)               #By supplying 'pcayley', it is used to compute the
 plot(rs, cdf)                                  #the CDF

@@ -35,9 +35,11 @@ rcayley(n, kappa = 1, nu = NULL)
 Density, distribution function and random generation for the Cayley distribution with concentration \code{kappa} \eqn{\kappa}.
 }
 \details{
-The symmetric Cayley distribution with concentration \eqn{\kappa} has density 
+The symmetric Cayley distribution with concentration \eqn{\kappa} has density
 \deqn{C_C(r |\kappa)=\frac{1}{\sqrt{\pi}} \frac{\Gamma(\kappa+2)}{\Gamma(\kappa+1/2)}2^{-(\kappa+1)}(1+\cos r)^\kappa(1-\cos r).}{C(r |\kappa)= \Gamma(\kappa+2)(1+cos r)^\kappa(1-cos r)/[\Gamma(\kappa+1/2)2^(\kappa+1)\sqrt\pi].}
 The Cayley distribution is equivalent to the de la Vallee Poussin distribution of \cite{Schaeben1997}.
+
+Schaeben1997 leon2006
 }
 \examples{
 r <- seq(-pi, pi, length = 500)

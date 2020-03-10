@@ -27,6 +27,8 @@ Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the projected m
 Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
 estimator using the method due to \cite{prentice1986}.  For a rotation specific version see \cite{rancourt2000}. The variability
 in each axis is different so each axis will have its own radius.
+
+prentice1986, rancourt2000
 }
 \examples{
 Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')

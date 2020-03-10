@@ -37,9 +37,9 @@ Density, distribution function and random generation for the matrix-Fisher distr
 \details{
 The matrix-Fisher distribution with concentration \eqn{\kappa} has density
 \deqn{C_\mathrm{{F}}(r|\kappa)=\frac{1}{2\pi[\mathrm{I_0}(2\kappa)-\mathrm{I_1}(2\kappa)]}e^{2\kappa\cos(r)}[1-\cos(r)]}{C(r|\kappa)=exp[2\kappa cos(r)][1-cos(r)]/(2\pi[I0(2\kappa)-I1(2\kappa)])}
-with respect to Lebesgue measure where \eqn{\mathrm{I}_p(\cdot)}{Ip()} denotes the Bessel function of order \eqn{p} defined as  
+with respect to Lebesgue measure where \eqn{\mathrm{I}_p(\cdot)}{Ip()} denotes the Bessel function of order \eqn{p} defined as
 \eqn{\mathrm{I}_p(\kappa)=\frac{1}{2\pi}\int_{-\pi}^{\pi}\cos(pr)e^{\kappa\cos r}dr}{Ip(\kappa)}.  If \code{kappa>354} then random deviates
-are generated from the \code{\link{Cayley}} distribution because they agree closely for large \code{kappa} and generation is 
+are generated from the \code{\link{Cayley}} distribution because they agree closely for large \code{kappa} and generation is
 more stable from the Cayley distribution.
 
 For large \eqn{\kappa}, the Bessel functon gives errors so a large \eqn{\kappa} approximation to the matrix-Fisher

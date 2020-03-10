@@ -29,10 +29,12 @@ Compute the sample geometric or projected mean.
 \details{
 This function takes a sample of 3D rotations (in matrix or quaternion form) and returns the projected arithmetic mean denoted \eqn{\widehat{\bm S}_P}{S_P} or
 geometric mean \eqn{\widehat{\bm S}_G}{S_G} according to the \code{type} option.
-For a sample of \eqn{n} rotations in matrix form \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the mean-type estimator is defined as \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd^2(\bm{R}_i,\bm{S})}{argmin\sum d^2(Ri,S)} 
+For a sample of \eqn{n} rotations in matrix form \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the mean-type estimator is defined as \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd^2(\bm{R}_i,\bm{S})}{argmin\sum d^2(Ri,S)}
 where \eqn{d} is the Riemannian or Euclidean distance.
 For more on the projected mean see \cite{moakher02} and for the geometric mean see \cite{manton04}.
 For the projected mean from a quaternion point of view see \cite{tyler1981}.
+
+tyler1981, moakher02, manton04
 }
 \examples{
 Rs <- ruars(20, rvmises, kappa = 0.01)

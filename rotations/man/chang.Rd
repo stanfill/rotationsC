@@ -31,6 +31,8 @@ or median based on a result due to \cite{chang2001} among others.  By constructi
 radius so the radius reported is for all three axes.  This method is called "direct" because it uses
 M-estimation theory for SO(3) directly instead of relying on the transformation of a result from directional statistics
 like \code{\link{prentice}} and \code{\link{fisheretal}} do.
+
+chang2001
 }
 \examples{
 Rs <- ruars(20, rcayley, kappa = 100)

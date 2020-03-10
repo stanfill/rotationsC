@@ -35,7 +35,7 @@ measure.  The Haar measure is the volume invariant measure for SO(3) that plays 
 of the uniform measure on SO(3) and \eqn{C_U(r)}{C(r)} is the angular distribution that corresponds
 to the uniform distribution on SO(3), see \code{\link{UARS}}.  The uniform distribution with respect to the Haar measure is given
 by \deqn{C_U(r)=\frac{1}{2\pi}.}{C(r)=1/(2\pi).}  Because the uniform distribution
-with respect to the Haar measure gives a horizontal line at 1 
+with respect to the Haar measure gives a horizontal line at 1
 with respect to the Lebesgue measure, we called this distribution 'Haar.'
 }
 \examples{

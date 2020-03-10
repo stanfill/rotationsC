@@ -30,7 +30,7 @@ bayes.mean(x, type, S0, kappa0, tuneS, tuneK, burn_in, m = 5000)
 \item{m}{number of draws to keep from posterior distribution}
 }
 \value{
-list of 
+list of
          \itemize{
          \item \code{Shat} Mode of the posterior distribution for the central orientation S
          \item \code{kappa} Mean of the posterior distribution for the concentration kappa
@@ -41,23 +41,25 @@ Use non-informative Bayes to estimate the central orientation and concentration 
 }
 \details{
 The procedures detailed in \cite{bingham2009b} and \cite{bingham2010} are implemented to obtain
-draws from the posterior distribution for the central orientation and concentration parameters for 
+draws from the posterior distribution for the central orientation and concentration parameters for
 a sample of 3D rotations.  A uniform prior on SO(3) is used for the central orientation and the
 Jeffreys prior determined by \code{type} is used for the concentration parameter.
+
+bingham2009b bingham2010
 }
 \examples{
 Rs <- ruars(20, rvmises, kappa = 10)
 
 Shat <- mean(Rs)               #Estimate the central orientation using the projected mean
 rotdist.sum(Rs, Shat, p = 2)   #The projected mean minimizes the sum of squared Euclidean
-rot.dist(Shat)                 #distances, compute the minimized sum and estimator bias 
+rot.dist(Shat)                 #distances, compute the minimized sum and estimator bias
 
-#Estimate the central orientation using the posterior mode (not run due to time constraints) 
+#Estimate the central orientation using the posterior mode (not run due to time constraints)
 #Compare it to the projected mean in terms of the squared Euclidean distance and bias
 \dontrun{
 ests <- bayes.mean(Rs, type = "Mises", S0 = mean(Rs), kappa0 = 10, tuneS = 5000,
                    tuneK = 1, burn_in = 1000, m = 5000)
-                   
+
 Shat2 <- ests$Shat             #The posterior mode is the 'Shat' object
 rotdist.sum(Rs, Shat2, p = 2)  #Compute sum of squared Euclidean distances
 rot.dist(Shat2)                #Bayes estimator bias}

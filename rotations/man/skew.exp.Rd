@@ -17,6 +17,9 @@ Compute the matrix exponential for skew-symmetric matrices according to the usua
 The expansion is significantly simplified for skew-symmetric matrices, see \cite{moakher02}.
 Maps a matrix belonging to the lie algebra \eqn{so(3)} into the lie group \eqn{SO(3)}.
 }
+\details{
+moakher02
+}
 \examples{
 Rs <- ruars(20, rcayley)
 lRs <- log(Rs)           #Take the matrix logarithm for rotation matrices

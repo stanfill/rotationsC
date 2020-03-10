@@ -19,6 +19,9 @@ Compute the logarithm of a rotation matrix, which results in a \eqn{3\times 3}{3
 the lie group \eqn{SO(3)} into its tangent space, which is the space of all \eqn{3\times 3}{3-by-3} skew symmetric matrices,
 the lie algebra \eqn{so(3)}.  For details see e.g. \cite{moakher02}.
 }
+\details{
+moakher02
+}
 \examples{
 Rs <- ruars(20, rcayley)
 

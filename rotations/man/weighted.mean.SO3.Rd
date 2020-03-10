@@ -31,9 +31,11 @@ Compute the weighted geometric or projected mean of a sample of rotations.
 \details{
 This function takes a sample of 3D rotations (in matrix or quaternion form) and returns the weighted projected arithmetic mean \eqn{\widehat{\bm S}_P}{S_P} or
 geometric mean \eqn{\widehat{\bm S}_G}{S_G} according to the \code{type} option.
-For a sample of \eqn{n} rotations in matrix form \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the weighted mean is defined as 
+For a sample of \eqn{n} rotations in matrix form \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the weighted mean is defined as
 \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nw_id^2(\bm{R}_i,\bm{S})}{argmin\sum wi d^2(Ri,S)} where \eqn{d}
 is the Riemannian or Euclidean distance.  For more on the projected mean see \cite{moakher02} and for the geometric mean see \cite{manton04}.
+
+moakher02
 }
 \examples{
 Rs <- ruars(20, rvmises, kappa = 0.01)
@@ -45,11 +47,11 @@ rot.dist(weighted.mean(Rs, wt)) #usually much smaller than unweighted mean
 
 #Can do the same thing with quaternions
 Qs <- as.Q4(Rs)
-mean(Qs) 
-wt <- abs(1/mis.angle(Qs)) 
-weighted.mean(Qs, wt)      
+mean(Qs)
+wt <- abs(1/mis.angle(Qs))
+weighted.mean(Qs, wt)
 rot.dist(mean(Qs))
-rot.dist(weighted.mean(Qs, wt)) 
+rot.dist(weighted.mean(Qs, wt))
 }
 \seealso{
 \code{\link{median.SO3}}, \code{\link{mean.SO3}}, \code{\link{bayes.mean}}

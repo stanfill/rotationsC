@@ -33,12 +33,14 @@ Find the radius of a \eqn{100(1-\alpha)}\% confidence region for the central ori
 Compute the radius of a \eqn{100(1-\alpha)}\% confidence region for the central orientation based on the projected mean
 estimator using the method for the mean polar axis as proposed in \cite{fisher1996}.  To be able to reduce their method
 to a radius requires the additional assumption of rotational symmetry, equation (10) in \cite{fisher1996}.
+
+fisher1996
 }
 \examples{
 Qs<-ruars(20, rcayley, kappa = 100, space = 'Q4')
 
 #The Fisher et al. method can be accesed from the "region" function or the "fisheretal" function
-region(Qs, method = "transformation", type = "bootstrap", alp = 0.1, 
+region(Qs, method = "transformation", type = "bootstrap", alp = 0.1,
 symm = TRUE, estimator = "mean")
 fisheretal(Qs, alp = 0.1, boot = TRUE, symm = TRUE)
 }

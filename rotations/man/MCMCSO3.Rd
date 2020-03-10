@@ -30,7 +30,7 @@ MCMCSO3(x, type, S0, kappa0, tuneS, tuneK, burn_in, m = 5000)
 \item{m}{number of draws to keep from posterior distribution}
 }
 \value{
-list of 
+list of
 \itemize{
          \item \code{S} Draws from the posterior distribution for central orientation S
          \item \code{kappa} Draws from the posterior distribution for concentration parameter kappa
@@ -39,19 +39,21 @@ list of
          }
 }
 \description{
-Use non-informative Bayesian methods to infer about the central orientation and concentration 
+Use non-informative Bayesian methods to infer about the central orientation and concentration
 parameter for a sample of rotations.
 }
 \details{
 The procedures detailed in \cite{bingham2009b} and \cite{bingham2010} are implemented to obtain
-draws from the posterior distribution for the central orientation and concentration parameters for 
+draws from the posterior distribution for the central orientation and concentration parameters for
 a sample of 3D rotations.  A uniform prior on SO(3) is used for the central orientation and the
 Jeffreys prior determined by \code{type} is used for the concentration parameter.
+
+bingham2009b bingham2010
 }
 \examples{
 #Not run due to time constraints
 \dontrun{
 Rs <- ruars(20, rfisher, kappa = 10)
-draws <- MCMCSO3(Rs, type = "Fisher", S0 = mean(Rs), kappa0 = 10, tuneS = 5000, 
+draws <- MCMCSO3(Rs, type = "Fisher", S0 = mean(Rs), kappa0 = 10, tuneS = 5000,
                  tuneK = 1,burn_in = 1000, m = 5000)}
 }
