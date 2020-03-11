@@ -529,11 +529,11 @@ namespace rotations {
         return Rcpp::as<Rcpp::NumericVector >(rcpp_result_gen);
     }
 
-    inline arma::mat eskewC(arma::rowvec U) {
+    inline arma::mat eskewC(const arma::rowvec& U) {
         typedef SEXP(*Ptr_eskewC)(SEXP);
         static Ptr_eskewC p_eskewC = NULL;
         if (p_eskewC == NULL) {
-            validateSignature("arma::mat(*eskewC)(arma::rowvec)");
+            validateSignature("arma::mat(*eskewC)(const arma::rowvec&)");
             p_eskewC = (Ptr_eskewC)R_GetCCallable("rotations", "_rotations_eskewC");
         }
         RObject rcpp_result_gen;
@@ -550,11 +550,11 @@ namespace rotations {
         return Rcpp::as<arma::mat >(rcpp_result_gen);
     }
 
-    inline arma::mat SO3defaultC(arma::mat U, arma::vec theta) {
+    inline arma::mat SO3defaultC(const arma::mat& U, const arma::vec& theta) {
         typedef SEXP(*Ptr_SO3defaultC)(SEXP,SEXP);
         static Ptr_SO3defaultC p_SO3defaultC = NULL;
         if (p_SO3defaultC == NULL) {
-            validateSignature("arma::mat(*SO3defaultC)(arma::mat,arma::vec)");
+            validateSignature("arma::mat(*SO3defaultC)(const arma::mat&,const arma::vec&)");
             p_SO3defaultC = (Ptr_SO3defaultC)R_GetCCallable("rotations", "_rotations_SO3defaultC");
         }
         RObject rcpp_result_gen;
@@ -571,11 +571,11 @@ namespace rotations {
         return Rcpp::as<arma::mat >(rcpp_result_gen);
     }
 
-    inline arma::mat Q4defaultC(arma::mat U, arma::vec theta) {
+    inline arma::mat Q4defaultC(const arma::mat& U, const arma::vec& theta) {
         typedef SEXP(*Ptr_Q4defaultC)(SEXP,SEXP);
         static Ptr_Q4defaultC p_Q4defaultC = NULL;
         if (p_Q4defaultC == NULL) {
-            validateSignature("arma::mat(*Q4defaultC)(arma::mat,arma::vec)");
+            validateSignature("arma::mat(*Q4defaultC)(const arma::mat&,const arma::vec&)");
             p_Q4defaultC = (Ptr_Q4defaultC)R_GetCCallable("rotations", "_rotations_Q4defaultC");
         }
         RObject rcpp_result_gen;
@@ -592,11 +592,11 @@ namespace rotations {
         return Rcpp::as<arma::mat >(rcpp_result_gen);
     }
 
-    inline arma::mat pMatC(arma::mat p) {
+    inline arma::mat pMatC(const arma::mat& p) {
         typedef SEXP(*Ptr_pMatC)(SEXP);
         static Ptr_pMatC p_pMatC = NULL;
         if (p_pMatC == NULL) {
-            validateSignature("arma::mat(*pMatC)(arma::mat)");
+            validateSignature("arma::mat(*pMatC)(const arma::mat&)");
             p_pMatC = (Ptr_pMatC)R_GetCCallable("rotations", "_rotations_pMatC");
         }
         RObject rcpp_result_gen;
@@ -613,11 +613,11 @@ namespace rotations {
         return Rcpp::as<arma::mat >(rcpp_result_gen);
     }
 
-    inline arma::mat genrC(arma::vec r, arma::mat S, int SO3, arma::mat u) {
+    inline arma::mat genrC(const arma::vec& r, const arma::mat& S, int SO3, const arma::mat& u) {
         typedef SEXP(*Ptr_genrC)(SEXP,SEXP,SEXP,SEXP);
         static Ptr_genrC p_genrC = NULL;
         if (p_genrC == NULL) {
-            validateSignature("arma::mat(*genrC)(arma::vec,arma::mat,int,arma::mat)");
+            validateSignature("arma::mat(*genrC)(const arma::vec&,const arma::mat&,int,const arma::mat&)");
             p_genrC = (Ptr_genrC)R_GetCCallable("rotations", "_rotations_genrC");
         }
         RObject rcpp_result_gen;

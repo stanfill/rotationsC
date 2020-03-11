@@ -5,18 +5,18 @@
 // [[Rcpp::interfaces(r, cpp)]]
 
 // [[Rcpp::export]]
-arma::mat eskewC(arma::rowvec U);
+arma::mat eskewC(const arma::rowvec &U);
 
 // [[Rcpp::export]]
-arma::mat SO3defaultC(arma::mat U, arma::vec theta);
+arma::mat SO3defaultC(const arma::mat &U, const arma::vec &theta);
 
 // [[Rcpp::export]]
-arma::mat Q4defaultC(arma::mat U, arma::vec theta);
+arma::mat Q4defaultC(const arma::mat &U, const arma::vec &theta);
 
 // [[Rcpp::export]]
-arma::mat pMatC(arma::mat p);
+arma::mat pMatC(const arma::mat &p);
 
 // [[Rcpp::export]]
-arma::mat genrC(arma::vec r, arma::mat S , int SO3, arma::mat u);
+arma::mat genrC(const arma::vec &r, const arma::mat &S, int SO3, const arma::mat &u);
 
 #endif /* BASICS_H */

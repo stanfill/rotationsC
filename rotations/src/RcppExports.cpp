@@ -866,11 +866,11 @@ RcppExport SEXP _rotations_zhangMedianC(SEXP RsSEXP, SEXP mSEXP) {
     return rcpp_result_gen;
 }
 // eskewC
-arma::mat eskewC(arma::rowvec U);
+arma::mat eskewC(const arma::rowvec& U);
 static SEXP _rotations_eskewC_try(SEXP USEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::rowvec >::type U(USEXP);
+    Rcpp::traits::input_parameter< const arma::rowvec& >::type U(USEXP);
     rcpp_result_gen = Rcpp::wrap(eskewC(U));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -900,12 +900,12 @@ RcppExport SEXP _rotations_eskewC(SEXP USEXP) {
     return rcpp_result_gen;
 }
 // SO3defaultC
-arma::mat SO3defaultC(arma::mat U, arma::vec theta);
+arma::mat SO3defaultC(const arma::mat& U, const arma::vec& theta);
 static SEXP _rotations_SO3defaultC_try(SEXP USEXP, SEXP thetaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type U(USEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type U(USEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type theta(thetaSEXP);
     rcpp_result_gen = Rcpp::wrap(SO3defaultC(U, theta));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -935,12 +935,12 @@ RcppExport SEXP _rotations_SO3defaultC(SEXP USEXP, SEXP thetaSEXP) {
     return rcpp_result_gen;
 }
 // Q4defaultC
-arma::mat Q4defaultC(arma::mat U, arma::vec theta);
+arma::mat Q4defaultC(const arma::mat& U, const arma::vec& theta);
 static SEXP _rotations_Q4defaultC_try(SEXP USEXP, SEXP thetaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type U(USEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type U(USEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type theta(thetaSEXP);
     rcpp_result_gen = Rcpp::wrap(Q4defaultC(U, theta));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -970,11 +970,11 @@ RcppExport SEXP _rotations_Q4defaultC(SEXP USEXP, SEXP thetaSEXP) {
     return rcpp_result_gen;
 }
 // pMatC
-arma::mat pMatC(arma::mat p);
+arma::mat pMatC(const arma::mat& p);
 static SEXP _rotations_pMatC_try(SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type p(pSEXP);
     rcpp_result_gen = Rcpp::wrap(pMatC(p));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -1004,14 +1004,14 @@ RcppExport SEXP _rotations_pMatC(SEXP pSEXP) {
     return rcpp_result_gen;
 }
 // genrC
-arma::mat genrC(arma::vec r, arma::mat S, int SO3, arma::mat u);
+arma::mat genrC(const arma::vec& r, const arma::mat& S, int SO3, const arma::mat& u);
 static SEXP _rotations_genrC_try(SEXP rSEXP, SEXP SSEXP, SEXP SO3SEXP, SEXP uSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type r(rSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type S(SSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type r(rSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type S(SSEXP);
     Rcpp::traits::input_parameter< int >::type SO3(SO3SEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type u(uSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type u(uSEXP);
     rcpp_result_gen = Rcpp::wrap(genrC(r, S, SO3, u));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -1586,11 +1586,11 @@ static int _rotations_RcppExport_validate(const char* sig) {
         signatures.insert("Rcpp::NumericVector(*zhangQ4)(Rcpp::NumericMatrix,int)");
         signatures.insert("Rcpp::NumericVector(*cdfunsCSO3)(arma::mat,arma::mat)");
         signatures.insert("Rcpp::NumericVector(*zhangMedianC)(arma::mat,int)");
-        signatures.insert("arma::mat(*eskewC)(arma::rowvec)");
-        signatures.insert("arma::mat(*SO3defaultC)(arma::mat,arma::vec)");
-        signatures.insert("arma::mat(*Q4defaultC)(arma::mat,arma::vec)");
-        signatures.insert("arma::mat(*pMatC)(arma::mat)");
-        signatures.insert("arma::mat(*genrC)(arma::vec,arma::mat,int,arma::mat)");
+        signatures.insert("arma::mat(*eskewC)(const arma::rowvec&)");
+        signatures.insert("arma::mat(*SO3defaultC)(const arma::mat&,const arma::vec&)");
+        signatures.insert("arma::mat(*Q4defaultC)(const arma::mat&,const arma::vec&)");
+        signatures.insert("arma::mat(*pMatC)(const arma::mat&)");
+        signatures.insert("arma::mat(*genrC)(const arma::vec&,const arma::mat&,int,const arma::mat&)");
         signatures.insert("int(*checkQ4)(Rcpp::NumericMatrix)");
         signatures.insert("int(*checkSO3)(arma::mat)");
         signatures.insert("arma::mat(*expskewC)(arma::mat)");
