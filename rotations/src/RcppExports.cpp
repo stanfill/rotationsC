@@ -445,12 +445,12 @@ RcppExport SEXP _rotations_both_MCMC_CPP(SEXP RsSEXP, SEXP S0SEXP, SEXP kappa0SE
     return rcpp_result_gen;
 }
 // fisherAxisC
-double fisherAxisC(arma::mat Qs, arma::rowvec Qhat);
+double fisherAxisC(const arma::mat& Qs, const arma::rowvec& Qhat);
 static SEXP _rotations_fisherAxisC_try(SEXP QsSEXP, SEXP QhatSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Qs(QsSEXP);
-    Rcpp::traits::input_parameter< arma::rowvec >::type Qhat(QhatSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Qs(QsSEXP);
+    Rcpp::traits::input_parameter< const arma::rowvec& >::type Qhat(QhatSEXP);
     rcpp_result_gen = Rcpp::wrap(fisherAxisC(Qs, Qhat));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -480,12 +480,12 @@ RcppExport SEXP _rotations_fisherAxisC(SEXP QsSEXP, SEXP QhatSEXP) {
     return rcpp_result_gen;
 }
 // fisherAxisCSymmetric
-double fisherAxisCSymmetric(arma::mat Qs, arma::rowvec Qhat);
+double fisherAxisCSymmetric(const arma::mat& Qs, const arma::rowvec& Qhat);
 static SEXP _rotations_fisherAxisCSymmetric_try(SEXP QsSEXP, SEXP QhatSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Qs(QsSEXP);
-    Rcpp::traits::input_parameter< arma::rowvec >::type Qhat(QhatSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Qs(QsSEXP);
+    Rcpp::traits::input_parameter< const arma::rowvec& >::type Qhat(QhatSEXP);
     rcpp_result_gen = Rcpp::wrap(fisherAxisCSymmetric(Qs, Qhat));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -515,12 +515,12 @@ RcppExport SEXP _rotations_fisherAxisCSymmetric(SEXP QsSEXP, SEXP QhatSEXP) {
     return rcpp_result_gen;
 }
 // fisherBootC
-arma::vec fisherBootC(arma::mat Qs, int m, bool symm);
+arma::vec fisherBootC(const arma::mat& Qs, unsigned int m, bool symm);
 static SEXP _rotations_fisherBootC_try(SEXP QsSEXP, SEXP mSEXP, SEXP symmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Qs(QsSEXP);
-    Rcpp::traits::input_parameter< int >::type m(mSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Qs(QsSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type m(mSEXP);
     Rcpp::traits::input_parameter< bool >::type symm(symmSEXP);
     rcpp_result_gen = Rcpp::wrap(fisherBootC(Qs, m, symm));
     return rcpp_result_gen;
@@ -1574,9 +1574,9 @@ static int _rotations_RcppExport_validate(const char* sig) {
         signatures.insert("double(*kap_MCMC_CPP)(const arma::mat&,double,double,const arma::mat&,int)");
         signatures.insert("arma::rowvec(*afun_CPP)(const arma::mat&,const arma::mat&)");
         signatures.insert("Rcpp::List(*both_MCMC_CPP)(const arma::mat&,arma::mat,double,double,double,int,int,int)");
-        signatures.insert("double(*fisherAxisC)(arma::mat,arma::rowvec)");
-        signatures.insert("double(*fisherAxisCSymmetric)(arma::mat,arma::rowvec)");
-        signatures.insert("arma::vec(*fisherBootC)(arma::mat,int,bool)");
+        signatures.insert("double(*fisherAxisC)(const arma::mat&,const arma::rowvec&)");
+        signatures.insert("double(*fisherAxisCSymmetric)(const arma::mat&,const arma::rowvec&)");
+        signatures.insert("arma::vec(*fisherBootC)(const arma::mat&,unsigned int,bool)");
         signatures.insert("Rcpp::NumericVector(*RdistC)(Rcpp::NumericMatrix,Rcpp::NumericVector)");
         signatures.insert("arma::rowvec(*rdistSO3C)(arma::mat,arma::mat)");
         signatures.insert("Rcpp::NumericVector(*EdistC)(Rcpp::NumericMatrix,Rcpp::NumericVector)");

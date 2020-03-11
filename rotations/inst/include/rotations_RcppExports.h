@@ -277,11 +277,11 @@ namespace rotations {
         return Rcpp::as<Rcpp::List >(rcpp_result_gen);
     }
 
-    inline double fisherAxisC(arma::mat Qs, arma::rowvec Qhat) {
+    inline double fisherAxisC(const arma::mat& Qs, const arma::rowvec& Qhat) {
         typedef SEXP(*Ptr_fisherAxisC)(SEXP,SEXP);
         static Ptr_fisherAxisC p_fisherAxisC = NULL;
         if (p_fisherAxisC == NULL) {
-            validateSignature("double(*fisherAxisC)(arma::mat,arma::rowvec)");
+            validateSignature("double(*fisherAxisC)(const arma::mat&,const arma::rowvec&)");
             p_fisherAxisC = (Ptr_fisherAxisC)R_GetCCallable("rotations", "_rotations_fisherAxisC");
         }
         RObject rcpp_result_gen;
@@ -298,11 +298,11 @@ namespace rotations {
         return Rcpp::as<double >(rcpp_result_gen);
     }
 
-    inline double fisherAxisCSymmetric(arma::mat Qs, arma::rowvec Qhat) {
+    inline double fisherAxisCSymmetric(const arma::mat& Qs, const arma::rowvec& Qhat) {
         typedef SEXP(*Ptr_fisherAxisCSymmetric)(SEXP,SEXP);
         static Ptr_fisherAxisCSymmetric p_fisherAxisCSymmetric = NULL;
         if (p_fisherAxisCSymmetric == NULL) {
-            validateSignature("double(*fisherAxisCSymmetric)(arma::mat,arma::rowvec)");
+            validateSignature("double(*fisherAxisCSymmetric)(const arma::mat&,const arma::rowvec&)");
             p_fisherAxisCSymmetric = (Ptr_fisherAxisCSymmetric)R_GetCCallable("rotations", "_rotations_fisherAxisCSymmetric");
         }
         RObject rcpp_result_gen;
@@ -319,11 +319,11 @@ namespace rotations {
         return Rcpp::as<double >(rcpp_result_gen);
     }
 
-    inline arma::vec fisherBootC(arma::mat Qs, int m, bool symm) {
+    inline arma::vec fisherBootC(const arma::mat& Qs, unsigned int m, bool symm) {
         typedef SEXP(*Ptr_fisherBootC)(SEXP,SEXP,SEXP);
         static Ptr_fisherBootC p_fisherBootC = NULL;
         if (p_fisherBootC == NULL) {
-            validateSignature("arma::vec(*fisherBootC)(arma::mat,int,bool)");
+            validateSignature("arma::vec(*fisherBootC)(const arma::mat&,unsigned int,bool)");
             p_fisherBootC = (Ptr_fisherBootC)R_GetCCallable("rotations", "_rotations_fisherBootC");
         }
         RObject rcpp_result_gen;
