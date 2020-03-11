@@ -1455,11 +1455,11 @@ RcppExport SEXP _rotations_gmeanSO3C(SEXP RsSEXP, SEXP maxIterationsSEXP, SEXP m
     return rcpp_result_gen;
 }
 // HnCpp
-arma::rowvec HnCpp(arma::mat Qs);
+arma::rowvec HnCpp(const arma::mat& Qs);
 static SEXP _rotations_HnCpp_try(SEXP QsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Qs(QsSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Qs(QsSEXP);
     rcpp_result_gen = Rcpp::wrap(HnCpp(Qs));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -1489,11 +1489,11 @@ RcppExport SEXP _rotations_HnCpp(SEXP QsSEXP) {
     return rcpp_result_gen;
 }
 // HnCppIntrinsic
-arma::rowvec HnCppIntrinsic(arma::mat Qs);
+arma::rowvec HnCppIntrinsic(const arma::mat& Qs);
 static SEXP _rotations_HnCppIntrinsic_try(SEXP QsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Qs(QsSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Qs(QsSEXP);
     rcpp_result_gen = Rcpp::wrap(HnCppIntrinsic(Qs));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -1523,12 +1523,12 @@ RcppExport SEXP _rotations_HnCppIntrinsic(SEXP QsSEXP) {
     return rcpp_result_gen;
 }
 // HnCppBloc
-arma::rowvec HnCppBloc(arma::mat Qs, arma::mat Cs);
+arma::rowvec HnCppBloc(const arma::mat& Qs, const arma::mat& Cs);
 static SEXP _rotations_HnCppBloc_try(SEXP QsSEXP, SEXP CsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Qs(QsSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type Cs(CsSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Qs(QsSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Cs(CsSEXP);
     rcpp_result_gen = Rcpp::wrap(HnCppBloc(Qs, Cs));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -1603,9 +1603,9 @@ static int _rotations_RcppExport_validate(const char* sig) {
         signatures.insert("arma::mat(*medianSO3C)(const arma::mat&,unsigned int,double)");
         signatures.insert("arma::mat(*HartmedianSO3C)(const arma::mat&,unsigned int,double)");
         signatures.insert("arma::mat(*gmeanSO3C)(const arma::mat&,unsigned int,double)");
-        signatures.insert("arma::rowvec(*HnCpp)(arma::mat)");
-        signatures.insert("arma::rowvec(*HnCppIntrinsic)(arma::mat)");
-        signatures.insert("arma::rowvec(*HnCppBloc)(arma::mat,arma::mat)");
+        signatures.insert("arma::rowvec(*HnCpp)(const arma::mat&)");
+        signatures.insert("arma::rowvec(*HnCppIntrinsic)(const arma::mat&)");
+        signatures.insert("arma::rowvec(*HnCppBloc)(const arma::mat&,const arma::mat&)");
     }
     return signatures.find(sig) != signatures.end();
 }

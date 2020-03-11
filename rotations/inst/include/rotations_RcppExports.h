@@ -886,11 +886,11 @@ namespace rotations {
         return Rcpp::as<arma::mat >(rcpp_result_gen);
     }
 
-    inline arma::rowvec HnCpp(arma::mat Qs) {
+    inline arma::rowvec HnCpp(const arma::mat& Qs) {
         typedef SEXP(*Ptr_HnCpp)(SEXP);
         static Ptr_HnCpp p_HnCpp = NULL;
         if (p_HnCpp == NULL) {
-            validateSignature("arma::rowvec(*HnCpp)(arma::mat)");
+            validateSignature("arma::rowvec(*HnCpp)(const arma::mat&)");
             p_HnCpp = (Ptr_HnCpp)R_GetCCallable("rotations", "_rotations_HnCpp");
         }
         RObject rcpp_result_gen;
@@ -907,11 +907,11 @@ namespace rotations {
         return Rcpp::as<arma::rowvec >(rcpp_result_gen);
     }
 
-    inline arma::rowvec HnCppIntrinsic(arma::mat Qs) {
+    inline arma::rowvec HnCppIntrinsic(const arma::mat& Qs) {
         typedef SEXP(*Ptr_HnCppIntrinsic)(SEXP);
         static Ptr_HnCppIntrinsic p_HnCppIntrinsic = NULL;
         if (p_HnCppIntrinsic == NULL) {
-            validateSignature("arma::rowvec(*HnCppIntrinsic)(arma::mat)");
+            validateSignature("arma::rowvec(*HnCppIntrinsic)(const arma::mat&)");
             p_HnCppIntrinsic = (Ptr_HnCppIntrinsic)R_GetCCallable("rotations", "_rotations_HnCppIntrinsic");
         }
         RObject rcpp_result_gen;
@@ -928,11 +928,11 @@ namespace rotations {
         return Rcpp::as<arma::rowvec >(rcpp_result_gen);
     }
 
-    inline arma::rowvec HnCppBloc(arma::mat Qs, arma::mat Cs) {
+    inline arma::rowvec HnCppBloc(const arma::mat& Qs, const arma::mat& Cs) {
         typedef SEXP(*Ptr_HnCppBloc)(SEXP,SEXP);
         static Ptr_HnCppBloc p_HnCppBloc = NULL;
         if (p_HnCppBloc == NULL) {
-            validateSignature("arma::rowvec(*HnCppBloc)(arma::mat,arma::mat)");
+            validateSignature("arma::rowvec(*HnCppBloc)(const arma::mat&,const arma::mat&)");
             p_HnCppBloc = (Ptr_HnCppBloc)R_GetCCallable("rotations", "_rotations_HnCppBloc");
         }
         RObject rcpp_result_gen;
