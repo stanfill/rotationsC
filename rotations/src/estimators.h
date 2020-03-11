@@ -31,7 +31,7 @@ arma::mat meanSO3C(const arma::mat &Rs);
 // [[Rcpp::export]]
 arma::rowvec meanQ4C(const arma::mat &Q);
 
-//[[Rcpp::export]]
+// [[Rcpp::export]]
 arma::mat medianSO3C(const arma::mat &Rs, unsigned int maxIterations, double maxEps);
 
 //[[Rcpp::export]]

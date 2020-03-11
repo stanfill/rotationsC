@@ -10,11 +10,11 @@
 using namespace Rcpp;
 
 // rcayleyCpp
-NumericVector rcayleyCpp(int n, double kappa);
+Rcpp::NumericVector rcayleyCpp(unsigned int n, double kappa);
 static SEXP _rotations_rcayleyCpp_try(SEXP nSEXP, SEXP kappaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type n(nSEXP);
     Rcpp::traits::input_parameter< double >::type kappa(kappaSEXP);
     rcpp_result_gen = Rcpp::wrap(rcayleyCpp(n, kappa));
     return rcpp_result_gen;
@@ -45,11 +45,11 @@ RcppExport SEXP _rotations_rcayleyCpp(SEXP nSEXP, SEXP kappaSEXP) {
     return rcpp_result_gen;
 }
 // rmbCpp
-NumericVector rmbCpp(int n, double kappa);
+Rcpp::NumericVector rmbCpp(unsigned int n, double kappa);
 static SEXP _rotations_rmbCpp_try(SEXP nSEXP, SEXP kappaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type n(nSEXP);
     Rcpp::traits::input_parameter< double >::type kappa(kappaSEXP);
     rcpp_result_gen = Rcpp::wrap(rmbCpp(n, kappa));
     return rcpp_result_gen;
@@ -80,11 +80,11 @@ RcppExport SEXP _rotations_rmbCpp(SEXP nSEXP, SEXP kappaSEXP) {
     return rcpp_result_gen;
 }
 // rfisherCpp
-NumericVector rfisherCpp(int n, double kappa);
+Rcpp::NumericVector rfisherCpp(unsigned int n, double kappa);
 static SEXP _rotations_rfisherCpp_try(SEXP nSEXP, SEXP kappaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type n(nSEXP);
     Rcpp::traits::input_parameter< double >::type kappa(kappaSEXP);
     rcpp_result_gen = Rcpp::wrap(rfisherCpp(n, kappa));
     return rcpp_result_gen;
@@ -115,11 +115,11 @@ RcppExport SEXP _rotations_rfisherCpp(SEXP nSEXP, SEXP kappaSEXP) {
     return rcpp_result_gen;
 }
 // rvmisesCPP
-NumericVector rvmisesCPP(int n, double kappa);
+Rcpp::NumericVector rvmisesCPP(unsigned int n, double kappa);
 static SEXP _rotations_rvmisesCPP_try(SEXP nSEXP, SEXP kappaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type n(nSEXP);
     Rcpp::traits::input_parameter< double >::type kappa(kappaSEXP);
     rcpp_result_gen = Rcpp::wrap(rvmisesCPP(n, kappa));
     return rcpp_result_gen;
@@ -150,12 +150,12 @@ RcppExport SEXP _rotations_rvmisesCPP(SEXP nSEXP, SEXP kappaSEXP) {
     return rcpp_result_gen;
 }
 // centerCpp
-arma::mat centerCpp(arma::mat Rs, arma::mat S);
+arma::mat centerCpp(const arma::mat& Rs, const arma::mat& S);
 static SEXP _rotations_centerCpp_try(SEXP RsSEXP, SEXP SSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Rs(RsSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type S(SSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Rs(RsSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type S(SSEXP);
     rcpp_result_gen = Rcpp::wrap(centerCpp(Rs, S));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -185,12 +185,12 @@ RcppExport SEXP _rotations_centerCpp(SEXP RsSEXP, SEXP SSEXP) {
     return rcpp_result_gen;
 }
 // lpvmises
-double lpvmises(arma::mat Rs, arma::mat S, double kappa);
+double lpvmises(const arma::mat& Rs, const arma::mat& S, double kappa);
 static SEXP _rotations_lpvmises_try(SEXP RsSEXP, SEXP SSEXP, SEXP kappaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Rs(RsSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type S(SSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Rs(RsSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type S(SSEXP);
     Rcpp::traits::input_parameter< double >::type kappa(kappaSEXP);
     rcpp_result_gen = Rcpp::wrap(lpvmises(Rs, S, kappa));
     return rcpp_result_gen;
@@ -221,12 +221,12 @@ RcppExport SEXP _rotations_lpvmises(SEXP RsSEXP, SEXP SSEXP, SEXP kappaSEXP) {
     return rcpp_result_gen;
 }
 // lpfisher
-double lpfisher(arma::mat Rs, arma::mat S, double kappa);
+double lpfisher(const arma::mat& Rs, const arma::mat& S, double kappa);
 static SEXP _rotations_lpfisher_try(SEXP RsSEXP, SEXP SSEXP, SEXP kappaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Rs(RsSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type S(SSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Rs(RsSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type S(SSEXP);
     Rcpp::traits::input_parameter< double >::type kappa(kappaSEXP);
     rcpp_result_gen = Rcpp::wrap(lpfisher(Rs, S, kappa));
     return rcpp_result_gen;
@@ -257,12 +257,12 @@ RcppExport SEXP _rotations_lpfisher(SEXP RsSEXP, SEXP SSEXP, SEXP kappaSEXP) {
     return rcpp_result_gen;
 }
 // lpcayley
-double lpcayley(arma::mat Rs, arma::mat S, double kappa);
+double lpcayley(const arma::mat& Rs, const arma::mat& S, double kappa);
 static SEXP _rotations_lpcayley_try(SEXP RsSEXP, SEXP SSEXP, SEXP kappaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Rs(RsSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type S(SSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Rs(RsSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type S(SSEXP);
     Rcpp::traits::input_parameter< double >::type kappa(kappaSEXP);
     rcpp_result_gen = Rcpp::wrap(lpcayley(Rs, S, kappa));
     return rcpp_result_gen;
@@ -293,12 +293,12 @@ RcppExport SEXP _rotations_lpcayley(SEXP RsSEXP, SEXP SSEXP, SEXP kappaSEXP) {
     return rcpp_result_gen;
 }
 // S_MCMC_CPP
-arma::mat S_MCMC_CPP(arma::mat Rs, arma::mat oldS, double rho, double kappa, int Dist);
+arma::mat S_MCMC_CPP(const arma::mat& Rs, const arma::mat& oldS, double rho, double kappa, int Dist);
 static SEXP _rotations_S_MCMC_CPP_try(SEXP RsSEXP, SEXP oldSSEXP, SEXP rhoSEXP, SEXP kappaSEXP, SEXP DistSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Rs(RsSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type oldS(oldSSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Rs(RsSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type oldS(oldSSEXP);
     Rcpp::traits::input_parameter< double >::type rho(rhoSEXP);
     Rcpp::traits::input_parameter< double >::type kappa(kappaSEXP);
     Rcpp::traits::input_parameter< int >::type Dist(DistSEXP);
@@ -331,14 +331,14 @@ RcppExport SEXP _rotations_S_MCMC_CPP(SEXP RsSEXP, SEXP oldSSEXP, SEXP rhoSEXP, 
     return rcpp_result_gen;
 }
 // kap_MCMC_CPP
-double kap_MCMC_CPP(arma::mat Rs, double oldKappa, double sigma, arma::mat S, int Dist);
+double kap_MCMC_CPP(const arma::mat& Rs, double oldKappa, double sigma, const arma::mat& S, int Dist);
 static SEXP _rotations_kap_MCMC_CPP_try(SEXP RsSEXP, SEXP oldKappaSEXP, SEXP sigmaSEXP, SEXP SSEXP, SEXP DistSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Rs(RsSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Rs(RsSEXP);
     Rcpp::traits::input_parameter< double >::type oldKappa(oldKappaSEXP);
     Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type S(SSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type S(SSEXP);
     Rcpp::traits::input_parameter< int >::type Dist(DistSEXP);
     rcpp_result_gen = Rcpp::wrap(kap_MCMC_CPP(Rs, oldKappa, sigma, S, Dist));
     return rcpp_result_gen;
@@ -369,12 +369,12 @@ RcppExport SEXP _rotations_kap_MCMC_CPP(SEXP RsSEXP, SEXP oldKappaSEXP, SEXP sig
     return rcpp_result_gen;
 }
 // afun_CPP
-arma::rowvec afun_CPP(arma::mat R1, arma::mat R2);
+arma::rowvec afun_CPP(const arma::mat& R1, const arma::mat& R2);
 static SEXP _rotations_afun_CPP_try(SEXP R1SEXP, SEXP R2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type R1(R1SEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type R2(R2SEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type R1(R1SEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type R2(R2SEXP);
     rcpp_result_gen = Rcpp::wrap(afun_CPP(R1, R2));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -404,11 +404,11 @@ RcppExport SEXP _rotations_afun_CPP(SEXP R1SEXP, SEXP R2SEXP) {
     return rcpp_result_gen;
 }
 // both_MCMC_CPP
-List both_MCMC_CPP(arma::mat Rs, arma::mat S0, double kappa0, double rho, double sigma, int burnin, int B, int Dist);
+Rcpp::List both_MCMC_CPP(const arma::mat& Rs, arma::mat S0, double kappa0, double rho, double sigma, int burnin, int B, int Dist);
 static SEXP _rotations_both_MCMC_CPP_try(SEXP RsSEXP, SEXP S0SEXP, SEXP kappa0SEXP, SEXP rhoSEXP, SEXP sigmaSEXP, SEXP burninSEXP, SEXP BSEXP, SEXP DistSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type Rs(RsSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Rs(RsSEXP);
     Rcpp::traits::input_parameter< arma::mat >::type S0(S0SEXP);
     Rcpp::traits::input_parameter< double >::type kappa0(kappa0SEXP);
     Rcpp::traits::input_parameter< double >::type rho(rhoSEXP);
@@ -1562,18 +1562,18 @@ RcppExport SEXP _rotations_HnCppBloc(SEXP QsSEXP, SEXP CsSEXP) {
 static int _rotations_RcppExport_validate(const char* sig) { 
     static std::set<std::string> signatures;
     if (signatures.empty()) {
-        signatures.insert("NumericVector(*rcayleyCpp)(int,double)");
-        signatures.insert("NumericVector(*rmbCpp)(int,double)");
-        signatures.insert("NumericVector(*rfisherCpp)(int,double)");
-        signatures.insert("NumericVector(*rvmisesCPP)(int,double)");
-        signatures.insert("arma::mat(*centerCpp)(arma::mat,arma::mat)");
-        signatures.insert("double(*lpvmises)(arma::mat,arma::mat,double)");
-        signatures.insert("double(*lpfisher)(arma::mat,arma::mat,double)");
-        signatures.insert("double(*lpcayley)(arma::mat,arma::mat,double)");
-        signatures.insert("arma::mat(*S_MCMC_CPP)(arma::mat,arma::mat,double,double,int)");
-        signatures.insert("double(*kap_MCMC_CPP)(arma::mat,double,double,arma::mat,int)");
-        signatures.insert("arma::rowvec(*afun_CPP)(arma::mat,arma::mat)");
-        signatures.insert("List(*both_MCMC_CPP)(arma::mat,arma::mat,double,double,double,int,int,int)");
+        signatures.insert("Rcpp::NumericVector(*rcayleyCpp)(unsigned int,double)");
+        signatures.insert("Rcpp::NumericVector(*rmbCpp)(unsigned int,double)");
+        signatures.insert("Rcpp::NumericVector(*rfisherCpp)(unsigned int,double)");
+        signatures.insert("Rcpp::NumericVector(*rvmisesCPP)(unsigned int,double)");
+        signatures.insert("arma::mat(*centerCpp)(const arma::mat&,const arma::mat&)");
+        signatures.insert("double(*lpvmises)(const arma::mat&,const arma::mat&,double)");
+        signatures.insert("double(*lpfisher)(const arma::mat&,const arma::mat&,double)");
+        signatures.insert("double(*lpcayley)(const arma::mat&,const arma::mat&,double)");
+        signatures.insert("arma::mat(*S_MCMC_CPP)(const arma::mat&,const arma::mat&,double,double,int)");
+        signatures.insert("double(*kap_MCMC_CPP)(const arma::mat&,double,double,const arma::mat&,int)");
+        signatures.insert("arma::rowvec(*afun_CPP)(const arma::mat&,const arma::mat&)");
+        signatures.insert("Rcpp::List(*both_MCMC_CPP)(const arma::mat&,arma::mat,double,double,double,int,int,int)");
         signatures.insert("double(*fisherAxisC)(arma::mat,arma::rowvec)");
         signatures.insert("double(*fisherAxisCSymmetric)(arma::mat,arma::rowvec)");
         signatures.insert("arma::vec(*fisherBootC)(arma::mat,int,bool)");
