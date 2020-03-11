@@ -1,3 +1,6 @@
+#ifndef ROBUSTCPP_H
+#define ROBUSTCPP_H
+
 #include <RcppArmadillo.h>
 // [[Rcpp::interfaces(r, cpp)]]
 
@@ -11,3 +14,5 @@ arma::rowvec HnCppIntrinsic(const arma::mat &Qs);
 
 // [[Rcpp::export]]
 arma::rowvec HnCppBloc(const arma::mat &Qs, const arma::mat &Cs);
+
+#endif /* ROBUSTCPP_H */

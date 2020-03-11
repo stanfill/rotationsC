@@ -1,3 +1,6 @@
+#ifndef CPPBAYESFUNCTIONS_H
+#define CPPBAYESFUNCTIONS_H
+
 #include <RcppArmadillo.h>
 // [[Rcpp::interfaces(r, cpp)]]
 
@@ -93,3 +96,5 @@ Rcpp::List both_MCMC_CPP(
     int B,
     int Dist
 );
+
+#endif /* CPPBAYESFUNCTIONS_H */
