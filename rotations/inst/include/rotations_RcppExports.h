@@ -634,11 +634,11 @@ namespace rotations {
         return Rcpp::as<arma::mat >(rcpp_result_gen);
     }
 
-    inline int checkQ4(Rcpp::NumericMatrix Q) {
+    inline int checkQ4(const Rcpp::NumericMatrix& Q) {
         typedef SEXP(*Ptr_checkQ4)(SEXP);
         static Ptr_checkQ4 p_checkQ4 = NULL;
         if (p_checkQ4 == NULL) {
-            validateSignature("int(*checkQ4)(Rcpp::NumericMatrix)");
+            validateSignature("int(*checkQ4)(const Rcpp::NumericMatrix&)");
             p_checkQ4 = (Ptr_checkQ4)R_GetCCallable("rotations", "_rotations_checkQ4");
         }
         RObject rcpp_result_gen;
@@ -655,11 +655,11 @@ namespace rotations {
         return Rcpp::as<int >(rcpp_result_gen);
     }
 
-    inline int checkSO3(arma::mat Rs) {
+    inline int checkSO3(const arma::mat& Rs) {
         typedef SEXP(*Ptr_checkSO3)(SEXP);
         static Ptr_checkSO3 p_checkSO3 = NULL;
         if (p_checkSO3 == NULL) {
-            validateSignature("int(*checkSO3)(arma::mat)");
+            validateSignature("int(*checkSO3)(const arma::mat&)");
             p_checkSO3 = (Ptr_checkSO3)R_GetCCallable("rotations", "_rotations_checkSO3");
         }
         RObject rcpp_result_gen;
@@ -676,11 +676,11 @@ namespace rotations {
         return Rcpp::as<int >(rcpp_result_gen);
     }
 
-    inline arma::mat expskewC(arma::mat M) {
+    inline arma::mat expskewC(const arma::mat& M) {
         typedef SEXP(*Ptr_expskewC)(SEXP);
         static Ptr_expskewC p_expskewC = NULL;
         if (p_expskewC == NULL) {
-            validateSignature("arma::mat(*expskewC)(arma::mat)");
+            validateSignature("arma::mat(*expskewC)(const arma::mat&)");
             p_expskewC = (Ptr_expskewC)R_GetCCallable("rotations", "_rotations_expskewC");
         }
         RObject rcpp_result_gen;
@@ -697,11 +697,11 @@ namespace rotations {
         return Rcpp::as<arma::mat >(rcpp_result_gen);
     }
 
-    inline arma::mat expskewCMulti(arma::mat M) {
+    inline arma::mat expskewCMulti(const arma::mat& M) {
         typedef SEXP(*Ptr_expskewCMulti)(SEXP);
         static Ptr_expskewCMulti p_expskewCMulti = NULL;
         if (p_expskewCMulti == NULL) {
-            validateSignature("arma::mat(*expskewCMulti)(arma::mat)");
+            validateSignature("arma::mat(*expskewCMulti)(const arma::mat&)");
             p_expskewCMulti = (Ptr_expskewCMulti)R_GetCCallable("rotations", "_rotations_expskewCMulti");
         }
         RObject rcpp_result_gen;
@@ -718,11 +718,11 @@ namespace rotations {
         return Rcpp::as<arma::mat >(rcpp_result_gen);
     }
 
-    inline arma::mat logSO3C(arma::mat R) {
+    inline arma::mat logSO3C(const arma::mat& R) {
         typedef SEXP(*Ptr_logSO3C)(SEXP);
         static Ptr_logSO3C p_logSO3C = NULL;
         if (p_logSO3C == NULL) {
-            validateSignature("arma::mat(*logSO3C)(arma::mat)");
+            validateSignature("arma::mat(*logSO3C)(const arma::mat&)");
             p_logSO3C = (Ptr_logSO3C)R_GetCCallable("rotations", "_rotations_logSO3C");
         }
         RObject rcpp_result_gen;
@@ -739,11 +739,11 @@ namespace rotations {
         return Rcpp::as<arma::mat >(rcpp_result_gen);
     }
 
-    inline arma::mat logSO3CMulti(arma::mat R) {
+    inline arma::mat logSO3CMulti(const arma::mat& R) {
         typedef SEXP(*Ptr_logSO3CMulti)(SEXP);
         static Ptr_logSO3CMulti p_logSO3CMulti = NULL;
         if (p_logSO3CMulti == NULL) {
-            validateSignature("arma::mat(*logSO3CMulti)(arma::mat)");
+            validateSignature("arma::mat(*logSO3CMulti)(const arma::mat&)");
             p_logSO3CMulti = (Ptr_logSO3CMulti)R_GetCCallable("rotations", "_rotations_logSO3CMulti");
         }
         RObject rcpp_result_gen;
@@ -760,11 +760,11 @@ namespace rotations {
         return Rcpp::as<arma::mat >(rcpp_result_gen);
     }
 
-    inline arma::mat projectSO3C(arma::mat M) {
+    inline arma::mat projectSO3C(const arma::mat& M) {
         typedef SEXP(*Ptr_projectSO3C)(SEXP);
         static Ptr_projectSO3C p_projectSO3C = NULL;
         if (p_projectSO3C == NULL) {
-            validateSignature("arma::mat(*projectSO3C)(arma::mat)");
+            validateSignature("arma::mat(*projectSO3C)(const arma::mat&)");
             p_projectSO3C = (Ptr_projectSO3C)R_GetCCallable("rotations", "_rotations_projectSO3C");
         }
         RObject rcpp_result_gen;
@@ -781,11 +781,11 @@ namespace rotations {
         return Rcpp::as<arma::mat >(rcpp_result_gen);
     }
 
-    inline arma::mat meanSO3C(arma::mat Rs) {
+    inline arma::mat meanSO3C(const arma::mat& Rs) {
         typedef SEXP(*Ptr_meanSO3C)(SEXP);
         static Ptr_meanSO3C p_meanSO3C = NULL;
         if (p_meanSO3C == NULL) {
-            validateSignature("arma::mat(*meanSO3C)(arma::mat)");
+            validateSignature("arma::mat(*meanSO3C)(const arma::mat&)");
             p_meanSO3C = (Ptr_meanSO3C)R_GetCCallable("rotations", "_rotations_meanSO3C");
         }
         RObject rcpp_result_gen;
@@ -802,11 +802,11 @@ namespace rotations {
         return Rcpp::as<arma::mat >(rcpp_result_gen);
     }
 
-    inline arma::rowvec meanQ4C(arma::mat Q) {
+    inline arma::rowvec meanQ4C(const arma::mat& Q) {
         typedef SEXP(*Ptr_meanQ4C)(SEXP);
         static Ptr_meanQ4C p_meanQ4C = NULL;
         if (p_meanQ4C == NULL) {
-            validateSignature("arma::rowvec(*meanQ4C)(arma::mat)");
+            validateSignature("arma::rowvec(*meanQ4C)(const arma::mat&)");
             p_meanQ4C = (Ptr_meanQ4C)R_GetCCallable("rotations", "_rotations_meanQ4C");
         }
         RObject rcpp_result_gen;
@@ -823,11 +823,11 @@ namespace rotations {
         return Rcpp::as<arma::rowvec >(rcpp_result_gen);
     }
 
-    inline arma::mat medianSO3C(arma::mat Rs, int maxIterations, double maxEps) {
+    inline arma::mat medianSO3C(const arma::mat& Rs, unsigned int maxIterations, double maxEps) {
         typedef SEXP(*Ptr_medianSO3C)(SEXP,SEXP,SEXP);
         static Ptr_medianSO3C p_medianSO3C = NULL;
         if (p_medianSO3C == NULL) {
-            validateSignature("arma::mat(*medianSO3C)(arma::mat,int,double)");
+            validateSignature("arma::mat(*medianSO3C)(const arma::mat&,unsigned int,double)");
             p_medianSO3C = (Ptr_medianSO3C)R_GetCCallable("rotations", "_rotations_medianSO3C");
         }
         RObject rcpp_result_gen;
@@ -844,11 +844,11 @@ namespace rotations {
         return Rcpp::as<arma::mat >(rcpp_result_gen);
     }
 
-    inline arma::mat HartmedianSO3C(arma::mat Rs, int maxIterations, double maxEps) {
+    inline arma::mat HartmedianSO3C(const arma::mat& Rs, unsigned int maxIterations, double maxEps) {
         typedef SEXP(*Ptr_HartmedianSO3C)(SEXP,SEXP,SEXP);
         static Ptr_HartmedianSO3C p_HartmedianSO3C = NULL;
         if (p_HartmedianSO3C == NULL) {
-            validateSignature("arma::mat(*HartmedianSO3C)(arma::mat,int,double)");
+            validateSignature("arma::mat(*HartmedianSO3C)(const arma::mat&,unsigned int,double)");
             p_HartmedianSO3C = (Ptr_HartmedianSO3C)R_GetCCallable("rotations", "_rotations_HartmedianSO3C");
         }
         RObject rcpp_result_gen;
@@ -865,11 +865,11 @@ namespace rotations {
         return Rcpp::as<arma::mat >(rcpp_result_gen);
     }
 
-    inline arma::mat gmeanSO3C(arma::mat Rs, int maxIterations, double maxEps) {
+    inline arma::mat gmeanSO3C(const arma::mat& Rs, unsigned int maxIterations, double maxEps) {
         typedef SEXP(*Ptr_gmeanSO3C)(SEXP,SEXP,SEXP);
         static Ptr_gmeanSO3C p_gmeanSO3C = NULL;
         if (p_gmeanSO3C == NULL) {
-            validateSignature("arma::mat(*gmeanSO3C)(arma::mat,int,double)");
+            validateSignature("arma::mat(*gmeanSO3C)(const arma::mat&,unsigned int,double)");
             p_gmeanSO3C = (Ptr_gmeanSO3C)R_GetCCallable("rotations", "_rotations_gmeanSO3C");
         }
         RObject rcpp_result_gen;
