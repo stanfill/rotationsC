@@ -1,9 +1,23 @@
 Package: rotations
 Type: Package
 Title: Tools for Working with Rotation Data
-Version: 1.5
-Author: Bryan Stanfill <bstanfill2003@gmail.com>, Heike Hofmann
-    <hofmann@iastate.edu>, Ulrike Genschel <ulrike@iastate.edu>
+Version: 1.5.1
+Authors@R: 
+    c(person(given = "Bryan",
+             family = "Stanfill",
+             role = c("aut", "cre"),
+             email = "bstanfill2003@gmail.com"),
+      person(given = "Heike",
+             family = "Hofmann",
+             role = "aut"),
+      person(given = "Ulrike",
+             family = "Genschel",
+             role = "aut"),
+      person(given = "Aymeric",
+             family = "Stamm",
+             role = "aut",
+             email = "aymeric.stamm@math.cnrs.fr",
+             comment = c(ORCID = "0000-0002-8725-3654")))
 Maintainer: Bryan Stanfill <bstanfill2003@gmail.com>
 Description: Tools for working with rotational data, including
     simulation from the most commonly used distributions on SO(3),
