@@ -1,7 +1,7 @@
 Package: rotations
 Type: Package
 Title: Tools for Working with Rotation Data
-Version: 1.5.1
+Version: 1.6
 Authors@R: 
     c(person(given = "Bryan",
              family = "Stanfill",
@@ -46,7 +46,6 @@ Suggests:
 LinkingTo: 
     Rcpp, 
     RcppArmadillo
-VignetteBuilder: knitr
 URL: https://github.com/stanfill/rotationsC/tree/master/rotations
 BugReports: https://github.com/stanfill/rotationsC/issues
 Encoding: UTF-8
