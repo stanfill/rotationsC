@@ -42,7 +42,6 @@ region <- function(x, method, type, estimator, alp = NULL, ...) {
 }
 
 #' @rdname region
-#' @method region Q4
 #' @export
 region.Q4 <- function(x, method, type, estimator, alp = NULL, ...) {
   # Allow for upper case arguments
@@ -90,7 +89,6 @@ region.Q4 <- function(x, method, type, estimator, alp = NULL, ...) {
 }
 
 #' @rdname region
-#' @method region SO3
 #' @export
 region.SO3 <- function(x, method, type, estimator, alp = NULL, ...) {
   # Allow for upper case arguments
@@ -170,7 +168,6 @@ prentice <- function(x, alp) {
 }
 
 #' @rdname prentice
-#' @method prentice Q4
 #' @export
 prentice.Q4 <- function(x, alp = NULL) {
   # This takes a sample qs and returns the radius of the confidence region
@@ -193,11 +190,10 @@ prentice.Q4 <- function(x, alp = NULL) {
   RtR <- t(Rhat) %*% Rhat
   Ahat <- (diag(RtR[1, 1], 3, 3) - RtR[-1, -1]) / n
   Tm <- diag(n * Ahat %*% solve(VarShat) %*% Ahat)
-  sqrt(qchisq((1 - alp), 3) / Tm)
+  sqrt(stats::qchisq((1 - alp), 3) / Tm)
 }
 
 #' @rdname prentice
-#' @method prentice SO3
 #' @export
 prentice.SO3 <- function(x, alp = NULL) {
   Qs <- as.Q4(x)
@@ -240,7 +236,6 @@ zhang <- function(x, estimator, alp = NULL, m = 300) {
 }
 
 #' @rdname zhang
-#' @method zhang SO3
 #' @export
 zhang.SO3 <- function(x,
                       estimator,
@@ -263,7 +258,7 @@ zhang.SO3 <- function(x,
     n <- nrow(Rs)
     stats <- zhangMedianC(Rs, m)
     cdtilde <- cdfunsCSO3(Rs, median(Rs))
-    rad <- sqrt(as.numeric(quantile(stats, 1 - alp, na.rm = TRUE)) * cdtilde[1] / (2 * n * cdtilde[2] ^ 2))
+    rad <- sqrt(as.numeric(stats::quantile(stats, 1 - alp, na.rm = TRUE)) * cdtilde[1] / (2 * n * cdtilde[2] ^ 2))
   } else if (estimator == "mean") {
     Qs <- as.Q4(Rs)
     rad <- zhang.Q4(Qs, estimator, alp, m)
@@ -274,7 +269,6 @@ zhang.SO3 <- function(x,
 }
 
 #' @rdname zhang
-#' @method zhang Q4
 #' @export
 zhang.Q4 <- function(x,
                      estimator,
@@ -291,7 +285,7 @@ zhang.Q4 <- function(x,
     n <- nrow(Qs)
     stats <- zhangQ4(Qs, m)
     cdhat <- cdfuns(Qs, estimator)
-    rad <- sqrt(as.numeric(quantile(stats, 1 - alp, na.rm = TRUE)) * cdhat$c / (2 * n * cdhat$d ^ 2))
+    rad <- sqrt(as.numeric(stats::quantile(stats, 1 - alp, na.rm = TRUE)) * cdhat$c / (2 * n * cdhat$d ^ 2))
   } else if (estimator == "median") {
     Rs <- as.SO3(Qs)
     rad <- zhang.SO3(Rs, estimator, alp, m)
@@ -348,7 +342,6 @@ chang <- function(x, estimator, alp = NULL) {
 }
 
 #' @rdname chang
-#' @method chang SO3
 #' @export
 chang.SO3 <- function(x, estimator, alp = NULL) {
   # Rs is a n-by-9 matrix where each row is an 3-by-3 rotation matrix
@@ -361,7 +354,6 @@ chang.SO3 <- function(x, estimator, alp = NULL) {
 }
 
 #' @rdname chang
-#' @method chang Q4
 #' @export
 chang.Q4 <- function(x, estimator, alp = NULL) {
   if (is.null(alp)) {
@@ -373,7 +365,7 @@ chang.Q4 <- function(x, estimator, alp = NULL) {
   Qs <- formatQ4(x)
   n <- nrow(Qs)
   cdhat <- cdfuns(Qs, estimator)
-  rad <- sqrt(as.numeric(qchisq(1 - alp, 3)) * cdhat$c / (2 * n * cdhat$d^2))
+  rad <- sqrt(as.numeric(stats::qchisq(1 - alp, 3)) * cdhat$c / (2 * n * cdhat$d^2))
   min(rad, pi)
 }
 
@@ -415,7 +407,6 @@ fisheretal <- function(x,
 }
 
 #' @rdname fisheretal
-#' @method fisheretal Q4
 #' @export
 fisheretal.Q4 <- function(x,
                           alp = NULL,
@@ -432,11 +423,11 @@ fisheretal.Q4 <- function(x,
 
   if (boot) {
     Tstats <- fisherBootC(Qs, m, symm)
-    qhat <- as.numeric(quantile(Tstats, 1 - alp, na.rm = TRUE))
+    qhat <- as.numeric(stats::quantile(Tstats, 1 - alp, na.rm = TRUE))
   } else
-    qhat <- qchisq(1 - alp, 3)
+    qhat <- stats::qchisq(1 - alp, 3)
 
-  rsym <- optim(
+  rsym <- stats::optim(
     par = .05,
     fn = optimAxis,
     Qs = Qs,
@@ -460,7 +451,6 @@ optimAxis <- function(r, Qs, cut, symm) {
 }
 
 #' @rdname fisheretal
-#' @method fisheretal SO3
 #' @export
 fisheretal.SO3 <- function(x,
                            alp = NULL,

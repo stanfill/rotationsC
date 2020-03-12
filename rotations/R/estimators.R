@@ -19,7 +19,6 @@
 #' @seealso \code{\link{median.SO3}}, \code{\link{bayes.mean}}, \code{\link{weighted.mean.SO3}}
 #' @details tyler1981, moakher02, manton04
 #' @export
-#' @method mean SO3
 #' @examples
 #' Rs <- ruars(20, rvmises, kappa = 0.01)
 #' mean(Rs)                               #Projected mean
@@ -61,8 +60,6 @@ mean.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000, ...
 #' @rdname mean.SO3
 #' @aliases mean.SO3
 #' @export
-#' @method mean Q4
-
 mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) {
 
 	Qs<-formatQ4(x)
@@ -91,26 +88,33 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 
 }
 
-
 #' Median rotation
 #'
 #' Compute the sample projected or geometric median.
 #'
-#' The median-type estimators are defined as \deqn{\widetilde{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd(\bm{R}_i,\bm{S}).}{argmin\sum d(Ri,S).}
-#' If the choice of distance metric \eqn{d} is Riemannian then the estimator is called the geometric median,
-#' and if the distance metric in Euclidean then it is called the projected median.
-#' The algorithm used in the geometric case is discussed in \cite{hartley11}
-#' and the projected case is in \cite{stanfill2013}.
+#' The median-type estimators are defined as
+#' \deqn{\widetilde{\bm{S}}=argmin_{\bm{S}\in
+#' SO(3)}\sum_{i=1}^nd(\bm{R}_i,\bm{S}).}{argmin\sum d(Ri,S).} If the choice of
+#' distance metric \eqn{d} is Riemannian then the estimator is called the
+#' geometric median, and if the distance metric in Euclidean then it is called
+#' the projected median. The algorithm used in the geometric case is discussed
+#' in \cite{hartley11} and the projected case is in \cite{stanfill2013}.
 #'
 #' @name median.SO3
-#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix form (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a
+#'   random rotation in matrix form (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
+#' @param na.rm a logical value indicating whether NA values should be stripped
+#'   before the computation proceeds.
 #' @param type string indicating "projected" or "geometric" type mean estimator.
 #' @param epsilon stopping rule.
-#' @param maxIter maximum number of iterations allowed before returning most recent estimate.
+#' @param maxIter maximum number of iterations allowed before returning most
+#'   recent estimate.
 #' @param ... additional arguments.
-#' @return Estimate of the projected or geometric median in the same parameterization.
+#' @return Estimate of the projected or geometric median in the same
+#'   parameterization.
 #' @aliases median.Q4 median.SO3
-#' @seealso \code{\link{mean.SO3}}, \code{\link{bayes.mean}}, \code{\link{weighted.mean.SO3}}
+#' @seealso \code{\link{mean.SO3}}, \code{\link{bayes.mean}},
+#'   \code{\link{weighted.mean.SO3}}
 #' @details hartley11 stanfill2013
 #' @export
 #' @examples
@@ -128,7 +132,6 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 
 #' @rdname median.SO3
 #' @aliases median.Q4 median
-#' @method median SO3
 #' @export
 median.SO3 <- function(x, na.rm = FALSE, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
 
@@ -159,7 +162,6 @@ median.SO3 <- function(x, na.rm = FALSE, type = "projected", epsilon = 1e-05, ma
 
 #' @rdname median.SO3
 #' @aliases median.SO3 median
-#' @method median Q4
 #' @export
 median.Q4 <- function(x, na.rm = FALSE, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
 	Qs <- formatQ4(x)
@@ -191,7 +193,6 @@ median.Q4 <- function(x, na.rm = FALSE, type = "projected", epsilon = 1e-05, max
 #' @aliases weighted.mean.Q4
 #' @details moakher02
 #' @export
-#' @method weighted.mean SO3
 #' @examples
 #' Rs <- ruars(20, rvmises, kappa = 0.01)
 #' mean(Rs)                   #Find the equal-weight projected mean
@@ -264,9 +265,6 @@ weighted.mean.SO3 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter
 #' @rdname weighted.mean.SO3
 #' @aliases weighted.mean.SO3
 #' @export
-#' @method weighted.mean Q4
-
-
 weighted.mean.Q4 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter = 2000,...) {
 
 	Qs<-formatQ4(x)

@@ -38,9 +38,7 @@ MCMCSO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 
 
 #' @rdname MCMCSO3
-#' @method MCMCSO3 SO3
 #' @export
-
 MCMCSO3.SO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 
   if(type %in% c("Cayley","cayley")){
@@ -67,9 +65,7 @@ MCMCSO3.SO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 }
 
 #' @rdname MCMCSO3
-#' @method MCMCSO3 Q4
 #' @export
-
 MCMCSO3.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 
   Rs<-as.SO3(x)
@@ -128,9 +124,7 @@ bayesCR<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
 
 
 #' @rdname bayesCR
-#' @method bayesCR SO3
 #' @export
-
 bayesCR.SO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
 
   if(type %in% c("Cayley","cayley")){
@@ -157,13 +151,11 @@ bayesCR.SO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
   Shat<-mean(Sdraws)
   rs<-rot.dist(Sdraws,Shat)
 
-  return(list(Shat=Shat,Radius=quantile(rs,1-alp)))
+  return(list(Shat=Shat,Radius=stats::quantile(rs,1-alp)))
 }
 
 #' @rdname bayesCR
-#' @method bayesCR Q4
 #' @export
-
 bayesCR.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000,alp=0.1){
 
   Rs<-as.SO3(x)
@@ -222,9 +214,7 @@ bayes.mean<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 
 
 #' @rdname bayes.mean
-#' @method bayes.mean SO3
 #' @export
-
 bayes.mean.SO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 
   if(type %in% c("Cayley","cayley")){
@@ -253,9 +243,7 @@ bayes.mean.SO3<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 }
 
 #' @rdname bayes.mean
-#' @method bayes.mean Q4
 #' @export
-
 bayes.mean.Q4<-function(x,type,S0,kappa0,tuneS,tuneK,burn_in,m=5000){
 
   Rs<-as.SO3(x)

@@ -11,7 +11,11 @@
 \alias{as.Q4.Q4}
 \alias{as.Q4.data.frame}
 \title{Quaternions}
-\format{\code{id.Q4} is the identity rotation given by the matrix \eqn{[1,0,0,0]^\top}{[1,0,0,0]'}.}
+\format{
+\code{id.Q4} is the identity rotation given by the matrix \eqn{[1,0,0,0]^\top}{[1,0,0,0]'}.
+
+An object of class \code{Q4} with 1 rows and 4 columns.
+}
 \usage{
 as.Q4(x, ...)
 

@@ -35,9 +35,7 @@ rot.dist<-function(x,...){
 
 
 #' @rdname rot.dist
-#' @method rot.dist SO3
 #' @export
-
 rot.dist.SO3 <- function(x, R2=id.SO3, method='extrinsic' , p=1,...) {
 
   R1<-formatSO3(x)
@@ -71,11 +69,8 @@ rot.dist.SO3 <- function(x, R2=id.SO3, method='extrinsic' , p=1,...) {
 
 }
 
-
 #' @rdname rot.dist
-#' @method rot.dist Q4
 #' @export
-
 rot.dist.Q4 <- function(x, Q2=id.Q4 ,method='extrinsic', p=1,...) {
 
   Q1<-formatQ4(x)
@@ -100,7 +95,6 @@ rot.dist.Q4 <- function(x, Q2=id.Q4 ,method='extrinsic', p=1,...) {
 
   return(q4dist)
 }
-
 
 #' Misorientation angle
 #'
@@ -132,16 +126,12 @@ rot.dist.Q4 <- function(x, Q2=id.Q4 ,method='extrinsic', p=1,...) {
 #' #If the central orientation is NOT id.SO3 then mis.angle(Rs) and abs(rs) are usual unequal
 #' Rs <- genR(rs, S = genR(pi/8))
 #' all.equal(mis.angle(Rs), abs(rs))  #Mean relative difference > 0
-
 mis.angle<-function(x){
   UseMethod("mis.angle")
 }
 
-
 #' @rdname mis.angle
-#' @method mis.angle SO3
 #' @export
-
 mis.angle.SO3 <- function(x){
 
 	Rs<-formatSO3(x)
@@ -149,11 +139,8 @@ mis.angle.SO3 <- function(x){
   return(theta)
 }
 
-
 #' @rdname mis.angle
-#' @method mis.angle Q4
 #' @export
-
 mis.angle.Q4 <- function(x){
 
   Qs<-formatQ4(x)
@@ -161,7 +148,6 @@ mis.angle.Q4 <- function(x){
   class(theta)<-"numeric"
 	return(theta)
 }
-
 
 #' Misorientation axis
 #'
@@ -194,15 +180,12 @@ mis.angle.Q4 <- function(x){
 #' Qs <- genR(rs, S = id.Q4, space = "Q4")
 #' mis.axis(Qs)
 #' all.equal(Qs, as.Q4(mis.axis(Qs), mis.angle(Qs)))
-
 mis.axis<-function(x,...){
   UseMethod("mis.axis")
 }
 
 #' @rdname mis.axis
-#' @method mis.axis SO3
 #' @export
-
 mis.axis.SO3<-function(x,...){
 
 	R<-formatSO3(x)
@@ -226,9 +209,7 @@ mis.axis.SO3<-function(x,...){
 }
 
 #' @rdname mis.axis
-#' @method mis.axis Q4
 #' @export
-
 mis.axis.Q4<- function(x,...){
 
   q<-formatQ4(x)
@@ -291,11 +272,11 @@ genR <- function(r, S = NULL, space='SO3') {
 
   n<-length(r)
 
-  theta <- acos(runif(n, -1, 1))
+  theta <- acos(stats::runif(n, -1, 1))
 
   # Generate angles phi from a uniform distribution from -pi to pi
 
-  phi <- runif(n, -pi, pi)
+  phi <- stats::runif(n, -pi, pi)
   u <- matrix(c(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta)),n,3)
 
   if(space=="SO3"){
@@ -357,7 +338,6 @@ genR <- function(r, S = NULL, space='SO3') {
 
 }
 
-
 #' Matrix exponential
 #'
 #' Compute the matrix exponential for skew-symmetric matrices according to the usual Taylor expansion.
@@ -373,7 +353,6 @@ genR <- function(r, S = NULL, space='SO3') {
 #' lRs <- log(Rs)           #Take the matrix logarithm for rotation matrices
 #' Rs2 <- skew.exp(lRs)     #Go back to rotation matrices
 #' all.equal(Rs, Rs2)
-
 skew.exp <- function(x) {
 
   if(length(x)==9){
@@ -401,7 +380,6 @@ skew.exp <- function(x) {
 #' @return Skew symmetric matrix \eqn{\log(R)}{log(R)}.
 #' @details moakher02
 #' @export
-#' @method log SO3
 #' @examples
 #' Rs <- ruars(20, rcayley)
 #'
@@ -415,8 +393,6 @@ skew.exp <- function(x) {
 #' angs <- mis.angle(Rs)
 #' all.equal(axes, Ws/lens)
 #' all.equal(angs, lens)
-
-
 log.SO3 <- function(x,...) {
   if(length(x)==9){
 	  x<-matrix(x,3,3)
@@ -448,14 +424,12 @@ log.SO3 <- function(x,...) {
 #' Rbar <- colSums(Rs)/nrow(Rs)
 #' project.SO3(Rbar)              #The following is equivalent
 #' mean(Rs)
-
 project.SO3 <- function(M) {
 
 	M<-matrix(M,3,3)
   R<-projectSO3C(M)
   return(R)
 }
-
 
 #' Sample distance
 #'
@@ -494,32 +468,20 @@ project.SO3 <- function(M) {
 #'                  rotdist.sum(Rs, S = SE1, p = 2, method = "intrinsic")
 #' rotdist.sum(Rs, S = SR2, p = 2, method = "intrinsic") <
 #'                  rotdist.sum(Rs, S = SE2, p = 2, method = "intrinsic")
-
-
 rotdist.sum<-function(x, S = genR(0, space=class(x)), method='extrinsic', p=1){
-
   UseMethod( "rotdist.sum" )
-
 }
 
 #' @rdname rotdist.sum
-#' @method rotdist.sum SO3
 #' @export
-
 rotdist.sum.SO3 <- function(x, S = id.SO3, method='extrinsic', p=1) {
-
   return(sum(rot.dist(x,S, method=method, p=p)))
-
 }
 
 #' @rdname rotdist.sum
-#' @method rotdist.sum Q4
 #' @export
-
 rotdist.sum.Q4 <- function(x, S = id.Q4, method='extrinsic', p=1) {
-
   return(sum(rot.dist(x,S, method=method, p=p)))
-
 }
 
 #' Center rotation data
@@ -543,17 +505,12 @@ rotdist.sum.Q4 <- function(x, S = id.Q4, method='extrinsic', p=1) {
 #' center(Rs,Rs)                  #n-Identity matrices: If the second argument is of the same dimension
 #'                                #as Rs then each row is centered around the corresponding
 #'                                #row in the first argument
-
 center<-function(x,S){
-
   UseMethod( "center" )
-
 }
 
 #' @rdname center
-#' @method center SO3
 #' @export
-
 center.SO3<-function(x,S){
 	#This takes a set of observations in SO3 and centers them around S
 
@@ -580,9 +537,7 @@ center.SO3<-function(x,S){
 
 
 #' @rdname center
-#' @method center Q4
 #' @export
-
 center.Q4<-function(x,S){
 	#This takes a set of observations in Q4 and centers them around S
 	Qs<-formatQ4(x)
@@ -608,8 +563,6 @@ center.Q4<-function(x,S){
   class(Qs)<-"Q4"
 	return(Qs)
 }
-
-
 
 formatSO3<-function(Rs){
 	#This function will take input and format it to work with our functions

@@ -2,50 +2,39 @@
 % Please edit documentation in R/kappa.R
 \name{vmises.kappa}
 \alias{vmises.kappa}
-\title{Circular variance and concentration parameter
- 
- Return the concentration parameter that corresponds to a given circular variance.
- 
- The concentration parameter \eqn{\kappa} does not translate across circular distributions.  A commonly used
- measure of spread in circular distributions that does translate
- is the circular variance defined as \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]} 
- is the mean resultant length.  See \cite{mardia2000} for more details.
- This function translates the circular variance \eqn{\nu} into the corresponding concentration parameter \eqn{\kappa}
- for the circular-von Mises distribution.  For numerical stability, a maximum \eqn{\kappa} of 500 is returned.
- 
- @param nu circular variance
- @return Concentration parameter corresponding to nu.
- @seealso \code{\link{Mises}}
- @cite mardia2000
- @export
- @examples
- #Find the concentration parameter for circular variances 0.25, 0.5, 0.75
- vmises.kappa(0.25)
- vmises.kappa(0.5)
- vmises.kappa(0.75)}
+\title{Circular variance and concentration parameter}
 \usage{
 vmises.kappa(nu)
 }
+\arguments{
+\item{nu}{circular variance}
+}
+\value{
+Concentration parameter corresponding to nu.
+}
 \description{
-Circular variance and concentration parameter
- 
- Return the concentration parameter that corresponds to a given circular variance.
- 
- The concentration parameter \eqn{\kappa} does not translate across circular distributions.  A commonly used
- measure of spread in circular distributions that does translate
- is the circular variance defined as \eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]} 
- is the mean resultant length.  See \cite{mardia2000} for more details.
- This function translates the circular variance \eqn{\nu} into the corresponding concentration parameter \eqn{\kappa}
- for the circular-von Mises distribution.  For numerical stability, a maximum \eqn{\kappa} of 500 is returned.
- 
- @param nu circular variance
- @return Concentration parameter corresponding to nu.
- @seealso \code{\link{Mises}}
- @cite mardia2000
- @export
- @examples
- #Find the concentration parameter for circular variances 0.25, 0.5, 0.75
- vmises.kappa(0.25)
- vmises.kappa(0.5)
- vmises.kappa(0.75)
+Return the concentration parameter that corresponds to a given circular
+variance.
+}
+\details{
+The concentration parameter \eqn{\kappa} does not translate across circular
+distributions.  A commonly used measure of spread in circular distributions
+that does translate is the circular variance defined as
+\eqn{\nu=1-E[\cos(r)]}{\nu=1-E[cos(r)]} where \eqn{E[\cos(r)]}{E[cos(r)]} is
+the mean resultant length.  See \cite{mardia2000} for more details. This
+function translates the circular variance \eqn{\nu} into the corresponding
+concentration parameter \eqn{\kappa} for the circular-von Mises
+distribution.  For numerical stability, a maximum \eqn{\kappa} of 500 is
+returned.
+
+mardia2000
+}
+\examples{
+# Find the concentration parameter for circular variances 0.25, 0.5, 0.75
+vmises.kappa(0.25)
+vmises.kappa(0.5)
+vmises.kappa(0.75)
+}
+\seealso{
+\code{\link{Mises}}
 }

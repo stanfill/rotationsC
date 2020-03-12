@@ -25,28 +25,36 @@
 )
 }
 \arguments{
-\item{x}{\eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix form (\eqn{p=9}) or quaternion (\eqn{p=4}) form.}
+\item{x}{\eqn{n\times p}{n-by-p} matrix where each row corresponds to a
+random rotation in matrix form (\eqn{p=9}) or quaternion (\eqn{p=4}) form.}
+
+\item{na.rm}{a logical value indicating whether NA values should be stripped
+before the computation proceeds.}
 
 \item{type}{string indicating "projected" or "geometric" type mean estimator.}
 
 \item{epsilon}{stopping rule.}
 
-\item{maxIter}{maximum number of iterations allowed before returning most recent estimate.}
+\item{maxIter}{maximum number of iterations allowed before returning most
+recent estimate.}
 
 \item{...}{additional arguments.}
 }
 \value{
-Estimate of the projected or geometric median in the same parameterization.
+Estimate of the projected or geometric median in the same
+  parameterization.
 }
 \description{
 Compute the sample projected or geometric median.
 }
 \details{
-The median-type estimators are defined as \deqn{\widetilde{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd(\bm{R}_i,\bm{S}).}{argmin\sum d(Ri,S).}
-If the choice of distance metric \eqn{d} is Riemannian then the estimator is called the geometric median,
-and if the distance metric in Euclidean then it is called the projected median.
-The algorithm used in the geometric case is discussed in \cite{hartley11}
-and the projected case is in \cite{stanfill2013}.
+The median-type estimators are defined as
+\deqn{\widetilde{\bm{S}}=argmin_{\bm{S}\in
+SO(3)}\sum_{i=1}^nd(\bm{R}_i,\bm{S}).}{argmin\sum d(Ri,S).} If the choice of
+distance metric \eqn{d} is Riemannian then the estimator is called the
+geometric median, and if the distance metric in Euclidean then it is called
+the projected median. The algorithm used in the geometric case is discussed
+in \cite{hartley11} and the projected case is in \cite{stanfill2013}.
 
 hartley11 stanfill2013
 }
@@ -64,5 +72,6 @@ rot.dist(median(Qs))                     #Bias of the projected median
 rot.dist(median(Qs, type = "geometric")) #Bias of the geometric median
 }
 \seealso{
-\code{\link{mean.SO3}}, \code{\link{bayes.mean}}, \code{\link{weighted.mean.SO3}}
+\code{\link{mean.SO3}}, \code{\link{bayes.mean}},
+  \code{\link{weighted.mean.SO3}}
 }

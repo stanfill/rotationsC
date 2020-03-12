@@ -27,7 +27,7 @@ arsample <- function(f, g, M, kappa, Haar, ...) {
   found = FALSE
   while (!found) {
     x <- g(1, ...)
-    y <- runif(1, min = 0, max = M)
+    y <- stats::runif(1, min = 0, max = M)
     if (y < f(x, kappa, Haar))
       found = TRUE
   }
@@ -41,8 +41,8 @@ arsample.unif <- function(f, M, ...) {
   #generate a random observation from target density f assuming g is uniform
   found = FALSE
   while (!found) {
-    x <- runif(1, -pi, pi)
-    y <- runif(1, min = 0, max = M)
+    x <- stats::runif(1, -pi, pi)
+    y <- stats::runif(1, min = 0, max = M)
     if (y < f(x, ...))
       found = TRUE
   }
@@ -127,7 +127,7 @@ pcayley<-function(q,kappa=1,nu=NULL,lower.tail=TRUE){
   a<-(2*kappa+1)*(1-cos(q))/(3*(1+cos(q)))
   pos<-which(q>0)
 
-  cdf<-pf(a,3,2*kappa+1)
+  cdf<-stats::pf(a,3,2*kappa+1)
   cdf[pos]<-cdf[pos]/2+0.5
   cdf[-pos]<-0.5-cdf[-pos]/2
 
@@ -151,8 +151,8 @@ rcayley <- function(n, kappa = 1, nu = NULL) {
 
   #This has also been coded in C++ but the gains aren't worth the pains so
   #I will keep it in R for now
-  bet <- rbeta(n, kappa + 0.5, 3/2)
-  theta <- acos(2 * bet - 1) * (1 - 2 * rbinom(n, 1, 0.5))
+  bet <- stats::rbeta(n, kappa + 0.5, 3/2)
+  theta <- acos(2 * bet - 1) * (1 - 2 * stats::rbinom(n, 1, 0.5))
   return(theta)
 }
 
@@ -234,7 +234,7 @@ pfisher<-function(q,kappa=1, nu=NULL, lower.tail=TRUE){
   cdf<-rep(NA,n)
 
   for(i in 1:n)
-    cdf[i]<-max(min(integrate(dfisher,-pi,q[i],kappa,nu,Haar=FALSE)$value,1),0)
+    cdf[i]<-max(min(stats::integrate(dfisher,-pi,q[i],kappa,nu,Haar=FALSE)$value,1),0)
 
   if(lower.tail)
     return(cdf) else return((1-cdf))
@@ -399,7 +399,7 @@ dmaxwell <- function(r, kappa = 1, nu = NULL, Haar = TRUE) {
   den <- dmkern(r = r, kappa = kappa)
 
   if(kappa<1.9){
-    den <- den/(1-2*integrate(dmkern,lower = pi, upper = Inf,kappa = kappa)$value)
+    den <- den/(1-2*stats::integrate(dmkern,lower = pi, upper = Inf,kappa = kappa)$value)
   }
 
   zeros <- which(abs(r)>pi)
@@ -421,7 +421,7 @@ pmaxwell<-function(q,kappa=1,nu=NULL,lower.tail=TRUE){
   cdf<-rep(NA,n)
 
   for(i in 1:n)
-    cdf[i]<-max(min(integrate(dmaxwell,-pi,q[i],kappa,nu,Haar=FALSE)$value,1),0)
+    cdf[i]<-max(min(stats::integrate(dmaxwell,-pi,q[i],kappa,nu,Haar=FALSE)$value,1),0)
 
   if(lower.tail)
     return(cdf) else return((1-cdf))
@@ -513,7 +513,7 @@ pvmises<-function(q,kappa=1,nu=NULL,lower.tail=TRUE){
   cdf<-rep(NA,n)
 
   for(i in 1:n)
-    cdf[i]<-max(min(integrate(dvmises,-pi,q[i],kappa,nu,Haar=FALSE)$value,1),0)
+    cdf[i]<-max(min(stats::integrate(dvmises,-pi,q[i],kappa,nu,Haar=FALSE)$value,1),0)
 
   if(lower.tail)
     return(cdf) else return((1-cdf))

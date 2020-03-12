@@ -75,9 +75,9 @@ plot(Rs, center = mean(Rs), show_estimates = "proj.mean", shape = 4)
 
 \dontrun{
 # Z is computed internally and contains information on depth
-plot(Rs, center = mean(Rs), show_estimates = c("proj.mean", "geom.mean"), 
- label_points = sample(LETTERS, 200, replace = TRUE)) + aes(size = Z, alpha = Z) + 
+plot(Rs, center = mean(Rs), show_estimates = c("proj.mean", "geom.mean"),
+ label_points = sample(LETTERS, 200, replace = TRUE)) + aes(size = Z, alpha = Z) +
  scale_size(limits = c(-1, 1), range = c(0.5, 2.5))
- 
+
 plot(Rs, center = mean(Rs), interactive = TRUE)}
 }

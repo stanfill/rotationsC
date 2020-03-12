@@ -11,7 +11,11 @@
 \alias{as.SO3.SO3}
 \alias{as.SO3.data.frame}
 \title{Rotation matrices}
-\format{\code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix.}
+\format{
+\code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix.
+
+An object of class \code{SO3} with 1 rows and 9 columns.
+}
 \usage{
 as.SO3(x, ...)
 
