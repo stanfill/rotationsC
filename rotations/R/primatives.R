@@ -22,22 +22,46 @@ print.SO3<-function(x,...){
   }
 }
 
+#' @importFrom utils head
+#' @inherit utils::head
+#' @name head
+NULL
+
+#' @rdname head
 #' @export
-head.SO3 <- function(x, n = 6L,...){
-  head(as.matrix(x), n, ...)
+head.SO3 <- function(x, n = 6L, ...) {
+  x <- matrix(x, nrow(x))
+  colnames(x) <- c("R11", "R21", "R31", "R12", "R22", "R32", "R13", "R23", "R33")
+  head(x, n, ...)
 }
 
+#' @rdname head
 #' @export
-tail.SO3<-function(x, n = 6L, addrownums = TRUE,...){
+head.Q4 <- function(x, n = 6L, ...) {
+  x <- matrix(x, nrow(x))
+  colnames(x) <- c("Real", "i", "j", "k")
+  head(x, n, ...)
+}
 
-  x<-matrix(x,dim(x))
+#' @importFrom utils tail
+#' @inherit utils::tail
+#' @name tail
+NULL
 
-  if(ncol(x)==9){
-    cnames<-c("R11","R21","R31","R12","R22","R32","R13","R23","R33")
-    colnames(x)<-cnames
-  }
+#' @rdname tail
+#' @export
+tail.SO3 <- function(x, n = 6L, addrownums = TRUE, ...) {
+  x <- matrix(x, nrow(x))
+  colnames(x) <- c("R11", "R21", "R31", "R12", "R22", "R32", "R13", "R23", "R33")
+  tail(x, n, addrownums, ...)
+}
 
-  utils::tail(x, n, addrownums, ...)
+#' @rdname tail
+#' @export
+tail.Q4 <- function(x, n = 6L, addrownums = TRUE, ...) {
+  x <- matrix(x, nrow(x))
+  colnames(x) <- c("Real", "i", "j", "k")
+  tail(x, n, addrownums, ...)
 }
 
 #' @export
@@ -117,21 +141,6 @@ print.Q4<-function(x,...){
 
     }
   }
-}
-
-#' @export
-head.Q4<-function(x,n=6L,...){
-  head(as.matrix(x), n, ...)
-}
-
-#' @export
-tail.Q4<-function(x, n = 6L, addrownums = TRUE,...){
-
-  x <- matrix(x, dim(x))
-
-  if(ncol(x)==4) colnames(x) <- c("Real","i","j","k")
-
-  utils::tail(x, n, addrownums,...)
 }
 
 #' @export
