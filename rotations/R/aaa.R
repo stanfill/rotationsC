@@ -2,16 +2,22 @@
 #'
 #' Calculate the extrinsic or intrinsic distance between two rotations.
 #'
-#' This function will calculate the intrinsic (Riemannian) or extrinsic (Euclidean) distance between two rotations.
-#' \code{R2} and \code{Q2} are set to the identity rotations by default.  For rotations \eqn{R_1}{R1} and \eqn{R_2}{R2}
-#' both in \eqn{SO(3)}, the Euclidean distance between them is \deqn{||R_1-R_2||_F}{||R1-R2||} where \eqn{||\cdot||_F}{|| ||} is the Frobenius norm.
-#' The Riemannian distance is defined as \deqn{||Log(R_1^\top R_2)||_F}{||Log(R1'R2)||} where \eqn{Log} is the matrix logarithm, and it corresponds
-#' to the misorientation angle of \eqn{R_1^\top R_2}{R1'R2}.  See the vignette `rotations-intro' for a comparison of these
-#' two distance measures.
+#' This function will calculate the intrinsic (Riemannian) or extrinsic
+#' (Euclidean) distance between two rotations. \code{R2} and \code{Q2} are set
+#' to the identity rotations by default.  For rotations \eqn{R_1}{R1} and
+#' \eqn{R_2}{R2} both in \eqn{SO(3)}, the Euclidean distance between them is
+#' \deqn{||R_1-R_2||_F}{||R1-R2||} where \eqn{||\cdot||_F}{|| ||} is the
+#' Frobenius norm. The Riemannian distance is defined as \deqn{||Log(R_1^\top
+#' R_2)||_F}{||Log(R1'R2)||} where \eqn{Log} is the matrix logarithm, and it
+#' corresponds to the misorientation angle of \eqn{R_1^\top R_2}{R1'R2}.  See
+#' the vignette `rotations-intro' for a comparison of these two distance
+#' measures.
 #'
-#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a
+#'   random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param R2,Q2 the second rotation in the same parameterization as x.
-#' @param method string indicating "extrinsic" or "intrinsic" method of distance.
+#' @param method string indicating "extrinsic" or "intrinsic" method of
+#'   distance.
 #' @param p the order of the distance.
 #' @param ... additional arguments.
 #' @return The rotational distance between each rotation in x and R2 or Q2.
@@ -28,11 +34,9 @@
 #'
 #' #The extrinsic distance is related to the intrinsic distance
 #' all.equal(dEs, 2*sqrt(2)*sin(dRs/2)) #TRUE
-
 rot.dist<-function(x,...){
   UseMethod("rot.dist")
 }
-
 
 #' @rdname rot.dist
 #' @export
@@ -47,9 +51,9 @@ rot.dist.SO3 <- function(x, R2=id.SO3, method='extrinsic' , p=1,...) {
 
   if(method%in%c('projected','extrinsic')){
 
-    n<-nrow(R1)
-    R1<-matrix(R1,n,9)
-    R2<-matrix(R2,n,9,byrow=TRUE)
+    n <- nrow(R1)
+    R1 <- matrix(R1, n, 9)
+    R2 <- matrix(R2, n, 9, byrow = TRUE)
 
     so3dist<-sqrt(rowSums((R1-R2)^2))^p
 
