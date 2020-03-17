@@ -1,24 +1,12 @@
-#' SO3 class.
-#'
-#' Class for \eqn{3\times 3}{3-by-3} matrix representation of rotations.
-#'
-#' @name SO3-class
-#' @seealso See the \code{\link{SO3}} functions.
-#'
+#' @importFrom methods setOldClass
 #' @exportClass SO3
 setOldClass("SO3")
 
-#' Q4 class.
-#'
-#' Class for quaternion representation of rotations.
-#'
-#' @name Q4-class
-#' @seealso See the \code{\link{Q4}} functions.
-#'
+#' @importFrom methods setOldClass
 #' @exportClass Q4
 setOldClass("Q4")
 
-#' Quaternions
+#' `Q4` class for storing rotation data as quaternions
 #'
 #' Creates or tests for objects of class "Q4".
 #'
@@ -46,7 +34,7 @@ setOldClass("Q4")
 #'
 #'
 #' @export
-#' @rdname Q4
+#' @name Q4
 #' @param x object to be coerced or tested
 #' @param theta vector or single rotation angle; if \code{length(theta)==1}, the same theta is used for all axes
 #' @param ... additional arguments.
@@ -206,7 +194,7 @@ is.Q4 <- function(x) {
 #' @export
 id.Q4 <- as.Q4(c(1,0,0,0))
 
-#' Rotation matrices
+#' `SO3` class for storing rotation data as rotation matrices
 #'
 #' Creates or tests for objects of class "SO3".
 #'

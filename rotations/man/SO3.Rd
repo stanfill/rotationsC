@@ -10,7 +10,7 @@
 \alias{as.SO3.Q4}
 \alias{as.SO3.SO3}
 \alias{as.SO3.data.frame}
-\title{Rotation matrices}
+\title{`SO3` class for storing rotation data as rotation matrices}
 \format{
 \code{id.SO3} is the identity rotation given by the the 3-by-3 identity matrix.
 
