@@ -15,10 +15,9 @@ Authors@R:
              role = "aut"),
       person(given = "Aymeric",
              family = "Stamm",
-             role = "aut",
+             role = "ctb",
              email = "aymeric.stamm@math.cnrs.fr",
              comment = c(ORCID = "0000-0002-8725-3654")))
-Maintainer: Bryan Stanfill <bstanfill2003@gmail.com>
 Description: Tools for working with rotational data, including
     simulation from the most commonly used distributions on SO(3),
     methods for different Bayes, mean and median type estimators for
@@ -46,8 +45,9 @@ Suggests:
 LinkingTo: 
     Rcpp, 
     RcppArmadillo
-URL: https://github.com/stanfill/rotationsC/tree/master/rotations
+URL: https://github.com/stanfill/rotationsC
 BugReports: https://github.com/stanfill/rotationsC/issues
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
+VignetteBuilder: knitr
