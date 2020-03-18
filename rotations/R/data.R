@@ -20,7 +20,7 @@
 #' }
 #'
 #' @source
-#'   \url{http://www.mat.ulaval.ca/departement-et-professeurs/direction-et-personnel/professeurs/louis-paul-rivest/publications/}
+#'   \url{https://www.mat.ulaval.ca/lrivest/louis-paul-rivest/publications/}
 #'
 #' @references \enumerate{
 #'   \item Rancourt, D. (1995). "Arm posture and hand

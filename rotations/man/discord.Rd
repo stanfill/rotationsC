@@ -16,7 +16,7 @@ discord(x, type, t = 1L, obs = 1:nrow(x))
 \item{obs}{integer vector specifying which observation(s) to compute the measure of discord for}
 }
 \value{
-The Hi statistic for each group of size t is returned.  If \code{t>1} then which observations
+The Hi statistic for each group of size t is returned.  If \code{t>1} then which observations 
 that define each group of size \code{t} is returned as well.
 }
 \description{
@@ -29,9 +29,11 @@ distribution with 1,n-2 df for the von Mises Fisher distribution.
 }
 \examples{
 #Compute the measures of discord for a sample from the Cayley distribution
-Rs <- ruars(20,rcayley,kappa=1)
-Hi <- discord(Rs, type='intrinsic')
-He <- discord(Rs, type='extrinsic')
+# Intrinsic examples are commented out but are below if you're interested
+
+Rss <- ruars(20,rcayley,kappa=1)
+Hi <- discord(Rss, type='intrinsic')
+He <- discord(Rss, type='extrinsic')
 
 #Compare to the theoretical F distribution
 OrdHi <- sort(Hi)

@@ -43,7 +43,7 @@ discord<-function(x, type, t=1L, obs=1:nrow(x)){
   if ("try-error"%in%class(type))
     stop("type needs to be one of 'intrinsic' or 'extrinsic'.")
   
-  if(any(obs>nrow(x)||obs<0))
+  if(any(obs>nrow(x))||any(obs<0))
     stop("obs must be between 1 and nrow(x)")
   
   if(t>1){
@@ -87,7 +87,7 @@ HnBlocCpp<-function(Qs,t){
   #Compute the Hn statistic when each possible set of t observations is deleted
   Qs<-as.Q4(Qs)
   n<-nrow(Qs)
-  groups <- combn(n,t)
+  groups <- utils::combn(n,t)
   
   Hnia <- HnCppBloc(Qs,groups)
   

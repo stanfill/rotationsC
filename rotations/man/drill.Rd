@@ -18,7 +18,7 @@ A data frame with 720 observations on the following 8 variables:
 }
 }
 \source{
-\url{http://www.mat.ulaval.ca/departement-et-professeurs/direction-et-personnel/professeurs/louis-paul-rivest/publications/}
+\url{https://www.mat.ulaval.ca/lrivest/louis-paul-rivest/publications/}
 }
 \usage{
 drill
