@@ -593,7 +593,7 @@ duars<-function(R,dangle,S=id.SO3,kappa=1,...){
 	#Create an exception for rangles that don't take kappas
 	cr <- try(dangle(rs,kappa,...),silent=TRUE)
 	if(class(cr)=="try-error"){
-	  cr <- rangle(rs,...)
+	  cr <- dangle(rs,...)
 	}
 	
 	trStO<-2*cos(rs)+1
