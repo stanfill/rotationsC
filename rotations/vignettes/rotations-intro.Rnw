@@ -1,16 +1,11 @@
 \documentclass[a4paper]{report}
+
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{RJournal_edited}
 \usepackage{amsmath,amssymb,array}
 \usepackage{booktabs}
-%\VignetteIndexEntry{Introduction to rotations}
-%\VignetteDepends{knitr,onion,orientlib}
-%\VignetteEngine{knitr::knitr}
-
-%% load any required packages here
 \usepackage{bm,subcaption,amsfonts}
-
 
 \newcommand{\argmin}{\text{argmin}}
 \newcommand{\argmax}{\text{argmax}}
@@ -23,16 +18,29 @@
 \newcommand{\ProjMedian}{\widetilde{\bm S}_E}
 \newcommand{\GeomMean}{\widehat{\bm S}_R}
 \newcommand{\GeomMedian}{\widetilde{\bm S}_R}
+
+%\VignetteIndexEntry{Introduction to rotations}
+%\VignetteDepends{knitr,onion,orientlib}
+%\VignetteEngine{knitr::knitr}
+
 \begin{document}
 
 <<setup,include=FALSE>>=
-library(rotations)
 options(digits=3)
 library(knitr)
-opts_chunk$set(fig.path='figure/', fig.width=5, fig.height=5, fig.show='hold',fig.align='center')
+opts_chunk$set(
+  concordance = TRUE, 
+  fig.path = 'figure/', 
+  fig.width = 5, 
+  fig.height = 5, 
+  fig.show = 'hold', 
+  fig.align = 'center'
+)
+knit_hooks$set(document = function(x) {
+  sub('\\usepackage[]{color}', '\\usepackage{xcolor}', x, fixed = TRUE)
+})
+library(rotations)
 @
-
-
 
 %% do not edit, for illustration only
 \sectionhead{}
@@ -47,16 +55,15 @@ opts_chunk$set(fig.path='figure/', fig.width=5, fig.height=5, fig.show='hold',fi
 
 \maketitle
 
-
 \abstract{
-In this article we introduce the \pkg{rotations} package which provides users with the ability to simulate, analyze and visualize three-dimensional rotation data.  More specifically it includes four commonly used distributions from which to simulate data, four estimators of the central orientation, six confidence region estimation procedures and two approaches to visualizing rotation data.  All of these features are available for two different parameterizations of rotations: three-by-three matrices and quaternions.  In addition, two datasets are included that illustrate the use of rotation data in practice.
+In this article we introduce the \pkg{rotations} package which provides users with the ability to simulate, analyze and visualize three-dimensional rotation data.  More specifically it includes four commonly used distributions from which to simulate data, four estimators of the central orientation, six confidence region estimation procedures and two approaches to visualizing rotation data.  All of these features are available for two different parametrizations of rotations: three-by-three matrices and quaternions.  In addition, two datasets are included that illustrate the use of rotation data in practice.
 }
 
 \section{Introduction}
 
-Data in the form of three-dimensional rotations have applications in many scientific areas, such as bio-medical engineering, computer vision, and geological and materials sciences where such data represent the positions of objects within a three-dimensional reference frame.  For example, \cite{humbert1996}, \cite{bingham2009} and \cite{bachmann2010} apply rotation data to study the orientation of cubic crystals on the surfaces of metal.  \cite{rancourt2000} use rotations to represent  variations in human movement while performing a task. 
+Data in the form of three-dimensional rotations have applications in many scientific areas, such as bio-medical engineering, computer vision, and geological and materials sciences where such data represent the positions of objects within a three-dimensional reference frame.  For example, \cite{humbert1996}, \cite{bingham2009} and \cite{bachmann2010} apply rotation data to study the orientation of cubic crystals on the surfaces of metal.  \cite{rancourt2000} use rotations to represent  variations in human movement while performing a task.
 
-A common goal shared in the analysis of rotation data across all fields is to estimate the main or central orientation for a sample of rotations. 
+A common goal shared in the analysis of rotation data across all fields is to estimate the main or central orientation for a sample of rotations.
 More formally, let  $SO(3)$ denote the  rotation group, which consists of all real-valued $3\times 3$  matrices $\bm R$ with determinant equal to +1.
 Then observations $\bm{R}_1,\ldots,\bm{R}_n \in SO(3)$ can be conceptualized as a random sample from a \dfn{location model}
 \begin{equation}
@@ -65,15 +72,15 @@ Then observations $\bm{R}_1,\ldots,\bm{R}_n \in SO(3)$ can be conceptualized as 
 \end{equation}
 where $\bm S \in SO(3)$ is the {\it fixed} parameter of interest indicating the central orientation, and $\bm{E}_1,\ldots,\bm{E}_n \in SO(3)$ denote i.i.d.\ {\it random} rotations which symmetrically perturb $\bm{S}$.  Model \eqref{eqn:loc_model} is a rotation-matrix analog of a location model for scalar data $Y_i = \mu + e_i$, where $\mu \in \mathbb{R}$ denotes a mean and $e_i \in \mathbb{R}$ denotes an additive error symmetrically distributed around zero.
 
-Assuming the perturbations $\bm E_i$ symmetrically perturb $\bm S$ implies that the observations $\bm R_i$ have no preferred direction relative to $\bm S$ and that $E\left(\bm R_i\right)=c\bm S$ for some $c\in\mathbb{R}^+$ for all $i$.  Also note that under the symmetry assumption, \eqref{eqn:loc_model} could be equivalently specified as $\bm R_i=\bm E_i\bm S$, though the form given in \eqref{eqn:loc_model} is the most common form in the literature (see \citealt{bingham2009} for details). 
+Assuming the perturbations $\bm E_i$ symmetrically perturb $\bm S$ implies that the observations $\bm R_i$ have no preferred direction relative to $\bm S$ and that $E\left(\bm R_i\right)=c\bm S$ for some $c\in\mathbb{R}^+$ for all $i$.  Also note that under the symmetry assumption, \eqref{eqn:loc_model} could be equivalently specified as $\bm R_i=\bm E_i\bm S$, though the form given in \eqref{eqn:loc_model} is the most common form in the literature (see \citealt{bingham2009} for details).
 
 While there is a multitude of packages and functions available in R to estimate the mean in a location model, the toolbox for rotational data is limited.  The \CRANpkg{orientlib} \citep{murdoch2003} package includes the definition of an orientation class along with a few methods to summarize and visualize rotation data.  A strength of the \pkg{orientlib} package is its thorough exploration of rotation representations, but the estimation and visualization techniques are lacking and no methods for inference are available.  The \CRANpkg{onion} \citep{hankin2011} package includes functions for rotation algebra but only the quaternion form is available and data analysis is not possible.  The \pkg{uarsbayes}  \citep{qu2013} package includes functions for data generation and Bayes inference but this package is currently not publicly available.  Packages for circular and spherical data, e.g.\ \CRANpkg{circular} \citep{agostinelli2011} and \CRANpkg{SpherWave} \citep{oh2013}, can possibly be used but their extension to rotation data is not straightforward.
 
 The \CRANpkg{rotations} \citep{stanfill2014} package fills this void by providing users with the tools necessary to simulate rotations from \eqref{eqn:loc_model} with four distribution choices for the perturbation matrices $\bm E_i$.  Estimation and inference for $\bm{S}$ in \eqref{eqn:loc_model} is available along with two visualization techniques.  The remainder of this manuscript introduces rotation data more fully and discusses the ways they are handled by the \pkg{rotations} package.  For the latest on this package as well as a full list of available functions, see \code{help(package = "rotations")}.
 
-\section{Rotation parameterizations}
+\section{Rotation parametrizations}
 
-Several parameterizations of rotations exist. We consider two of the most commonly used: orthogonal $3\times 3$ matrices with determinant one and four-dimensional unit vectors called \dfn{quaternions}.  The \pkg{rotations} package allows for both parameterizations as input as well as transforming one into the other. We will briefly discuss each:
+Several parametrizations of rotations exist. We consider two of the most commonly used: orthogonal $3\times 3$ matrices with determinant one and four-dimensional unit vectors called \dfn{quaternions}.  The \pkg{rotations} package allows for both parametrizations as input as well as transforming one into the other. We will briefly discuss each:
 
 \subsection{Matrix form}\label{subsec:matrix}
 
@@ -104,9 +111,6 @@ The \pkg{rotations} package defines the \code{S3} class \code{"SO3"}, which inte
 
 The \code{as.SO3} function coerces the input into the class \code{"SO3"}.  There are three types of input supported by the \code{as.SO3} function.  Given a singe angle $r$ and axis $\bm U$, \code{as.SO3} will form a rotation matrix according to \eqref{eqn:angleAxis}. Equivalently one could supply a three-dimensional vector $\bm W$, then the length of that vector will be taken to be the angle of rotation $r=\|\bm W\|$ and the axis is taken to be the unit-vector in the direction of $\bm W$, i.e.\ $\bm U=\bm W/\|\bm W\|$.  One can also supply a rotation $\bm Q$ in the quaternion representation. The \code{as.SO3} function will return the matrix equivalent of $\bm Q$.  For all input types the function \code{as.SO3} returns an $n\times9$ matrix of class \code{"SO3"} where each row corresponds to a rotation matrix.    Below we illustrate the use of the \code{as.SO3} function by constructing the $3\times3$ matrix associated with a $90^\circ$ rotation about the $y$-axis, i.e.\ $r=\pi/2$ and $\bm U=(0,1,0)$.  In this example and all that follow, we have rounded the output  to three digits for compactness.
 
-<<setup2,include=FALSE>>=
-options(digits=3)
-@
 <<ex2>>=
 r <- pi/2
 U <- c(0, 1 ,0)
@@ -116,7 +120,7 @@ R
 identical(R, as.SO3(U, r))
 @
 
-Given a rotation matrix $\bm R$, the functions \code{mis.angle} and \code{mis.axis} will determine the misorientation angle and axis of an object with class \code{"SO3"} as illustrated in the next example. 
+Given a rotation matrix $\bm R$, the functions \code{mis.angle} and \code{mis.axis} will determine the misorientation angle and axis of an object with class \code{"SO3"} as illustrated in the next example.
 <<ex3>>=
 mis.angle(R)*2/pi
 mis.axis(R)
@@ -146,9 +150,7 @@ as.Q4(U, r)
 as.Q4(as.SO3(U, r))
 @
 
-
-
-\section{Data generation\label{section:generation}} 
+\section{Data generation\label{section:generation}}
 
 If the rotation $\bm{E}_i\in SO(3)$ from \eqref{eqn:loc_model} has an axis $\bm U$ that is uniformly distributed on the unit sphere and an angle $r$ that is independently distributed about zero according to some symmetric distribution function then $\bm E_i$ is said to belong to the \dfn{uniform-axis random spin}, or \dfn{UARS}, class of distributions.  From \cite{bingham2009} the density for $\bm E_i$ is given by
 \begin{equation}\label{eq:uarsden}
@@ -165,26 +167,26 @@ The spread of  the Cayley, matrix Fisher and circular-von Mises distributions is
 \centering
 \small{
 \begin{tabular}{ lcccccl}\toprule
-\textbf{Name}  & & \textbf{Density} $C(r |\kappa)$ & & \textbf{Circular variance $\nu$}& & \textbf{Function}\\ \midrule 
+\textbf{Name}  & & \textbf{Density} $C(r |\kappa)$ & & \textbf{Circular variance $\nu$}& & \textbf{Function}\\ \midrule
 Uniform  & & $\frac{1-\cos(r)}{2\pi}$ & & $\frac{3}{2}$& & \code{.haar} \\
 
 \rule[2mm]{0mm}{6mm} Cayley  & & $\frac{\Gamma(\kappa+2)(1+\cos r)^\kappa(1-\cos r)}{2^{(\kappa+1)}\sqrt{\pi}\Gamma(\kappa+1/2)}$ & & $\frac{3}
 {\kappa+2}$ & & \code{.cayley}\\
 
-\rule[2mm]{0mm}{6mm} matrix Fisher  & & $\frac{[1-\cos(r)]\exp[2\kappa 
-\cos(r)]}{2\pi[\mathrm{I_0}(2\kappa)-\mathrm{I_1}(2\kappa)]}$ & & 
+\rule[2mm]{0mm}{6mm} matrix Fisher  & & $\frac{[1-\cos(r)]\exp[2\kappa
+\cos(r)]}{2\pi[\mathrm{I_0}(2\kappa)-\mathrm{I_1}(2\kappa)]}$ & &
 $\frac{3\mathrm{I}_0(2\kappa)-4\mathrm{I}_1(2\kappa)+\mathrm{I}_2(2\kappa)}
 {2[\mathrm{I}_0(2\kappa)-\mathrm{I}_1(2\kappa)]}$& & \code{.fisher} \\
 
-\rule[2mm]{0mm}{6mm} circular-von Mises  & & $\frac{\exp[\kappa\cos(r)]}{2\pi \mathrm{I_0}(\kappa)}$&  & 
-$\frac{\mathrm{I_0}(\kappa)-\mathrm{I_1}(\kappa)}{\mathrm{I_0}(\kappa)}$& & \code{.vmises} \\[-7mm] 
+\rule[2mm]{0mm}{6mm} circular-von Mises  & & $\frac{\exp[\kappa\cos(r)]}{2\pi \mathrm{I_0}(\kappa)}$&  &
+$\frac{\mathrm{I_0}(\kappa)-\mathrm{I_1}(\kappa)}{\mathrm{I_0}(\kappa)}$& & \code{.vmises} \\[-7mm]
 \rule[2mm]{0mm}{6mm} & & & & & & \\\bottomrule
 \end{tabular}}
 \caption{Circular densities and circular variance $\nu$; $I_i(\cdot)$ represents the modified Bessel function of order $i$ and $\Gamma(\cdot)$ is the gamma function.}  \label{tab:Crforms}
 \end{table}
 
 
-For a given concentration \code{d}, \code{p} and \code{r} take the same meaning as for the more familiar distributions such as \code{dnorm}.  To simulate a sample of $SO(3)$ data, the \code{ruars} function takes arguments \code{n}, \code{rangle}, and \code{kappa} to specify the sample size, angular distribution and concentration as shown below.  Alternatively, one can specify the circular variance $\nu$.  Circular variance is used in the event that both circular variance and concentration are provided.  The \code{space} argument determines the parameterization to form.   When a sample of rotations is printed then a $n\times 9$ matrix is printed with column titles that specify which element of the matrix each column corresponds to.  For example, the $\bm R_{\{1,1\}}$ element of a rotation matrix is printed under the column heading \code{R11} as illustrated below.
+For a given concentration \code{d}, \code{p} and \code{r} take the same meaning as for the more familiar distributions such as \code{dnorm}.  To simulate a sample of $SO(3)$ data, the \code{ruars} function takes arguments \code{n}, \code{rangle}, and \code{kappa} to specify the sample size, angular distribution and concentration as shown below.  Alternatively, one can specify the circular variance $\nu$.  Circular variance is used in the event that both circular variance and concentration are provided.  The \code{space} argument determines the parametrization to form.   When a sample of rotations is printed then a $n\times 9$ matrix is printed with column titles that specify which element of the matrix each column corresponds to.  For example, the $\bm R_{\{1,1\}}$ element of a rotation matrix is printed under the column heading \code{R11} as illustrated below.
 
 
 <<ex5>>=
@@ -207,21 +209,21 @@ The choice of geometry results in two different metrics to measure the distance 
 \begin{equation*}
 \Edist\left(\bm{R}_1,\bm{R}_2\right)=\left\|\bm{R}_1-\bm{R}_2\right\|_F,
 \end{equation*}
-where $\|\bm{A}\|_F = \sqrt{\mathbf{tr}({\bm A^\top \bm A})}$ denotes the Frobenius norm.  The Euclidean distance between two rotation matrices corresponds to the length of the shortest path in $\Rbb^{3\times3}$ that connects them and is therefore an \dfn{extrinsic} distance metric.  
+where $\|\bm{A}\|_F = \sqrt{\mathbf{tr}({\bm A^\top \bm A})}$ denotes the Frobenius norm.  The Euclidean distance between two rotation matrices corresponds to the length of the shortest path in $\Rbb^{3\times3}$ that connects them and is therefore an \dfn{extrinsic} distance metric.
 
 Estimators based on the Euclidean distance form the class of \dfn{projected} estimators.  The name is derived from the method used to compute these estimators.  That is, each estimator in this class is the projection of the the generic $3\times 3$ matrix that minimizes the loss function into $SO(3)$.  For an object with class \code{"SO3"} the \code{median} or \code{mean} function with argument \code{type = "projected"} will return a $3\times 3$ matrix in $SO(3)$ that minimizes the first- or second-order loss function, respectively.
 
-By staying in the Riemannian space $SO(3)$ the natural distance metric becomes the Riemannian (or geodesic) distance, $\Rdist$, which for two rotations $\bm{R}_1,\bm{R}_2\in SO(3)$  is  defined as 
+By staying in the Riemannian space $SO(3)$ the natural distance metric becomes the Riemannian (or geodesic) distance, $\Rdist$, which for two rotations $\bm{R}_1,\bm{R}_2\in SO(3)$  is  defined as
 \begin{equation*}
 \Rdist\left(\bm{R}_1,\bm{R}_2\right)=  \frac{1}{\sqrt{2}}\left\|\text{Log}\left(\bm{R}_1^\top\bm{R}_2\right)\right\|_F = |r|,
 \end{equation*}
 where $\text{Log}(\bm{R})$ denotes the logarithm of $\bm{R}$ defined in \eqref{eqn:matLog} and $r\in[-\pi,\pi)$ is the misorientation angle of $\bm{R}_1^\top \bm{R}_2$.  The Riemannian distance corresponds to the length of the shortest path that connects $\bm{R}_1$ and $\bm{R}_2$ {\it within} the space $SO(3)$ and is therefore an \dfn{intrinsic} distance metric. For this reason, the Riemannian distance is often considered the more natural metric on $SO(3)$.  As demonstrated in \cite{stanfill2013}, the Euclidean and Riemannian distances are related by $\Edist(\bm R_1,\bm R_2)=2\sqrt{2}\sin\left[\Rdist(\bm R_1,\bm R_2)/2\right]$.
 
-Estimators based on the Riemannian distance metric are called \dfn{geometric} estimators because they preserve the geometry of $SO(3)$.  These can be computed using the \code{mean} and \code{median} functions with the argument \code{type = "geometric"}.  Table~\ref{tab:ests.sum} summarizes the four estimators including their formal definition and how they can be computed.  
+Estimators based on the Riemannian distance metric are called \dfn{geometric} estimators because they preserve the geometry of $SO(3)$.  These can be computed using the \code{mean} and \code{median} functions with the argument \code{type = "geometric"}.  Table~\ref{tab:ests.sum} summarizes the four estimators including their formal definition and how they can be computed.
 
 The estimators in Table~\ref{tab:ests.sum} find estimates  based on minimization of $L_1$- and $L_2$-norms in the chosen geometry. The  function \code{gradient.search} provides the option to optimize for any other arbitrary minimization criterion. As the name suggests, the minimization is done along the gradient of the minimization function in the rotation space. Starting from an initial, user-specified rotation, the algorithm finds a (local) minimum by stepping iteratively in the direction of the steepest descent. Step size is regulated internally by adjusting for curvature of the minimization function.
 
-We highlight this process  in the example below. The function \code{L1.error} is defined to minimize the intrinsic $L_1$-norm, the result from the optimization should therefore agree with the geometric median of the sample. In fact, the difference between the two results is at the same level as the minimal difference (\code{minerr}) used for convergence of the gradient search. What is gained in flexibility of the optimization is, of course, paid for in terms of speed: the built-in median function is faster by far than the gradient search. 
+We highlight this process  in the example below. The function \code{L1.error} is defined to minimize the intrinsic $L_1$-norm, the result from the optimization should therefore agree with the geometric median of the sample. In fact, the difference between the two results is at the same level as the minimal difference (\code{minerr}) used for convergence of the gradient search. What is gained in flexibility of the optimization is, of course, paid for in terms of speed: the built-in median function is faster by far than the gradient search.
 
 Also illustrated in the example below is the \code{rot.dist} function, which computes the distance between two objects of class \code{"SO3"}, e.g.\ \code{R1} and \code{R2}.  The argument \code{method} specifies which type of distance to compute: the \code{"extrinsic"} option will return the Euclidean distance and the \code{"intrinsic"} option will return the Riemannian distance.  If \code{R1} is an $n\times9$ matrix representing a sample of rotations, then \code{rot.dist} will return a vector of length $n$ where the $i$th element represents the specified distance between \code{R2} and the $i$th row of \code{R1}.
 
@@ -241,13 +243,15 @@ rot.dist(S, SL1$Shat)
 
 \begin{table}[h]
 \centering
-\begin{tabular}{ lclclcl}\toprule
-\rule[2mm]{0mm}{1mm} \textbf{Estimator name} & & \textbf{Definition} & & \textbf{Code}\\ 
+\small
+\begin{tabular}{lclclcl}
+\toprule
+\rule[2mm]{0mm}{1mm} \textbf{Estimator name} & & \textbf{Definition} & & \textbf{Code}\\
 \midrule
 Projected Mean & & $\ProjMean=\underset{\bm S\in SO(3)}{\argmin}\sum\limits_{i=1}^n d_E^2(\bm S,\bm R_i)$ & & \code{mean(Rs, type = "projected")} \\
 \rule[2mm]{0mm}{6mm} Projected Median & & $\ProjMedian=\underset{\bm S\in SO(3)}{\argmin}\sum\limits_{i=1}^nd_E(\bm S,\bm R_i)$ & & \code{median(Rs, type = "projected")} \\
 \rule[2mm]{0mm}{6mm} Geometric Mean & & $\GeomMean=\underset{\bm S\in SO(3)}{\argmin}\sum\limits_{i=1}^n d_R^2(\bm S,\bm R_i)$&  & \code{mean(Rs, type = "geometric")} \\
-\rule[2mm]{0mm}{6mm} Geometric Median & & $\GeomMedian=\underset{\bm S\in SO(3)}{\argmin}\sum\limits_{i=1}^n\Rdist(\bm S,\bm R_i)$&  & \code{median(Rs, type = "geometric")} \\[-7mm] 
+\rule[2mm]{0mm}{6mm} Geometric Median & & $\GeomMedian=\underset{\bm S\in SO(3)}{\argmin}\sum\limits_{i=1}^n\Rdist(\bm S,\bm R_i)$&  & \code{median(Rs, type = "geometric")} \\[-7mm]
 \rule[2mm]{0mm}{6mm} & & & & \\ \bottomrule
 \end{tabular}
 \caption{A summary of the estimators included in the \pkg{rotations} package.  \code{Rs} is a sample of $n$ rotations with class \code{"SO3"} or \code{"Q4"}.}  \label{tab:ests.sum}
@@ -265,18 +269,43 @@ In the context of directional statistics, \cite{prentice1984} used results found
 
 It has also been shown that both estimators $\ProjMean$ and $\ProjMedian$ are $M$-estimators, which motivates a direct approach to confidence region estimation in $SO(3)$ \citep{chang2001}.  In \cite{stanfill2014b}, a pivotal bootstrap method based on the direct approach was implemented to improve coverage rates in small samples.  Because the results in \cite{chang2001} and \cite{stanfill2014b} deal with $SO(3)$ data directly, this approach is called \dfn{direct}.
 
-The six possible confidence regions that result from these two methods are available through the wrapper function \code{region}.  They are differentiated based on the \code{method}, \code{type} and \code{estimator} arguments.  Set \code{estimator = "mean"} or  \code{estimator = "median"} to estimate a region based on $\ProjMean$ or $\ProjMedian$, respectively.  For $\ProjMean$ one can choose \code{method = "transformation"} for the transformation-based methods or \code{method = "direct"} for the direct method.  Since the transformation-based methods cannot be applied to $\ProjMedian$ an error is returned if \code{estimator = "median"} and \code{method = "transformation"} are combined.  A bootstrap version of the specified method is implemented if \code{type = "bootstrap"} or the normal limiting distribution can be chosen with\\ \code{type = "asymptotic"}.  If a bootstrap type region is specified one can additionally specify the bootstrap sample size with the \code{m} argument, which is set to 300 by default.  Regardless of the method and type chosen a single value is returned on the interval $(0,\pi]$.  This value corresponds to the radius of the confidence region centered at each of the axes of the specified estimator.  
+The six possible confidence regions that result from these two methods are available through the wrapper function \code{region}.  They are differentiated based on the \code{method}, \code{type} and \code{estimator} arguments.  Set \code{estimator = "mean"} or  \code{estimator = "median"} to estimate a region based on $\ProjMean$ or $\ProjMedian$, respectively.  For $\ProjMean$ one can choose \code{method = "transformation"} for the transformation-based methods or \code{method = "direct"} for the direct method.  Since the transformation-based methods cannot be applied to $\ProjMedian$ an error is returned if \code{estimator = "median"} and \code{method = "transformation"} are combined.  A bootstrap version of the specified method is implemented if \code{type = "bootstrap"} or the normal limiting distribution can be chosen with\\ \code{type = "asymptotic"}.  If a bootstrap type region is specified one can additionally specify the bootstrap sample size with the \code{m} argument, which is set to 300 by default.  Regardless of the method and type chosen a single value is returned on the interval $(0,\pi]$.  This value corresponds to the radius of the confidence region centered at each of the axes of the specified estimator.
 
 In the example code below a sample of $n=50$ rotations are drawn from the Cayley-UARS($\bm I_{3\times 3}, \kappa=10$) distribution then the four types of confidence regions based on the direct approach are constructed.  For a graphical representation of this dataset along with an interpretation of the confidence regions see Figure \ref{figure:eye1ex7}.
 
 <<ex6>>=
 Rs <- ruars(50, rcayley, kappa = 10)
-region(Rs, method="direct", type="asymptotic", estimator="mean", alp=0.05)
-region(Rs, method="direct", type="bootstrap", estimator="mean", alp=0.05, m=300)
-region(Rs, method="direct", type="asymptotic", estimator="median", alp=0.05)
-region(Rs, method="direct", type="bootstrap", estimator="median", alp=0.05, m=300)
+region(
+  x = Rs, 
+  method = "direct", 
+  type = "asymptotic", 
+  estimator = "mean", 
+  alp = 0.05
+)
+region(
+  x = Rs, 
+  method = "direct", 
+  type = "bootstrap", 
+  estimator = "mean", 
+  alp = 0.05, 
+  m = 300
+)
+region(
+  x = Rs, 
+  method = "direct", 
+  type = "asymptotic", 
+  estimator = "median", 
+  alp = 0.05
+)
+region(
+  x = Rs, 
+  method = "direct", 
+  type = "bootstrap", 
+  estimator = "median", 
+  alp = 0.05, 
+  m = 300
+)
 @
-
 
 \section{Visualizations}
 
@@ -284,18 +313,26 @@ The \pkg{rotations} package offers two methods to visualize rotation data in thr
 
 An existing function that can be used to illustrate rotation data is the \code{boat3d} function included in the \pkg{orientlib} package.  Given a sample of rotations, the \code{boat3d} function produces either a static or interactive three-dimensional boat to represent the provided data.  If only one rotation is of interest, the \code{boat3d} function is superior to the proposed method because it conveniently illustrates rotational data in a single image.  If multiple rotations are provided, however, the \code{boat3d} function will produce separate side-by-side boats, which can be hard to interpret.  In addition, the illustration of a estimated central orientation or a confidence region in $SO(3)$ with the \code{boat3d} function is not presently possible.
 
-The \pkg{rotations} package can be used to produce high-quality static plots within the framework of the \CRANpkg{ggplot2} package \citep{wickham2009}.  Static plots are specifically designed for datasets that are highly concentrated and for use in presentations or publications. Alternatively, the \pkg{rotations} package can produce interactive plots using functions included in the \CRANpkg{sphereplot} package \citep{robotham2013}.  Interactive plots are designed so that the user can explore a dataset and visualize a diffuse sample. 
+The \pkg{rotations} package can be used to produce high-quality static plots within the framework of the \CRANpkg{ggplot2} package \citep{wickham2009}.  Static plots are specifically designed for datasets that are highly concentrated and for use in presentations or publications. Alternatively, the \pkg{rotations} package can produce interactive plots using functions included in the \CRANpkg{sphereplot} package \citep{robotham2013}.  Interactive plots are designed so that the user can explore a dataset and visualize a diffuse sample.
 
-Calling the \code{plot} function with a \code{"SO3"} or \code{"Q4"} object will result in an interactive or static sphere, differentiated by setting the argument \code{interactive} to \code{TRUE} or \code{FALSE}, respectively. The \code{center} argument defines the center of the plot and is usually set to the identity rotation \code{id.SO3} or an estimate of the central orientation, e.g.\ \code{mean(Rs)}.  The user can specify which columns to visualize with the \code{col} argument with options $1$, $2$ and $3$ representing the $x$-, $y$- and $z$- axes, respectively.  For static plots, multiple axes can be displayed simultaneously by supplying a vector to \code{col}; only one column will be displayed at a time for interactive plots.  Also available to static plots is the argument \code{to$\_$range}, which when set to \code{TRUE} will display the portion of the sphere where the observations are present. 
+Calling the \code{plot} function with a \code{"SO3"} or \code{"Q4"} object will result in an interactive or static sphere, differentiated by setting the argument \code{interactive} to \code{TRUE} or \code{FALSE}, respectively. The \code{center} argument defines the center of the plot and is usually set to the identity rotation \code{id.SO3} or an estimate of the central orientation, e.g.\ \code{mean(Rs)}.  The user can specify which columns to visualize with the \code{col} argument with options $1$, $2$ and $3$ representing the $x$-, $y$- and $z$- axes, respectively.  For static plots, multiple axes can be displayed simultaneously by supplying a vector to \code{col}; only one column will be displayed at a time for interactive plots.  Also available to static plots is the argument \code{to$\_$range}, which when set to \code{TRUE} will display the portion of the sphere where the observations are present.
 
 All four estimates of the central orientation can be plotted along with a sample of rotations. Setting the argument \code{estimates$\_$show = "all"} will display all four simultaneously.  If only a few estimates are of interest then any combination of \code{"proj.mean"}, \code{"proj.median"}, \code{"geom.mean"} or \code{"geom.median"} are valid inputs.  The estimators are indicated by color and a legend is provided, see Figure \ref{figure:eye1ex7}. Finally, the \code{mean$\_$regions} and \code{median$\_$regions} options allow the user to draw a circle on the surface of the sphere representing the confidence region for that axis, centered at $\ProjMean$ and $\ProjMedian$ respectively.  If estimators are plotted along with the different regions in static plots then shapes represent the estimators and colors represent the region methods, see Figure \ref{figure:eye1ex7}, while regions and estimators are always distinguished by colors for the interactive plots.  Given the sample of rotations generated in a previous example, the example below illustrates how to produce static plots using the \code{plot} function for objects of class \code{"SO3"} and Figure \ref{figure:eye1ex7} illustrates the results of these commands.% and Figure \ref{figure:eye2} illustrates the same data with the additional argument \code{interactive=TRUE}.
 
-<<ex7,fig.cap="The $x$-axis of a random sample from the Cayley-UARS distribution with $\\kappa=1$, $n=50$.  All for point estimates are displayed on the left and all three region methods along with the projected mean are on the right.",fig.lp="figure:eye1",out.width=".4\\textwidth",fig.pos="h",dev='png'>>=
-plot(Rs, center = mean(Rs), show_estimates = "all")
-plot(Rs, center = mean(Rs), show_estimates = "proj.mean", 
- mean_regions = "all",  alp = .05)
+<<ex7,fig.cap="The $x$-axis of a random sample from the Cayley-UARS distribution with $\\kappa=1$ and $n=50$. All four point estimates are displayed on the left and all three region methods along with the projected mean are on the right.",fig.lp="figure:eye1",out.width=".4\\textwidth",fig.pos="h",dev='png'>>=
+plot(
+  x = Rs, 
+  center = mean(Rs), 
+  show_estimates = "all"
+)
+plot(
+  x = Rs,
+  center = mean(Rs),
+  show_estimates = "proj.mean",
+  mean_regions = "all",
+  alp = .05
+)
 @
-
 
 \section{Datasets}
 
@@ -323,19 +360,18 @@ mean(Loc1data)
 
 \section{Summary}
 
-In this manuscript we introduced the \pkg{rotations} package and demonstrated how it can be used to generate, analyze and visualize rotation data.  The \pkg{rotations} package is compatible with the quaternion specific \pkg{onion} package by applying its \code{as.quaternion} function to a transposed \code{"Q4"} object.  Connecting to the \pkg{onion} package gives the user access to a wide range of algebraic functions unique to quaternions.  Also compatible with the \pkg{rotations} package is the \pkg{orientlib} package, which includes additional parameterizations of rotations.  To translate rotation matrices generated by the \pkg{rotations} package into a form usable by the \pkg{orientlib} package, first coerce a \code{"SO3"} object into a matrix of the same dimension, i.e.\ $n\times9$, then apply the \code{rotvector} function provided by the \pkg{orientlib} package.  Quaternions are defined in the \pkg{orientlib} package by $\bm Q = x_1 i + x_2 j + x_3 k + x_4$, cf.\ \eqref{eqn:quat}, which may lead to confusion when translating quaternions between the \pkg{orientlib} package and either of the \pkg{onion} or \pkg{rotations} packages.  Below is a demonstration of how quaternions and rotation matrices generated by the \pkg{rotations} package can be translated into a form usable by the \pkg{onion} and \pkg{orientlib} packages, respectively.  See \code{help(package = "onion")} and \code{help(package = "orientlib")} for more on these packages.
-
+In this manuscript we introduced the \pkg{rotations} package and demonstrated how it can be used to generate, analyze and visualize rotation data.  The \pkg{rotations} package is compatible with the quaternion specific \pkg{onion} package by applying its \code{as.quaternion} function to a transposed \code{"Q4"} object.  Connecting to the \pkg{onion} package gives the user access to a wide range of algebraic functions unique to quaternions.  Also compatible with the \pkg{rotations} package is the \pkg{orientlib} package, which includes additional parametrizations of rotations.  To translate rotation matrices generated by the \pkg{rotations} package into a form usable by the \pkg{orientlib} package, first coerce a \code{"SO3"} object into a matrix of the same dimension, i.e.\ $n\times9$, then apply the \code{rotvector} function provided by the \pkg{orientlib} package.  Quaternions are defined in the \pkg{orientlib} package by $\bm Q = x_1 i + x_2 j + x_3 k + x_4$, cf.\ \eqref{eqn:quat}, which may lead to confusion when translating quaternions between the \pkg{orientlib} package and either of the \pkg{onion} or \pkg{rotations} packages.  Below is a demonstration of how quaternions and rotation matrices generated by the \pkg{rotations} package can be translated into a form usable by the \pkg{onion} and \pkg{orientlib} packages, respectively.  See \code{help(package = "onion")} and \code{help(package = "orientlib")} for more on these packages.
 
 <<summary>>=
- Qs<-ruars(20, rcayley, space='Q4')
- Rs<-as.SO3(Qs)
+ Qs <- ruars(20, rcayley, space = 'Q4')
+ Rs <- as.SO3(Qs)
  suppressMessages(require(onion))
  onionQs <- as.quaternion(t(Qs))
  suppressMessages(require(orientlib))
  orientRs <- rotvector(matrix(Rs, ncol = 9))
 @
 
-Computational speed of the \pkg{rotations} package has been enhanced through use of the  \CRANpkg{Rcpp} and \CRANpkg{RcppArmadillo} packages \citep*{eddelbuettel2013,eddelbuettel2013b}.  In future versions of the package we plan to extend the parameterization and estimator sections to include robust estimators currently being developed by the authors.  
+Computational speed of the \pkg{rotations} package has been enhanced through use of the \CRANpkg{Rcpp} and \CRANpkg{RcppArmadillo} packages \citep*{eddelbuettel2013,eddelbuettel2013b}. In future versions of the package we plan to extend the parametrization and estimator sections to include robust estimators currently being developed by the authors.
 
 \section{Acknowledgements}
 

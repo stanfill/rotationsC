@@ -1,10 +1,23 @@
 Package: rotations
 Type: Package
 Title: Tools for Working with Rotation Data
-Version: 1.5
-Author: Bryan Stanfill <bstanfill2003@gmail.com>, Heike Hofmann
-    <hofmann@iastate.edu>, Ulrike Genschel <ulrike@iastate.edu>
-Maintainer: Bryan Stanfill <bstanfill2003@gmail.com>
+Version: 1.6
+Authors@R: 
+    c(person(given = "Bryan",
+             family = "Stanfill",
+             role = c("aut", "cre"),
+             email = "bstanfill2003@gmail.com"),
+      person(given = "Heike",
+             family = "Hofmann",
+             role = "aut"),
+      person(given = "Ulrike",
+             family = "Genschel",
+             role = "aut"),
+      person(given = "Aymeric",
+             family = "Stamm",
+             role = "ctb",
+             email = "aymeric.stamm@math.cnrs.fr",
+             comment = c(ORCID = "0000-0002-8725-3654")))
 Description: Tools for working with rotational data, including
     simulation from the most commonly used distributions on SO(3),
     methods for different Bayes, mean and median type estimators for
@@ -14,37 +27,44 @@ Description: Tools for working with rotational data, including
     functions to identify potentially discordant (outlying) values
     have been added.
 License: MIT + file LICENSE
-Depends:
-    R (>= 3.2),
-    ggplot2,
-    Rcpp,
-    rgl
+Depends: 
+    R (>= 2.10)
 Imports:
-    stats,
-    utils,
-    methods,
+    ggplot2,
+    gridExtra,
+    Rcpp,
+    rgl,
     sphereplot
 Suggests:
-    gridExtra,
     knitr,
     onion,
     orientlib,
-    testthat
-LinkingTo: Rcpp, RcppArmadillo
-VignetteBuilder: knitr
-Collate:
-    'help.R'
-    'estimators.R'
-    'preliminary.R'
-    'parameterizations.R'
-    'distributions.R'
-    'kappa.R'
-    'regions.R'
-    'RcppExports.R'
-    'plot.R'
-    'grid-search.R'
-    'bayes.R'
-    'primatives.R'
-    'robust.R'
-URL: https://github.com/stanfill/rotationsC/tree/master/rotations
+    testthat,
+    rmarkdown
+LinkingTo: 
+    Rcpp, 
+    RcppArmadillo
+URL: https://github.com/stanfill/rotationsC
 BugReports: https://github.com/stanfill/rotationsC/issues
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.0
+VignetteBuilder: knitr
+Collate: 
+    'Q4-class.R'
+    'RcppExports.R'
+    'preliminary.R'
+    'SO3-class.R'
+    'bayes.R'
+    'data.R'
+    'distributions.R'
+    'estimators.R'
+    'grid-search.R'
+    'help.R'
+    'kappa.R'
+    'plot.R'
+    'primitives.R'
+    'regions.R'
+    'robust.R'
+    'rotations-package.R'
+    'zzz.R'
