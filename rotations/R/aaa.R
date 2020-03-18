@@ -15,7 +15,7 @@
 #'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a
 #'   random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
-#' @param R2,Q2 the second rotation in the same parameterization as x.
+#' @param R2,Q2 a single, second rotation in the same parametrization as x.
 #' @param method string indicating "extrinsic" or "intrinsic" method of
 #'   distance.
 #' @param p the order of the distance.
