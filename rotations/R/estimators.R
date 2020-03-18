@@ -100,7 +100,8 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 #' the projected median. The algorithm used in the geometric case is discussed
 #' in \cite{hartley11} and the projected case is in \cite{stanfill2013}.
 #'
-#' @name median.SO3
+#' @name median
+#'
 #' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a
 #'   random rotation in matrix form (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param na.rm a logical value indicating whether NA values should be stripped
@@ -110,126 +111,176 @@ mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) 
 #' @param maxIter maximum number of iterations allowed before returning most
 #'   recent estimate.
 #' @param ... additional arguments.
+#'
 #' @return Estimate of the projected or geometric median in the same
-#'   parameterization.
-#' @aliases median.Q4 median.SO3
+#'   parametrization.
+#'
 #' @seealso \code{\link{mean.SO3}}, \code{\link{bayes.mean}},
 #'   \code{\link{weighted.mean.SO3}}
+#'
 #' @details hartley11 stanfill2013
-#' @export
+#'
+#' @importFrom stats median
+#'
 #' @examples
 #' Rs <- ruars(20, rvmises, kappa = 0.01)
-#' median(Rs)                               #Projected median
-#' median(Rs, type = "geometric")           #Geometric median
-#' rot.dist(median(Rs))                     #Bias of the projected median
-#' rot.dist(median(Rs, type = "geometric")) #Bias of the geometric median
+#'
+#' # Projected median
+#' median(Rs)
+#'
+#' # Geometric median
+#' median(Rs, type = "geometric")
+#'
+#' # Bias of the projected median
+#' rot.dist(median(Rs))
+#'
+#' # Bias of the geometric median
+#' rot.dist(median(Rs, type = "geometric"))
 #'
 #' Qs <- as.Q4(Rs)
-#' median(Qs)                               #Projected median
-#' median(Qs, type = "geometric")           #Geometric median
-#' rot.dist(median(Qs))                     #Bias of the projected median
-#' rot.dist(median(Qs, type = "geometric")) #Bias of the geometric median
+#'
+#' # Projected median
+#' median(Qs)
+#'
+#' # Geometric median
+#' median(Qs, type = "geometric")
+#'
+#' # Bias of the projected median
+#' rot.dist(median(Qs))
+#'
+#' # Bias of the geometric median
+#' rot.dist(median(Qs, type = "geometric"))
+NULL
 
-#' @rdname median.SO3
-#' @aliases median.Q4 median
+#' @rdname median
 #' @export
-median.SO3 <- function(x, na.rm = FALSE, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
+median.SO3 <- function(x,
+                       na.rm = FALSE,
+                       type = "projected",
+                       epsilon = 1e-05,
+                       maxIter = 2000,
+                       ...) {
+  Rs <- formatSO3(x)
+	n <- nrow(Rs)
 
-	Rs<-formatSO3(x)
-	n<-nrow(Rs)
+	if (nrow(Rs) == 1) return(Rs)
 
-	if(nrow(Rs)==1)
-		return(Rs)
+	type <- try(match.arg(type, c("projected", "geometric")), silent = TRUE)
 
-	type <- try(match.arg(type,c("projected", "geometric")),silent=T)
+	if (class(type) == "try-error")
+	  stop("Type needs to be one of 'projected' or 'geometric'.")
 
-	if (class(type)=="try-error")
-	  stop("type needs to be one of 'projected' or 'geometric'.")
+  if (type == "projected")
+  	S <- medianSO3C(Rs, maxIter, epsilon)
+  else
+		S <- HartmedianSO3C(Rs, maxIter, epsilon)
 
-  if (type == "projected") {
-
-  	S<-medianSO3C(Rs,maxIter,epsilon)
-
-  } else {
-
-		S<-HartmedianSO3C(Rs,maxIter,epsilon)
-
-  }
-
-	class(S)<-"SO3"
-  return(S)
+	class(S) <- "SO3"
+  S
 }
 
-#' @rdname median.SO3
-#' @aliases median.SO3 median
+#' @rdname median
 #' @export
-median.Q4 <- function(x, na.rm = FALSE, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
+median.Q4 <- function(x,
+                      na.rm = FALSE,
+                      type = "projected",
+                      epsilon = 1e-05,
+                      maxIter = 2000,
+                      ...) {
 	Qs <- formatQ4(x)
-	if (length(Qs) == 4)
-		return(Qs)
-  Rs <- as.SO3.Q4(Qs)
+	if (length(Qs) == 4) return(Qs)
+  Rs <- as.SO3(Qs)
   R <- median(Rs, na.rm, type, epsilon, maxIter, ...)
-  as.Q4.SO3(R)
+  as.Q4(R)
 }
 
 #' Weighted mean rotation
 #'
 #' Compute the weighted geometric or projected mean of a sample of rotations.
 #'
-#' This function takes a sample of 3D rotations (in matrix or quaternion form) and returns the weighted projected arithmetic mean \eqn{\widehat{\bm S}_P}{S_P} or
-#' geometric mean \eqn{\widehat{\bm S}_G}{S_G} according to the \code{type} option.
-#' For a sample of \eqn{n} rotations in matrix form \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the weighted mean is defined as
-#' \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nw_id^2(\bm{R}_i,\bm{S})}{argmin\sum wi d^2(Ri,S)} where \eqn{d}
-#' is the Riemannian or Euclidean distance.  For more on the projected mean see \cite{moakher02} and for the geometric mean see \cite{manton04}.
+#' This function takes a sample of 3D rotations (in matrix or quaternion form)
+#' and returns the weighted projected arithmetic mean \eqn{\widehat{\bm
+#' S}_P}{S_P} or geometric mean \eqn{\widehat{\bm S}_G}{S_G} according to the
+#' \code{type} option. For a sample of \eqn{n} rotations in matrix form
+#' \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the
+#' weighted mean is defined as \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in
+#' SO(3)}\sum_{i=1}^nw_id^2(\bm{R}_i,\bm{S})}{argmin\sum wi d^2(Ri,S)} where
+#' \eqn{d} is the Riemannian or Euclidean distance.  For more on the projected
+#' mean see \cite{moakher02} and for the geometric mean see \cite{manton04}.
 #'
-#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix form (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
-#' @param w vector of weights the same length as the number of rows in x giving the weights to use for elements of x.
+#' @name weighted.mean
+#'
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a
+#'   random rotation in matrix form (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
+#' @param w vector of weights the same length as the number of rows in x giving
+#'   the weights to use for elements of x. Default is \code{NULL}, which falls
+#'   back to the usual \code{mean} function.
 #' @param type string indicating "projected" or "geometric" type mean estimator.
 #' @param epsilon stopping rule for the geometric method.
-#' @param maxIter maximum number of iterations allowed before returning most recent estimate.
+#' @param maxIter maximum number of iterations allowed before returning most
+#'   recent estimate.
 #' @param ... only used for consistency with mean.default.
-#' @return Weighted mean of the sample in the same parameterization.
+#'
+#' @return Weighted mean of the sample in the same parametrization.
+#'
 #' @seealso \code{\link{median.SO3}}, \code{\link{mean.SO3}}, \code{\link{bayes.mean}}
-#' @aliases weighted.mean.Q4
+#'
 #' @details moakher02
-#' @export
+#'
+#' @importFrom stats weighted.mean
+#'
 #' @examples
 #' Rs <- ruars(20, rvmises, kappa = 0.01)
-#' mean(Rs)                   #Find the equal-weight projected mean
-#' wt <- abs(1/mis.angle(Rs)) #Use the rotation misorientation angle as weight
-#' weighted.mean(Rs, wt)      #as weight
-#' rot.dist(mean(Rs))
-#' rot.dist(weighted.mean(Rs, wt)) #usually much smaller than unweighted mean
 #'
-#' #Can do the same thing with quaternions
+#' # Find the equal-weight projected mean
+#' mean(Rs)
+#'
+#' # Use the rotation misorientation angle as weight
+#' wt <- abs(1 / mis.angle(Rs))
+#' weighted.mean(Rs, wt)
+#'
+#' rot.dist(mean(Rs))
+#'
+#' # Usually much smaller than unweighted mean
+#' rot.dist(weighted.mean(Rs, wt))
+#'
+#' # Can do the same thing with quaternions
 #' Qs <- as.Q4(Rs)
 #' mean(Qs)
-#' wt <- abs(1/mis.angle(Qs))
+#' wt <- abs(1 / mis.angle(Qs))
 #' weighted.mean(Qs, wt)
 #' rot.dist(mean(Qs))
 #' rot.dist(weighted.mean(Qs, wt))
+NULL
 
-weighted.mean.SO3 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
+#' @rdname weighted.mean
+#' @export
+weighted.mean.SO3 <- function(x,
+                              w = NULL,
+                              type = "projected",
+                              epsilon = 1e-05,
+                              maxIter = 2000,
+                              ...) {
+  if (is.null(w)) return(mean(x, type, epsilon, maxIter, ...))
 
-	Rs<-formatSO3(x)
+  Rs<-formatSO3(x)
 
-	if(nrow(Rs)==1)
-		return(Rs)
+	if (nrow(Rs) == 1) return(Rs)
 
-	if(length(w)!=nrow(Rs))
-		stop("'Rs' and 'w' must have same length")
+	if (length(w) != nrow(Rs))
+		stop("'Rs' and 'w' must have same length.")
 
-	type <- try(match.arg(type,c("projected", "geometric")),silent=T)
+	type <- try(match.arg(type, c("projected", "geometric")), silent = TRUE)
 
-	if (class(type)=="try-error")
-	  stop("type needs to be one of 'projected' or 'geometric'.")
+	if (class(type) == "try-error")
+	  stop("Type needs to be one of 'projected' or 'geometric'.")
 
-	if(any(w<0))
-		warning("Negative weights were given.  Their absolute value is used.")
+	if (any(w < 0))
+		warning("Negative weights were given. Their absolute value is used.")
 
-	w<-abs(w/sum(w))
+	w <- abs(w / sum(w))
 
-	wRs<-w*Rs
+	wRs <- w * Rs
 
 	R <- as.SO3(project.SO3(matrix(colSums(wRs), 3, 3)))
 
@@ -240,42 +291,35 @@ weighted.mean.SO3 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter
 		s <- matrix(0, 3, 3)
 
 		while (d >= epsilon) {
-
 			R <- R %*% skew.exp(s)
-
-			s <- matrix(colSums(w*t(apply(Rs, 1, tLogMat, S = R))), 3, 3)
-
+			s <- matrix(colSums(w * t(apply(Rs, 1, tLogMat, S = R))), 3, 3)
 			d <- norm(s, type = "F")
-
 			iter <- iter + 1
 
 			if (iter >= maxIter) {
 				warning(paste("No convergence in ", iter, " iterations."))
-        class(R)<-"SO3"
+        class(R) <- "SO3"
 				return(R)
 			}
 		}
-    class(R)<-"SO3"
-		#R<-as.SO3(R)
+    class(R) <- "SO3"
 	}
 
-	return(R)
+	R
 }
 
-#' @rdname weighted.mean.SO3
-#' @aliases weighted.mean.SO3
+#' @rdname weighted.mean
 #' @export
-weighted.mean.Q4 <- function(x, w, type = "projected", epsilon = 1e-05, maxIter = 2000,...) {
-
-	Qs<-formatQ4(x)
-
-	if(nrow(Qs)==1)
-		return(Qs)
-
-	Rs<-as.SO3(Qs)
-
-	R<-weighted.mean.SO3(Rs,w,type,epsilon,maxIter)
-
-	return(as.Q4.SO3(R))
-
+weighted.mean.Q4 <- function(x,
+                             w = NULL,
+                             type = "projected",
+                             epsilon = 1e-05,
+                             maxIter = 2000,
+                             ...) {
+  if (is.null(w)) return(mean(x, type, epsilon, maxIter, ...))
+	Qs <- formatQ4(x)
+	if (nrow(Qs) == 1) return(Qs)
+	Rs <- as.SO3(Qs)
+	R <- weighted.mean(Rs, w, type, epsilon, maxIter)
+	as.Q4(R)
 }
