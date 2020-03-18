@@ -2,90 +2,110 @@
 #'
 #' Compute the sample geometric or projected mean.
 #'
-#' This function takes a sample of 3D rotations (in matrix or quaternion form) and returns the projected arithmetic mean denoted \eqn{\widehat{\bm S}_P}{S_P} or
-#' geometric mean \eqn{\widehat{\bm S}_G}{S_G} according to the \code{type} option.
-#' For a sample of \eqn{n} rotations in matrix form \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the mean-type estimator is defined as \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in SO(3)}\sum_{i=1}^nd^2(\bm{R}_i,\bm{S})}{argmin\sum d^2(Ri,S)}
-#' where \eqn{d} is the Riemannian or Euclidean distance.
-#' For more on the projected mean see \cite{moakher02} and for the geometric mean see \cite{manton04}.
-#' For the projected mean from a quaternion point of view see \cite{tyler1981}.
+#' This function takes a sample of 3D rotations (in matrix or quaternion form)
+#' and returns the projected arithmetic mean denoted \eqn{\widehat{\bm
+#' S}_P}{S_P} or geometric mean \eqn{\widehat{\bm S}_G}{S_G} according to the
+#' \code{type} option. For a sample of \eqn{n} rotations in matrix form
+#' \eqn{\bm{R}_i\in SO(3), i=1,2,\dots,n}{Ri in SO(3), i=1,2,\dots,n}, the
+#' mean-type estimator is defined as \deqn{\widehat{\bm{S}}=argmin_{\bm{S}\in
+#' SO(3)}\sum_{i=1}^nd^2(\bm{R}_i,\bm{S})}{argmin\sum d^2(Ri,S)} where \eqn{d}
+#' is the Riemannian or Euclidean distance. For more on the projected mean see
+#' \cite{moakher02} and for the geometric mean see \cite{manton04}. For the
+#' projected mean from a quaternion point of view see \cite{tyler1981}.
 #'
-#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a random rotation in matrix form (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
+#' @name mean
+#'
+#' @param x \eqn{n\times p}{n-by-p} matrix where each row corresponds to a
+#'   random rotation in matrix form (\eqn{p=9}) or quaternion (\eqn{p=4}) form.
 #' @param type string indicating "projected" or "geometric" type mean estimator.
 #' @param epsilon stopping rule for the geometric-mean.
 #' @param maxIter maximum number of iterations allowed for geometric-mean.
 #' @param ... additional arguments.
-#' @return Estimate of the projected or geometric mean of the sample in the same parameterization.
-#' @aliases mean.Q4
+#'
+#' @return Estimate of the projected or geometric mean of the sample in the same
+#'   parametrization.
+#'
 #' @seealso \code{\link{median.SO3}}, \code{\link{bayes.mean}}, \code{\link{weighted.mean.SO3}}
+#'
 #' @details tyler1981, moakher02, manton04
-#' @export
+#'
 #' @examples
 #' Rs <- ruars(20, rvmises, kappa = 0.01)
-#' mean(Rs)                               #Projected mean
-#' project.SO3(colMeans(Rs))              #Same as mean(Rs)
 #'
-#' mean(Rs, type = "geometric")           #Geometric mean
-#' rot.dist(mean(Rs))                     #Bias of the projected mean
-#' rot.dist(mean(Rs, type = "geometric")) #Bias of the geometric mean
+#' # Projected mean
+#' mean(Rs)
 #'
+#' # Same as mean(Rs)
+#' project.SO3(colMeans(Rs))
+#'
+#' # Geometric mean
+#' mean(Rs, type = "geometric")
+#'
+#' # Bias of the projected mean
+#' rot.dist(mean(Rs))
+#'
+#' # Bias of the geometric mean
+#' rot.dist(mean(Rs, type = "geometric"))
+#'
+#' # Same thing with quaternion form
 #' Qs <- as.Q4(Rs)
-#' mean(Qs)                               #Projected mean
-#' mean(Qs, type = "geometric")           #Geometric mean
-#' rot.dist(mean(Qs))                     #Bias of the projected mean
-#' rot.dist(mean(Qs, type = "geometric")) #Bias of the geometric mean
+#' mean(Qs)
+#' mean(Qs, type = "geometric")
+#' rot.dist(mean(Qs))
+#' rot.dist(mean(Qs, type = "geometric"))
+NULL
 
-mean.SO3 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000, ...) {
-
+#' @rdname mean
+#' @export
+mean.SO3 <- function(x,
+                     type = "projected",
+                     epsilon = 1e-05,
+                     maxIter = 2000,
+                     ...) {
 	Rs<-formatSO3(x)
 
-	if(nrow(Rs)==1)
-		return(Rs)
+	if (nrow(Rs)==1) return(Rs)
 
-  type <- try(match.arg(type,c("projected", "geometric")),silent=T)
+  type <- try(match.arg(type, c("projected", "geometric")), silent = TRUE)
 
-  if (class(type)=="try-error")
-    stop("type needs to be one of 'projected' or 'geometric'.")
+  if (class(type) == "try-error")
+    stop("Type needs to be one of 'projected' or 'geometric'.")
 
+	if (type == 'projected')
+		R <- meanSO3C(Rs)
+	else
+		R <- gmeanSO3C(Rs, maxIter, epsilon)
 
-	if(type=='projected'){
-		R<-meanSO3C(Rs)
-	}else{
-		R<-gmeanSO3C(Rs,maxIter,epsilon)
-	}
-
-  class(R)<-"SO3"
-  return(R)
+  class(R) <- "SO3"
+  R
 }
 
-#' @rdname mean.SO3
-#' @aliases mean.SO3
+#' @rdname mean
 #' @export
-mean.Q4 <- function(x, type = "projected", epsilon = 1e-05, maxIter = 2000,...) {
+mean.Q4 <- function(x,
+                    type = "projected",
+                    epsilon = 1e-05,
+                    maxIter = 2000,
+                    ...) {
+	Qs <- formatQ4(x)
 
-	Qs<-formatQ4(x)
+	if (nrow(Qs) == 1) return(Qs)
 
-	if(nrow(Qs)==1)
-		return(Qs)
+	type <- try(match.arg(type, c("projected", "geometric")), silent = TRUE)
 
-	type <- try(match.arg(type,c("projected", "geometric")),silent=T)
+	if (class(type) == "try-error")
+	  stop("Type needs to be one of 'projected' or 'geometric'.")
 
-	if (class(type)=="try-error")
-	  stop("type needs to be one of 'projected' or 'geometric'.")
-
-	if(type=='projected'){
-
-		R<-meanQ4C(Qs)
-
-	}else{
-
-		Rs<-as.SO3.Q4(Qs)
-  	R<-gmeanSO3C(Rs,maxIter,epsilon)
-		R<-as.Q4.SO3(R)
+	if (type == 'projected')
+		R <- meanQ4C(Qs)
+	else {
+		Rs <- as.SO3(Qs)
+  	R <- gmeanSO3C(Rs, maxIter, epsilon)
+		R <- as.Q4.SO3(R)
 	}
 
-	class(R)<-'Q4'
-  return(R)
-
+	class(R) <- "Q4"
+  R
 }
 
 #' Median rotation
