@@ -589,7 +589,13 @@ duars<-function(R,dangle,S=id.SO3,kappa=1,...){
 
 	R<-formatSO3(R)
 	rs<-mis.angle(R-S)
-	cr<-dangle(rs,kappa,...)
+
+	#Create an exception for rangles that don't take kappas
+	cr <- try(dangle(rs,kappa,...),silent=TRUE)
+	if(class(cr)=="try-error"){
+	  cr <- rangle(rs,...)
+	}
+	
 	trStO<-2*cos(rs)+1
 
 	den<-4*pi*cr/(3-trStO)
@@ -616,7 +622,10 @@ puars<-function(R,pangle=NULL,S=id.SO3,kappa=1,...){
 			cr[i]<-length(which(rs<=rs[i]))/n
 
 	}else{
-		cr<-2*(pangle(rs,kappa,...)-.5)
+		cr<-try(2*(pangle(rs,kappa,...)-.5),silent=TRUE)
+		if(class(cr)=='try-error'){
+		  cr<-2*(pangle(rs,...)-.5)
+		}
 	}
 
 
@@ -630,8 +639,12 @@ puars<-function(R,pangle=NULL,S=id.SO3,kappa=1,...){
 #' @export
 
 ruars<-function(n,rangle,S=NULL,kappa=1,space="SO3",...){
-
-  r<-rangle(n,kappa,...)
+  
+  #Create an exception for rangles that don't take kappas
+  r <- try(rangle(n,kappa,...),silent=TRUE)
+  if(class(r)=="try-error"){
+    r <- rangle(n,...)
+  }
   Rs<-genR(r,S,space)
 
   return(Rs)
