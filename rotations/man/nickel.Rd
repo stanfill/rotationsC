@@ -45,7 +45,7 @@ Rep1 <- subset(nickel, rep == 1)
 
 # Get a rough idea of how the grain map looks by plotting the first
 # element of the rotation matrix at each location
-qplot(xpos, ypos, data = Rep1, colour = V1, size = I(2))
+ggplot2::qplot(xpos, ypos, data = Rep1, colour = V1, size = I(2))
 
 # Focus in on a particular location, for example location 698
 Rs <- subset(nickel, location == 698)
