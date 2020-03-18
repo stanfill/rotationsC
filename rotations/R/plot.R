@@ -147,61 +147,96 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
   if (longtype == "D") {
     scale = 1
   }
-  #Remove logitude and latitude signifiers
-  #rgl.sphtext(long = 0, lat = seq(-90, 90, by = deggap), radius = radius,
-  #            text = seq(-90, 90, by = deggap), deg = TRUE, col = col.lat)
-  #rgl.sphtext(long = seq(0, 360 - deggap, by = deggap), lat = 0,
-  #            radius = radius, text = seq(0, 360 - deggap, by = deggap)/scale,
-  #            deg = TRUE, col = col.long)
 }
-
 
 #' Visualizing random rotations
 #'
-#' This function produces an interactive or static three-dimensional globe onto which  one of the  columns of the provided sample of rotations is projected.  The data are centered around a user-specified
-#' rotation matrix.  The interactive plot is based on the \code{sphereplot} package and the static plot uses \code{ggplot2}.
+#' This function produces an interactive or static three-dimensional globe onto
+#' which  one of the  columns of the provided sample of rotations is projected.
+#' The data are centered around a user-specified rotation matrix.  The
+#' interactive plot is based on the \code{sphereplot} package and the static
+#' plot uses \code{ggplot2}.
+#'
+#' @name plot
 #'
 #' @param x n rotations in \code{SO3} or \code{Q4} format.
 #' @param center rotation about which to center the observations.
-#' @param col integer or vector comprised of 1, 2, 3 indicating which column(s) to display.  If \code{length(col)>1} then each eyeball is labelled with the corresponding axis.
-#' @param to_range logical; if \code{TRUE} only part of the globe relevant to the data is displayed
-#' @param show_estimates character vector to specify  which of the four estimates of the principal direction to show. Possibilities are "all", "proj.mean", "proj.median", "geom.mean", "geom.median".
+#' @param col integer or vector comprised of 1, 2, 3 indicating which column(s)
+#'   to display.  If \code{length(col)>1} then each eyeball is labelled with the
+#'   corresponding axis.
+#' @param to_range logical; if \code{TRUE} only part of the globe relevant to
+#'   the data is displayed
+#' @param show_estimates character vector to specify  which of the four
+#'   estimates of the principal direction to show. Possibilities are "all",
+#'   "proj.mean", "proj.median", "geom.mean", "geom.median".
 #' @param label_points  vector of labels.
-#' @param mean_regions character vector to specify which of the three confidence regions to show for the projected mean.  Possibilities are "all", "trans.theory","trans.bootstrap, "direct.theory", "direct.bootstrap".
-#' @param median_regions character vector to specify which of the three confidence regions to show for the projected median.  Possibilities are "all", "theory", "bootstrap."
-#' @param alp alpha level to be used for confidence regions.  See \code{\link{region}} for more details.
-#' @param m number of bootstrap replicates to use in bootstrap confidence regions.
-#' @param interactive logical; if \code{TRUE} \code{sphereplot} is used to create an interactive 3D plot, otherwise \code{ggplot2} is used
+#' @param mean_regions character vector to specify which of the three confidence
+#'   regions to show for the projected mean.  Possibilities are "all",
+#'   "trans.theory","trans.bootstrap, "direct.theory", "direct.bootstrap".
+#' @param median_regions character vector to specify which of the three
+#'   confidence regions to show for the projected median.  Possibilities are
+#'   "all", "theory", "bootstrap."
+#' @param alp alpha level to be used for confidence regions.  See
+#'   \code{\link{region}} for more details.
+#' @param m number of bootstrap replicates to use in bootstrap confidence
+#'   regions.
+#' @param interactive logical; if \code{TRUE} \code{sphereplot} is used to
+#'   create an interactive 3D plot, otherwise \code{ggplot2} is used
 #' @param ... parameters passed onto the points layer.
+#'
 #' @return  A visualization of rotation data.
-#' @aliases plot.Q4
-#' @export
+#'
 #' @examples
 #' r <- rvmises(200, kappa = 1.0)
 #' Rs <- genR(r)
-#'
 #' plot(Rs, center = mean(Rs), show_estimates = "proj.mean", shape = 4)
 #'
 #' \dontrun{
-#' # Z is computed internally and contains information on depth
-#' plot(Rs, center = mean(Rs), show_estimates = c("proj.mean", "geom.mean"),
-#'  label_points = sample(LETTERS, 200, replace = TRUE)) + aes(size = Z, alpha = Z) +
-#'  scale_size(limits = c(-1, 1), range = c(0.5, 2.5))
-#'
-#' plot(Rs, center = mean(Rs), interactive = TRUE)}
+#'   # Z is computed internally and contains information on depth
+#'   plot(
+#'     Rs,
+#'     center = mean(Rs),
+#'     show_estimates = c("proj.mean", "geom.mean"),
+#'     label_points = sample(LETTERS, 200, replace = TRUE)
+#'  ) +
+#'    aes(size = Z, alpha = Z) +
+#'    scale_size(limits = c(-1, 1), range = c(0.5, 2.5))
+#'   plot(Rs, center = mean(Rs), interactive = TRUE)
+#' }
+NULL
 
-plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300, interactive=FALSE,  ...) {
+#' @rdname plot
+#' @export
+plot.SO3 <- function(x,
+                     center = mean(x),
+                     col = 1,
+                     to_range = FALSE,
+                     show_estimates = NULL,
+                     label_points = NULL,
+                     mean_regions = NULL,
+                     median_regions = NULL,
+                     alp = NULL,
+                     m = 300,
+                     interactive = FALSE,
+                     ...) {
+  # For interactive plots only one column can be displayed at a time
+  if(interactive) col <- col[1]
 
-  if(interactive){
-
-    col<-col[1]   #For interactive plots only one column can be displayed at a time
-
-  }
-
-  if(length(col)>1){
-    mplotSO3(x, center=center, col=col, to_range=to_range, show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,interactive=FALSE,...)
-  }else{
-
+  if (length(col) > 1)
+    mplotSO3(
+      x = x,
+      center = center,
+      col = col,
+      to_range = to_range,
+      show_estimates = show_estimates,
+      label_points = label_points,
+      mean_regions = mean_regions,
+      median_regions = median_regions,
+      alp = alp,
+      m = m,
+      ...
+    )
+  else {
   Rs <- as.SO3(x)
 	xlimits <- c(-1,1)
 	ylimits <- c(-1,1)
@@ -260,7 +295,6 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
       show_estimates<-NULL
 		}
 
-		#Shats <- Shats[rmNA,]
 		Estlabels<-Estlabels[c(rmNA,NAs)]
 
 		if(!is.null(mean_regions) || !is.null(median_regions)){
@@ -358,7 +392,6 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 	}
 
   if(interactive){
-    #require(sphereplot)
     rgl.sphgrid2(deggap=22.5)
     pts <- sphereplot::car2sph(proj2d)
     sphereplot::rgl.sphpoints(pts,deg=TRUE,size=4)
@@ -372,7 +405,6 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
       sphereplot::rgl.sphpoints(estpts,deg=TRUE,col=c(2:(nrow(estDF)+1)),size=5)
 
       #Legend
-      #text3d(x=1, y=c(.8,1,1.2,1.4)[rmNA], z=1, estDF$lab ,col=c(2:(nrow(estDF)+1)))
       graphics::legend('topleft',estDF$lab,col=c(2:(nrow(estDF)+1)),pch=19,title='Estimators')
     }
 
@@ -396,15 +428,6 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
 
     }
 
-    #if(!is.null(medianregDF)){
-    #  medregpts <- car2sph(medianregDF)
-    #  numRegs2<-nrow(MedRegions)
-    #  rgl.sphpoints(medregpts,deg=TRUE,col=rep((1:numRegs2)+1+numRegs,each=500))
-
-    #  legend(.66,1,MedRegions$Meth,col=c((1:numRegs2)+1+numRegs),lty=19,title='Median Regions')
-
-    #}
-
   }else{
     labels <- NULL
     if (!is.null(label_points)) {
@@ -422,136 +445,152 @@ plot.SO3 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NU
   }
 }
 
-#Function written by Luciano Selzer and published on Stackoverflow on Aug 9 2012 and edited by user "sebastian-c".
-#It removes the guide from a ggplot2 object that can then be drawn by calling "grid.draw()" on what is returned
-g_legend<-function(a.gplot){
+#' @rdname plot
+#' @export
+plot.Q4 <- function(x,
+                    center = mean(x),
+                    col = 1,
+                    to_range = FALSE,
+                    show_estimates = NULL,
+                    label_points = NULL,
+                    mean_regions = NULL,
+                    median_regions = NULL,
+                    alp = NULL,
+                    m = 300,
+                    interactive = FALSE,
+                    ...) {
+  Rs <- as.SO3(x)
+  center <- as.SO3(center)
+  graphics::plot(
+    x = Rs,
+    center = center,
+    col = col,
+    to_range = to_range,
+    show_estimates = show_estimates,
+    label_points = label_points,
+    mean_regions = mean_regions,
+    median_regions = median_regions,
+    alp = alp,
+    m = m,
+    interactive = interactive,
+    ...
+  )
+}
+
+# Function written by Luciano Selzer and published on Stackoverflow on Aug 9 2012
+# and edited by user "sebastian-c". It removes the guide from a ggplot2 object
+# that can then be drawn by calling "grid.draw()" on what is returned.
+g_legend <- function(a.gplot) {
   tmp <- ggplot_gtable(ggplot_build(a.gplot))
   leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
-  if(length(leg)>0){
+  if (length(leg) > 0) {
     legend <- tmp$grobs[[leg]]
     return(legend)
-  }else return(NULL)
+  } else
+    return(NULL)
 }
 
-# multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
-#
-#   # Make a list from the ... arguments and plotlist
-#   plots <- c(list(...), plotlist)
-#
-#   numPlots = length(plots)
-#
-#   # If layout is NULL, then use 'cols' to determine layout
-#   if (is.null(layout)) {
-#     # Make the panel
-#     # ncol: Number of columns of plots
-#     # nrow: Number of rows needed, calculated from # of cols
-#     layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
-#                      ncol = cols, nrow = ceiling(numPlots/cols))
-#   }
-#
-#
-#   # Set up the page
-#   grid.newpage()
-#   pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
-#
-#   # Make each plot, in the correct location
-#   for (i in 1:numPlots) {
-#     # Get the i,j matrix positions of the regions that contain this subplot
-#     matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
-#
-#     if("gtable"%in%class(plots[[i]])){
-#       print(grid.draw(plots[[i]]), vp = viewport(layout.pos.row = matchidx$row,
-#                                                  layout.pos.col = matchidx$col))
-#     }else{
-#       print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
-#                                       layout.pos.col = matchidx$col))
-#     }
-#   }
-#
-# }
+# If more then one column is called in plot.SO3 then this is called to
+# independently create an eyeball for each column and print them in a single row
+# with the legend at the end, if applicable.
+mplotSO3 <- function(x,
+                     center = mean(x),
+                     col = 1,
+                     to_range = FALSE,
+                     show_estimates = NULL,
+                     label_points = NULL,
+                     mean_regions = NULL,
+                     median_regions = NULL,
+                     alp = NULL,
+                     m = 300,
+                     ...) {
+  p4 <- NULL
 
+  if (1 %in% col) {
+    p1 <- graphics::plot(
+      x,
+      center = center,
+      col = 1,
+      to_range = to_range,
+      show_estimates = show_estimates,
+      label_points = label_points,
+      mean_regions = mean_regions,
+      median_regions = median_regions,
+      alp = alp,
+      m = m,
+      ...
+    )
+    p1 <- p1 +
+      theme(axis.title.x = element_text(size = rel(1.5))) +
+      labs(x = "x-axis")
+    p4 <- g_legend(p1)
+    p1 <- p1 + theme(legend.position = 'none')
+  } else
+    p1 <- NULL
 
-#If more then one column is called in plot.SO3 then this is called to independencly create an eyeball for each column
-#and print them in a single row with the legend at the end, if applicable.
-mplotSO3<-function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300,interactive=FALSE,  ...){
+  if (2 %in% col) {
+    p2 <- graphics::plot(
+      x,
+      center = center,
+      col = 2,
+      to_range = to_range,
+      show_estimates = show_estimates,
+      label_points = label_points,
+      mean_regions = mean_regions,
+      median_regions = median_regions,
+      alp = alp,
+      m = m,
+      ...
+    )
+    p2 <- p2 +
+      theme(axis.title.x = element_text(size = rel(1.5))) +
+      labs(x = "y-axis")
+    p4 <- g_legend(p2)
+    p2 <- p2 + theme(legend.position = 'none')
+  } else
+    p2 <- NULL
 
-  p4<-NULL
-  if(1 %in% col){
-    p1<-graphics::plot(x,center=center,col=1,to_range=to_range,show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,...)
-    p1<-p1+theme(axis.title.x=element_text(size=rel(1.5)))+xlab("x-axis")
-    p4<-g_legend(p1)
-    p1<-p1+theme(legend.position='none')
-  }else p1<-NULL
+  if (3 %in% col) {
+    p3 <- graphics::plot(
+      x,
+      center = center,
+      col = 3,
+      to_range = to_range,
+      show_estimates = show_estimates,
+      label_points = label_points,
+      mean_regions = mean_regions,
+      median_regions = median_regions,
+      alp = alp,
+      m = m,
+      ...
+    )
+    p3 <- p3 +
+      theme(axis.title.x = element_text(size = rel(1.5))) +
+      labs(x = "z-axis")
+    p4 <- g_legend(p3)
+    p3 <- p3 + theme(legend.position = 'none')
+  } else
+    p3 <- NULL
 
-  if(2 %in% col){
-    p2<-graphics::plot(x,center=center,col=2,to_range=to_range,show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,...)
-    p2<-p2+theme(axis.title.x=element_text(size=rel(1.5)))+xlab("y-axis")
-    p4<-g_legend(p2)
-    p2<-p2+theme(legend.position='none')
-  }else p2<-NULL
+  ps <- list(p1, p2, p3, p4)
+  ps <- !sapply(ps, is.null)
 
-  if(3 %in% col){
-    p3<-graphics::plot(x,center=center,col=3,to_range=to_range,show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m,...)
-    p3<-p3+theme(axis.title.x=element_text(size=rel(1.5)))+xlab("z-axis")
-    p4<-g_legend(p3)
-    p3<-p3+theme(legend.position='none')
-  }else p3<-NULL
-
-
-
-  ps<-list(p1,p2,p3,p4)
-  ps<-!sapply(ps, is.null)
-  if(all(ps==c(TRUE,TRUE,TRUE,TRUE))){
-
-    gridExtra::grid.arrange(p1,p2,p3,p4,nrow=2,widths=c(2,2,2,1))
-    #multiplot(p1,p2,p3,p4,cols=2)
-
-  }else if(all(ps==c(TRUE,TRUE,FALSE,TRUE))){
-
-    gridExtra::grid.arrange(p1,p2,p4,nrow=1,widths=c(2,2,1))
-    #multiplot(p1,p2,p4,cols=3)
-
-  }else if(all(ps==c(TRUE,FALSE,TRUE,TRUE))){
-
-    gridExtra::grid.arrange(p1,p3,p4,nrow=1,widths=c(2,2,1))
-    #multiplot(p1,p3,p4,cols=3)
-
-  }else if(all(ps==c(FALSE,TRUE,TRUE,TRUE))){
-
-    gridExtra::grid.arrange(p2,p3,p4,nrow=1,widths=c(2,2,1))
-    #multiplot(p2,p3,p4,cols=3)
-
-  }else if(all(ps==c(TRUE,TRUE,TRUE,FALSE))){
-
-    gridExtra::grid.arrange(p1,p2,p3,nrow=1)
-    #multiplot(p1,p2,p3,cols=3)
-
-  }else if(all(ps==c(TRUE,TRUE,FALSE,FALSE))){
-
-    gridExtra::grid.arrange(p1,p2,nrow=1)
-    #multiplot(p1,p2,cols=2)
-
-  }else if(all(ps==c(TRUE,FALSE,TRUE,FALSE))){
-
-    gridExtra::grid.arrange(p1,p3,nrow=1)
-    #multiplot(p1,p3,cols=2)
-
-  } else if(all(ps==c(FALSE,TRUE,TRUE,FALSE))){
-
-    gridExtra::grid.arrange(p2,p3,nrow=1)
-    #multiplot(p2,p3,cols=2)
-
-  }else{
+  if (all(ps == c(TRUE, TRUE, TRUE, TRUE)))
+    gridExtra::grid.arrange(p1, p2, p3, p4, nrow = 2, widths = c(2, 2, 2, 1))
+  else if (all(ps == c(TRUE, TRUE, FALSE, TRUE)))
+    gridExtra::grid.arrange(p1, p2, p4, nrow = 1, widths = c(2, 2, 1))
+  else if (all(ps == c(TRUE, FALSE, TRUE, TRUE)))
+    gridExtra::grid.arrange(p1, p3, p4, nrow = 1, widths = c(2, 2, 1))
+  else if (all(ps == c(FALSE, TRUE, TRUE, TRUE)))
+    gridExtra::grid.arrange(p2, p3, p4, nrow = 1, widths = c(2, 2, 1))
+  else if (all(ps == c(TRUE, TRUE, TRUE, FALSE)))
+    gridExtra::grid.arrange(p1, p2, p3, nrow = 1)
+  else if (all(ps == c(TRUE, TRUE, FALSE, FALSE)))
+    gridExtra::grid.arrange(p1, p2, nrow = 1)
+  else if (all(ps == c(TRUE, FALSE, TRUE, FALSE)))
+    gridExtra::grid.arrange(p1, p3, nrow = 1)
+  else if (all(ps == c(FALSE, TRUE, TRUE, FALSE)))
+    gridExtra::grid.arrange(p2, p3, nrow = 1)
+  else
     stop("Specify the columns correctly.")
-  }
-
-}
-
-#' @rdname plot.SO3
-#' @aliases plot.SO3
-#' @export
-plot.Q4 <- function(x, center=mean(x), col=1, to_range=FALSE, show_estimates=NULL, label_points=NULL, mean_regions=NULL, median_regions=NULL, alp=NULL, m=300, interactive=FALSE,  ...) {
-  Rs<-as.SO3(x)
-  center<-as.SO3(center)
-  graphics::plot(Rs, center=center, col=col, to_range=to_range, show_estimates=show_estimates, label_points=label_points, mean_regions=mean_regions, median_regions=median_regions, alp=alp, m=m, interactive=interactive,  ...)
 }
