@@ -18,7 +18,7 @@ random rotation in matrix (\eqn{p=9}) or quaternion (\eqn{p=4}) form.}
 
 \item{...}{additional arguments.}
 
-\item{R2, Q2}{the second rotation in the same parameterization as x.}
+\item{R2, Q2}{a single, second rotation in the same parametrization as x.}
 
 \item{method}{string indicating "extrinsic" or "intrinsic" method of
 distance.}
