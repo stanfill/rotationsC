@@ -1,6 +1,6 @@
 Package: rotations
 Type: Package
-Title: Tools for Working with Rotation Data
+Title: Working with Rotation Data
 Version: 1.6
 Authors@R: 
     c(person(given = "Bryan",

@@ -38,7 +38,7 @@
 #' Qs <- as.Q4(Subject1Wrist[, 5:8])
 #' mean(Qs)
 #'
-#' \dontrun{
+#' \donttest{
 #'   # Plot Subject 1's wrist measurements using the connection to rotation matrices
 #'   plot(Qs, col = c(1, 2, 3))
 #' }
@@ -117,7 +117,7 @@
 #' # Re-estimate central orientation robustly
 #' median(Rs)
 #'
-#' \dontrun{
+#' \donttest{
 #'   # Visualize the location, there appears to be two groups
 #'   plot(Rs, col = c(1, 2, 3))
 #' }
