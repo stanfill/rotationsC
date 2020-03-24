@@ -56,7 +56,7 @@ rot.dist(Shat)                 #distances, compute the minimized sum and estimat
 
 #Estimate the central orientation using the posterior mode (not run due to time constraints)
 #Compare it to the projected mean in terms of the squared Euclidean distance and bias
-\dontrun{
+\donttest{
 ests <- bayes.mean(Rs, type = "Mises", S0 = mean(Rs), kappa0 = 10, tuneS = 5000,
                    tuneK = 1, burn_in = 1000, m = 5000)
 
