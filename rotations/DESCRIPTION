@@ -29,6 +29,21 @@ Description: Tools for working with rotational data, including
     a novel visualization technique for rotation data.  Most recently,
     functions to identify potentially discordant (outlying) values
     have been added.
+    Bingham, Melissa A. and Nordman, Dan J. and Vardeman, Steve B. (2009) <doi:10.1198/jasa.2009.ap08741>
+    Bingham, Melissa A and Vardeman, Stephen B and Nordman, Daniel J (2009) <doi:10.1214/09-BA423>
+    Bingham, Melissa A and Nordman, Daniel J and Vardeman, Stephen B (2010) <doi:10.1016/j.csda.2009.11.020>
+    Schaeben, H (1997) <doi:10.1002/1521-3951(199704)200:2<367::AID-PSSB367>3.0.CO;2-I> 
+    Le{\'o}n, C.A. and Mass{\'e}, J.C. and Rivest, L.P. (2006) <doi:10.1016/j.jmva.2005.03.009>
+    Hartley, R and Aftab, K and Trumpf, J. (2011) <doi:10.1109/CVPR.2011.5995745>
+    Stanfill, Bryan and Genschel, Ulrike and Hofmann, Heike (2013) <doi:10.1080/00401706.2013.826145>
+    Moakher, M (2002) <doi:10.1137/S0895479801383877>
+    Tyler, David E (1981) (https://www.jstor.org/stable/2240842) 
+    Maonton, Jonathan (2004) <doi:10.1109/ICARCV.2004.1469774>
+    Mardia, KV and Jupp, PE (2000, ISBN:9780471953333) 
+    Prentice, M.J. (1986) (https://www.jstor.org/stable/2345716)
+    Rancourt, D. and Rivest, L.P. and Asselin, J. (2000) <doi:10.1111/1467-9876.00180>
+    Chang, Ted and Rivest, Louis-Paul (2001) <doi:10.1214/aos/1009210690>
+    Fisher, Nicholas I. (1996, ISBN:0521568900)
 License: MIT + file LICENSE
 Depends: 
     R (>= 2.10)
