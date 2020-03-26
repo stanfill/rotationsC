@@ -26,6 +26,7 @@
 \begin{document}
 
 <<setup,include=FALSE>>=
+orig_options <- options()
 options(digits=3)
 library(knitr)
 opts_chunk$set(
@@ -376,6 +377,10 @@ Computational speed of the \pkg{rotations} package has been enhanced through use
 \section{Acknowledgements}
 
 We would like to thank the reviewers for their comments and suggestions.  The \pkg{rotations} package and this article have benefited greatly from their time and effort.
+
+<<resetoption, include=FALSE>>=
+options(orig_options)
+@
 
 \bibliography{stanfill-hofmann-genschel}
 
