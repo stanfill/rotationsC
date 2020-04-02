@@ -7,7 +7,7 @@ arma::mat eskewC(const arma::rowvec &U)
   double v = U(1) / ulen;
   double w = U(2) / ulen;
 
-  arma::mat res;
+  arma::mat res(3,3);
   res.zeros();
   res(0, 1) = -w;
   res(1, 0) =  w;
