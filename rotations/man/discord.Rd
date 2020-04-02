@@ -45,4 +45,5 @@ lines(OrdHi,pf(OrdHi,3,3*(length(OrdHi)-2)))
 
 plot(ecdf(OrdHe),main='Extrinsic',xlim=range(c(OrdHi,OrdHe)))
 lines(OrdHi,pf(OrdHi,3,3*(length(OrdHe)-2)))
+layout(1)
 }

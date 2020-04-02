@@ -52,7 +52,7 @@ bingham2009b bingham2010
 }
 \examples{
 #Not run due to time constraints
-\dontrun{
+\donttest{
 Rs <- ruars(20, rfisher, kappa = 10)
 draws <- MCMCSO3(Rs, type = "Fisher", S0 = mean(Rs), kappa0 = 10, tuneS = 5000,
                  tuneK = 1,burn_in = 1000, m = 5000)}

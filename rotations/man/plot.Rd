@@ -88,7 +88,7 @@ r <- rvmises(200, kappa = 1.0)
 Rs <- genR(r)
 plot(Rs, center = mean(Rs), show_estimates = "proj.mean", shape = 4)
 
-\dontrun{
+\donttest{
   # Z is computed internally and contains information on depth
   plot(
     Rs,

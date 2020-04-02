@@ -32,6 +32,7 @@
 #' 
 #' plot(ecdf(OrdHe),main='Extrinsic',xlim=range(c(OrdHi,OrdHe)))
 #' lines(OrdHi,pf(OrdHi,3,3*(length(OrdHe)-2)))
+#' layout(1)
 
 discord<-function(x, type, t=1L, obs=1:nrow(x)){
   #Compute the statistic proposed by Best and Fisher (1986) that is a function of the largest eigenvalue

@@ -64,7 +64,7 @@
 #' Rs <- as.SO3(Qs)               #Coerce a 'Q4' object into rotation matrix format, see ?as.SO3
 #'
 #' #Visualize the measurements, see ?plot.Q4 for more
-#' \dontrun{
+#' \donttest{
 #'   plot(Qs, col = c(1, 2, 3))
 #' }
 NULL

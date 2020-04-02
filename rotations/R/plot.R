@@ -191,7 +191,7 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
 #' Rs <- genR(r)
 #' plot(Rs, center = mean(Rs), show_estimates = "proj.mean", shape = 4)
 #'
-#' \dontrun{
+#' \donttest{
 #'   # Z is computed internally and contains information on depth
 #'   plot(
 #'     Rs,

@@ -48,6 +48,6 @@ SL1 <- gradient.search(cayley.sample, L1.error, start = id.SO3)
 # visually no perceptible difference between median estimates from in-built function and 
 # gradient based search (for almost all starting values)
 
-\dontrun{
+\donttest{
 plot(cayley.sample, center=SL1$Shat, show_estimates="all")}
 }

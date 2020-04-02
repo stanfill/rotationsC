@@ -33,7 +33,7 @@
 #' alp = 0.1, symm = TRUE)
 #' region(Rs, method = "direct", type = "bootstrap", estimator = "mean", alp = 0.1, m = 100)
 #' region(Rs, method = "direct", type = "asymptotic", estimator = "mean", alp = 0.1)
-#' \dontrun{
+#' \donttest{
 #' region(Rs, method = "Bayes", type = "Mises", estimator = "mean",
 #'        S0 = mean(Rs), kappa0 = 10, tuneS = 5000, tuneK = 1, burn_in = 1000, alp = .01, m = 5000)
 #' }

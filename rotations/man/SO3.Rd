@@ -97,7 +97,7 @@ median(Rs)                     #Re-estimate central orientation robustly
 Qs <- as.Q4(Rs)                #Coerse into "SO3" format, see ?as.SO3 for more
 
 #Visualize the location, there appears to be two groups
-\dontrun{
+\donttest{
   plot(Rs, col = c(1, 2, 3))
 }
 }

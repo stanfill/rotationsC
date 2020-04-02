@@ -62,7 +62,7 @@ mean(Rs)
 # Re-estimate central orientation robustly
 median(Rs)
 
-\dontrun{
+\donttest{
   # Visualize the location, there appears to be two groups
   plot(Rs, col = c(1, 2, 3))
 }

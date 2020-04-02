@@ -51,7 +51,7 @@ bingham2009b bingham2010
 }
 \examples{
 #Not run due to time constraints
-\dontrun{
+\donttest{
 Rs <- ruars(20, rvmises, kappa = 10)
 
 #Compare the region size of the moment based theory mean estimator to the
