@@ -192,24 +192,21 @@ mis.axis<-function(x,...){
 #' @export
 mis.axis.SO3<-function(x,...){
 
-	R<-formatSO3(x)
-  n<-nrow(R)
-	u<-matrix(NA,n,3)
+  R <- formatSO3(x)
+  n <- nrow(R)
+  u <- matrix(NA, n, 3)
 
-	for(i in 1:n){
-		Ri<-matrix(R[i,],3,3)
-  	X <- Ri - t(Ri)
-  	u[i,] <- rev(X[upper.tri(X)])*c(-1,1,-1)
-    norm<-sqrt(sum(u[i,]^2))
-
-    if(norm!=0){
-      u[i,]<-u[i,]/norm
+  for (i in 1:n) {
+    Ri <- matrix(R[i, ], 3, 3)
+    X <- Ri - t(Ri)
+    u[i, ] <- rev(X[upper.tri(X)]) * c(-1, 1, -1)
+    norm <- sqrt(sum(u[i, ]^2))
+    if (norm != 0) {
+      u[i, ] <- u[i, ] / norm
     }
-
-	}
+  }
 
   return(u) # will be trouble, if R is symmetric, i.e. id,  ....
-
 }
 
 #' @rdname mis.axis

@@ -80,40 +80,40 @@ as.SO3 <- function(x, ...) {
 #' @rdname SO3
 #' @export
 as.SO3.default <- function(x, theta=NULL,...) {
-  
+
   p<-ncol(x)
   n<-nrow(x)
-  
+
   if(is.null(p)){
     p<-length(x)
     n<-1
   }
-  
+
   if(n==3 && p==3 && is.SO3(x) && is.null(theta)){
-    
+
     #If there are 3 rows and columns and the object is already a rotation matrix, the same rotation is returned
     class(x) <- "SO3"
     return(x)
-    
+
   }else if(p==9){
-    
+
     rots<-is.SO3(x)
     notRots<-which(!rots)
-    
+
     if(all(rots)){
       #If there are 9 columns and the data are already rotation matrices then the SO3 class is appeneded and object returned
-      
+
       class(x) <- "SO3"
       return(x)
-      
+
     }else{
       #If there are 9 columns and some are not rotations,
       #those that aren't rotations are projected to SO(3) and the others are left alone
-      
+
       for(i in notRots){
         x[i,]<-project.SO3(x[i,])
       }
-      
+
       txt<-"Row(s)"
       for(i in notRots){
         txt<-paste(txt,i)
@@ -122,74 +122,74 @@ as.SO3.default <- function(x, theta=NULL,...) {
       message(txt)
       class(x)<-"SO3"
       return(x)
-      
+
     }
   }else if(p==3){
-    
+
     #If there are 3 columns, it's assumed the input R is the matrix of unit axes of rotations and the theta vector are the angles,
     #or the length of the axes is the angle of rotation
-    
+
     U<-matrix(x,n,3)
-    
+
     ulen<-sqrt(rowSums(U^2))
     ntheta<-length(theta)
-    
+
     if(is.null(theta)){
-      
+
       theta<-ulen%%(pi)
-      
+
     }else if(ntheta!=n){
-      
+
       if(ntheta==1){
-        
+
         theta<-rep(theta,n)
-        
+
       }else{
-        
+
         stop("Number of angles must match number of axes")
-        
+
       }
-      
+
     }
-    
+
     R<-matrix(NA,n,9)
-    
+
     for(i in 1:n){
-      
+
       if(ulen[i]!=0)
         U[i,]<-U[i,]/ulen[i]
-      
+
       P <- U[i,] %*% t(U[i,])
-      
+
       R[i,] <- P + (diag(3) - P) * cos(theta[i]) + eskew(U[i,]) * sin(theta[i])
     }
     class(R) <- "SO3"
     return(R)
-    
+
   }else if(p==4){
-    
+
     #If there are 4 columns, it's assumed the input is an n-by-4 matrix with rows corresponding to quaternions
     R<-as.Q4(x)
     return(as.SO3(R))
-    
+
   }
-  
+
   stop("Unknown data type.  Please see ?SO3 for more details.")
-  
+
 }
 
 #' @rdname SO3
 #' @export
 as.SO3.Q4 <- function(x, ...) {
   q <- formatQ4(x)
-  
+
   if (any((rowSums(q^2) - 1) > 1.0e-9)) {
     warning("Unit quaternions required. Input was normalized.")
     nonq <- which((rowSums(q^2) - 1) > 1.0e-9)
     q[nonq, ] <- as.Q4(q[nonq, ] / sqrt(rowSums(q[nonq, ]^2)))
   } else
     class(q) <- "Q4"
-  
+
   theta <- mis.angle(q)
   u <- mis.axis(q)
   as.SO3.default(u, theta)
@@ -214,15 +214,15 @@ as.SO3.data.frame <- function(x, ...) {
 #' @export
 is.SO3 <- function(x) {
   Rlen <- length(x)
-  
+
   if (Rlen %% 9 != 0)
     return(FALSE)
-  
+
   R <- x
-  
+
   if (class(x)[1] == 'data.frame')
     R <- data.matrix(R)
-  
+
   R <- matrix(R, ncol = 9)
   apply(R, 1, function(R) {
     R <- matrix(R, 3, 3)
