@@ -1,6 +1,8 @@
 # rotations
 
 <!-- badges: start -->
+[![check-standard](https://github.com/astamm/rotationsC/rotations/workflows/R-CMD-check/badge.svg)](https://github.com/astamm/rotationsC/rotations/actions)
+[![CRAN status](https://www.r-pkg.org/badges/version/rotations)](https://CRAN.R-project.org/package=rotations)
 <!-- badges: end -->
 
 The goal of rotations is to provide tools for working with rotation data. A stable version (1.6) of the *rotations* package is available for download from CRAN.  For Windows users, the current version (1.6.1) of *rotations* can be downloaded from GitHub.  Mac users will need to download the repo, compile the C++ code and install.
