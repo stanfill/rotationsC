@@ -223,7 +223,7 @@ plot.SO3 <- function(x,
   if(interactive){ 
     col <- col[1]
     # rgl is required for interactive plots
-    if(!require(rgl)){
+    if(!requireNamespace("rgl")){
       stop("Interactive plots require the 'rgl' package be installed.")
     }
   }
