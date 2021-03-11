@@ -121,15 +121,21 @@ arma::mat logSO3C(const arma::mat &R)
   arma::mat logR(3, 3);
   I.eye();
 
-  double theta = std::acos(0.5 * arma::trace(R) - 0.5);
+  double workValue = 0.5 * arma::trace(R) - 0.5;
+  if (workValue > 1.0)
+    workValue = 1.0;
+  if (workValue < -1.0)
+    workValue = -1.0;
+  double theta = std::acos(workValue);
+  double denomValue = 2.0 * std::sin(theta);
 
-  if (theta < 0.0001)
+  if (denomValue < std::sqrt(std::numeric_limits<double>::epsilon()))
   {
     logR.zeros();
     return logR;
   }
 
-  logR = (R - R.t()) * theta / (2.0 * std::sin(theta));
+  logR = (R - R.t()) * theta / denomValue;
 
   return logR;
 }
@@ -300,6 +306,7 @@ arma::mat HartmedianSO3C(const arma::mat &Rs, unsigned int maxIterations, double
         Rsi(j) = Rs(i, j);
 
       vi = logSO3C(Rsi * S.t());
+
       double vin = std::max(arma::norm(vi, 2), 1.0e-5);
 
       vnInv(i) = std::pow(vin, -1.0);
@@ -307,7 +314,9 @@ arma::mat HartmedianSO3C(const arma::mat &Rs, unsigned int maxIterations, double
       denom += vnInv(i);
     }
 
-    delta = delta / denom;
+    if (denom > std::sqrt(std::numeric_limits<double>::epsilon()))
+      delta /= denom;
+
     Snew = expskewC(delta) * S;
 
     ++iterations;

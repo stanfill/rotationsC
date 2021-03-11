@@ -20,9 +20,9 @@ Data frame with columns X, Y, Z standing for the respective coordinates in 3D sp
 Projection of rotation matrices onto sphere with given center.
 }
 \examples{
-Rs<-ruars(20, rcayley)
+Rs <- ruars(20, rcayley)
 
-#Project the sample's 3 axes onto the 3-shere centered at the identity rotation
+# Project the sample's 3 axes onto the 3-sphere centered at the identity rotation
 
 pointsXYZ(Rs, center = id.SO3, column = 1)  #x-axis
 pointsXYZ(Rs, center = id.SO3, column = 2)  #y-axis
