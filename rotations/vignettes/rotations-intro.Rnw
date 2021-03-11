@@ -367,7 +367,7 @@ In this manuscript we introduced the \pkg{rotations} package and demonstrated ho
  Qs <- ruars(20, rcayley, space = 'Q4')
  Rs <- as.SO3(Qs)
  suppressMessages(require(onion))
- onionQs <- as.quaternion(t(Qs))
+ onionQs <- as.quaternion(matrix(Qs,nrow=4, byrow = TRUE))
  suppressMessages(require(orientlib))
  orientRs <- rotvector(matrix(Rs, ncol = 9))
 @

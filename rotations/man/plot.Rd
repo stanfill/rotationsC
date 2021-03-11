@@ -69,7 +69,7 @@ confidence regions to show for the projected median.  Possibilities are
 regions.}
 
 \item{interactive}{logical; if \code{TRUE} \code{sphereplot} is used to
-create an interactive 3D plot, otherwise \code{ggplot2} is used}
+create an interactive 3D plot, otherwise \code{ggplot2} is used (requires \code{rgl} package)}
 
 \item{...}{parameters passed onto the points layer.}
 }

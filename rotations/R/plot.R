@@ -181,7 +181,7 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
 #' @param m number of bootstrap replicates to use in bootstrap confidence
 #'   regions.
 #' @param interactive logical; if \code{TRUE} \code{sphereplot} is used to
-#'   create an interactive 3D plot, otherwise \code{ggplot2} is used
+#'   create an interactive 3D plot, otherwise \code{ggplot2} is used (requires \code{rgl} package)
 #' @param ... parameters passed onto the points layer.
 #'
 #' @return  A visualization of rotation data.
@@ -220,7 +220,13 @@ plot.SO3 <- function(x,
                      interactive = FALSE,
                      ...) {
   # For interactive plots only one column can be displayed at a time
-  if(interactive) col <- col[1]
+  if(interactive){ 
+    col <- col[1]
+    # rgl is required for interactive plots
+    if(!require(rgl)){
+      stop("Interactive plots require the 'rgl' package be installed.")
+    }
+  }
 
   if (length(col) > 1)
     mplotSO3(

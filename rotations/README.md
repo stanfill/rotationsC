@@ -3,7 +3,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of rotations is to provide tools for working with rotation data. A stable version (1.6) of the *rotations* package is available for download from CRAN.  For Windows users, the current version (1.6.1) of *rotations* can be downloaded from GitHub.  Mac users will need to download the repo, compile the C++ code and install.
+The goal of rotations is to provide tools for working with rotation data. A stable version (1.6.2) of the *rotations* package is available for download from CRAN.  For Windows users, the current version (1.6.3) of *rotations* can be downloaded from GitHub.  Mac users will need to download the repo, compile the C++ code and install.
 
 ## Installation
 
