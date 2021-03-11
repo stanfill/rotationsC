@@ -68,9 +68,9 @@ roteye <- function(origin, center, column=1) {
 #' @return  Data frame with columns X, Y, Z standing for the respective coordinates in 3D space.
 #' @export
 #' @examples
-#' Rs<-ruars(20, rcayley)
+#' Rs <- ruars(20, rcayley)
 #'
-#' #Project the sample's 3 axes onto the 3-shere centered at the identity rotation
+#' # Project the sample's 3 axes onto the 3-sphere centered at the identity rotation
 #'
 #' pointsXYZ(Rs, center = id.SO3, column = 1)  #x-axis
 #' pointsXYZ(Rs, center = id.SO3, column = 2)  #y-axis
@@ -199,8 +199,10 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
 #'     show_estimates = c("proj.mean", "geom.mean"),
 #'     label_points = sample(LETTERS, 200, replace = TRUE)
 #'  ) +
-#'    aes(size = Z, alpha = Z) +
-#'    scale_size(limits = c(-1, 1), range = c(0.5, 2.5))
+#'    ggplot2::aes(size = Z, alpha = Z) +
+#'    ggplot2::scale_size(limits = c(-1, 1), range = c(0.5, 2.5))
+#' }
+#' \dontrun{
 #'   plot(Rs, center = mean(Rs), interactive = TRUE)
 #' }
 NULL

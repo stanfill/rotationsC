@@ -30,11 +30,11 @@ orig_options <- options()
 options(digits=3)
 library(knitr)
 opts_chunk$set(
-  concordance = TRUE, 
-  fig.path = 'figure/', 
-  fig.width = 5, 
-  fig.height = 5, 
-  fig.show = 'hold', 
+  concordance = TRUE,
+  fig.path = 'figure/',
+  fig.width = 5,
+  fig.height = 5,
+  fig.show = 'hold',
   fig.align = 'center'
 )
 knit_hooks$set(document = function(x) {
@@ -277,33 +277,33 @@ In the example code below a sample of $n=50$ rotations are drawn from the Cayley
 <<ex6>>=
 Rs <- ruars(50, rcayley, kappa = 10)
 region(
-  x = Rs, 
-  method = "direct", 
-  type = "asymptotic", 
-  estimator = "mean", 
+  x = Rs,
+  method = "direct",
+  type = "asymptotic",
+  estimator = "mean",
   alp = 0.05
 )
 region(
-  x = Rs, 
-  method = "direct", 
-  type = "bootstrap", 
-  estimator = "mean", 
-  alp = 0.05, 
+  x = Rs,
+  method = "direct",
+  type = "bootstrap",
+  estimator = "mean",
+  alp = 0.05,
   m = 300
 )
 region(
-  x = Rs, 
-  method = "direct", 
-  type = "asymptotic", 
-  estimator = "median", 
+  x = Rs,
+  method = "direct",
+  type = "asymptotic",
+  estimator = "median",
   alp = 0.05
 )
 region(
-  x = Rs, 
-  method = "direct", 
-  type = "bootstrap", 
-  estimator = "median", 
-  alp = 0.05, 
+  x = Rs,
+  method = "direct",
+  type = "bootstrap",
+  estimator = "median",
+  alp = 0.05,
   m = 300
 )
 @
@@ -322,8 +322,8 @@ All four estimates of the central orientation can be plotted along with a sample
 
 <<ex7,fig.cap="The $x$-axis of a random sample from the Cayley-UARS distribution with $\\kappa=1$ and $n=50$. All four point estimates are displayed on the left and all three region methods along with the projected mean are on the right.",fig.lp="figure:eye1",out.width=".4\\textwidth",fig.pos="h",dev='png'>>=
 plot(
-  x = Rs, 
-  center = mean(Rs), 
+  x = Rs,
+  center = mean(Rs),
   show_estimates = "all"
 )
 plot(
@@ -367,7 +367,7 @@ In this manuscript we introduced the \pkg{rotations} package and demonstrated ho
  Qs <- ruars(20, rcayley, space = 'Q4')
  Rs <- as.SO3(Qs)
  suppressMessages(require(onion))
- onionQs <- as.quaternion(t(Qs))
+ onionQs <- as.quaternion(unclass(t(Qs)))
  suppressMessages(require(orientlib))
  orientRs <- rotvector(matrix(Rs, ncol = 9))
 @
