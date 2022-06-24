@@ -68,8 +68,8 @@ confidence regions to show for the projected median.  Possibilities are
 \item{m}{number of bootstrap replicates to use in bootstrap confidence
 regions.}
 
-\item{interactive}{logical; if \code{TRUE} \code{sphereplot} is used to
-create an interactive 3D plot, otherwise \code{ggplot2} is used (requires \code{rgl} package)}
+\item{interactive}{deprecated; \code{sphereplot} was set to be removed from CRAN
+and was going to take this package down with it}
 
 \item{...}{parameters passed onto the points layer.}
 }
@@ -77,11 +77,10 @@ create an interactive 3D plot, otherwise \code{ggplot2} is used (requires \code{
 A visualization of rotation data.
 }
 \description{
-This function produces an interactive or static three-dimensional globe onto
+This function produces a static three-dimensional globe onto
 which  one of the  columns of the provided sample of rotations is projected.
-The data are centered around a user-specified rotation matrix.  The
-interactive plot is based on the \code{sphereplot} package and the static
-plot uses \code{ggplot2}.
+The data are centered around a user-specified rotation matrix.  The static
+plot uses \code{ggplot2}.  Interactive plots are no longer supported.
 }
 \examples{
 r <- rvmises(200, kappa = 1.0)
@@ -98,6 +97,5 @@ plot(Rs, center = mean(Rs), show_estimates = "proj.mean", shape = 4)
  ) +
    aes(size = Z, alpha = Z) +
    scale_size(limits = c(-1, 1), range = c(0.5, 2.5))
-  plot(Rs, center = mean(Rs), interactive = TRUE)
 }
 }

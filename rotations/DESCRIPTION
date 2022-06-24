@@ -1,7 +1,7 @@
 Package: rotations
 Type: Package
 Title: Working with Rotation Data
-Version: 1.6.3
+Version: 1.6.4
 Authors@R: 
     c(person(given = "Bryan",
              family = "Stanfill",
@@ -51,8 +51,7 @@ Suggests:
     onion,
     orientlib,
     testthat,
-    rmarkdown,
-    rgl
+    rmarkdown
 LinkingTo: 
     Rcpp, 
     RcppArmadillo

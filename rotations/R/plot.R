@@ -113,49 +113,14 @@ pointsXYZ_plot <- function(data, center=id.SO3, column=1) {
 	psample1
 }
 
-#This is a modified rgl.sphgrid that I use to create interactive plots
-rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap = 15,
-                        longtype = "H", add = FALSE) {
-  if (add == FALSE) {
-    rgl::open3d()
-  }
-  for (lat in seq(-90, 90, by = deggap)) {
-    if (lat == 0) {
-      col.grid = "grey50"
-    }
-    else {
-      col.grid = "grey"
-    }
-    rgl::plot3d(sphereplot::sph2car(long = seq(0, 360, len = 100), lat = lat,
-                   radius = radius, deg = TRUE), col = col.grid, add = TRUE,
-           type = "l")
-  }
-  for (long in seq(0, 360 - deggap, by = deggap)) {
-    if (long == 0) {
-      col.grid = "grey50"
-    }
-    else {
-      col.grid = "grey"
-    }
-    rgl::plot3d(sphereplot::sph2car(long = long, lat = seq(-90, 90, len = 100),
-                   radius = radius, deg = TRUE), col = col.grid, add = TRUE,
-           type = "l")
-  }
-  if (longtype == "H") {
-    scale = 15
-  }
-  if (longtype == "D") {
-    scale = 1
-  }
-}
+
 
 #' Visualizing random rotations
 #'
-#' This function produces an interactive or static three-dimensional globe onto
+#' This function produces a static three-dimensional globe onto
 #' which  one of the  columns of the provided sample of rotations is projected.
-#' The data are centered around a user-specified rotation matrix.  The
-#' interactive plot is based on the \code{sphereplot} package and the static
-#' plot uses \code{ggplot2}.
+#' The data are centered around a user-specified rotation matrix.  The static
+#' plot uses \code{ggplot2}.  Interactive plots are no longer supported.
 #'
 #' @name plot
 #'
@@ -180,8 +145,8 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
 #'   \code{\link{region}} for more details.
 #' @param m number of bootstrap replicates to use in bootstrap confidence
 #'   regions.
-#' @param interactive logical; if \code{TRUE} \code{sphereplot} is used to
-#'   create an interactive 3D plot, otherwise \code{ggplot2} is used (requires \code{rgl} package)
+#' @param interactive deprecated; \code{sphereplot} was set to be removed from CRAN
+#'  and was going to take this package down with it
 #' @param ... parameters passed onto the points layer.
 #'
 #' @return  A visualization of rotation data.
@@ -201,7 +166,6 @@ rgl.sphgrid2<-function (radius = 1, col.long = "red", col.lat = "blue", deggap =
 #'  ) +
 #'    aes(size = Z, alpha = Z) +
 #'    scale_size(limits = c(-1, 1), range = c(0.5, 2.5))
-#'   plot(Rs, center = mean(Rs), interactive = TRUE)
 #' }
 NULL
 
@@ -219,14 +183,7 @@ plot.SO3 <- function(x,
                      m = 300,
                      interactive = FALSE,
                      ...) {
-  # For interactive plots only one column can be displayed at a time
-  if(interactive){ 
-    col <- col[1]
-    # rgl is required for interactive plots
-    if(!requireNamespace("rgl")){
-      stop("Interactive plots require the 'rgl' package be installed.")
-    }
-  }
+
 
   if (length(col) > 1)
     mplotSO3(
@@ -250,11 +207,7 @@ plot.SO3 <- function(x,
 	X <- Y <- Est <- NULL
   center<-matrix(center,3,3)
 
-  if(interactive){
-    proj2d <- pointsXYZ(Rs, center=center, column=col)
-  }else{
-	  proj2d <- pointsXYZ_plot(Rs, center=center, column=col)
-  }
+	proj2d <- pointsXYZ_plot(Rs, center=center, column=col)
 
 	if(to_range) {
 		xlimits <- range(proj2d$X)
@@ -269,13 +222,6 @@ plot.SO3 <- function(x,
 	estimates <- NULL
   regs<-NULL
 	regsMed<-NULL
-
-  #Interactive plot objects
-  estDF<-NULL
-  meanregDF<-NULL
-  medianregDF<-NULL
-  MedRegions<-NULL
-  Regions<-NULL
 
 	if (!is.null(show_estimates)) {
 		ShatP <- StildeP <- ShatG <- StildeG <- NA
@@ -306,23 +252,17 @@ plot.SO3 <- function(x,
 		if(!is.null(mean_regions) || !is.null(median_regions)){
 			vals<-3:(2+nrow(Shats)) #Make the shapes noticable, 15:18
 
-      if(interactive){
-        estDF<-pointsXYZ(Shats[,1:9],center=center,column=col)
-        estDF$lab<-c("Proj. Mean","Proj. Median","Geom. Mean","Geom. Median")[rmNA]
-      }else{
-        estDF<-pointsXYZ_plot(Shats[,1:9], center=center, column=col)
-			  estimates <- list(geom_point(aes(x=X, y=Y, shape=Est),size=3.5, data=data.frame(estDF, Shats)),
+      
+      estDF<-pointsXYZ_plot(Shats[,1:9], center=center, column=col)
+			estimates <- list(geom_point(aes(x=X, y=Y, shape=Est),size=3.5, data=data.frame(estDF, Shats)),
 												scale_shape_manual(name="Estimates", labels=Estlabels,values=vals))
-      }
+      
 		}else{
-      if(interactive){
-        estDF<-pointsXYZ(Shats[,1:9],center=center,column=col)
-        estDF$lab<-c("Proj. Mean","Proj. Median","Geom. Mean","Geom. Median")[rmNA]
-      }else{
-		    estDF<-pointsXYZ_plot(Shats[,1:9], center=center, column=col)
-			  estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(estDF, Shats)),
+      
+		  estDF<-pointsXYZ_plot(Shats[,1:9], center=center, column=col)
+		  estimates <- list(geom_point(aes(x=X, y=Y, colour=Est),size=3.5, data=data.frame(estDF, Shats)),
 												scale_colour_brewer(name="Estimates", palette="Paired", labels=Estlabels))
-      }
+      
 		}
 	}
 
@@ -355,12 +295,10 @@ plot.SO3 <- function(x,
       if(col==3)
 	      cisp.boot <- rbind(cisp.boot,t(replicate(500, as.SO3(c(stats::runif(2,-1,1),0), Regions$X1[i]),simplify="matrix")))
     }
-    if(interactive){
-      meanregDF<-pointsXYZ(cisp.boot, center=t(mean(Rs))%*%center, column=col)
-    }else{
-	    meanregDF<-pointsXYZ_plot(cisp.boot, center=t(mean(Rs))%*%center, column=col)
-	    regs <- geom_point(aes(x=X, y=Y,colour=Regions), data=data.frame(meanregDF,Regions=rep(Regions$Meth,each=500)))
-    }
+    
+	  meanregDF<-pointsXYZ_plot(cisp.boot, center=t(mean(Rs))%*%center, column=col)
+	  regs <- geom_point(aes(x=X, y=Y,colour=Regions), data=data.frame(meanregDF,Regions=rep(Regions$Meth,each=500)))
+    
 	}
 
 	if (!is.null(median_regions)) {
@@ -389,12 +327,9 @@ plot.SO3 <- function(x,
 			if(col==3)
 				cisp.boot <- rbind(cisp.boot,t(replicate(500, as.SO3(c(stats::runif(2,-1,1),0), MedRegions$X1[i]),simplify="matrix")))
 		}
-    if(interactive){
-      medianregDF<-pointsXYZ(cisp.boot, center=t(median(Rs))%*%center, column=col)
-    }else{
-		  medianregDF<-pointsXYZ_plot(cisp.boot, center=t(median(Rs))%*%center, column=col)
-		  regsMed <- geom_point(aes(x=X, y=Y,colour=Regions), data=data.frame(medianregDF,Regions=rep(MedRegions$Meth,each=500)))
-    }
+		medianregDF<-pointsXYZ_plot(cisp.boot, center=t(median(Rs))%*%center, column=col)
+		regsMed <- geom_point(aes(x=X, y=Y,colour=Regions), data=data.frame(medianregDF,Regions=rep(MedRegions$Meth,each=500)))
+    
 	}
 
   labels <- NULL
