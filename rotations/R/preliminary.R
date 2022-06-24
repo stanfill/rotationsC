@@ -46,7 +46,7 @@ rot.dist.SO3 <- function(x, R2=id.SO3, method='extrinsic' , p=1,...) {
 
   method <- try(match.arg(method,c('projected','extrinsic','intrinsic')),silent=T)
 
-  if (is(method,"try-error"))
+  if (isa(method,"try-error"))
     stop("method needs to be one of 'projected', 'extrinsic' or 'intrinsic'.")
 
   if(method%in%c('projected','extrinsic')){
@@ -82,7 +82,7 @@ rot.dist.Q4 <- function(x, Q2=id.Q4 ,method='extrinsic', p=1,...) {
 
   method <- try(match.arg(method,c('projected','extrinsic','intrinsic')),silent=T)
 
-  if (is(method,"try-error"))
+  if (isa(method,"try-error"))
     stop("method needs to be one of 'projected', 'extrinsic' or 'intrinsic'.")
 
   if(method=='intrinsic'){

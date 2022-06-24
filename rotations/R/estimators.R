@@ -68,7 +68,7 @@ mean.SO3 <- function(x,
 
   type <- try(match.arg(type, c("projected", "geometric")), silent = TRUE)
 
-  if (is(type, "try-error"))
+  if (isa(type, "try-error"))
     stop("Type needs to be one of 'projected' or 'geometric'.")
 
 	if (type == 'projected')
@@ -93,7 +93,7 @@ mean.Q4 <- function(x,
 
 	type <- try(match.arg(type, c("projected", "geometric")), silent = TRUE)
 
-	if (is(type,"try-error"))
+	if (isa(type,"try-error"))
 	  stop("Type needs to be one of 'projected' or 'geometric'.")
 
 	if (type == 'projected')
@@ -187,7 +187,7 @@ median.SO3 <- function(x,
 
 	type <- try(match.arg(type, c("projected", "geometric")), silent = TRUE)
 
-	if (is(type,"try-error"))
+	if (isa(type,"try-error"))
 	  stop("Type needs to be one of 'projected' or 'geometric'.")
 
   if (type == "projected")
@@ -292,7 +292,7 @@ weighted.mean.SO3 <- function(x,
 
 	type <- try(match.arg(type, c("projected", "geometric")), silent = TRUE)
 
-	if (is(type, "try-error"))
+	if (isa(type, "try-error"))
 	  stop("Type needs to be one of 'projected' or 'geometric'.")
 
 	if (any(w < 0))

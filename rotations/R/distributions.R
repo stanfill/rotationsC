@@ -592,7 +592,7 @@ duars<-function(R,dangle,S=id.SO3,kappa=1,...){
 
 	#Create an exception for rangles that don't take kappas
 	cr <- try(dangle(rs,kappa,...),silent=TRUE)
-	if(is(cr,"try-error")){
+	if(isa(cr,"try-error")){
 	  cr <- dangle(rs,...)
 	}
 	
@@ -623,7 +623,7 @@ puars<-function(R,pangle=NULL,S=id.SO3,kappa=1,...){
 
 	}else{
 		cr<-try(2*(pangle(rs,kappa,...)-.5),silent=TRUE)
-		if(is(cr,'try-error')){
+		if(isa(cr,'try-error')){
 		  cr<-2*(pangle(rs,...)-.5)
 		}
 	}
@@ -642,7 +642,7 @@ ruars<-function(n,rangle,S=NULL,kappa=1,space="SO3",...){
   
   #Create an exception for rangles that don't take kappas
   r <- try(rangle(n,kappa,...),silent=TRUE)
-  if(is(r,"try-error")){
+  if(isa(r,"try-error")){
     r <- rangle(n,...)
   }
   Rs<-genR(r,S,space)
