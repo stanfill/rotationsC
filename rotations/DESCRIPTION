@@ -45,8 +45,7 @@ Depends:
 Imports:
     ggplot2,
     gridExtra,
-    Rcpp,
-    sphereplot
+    Rcpp
 Suggests:
     knitr,
     onion,

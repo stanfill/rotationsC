@@ -397,57 +397,18 @@ plot.SO3 <- function(x,
     }
 	}
 
-  if(interactive){
-    rgl.sphgrid2(deggap=22.5)
-    pts <- sphereplot::car2sph(proj2d)
-    sphereplot::rgl.sphpoints(pts,deg=TRUE,size=4)
-
-    if(!is.null(estDF)||!is.null(meanregDF)||!is.null(medianregDF))
-      graphics::plot.new()
-
-    if(!is.null(estDF)){
-      estpts <- sphereplot::car2sph(estDF[,-4])
-
-      sphereplot::rgl.sphpoints(estpts,deg=TRUE,col=c(2:(nrow(estDF)+1)),size=5)
-
-      #Legend
-      graphics::legend('topleft',estDF$lab,col=c(2:(nrow(estDF)+1)),pch=19,title='Estimators')
-    }
-
-    if(!is.null(label_points)){
-      label_points<-c(label_points,rep("",nrow(pts)-length(label_points)))
-      sphereplot::rgl.sphtext(pts,text=label_points)
-    }
-
-    numRegs<-0
-
-    if(!is.null(meanregDF)||!is.null(medianregDF)){
-      regDF<-rbind(meanregDF,medianregDF)
-
-      regpts <- sphereplot::car2sph(regDF)
-      numRegs<-nrow(regpts)/500
-      sphereplot::rgl.sphpoints(regpts,deg=TRUE,col=rep((1:numRegs)+1,each=500))
-
-      #Confidence region legend
-      graphics::legend('topright',c(as.character(Regions$Meth2),as.character(MedRegions$Meth)),
-             col=c((1:numRegs)+1),lty=19,title='Confidence Regions',lwd=2)
-
-    }
-
-  }else{
-    labels <- NULL
-    if (!is.null(label_points)) {
-      proj2d$labels <- label_points
-      labels <- geom_text(aes(x=X+0.05, y=Y, label=labels), size=3.25, data=proj2d, ...)
-    }
-
-	  base + geom_point(aes(x=X, y=Y), data=proj2d, ...) +
-		  labels +
-		  estimates +
-      regs+
-		  regsMed+
-	    xlim(xlimits) + ylim(ylimits)
-    }
+  labels <- NULL
+  if (!is.null(label_points)) {
+    proj2d$labels <- label_points
+    labels <- geom_text(aes(x=X+0.05, y=Y, label=labels), size=3.25, data=proj2d, ...)
+  }
+  
+  base + geom_point(aes(x=X, y=Y), data=proj2d, ...) +
+    labels +
+    estimates +
+    regs+
+    regsMed+
+    xlim(xlimits) + ylim(ylimits)
   }
 }
 
