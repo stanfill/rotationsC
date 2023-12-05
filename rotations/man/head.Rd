@@ -14,7 +14,8 @@
 \item{x}{an object}
 
 \item{n}{an integer vector of length up to \code{dim(x)} (or 1,
-    for non-dimensioned objects). Values specify the indices to be
+    for non-dimensioned objects).  A \code{logical} is silently coerced to
+    integer.  Values specify the indices to be
     selected in the corresponding dimension (or along the length) of the
     object. A positive value of \code{n[i]} includes the first/last
     \code{n[i]} indices in that dimension, while a negative value
@@ -73,6 +74,15 @@ For vector/array based objects, \code{head()} (\code{tail()}) returns
   As \code{\link{data.frame}} subsetting (\sQuote{indexing}) keeps
   \code{\link{attributes}}, so do the \code{head()} and \code{tail()}
   methods for data frames.
+}
+\note{
+For array inputs the output of \code{tail} when \code{keepnums} is \code{TRUE},
+  any dimnames vectors added for dimensions \code{>2} are the original
+  numeric indices in that dimension \emph{as character vectors}.  This
+  means that, e.g., for 3-dimensional array \code{arr},
+  \code{tail(arr, c(2,2,-1))[ , , 2]} and
+  \code{tail(arr, c(2,2,-1))[ , , "2"]} may both be valid but have
+  completely different meanings.
 }
 \examples{
 head(letters)

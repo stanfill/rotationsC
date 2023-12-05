@@ -179,5 +179,5 @@ HnCppBloc <- function(Qs, Cs) {
 
 # Register entry points for exported C++ functions
 methods::setLoadAction(function(ns) {
-    .Call('_rotations_RcppExport_registerCCallable', PACKAGE = 'rotations')
+    .Call(`_rotations_RcppExport_registerCCallable`)
 })
