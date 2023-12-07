@@ -1,6 +1,6 @@
-citEntry(entry="Article",
+bibentry(bibtype="Article",
           title = "rotations: An R package for SO(3) Data",
-          author=personList(as.person("Bryan Stanfill"), as.person("Heike Hofmann"),
+          author=c(as.person("Bryan Stanfill"), as.person("Heike Hofmann"),
                   as.person("Ulrike Genschel")),
           journal = "The R Journal",
           year = "2014",
