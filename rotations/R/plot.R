@@ -164,8 +164,8 @@ pointsXYZ_plot <- function(data, center=id.SO3, column=1) {
 #'     show_estimates = c("proj.mean", "geom.mean"),
 #'     label_points = sample(LETTERS, 200, replace = TRUE)
 #'  ) +
-#'    aes(size = Z, alpha = Z) +
-#'    scale_size(limits = c(-1, 1), range = c(0.5, 2.5))
+#'    ggplot2::aes(size = Z, alpha = Z) +
+#'    ggplot2::scale_size(limits = c(-1, 1), range = c(0.5, 2.5))
 #' }
 NULL
 
